@@ -25,7 +25,6 @@ async def index():
     <body>
         <h1>Current time in {settings.TIMEZONE}: {formatted_time}</h1>
     </body>
-</html>
-    """
+</html>"""
 
     return HTMLResponse(content=html_content, status_code=status.HTTP_200_OK)
