@@ -4,6 +4,10 @@
 
 This is a web app that shows current date and time in Moscow. It is written in Python with Bottle framework.
 
+## Requirements
+
+* Python 3.12
+
 ## Installation
 
 Clone this repository:
@@ -63,6 +67,7 @@ pip install requests==2.32.3
 They were not included in `requirements.txt` because they are not required to run application
 
 After that run:
+
 ```bash
 pytest test_app.py
 ```
