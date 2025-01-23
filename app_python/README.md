@@ -6,26 +6,36 @@ This is a simple python web application on FastAPI that shows current time in Mo
 
 ## Running locally
 
-* Make sure you have [Poetry](https://python-poetry.org/docs/) installed
+1. Clone this repository and enter its folder
 
-* Clone this repository and enter its folder
-```bash
-git clone https://github.com/dmhd6219/S25-core-course-labs.git
-cd S25-core-course-labs
-```
+    ```bash
+    git clone https://github.com/dmhd6219/S25-core-course-labs.git
+    cd S25-core-course-labs
+    ```
 
-* Create virtual environment
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
+2. Create virtual environment
 
-* Install dependencies
-```bash
-poetry install --no-root
-```
+    ```bash
+    python3 -m venv .venv
+    source .venv/bin/activate
+    ```
 
-* Run the application
+3. Install dependencies
+
+   * If you have [Poetry](https://python-poetry.org/docs/) installed:
+
+    ```bash
+    poetry install --no-root
+    ```
+
+   * If you have **no** [Poetry](https://python-poetry.org/docs/) installed:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. Run the application
+
 ```bash
 fastapi dev main.py
 ```
