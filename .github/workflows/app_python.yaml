@@ -1,4 +1,4 @@
-name: Linter CI/CD
+name: Lint & Test CI/CD
 
 on:
   pull_request:
