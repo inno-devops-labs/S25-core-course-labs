@@ -15,10 +15,18 @@ This is a simple python web application on FastAPI that shows current time in Mo
 
 2. Create virtual environment
 
+   * On Linux:
+   
     ```bash
     python3 -m venv .venv
     source .venv/bin/activate
     ```
+   
+   * On Windows:
+   ```bash
+   python -m venv .venv
+   .venv\Scripts\Activate.ps1
+   ```
 
 3. Install dependencies
 
