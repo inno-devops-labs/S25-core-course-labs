@@ -3,7 +3,8 @@
 ## Tech Stack
 
 * Python
-* FastApi, as it's most used Python Framework for backend nowadays and has all needed functionalities.
+* FastApi, as it's most used Python Framework
+for backend nowadays and has all needed functionalities.
 
 ## Best practises
 
@@ -14,6 +15,8 @@
 * I have configured code formatting
   with [pylint](https://www.pylint.org/), [black](https://black.readthedocs.io/en/stable/#),
   and [isort](https://pycqa.github.io/isort/)
+* I have configured [markdownlint-cli](https://github.com/igorshubovych/markdownlint-cli)
+for formatting markdown files.
 
 ## Testing
 
