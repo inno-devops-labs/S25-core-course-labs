@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Moscow Time</title>
+        <style>
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                text-align: center;
+                padding: 0 1.5rem;
+            }
+            h1 {
+                margin: 0;
+            }
+            #time-field {
+                margin-top: 0.5rem;
+                font-size: 3rem;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Current Time in Moscow:</h1>
+        <h1 id="time-field">Loading...</h1>
+        <script>
+            fetch('/api/time')
+                .then(response => response.json())
+                .then(data => {document.getElementById('time-field').textContent = data.time;});
+        </script>
+    </body>
+</html>
