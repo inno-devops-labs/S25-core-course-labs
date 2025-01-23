@@ -1,3 +1,4 @@
 # Python
 __pycache__/
 .venv/
+.mypy_cache/
