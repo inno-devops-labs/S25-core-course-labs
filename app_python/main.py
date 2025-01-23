@@ -1,9 +1,13 @@
 """
-This module defines a simple FastAPI application with two endpoints:
-1. The root endpoint ("/") that returns a welcome message.
-2. An item endpoint ("/items/{item_id}") that returns details of a specific item.
+This module defines a FastAPI application with the following features:
+1. A root endpoint ("/") that serves an HTML template displaying the current time.
+2. Static files served from the "static" directory.
+3. HTML templates rendered using Jinja2 from the "templates" directory.
+
 Author: Sviatoslav Sviatkin (s.sviatkin@innopolis.university)
 """
+
+from datetime import datetime, timedelta, timezone
 
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
@@ -11,32 +15,29 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
 templates = Jinja2Templates(directory="templates")
 
 
-@app.get("/")
-def read_root():
+@app.get("/", response_class=HTMLResponse)
+async def index(request: Request):
     """
-    Handle the root endpoint ("/").
+    Handle the root endpoint ("/") to render an HTML page displaying the current time.
 
-    Returns:
-        dict: A dictionary containing a welcome message.
-    """
-    return {"Hello": "World"}
-
-
-@app.get("/items/{id}", response_class=HTMLResponse)
-async def read_item(request: Request, item_id: str):
-    """
-    Handle the endpoint for retrieving item details.
+    The current time is calculated based on a timezone with a UTC offset of +3 hours (Moscow).
 
     Args:
-        item_id (int): The ID of the item to retrieve.
+        request (Request): The incoming HTTP request object.
 
     Returns:
-        HTMLResponse: A HTML page containing the item ID.
+        TemplateResponse: An HTML response rendered using the "item.html" template,
+        with the current time passed to the template context.
     """
+    zone = timezone(timedelta(hours=3))
+    time = datetime.now(timezone.utc).astimezone(zone)
+
     return templates.TemplateResponse(
-        request=request, name="item.html", context={"id": item_id}
+        name="item.html", context={"request": request, "time": time}
     )
