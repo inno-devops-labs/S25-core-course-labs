@@ -7,3 +7,6 @@ check:
 format:
 	black src/
 	isort src/
+
+run:
+	uvicorn src.main:app --host=0.0.0.0 --port 8888
