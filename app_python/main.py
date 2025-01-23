@@ -6,6 +6,7 @@ Author: Sviatoslav Sviatkin (s.sviatkin@innopolis.university)
 """
 
 from typing import Union
+
 from fastapi import FastAPI
 
 app = FastAPI()
