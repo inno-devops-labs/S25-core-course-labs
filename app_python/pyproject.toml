@@ -10,7 +10,8 @@ requires-python = ">=3.12"
 dependencies = [
     "fastapi[standard] (>=0.115.7,<0.116.0)",
     "pre-commit (>=4.1.0,<5.0.0)",
-    "mypy (>=1.14.1,<2.0.0)"
+    "mypy (>=1.14.1,<2.0.0)",
+    "pylint (>=3.3.3,<4.0.0)"
 ]
 
 

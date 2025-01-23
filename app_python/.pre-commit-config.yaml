@@ -13,3 +13,17 @@ repos:
     rev: v1.14.1
     hooks:
     -   id: mypy
+# pylint
+- repo: local
+  hooks:
+    - id: pylint
+      name: pylint
+      entry: pylint
+      language: system
+      types: [python]
+      require_serial: true
+      args:
+        [
+          "-rn", # Only display messages
+          "-sn", # Don't display the score
+        ]
