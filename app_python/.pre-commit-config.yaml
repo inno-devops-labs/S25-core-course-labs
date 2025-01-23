@@ -27,3 +27,8 @@ repos:
           "-rn", # Only display messages
           "-sn", # Don't display the score
         ]
+# black formatting
+-   repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
