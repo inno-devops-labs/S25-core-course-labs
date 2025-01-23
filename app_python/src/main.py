@@ -17,7 +17,8 @@ async def index():
     curr_time = datetime.now(pytz.timezone(settings.TIMEZONE))
     formatted_time = curr_time.strftime(settings.DATETIME_FORMAT)
 
-    html_content = f"""<html>
+    html_content = f"""<!DOCTYPE html>
+<html>
     <head>
         <title>{settings.TIMEZONE} Time</title>
     </head>
