@@ -8,6 +8,10 @@ Firstly, I have a lot of experience in it, so writing this application was very 
 Secondly, it is a popular framework and it is relatively lightweight.  
 Thirdly, I think it is suitable for this application.
 
+## 🧪 Testing
+
+Manual testing was performed by opening the webpage and comparing the showed time with the time on my devices.
+
 ## ✅ Best Practices
 
 - Code modularity that will ease the future development.
