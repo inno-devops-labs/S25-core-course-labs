@@ -8,37 +8,61 @@ This is a web app that shows current date and time in Moscow. It is written in P
 
 Clone this repository:
 
-``` git clone https://github.com/cuprum-acid/devops-labs.git -b lab1 ```
+```bash
+git clone https://github.com/cuprum-acid/devops-labs.git -b lab1
+```
 
 Open directory:
 
-``` cd devops-labs/app_python ```
+```bash
+cd devops-labs/app_python
+```
 
 Install virtual environment and dependencies:
 
-``` python -m venv venv ```
+```bash
+python -m venv venv
+```
 
-``` source venv/bin/activate ```
+```bash
+source venv/bin/activate # Linux/Mac
+```
 
-``` pip install pip install -r requirements.txt ```
+```bash
+venv\Scripts\activate # Windows
+```
+
+```bash
+pip install pip install -r requirements.txt
+```
 
 Run the app:
 
-``` python app.py ```
+```bash
+python app.py
+```
 
 Now it is available on `localhost:8080` in browser. Or you can run in terminal:
 
-``` curl localhost:8080 ```
+```bash
+curl localhost:8080
+```
 
 ## Run tests
 
 If you want to run automatic tests, then you need to install additional packages:
 
-``` pip install pytest==8.3.4 ```
+```bash
+pip install pytest==8.3.4
+```
 
-``` pip install requests==2.32.3 ```
+```bash
+pip install requests==2.32.3
+```
 
 They were not included in `requirements.txt` because they are not required to run application
 
 After that run:
-``` pytest test_app.py ```
+```bash
+pytest test_app.py
+```
