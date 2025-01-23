@@ -1,0 +1,9 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.4
+
+Metrics/ClassLength:
+  Max: 100
+
+Style/Documentation:
+  Enabled: false
