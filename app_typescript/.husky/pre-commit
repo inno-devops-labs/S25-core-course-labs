@@ -1,1 +1,1 @@
-cd app_typescript && npm run lint
+cd app_typescript && npx lint-staged
