@@ -7,6 +7,9 @@ DEFAULT_ENV_FILE = '.env'
 
 
 class Config:
+    """
+    Config class with necessary variables for the program startup & runtime
+    """
     DEBUG = os.environ.get('DEBUG', 'False')
     PORT = os.environ.get('PORT', '5000')
 
