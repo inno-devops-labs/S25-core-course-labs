@@ -1,0 +1,12 @@
+
+# Overview
+
+This service lets you monitor some data about linux kernel code repository, like
+
+- Number of commits
+- Time since the first release
+
+To run it locally, you may run
+```bash
+go run ./
+```
