@@ -6,7 +6,7 @@ This is a simple typescript web application with Vite and React that shows curre
 
 ## Running locally
 
-1. Make sure you have Node.JS installed.
+1. Make sure you have [Node.js](https://nodejs.org/en) installed.
 
 2. Clone this repository and enter its folder
 
