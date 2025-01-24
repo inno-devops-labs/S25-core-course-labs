@@ -11,10 +11,6 @@ const MoscowTimeDisplay = () => {
         return () => clearInterval(timer);
     }, []);
 
-
-
-
-
     const formatTime = (date: Date) => {
         return date.toLocaleString('ru-RU', {
             timeZone: 'Europe/Moscow',
