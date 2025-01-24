@@ -31,9 +31,15 @@ docker run -d -p 5000:5000 --name watch python-watch
 docker stop watch
 ```
 
+Then, start your browser and open `localhost:8080`. Great! You are awesome
+
 ## Conclusion
 
 That's all! By this, you receive the _great_ watch on your laptop, not the boring ones you have
 in the bottom-right corner.
 
 ![img.png](res/cowboy.png)
+
+## Example
+
+![application.png](res/application.png)
