@@ -1,4 +1,4 @@
-name: Lint & Test CI/CD
+name: Python Application Lint & Test
 
 on:
   pull_request:
