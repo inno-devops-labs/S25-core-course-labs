@@ -1,4 +1,4 @@
-# Python Web Application
+# Typescript Web Application
 
 ## Tech Stack
 
