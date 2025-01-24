@@ -2,7 +2,7 @@
 
 ## Task #1
 
-Let's start with the description of used dependencies in the project. Because I am not the Python programmer at all, I choose a very popular flake framework among others. There are a lot of guides for it, and in terms of fast and single-featured applications developments, it is one of the best choices.
+Let's start with the description of used dependencies in the project. Because I am not the Python programmer at all, I choose a very popular `flake` framework among others. There are a lot of guides for it, and in terms of fast and single-featured applications developments, it is one of the best choices.
 
 ## Task #2
 
