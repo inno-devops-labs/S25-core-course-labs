@@ -9,10 +9,9 @@ import (
 )
 
 // Handler function to display the current time in Moscow
-func CurrentTimeHandler(w http.ResponseWriter, r *http.Request) {
+func CurrentTimeHandler(w http.ResponseWriter, _ *http.Request) {
 	currentTime := utils.GetCurrentTimeInMoscow()
 
-	// Get the absolute path for templates directory
 	tmplPath := filepath.Join("templates", "index.html")
 	tmpl, err := template.ParseFiles(tmplPath)
 	if err != nil {
@@ -20,5 +19,9 @@ func CurrentTimeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmpl.Execute(w, currentTime)
+	err = tmpl.Execute(w, currentTime)
+	if err != nil {
+		http.Error(w, "Failed to render template", http.StatusInternalServerError)
+		return
+	}
 }
