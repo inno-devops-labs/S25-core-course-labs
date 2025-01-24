@@ -67,12 +67,6 @@ ij_java_doc_keep_empty_parameter_tag = false
 ij_java_doc_keep_empty_return_tag = false
 ij_java_doc_keep_empty_throws_tag = false
 
-[*.{bat,cmd,ps1}]
-end_of_line = crlf
-
-[*.sh]
-end_of_line = lf
-
 [*.md]
 trim_trailing_whitespace = false
 
