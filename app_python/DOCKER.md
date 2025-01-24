@@ -67,7 +67,7 @@ Let's begin with a step-by-step explanation of all the solutions I used to creat
 
 - **.dockerignore Usage**: Additionally, include a `.dockerignore` file to exclude unnecessary files from the final
   image.
-- **Lint**: I used the https://hadolint.github.io/hadolint/
+- **Lint**: I used the <https://hadolint.github.io/hadolint/>
 
 ---
 
