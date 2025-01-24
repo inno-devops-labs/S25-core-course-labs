@@ -11,6 +11,7 @@ This is a simple python web application on FastAPI that shows current time in Mo
     ```bash
     git clone https://github.com/dmhd6219/S25-core-course-labs.git
     cd S25-core-course-labs
+    cd app_python
     ```
 
 2. Create virtual environment
