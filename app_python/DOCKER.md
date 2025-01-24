@@ -23,3 +23,5 @@ I keep the `.dockerignore` file clean and avoid using the `COPY . .` in the Dock
 ## **Docker Scout**
 
 I analyze image with Docker Scout to find out possible vulnerabilities and fix them.
+
+<img width="1214" alt="Docker Scout" src="https://github.com/user-attachments/assets/f1ec3eac-4cb9-428e-be46-b63ca3f44464" />
