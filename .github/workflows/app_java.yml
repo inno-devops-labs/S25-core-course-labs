@@ -5,11 +5,10 @@ defaults:
     working-directory: ./app_java
 
 on:
-  workflow_dispatch:
   pull_request:
-    paths:
-      - ./app_java/src/**
-      - src/**
+    branches:
+      - main
+      - master
 
 jobs:
   build:
