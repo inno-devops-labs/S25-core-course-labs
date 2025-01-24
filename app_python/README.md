@@ -10,6 +10,7 @@
 - Flask
 - pytz
 - pytest
+- black
 
 ## Installation
 
@@ -29,7 +30,7 @@ pip install -r requirements.txt
 
 2. Open your browser and navigate to:
 
-   ```
+   ```curl
    http://127.0.0.1:5000
    ```
 
@@ -39,4 +40,12 @@ Run pytest:
 
 ```bash
 PYTHONPATH=$(pwd) pytest
+```
+
+## Formatting
+
+To format the code, run:
+
+```bash
+black .
 ```
