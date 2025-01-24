@@ -1,8 +1,12 @@
 # PyWatch
 
+## Overview
+
 How many times you check the time on your laptop and think something like 'O-oh, this kind of boring...'?
 Exactly, a lot of times! And now, the time has come... Literally and theoretically. Welcome to the
 new era of watches: python web-application watch!
+
+## How to use
 
 * You can start the application locally, by simply adding the `.env` file like this:
 
@@ -26,6 +30,8 @@ docker run -d -p 5000:5000 --name watch python-watch
 ```bash
 docker stop watch
 ```
+
+## Conclusion
 
 That's all! By this, you receive the _great_ watch on your laptop, not the boring ones you have
 in the bottom-right corner.
