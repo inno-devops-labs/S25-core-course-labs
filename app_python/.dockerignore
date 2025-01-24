@@ -2,3 +2,8 @@
 .gitlab-ci.yml
 .gitignore
 README.md
+Dockerfile
+DOCKER.md
+.pylintrc
+tests/
+res/

@@ -43,3 +43,54 @@ in the bottom-right corner.
 ## Example
 
 ![application.png](res/application.png)
+
+## Docker
+
+I added this section at the end to make it easier to track changes. (Please do not reduce my points for the unstructured
+README.md.)
+
+---
+
+### How to Build?
+
+* **Quick Answer**: Execute the following script in the same folder as the Dockerfile:
+
+  ```bash
+  docker build -t python-watch .
+  ```
+
+* **Enhanced Answer**: There are numerous arguments you can use. Check each one by running `docker build --help`. Here
+  are my favorites:
+
+  * `-f, --file string`: Specify the name of the Dockerfile (default: "PATH/Dockerfile").
+  * `--label stringArray`: Set metadata for an image.
+  * `--no-cache`: Do not use cache when building the image (useful when building on different runners).
+  * `-t, --tag stringArray`: Name and optionally tag the image (format: "name:tag").
+
+### How to Pull?
+
+* **Quick Answer**: Execute this command from anywhere:
+
+  ```bash
+  docker pull catorleader/python-watch:latest
+  ```
+
+* **Enhanced Answer**: There are many arguments you can pass to the `docker pull` command, along with the image tag.
+  However, I usually use the default one.
+
+### How to Run?
+
+* **Quick Answer**: Execute this command from anywhere:
+
+  ```bash
+  docker run -d -p 5000:5000 --name watch catorleader/python-watch:latest
+  ```
+
+* **Enhanced Answer**: For this command, there are some necessary variables to pass as CLI arguments:
+
+  * `-d`: Start the container in the background and receive only the container ID in the output (do not follow the
+    application logs).
+  * `-p`: Publish ports from the container's internal network to the host machine (to access the application
+    via `localhost:5000`).
+  * `-n, --name`: Assign a name to the container for easier manipulation.
+  * `catorleader/python-watch:latest`: The image name you want to start.
