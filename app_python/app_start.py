@@ -46,7 +46,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     timezones = available_timezones()
-    if args.tz not in timezones:
+    if args.timezone not in timezones:
         print(f"time-application: error: argument -t/--timezone: invalid choice: '{args.tz}'", file=stderr)
         print(f'available: {timezones}', file=stderr)
     else:
