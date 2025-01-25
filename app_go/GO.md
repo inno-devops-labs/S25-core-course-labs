@@ -2,7 +2,7 @@
 
 ## Technological Stack
 
-For this application I have used Go with the standard library.
+For this application I have used [Go](https://go.dev/) with the standard library [net/http](https://pkg.go.dev/net/http).
 Go is a statically typed, compiled language that is fast and easy to use.
 It is appropriate for this application because it is easy and fast to develop with it.
 
@@ -16,7 +16,7 @@ It is appropriate for this application because it is easy and fast to develop wi
 
 ## Coding Standards and Code Quality
 
-- I used gofmt to format the code and check the code style.
+- I used [gofmt](https://pkg.go.dev/cmd/gofmt) to format the code and check the code style.
 
 ## Testing
 
