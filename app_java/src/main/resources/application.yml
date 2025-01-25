@@ -1,0 +1,3 @@
+webapp:
+  generator:
+    chars: "a-zA-Z0-9"
