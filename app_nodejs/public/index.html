@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abu Dabi Time</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+        p {
+            font-size: 2em;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5em 1em;
+            border-radius: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Current Time in Abu Dabi</h1>
+        <p id="time">Loading...</p>
+    </div>
+
+    <script>
+        async function fetchTime() {
+            const response = await fetch('/current-time');
+            const data = await response.json();
+            document.getElementById('time').textContent = data.time;
+        }
+
+        fetchTime();
+    </script>
+</body>
+</html>
+
