@@ -23,3 +23,25 @@ python app_start.py
 ```
 
 You can run `python app_start.py -h` to get information about all available arguments.
+
+## Docker
+
+### Build
+
+```shell
+git clone https://github.com/UniLeonid/S25-core-course-labs
+cd S25-core-course-labs
+git checkout origin/lab1
+cd app_python
+
+docker build . --tag 'unileonid/time-app-py:1.0.0'
+```
+
+Also, you can get image from [Docker Hub](https://hub.docker.com/r/unileonid/time-app-py):
+
+```shell
+docker pull unileonid/time-app-py:latest
+docker run unileonid/time-app-py:latest -p 8080:8080
+```
+
+Timezone for the app can be changed via `APP_TIMEZONE` environment variable.
