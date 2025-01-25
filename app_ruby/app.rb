@@ -3,6 +3,8 @@
 require 'sinatra'
 require 'tzinfo'
 
+set :bind, '0.0.0.0'
+
 get '/' do
   # Set the timezone to Omsk
   timezone = TZInfo::Timezone.get('Asia/Omsk')
@@ -12,4 +14,8 @@ get '/' do
 
   # Display the time
   "Current time in Omsk: #{omsk_time}"
+rescue TZInfo::InvalidTimezoneIdentifier => e
+  "Error: Invalid timezone identifier - #{e.message}"
+rescue StandardError => e
+  "Error: #{e.message}"
 end
