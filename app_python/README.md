@@ -2,7 +2,7 @@
 
 ## About
 
-This is a simple web application that displays the current time in Moscow.
+This is a simple web application on Python that displays the current time in Moscow.
 
 ## How to Use
 
@@ -26,6 +26,6 @@ uvicorn --host 0.0.0.0 --port 8001 main:app
 
 ## Endpoints
 
-- `/`: Displays the current time in Moscow as an HTML response.
+- `/`: Displays the current time in Moscow as an HTML response using `/api/time` endpoint.
 - `/api/time`: Returns the current time in Moscow as a JSON response.
 - `/docs`: Interactive OpenAPI documentation.
