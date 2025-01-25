@@ -8,7 +8,7 @@ COPY --chown=app_python_user:app_python_user main.py requirements.txt ./
 COPY --chown=app_python_user:app_python_user templates/ ./templates/
 COPY --chown=app_python_user:app_python_user static/ ./static/
 
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 USER app_python_user
 
