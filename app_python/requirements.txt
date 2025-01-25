@@ -1,6 +1,2 @@
 fastapi[standard]
-mypy
-pylint
-black
-isort
 jinja2
