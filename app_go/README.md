@@ -16,5 +16,5 @@ go run main.go
 
 ## Endpoints
 
-- `/`: Displays the current date in Moscow as an HTML response using `/api/date` endpoint.
-- `/api/date`: Returns the current date in Moscow as a JSON response.
+- `/` - Displays the current date in Moscow as an HTML response using `/api/date` endpoint.
+- `/api/date` - Returns the current date in Moscow as a JSON response.

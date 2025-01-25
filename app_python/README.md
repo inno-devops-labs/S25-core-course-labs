@@ -26,6 +26,6 @@ uvicorn --host 0.0.0.0 --port 8001 main:app
 
 ## Endpoints
 
-- `/`: Displays the current time in Moscow as an HTML response using `/api/time` endpoint.
-- `/api/time`: Returns the current time in Moscow as a JSON response.
-- `/docs`: Interactive OpenAPI documentation.
+- `/` - Displays the current time in Moscow as an HTML response using `/api/time` endpoint.
+- `/api/time` - Returns the current time in Moscow as a JSON response.
+- `/docs` - Interactive OpenAPI documentation.
