@@ -11,7 +11,7 @@ This is a simple typescript web application with Vite and React that shows curre
 2. Clone this repository and enter its folder
 
     ```bash
-    git clone https://github.com/dmhd6219/S25-core-course-labs.git
+    git clone https://github.com/dmhd6219/S25-core-course-labs.git -b lab1
     cd S25-core-course-labs
     cd app_typescript
     ```
