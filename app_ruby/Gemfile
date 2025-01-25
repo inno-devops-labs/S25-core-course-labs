@@ -5,6 +5,9 @@ source 'https://rubygems.org'
 # Gems for running the app (production)
 gem 'sinatra', '~> 4.1'
 gem 'tzinfo', '~> 2.0'
+gem 'rackup', '~> 2.2'
+gem 'puma', '~> 6.5'
+gem 'time', '~> 0.4'
 
 # Gems for development and testing
 group :development, :test do
