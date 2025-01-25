@@ -4,9 +4,6 @@ FROM python:3.12.8-alpine3.21@sha256:ba13ef990f6e5d13014e9e8d04c02a8fdb0fe53d6dc
 # Maintainer information
 LABEL maintainer="a.bayramov@innopolis.university"
 
-# Set the pip version
-ARG PIP_VERSION=24.3.1
-
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -19,7 +16,7 @@ WORKDIR /app
 
 # Install dependencies
 COPY requirements.txt ./
-RUN pip install --no-cache-dir --upgrade pip==$PIP_VERSION && pip install --no-cache-dir --upgrade -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip==24.3.1 && pip install --no-cache-dir --upgrade -r requirements.txt
 
 # Copy the source code
 COPY main.py ./
