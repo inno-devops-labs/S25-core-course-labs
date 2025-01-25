@@ -7,9 +7,10 @@ I chose the `Flask` framework because I have a little experience with it, and th
 
 ## Best practices
 
-- I have configured the `pre-commit` hooks (check the `.pre-commit-config.yaml` file).
-- The `markdownlint` is used to check the documentation style.
-- The code is formatted by `black` formatter, linted by `pylint`, statically checked by `mypy`.
+- Code is well-commented and has documentation for further usage.
+- Configured the `pre-commit` hooks (check the `.pre-commit-config.yaml` file).
+    - The code is formatted by `black` formatter, linted by `pylint`, statically checked by `mypy`.
+    - The `markdownlint` is used to check the documentation style.
 
 ## Testing
 
