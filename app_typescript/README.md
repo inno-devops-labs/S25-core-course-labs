@@ -27,3 +27,38 @@ This is a simple typescript web application with Vite and React that shows curre
 ```bash
 npm run dev
 ```
+
+## Running locally with Docker
+
+### Build it locally
+
+1. Clone this repository and enter its folder
+    ```bash
+    git clone https://github.com/dmhd6219/S25-core-course-labs.git -b lab1
+    cd S25-core-course-labs
+    cd app_python
+    ```
+
+2. Build Docker image
+   ```bash
+   # It may take a while.. For me it takes ~1 minute
+   docker build -t dmhd6219/inno_devops_lab2:latest .
+   ```
+
+3. Run the application
+   ```bash
+   docker run -d -p 8080:8080 dmhd6219/inno_devops_lab2:latest
+   ```
+
+### Pull from DockerHub
+
+1. Pull the image
+   ```bash
+   docker pull dmhd6219/inno_devops_lab2_bonus:latest
+   ```
+
+2. Run the application
+
+   ```bash
+   docker run -d -p 8080:8080 dmhd6219/inno_devops_lab2_bonus:latest
+   ```

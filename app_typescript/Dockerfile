@@ -6,7 +6,7 @@ USER app_typescript_user
 
 WORKDIR /app_typescript
 
-COPY --chown=app_typescript_user:app_typescript_user package.json package-lock.json index.html tsconfig.app.json tsconfig.json tsconfig.node.json vite.config.ts ./
+COPY --chown=app_typescript_user:app_typescript_user package.json index.html tsconfig.app.json tsconfig.json tsconfig.node.json vite.config.ts ./
 COPY --chown=app_typescript_user:app_typescript_user public/ ./public/
 COPY --chown=app_typescript_user:app_typescript_user src/ ./src/
 
