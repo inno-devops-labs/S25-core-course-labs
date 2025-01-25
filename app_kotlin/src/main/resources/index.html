@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTC Time</title>
+    <script>
+        async function fetchTime() {
+            try {
+                const response = await fetch('/time');
+                const time = await response.text();
+                document.getElementById('time').innerText = time;
+            } catch (error) {
+                console.error('Error');
+            }
+        }
+
+        setInterval(fetchTime, 1000);
+
+        window.onload = fetchTime;
+    </script>
+</head>
+<body>
+<h1>Current UTC time: <span id="time">Loading...</span></h1>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Time in Moscow</title>
+</head>
+<body>
+    <h1>The current time in Moscow is:</h1>
+    <h2 id="time">...</h2>
+    <script>
+        async function fetchTime() {
+            const response = await fetch('/time');
+            const data = await response.json();
+            document.getElementById('time').textContent = data.time;
+        }
+        setInterval(fetchTime, 1000);
+        fetchTime();
+    </script>
+</body>
+</html>
