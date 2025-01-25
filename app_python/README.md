@@ -25,13 +25,13 @@ pip install -r requirements.txt
 1. Run the application:
 
    ```bash
-   python app.py
+   python3 -m gunicorn --bind 0.0.0.0:8080 app:app
    ```
 
 2. Open your browser and navigate to:
 
    ```curl
-   http://127.0.0.1:5000
+   http://127.0.0.1:8080
    ```
 
 ## Testing
