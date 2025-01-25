@@ -48,3 +48,37 @@ This is a simple python web application on FastAPI that shows current time in Mo
 ```bash
 fastapi dev main.py
 ```
+
+## Running locally with Docker
+
+### Build it locally
+
+1. Clone this repository and enter its folder
+    ```bash
+    git clone https://github.com/dmhd6219/S25-core-course-labs.git -b lab1
+    cd S25-core-course-labs
+    cd app_python
+    ```
+
+2. Build Docker image
+   ```bash
+   docker build -t dmhd6219/inno_devops_lab2:latest .
+   ```
+
+3. Run the application
+   ```bash
+   docker run -d -p 8000:8000 dmhd6219/inno_devops_lab2:latest
+   ```
+
+### Pull from DockerHub
+
+1. Pull the image
+   ```bash
+   docker pull dmhd6219/inno_devops_lab2:latest
+   ```
+
+2. Run the application
+   
+   ```bash
+   docker run -d -p 8000:8000 dmhd6219/inno_devops_lab2:latest
+   ```
