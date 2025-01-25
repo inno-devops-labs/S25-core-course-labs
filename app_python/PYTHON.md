@@ -21,4 +21,6 @@
 
 ## Code Quality
 
+- **Pre-commmit**: add pre-commit config with markdown linter, prettier,
+  python linters, formtatters (mypy and black)
 - Black: Automated formatting
