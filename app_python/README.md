@@ -48,7 +48,7 @@ docker pull unileonid/time-app-py:latest
 ### Run
 
 ```shell
-docker -p 8080:8080 run unileonid/time-app-py:latest
+docker run -p 8080:8080 unileonid/time-app-py:latest
 ```
 
 Timezone for the app can be changed via `APP_TIMEZONE` environment variable (it is `Europe/Moscow` by default).
