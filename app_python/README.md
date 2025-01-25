@@ -9,7 +9,7 @@ This is a simple python web application that shows current time in Moscow.
 - _Optional:_ activate nix-shell environment for Nix-based systems
 
 ```bash
-    nix-shell -p python312 python312Packages.pip
+nix-shell -p python312 python312Packages.pip
 ```
 
 - Clone this repository and navigate to the project directory:
