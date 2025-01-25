@@ -17,3 +17,19 @@ This is a simple Python web application built using FastAPI. It displays the cur
     ```bash
    uvicorn main:app --reload
     ```
+
+## Docker
+1. Build:
+   ```bash
+   cd app_python
+   docker build -t moscow-time-app .
+   ```
+2. Pull the image:
+   ```bash
+   docker pull zerohalf/moscow-time-app:latest
+   ```
+3. Run and test working app:
+   ```bash
+   docker run -d -p 8000:8000 --name moscow-time-container zerohalf/moscow-time-app:latest
+   curl localhost:8000
+   ```
