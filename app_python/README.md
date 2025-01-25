@@ -25,6 +25,7 @@ The project requires you to have:
    ```bash
    git clone https://github.com/MagicWinnie/S25-core-course-labs
    cd S25-core-course-labs/app_python
+   git checkout lab1
    ```
 
 2. Create a python virtual environment:
