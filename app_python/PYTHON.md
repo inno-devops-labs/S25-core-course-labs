@@ -2,7 +2,7 @@
 
 ## Technological Stack
 
-For this application I have used FastAPI.
+For this application I have used [FastAPI](https://fastapi.tiangolo.com/).
 It is modern, high-performance, easy to use Python framework.
 It is appropriate for this application because it is easy and fast to develop with it.
 
@@ -17,9 +17,9 @@ It is appropriate for this application because it is easy and fast to develop wi
 
 ## Coding Standards and Code Quality
 
-- I used Black to format the code.
-- I used isort to sort the imports.
-- I used Flake8 to check the code style and quality.
+- I used [Black](https://black.readthedocs.io) to format the code.
+- I used [isort](https://pycqa.github.io/isort/) to sort the imports.
+- I used [Flake8](https://flake8.pycqa.org) to check the code style and quality.
 
 ## Testing
 
