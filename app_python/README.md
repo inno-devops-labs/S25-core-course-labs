@@ -49,3 +49,18 @@ To format the code, run:
 ```bash
 black .
 ```
+
+## Docker
+
+### How to Build docker container
+
+```bash
+docker build --tag your_docker_username/app_python:v1.0 .
+```
+
+### How to Pull image and Run
+
+```bash
+docker pull adeepresession/app_python:v1.0
+docker run -p 8080:8080 adeepresession/app_python:v1.0
+```
