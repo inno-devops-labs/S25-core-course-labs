@@ -57,4 +57,10 @@ repos:
         additional_dependencies:
           - pylint
 
+  - repo: https://github.com/pryorda/dockerfilelint-precommit-hooks
+    rev: v0.1.0
+    hooks:
+      - id: dockerfilelint
+        files: Dockerfile
+
 default_stages: [commit, push]
