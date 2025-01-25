@@ -6,6 +6,8 @@ This is a simple web application on Python that displays the current time in Mos
 
 ## How to Use
 
+### Manual
+
 1. Install the required dependencies using the following command:
 
 ```bash
@@ -23,6 +25,31 @@ uvicorn --host 0.0.0.0 --port 8001 main:app
 ```
 
 3. Open your web browser and navigate to `http://0.0.0.0:8001/` to view the current time in Moscow.
+
+### Docker
+
+1. Build or pull the Docker image.
+
+- Build the Docker image using the following command:
+
+```bash
+docker build -t azamatbayramov/s25-devops-py .
+```
+
+- Pull the Docker image from Docker Hub using the following command:
+
+```bash
+docker pull azamatbayramov/s25-devops-py
+```
+
+2. Run the Docker container using the following command:
+
+```bash
+docker run -p 8001:8001 azamatbayramov/s25-devops-py
+```
+
+3. Open your web browser and navigate to `http://0.0.0.0:8001/` to view the current time in Moscow.
+
 
 ## Endpoints
 
