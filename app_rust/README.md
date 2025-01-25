@@ -27,7 +27,7 @@ cd S25-core-course-labs/app_rust
 cargo run
 ```
 
-- Application usage: open link from console `http://127.0.0.1:8000` or
+- Application usage: open <http://127.0.0.1:8000> or
 
 ```bash
 curl 127.0.0.1:8000

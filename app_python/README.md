@@ -33,7 +33,7 @@ pip3 install -r requirements.txt
 python3 app.py
 ```
 
-- Application usage: open link from console `http://127.0.0.1:5000` or
+- Application usage: open <http://127.0.0.1:5000> or
 
 ```bash
 curl 127.0.0.1:5000
