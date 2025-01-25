@@ -32,3 +32,24 @@ This web application, built with Flask, displays the current time in Moscow. The
    ```bash
    python app.py
    ```
+
+## Docker
+
+### How to build?
+
+```bash
+cd S25-core-course-labs/app_python
+docker build -t python-web-app .
+```
+
+### How to pull?
+
+```bash
+docker pull milanamilana/python-web-app:latest
+```
+
+### How to run?
+
+```bash
+docker run -p 5000:5000 milanamilana/python-web-app:latest
+```
