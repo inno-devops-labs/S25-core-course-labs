@@ -13,3 +13,32 @@ git clone https://github.com/tolmachdr/S25-core-course-labs -b lab1
 cd app_go
 go run main.go
 ```
+
+
+## Docker 
+
+To run this application you also can use docker, for this you need to:
+
+1. Build image
+```
+docker build -t go-app .
+```
+
+2. Run the container
+```aiignore
+docker run -p 8080:8080 go-app
+```
+
+OR
+
+1. Pull existing image from dockerhub
+```aiignore
+docker pull dtolmach/go-app:latest
+```
+2. Run the container
+```aiignore
+docker run -p 8080:8080 go-app
+```
+
+
+
