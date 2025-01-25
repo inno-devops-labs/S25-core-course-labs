@@ -20,6 +20,7 @@
 
 ## Code Quality
 
+- **Pre-commmit**: add pre-commit config with markdown linter, prettier,
+  golang linters, formtatters, validators
 - **Linting**: `golangci-lint` for code quality.
-- **Formatting**: `go fmt` to keep code clean.
 - **Test Coverage**: Ensures important logic is covered.
