@@ -18,3 +18,17 @@ This web application, built with Flask, displays the current time in Moscow. The
    ```bash
    git clone https://github.com/Milanaaaa/S25-core-course-labs.git
    cd S25-core-course-labs/app_python
+   ```
+2. Create virtual environment
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+3. Install requirements
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Run the app
+   ```bash
+   python app.py
+   ```
