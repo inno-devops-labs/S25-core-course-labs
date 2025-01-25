@@ -2,15 +2,19 @@ from flask import Flask, render_template
 from datetime import datetime
 import pytz
 
-app = Flask(__name__)
+app = Flask(__name__) # initialize the Flask application
 
 
-@app.route("/")
+@app.route("/") # define the main page route
 def index():
+    # Set the time zone to Moscow
     moscow_tz = pytz.timezone("Europe/Moscow")
+    # Get the current time in format HH:MM:SS
     current_time = datetime.now(moscow_tz).strftime("%H:%M:%S")
+    # Render the html page, passing there the current time
     return render_template("index.html", time=current_time)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Run the application
+    app.run()
