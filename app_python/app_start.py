@@ -47,7 +47,7 @@ if __name__ == '__main__':
 
     timezones = available_timezones()
     if args.timezone not in timezones:
-        print(f"time-application: error: argument -t/--timezone: invalid choice: '{args.tz}'", file=stderr)
+        print(f"time-application: error: argument -t/--timezone: invalid choice: '{args.timezone}'", file=stderr)
         print(f'available: {timezones}', file=stderr)
     else:
-        run(create_app(ZonedTimeService(args.tz), HtmlTemplateService()), host=args.host, port=args.port)
+        run(create_app(ZonedTimeService(args.timezone), HtmlTemplateService()), host=args.host, port=args.port)
