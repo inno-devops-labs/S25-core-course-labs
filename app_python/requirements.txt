@@ -1,0 +1,4 @@
+Flask==2.0.3
+pytz==2023.3
+Werkzeug==2.0.3
+black==23.7.0
