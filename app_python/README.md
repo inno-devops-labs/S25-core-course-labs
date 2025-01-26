@@ -19,7 +19,7 @@ The project requires only:
 
 ### Installation
 
-<!-- 1. Clone the repo:
+1. Clone the repo:
 
    ```bash
    git clone https://github.com/BugaevGleb/S25-core-course-labs
@@ -27,10 +27,10 @@ The project requires only:
    git checkout lab1
    ```
 
-2. Create a python virtual environment:
+2. Create a virtual environment:
 
    ```bash
-   python -m venv .venv
+   python3 -m venv .venv
    source .venv/bin/activate
    ```
 
@@ -43,7 +43,7 @@ The project requires only:
 4. Run the application:
 
    ```bash
-   make run
+   python3 app.py
    ```
 
-5. Navigate to <http://127.0.0.1:8888>. -->
+5. Go to <http://127.0.0.1:5000> and see the current Moscow time.
