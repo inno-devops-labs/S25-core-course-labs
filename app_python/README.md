@@ -9,7 +9,7 @@ This is a simple python web application that shows current time in Moscow.
 - Clone this repository and navigate to the project directory:
 
 ```bash
-git clone https://github.com/raleksan/S25-core-course-labs -b lab1
+git clone https://github.com/raleksan/S25-core-course-labs -b lab2
 cd S25-core-course-labs/app_python
 ```
 
@@ -35,10 +35,10 @@ pip3 install -r requirements.txt
 python3 app.py
 ```
 
-- Application usage: open <http://127.0.0.1:5000> or
+- Application usage: open <http://127.0.0.1:8000> or
 
 ```bash
-curl 127.0.0.1:5000
+curl 127.0.0.1:8000
 ```
 
 ## Docker
@@ -47,14 +47,6 @@ curl 127.0.0.1:5000
 
 ```bash
 docker build --tag raleksan/app_python:v0.1 .
-```
-
-> Note: Do not forget to replace nickname `raleksan` into your own.
-
-- Login into Dockerhub for image pull
-
-```bash
-docker login
 ```
 
 - Push image into Dockerhub
@@ -72,5 +64,43 @@ docker pull raleksan/app_python:v0.1
 - Run image
 
 ```bash
-docker run -p 8080:8080 raleksan/app_python:v0.1
+docker run -p 8000:8000 raleksan/app_python:v0.1
+```
+
+- Application usage: open <http://127.0.0.1:8000> or
+
+```bash
+curl 127.0.0.1:8000
+```
+
+## Distroless Image Version
+
+- Build Docker container
+
+```bash
+docker build -f distroless.dockerfile --tag raleksan/app_python_distroless:v0.1 .
+```
+
+- Push image into Dockerhub
+
+```bash
+docker push raleksan/app_python_distroless:v0.1
+```
+
+- Pull image from Dockerhub
+
+```bash
+docker pull raleksan/app_python_distroless:v0.1
+```
+
+- Run image
+
+```bash
+docker run -p 8000:8000 raleksan/app_python_distroless:v0.1
+```
+
+- Application usage: open <http://127.0.0.1:8000> or
+
+```bash
+curl 127.0.0.1:8000
 ```

@@ -9,7 +9,7 @@ COPY --chown=python_usr:python_usr templates/ ./templates/
 RUN pip install --no-cache-dir -r requirements.txt
 
 USER python_usr
-EXPOSE 8080
+EXPOSE 8000
 
 ENTRYPOINT ["gunicorn"]
-CMD ["--bind", "0.0.0.0:8080", "app:wsgi_app"]
+CMD ["--bind", "0.0.0.0:8000", "app:wsgi_app"]

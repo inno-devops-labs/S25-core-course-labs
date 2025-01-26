@@ -10,7 +10,7 @@ from flask import Flask, render_template
 
 
 HOST = environ.get("HOST", "0.0.0.0")
-PORT = int(environ.get("PORT", "8080"))
+PORT = int(environ.get("PORT", "8000"))
 
 
 def create_flask_app() -> Flask:
