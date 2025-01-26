@@ -45,7 +45,7 @@ The repository [fastapi-best-practices](https://github.com/zhanymkanov/fastapi-b
 
 - Logging is used to track application behavior and errors. Implemented as a middleware that writes logs in terminal.
 
-### 6. **Testing**
+### 5. **Testing**
 
 - Unit tests are written using `pytest` to ensure functionality and correctness:
   - Test cases include:
@@ -53,7 +53,7 @@ The repository [fastapi-best-practices](https://github.com/zhanymkanov/fastapi-b
       - Validating the time format.
       - Ensuring the time updates between requests.
 
-### 9. **Code Formatting**
+### 6. **Code Formatting**
 
 - Use the `black` module to ensure consistent style during development.
      To run styler formater run the following command in root directory:
@@ -62,7 +62,7 @@ The repository [fastapi-best-practices](https://github.com/zhanymkanov/fastapi-b
      black .
      ```
 
-### 10. **Documentation**
+### 7. **Documentation**
 
 - A comprehensive `README.md` file is provided to guide users through setup, usage, and testing.
   - Docstrings are added to functions for better code documentation.
