@@ -4,7 +4,7 @@
 
 ### Chose the right base image
 
-The base image python:3.11-slim-bullseye is minimal and officially maintained, which reduces the image size.
+The base image golang:1.23.5-bullseye is minimal and officially maintained, which reduces the image size.
 
 ### Used non-root user
 
@@ -18,14 +18,9 @@ The things that changes rarely are upper in the Dockerfile and the things that c
 
 To exclude files not relevant to the build, without restructuring your source repository, used a .dockerignore file.
 
-### Didn't install unnecessary packages
-
-In the Dockerfile there are requirements, that install all necessary packages and nothing else.
-
 ## Differences between the Distroless images and previous images
 
 ![img.png](img.png)
 
-The traditional Python image (211MB) is larger because it includes additional utilities and libraries, such as package managers and shells, which are unnecessary for running the app.
-
-In contrast, the Distroless image (173MB) is smaller as it includes only the runtime essentials, reducing the attack surface and improving security by removing additional components.
+The traditional Go image (37.2MB) is larger because it includes additional tools and utilities, such as shells and debugging tools, that are unnecessary for running the application.
+The Distroless image (18.2MB) is nearly half the size, as it contains only the minimal runtime dependencies needed to execute the application.
