@@ -1,4 +1,4 @@
-# Use the python:3.12.8-alpine3.21 image with the sha256 digest to pin the image version
+# Use the python:3.12.8-alpine3.21 image with the sha256 digest as the base image
 FROM python:3.12.8-alpine3.21@sha256:ba13ef990f6e5d13014e9e8d04c02a8fdb0fe53d6dccf6e19147f316e6cc3a84
 
 # Maintainer information
