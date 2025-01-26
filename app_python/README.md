@@ -24,6 +24,8 @@ Dockerhub: [link](https://hub.docker.com/repository/docker/rwkals/app_python)
 
 ### Building
 
+From folder with Dockerfile:
+
 ```shell
 docker build -t rwkals/app_python:latest .
 ```
@@ -48,8 +50,10 @@ Dockerhub: [link](https://hub.docker.com/repository/docker/rwkals/app_python_dis
 
 ### Distroless Building
 
+From folder with distroless.Dockerfile:
+
 ```shell
-docker build -t rwkals/app_python_distroless:latest .
+docker build -t rwkals/app_python_distroless:latest -f distroless.Dockerfile .
 ```
 
 ### Distroless Pulling
