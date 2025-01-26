@@ -11,4 +11,17 @@ in usage. It is easy to create a toy web application with Flask.
 Moreover, it is flexible and easy to extend in the future if needed.
 
 ### Best practices
-* **Modularity**: methods are splitted to separate functions 
+* **Modularity**: HTML code is splitted from the Python code
+* **Error handling**: checking whether the given timezone exists or not
+* **Easy to update/modify**: the name of the city and appropriate timezone are in global vars
+* **Comments**: help to navigate in the code
+
+
+### Project structure
+```
+app_python/
+│
+├── app.py
+├── templates/
+│   └── home.html
+```
