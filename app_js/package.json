@@ -1,0 +1,18 @@
+{
+  "name": "bonus_js_app",
+  "version": "1.0.0",
+  "description": "Bonus web application using Node.js and Express, showing current time in Moscow",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DeHopen/S25-core-course-labs.git"
+  },
+  "author": "Andrey Gerasimov",
+  "dependencies": {
+    "express": "^4.18.2",
+    "moment-timezone": "^0.5.42"
+  }
+}
