@@ -1,3 +1,5 @@
+# PYTHON.md
+
 This document outlines the best practices followed in this **Moscow Time Web Application** project, inspired by this [repo](https://github.com/zhanymkanov/fastapi-best-practices). It also explains why the official FastAPI documentation, while excellent for getting started, may not always suffice for large-scale industrial projects.
 
 ---
@@ -25,36 +27,44 @@ The repository [fastapi-best-practices](https://github.com/zhanymkanov/fastapi-b
 ## Best Practices Implemented in My Project
 
 ### 1. **Project Structure**
-   - The project follows a modular structure.
-   - This structure separates application logic, tests, and configuration, making the project easier to maintain and scale.
+
+- The project follows a modular structure.
+  - This structure separates application logic, tests, and configuration, making the project easier to maintain and scale.
 
 ### 2. **PEP 8 Compliance**
-   - The code adheres to **PEP 8** standards for readability and consistency:
-     - Use of `snake_case`, docstrings, spacing and other popular standards.
+
+- The code adheres to **PEP 8** standards for readability and consistency:
+  - Use of `snake_case`, docstrings, spacing and other popular standards.
 
 ### 3. **Dependency Management**
-   - Dependencies are listed in `requirements.txt` for easy installation:
-   - A virtual environment is used to isolate dependencies and avoid conflicts.
+
+- Dependencies are listed in `requirements.txt` for easy installation:
+  - A virtual environment is used to isolate dependencies and avoid conflicts.
 
 ### 4. **Logging**
-   - Logging is used to track application behavior and errors. Implemented as a middleware that writes logs in terminal.
+
+- Logging is used to track application behavior and errors. Implemented as a middleware that writes logs in terminal.
 
 ### 6. **Testing**
-   - Unit tests are written using `pytest` to ensure functionality and correctness:
-     - Test cases include:
-       - Verifying the endpoint response.
-       - Validating the time format.
-       - Ensuring the time updates between requests.
+
+- Unit tests are written using `pytest` to ensure functionality and correctness:
+  - Test cases include:
+    - Verifying the endpoint response.
+      - Validating the time format.
+      - Ensuring the time updates between requests.
 
 ### 9. **Code Formatting**
-   - Use the `black` module to ensure consistent style during development.
+
+- Use the `black` module to ensure consistent style during development.
      To run styler formater run the following command in root directory:
+
      ```bash
      black .
      ```
 
 ### 10. **Documentation**
-   - A comprehensive `README.md` file is provided to guide users through setup, usage, and testing.
-   - Docstrings are added to functions for better code documentation.
+
+- A comprehensive `README.md` file is provided to guide users through setup, usage, and testing.
+  - Docstrings are added to functions for better code documentation.
 
 ---
