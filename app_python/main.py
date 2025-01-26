@@ -29,7 +29,7 @@ def create_response(time_string: str) -> HTMLResponse:
 
 
 @app.get("/")
-async def root():
+async def root() -> HTMLResponse:
     tz = pytz.timezone("Europe/Moscow")
     ts = create_time_string(tz)
     return create_response(ts)
