@@ -37,3 +37,45 @@ Follow the steps below to install and run the application locally:
    go build -o main.out main.go
    ./main.out
    ```
+
+## Docker
+
+### How to build?
+
+   ```bash
+   cd S25-core-course-labs/app_go
+   docker build -t go-web-app .
+   ```
+
+### How to pull?
+
+   ```bash
+   docker pull milanamilana/go-web-app:latest
+   ```
+
+### How to run?
+
+   ```bash
+   docker run -p 8080:8080 milanamilana/go-web-app:latest
+   ```
+
+## Distroless Image Version
+
+### How to build? (Distroless)
+
+   ```bash
+   cd S25-core-course-labs/app_go
+   docker build -t go-distroless-web-app -f distroless.Dockerfile .
+   ```
+
+### How to pull? (Distroless)
+
+   ```bash
+   docker pull milanamilana/go-distroless-web-app:latest
+   ```
+
+### How to run? (Distroless)
+
+   ```bash
+   docker run -p 8080:8080 milanamilana/go-distroless-web-app:latest
+   ```
