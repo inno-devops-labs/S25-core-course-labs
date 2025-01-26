@@ -24,6 +24,8 @@ Dockerhub: [link](https://hub.docker.com/repository/docker/rwkals/app_kotlin)
 
 ### Building
 
+From folder with Dockerfile:
+
 ```shell
 docker build -t rwkals/app_kotlin:latest .
 ```
@@ -48,8 +50,10 @@ Dockerhub: [link](https://hub.docker.com/repository/docker/rwkals/app_kotlin_dis
 
 ### Distroless Building
 
+From folder with distroless.Dockerfile:
+
 ```shell
-docker build -t rwkals/app_kotlin_distroless:latest .
+docker build -t rwkals/app_kotlin_distroless:latest -f distroless.Dockerfile .
 ```
 
 ### Distroless Pulling
