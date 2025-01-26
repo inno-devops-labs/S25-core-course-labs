@@ -7,6 +7,8 @@ This web application displays the current time in Moscow. It supports two format
 - Web page containing current time in Moscow
 - JSON with current time in Moscow
 
+The Swagger documentation is available at the following path: `/docs`.
+
 ## Tools
 
 - [FastAPI](https://fastapi.tiangolo.com/)
@@ -31,7 +33,3 @@ pip install -r requirements.txt
 # 4. Run the production server
 fastapi run
 ```
-
-## Testing
-
-To test the application, you can compare the outputted time with the actual Moscow time ([resource](https://time100.ru)).
