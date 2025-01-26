@@ -65,3 +65,24 @@ page is refreshed.
    ```bash
    docker run -p 5000:5000 milanamilana/python-web-app:latest
    ```
+
+## Distroless Image Version
+
+### How to build? (Distroless)
+
+   ```bash
+   cd S25-core-course-labs/app_python
+   docker build -t python-distroless-web-app -f distroless.Dockerfile .
+   ```
+
+### How to pull? (Distroless)
+
+   ```bash
+   docker pull milanamilana/python-distroless-web-app:latest
+   ```
+
+### How to run? (Distroless)
+
+   ```bash
+   docker run -p 5000:5000 milanamilana/python-distroless-web-app:latest
+   ```
