@@ -18,7 +18,7 @@ The project requires:
 - SBT
 - Java
 
-All of it can be installed by requirements.sh bash file (included into the Installation steps). If Scala, Java and SBT are installed on your machine, skip the stap of requirements installation.
+All of it can be installed by requirements.sh bash file (included into the Installation steps). If Scala, Java and SBT are installed on your machine, skip the step of requirements installation.
 
 ### Installation
 
@@ -37,8 +37,6 @@ All of it can be installed by requirements.sh bash file (included into the Insta
    chmod +x requirements.sh
    ./requirements.sh
    ```
-
-
 
 3. Run the application:
 
