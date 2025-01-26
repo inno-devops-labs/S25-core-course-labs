@@ -18,6 +18,8 @@ This web application displays the current time in Moscow and updates it every se
 
 ## Docker
 
+This application is containerized with Alpine image because of its lightweight.
+
 Dockerhub: [link](https://hub.docker.com/repository/docker/rwkals/app_python)
 
 ### Building
