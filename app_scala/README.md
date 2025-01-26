@@ -43,7 +43,7 @@ All of it can be installed by requirements.sh bash file (included into the Insta
    ```bash
    cd time_application_project
    sbt assembly
-   java -jar time_application_project/target/scala-2.13/MoscowTimeApp-assembly-0.1.jar
+   java -jar target/scala-2.13/MoscowTimeApp-assembly-0.1.jar
    ```
 
    OR (just another way):
