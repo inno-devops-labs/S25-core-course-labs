@@ -15,3 +15,49 @@ This web application displays the current time in Moscow and updates it every se
 3. Install dependencies `pip install -r requirements.txt`
 4. Run using `python app.py`
 5. Navigate to [http://127.0.0.1:5000/](http://127.0.0.1:5000/) and observe correct Moscow time
+
+## Docker
+
+Dockerhub: [link](https://hub.docker.com/repository/docker/rwkals/app_python)
+
+### Building
+
+```shell
+docker build -t rwkals/app_python:latest .
+```
+
+### Pulling
+
+```shell
+docker pull rwkals/app_python:latest
+```
+
+### Running
+
+```shell
+docker run -p 5000:5000 rwkals/app_python:latest
+```
+
+## Distroless Image
+
+A distroless image, smaller and more secure. Details in [link](DOCKER.md)
+
+Dockerhub: [link](https://hub.docker.com/repository/docker/rwkals/app_python_distroless)
+
+### Distroless Building
+
+```shell
+docker build -t rwkals/app_python_distroless:latest .
+```
+
+### Distroless Pulling
+
+```shell
+docker pull rwkals/app_python_distroless:latest
+```
+
+### Distroless Running
+
+```shell
+docker run -p 5000:5000 rwkals/app_python_distroless:latest
+```

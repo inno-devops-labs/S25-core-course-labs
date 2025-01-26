@@ -15,3 +15,49 @@ This web application displays the current UTC time and updates it every second. 
 3. Install dependencies using `./gradlew build`
 4. Run using `./gradlew run`
 5. Navigate to [http://localhost:8080/](http://localhost:8080/) and observe the current UTC time
+
+## Docker
+
+Dockerhub: [link](https://hub.docker.com/repository/docker/rwkals/app_kotlin)
+
+### Building
+
+```shell
+docker build -t rwkals/app_kotlin:latest .
+```
+
+### Pulling
+
+```shell
+docker pull rwkals/app_kotlin:latest
+```
+
+### Running
+
+```shell
+docker run -p 8080:8080 rwkals/app_kotlin:latest
+```
+
+## Distroless Image
+
+A distroless image, smaller and more secure. Details in [link](DOCKER.md)
+
+Dockerhub: [link](https://hub.docker.com/repository/docker/rwkals/app_kotlin_distroless)
+
+### Distroless Building
+
+```shell
+docker build -t rwkals/app_kotlin_distroless:latest .
+```
+
+### Distroless Pulling
+
+```shell
+docker pull rwkals/app_kotlin_distroless:latest
+```
+
+### Distroless Running
+
+```shell
+docker run -p 8080:8080 rwkals/app_kotlin_distroless:latest
+```
