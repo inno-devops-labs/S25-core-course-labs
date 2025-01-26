@@ -29,12 +29,12 @@ I implemented the `.dockerignore` file to exclude files that should not be part 
 ### 7. Miscellaneous improvements
 
 - **Prefer COPY instead of ADD**: I used `COPY` to explicitly copy files instead of `ADD` since `COPY` is more predictable and conforms to best security practices.
-- **Explicit EXPOSE**: I used the `EXPOSE 8080` directive to explicitly document the intended use of the container on the network.
+- **Explicit EXPOSE**: I used the `EXPOSE 8000` directive to explicitly document the intended use of the container on the network.
 - **No-Cache Pip Install**: To reduce the image size and improve security, I used the `--no-cache-dir` option in `pip install`.
 
 ## Distroless Image Version
 
-I also built a Distroless image for a Python application. The build process is described in README.md.
+I also built a Distroless image for a Python application. The build process is described in `README.md`.
 
 ![Comparison of images sizes](misc/app_python_compare.png "Image sizes comparison")
 
