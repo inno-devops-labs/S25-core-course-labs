@@ -3,6 +3,7 @@
 ## Framework choice: FastAPI
 
 I chose FastAPI for this project for the following reasons:
+
 - I already worked with FastAPI before
 - It's easy to integrate with web applications
 - Built-in OpenAPI (Swagger) documentation
