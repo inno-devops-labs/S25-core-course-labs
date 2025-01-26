@@ -5,11 +5,10 @@ FROM golang:1.23.5-alpine3.21@sha256:47d337594bd9e667d35514b241569f95fb6d95727c2
 LABEL maintainer="a.bayramov@innopolis.university"
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /build
 
 # Copy the source code
 COPY main.go ./
-COPY index.html ./
 
 # Build the Go application
 RUN go build -o app main.go
@@ -27,8 +26,8 @@ RUN apk add --no-cache tzdata=2024b-r1
 WORKDIR /app
 
 # Copy the app and index.html from the previous stage
-COPY --from=build /app/app ./
-COPY --from=build /app/index.html ./
+COPY --from=build /build/app ./
+COPY index.html ./
 
 # Change the ownership of the app directory to the non-root user
 RUN chown -R app_user:app_group /app
