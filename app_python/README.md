@@ -4,7 +4,7 @@ This simple web application displays the current time in Moscow.
 
 ## Installation
 
-1. Clone the repository: `git clone <repository_url>`
+1. Clone the repository
 2. Navigate to the `app_python` directory: `cd app_python`
 3. Create a virtual environment: `python3 -m venv venv`
 4. Activate the virtual environment:
