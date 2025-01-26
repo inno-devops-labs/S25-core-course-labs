@@ -1,4 +1,4 @@
-# Python Web Application
+# Python Web App
 
 ## Description
 
@@ -12,7 +12,7 @@ This is a Python web application that shows the current time in Moscow.
 
 ### Prerequisites
 
-The project requires only:
+The project requires:
 
 - python3 (3.8 or later)
 - pip
@@ -23,8 +23,9 @@ The project requires only:
 
    ```bash
    git clone https://github.com/BugaevGleb/S25-core-course-labs
-   cd S25-core-course-labs/app_python
+   cd S25-core-course-labs
    git checkout lab1
+   cd app_python
    ```
 
 2. Create a virtual environment:
