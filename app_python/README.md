@@ -16,14 +16,50 @@ to ensure the accuracy of the results, regardless of network conditions.
 
 ### Setup
 
+* **Manual**
+
+Build application with python interpreter:
+
 1. Optional: create virtual environment:
-    > python3 -m venv /path/to/venv
+   > python3 -m venv /path/to/venv
 
 2. Install all necessary dependencies from the requirements.txt:
-    > pip install -r requirements.txt
+   > pip install -r requirements.txt
 
 3. Run application on the localhost:
-    > python3 app.py
+   > python3 app.py
+
+* **Docker (Base Image)**
+
+Build application with Docker (base image):
+
+1. Pull image from DockerHub:
+   > docker pull paranid5/app_piton
+
+2. Run docker container:
+   > docker run --rm -it -p <YOUR_PORT>:8080 paranid5/app_piton
+
+3. Access web page:
+   > curl http://127.0.0.1:<YOUR_PORT>
+
+4. Optional: build image with Dockerfile:
+   > docker build -t app_piton
+
+* **Docker (Distroless Image)**
+
+Build application with minimized Docker image:
+
+1. Pull image from DockerHub:
+   > docker pull paranid5/app_piton_dist
+
+2. Run docker container:
+   > docker run --rm -it -p <YOUR_PORT>:8080 paranid5/app_piton_dist
+
+3. Access web page:
+   > curl http://127.0.0.1:<YOUR_PORT>
+
+4. Optional: build image with Dockerfile:
+   > docker build -t app_piton_dist -f distroless.Dockerfile .
 
 ### Stack
 

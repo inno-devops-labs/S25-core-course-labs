@@ -1,0 +1,10 @@
+ *.log
+ *.pyc
+ *.pyo
+ .env
+ .gitignore
+ PYTHON.md
+ README.md
+ res
+ tests
+__pycache__/

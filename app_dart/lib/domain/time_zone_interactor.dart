@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:timezone/browser.dart' as tz;
+import 'package:timezone/data/latest.dart';
 
 final class TimeZoneInteractor {
   final tz.Location _location;
@@ -13,7 +14,7 @@ final class TimeZoneInteractor {
   }
 
   static Future<TimeZoneInteractor> setup({String? timezone}) async {
-    await tz.initializeTimeZone();
+    initializeTimeZones();
     return TimeZoneInteractor._(
       location: tz.getLocation(timezone ?? 'Europe/Moscow')
     );

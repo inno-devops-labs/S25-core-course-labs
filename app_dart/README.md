@@ -14,6 +14,10 @@ Sample Flutter application that shows current time in Yekaterinburg
 
 ### Setup
 
+* **Manual**
+
+Build application with Flutter CLI:
+
 1. Install Flutter for [your platform](https://docs.flutter.dev/get-started/install).
 
 2. Install all necessary dependencies:
@@ -24,6 +28,22 @@ Sample Flutter application that shows current time in Yekaterinburg
 
 4. Launch widget tests:
    > flutter test --platform chrome
+
+* **Docker (Base Image)**
+
+Build application with Docker:
+
+1. Pull image from DockerHub:
+   > docker pull paranid5/app_flutter
+
+2. Run docker container:
+   > docker run --rm -it -p <YOUR_PORT>:80 paranid5/app_flutter
+
+3. Access web page:
+   > curl http://127.0.0.1:<YOUR_PORT>
+
+4. Optional: build image with Dockerfile:
+   > docker build -t app_flutter
 
 ### Stack
 
