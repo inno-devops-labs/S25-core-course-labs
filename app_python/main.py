@@ -11,7 +11,7 @@ app = Flask(__name__)
 def hello_world():
     # Getting Moscow time
     msk_time = get_moscow_time()
-    return render_template('hello.html', time=msk_time)
+    return render_template('home_page.html', time=msk_time)
 
 
 @app.errorhandler(404)
