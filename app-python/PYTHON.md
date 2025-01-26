@@ -20,13 +20,13 @@ The current time is passed dynamically to the `index.html` template using Flask'
 
 Testing was done manually by checking if the time on the page update matches the real Moscow time zone time (which it does).
 
-# Requirements:
+## Requirements:
 
 - Python 3.9
 - Flask
 - pytz
 
-### To run the web application on your machine, follow the steps:
+## To run the web application on your machine, follow the steps:
 
 1. Clone the repository:
 
