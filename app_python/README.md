@@ -26,7 +26,7 @@ uvicorn --host 0.0.0.0 --port 8001 main:app
 
 3. Open your web browser and navigate to `http://0.0.0.0:8001/` to view the current time in Moscow.
 
-### Docker
+### Regular Docker Image
 
 1. Build or pull the Docker image.
 
@@ -50,6 +50,29 @@ docker run -p 8001:8001 azamatbayramov/s25-devops-py
 
 3. Open your web browser and navigate to `http://0.0.0.0:8001/` to view the current time in Moscow.
 
+### Distroless Docker Image
+
+1. Build or pull the Docker image.
+
+- Build the Docker image using the following command:
+
+```bash
+docker build -t azamatbayramov/s25-devops-py-dl -f distroless.Dockerfile .
+```
+
+- Pull the Docker image from Docker Hub using the following command:
+
+```bash
+docker pull azamatbayramov/s25-devops-py-dl
+```
+
+2. Run the Docker container using the following command:
+
+```bash
+docker run -p 8001:8001 azamatbayramov/s25-devops-py-dl
+```
+
+3. Open your web browser and navigate to `http://0.0.0.0:8001/` to view the current time in Moscow.
 
 ## Endpoints
 
