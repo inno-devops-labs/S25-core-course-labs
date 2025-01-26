@@ -18,6 +18,8 @@ This web application displays the current UTC time and updates it every second. 
 
 ## Docker
 
+This application is containerized using a multi-stage Docker build to optimize size and performance.
+
 Dockerhub: [link](https://hub.docker.com/repository/docker/rwkals/app_kotlin)
 
 ### Building
