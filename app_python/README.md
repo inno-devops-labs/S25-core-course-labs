@@ -56,7 +56,7 @@ README.md.)
 * **Quick Answer**: Execute the following script in the same folder as the Dockerfile:
 
   ```bash
-  docker build -t python-watch .
+  docker build -t python-watch -f distroless.Dockerfile .
   ```
 
 * **Enhanced Answer**: There are numerous arguments you can use. Check each one by running `docker build --help`. Here
@@ -94,3 +94,27 @@ README.md.)
     via `localhost:5000`).
   * `-n, --name`: Assign a name to the container for easier manipulation.
   * `catorleader/python-watch:latest`: The image name you want to start.
+
+## Distroless Image Version
+
+Lightweight image for mostly production use, without tools for debugging and OS components (shell and etc.)
+
+---
+
+### Ver2.0: How to Build?
+
+  ```bash
+  docker build -t python-watch:distroless .
+  ```
+
+### Ver2.0: How to Pull?
+
+  ```bash
+  docker pull catorleader/python-watch:distroless
+  ```
+
+### Vet2.0: How to Run?
+
+  ```bash
+  docker run -d -p 5000:5000 --name watch catorleader/python-watch:distroless
+  ```

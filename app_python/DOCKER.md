@@ -73,3 +73,24 @@ Let's begin with a step-by-step explanation of all the solutions I used to creat
 
 Additionally, I do not use multi-stage builds because for Python applications that are not compiled
 this is unnecessary.
+
+---
+
+## Distro VS. Distroless Images
+
+| Type       | Size   |
+|------------|--------|
+| Distroless | 58.6MB |
+| Distro     | 134MB  |
+
+![img.png](res/pushed_images.png)
+
+## Main Differences
+
+- Distroless images have a smaller image size (obviously), because inside the container there is no unnecessary stuff like shells,
+  additional OS components, etc. In our case, we have size 2x smaller.
+- No shell—no additional way to exploit into the image. Absence of such OS components literally reduces the possible attacker's space of entry.
+- Not chaotically good—this is hard to debug anything using the distroless image because there are no tools for it.
+- Ideal for production development, no need to upgrade the external components (OS, tools) that do not affect the application directly.
+
+---
