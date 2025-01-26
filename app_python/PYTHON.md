@@ -14,7 +14,7 @@ I chose FastAPI for this project for the following reasons:
    - Use of virtual environment
    - Proper requirements.txt
 
-2. **Code Quality**
+2. **Code quality**
    - Clear function and variable naming
    - Proper code formatting
    - Comments explaining code
