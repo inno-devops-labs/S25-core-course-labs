@@ -28,3 +28,35 @@ This JavaScript web application displays the **current time in the Moscow (MSK) 
     ```bash
    npm start
 5. Open http://localhost:3000 in your web browser to view the current time in Moscow.
+
+### Docker
+
+Below are instructions for two Docker approaches:
+
+### 1. Standard Dockerfile
+1. Build the image:
+   ```bash
+   cd app_js
+   docker build -t your-dockerhub-user/js-app:latest .
+2. Run it locally:
+   ```bash
+   docker run -it --rm -p 3000:3000 your-dockerhub-user/js-app:latest
+3. Push the image to Docker Hub:
+   ```bash
+   docker push your-dockerhub-user/js-app:latest
+4. Pull and run from Docker Hub:
+   ```bash
+   docker pull your-dockerhub-user/js-app:latest
+   docker run -it --rm -p 3000:3000 your-dockerhub-user/js-app:latest
+### 2. Distroless (Multi-Stage) Dockerfile
+We also provide a distroless.Dockerfile demonstrating a multi-stage build with a final Distroless image:
+1. Build using Distroless:
+   ```bash
+   docker build -f distroless.Dockerfile -t your-dockerhub-user/js-app:distroless .
+2. Run:
+   ```bash
+   docker run -it --rm -p 3000:3000 your-dockerhub-user/js-app:distroless
+3. Check container size differences:
+   ```bash
+   docker images | grep js-app
+- You should see js-app:latest (standard) and js-app:distroless.

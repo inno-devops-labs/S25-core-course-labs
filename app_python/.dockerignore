@@ -1,0 +1,9 @@
+# Exclude files and folders not needed in the Docker image
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.git
+.gitignore
+PYTHON.md
+DOCKER.md
