@@ -36,3 +36,36 @@ python app.py
 Open your browser and navigate to: <http://127.0.0.1:8000>
 
 The page will display the current Moscow time in the format: YYYY-MM-DD HH:MM:SS
+
+## Docker
+
+### Building the Image
+
+```bash
+docker build -t your-dockerhub-username/moscow-time-api:latest .
+```
+
+### Pulling the Image
+
+```bash
+docker pull your-dockerhub-username/moscow-time-api:latest
+```
+
+### Running the Container
+
+```bash
+docker run -d -p 8000:8000 your-dockerhub-username/moscow-time-api:latest
+```
+
+The API will be available at http://localhost:8000
+
+### API Endpoints
+
+- `GET /`: Returns the current time in Moscow
+
+### Features
+
+- Lightweight Alpine-based image
+- Runs as non-root user for security
+- Optimized for minimal image size
+- Follows Docker best practices
