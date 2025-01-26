@@ -23,9 +23,9 @@ type JokeResponse struct {
 // @Success 200 {object} JokeResponse
 // @Router /joke [get]
 func Joke(c *gin.Context) {
-	joke := utils.JokeFromAPI(c)	
+	joke := utils.JokeFromAPI(c)
 
-	if (joke.Type == "twopart") {
+	if joke.Type == "twopart" {
 		c.JSON(http.StatusOK, gin.H{
 			"joke": joke.Setup + " " + joke.Delivery,
 		})

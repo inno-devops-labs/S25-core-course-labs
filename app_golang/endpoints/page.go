@@ -21,13 +21,13 @@ import (
 func JokePage(c *gin.Context) {
 	joke := utils.JokeFromAPI(c)
 
-	if (joke.Type == "twopart") {
+	if joke.Type == "twopart" {
 		c.HTML(http.StatusOK, "joke.tmpl", gin.H{
 			"joke": joke.Setup + " " + joke.Delivery,
 		})
 	} else {
-	c.HTML(http.StatusOK, "joke.tmpl", gin.H{
-		"joke": joke.Joke,
-	})
-}
+		c.HTML(http.StatusOK, "joke.tmpl", gin.H{
+			"joke": joke.Joke,
+		})
+	}
 }

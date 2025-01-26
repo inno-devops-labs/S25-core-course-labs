@@ -19,7 +19,7 @@ func main() {
 	router.LoadHTMLGlob("templates/*")
 
 	// Register endpoints
-	v1 := router.Group("/") 
+	v1 := router.Group("/")
 	{
 		v1.GET("/", endpoints.JokePage)
 		v1.GET("/joke", endpoints.Joke)
