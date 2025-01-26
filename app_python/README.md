@@ -56,7 +56,7 @@ moscow_time_app/
 To start the FastAPI application, run the following command:
 
 ```bash
-uvicorn src.main:app --reload
+uvicorn app_python.src.main:app --reload
 ```
 
 - The `--reload` flag enables auto-reloading, so the server restarts whenever you make changes to the code.
