@@ -66,3 +66,23 @@ Let's begin with a step-by-step explanation of all the solutions I used to creat
   for application startup files
 
 ---
+
+## Distro VS. Distroless Images
+
+| Type       | Size  |
+|------------|-------|
+| Distroless | 256MB |
+| Distro     | 356MB |
+
+![img.png](res/pushed_images.png)
+
+## Main Differences
+
+- Distroless images have a smaller image size (obviously),
+  because inside the container there is no unnecessary stuff like shells,
+  additional OS components, etc. In our case, we have size smaller on 100MB.
+- No shell—no additional way to exploit into the image. Absence of such OS components literally reduces the possible attacker's space of entry.
+- Not chaotically good—this is hard to debug anything using the distroless image because there are no tools for it.
+- Ideal for production development, no need to upgrade the external components (OS, tools) that do not affect the application directly.
+
+---

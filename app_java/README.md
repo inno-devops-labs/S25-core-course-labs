@@ -91,3 +91,27 @@ That's all! You are great, prepare for the weekends and calculate the width of y
     via `localhost:8080`).
   * `-n, --name`: Assign a name to the container for easier manipulation.
   * `catorleader/vacation_calculator:latest`: The image name you want to start.
+
+## Distroless Image Version
+
+Lightweight image for mostly production use, without tools for debugging and OS components (shell and etc.)
+
+---
+
+### Ver2.0: How to Build?
+
+  ```bash
+  docker build -t vacation_calculator:distroless .
+  ```
+
+### Ver2.0: How to Pull?
+
+  ```bash
+  docker pull catorleader/vacation_calculator:distroless
+  ```
+
+### Vet2.0: How to Run?
+
+  ```bash
+  docker run -d -p 8080:8080 --name watch catorleader/vacation_calculator:distroless
+  ```
