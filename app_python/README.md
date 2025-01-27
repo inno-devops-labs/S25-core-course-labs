@@ -41,17 +41,18 @@ python -m venv env
 source env/bin/activate
 ```
 
+Navigate to the ```app_python``` folder:
+
+```bash
+cd app_python/
+```
+
 Install necessary dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Navigate to the ```app_python``` folder:
-
-```bash
-cd app_python/
-```
 
 Run the application locally:
 
