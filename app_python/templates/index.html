@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moscow Time</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+        p {
+            font-size: 2em;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5em 1em;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        footer {
+            margin-top: 2em;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Current Time in Moscow</h1>
+        <p>{{ time }}</p>
+        <footer>Updated on page refresh</footer>
+    </div>
+</body>
+</html>
+
