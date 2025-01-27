@@ -18,5 +18,8 @@ func main() {
 	router.GET("/", handlers.RenderIndex)
 	router.GET("/calculate-age", handlers.CalculateAge)
 
-	router.Run(PORT)
+	err := router.Run(PORT)
+	if err != nil {
+		panic(err)
+	}
 }
