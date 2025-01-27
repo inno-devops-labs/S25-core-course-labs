@@ -56,3 +56,25 @@ Testing was done manually by checking if the time on the page update matches the
 ```
 
 5. Go to your web browser and open the url http://127.0.0.1:5000
+
+## To run the web application on your machine using Docker, follow the steps:
+
+If you already have all the files locally, build the image:
+
+```bash
+    docker build -t mangocandle/app_python:latest .
+```
+
+OR
+
+1. Pull the image:
+
+```bash
+    docker pull mangocandle/app_python:latest .
+```
+
+2. Run the image:
+
+```bash
+    docker run -p 5000:5000 mangocandle/app_python:latest
+```
