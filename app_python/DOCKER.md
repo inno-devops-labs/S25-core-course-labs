@@ -36,6 +36,7 @@ Additionaly, I build distroless image. I didn't create an additional user becaus
 
 Here is image size comparison:
 
+![image](https://github.com/user-attachments/assets/37cbc610-a7a2-4da1-bcab-34a81515347b)
 
 
 I upload it on [DockerHub](https://hub.docker.com/repository/docker/ebob/moscow-time/tags/v1.0-distroless/sha256-cee4db447ea129aca4c6a05e045e3de5758d01343a68345abbdd93b6affae59d) too
