@@ -16,4 +16,4 @@ pip install -r requirements.txt
 uvicorn main:app
 ```
 
-- The server's address will be http://127.0.0.1:8000
+- The server's address will be `http://127.0.0.1:8000`

@@ -45,4 +45,4 @@ cargo install --root <installation root>
 
 This installs the binary into `<installation root>/bin/app_rust`
 
-_Note: the command may require root priveledges_
+Note: _the command may require root priveledges_
