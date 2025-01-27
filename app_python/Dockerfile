@@ -1,11 +1,22 @@
-FROM python:3.11-slim
+FROM python:3.11.6-slim-bullseye
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
+
+RUN addgroup --system appgroup
+RUN adduser --system --ingroup appgroup appuser
 
 WORKDIR /app
 
-COPY . /app/
+RUN chown appuser:appgroup /app
 
-RUN pip install --no-cache-dir -r requirements.txt
+COPY --chown=appuser:appgroup requirements.txt /app/requirements.txt
+COPY --chown=appuser:appgroup main.py /app/main.py
+
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+USER appuser:appgroup
 
 EXPOSE 8000
 
-CMD ["uvicorn", "main:app"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
