@@ -4,7 +4,12 @@ from datetime import datetime
 import pytz
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
+
+from pathlib import Path
+
+# using relative pathes (thanks to pytest)
+BASE_DIR = Path(__file__).resolve().parent.parent
+templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 
 @router.get("/")
 async def root(request: Request):
