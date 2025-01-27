@@ -5,14 +5,9 @@ FROM python:3.13.1-alpine3.21
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
-# Install system dependencies and create non-root user
-RUN apk add --no-cache \
-        shadow=4.16.0-r1 \
-        gcc=14.2.0-r4 \
-        musl-dev=1.2.5-r8 \
-        libffi-dev=3.4.6-r0 && \
-    groupadd -r appgroup && \
-    useradd -r -g appgroup appuser
+# Create non-root user
+RUN addgroup -S appgroup && \
+    adduser -S -G appgroup appuser
 
 # Set the working directory in the container
 WORKDIR /app

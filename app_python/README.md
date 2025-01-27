@@ -95,3 +95,23 @@ docker run -d --name msk -p 8080:8080 ebob/moscow-time:v1.0
 ```
 
 Now it is available on `localhost:8080`
+
+## Distroless Docker Image
+
+### Build
+
+```bash
+docker build -t ebob/moscow-time:v1.0-distroless -f distroless.Dockerfile .
+```
+
+### Pull and Run
+
+```bash
+docker pull ebob/moscow-time:v1.0-distroless
+```
+
+```bash
+docker run -d --name msk-distroless -p 8081:8080 ebob/moscow-time:v1.0-distroless
+```
+
+Now it is available on `localhost:8081`
