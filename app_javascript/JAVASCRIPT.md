@@ -2,6 +2,9 @@
 
 This web application loads the most recent comic from **XKCD** and displays it on the website.
 
+## Language choose
+I chose JavaScript for the bonus task because, as a frontend developer, it’s the most efficient and natural choice for building web applications. JavaScript integrates seamlessly with HTML and CSS, allowing me to quickly create dynamic and interactive UIs. Its asynchronous programming features, like Promises and async/await, make it ideal for handling real-time updates.
+
 ## Features
 
 - Fetches the latest XKCD comic from the API.
