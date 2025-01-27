@@ -3,8 +3,7 @@ FROM python:3.11.6-slim-bullseye
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 
-RUN addgroup --system appgroup
-RUN adduser --system --ingroup appgroup appuser
+RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
 
 WORKDIR /app
 
