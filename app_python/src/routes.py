@@ -1,27 +1,26 @@
 from datetime import datetime
 
 import pytz
-from fastapi import APIRouter, status
+from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 
 from .config import settings
 
 router = APIRouter()
+templates = Jinja2Templates(directory="src/templates")
 
 
 @router.get("/", response_class=HTMLResponse)
-async def index():
+async def index(request: Request):
     curr_time = datetime.now(pytz.timezone(settings.TIMEZONE))
     formatted_time = curr_time.strftime(settings.DATETIME_FORMAT)
 
-    html_content = f"""<!DOCTYPE html>
-<html>
-    <head>
-        <title>{settings.TIMEZONE} Time</title>
-    </head>
-    <body>
-        <h1>Current time in {settings.TIMEZONE}: {formatted_time}</h1>
-    </body>
-</html>"""
-
-    return HTMLResponse(content=html_content, status_code=status.HTTP_200_OK)
+    return templates.TemplateResponse(
+        "index.html",
+        {
+            "request": request,
+            "timezone": settings.TIMEZONE,
+            "formatted_time": formatted_time,
+        },
+    )
