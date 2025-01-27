@@ -10,6 +10,9 @@ app = Flask(__name__)
 CITY = "Moscow"
 TIMEZONE = "Europe/Moscow"
 
+HOST = '0.0.0.0'
+PORT = 5000
+
 
 # function for returning date and time in the given timezone
 def get_current_time(str_timezone):
@@ -34,4 +37,4 @@ def home():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host=HOST, port=PORT)
