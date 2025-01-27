@@ -46,3 +46,23 @@ cargo install --root <installation root>
 This installs the binary into `<installation root>/bin/app_rust`
 
 Note: _the command may require root priveledges_
+
+## Docker
+
+### Building The Image
+
+```console
+docker build -t 2imt/app_rust:1.0 .
+```
+
+### Pulling The Image
+
+```console
+docker pull 2imt/app_rust:1.0
+```
+
+### Running The Image
+
+```console
+docker run --rm -p 8080:8080 2imt/app_rust:1.0
+```
