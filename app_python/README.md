@@ -17,3 +17,23 @@ uvicorn main:app
 ```
 
 - The server's address will be `http://127.0.0.1:8000`
+
+## Docker
+
+### Building
+
+```console
+docker build -t 2imt/app_python:1.1 .
+```
+
+### Pulling
+
+```console
+docker pull 2imt/app_python:1.1
+```
+
+### Running
+
+```console
+docker run --rm -p 8000:8000 2imt/app_python:1.1
+```
