@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"app_go/internal/services"
-
 	"net/http"
+
+	"app_go/internal/services"
 
 	"github.com/gin-gonic/gin"
 )
