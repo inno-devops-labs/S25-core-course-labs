@@ -1,0 +1,9 @@
+*.git
+.git*
+*.md
+*.png
+
+__pycache__
+
+.venv
+.vscode
