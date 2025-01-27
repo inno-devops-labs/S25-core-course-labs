@@ -1,0 +1,53 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #FFF6F6;
+    font-family: 'Zilla Slab';
+}
+
+.comic-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #FCCBCB;
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    gap: 16px;
+
+}
+
+.hidden{
+    display: none;
+}
+
+#comic-title {
+    margin: 0;
+}
+
+#comic-date {
+    margin: 0;
+}
+
+#comic-released{
+    margin: 0;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+#comic {
+    height: 48px;
+    width: fit-content;
+    margin-left: 16px;
+    background-color: #FEAAAA;
+    border: 1px solid #FEAAAA;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    font-size: 20px;
+    font-family: 'Zilla Slab';
+    color: #FFF6F6;
+    cursor: pointer;
+}
