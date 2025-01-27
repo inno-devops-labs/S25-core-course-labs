@@ -1,0 +1,4 @@
+fastapi
+uvicorn
+Jinja2
+pytz
