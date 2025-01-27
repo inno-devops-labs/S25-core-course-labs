@@ -6,6 +6,7 @@ Displays current Moscow time (MSK) using Python/Flask.
 ## Quick Start
 ```bash
 git clone https://github.com/VilaPat7/S25-core-course-labs.git
+git checkout lab1
 cd app_python
 
 # Install dependencies
