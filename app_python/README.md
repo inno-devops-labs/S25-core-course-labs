@@ -65,7 +65,7 @@ Containerized version of the web application:
    ```bash
    # clone the repository
    git clone https://github.com/MagicWinnie/S25-core-course-labs
-   git checkout lab1
+   git checkout lab2
    cd S25-core-course-labs/app_python
    # build the image
    docker build -t simple-python-web-app .
