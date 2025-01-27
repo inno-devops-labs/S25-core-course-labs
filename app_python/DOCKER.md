@@ -23,6 +23,7 @@
 
 5. **Layer Optimization**
 
+   - Related commands are grouped in a single `RUN` instructions where possible
    - Installed Python dependencies in a single step
 
 6. **Using `.dockerignore`**
