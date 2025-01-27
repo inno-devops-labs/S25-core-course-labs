@@ -5,14 +5,14 @@ Displays current Moscow time (MSK) using Python/Flask.
 
 ## Quick Start
 ```bash
-git clone [your-repo-url]
+git clone https://github.com/VilaPat7/S25-core-course-labs.git
 cd app_python
 
 # Install dependencies
 pip install -r requirements.txt
 
 # Run app
-flask run
+python3 app.py
 ```
 Open http://localhost:5000 in browser. Refresh page to update time.
 
