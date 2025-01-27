@@ -1,3 +1,2 @@
 # Go
-*.exe
-*.out
+build/
