@@ -24,7 +24,7 @@ I keep the `.dockerignore` file clean and avoid using the `COPY . .` in the Dock
 
 I analyze image with Docker Scout to find out possible vulnerabilities and fix them.
 
-
+<img width="1204" alt="Docker Scout" src="https://github.com/user-attachments/assets/6749da86-f21f-447c-8ca4-3097c1add321" />
 
 ## **DockerHub**
 
@@ -36,6 +36,6 @@ Additionaly, I build distroless image. I didn't create an additional user becaus
 
 Here is image size comparison:
 
-
+<img width="1389" alt="Comparison Size" src="https://github.com/user-attachments/assets/a4e6ba3c-169b-4efa-b341-43759dd4a3d7" />
 
 I upload it on [DockerHub](https://hub.docker.com/repository/docker/ebob/omsk-time/tags/v1.0-distroless/sha256-f7e2aba76f6b08839e08129c95aa371841a48f780116d12e9e8f66840b20c3f8) too
