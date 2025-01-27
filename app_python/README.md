@@ -20,19 +20,19 @@ uvicorn main:app
 
 ## Docker
 
-### Building
+### Building The Image
 
 ```console
 docker build -t 2imt/app_python:1.1 .
 ```
 
-### Pulling
+### Pulling The Image
 
 ```console
 docker pull 2imt/app_python:1.1
 ```
 
-### Running
+### Running The Image
 
 ```console
 docker run --rm -p 8000:8000 2imt/app_python:1.1
