@@ -32,7 +32,7 @@ Image is available on [DockerHub](https://hub.docker.com/repository/docker/ebob/
 
 ## **Distroless Image**
 
-Additionaly, I build distroless image. I didn't create an additional user because I used a container with a `nonroot` tag. Distroless image appeared to be 70 MB larger than the original one. I think this is because we don't compile the ruby program into a binary file, so reducing the size is not an advantage. Also `alipine` base image did not work in distroless environment, so I used `slim` which is a little bit larger. But the distroless container is a very good solution in terms of security: it does not contain shell and other utilities that reduce attack surface.
+Additionaly, I build distroless image. I didn't create an additional user because I used a container with a `nonroot` tag. Distroless image appeared to be 70 MB larger than the original one. I think this is because we don't compile the ruby program into a binary file, so reducing the size is not an advantage. Also `alpine` base image did not work in distroless environment, so I used `slim` which is a little bit larger. But the distroless container is a very good solution in terms of security: it does not contain shell and other utilities that reduce attack surface.
 
 Here is image size comparison:
 
