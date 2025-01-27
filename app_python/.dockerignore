@@ -1,0 +1,7 @@
+.git
+.venv
+.gitignore
+__pycache__
+pyproject.toml
+PYTHON.md
+README.md
