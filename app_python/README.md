@@ -53,7 +53,6 @@ Install necessary dependencies:
 pip install -r requirements.txt
 ```
 
-
 Run the application locally:
 
 ```bash
@@ -64,4 +63,42 @@ Go to localhost:
 
 ```bash
 http://127.0.0.1:8000
+```
+
+## Docker
+
+### How to build?
+
+Navigate to ```app_python``` if you are not already in:
+
+```bash
+cd app_python/
+```
+
+Build the Docker image locally:
+
+```bash
+docker build -t moscow-time-app .
+```
+
+### How to pull?
+
+Pull the Docker image from Docker Hub:
+
+```bash
+docker pull pupolina7/moscow-time-app:latest
+```
+
+### How to run?
+
+Run the container locally:
+
+```bash
+docker run -p 8000:8000 pupolina7/moscow-time-app:latest
+```
+
+Go to localhost:
+
+```bash
+http://localhost:8000
 ```
