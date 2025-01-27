@@ -25,3 +25,23 @@ app_python/
 
 Using this web-application, you can check current time in Moscow.
 
+# Docker
+
+### Building the Docker image
+```
+docker build -t python-msk-time .
+```
+
+### Run the container
+```
+docker run -p 5000:5000 python-msk-time
+```
+
+### Pull from Docker Hub
+```
+docker pull .../python-msk-time:latest
+```
+
+
+#### Working directory: `/app`
+
