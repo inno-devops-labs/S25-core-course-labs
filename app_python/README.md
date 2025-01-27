@@ -39,9 +39,12 @@ docker run -p 5000:5000 python-msk-time
 
 ### Pull from Docker Hub
 ```
-docker pull .../python-msk-time:latest
+docker pull nickolaus899/python-msk-time:latest
 ```
 
 
 #### Working directory: `/app`
+
+### Verification and testing
+Manuaaly tested the container and pulling for the DockerHub.
 
