@@ -1,4 +1,4 @@
-from app import app
+from app_python.app import app
 from flask import render_template
 from datetime import datetime
 import pytz
