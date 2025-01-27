@@ -1,0 +1,6 @@
+asgiref==3.8.1
+black==24.10.0
+click==8.1.8
+Django==5.1.5
+flake8==7.1.1
+sqlparse==0.5.3
