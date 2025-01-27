@@ -32,3 +32,13 @@ pytest -v
 ## API Endpoints
 - `GET /` - Main page with time display
 - `GET /time` - JSON endpoint returning current Moscow time
+
+
+# Image on Docker Hub
+
+```bash
+# Download image
+docker pull dexnight/moscow-time-app:latest
+# Run retrieved docker container
+docker run -p 8000:8000 dexnight/moscow-time-app:latest
+```
