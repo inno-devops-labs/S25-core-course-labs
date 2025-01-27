@@ -19,5 +19,9 @@ func CalculateAge(date string) (int, error) {
 		age--
 	}
 
+	if age < 0 {
+		return -1, errors.New("Negative age")
+	}
+
 	return age, nil
 }
