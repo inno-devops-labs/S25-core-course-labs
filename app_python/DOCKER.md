@@ -2,9 +2,13 @@
 
 ## ✅ Best Practices
 
+### Using linter
+
+I use `hadolint` linter to ensure that `Dockerfile` adheres to best practices and to identify possible problems early.
+
 ### Minimal base image
 
-I am using a lightweight image that is based on Alpine Linux and I specify the exact versions of Python and Alpine. This reduces the image size and the potential attack surface.
+I use a lightweight image that is based on Alpine Linux and I specify the exact versions of Python and Alpine. This reduces the image size and the potential attack surface.
 
 ### Using working directory
 
