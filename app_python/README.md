@@ -58,6 +58,7 @@ docker build -t app .
 ### How to Push the Docker Image to Docker Hub
 After building the Docker image, push it to Docker Hub:
 ```bash
+docker tag app doryshibkova03/app:latest
 docker push <dockerhub-username>/app
 ```
 
