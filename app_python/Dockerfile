@@ -1,12 +1,14 @@
 FROM python:alpine3.12
-FROM ubuntu
-RUN useradd -u 1234 nonroot
-USER nonroot
+
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+RUN adduser --disabled-password docker-user
 
 WORKDIR app
-COPY requirements.txt .
 COPY main.py .
 COPY templates/ ./templates/
-RUN pip install -r requirements.txt
 ENTRYPOINT [ "python" ]
+
+USER docker-user
 CMD ["main.py"]
