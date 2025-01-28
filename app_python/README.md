@@ -48,3 +48,42 @@ The project requires:
    ```
 
 5. Go to <http://127.0.0.1:5000> and see the current Moscow time.
+
+-----
+
+## Docker
+
+This application is containerized using the Docker. To build, pull and push the application, follow these steps:
+
+1. Build and run the Docker image for the application:
+
+   ```bash
+   git clone https://github.com/BugaevGleb/S25-core-course-labs
+   cd S25-core-course-labs
+   git checkout lab2
+   cd app_python
+   ```
+   
+   ```bash
+   docker build -t python-msk-time-app:1.0 .
+   ```
+
+   ```bash
+   docker run -p 5000:5000 python-msk-time-app:1.0
+   ```
+
+2. Pull the image from the Docker Hub:
+
+   ```bash
+   docker pull bugay/python-msk-time-app:1.0
+   ```
+
+3. Run the application:
+
+   ```bash
+   docker run -p 5000:5000 bugay/python-msk-time-app:1.0
+   ```
+
+4. Go to <http://127.0.0.1:5000> and see the current Moscow time.
+
+-----
