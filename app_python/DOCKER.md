@@ -81,7 +81,8 @@ Standard Image
 ![image](https://github.com/user-attachments/assets/59070a3b-d06a-486a-86c7-acd0f410e795)
 
 Distroless Image:
-![image](https://github.com/user-attachments/assets/a571f6fe-d391-40ce-9389-5620ff5f3104)
+![Скриншот 28-01-2025 223152](https://github.com/user-attachments/assets/70a8c0d1-57ff-43f5-9cce-9a6e7b25a1cc)
+
 
 
 
