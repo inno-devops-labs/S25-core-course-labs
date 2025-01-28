@@ -128,6 +128,6 @@ func main() {
 	// Set up HTTP server
 	http.HandleFunc("/", handler)
 
-	fmt.Println("Server running on http://localhost:8889")
-	http.ListenAndServe(":8889", nil)
+	fmt.Println("Server running on http://localhost:8080")
+	http.ListenAndServe(":8080", nil)
 }
