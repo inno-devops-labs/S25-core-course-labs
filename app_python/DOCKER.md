@@ -77,6 +77,12 @@
 - Faster startup: No OS-related overhead.
 - More secure: Runs as a non-root user by default.
 
+**Standard image is larger**, the **Distroless image provides an advantage** by:
+
+- **Reducing unnecessary components**: Standard images include package managers and shell utilities that are not required for running Java applications.
+- **LoIring security risks**: The absence of a shell and package manager minimizes the attack surface.
+- **Improving efficiency**: Even with the same runtime functionality, a smaller image means faster deployment and less disk space usage.
+
 **Standard Image:**
 ![image](https://github.com/user-attachments/assets/59070a3b-d06a-486a-86c7-acd0f410e795)
 
