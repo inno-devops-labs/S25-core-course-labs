@@ -43,25 +43,3 @@ Also please add the following dependencies in your pom.xml for Maven:
 ```
 
 4. Go to your web browser and open the url: http://localhost:8080
-
-## To run the web application on your machine using Docker, follow the steps:
-
-If you already have all the files locally, build the image:
-
-```bash
-    docker build -t mangocandle/app_java:latest .
-```
-
-OR
-
-1. Pull the image:
-
-```bash
-    docker pull mangocandle/app_java:latest .
-```
-
-2. Run the image:
-
-```bash
-    docker run -p 8080:8080 mangocandle/app_java:latest
-```
