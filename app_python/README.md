@@ -42,7 +42,7 @@ This is a simple Python web application built using FastAPI. It displays the cur
    ```
 2. Pull the image
    ```bash
-   docker push zerohalf/fastapi-distroless:nonroot
+   docker pull zerohalf/fastapi-distroless:nonroot
    ```
 3. Run and test working app:
    ```bash
