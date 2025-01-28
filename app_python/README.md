@@ -9,8 +9,8 @@ Simple Python web app to show time in Moscow.
 ## Installation
 
 ```bash
-$ git clone https://github.com/azzyyzz/S25-core-course-labs.git
-$ cd S25-core-course-labs/app_python
+git clone https://github.com/azzyyzz/S25-core-course-labs.git
+cd S25-core-course-labs/app_python
 ```
 
 ## Requitements
@@ -21,6 +21,6 @@ $ cd S25-core-course-labs/app_python
 ## Usage
 
 ```bash
-$ pip install -r requirements.txt
-$ python3 app.py
+pip install -r requirements.txt
+python3 app.py
 ```
