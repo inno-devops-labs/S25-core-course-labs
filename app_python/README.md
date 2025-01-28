@@ -33,3 +33,19 @@ This is a simple Python web application built using FastAPI. It displays the cur
    docker run -d -p 8000:8000 --name moscow-time-container zerohalf/moscow-time-app:latest
    curl localhost:8000
    ```
+
+## Docker Distroless
+1. Build:
+   ```bash
+   cd app_python
+   docker build -t fastapi-distroless -f distroless.Dockerfile .
+   ```
+2. Pull the image
+   ```bash
+   docker push zerohalf/fastapi-distroless:nonroot
+   ```
+3. Run and test working app:
+   ```bash
+   docker run -d -p 8000:8000 --name fastapi_distroless zerohalf/fastapi-distroless:nonroot
+   curl localhost:8000
+   ```
