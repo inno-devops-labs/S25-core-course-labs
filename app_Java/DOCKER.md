@@ -77,7 +77,7 @@
 **Standard image is larger**, the **Distroless image provides an advantage** by:
 
 - **Reducing unnecessary components**: Standard images include package managers and shell utilities that are not required for running Java applications.
-- **LoIring security risks**: The absence of a shell and package manager minimizes the attack surface.
+- **Lowering security risks**: The absence of a shell and package manager minimizes the attack surface.
 - **Improving efficiency**: Even with the same runtime functionality, a smaller image means faster deployment and less disk space usage.
 
 Standard Image: 
