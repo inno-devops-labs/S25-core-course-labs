@@ -50,3 +50,20 @@ python main.py
 ```
 
 Then you can find the application on the address: `http://127.0.0.1:5000`
+
+# Docker
+
+### How to build?
+```bash
+docker build -t lab2 .
+```
+
+### How to pull?
+```bash
+docker pull angelika2707/lab2
+```
+
+### How to run?
+```bash
+docker run -p 5000:5000 angelika2707/lab2
+```
