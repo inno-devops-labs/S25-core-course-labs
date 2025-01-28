@@ -6,7 +6,7 @@
 - Maven
 - Spring Boot
 
-Also please add the following dependencies in your pom.xml for Maven:
+Also please add the following dependencies in your pom.xml for Maven if they are missing:
 
 ```bash
 <dependencies>
