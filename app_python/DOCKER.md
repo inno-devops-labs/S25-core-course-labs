@@ -18,3 +18,9 @@ is set
 * **Clean up**: the `--no-cache-dir` prevents
 increase of image size because of cache files 
 * **Security**: running everything as a non-root user (*appuser*)
+* **Distroless image**: for decreasing size
+* **Multi-stage for distroless image**: building and running
+
+
+### Distroless
+Size decreased from 139MB to 57.7MB.
