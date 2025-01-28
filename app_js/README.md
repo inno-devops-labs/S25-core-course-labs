@@ -54,3 +54,13 @@ docker run -p 3000:3000 js-cities-dist
 docker run -p 3000:3000 js-distroless &
 ```
 Run in distroless image in background.
+
+
+### Pull
+```
+docker pull nickolaus899/js-cities-dist:latest
+```
+#### For Distroless
+```
+docker pull nickolaus899/js-distroless:latest
+```
