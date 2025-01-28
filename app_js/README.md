@@ -33,3 +33,17 @@ app_js/
 ├── .env
 ... other files
 ```
+
+# Docker
+
+### Building
+```
+docker build -t js-cities-dist .
+
+```
+
+### Run
+```
+docker run -p 3000:3000 js-cities-dist
+
+```

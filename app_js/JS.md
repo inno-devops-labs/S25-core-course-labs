@@ -19,3 +19,6 @@ to integrate with external APIs (Yandex Maps API in this case).
 Checked manually for different cities (for instance,
 Munich and Innopolis). Moreover, checked the behaviour 
 in case of entering invalid/unexisting names of cities.
+
+### Multi-stage building
+Multi-stage building was considered 
