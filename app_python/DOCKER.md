@@ -69,8 +69,8 @@
 
 ## Comparison: Standard vs. Distroless Images
 
-Standard Image - has package manager, shell, standard performance, size the same 
-Distroless Image - no shell, no package manager, more secure, optimized, size the same
+- **Standard Image** - has package manager, shell, standard performance, size the same.
+- **Distroless Image** - no shell, no package manager, more secure, optimized, size the same.
 
 ### Distroless
 - Smaller attack surface: No shell or package manager reduces vulnerabilities.
@@ -83,5 +83,9 @@ Even if the image size remains the same, Distroless offers additional security b
 - Fewer dependencies (lower risk of security vulnerabilities)
 
 Additionally, even with a similar size, Distroless images generally consume fewer resources and improve startup performance due to the reduced overhead of unused system utilities.
+
+![image](https://github.com/user-attachments/assets/9d5e7c6d-960a-4cfd-976d-616724237d2b)
+![image](https://github.com/user-attachments/assets/5da4665a-af41-4179-8be6-d63af6ea6717)
+
 
 
