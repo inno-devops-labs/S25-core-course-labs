@@ -100,3 +100,25 @@ This project is licensed under the **MIT License**. Feel free to use, modify, an
 
 The Random Programming Quote Generator is a simple yet fun application built to inspire developers. It combines Go's powerful standard library with creativity and scalability.
 Feel free to explore, extend, and share your own version of this app!
+
+## 🐳 Distroless Image Version
+
+I implemented a **Distroless-based** image for the Golang application to improve security and reduce image size.
+
+---
+
+### 📏 Image Size Comparison
+
+| Image Type       | Base Image Used                        | Approx. Size |
+|------------------|---------------------------------------|-------------|
+| **Standard Image** | `alpine:3.18`                        | **17MB**     |
+| **Distroless Image** | `gcr.io/distroless/static:nonroot`  | **12MB**     |
+
+The **Distroless image** is **5MB smaller** than the standard Alpine image.
+
+---
+
+### 📥 How to Build the Distroless Image
+
+```bash
+docker build -f distroless.Dockerfile -t azazaki/app_golang:distroless .

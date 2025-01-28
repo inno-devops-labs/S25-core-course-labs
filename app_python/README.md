@@ -80,3 +80,26 @@ This web application is created for educational purposes. Feel free to enhance i
 - Enhancing the design with more modern styling.
 
 ---
+
+## 🐳 Distroless Image Version
+
+I implemented a **Distroless-based** image for the Python Moscow Time web application to enhance security and optimize performance.
+
+---
+
+### 📏 Image Size Comparison
+
+| Image Type       | Base Image Used                        | Approx. Size |
+|------------------|---------------------------------------|-------------|
+| **Standard Image** | `python:3.11-alpine3.18`             | **62MB**     |
+| **Distroless Image** | `gcr.io/distroless/base:nonroot`    | **71MB**     |
+
+Unlike the Go application, the **Distroless Python image is actually larger than the Alpine-based image**.
+
+---
+
+### 📥 How to Build the Distroless Image
+
+```bash
+docker build -f distroless.Dockerfile -t azazaki/app_python:distroless .
+
