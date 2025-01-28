@@ -77,3 +77,9 @@ npm run dev
    ```bash
    docker run -d -p 8080:8080 dmhd6219/inno_devops_lab2_typescript_bonus:latest
    ```
+
+### Images comparison
+
+![Images size comparison](sizes.png)
+
+As we can see, distroless container is almost twice smaller.
