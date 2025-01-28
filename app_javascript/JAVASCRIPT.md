@@ -1,34 +1,42 @@
-# XKCD Comic Fetcher - JavaScript Web Application
+# Comic Fetcher - JavaScript Web Application
 
-This web application loads the most recent comic from **XKCD** and displays it on the website.
+This web application fetches and displays the latest XKCD comic using a Node.js backend and a frontend interface.
 
-## Language choose
+## Language Choice
 
-I chose JavaScript for the bonus task because, as a frontend developer, it’s the most efficient and natural choice for building web applications. JavaScript integrates seamlessly with HTML and CSS, allowing me to quickly create dynamic and interactive UIs. Its asynchronous programming features, like Promises and async/await, make it ideal for handling real-time updates.
+JavaScript was chosen for the frontend because it naturally integrates with HTML and CSS, allowing for the creation of dynamic, interactive web applications. The asynchronous nature of JavaScript (using `async/await` and Promises) makes it ideal for handling API requests in real-time without blocking the user interface.
 
 ## Features
 
-- Fetches the latest XKCD comic from the API.
-- Displays the comic title, release date, description, and image.
-- The comic information is displayed after clicking the button.
+- Fetches the latest XKCD comic from the public XKCD API.
+- Displays the comic title, image, description, and release date.
+- The comic is displayed upon clicking a button, and the page updates dynamically.
 
 ## How It Works
 
-- The application makes a **fetch request** to the XKCD API using JavaScript's `fetch()` method to retrieve the latest comic data.
-- If the fetch is successful, the comic's title, image, and description are displayed.
-- If any error occurs during the fetch, an error message is logged to the console.
+1. **Backend (Node.js Express)**: The backend serves the static files (HTML, CSS, JavaScript) located in the `public` folder.
+   - The Express server listens for requests on port `3000` and serves the HTML page (`index.html`) when accessed via the root route `/`.
+
+2. **Frontend (HTML + JavaScript)**:
+   - **`myapp.js`**: The JavaScript file includes an asynchronous function, `ComicFetch()`, that sends a request to the XKCD API to fetch the latest comic data.
+   - Once the data is retrieved, the comic's title, image, description, and release date are displayed in the HTML document by updating the DOM.
+   - The comic information is shown only after the user clicks the button, using event listeners to trigger the fetch process.
+
+3. **Styling**: The UI is styled with `style_comic.css` to provide an appealing layout.
 
 ## Dependencies
 
-No external libraries are required for this application.
+- **Express**: A minimal and flexible Node.js web application framework used for serving static files.
+- **No external libraries** are required for the frontend.
 
 ## Error Handling
 
-- **FetchComicError**: Custom error class for handling errors when fetching comic data.
-- **General Errors**: Any unexpected errors are caught by the `catch` block and logged.
+- **FetchComicError**: Custom error class for handling specific errors during the comic fetching process.
+- **General Errors**: Any other errors are caught and logged either to the console or displayed as a user-friendly message.
 
 ## Best Practices
 
-- Code is structured in a modular way using functions and classes to handle errors.
-- The app uses asynchronous JavaScript (`async/await`) to handle the fetching process.
-- Proper error handling ensures that users get meaningful messages if something goes wrong.
+- **Modular Code**: The code is divided into small functions to handle specific tasks, such as fetching data and rendering the comic on the page.
+- **Asynchronous Fetching**: The app uses `async/await` to handle the fetching of comic data, ensuring the UI remains responsive.
+- **Error Handling**: Proper error handling is implemented to provide feedback if an issue arises during the comic fetch or any other unexpected errors.
+- **Separation of Concerns**: HTML, CSS, and JavaScript are kept in separate files, making the project more maintainable and scalable.
