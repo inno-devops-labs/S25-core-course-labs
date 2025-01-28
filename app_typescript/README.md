@@ -42,23 +42,38 @@ npm run dev
 2. Build Docker image
    ```bash
    # It may take a while.. For me it takes ~1 minute
-   docker build -t dmhd6219/inno_devops_lab2:latest .
+   docker build -t dmhd6219/inno_devops_lab2_typescript_basic:latest .
    ```
 
 3. Run the application
    ```bash
-   docker run -d -p 8080:8080 dmhd6219/inno_devops_lab2:latest
+   docker run -d -p 8080:8080 dmhd6219/inno_devops_lab2_typescript_basic:latest
    ```
 
 ### Pull from DockerHub
 
 1. Pull the image
    ```bash
-   docker pull dmhd6219/inno_devops_lab2_bonus:latest
+   docker pull dmhd6219/inno_devops_lab2_typescript_basic:latest
    ```
 
 2. Run the application
 
    ```bash
-   docker run -d -p 8080:8080 dmhd6219/inno_devops_lab2_bonus:latest
+   docker run -d -p 8080:8080 dmhd6219/inno_devops_lab2_typescript_basic:latest
+   ```
+   
+## Distroless Image Version
+
+### Install with pulling from DockerHub
+
+1. Pull the image
+   ```bash
+   docker pull dmhd6219/inno_devops_lab2_typescript_bonus:latest
+   ```
+
+2. Run the application
+
+   ```bash
+   docker run -d -p 8080:8080 dmhd6219/inno_devops_lab2_typescript_bonus:latest
    ```
