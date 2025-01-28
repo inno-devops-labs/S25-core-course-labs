@@ -62,23 +62,58 @@ fastapi dev main.py
 
 2. Build Docker image
    ```bash
-   docker build -t dmhd6219/inno_devops_lab2:latest .
+   docker build -t dmhd6219/inno_devops_lab2_python_basic:latest -f Dockerfile .
    ```
 
 3. Run the application
    ```bash
-   docker run -d -p 8000:8000 dmhd6219/inno_devops_lab2:latest
+   docker run -d -p 8000:8000 dmhd6219/inno_devops_lab2_python_basic:latest
    ```
 
 ### Pull from DockerHub
 
 1. Pull the image
    ```bash
-   docker pull dmhd6219/inno_devops_lab2:latest
+   docker pull dmhd6219/inno_devops_lab2_python_basic:latest
    ```
 
 2. Run the application
    
    ```bash
-   docker run -d -p 8000:8000 dmhd6219/inno_devops_lab2:latest
+   docker run -d -p 8000:8000 dmhd6219/inno_devops_lab2_python_basic:latest
+   ```
+   
+## Distroless Image Version
+
+### Build it locally
+
+1. Clone this repository and enter its folder
+    ```bash
+    git clone https://github.com/dmhd6219/S25-core-course-labs.git -b lab1
+    cd S25-core-course-labs
+    cd app_python
+    ```
+
+2. Build Docker image
+   ```bash
+   docker build -t dmhd6219/inno_devops_lab2_python_bonus:latest -f distroless.Dockerfile .
+   ```
+
+3. Run the application
+   ```bash
+   docker run -d -p 8000:8000 dmhd6219/inno_devops_lab2_python_basic:latest
+   ```
+
+
+### Install with pulling from DockerHub
+
+1. Pull the image
+   ```bash
+   docker pull dmhd6219/inno_devops_lab2_python_bonus:latest
+   ```
+
+2. Run the application
+
+   ```bash
+   docker run -d -p 8000:8000 dmhd6219/inno_devops_lab2_python_bonus:latest
    ```
