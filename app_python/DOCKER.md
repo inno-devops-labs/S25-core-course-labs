@@ -1,6 +1,7 @@
 # Docker
 
-**Docker Hub**: click the [link](https://hub.docker.com/r/nickolaus899/python-msk-time)
+**Docker Hub (default)**: click the [link](https://hub.docker.com/r/nickolaus899/python-msk-time)
+**Docker Hub (distroless)**: click this [link](https://hub.docker.com/r/nickolaus899/py-distroless)
 
 ### Base image
 `python:3.10-slim` was taken as a lighweight (slim) version
