@@ -46,8 +46,7 @@ and avoids additional unnecessary tools, further reducing the attack surface.
 
 ## 4. Build Process
 
-* Previous: Combined the build and runtime stages in a single image,
-leading to a larger final image with development dependencies (e.g., `npm`).
+* Previous: Combined the build and runtime stages in a single image, leading to a larger final image.
 
 * Distroless: Introduces a multi-stage build process:
 
