@@ -85,7 +85,7 @@ docker build -t app-dist -f distroless.Dockerfile .
 
 ### Push the Distroless Image to Docker Hub
 ```bash
-docker tag app <dockerhub-username>/app-dist:latest
+docker tag app-dist <dockerhub-username>/app-dist:latest
 docker push <dockerhub-username>/app-dist
 ```
 
