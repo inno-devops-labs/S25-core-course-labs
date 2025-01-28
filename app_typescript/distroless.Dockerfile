@@ -1,5 +1,5 @@
 ARG BUILD_IMAGE=node:20.1.0
-ARG RUN_IMAGE=gcr.io/distroless/nodejs20-debian11
+ARG RUN_IMAGE=gcr.io/distroless/nodejs20-debian11:nonroot
 
 # Build stage
 FROM $BUILD_IMAGE AS build-env
@@ -14,11 +14,12 @@ FROM $BUILD_IMAGE AS deps-env
 COPY package.json ./
 RUN npm install
 
+# Create final production stage
 FROM $RUN_IMAGE AS run-env
 WORKDIR /usr/app
 COPY --from=build-env /app/dist ./dist
 COPY --from=deps-env /node_modules ./node_modules
-COPY package.json ./package.json
 
+ENV NODE_ENV="production"
 EXPOSE 8080
 CMD ["node_modules/vite/dist/node/cli.js", "preview", "--host", "0.0.0.0", "--port", "8080"]
