@@ -33,3 +33,38 @@ pip install -r requirements.txt
 # 4. Run the production server
 fastapi run
 ```
+
+## Docker
+
+### How to build?
+
+You can build the Docker image using the following command:
+
+```bash
+docker build app_python -t app_python
+```
+
+### How to pull?
+
+To pull the latest image from Docker Hub, use the following command:
+
+```bash
+docker pull dnworks/app_python:latest
+```
+
+### How to run?
+
+Run the Docker container:
+> **NB!** Port 80 must be exposed so you can access the web application at 80 port (`http://localhost/`).
+
+- Self-built image:
+
+```bash
+docker run -p 80:80 app_python
+```
+
+- From Docker Hub:
+
+```bash
+docker run -p 80:80 dnworks/app_python:latest
+```
