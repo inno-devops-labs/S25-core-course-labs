@@ -1,12 +1,13 @@
-# Python Web Application
+# JavaScript Web Application
 
 ## Overview
-This web application displays the current time in Moscow. It is built using Flask, a lightweight Python framework.
+This web application displays the current time in Moscow using Node.js and Express.js.
 
 ## Requirements
-- Python 3.8+
-- Flask
-- pytz
+- Node.js
+- npm
+- express
+- moment-timezone
 
 ## Local Installation
 1. Clone the repository:
@@ -17,24 +18,24 @@ This web application displays the current time in Moscow. It is built using Flas
 2.	Navigate to the app_javascript directory:
 
    ```bash
-   cd app_python
+   cd app_javascript
    ```
 
 3.	Install dependencies:
 
    ```bash
-   pip install -r requirements.txt
+   npm install
    ```
 
 4.	Run the application:
 
    ```bash
-   python app.py
+   node server.js
    ```
 
 5.	Open the application in your browser:
 
-    URL: http://127.0.0.1:5000/
+    URL: http://127.0.0.1:3000/
 
 Features
 
