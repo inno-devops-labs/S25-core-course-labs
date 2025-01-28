@@ -60,3 +60,22 @@ python app.py
 
 ### 5. Access the application 
 Access the application in your web browser at `http://127.0.0.1:5000/`.
+
+## Docker
+
+### How to Build the Docker Image
+
+```bash
+cd app_python
+docker build -t lab2 .
+```
+
+### How to Pull the Docker Image
+```bash
+docker pull wellnotwell/lab2
+```
+
+### How to Run the Docker Image
+```bash
+docker run -p 5000:5000 wellnotwell/lab2
+```
