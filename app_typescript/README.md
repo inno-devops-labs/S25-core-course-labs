@@ -42,7 +42,7 @@ npm run dev
 2. Build Docker image
    ```bash
    # It may take a while.. For me it takes ~1 minute
-   docker build -t dmhd6219/inno_devops_lab2_typescript_basic:latest .
+   docker build -t dmhd6219/inno_devops_lab2_typescript_basic:latest -f Dockerfile .
    ```
 
 3. Run the application
@@ -63,9 +63,29 @@ npm run dev
    docker run -d -p 8080:8080 dmhd6219/inno_devops_lab2_typescript_basic:latest
    ```
    
-## Distroless Image Version
+## Running locally with Distroless Image Version
 
-### Install with pulling from DockerHub
+### Build it locally
+
+1. Clone this repository and enter its folder
+    ```bash
+    git clone https://github.com/dmhd6219/S25-core-course-labs.git -b lab1
+    cd S25-core-course-labs
+    cd app_python
+    ```
+
+2. Build Docker image
+   ```bash
+   # It may take a while.. For me it takes ~1 minute
+   docker build -t dmhd6219/inno_devops_lab2_typescript_bonus:latest -f distroless.Dockerfile .
+   ```
+
+3. Run the application
+   ```bash
+   docker run -d -p 8080:8080 dmhd6219/inno_devops_lab2_typescript_bonus:latest
+   ```
+
+### Pull from DockerHub
 
 1. Pull the image
    ```bash
@@ -77,9 +97,3 @@ npm run dev
    ```bash
    docker run -d -p 8080:8080 dmhd6219/inno_devops_lab2_typescript_bonus:latest
    ```
-
-### Images comparison
-
-![Images size comparison](sizes.png)
-
-As we can see, distroless container is almost twice smaller.

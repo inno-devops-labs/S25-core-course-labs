@@ -83,7 +83,7 @@ fastapi dev main.py
    docker run -d -p 8000:8000 dmhd6219/inno_devops_lab2_python_basic:latest
    ```
    
-## Distroless Image Version
+## Running locally with Distroless Image Version
 
 ### Build it locally
 
@@ -105,7 +105,7 @@ fastapi dev main.py
    ```
 
 
-### Install with pulling from DockerHub
+### Pull from DockerHub
 
 1. Pull the image
    ```bash
