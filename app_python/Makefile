@@ -12,3 +12,6 @@ format:
 
 check:
 	mypy main.py
+
+check-dockerfile:
+	docker run --rm -i hadolint/hadolint < Dockerfile
