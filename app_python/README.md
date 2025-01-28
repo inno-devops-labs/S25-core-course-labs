@@ -1,20 +1,25 @@
 # Python Web Application: Moscow Time
 
 ## Overview
-This is a simple Python web application built using the Flask framework, which displays the current time in Moscow. The time is dynamically updated each time the page is refreshed.
+
+This is a simple Python web application built using the Flask framework, which displays the current time in Moscow. The
+time is dynamically updated each time the page is refreshed.
 
 The application uses the `pytz` library to handle time zones and `datetime` to fetch the current time in Moscow.
 
 ## Features
+
 - Displays the current time in Moscow.
 - The time is updated every time the page is refreshed.
 - Developed using Flask, a lightweight web framework.
 - Built following best practices for coding standards, testing, and project structure.
 
 ## Local installation
+
 To set up and run the application locally, follow these steps:
 
 ### Prerequisites:
+
 - Python 3.x
 - A virtual environment (optional)
 
@@ -33,15 +38,15 @@ To set up and run the application locally, follow these steps:
    ```
 
 3. Activate the virtual environment:
-   - On Windows: 
+    - On Windows:
    ```bash
     .venv\Scripts\activate
    ```
-   - On macOS/Linux
+    - On macOS/Linux
    ```bash
    source .venv/bin/activate
    ```
-   
+
 4. Install the required dependencies:
     ```bash
    pip install -r requirements.txt
@@ -57,6 +62,7 @@ To set up and run the application locally, follow these steps:
 ### Testing:
 
 To run tests follow this command:
+
    ```bash
    pytest
    ```

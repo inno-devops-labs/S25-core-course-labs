@@ -4,10 +4,12 @@ from datetime import datetime
 
 from app_python.app import app
 
+
 @pytest.fixture
 def client():
     with app.test_client() as client:
         yield client
+
 
 def test_moscow_time(client):
     moscow = timezone('Europe/Moscow')

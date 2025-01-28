@@ -11,9 +11,9 @@ For this web application, I chose **Flask** as the web framework.
 
 Overall, Flask is a best web framework for building small to medium-sized web applications.
 
-## Best Practices Applied
+## Best practices applied
 
-### 1. Code Organization
+### 1. Code organization
 The project follows a clean structure:
 - The **Flask app** is located in the `app/` directory, keeping everything organized.
 - The **templates** for HTML files are stored in a dedicated `templates/` folder.
@@ -35,12 +35,12 @@ The project uses pytest for robust and efficient testing. Key reasons for choosi
     Ease of use: Writing and running tests is simple and intuitive.
     Fixture support: Allows setup and teardown of test cases using pytest.fixture.
 
-### 4. Dependency Management
+### 4. Dependency management
 
 Dependencies are managed through requirements.txt. 
 This file includes all the necessary libraries to run the application.
 
-### 5. Code Quality
+### 5. Code quality
 
     PEP 8 compliance: The code follows the PEP 8 style guide, ensuring it is readable and maintainable.
     Clear function names

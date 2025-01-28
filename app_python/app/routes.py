@@ -3,6 +3,7 @@ from flask import render_template
 from datetime import datetime
 import pytz
 
+
 @app.route('/')
 def moscow_time():
     moscow_tz = pytz.timezone('Europe/Moscow')
