@@ -41,3 +41,6 @@ This is a simple Python web application that displays the current time in Moscow
 
 5. **Open your browser** and navigate to `http://127.0.0.1:5000/`.
 
+---
+Thank you for checking out this project! If you have any questions or suggestions, feel free to reach out.
+
