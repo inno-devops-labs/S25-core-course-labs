@@ -35,6 +35,7 @@ Steps to configure the app locally:
    ```
 6. **Open browser and go to:** http://localhost:4567/
 
+     
 ## Docker
 
 ### Login to Docker Hub
@@ -67,7 +68,8 @@ To run the application in a Docker container, use:
 docker run -p 4567:4567 <dockerhub-username>/appjava
 ```
 **Open browser and visit:** http://localhost:4567/
-
+ 
+     
 ## Distroless Image Version
 
 ### Build the Distroless Image
