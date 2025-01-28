@@ -75,4 +75,15 @@ docker run -p 5000:5000 <dockerhub-username>/app
 ```
 **Open browser and visit:** http://127.0.0.1:5000/
 
+## Distroless Image Version
 
+### Build the Distroless Image
+```bash
+docker build -t app-dist -f distroless.Dockerfile .
+```
+
+### Push the Distroless Image to Docker Hub
+```bash
+docker run -p 5000:5000 app-dist
+```
+**Open browser and go to:** http://127.0.0.1:5000/
