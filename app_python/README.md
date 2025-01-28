@@ -25,7 +25,7 @@ The web application that provides the current time in Moscow.
 2. Navigate to the repository folder:
 
    ``` bash
-   cd S25-core-course-labs
+   cd S25-core-course-labs/app_python
    ```
 
 3. Install dependencies:
@@ -34,16 +34,10 @@ The web application that provides the current time in Moscow.
    pip install -r requirements.txt
    ```
 
-4. Navigate to the application folder:
-
-   ``` bash
-   cd app_python
-   ```
-
-5. Run the application:
+4. Run the application:
 
    ``` bash
    uvicorn main:app --reload
    ```
 
-6. Access the application in your browser at <http://127.0.0.1:8000>.
+5. Access the application in your browser at <http://127.0.0.1:8000>.
