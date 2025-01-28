@@ -52,3 +52,18 @@ In this task, the following Docker best practices were implemented to ensure tha
      COPY requirements.txt .
      COPY . .
      ```
+
+## **Distroless Image Version**
+
+### **Differences Between Distroless and Previous Images**
+
+1. **Size**:
+   - **Distroless Image**: ~72 MB.
+   - **Previous Python Image**: ~68 MB.
+   - **Reason**: Distroless images contain only the application and essential runtime dependencies, without unnecessary tools. But I copied python3.*/site-packages and set the PYTHONPATH environment variable for my flask app to work. Thats why I copy it and "make my distroless image bigger", than I could. I tried different versions of distroless.Dockerfile and only the one like the one I submitted worked.
+
+2. **Security**:
+   - **Distroless Image**: Contains only runtime dependencies, no shell or package manager, reducing the attack surface.
+   - **Previous Python Image**: Includes a shell and package manager, which increase potential security risks.
+
+![Images compare](/app_python/images_compare.jpg)

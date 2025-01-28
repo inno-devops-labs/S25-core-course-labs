@@ -70,7 +70,27 @@ docker pull kira354/js-app:latest
 ### How to Run
 To run the Docker container and serve the application, use the following command:
 ```bash
-docker run -p 80:80 js-app
+docker run -p 3000:3000 js-app
 ```
 
-Visit `http://localhost` in your browser to access the application.
+Visit `http://localhost:3000` in your browser to access the application.
+
+## **Distroless Image Version**
+
+### **How to Build the Distroless Image**
+
+```bash
+docker build -f distroless.Dockerfile -t kira354/app-javascript-distroless .
+```
+
+### **How to Pull the Distroless Image**
+
+```bash
+docker pull kira354/app-javascript-distroless
+```
+
+### **How to Run the Distroless Image**
+
+```bash
+docker run -p 3000:3000 kira354/app-javascript-distroless
+```

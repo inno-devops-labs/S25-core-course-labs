@@ -1,25 +1,66 @@
-# DOCKER
+# Docker Best Practices for app_javascript
 
-## Docker Best Practices for JavaScript App
+## 1. Non-root User
 
-### 1. **Rootless Container**
-   - The Dockerfile uses the `nginx:alpine` image, which runs Nginx as a non-root user by default. This minimizes security risks associated with running containers as root.
+Running applications in Docker containers as a non-root user improves security by reducing the potential attack surface. In this Dockerfile, I've created a non-root user (`appuser`) and set it as the user that runs the Node.js app. This ensures that even if an attacker exploits the app, they won’t have full root access to the container.
 
-### 2. **Use COPY, But Only Specific Files**
-   - The `COPY` command only copies the necessary application files (`index.html`, `myapp.js`, and `style_comic.css`) to reduce the image size and exclude unnecessary files.
+```Dockerfile
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+```
 
-### 3. **Layer Sanity**
-   - The Dockerfile avoids unnecessary layers by using a single `COPY` command and minimizing other commands.
+## 2. Efficient Layering
 
-### 4. **Use `.dockerignore`**
-   - A `.dockerignore` file is included to exclude unnecessary files, such as `.git` directories and `.env` files, from being copied into the Docker image.
+Docker images are built in layers, and each instruction in the Dockerfile creates a new layer. By copying the `package.json` and `package-lock.json` files first, it takes advantage of Docker's layer caching. This means that if these files don’t change, Docker will skip the `npm install` step and use the cached layer, speeding up the build process.
 
-### 5. **Precise Version of Base Image**
-   - The base image `nginx:alpine` is a stable version of Nginx, ensuring that we get consistent builds and avoid the potential instability of the `latest` tag.
+```Dockerfile
+COPY package*.json ./
+RUN npm install --production
+```
 
-### 6. **Image Size**
-   - By using the `nginx:alpine` base image, we ensure a smaller image size, which helps with faster deployment and reduced storage requirements.
+## 3. Multi-Stage Builds
 
-## Docker Multi-Stage Builds
-I read about Multi-Stage Builds and also tried to implement it for my javascript app. As I understood my app is small and includes an index.html file, styles (style_comic.css) and a JavaScript script (myapp.js), a multi-stage Dockerfile might be unnecessary unless I plan to add more complexity later, like using a build process (e.g., Webpack or Babel). As I'm only serving static files, a simpler Dockerfile would work better for this use case.
+In the Dockerfile, I use a multi-stage build to separate the build environment from the final production image. In the first stage (`build`), I install dependencies and copy the application files. The second stage is based on a minimal `node:16-alpine` image and only copies over the necessary artifacts (i.e., the app files and installed dependencies) from the build stage. This reduces the size of the final image and eliminates unnecessary build tools.
 
+```Dockerfile
+FROM node:16-alpine as build
+FROM node:16-alpine
+COPY --from=build /app /app
+```
+
+## 4. Specific Version of Node Image
+
+To ensure consistency and avoid unexpected updates, I use a specific version of the Node.js base image (`node:16-alpine`). This guarantees that the app will always run in the same environment, regardless of when the image is built.
+
+```Dockerfile
+FROM node:16-alpine
+```
+
+## 5. Use of `.dockerignore`
+
+The `.dockerignore` file is used to exclude files that are not necessary for the application to run, such as `node_modules`, `.git` directory, and local development files like `.vscode`. This reduces the size of the image and keeps it clean from unnecessary files.
+
+## **Distroless Image Version**
+
+### **Differences Between Distroless and Previous Images**
+
+1. **Size**:
+   - **Distroless Image**: ~113 MB.
+   - **Previous Node.js Image**: ~120 MB.
+   - **Reason**: Distroless images contain only the app and runtime, without development tools, reducing the overall size.
+
+2. **Security**:
+   - **Distroless Image**: Fewer components, reducing the attack surface.
+   - **Previous Node.js Image**: Includes shell and package managers, which increase potential vulnerabilities.
+
+3. **Performance**:
+   - **Distroless Image**: Slightly faster startup and lower memory usage.
+   - **Previous Node.js Image**: Larger and includes more utilities, which can affect performance.
+
+### **Why These Differences Exist**
+
+- **Smaller Size**: Distroless images are optimized for production with only the essentials.
+- **Reduced Attack Surface**: Fewer components to exploit.
+- **Production-Readiness**: Only the necessary parts for running the app are included.
+
+![Images compare](/app_javascript/images_compare.jpg)

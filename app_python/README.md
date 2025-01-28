@@ -73,3 +73,29 @@ docker run -p 5000:5000 python-app
 ```
 
 This will run the application inside the Docker container and map port 5000 of the container to port 5000 on your local machine. You can now access the application by visiting [http://localhost:5000](http://localhost:5000) in your browser.
+
+## **Distroless Image Version**
+
+### **How to Build the Distroless Image**
+
+1. Build the Docker image for the Distroless version:
+
+   ```bash
+   docker build -f distroless.Dockerfile -t kira354/app-python-distroless .
+   ```
+
+### **How to Pull the Distroless Image**
+
+To pull the Distroless version of the app from Docker Hub:
+
+```bash
+docker pull kira354/app-python-distroless
+```
+
+### **How to Run the Distroless Image**
+
+To run the Distroless image:
+
+```bash
+docker run -p 5000:5000 kira354/app-python-distroless
+```

@@ -1,22 +1,30 @@
-# Distroless Stage (Use Nginx-based image to serve static files)
-FROM nginx:alpine AS distroless-stage
+# Stage 1: Build Stage
+# Use a specific version of the Node.js image to ensure consistency and install dependencies
+FROM node:16-alpine AS build
 
 WORKDIR /app
 
-# Copy the package files if you have any dependencies to install
-COPY package*.json ./
+# Copy package.json and package-lock.json first to take advantage of Docker cache
+COPY package*.json ./ 
 
-# Install any dependencies (if you have any, like for minification or transpiling)
-RUN npm install
+# Install production dependencies (we don't want to install devDependencies in the final image)
+RUN npm install --production
 
-# Copy the app files (myapp.js, index.html, comic_style.css, etc.)
-COPY index.html myapp.js style_comic.css /app/
+# Copy the rest of the application files
+COPY . .
 
+# Stage 2: Production Stage with Distroless Image
+# Use Distroless image with the nonroot tag (contains only the app and its dependencies, no package manager)
+FROM gcr.io/distroless/nodejs16:nonroot
 
-# Copy the app files from the build stage to Nginx's default directory for serving static files
-COPY --from=build-stage /app /usr/share/nginx/html
+# Set the working directory
+WORKDIR /app
 
-# Expose the port Nginx will use to serve the app
-EXPOSE 80
+# Copy the app files from the build stage to the production stage
+COPY --from=build /app /app
 
-# Nginx is already set up to run by default, so no need to specify CMD
+# Expose the port the app will run on (default 3000 for Node.js apps)
+EXPOSE 3000
+
+# Start the application
+CMD ["server.js"]

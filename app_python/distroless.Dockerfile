@@ -1,61 +1,37 @@
-# # Build Stage (Install dependencies and build the app)
-# FROM python:3-alpine3.15 AS build-stage
+# Stage 1: Build Stage
+# Use a minimal Python image to install dependencies and build the app
+FROM python:3.10-slim AS build
 
-# WORKDIR /app
-
-# # Copy the requirements file and install dependencies
-# COPY requirements.txt . 
-# RUN pip install --no-cache-dir -r requirements.txt
-
-# # Copy the rest of the application code
-# COPY . . 
-
-# # Custom Distroless Stage with Python installed
-# FROM gcr.io/distroless/python3:nonroot
-
-# # Copy Python binary, installed packages, and application code from build stage
-# COPY --from=build-stage /usr/local/bin/python3 /usr/local/bin/python3
-# COPY --from=build-stage /usr/local/lib/python3.*/site-packages /usr/local/lib/python3.*/site-packages
-# COPY --from=build-stage /app /app
-
-# # Set the PYTHONPATH to the location where Python packages are installed
-# ENV PYTHONPATH=/usr/local/lib/python3.*/site-packages
-
-# # Expose the port the app will run on
-# EXPOSE 5000
-
-# # Run the application with the non-root user
-# CMD ["/app/main.py"]
-
-
-# Build Stage (Install dependencies and build the app)
-FROM python:3-alpine3.15 AS build-stage
-
+# Set the working directory for the build stage
 WORKDIR /app
 
-# Copy the requirements file and install dependencies
-COPY requirements.txt .
+# Copy only the necessary files to install dependencies
+COPY requirements.txt ./
+
+# Install dependencies (Flask, etc.) without cache and unnecessary files
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application code
-COPY . .
+# Copy only the application code (avoid unnecessary files)
+COPY main.py ./
 
-# Custom Distroless Stage with Python installed
+# Stage 2: Production Stage with Distroless Image
+# Use the Distroless Python image with the nonroot tag (automatically creates a non-root user)
 FROM gcr.io/distroless/python3:nonroot
 
-# Copy Python binary and the installed site-packages (dependencies) from the build stage
-COPY --from=build-stage /usr/local/bin/python3 /usr/local/bin/python3
-COPY --from=build-stage /usr/local/lib/python3.*/site-packages /usr/local/lib/python3.*/site-packages
+# Set the working directory for the production stage
+WORKDIR /app
+
+# Copy the installed dependencies from the build stage
+COPY --from=build /usr/local/lib/python3.*/site-packages /usr/local/lib/python3.*/site-packages
+
+# Set the PYTHONPATH environment variable to include the path to installed dependencies
+ENV PYTHONPATH=/usr/local/lib/python3.*/site-packages
 
 # Copy the application code from the build stage
-COPY --from=build-stage /app /app
-
-# Set the PYTHONPATH to the location where Python packages are installed
-ENV PYTHONPATH=/usr/local/lib/python3.*/site-packages
+COPY --from=build /app /app
 
 # Expose the port the app will run on
 EXPOSE 5000
 
-# Set the entry point to the app
-CMD ["/app/main.py"]
-
+# Command to run the app
+CMD ["main.py"]
