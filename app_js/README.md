@@ -39,11 +39,18 @@ app_js/
 ### Building
 ```
 docker build -t js-cities-dist .
-
+```
+#### For Distroless
+```
+docker build -t js-distroless -f distroless.Dockerfile .
 ```
 
 ### Run
 ```
 docker run -p 3000:3000 js-cities-dist
-
 ```
+#### For Distroless
+```
+docker run -p 3000:3000 js-distroless &
+```
+Run in distroless image in background.
