@@ -58,7 +58,7 @@ docker build -t app .
 ### How to Push the Docker Image to Docker Hub
 After building the Docker image, push it to Docker Hub:
 ```bash
-docker tag app doryshibkova03/app:latest
+docker tag app <dockerhub-username>/app:latest
 docker push <dockerhub-username>/app
 ```
 
@@ -85,6 +85,17 @@ docker build -t app-dist -f distroless.Dockerfile .
 
 ### Push the Distroless Image to Docker Hub
 ```bash
-docker run -p 5000:5000 app-dist
+docker tag app <dockerhub-username>/app-dist:latest
+docker push <dockerhub-username>/app-dist
+```
+
+### Pull the Docker Image from Docker Hub
+```bash
+docker pull <dockerhub-username>/app-dist 
+```
+
+### Run the Docker Container
+```bash
+docker run -p 5000:5000 <dockerhub-username>/app-dist
 ```
 **Open browser and go to:** http://127.0.0.1:5000/
