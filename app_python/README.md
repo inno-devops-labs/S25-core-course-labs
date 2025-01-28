@@ -38,3 +38,40 @@ Steps to configure the app locally:
        python app.py
    ```
 6. **Open browser and go to:** http://127.0.0.1:5000/
+
+
+## Docker
+
+### Login to Docker Hub
+Before building or pulling the Docker image, login into Docker Hub:
+```bash
+docker login
+```
+You will be prompted to enter your Docker Hub username and password.
+
+### How to Build the Docker Image
+To build the Docker image for this application, navigate to the project directory and run:
+```bash
+docker build -t app .
+```
+
+### How to Push the Docker Image to Docker Hub
+After building the Docker image, push it to Docker Hub:
+```bash
+docker push <dockerhub-username>/app
+```
+
+### How to Pull the Docker Image from Docker Hub
+If the image has been pushed to Docker Hub, to pull it use:
+```bash
+docker pull <dockerhub-username>/app
+```
+
+### How to Run the Docker Container
+To run the application in a Docker container, use:
+```bash
+docker run -p 5000:5000 <dockerhub-username>/app
+```
+**Open browser and visit:** http://127.0.0.1:5000/
+
+
