@@ -17,3 +17,19 @@ This is a simple Node.js web application built using Express. It displays the cu
     ```bash
    npm start
     ```
+
+## Docker Distroless
+1. Build:
+   ```bash
+   cd app_nodejs
+   docker build -f distroless.Dockerfile -t app_nodejs .
+   ```
+2. Pull the image
+   ```bash
+   docker pull zerohalf/app_nodejs:nonroot
+   ```
+3. Run and test working app:
+   ```bash
+   docker run -d -p 3000:3000 --name app_nodejs zerohalf/app_nodejs:nonroot
+   curl localhost:3000
+   ```
