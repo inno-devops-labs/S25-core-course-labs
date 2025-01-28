@@ -15,7 +15,7 @@ The main purpose - to display the current time in Moscow
 There is possibility to run the project using Docker.
 Of course, Docker need to be installed on your machine. Here is step-by-step guide:
 1. **Build** the image:
-   ```docker build -t python-msk .``` <br> Or **pull** it from DockerHub: ```docker pull mirgasimovk/python-msk:latest```. 
+   ```docker build -t python-msk .``` <br> Or **pull** it from DockerHub: ```docker pull mirgasimovk/python-msk:latest``` 
 3. Finally, run the application:
    - Locally ```docker run -p 5000:5000 python-msk```
-   - Using pulled image ```docker run -p 5000:5000 mirgasimovk/python-msk``` and follow to the http://localhost:5000/.
+   - Using pulled image ```docker run -p 5000:5000 mirgasimovk/python-msk``` <br> and follow to the http://localhost:5000/.
