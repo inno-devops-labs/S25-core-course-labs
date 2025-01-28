@@ -63,7 +63,7 @@ This application is containerized using the Docker. To build, pull and push the 
    git checkout lab2
    cd app_python
    ```
-   
+
    ```bash
    docker build -t python-msk-time-app:1.0 .
    ```
