@@ -7,10 +7,13 @@ The first option was more preferable, since
 It is designed to make getting started quick and easy,
 with the ability to scale up to complex applications.`
 (<i><a href='https://flask.palletsprojects.com/en/stable/'>from official Flask documentation</a></i>).
+---
 ## Best practices applied
 - PEP8 compliance
-- Meaningful functions, variable names
+- As Guido van Rossum said `Code is more often read than written.`
+So, meaningful functions, variable names, comments were added.
 - Error handling. Custom page was created for not-found (404) error,
 it also follows the main page's design.
-- Testing was done manually, comparing the displayed time with well-known and independent
+---
+Testing was done manually, comparing the displayed time with well-known and independent
 similar sites (https://time.is/MSK, https://www.timeanddate.com/worldclock/russia/moscow)
