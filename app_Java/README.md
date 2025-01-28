@@ -34,3 +34,60 @@ Steps to configure the app locally:
        java -cp .:spark-core-2.9.3.jar OmskTimeApp
    ```
 6. **Open browser and go to:** http://localhost:4567/
+
+## Docker
+
+### Login to Docker Hub
+Before building or pulling the Docker image, login into Docker Hub:
+```bash
+docker login
+```
+You will be prompted to enter your Docker Hub username and password.
+
+### How to Build the Docker Image
+To build the Docker image for this application, navigate to the project directory and run:
+```bash
+docker build -t appjava .
+```
+
+### How to Push the Docker Image to Docker Hub
+```bash
+docker tag appjava <dockerhub-username>/appjava:latest
+docker push <dockerhub-username>/appjava
+```
+
+### How to Pull the Docker Image from Docker Hub
+```bash
+docker pull <dockerhub-username>/appjava
+```
+
+### How to Run the Docker Container
+To run the application in a Docker container, use:
+```bash
+docker run -p 4567:4567 <dockerhub-username>/appjava
+```
+**Open browser and visit:** http://localhost:4567/
+
+## Distroless Image Version
+
+### Build the Distroless Image
+```bash
+docker build -t appjava-dist -f distroless.Dockerfile .
+```
+
+### Push the Distroless Image to Docker Hub
+```bash
+docker tag appjava-dist <dockerhub-username>/appjava-dist:latest
+docker push <dockerhub-username>/appjava-dist
+```
+
+### Pull the Docker Image from Docker Hub
+```bash
+docker pull <dockerhub-username>/appjava-dist
+```
+
+### Run the Docker Container
+```bash
+docker run -p 4567:4567 <dockerhub-username>/appjava-dist
+```
+**Open browser and go to:** http://localhost:4567
