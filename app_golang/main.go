@@ -27,5 +27,5 @@ func main() {
 
 	// Run router
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
-	router.Run(":8080")
+	router.Run(":80")
 }

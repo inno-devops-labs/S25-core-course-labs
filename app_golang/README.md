@@ -29,6 +29,13 @@ cd S25-core-course-labs/app_golang
 # 3. Install the dependencies
 go mod download
 
-# 4. Run the server
-go run main.go
+# 4. Build the application
+go build main.go
+
+# 5. Run the application
+./main
+
+# 6. Test the application
+curl http://localhost
+curl http://localhost/joke
 ```
