@@ -42,6 +42,15 @@ docker run -p 5000:5000 python-msk-time
 docker pull nickolaus899/python-msk-time:latest
 ```
 
+#### For the distroless one:
+```
+docker build -t py-distroless -f distroless.Dockerfile .
+
+docker run -p 5000:5000 py-distroless
+
+docker pull nickolaus899/py-distroless:latest
+```
+
 
 #### Working directory: `/app`
 
