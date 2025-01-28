@@ -11,3 +11,11 @@ The main purpose - to display the current time in Moscow
     - Run the application: ```python -m flask --app main run``` from app_python directory
     - Finally, open the application by following the link: `http://127.0.0.1:5000`
 ---
+## Docker
+There is possibility to run the project using Docker.
+Of course, Docker need to be installed on your machine. Here is step-by-step guide:
+1. Build the image:
+   ```docker build -t python-msk .```
+2. Pull from DockerHub: ```docker pull mirgasimovk/python-msk:latest```. 
+3. Finally, run the application: ```docker run -p 5000:5000 python-msk```
+and follow to the http://localhost:5000/.
