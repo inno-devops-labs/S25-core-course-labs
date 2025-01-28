@@ -41,3 +41,35 @@ This web app shows the current time in Moscow, updating each time the page is re
     ```
 
 4. **Open the app in your browser: Go to <http://localhost:5000> to see the current time in Moscow.**
+
+## Docker Usage
+
+This project can be easily run in a Docker container. Follow the instructions below to build, pull, and run the Dockerized application.
+
+### How to Build
+
+1. Make sure Docker is installed and running on your machine.
+
+2. In the root folder of the project, build the Docker image with the following command:
+
+   ```bash
+   docker build -t python-app .
+   ```
+
+### How to Pull
+
+If you want to use the pre-built image from Docker Hub, run the following command:
+
+```bash
+docker pull kira354/python-app:latest
+```
+
+### How to Run
+
+After building or pulling the image, run the following command to start the application:
+
+```bash
+docker run -p 5000:5000 python-app
+```
+
+This will run the application inside the Docker container and map port 5000 of the container to port 5000 on your local machine. You can now access the application by visiting [http://localhost:5000](http://localhost:5000) in your browser.

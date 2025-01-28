@@ -29,3 +29,25 @@ This web application fetches the latest comic from **XKCD** and displays it on t
 
 4. **Click the button**:
    The button will fetch the latest comic and display it below.
+
+# Docker Usage
+
+### How to Build
+To build the Docker image for this application, run:
+```bash
+docker build -t js-app .
+```
+
+### How to Pull
+To pull the pre-built image from Docker Hub, run:
+```bash
+docker pull kira354/js-app:latest
+```
+
+### How to Run
+To run the Docker container and serve the application, use the following command:
+```bash
+docker run -p 80:80 js-app
+```
+
+Visit `http://localhost` in your browser to access the application.
