@@ -19,4 +19,5 @@ I have chosen:
 - **BEM methodology** - [BEM](https://en.bem.info/methodology/) helps to create extendable and reusable interface components. It was used in the HTML template.
 
 ## Testing
+
 This application was tested manually by refreshing the page and checking if the displayed time is correct ([resource](https://time100.ru) with the actual Moscow time).

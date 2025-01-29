@@ -22,4 +22,3 @@ The larger size of a distroless image was most probably caused by the slim base 
 ![docker_python.png](docker_python.png "Size comparison")
 
 Moreover, since the application do not require an explicit build stage, such approach is not efficient as it could be.
-

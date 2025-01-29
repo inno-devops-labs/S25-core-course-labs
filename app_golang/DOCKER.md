@@ -24,4 +24,3 @@ Additionally, the distroless image was designed to restrict what's in the contai
 ![docker_golang.png](docker_golang.png "Size comparison")
 
 In this particular case, it is an efficient approach because this application requires building a binary file, which is the only file required in the distroless image (including the static templates).
-
