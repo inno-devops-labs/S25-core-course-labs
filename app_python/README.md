@@ -31,3 +31,21 @@ This web application built with **FastAPI** to display the current formatted dat
 
 4. Access at:
     http://127.0.0.1:8000
+
+## Docker
+
+### Build the container
+```sh
+docker build -t fastapi-mt .
+```
+
+### Run the container
+```sh
+docker run -p 8000:8000 fastapi-mt
+```
+
+### Run via Docker Hub
+```sh
+docker pull iucd/fastapi-mt:latest
+docker run -p 8000:8000 iucd/fastapi-mt
+```
