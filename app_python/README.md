@@ -31,7 +31,7 @@ cd S25-core-course-labs/app_python
 pip install -r requirements.txt
 
 # 4. Run the production server
-fastapi run --port 80
+fastapi run src/main.py --port 80
 
 # 5. Test the application
 curl http://localhost

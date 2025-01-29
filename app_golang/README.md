@@ -30,7 +30,7 @@ cd S25-core-course-labs/app_golang
 go mod download
 
 # 4. Build the application
-go build main.go
+go build src/main.go
 
 # 5. Run the application
 ./main

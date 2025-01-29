@@ -17,7 +17,7 @@ app = FastAPI(description="""Web application for displaying current time in Mosc
 
 
 # Load templates from the corresponding directory
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="src/templates")
 
 
 @app.get(
