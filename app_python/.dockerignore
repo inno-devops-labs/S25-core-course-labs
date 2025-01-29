@@ -2,3 +2,4 @@ __pycache__
 .gitignore
 *.md
 Dockerfile
+*.png
