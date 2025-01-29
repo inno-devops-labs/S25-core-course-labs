@@ -12,9 +12,10 @@ This is a simple React web application that displays the current time in Moscow,
 4. [Running the Application](#running-the-application)
 5. [Building the Application](#building-the-application)
 6. [Previewing the Production Build](#previewing-the-production-build)
-7. [Testing](#testing)
-8. [Code Quality Checks](#code-quality-checks)
-9. [Author](#author)
+7. [Docker](#docker)
+8. [Testing](#testing)
+9. [Code Quality Checks](#code-quality-checks)
+10. [Author](#author)
 
 ---
 
@@ -98,6 +99,62 @@ To ensure the application works correctly:
 
 1. Run the application and verify that the displayed time matches the current time in Moscow.
 2. Refresh the page to confirm that the time updates dynamically.
+
+---
+
+## Docker
+
+This application is containerized using Docker, following best practices for building and running Docker images.
+
+### How to Build the Docker Image
+
+1. Navigate to the `app_react` directory:
+
+   ```bash
+   cd S25-core-course-labs/app_react
+   ```
+
+2. Build the Docker image:
+
+   ```bash
+   docker build -t oshaheen1882051/app_react:app_react-prod-1.0.0 --no-cache=True .
+   ```
+
+   - The `--no-cache=True` flag ensures a clean build by ignoring cached layers.
+
+### How to Run the Docker Image
+
+1. Run the Docker container:
+
+   ```bash
+   docker run -d -p 4173:4173 --name app_react oshaheen1882051/app_react:app_react-prod-1.0.0
+   ```
+
+2. Access the application at `http://localhost:4173`.
+
+### How to Push the Docker Image to Docker Hub
+
+1. Log in to Docker Hub (if not already logged in):
+
+   ```bash
+   docker login
+   ```
+
+2. Push the Docker image:
+
+   ```bash
+   docker push oshaheen1882051/app_react:app_react-prod-1.0.0
+   ```
+
+### How to Pull the Docker Image from Docker Hub
+
+1. Pull the Docker image:
+
+   ```bash
+   docker pull oshaheen1882051/app_react:app_react-prod-1.0.0
+   ```
+
+2. Run the container as described in the "How to Run the Docker Image" section.
 
 ---
 
