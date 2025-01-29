@@ -9,6 +9,7 @@ This is a simple web application that displays the current time in Moscow. The a
     - [Requirements](#requirements)
     - [Manual](#manual)
     - [Docker](#docker)
+    - [Distroless Image Version](#distroless-image-version)
 
 ## Installation
 
@@ -66,13 +67,13 @@ The application will be available at [localhost:8000](http://localhost:8000/)
 docker build -t saleemasekrea/app_python .
 ```
 
-To pull the image from the Docker Hub, use the following command:
+- To pull the image from the Docker Hub, use the following command:
 
 ```bash
 docker pull saleemasekrea/app_python:latest
 ```
 
-After building or pulling the image, the container can be run with the following command:
+- After building or pulling the image, the container can be run with the following command:
 
 ```bash
 docker run -p 8000:8000 saleemasekrea/app_python
@@ -80,7 +81,23 @@ docker run -p 8000:8000 saleemasekrea/app_python
 
 The application will be available at [localhost:8000](http://localhost:8000/)
 
-distroless
-- docker build -f distroless.Dockerfile -t saleemasekrea/distroless_python_app .
-- docker pull saleemasekrea/distroless_python_app:latest
-- docker run -p 8001:8001 saleemasekrea/distroless_python_app 
+## Distroless Image Version
+
+- To build the image, use the following command:
+
+```bash
+docker build -f distroless.Dockerfile -t saleemasekrea/distroless_python_app .
+```
+
+- To pull the image from the Docker Hub, use the following command:
+
+```bash
+docker pull saleemasekrea/distroless_python_app:latest
+```
+
+- After building or pulling the image, the container can be run with the following command:
+
+```bash
+docker run -p 8001:8001 saleemasekrea/distroless_python_app 
+```
+The application will be available at [localhost:8001](http://localhost:8001/)

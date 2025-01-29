@@ -15,6 +15,11 @@ RUN apt-get update && \
     python3 -m venv /venv && \
     /venv/bin/pip install --upgrade pip==24.3.1
 
+# i can add this clean up for the venv to reduce the image size but i think it's not the best practice
+# RUN find /venv -name '__pycache__' -type d -exec rm -rf {} + && \
+# find /venv -name '*.pyc' -delete && \
+# find /venv -name 'tests' -type d -exec rm -rf {} +
+
 COPY requirements.txt /requirements.txt
 RUN /venv/bin/pip install --no-cache-dir --disable-pip-version-check -r /requirements.txt
 

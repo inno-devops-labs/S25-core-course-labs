@@ -14,6 +14,12 @@
 
 - Combined multiple `RUN` commands to reduce the number of layers in the image.
 
+## Docker Image
+
+- `python:3.12.8-alpine3.21` as the base image (ightweight image)
+- Distroless Docker Image `debian:12-slim`
+- final distroless image `gcr.io/distroless/python3-debian12` (minimal image)
+
 ## Efficient Dependency Management
 
 - Used the `--no-cache-dir` flag with pip to avoid caching downloaded packages, further reducing image size.
@@ -35,3 +41,17 @@
 ## Efficient Layer Caching
 
 - Ordered instructions in the Dockerfile so that layers that change the least are placed at the top. This maximizes the use of Docker’s layer caching, reducing build times.
+
+## Use Gunicorn with Uvicorn workers for production
+
+- Better process management, concurrency, and stability in production.
+
+## Multi-Stage Builds for Smaller Images
+
+- For the distroless image, I used multi-stage builds which reduce the image size (depends)
+
+## Distroless Image
+
+- I created a distroless image for the Python app, but its size turned out to be larger than the regular image. This is likely because the regular image is based on Alpine, which is an extremely lightweight distribution. However, despite the size difference, a distroless image provides better security since it has a smaller attack surface, containing only the essential runtime dependencies and no unnecessary system packages.
+
+![size](img/3.png)
