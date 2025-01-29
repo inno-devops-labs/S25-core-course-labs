@@ -21,10 +21,12 @@ A production-ready web application displaying current Moscow time with retro pix
 ## Installation 💻
 
 ### Prerequisites
+
 - Python 3.9+
 - pip 23.0+
 
 ### Quick Start
+
 ```bash
 # Clone repository
 git clone https://github.com/yourusername/moscow-time-app.git
@@ -35,3 +37,4 @@ pip install -r requirements.txt
 
 # Run application
 python app.py
+
