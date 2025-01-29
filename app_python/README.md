@@ -29,7 +29,7 @@ A production-ready web application displaying current Moscow time with retro pix
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/moscow-time-app.git
+git clone https://github.com/ArturLukianov/S25-core-course-labs.git
 cd moscow-time-app
 
 # Install dependencies
