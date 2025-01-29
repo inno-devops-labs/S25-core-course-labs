@@ -55,4 +55,82 @@ All of it can be installed by requirements.sh bash file (included into the Insta
    sbt run
    ```
 
-4. Go to <http://localhost:9090/> and see the current Moscow time.
+4. Go to <http://0.0.0.0:9090/> and see the current Moscow time.
+
+-----
+
+## Docker
+
+### Basic Image Version
+
+This application is containerized using the Docker. To build, pull and push the application, follow these steps:
+
+1. Build and run the Docker image for the application:
+
+   ```bash
+   git clone https://github.com/BugaevGleb/S25-core-course-labs
+   cd S25-core-course-labs
+   git checkout lab2
+   cd app_scala
+   ```
+
+   ```bash
+   docker build -t scala-msk-time-app .
+   ```
+
+   ```bash
+   docker run -p 9090:9090 scala-msk-time-app
+   ```
+
+2. Pull the image from the Docker Hub:
+
+   ```bash
+   docker pull bugay/scala-msk-time-app:1.0
+   ```
+
+3. Run the application:
+
+   ```bash
+   docker run -p 9090:9090 bugay/scala-msk-time-app:1.0
+   ```
+
+4. Go to <http://0.0.0.0:9090/> and see the current Moscow time.
+
+-----
+
+### Distroless Image Version
+
+This application also is containerized using the Docker as an Distroless image (in order to increase a security aspect and decrease a size of an image). To build, pull and push the application, follow these steps:
+
+1. Build and run the Docker image for the application:
+
+   ```bash
+   git clone https://github.com/BugaevGleb/S25-core-course-labs
+   cd S25-core-course-labs
+   git checkout lab2
+   cd app_scala
+   ```
+
+   ```bash
+   docker build -t scala-msk-time-app-distroless -f distroless.Dockerfile .
+   ```
+
+   ```bash
+   docker run -p 9090:9090 scala-msk-time-app-distroless
+   ```
+
+2. Pull the image from the Docker Hub:
+
+   ```bash
+   docker pull bugay/scala-msk-time-app-distroless:1.0
+   ```
+
+3. Run the application:
+
+   ```bash
+   docker run -p 9090:9090 bugay/scala-msk-time-app-distroless:1.0
+   ```
+
+4. Go to <http://0.0.0.0:9090/> and see the current Moscow time.
+
+-----

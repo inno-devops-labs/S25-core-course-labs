@@ -72,10 +72,10 @@ object MoscowTimeApp extends App {
     }
 
   // Start the server
-  val bindingFuture = Http().newServerAt("localhost", 9090).bind(route)
+  val bindingFuture = Http().newServerAt("0.0.0.0", 9090).bind(route)
   bindingFuture.onComplete {
     case Success(binding) =>
-      println(s"Server online at http://localhost:9090/")
+      println(s"Server online at http://0.0.0.0:9090/")
 
       // Add a handle to shut down the server on Ctrl+C
       sys.addShutdownHook {
