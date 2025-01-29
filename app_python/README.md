@@ -1,7 +1,7 @@
 # Python Web Application: Moscow Time
 
 ## Overview
-This is a simple Python web application that displays the current time in Moscow. The application is built using FastAPI with Python 3.7+ based on standard Python type hints.
+This is a simple Python web application that displays the current time in Moscow. The application is built using FastAPI with Python 3.12+ based on standard Python type hints.
 
 ## Features
 - Displays the current time in Moscow.
