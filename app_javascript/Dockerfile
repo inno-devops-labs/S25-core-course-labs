@@ -12,7 +12,8 @@ COPY package*.json ./
 RUN npm install --production
 
 # Copy the rest of the application files
-COPY . .
+COPY public/ ./public
+COPY server.js .
 
 # Stage 2: Production Stage
 # Use a minimal Node.js image with Alpine to reduce image size

@@ -11,7 +11,8 @@ COPY package*.json ./
 RUN npm install --production
 
 # Copy the rest of the application files
-COPY . .
+COPY public/ ./public
+COPY server.js .
 
 # Stage 2: Production Stage with Distroless Image
 # Use Distroless image with the nonroot tag (contains only the app and its dependencies, no package manager)

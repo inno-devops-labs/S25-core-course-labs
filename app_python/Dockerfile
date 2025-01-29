@@ -10,7 +10,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the app code
-COPY . .
+COPY main.py .
 
 # Create and switch to a non-root user
 RUN adduser -D appuser
