@@ -42,3 +42,6 @@ docker pull azeeeez/python_moscow_time
 docker run -p 5000:5000 azeeeez/python_moscow_time
 ```
 The app should be running on `localhost:5000`
+
+### Distroless
+You can find distroless image in this [link](https://hub.docker.com/repository/docker/azeeeez/python_moscow_time_dist/general)
