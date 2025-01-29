@@ -27,7 +27,7 @@ cd S25-core-course-labs/app_python
 - Run the application:
 
 ```bash
-  python app.py
+  python app/app.py
 ```
 
 - Open the app using the link:
