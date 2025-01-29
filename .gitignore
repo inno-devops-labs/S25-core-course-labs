@@ -1,0 +1,4 @@
+.venv/
+.metals/
+.vscode/
+.scala-build
