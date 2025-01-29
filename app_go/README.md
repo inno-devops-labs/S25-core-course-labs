@@ -203,7 +203,7 @@ To ensure the code adheres to best practices and Go coding standards, the follow
    ```
 
    > **Note**: To automatically format your code, run:
-   
+
    ```bash
    gofmt -w .
    ```
