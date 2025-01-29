@@ -186,7 +186,6 @@ This application is containerized using Docker, following best practices for bui
 
 ---
 
-
 ## Distroless Image Version
 
 This application is also available in a **Distroless** version, which is a minimal Docker image that only includes the application and its runtime dependencies, without unnecessary tools or package managers.
@@ -243,8 +242,6 @@ This application is also available in a **Distroless** version, which is a minim
 2. Run the container as described in the "How to Run the Distroless Docker Image" section.
 
 ---
-
-
 
 ## Code Quality Checks
 
