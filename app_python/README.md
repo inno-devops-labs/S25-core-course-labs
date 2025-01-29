@@ -8,28 +8,46 @@ This is a simple python web application that has a functionality of showing curr
 
 - Clone the repository.
 
-```bash
-git clone https://github.com/UFA-MOROZOV/S25-core-course-labs.git
-```
+    ```bash
+    git clone https://github.com/UFA-MOROZOV/S25-core-course-labs.git
+    ```
 
 - Go to `app_python` folder.
 
-```bash
-cd S25-core-course-labs/app_python
-```
+    ```bash
+    cd S25-core-course-labs/app_python
+    ```
 
 - Install the dependencies:
 
-```bash
-pip install -r requirements.txt
-```
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 - Run the application:
 
-```bash
-python app/app.py
-```
+    ```bash
+    python app/app.py
+    ```
 
 - Open the app using the link:
 
-`http://127.0.0.1:5000/`
+    `http://127.0.0.1:5000/`
+
+## Docker
+
+This application also is containerised and there is to options of running container:
+
+1. Build and run the Docker image:
+
+    ```bash
+    docker build -t lab2 .
+    docker run -p 5000:5000 -d lab2
+    ```
+
+2. Pull latest version of image from Docker Hub:
+
+    ```bash
+    docker pull leha0704/morozov_devops_webapp:latest
+    docker run -p 5000:5000 -d leha0704/morozov_devops_webapp:latest
+    ```

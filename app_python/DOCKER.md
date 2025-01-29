@@ -6,4 +6,4 @@ Best practices used in Dockerfile:
 - Used renown base image: python;
 - Written .dockerignore;
 - Linted by `hadolint`;
-- Specified exposed port: 8080.
+- Specified exposed port: 5000.
