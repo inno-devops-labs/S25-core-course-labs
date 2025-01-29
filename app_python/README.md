@@ -79,3 +79,8 @@ docker run -p 8000:8000 saleemasekrea/app_python
 ```
 
 The application will be available at [localhost:8000](http://localhost:8000/)
+
+distroless
+- docker build -f distroless.Dockerfile -t saleemasekrea/distroless_python_app .
+- docker pull saleemasekrea/distroless_python_app:latest
+- docker run -p 8001:8001 saleemasekrea/distroless_python_app 

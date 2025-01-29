@@ -7,7 +7,9 @@ This is a simple web application that displays the current time in Moscow. The a
 - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
     - [Requirements](#requirements)
-    - [Installation Steps](#installation-steps)
+    - [Manual](#manual)
+    - [Docker](#docker)
+    
 
 ## Installation
 
@@ -15,7 +17,7 @@ This is a simple web application that displays the current time in Moscow. The a
 
 - [Go installation](https://go.dev/doc/install)
 
-### Installation Steps
+### Manual
 
 - Clone this branch to your local machine
 
@@ -38,3 +40,40 @@ go run .
 The application will be available at [localhost:8002](http://localhost:8000/)
 
 ![First Opening](img/2.png)
+
+
+## Docker
+
+- To build the image, use the following command:
+
+```bash
+docker build -t saleemasekrea/app_go .
+```
+
+To pull the image from the Docker Hub, use the following command:
+
+```bash
+docker pull saleemasekrea/app_go:latest
+```
+
+After building or pulling the image, the container can be run with the following command:
+
+```bash
+docker run -p 8002:8002 saleemasekrea/app_go
+```
+
+The application will be available at [localhost:8002](http://localhost:8002/)
+
+## Distroless Image Version
+
+```bash
+docker build -f distroless.Dockerfile -t saleemasekrea/distroless_go_app .
+```
+
+```bash
+docker pull saleemasekrea/distroless_go_app:latest
+```
+
+```bash
+docker run -p 8002:8002 saleemasekrea/distroless_go_app 
+```
