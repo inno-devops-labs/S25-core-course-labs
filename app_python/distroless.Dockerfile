@@ -4,7 +4,7 @@ WORKDIR /app_python
 
 COPY requirements.txt /app_python
 
-RUN pip install --no-cache-dir --upgrade -r /app_python/requirements.txt && cp $(which fastapi) /app_python
+RUN pip install --no-cache-dir --upgrade -r /app_python/requirements.txt && cp "$(command -v fastapi)" /app_python
 
 COPY src/ /app_python/src/
 
