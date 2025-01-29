@@ -72,3 +72,33 @@ docker run -p 80:80 app_python
 ```bash
 docker run -p 80:80 dnworks/app_python:latest
 ```
+
+## Distroless Image Version
+
+### How to build?
+
+```bash
+docker build -f app_python/distroless.Dockerfile app_python -t app_python_dstlss
+```
+
+### How to pull?
+
+```bash
+docker pull dnworks/app_python_dstlss:latest
+```
+
+### How to run?
+
+> **NB!** Port 80 must be exposed so you can access the web application at 80 port (`http://localhost/`).
+
+- Self-built image:
+
+```bash
+docker run -p 80:80 app_python_dstlss
+```
+
+- From Docker Hub:
+
+```bash
+docker run -p 80:80 dnworks/app_python_dstlss:latest
+```
