@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Moscow Time</title>
+        <style>
+            .time-container {
+                font-family: Inter, sans-serif;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 1em;
+                background-color: linear-gradient(45deg, #FF7E5F, #FEB47B, #FFB88C);
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="time-container">
+            <h2>Moscow time</h2>
+            <h1 id="time">Load time...</h1>
+        </div>
+        <script>
+            fetch('/api/time')
+                .then(response => response.json())
+                .then(data => {document.getElementById('time').textContent = data.time;});
+        </script>
+    </body>
+</html>
