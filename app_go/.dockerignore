@@ -1,0 +1,4 @@
+# Go
+build/
+# Git
+.git/
