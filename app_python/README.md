@@ -12,8 +12,9 @@ This is a simple web application that displays the current time in Moscow, Russi
 4. [Running the Application](#running-the-application)
 5. [Testing](#testing)
 6. [Docker](#docker)
-7. [Code Quality Checks](#code-quality-checks)
-8. [Author](#author)
+7. [Distroless Image Version](#distroless-image-version)
+8. [Code Quality Checks](#code-quality-checks)
+9. [Author](#author)
 
 ---
 
@@ -184,6 +185,66 @@ This application is containerized using Docker, following best practices for bui
 2. Run the container as described in the "How to Run the Docker Image" section.
 
 ---
+
+
+## Distroless Image Version
+
+This application is also available in a **Distroless** version, which is a minimal Docker image that only includes the application and its runtime dependencies, without unnecessary tools or package managers.
+
+### How to Build the Distroless Docker Image
+
+1. Navigate to the `app_python` directory:
+
+   ```bash
+   cd S25-core-course-labs/app_python
+   ```
+
+2. Build the Distroless Docker image:
+
+   ```bash
+   docker build -t oshaheen1882051/app_python:app_python-distroless-prod-1.0.0 --file distroless.Dockerfile --no-cache=True .
+   ```
+
+   - The `--file distroless.Dockerfile` flag specifies the custom Dockerfile for the Distroless build.
+   - The `--no-cache=True` flag ensures a clean build by ignoring cached layers.
+
+### How to Run the Distroless Docker Image
+
+1. Run the Distroless Docker container:
+
+   ```bash
+   docker run -d -p 5000:5000 --name app_python_distroless oshaheen1882051/app_python:app_python-distroless-prod-1.0.0
+   ```
+
+2. Access the application at `http://localhost:5000`.
+
+### How to Push the Distroless Docker Image to Docker Hub
+
+1. Log in to Docker Hub (if not already logged in):
+
+   ```bash
+   docker login
+   ```
+
+2. Push the Distroless Docker image:
+
+   ```bash
+   docker push oshaheen1882051/app_python:app_python-distroless-prod-1.0.0
+   ```
+
+### How to Pull the Distroless Docker Image from Docker Hub
+
+1. Pull the Distroless Docker image:
+
+   ```bash
+   docker pull oshaheen1882051/app_python:app_python-distroless-prod-1.0.0
+   ```
+
+2. Run the container as described in the "How to Run the Distroless Docker Image" section.
+
+---
+
+
 
 ## Code Quality Checks
 
