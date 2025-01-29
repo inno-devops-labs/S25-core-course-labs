@@ -5,7 +5,7 @@
 
 A production-ready web application displaying current Moscow time with retro pixel styling and automatic refresh.
 
-![Moscow Time Screenshot](screenshot.png) *Replace with actual screenshot*
+![Moscow Time Screenshot](docs/screenshot.png)
 
 ## Features ✨
 
