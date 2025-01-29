@@ -34,7 +34,7 @@ File copying and requirements installation steps are ordered to utilize Docker l
 
 ### Size comparison
 
-A distroless image turned out slightly larger than a distro-based image (104 MB vs 107 MB, respectively).
+A distroless image turned out slightly larger than a distro-based image (107 MB vs 104 MB, respectively).
 
 This is probably due to me using Alpine Linux based image for distro-based version and Debian based image for distroless version. Although distroless is a stripped down version of Debian, it is still slightly larger than Alpine.
 

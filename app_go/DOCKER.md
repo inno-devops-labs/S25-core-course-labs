@@ -33,3 +33,29 @@ File copying and dependency installation steps are ordered to utilize Docker lay
 ### Multi-stage building
 
 I implement a multi-stage build process to separate the build environment from the runtime environment. This provides a smaller final image as it includes only binary and static files.
+
+## 🐟 Distroless Version
+
+### Size comparison
+
+A distroless image turned out more than 2x smaller than a distro-based image (18.5 MB vs 40.9 MB, respectively).
+
+This is because distroless version is a stripped down version of Debian. It contains a minimal environment to run binary files.
+
+### Differences from distro-based version
+
+- Smaller attack surface
+
+    By removing shells, package managers, and other tools, we lower the amount of components in the container, therefore, reducing the attack surface.
+
+- Image size
+
+    The distroless version has a smaller image size, due to different components being removed.
+
+- Worse debugging
+
+    Due to different components being removed, the debugging capabilities are more worse than in distro-based version.
+
+### Final result
+
+![Image size comparison](media/sizes.png)
