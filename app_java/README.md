@@ -3,7 +3,6 @@
 This is a Spring Boot web application that displays the current time in Magnitogorsk, Russia. The application uses
 Thymeleaf for server-side rendering and includes a dynamically updating clock.
 
-
 ![screenshot](src/main/resources/static/screenshot_java.png)
 
 ---
@@ -13,6 +12,7 @@ Thymeleaf for server-side rendering and includes a dynamically updating clock.
 1. [Prerequisites](#prerequisites)
 2. [Cloning the repository](#cloning-the-repository)
 3. [Running the application](#running-the-application)
+4. [Bulding and running the Docker image](#building-and-running-the-docker-image)
 
 ---
 
@@ -58,4 +58,18 @@ To clone the repository, run the following command:
 
 ```
   http://localhost:8080
+```
+
+## Building and running the Docker image
+
+### Build the Docker Image
+
+```bash
+docker build -t magnitogorsk-app .
+```
+
+### Run the Docker Container
+
+```bash
+docker run -p 8080:8080 magnitogorsk-app
 ```
