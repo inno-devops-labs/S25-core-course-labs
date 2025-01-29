@@ -43,8 +43,8 @@ source .venv/bin/activate  # On macOS/Linux
 
 The project uses pytest for robust and efficient testing. Key reasons for choosing pytest:
 
-    Ease of use: Writing and running tests is simple and intuitive.
-    Fixture support: Allows setup and teardown of test cases using pytest.fixture.
+- Ease of use: Writing and running tests is simple and intuitive.
+- Fixture support: Allows setup and teardown of test cases using pytest.fixture.
 
 ### 4. Dependency management
 
@@ -53,12 +53,13 @@ This file includes all the necessary libraries to run the application.
 
 ### 5. Code quality
 
-    PEP 8 compliance: The code follows the PEP 8 style guide, ensuring it is readable and maintainable.
-    Clear function names
+- PEP 8 compliance: The code follows the PEP 8 style guide, ensuring it is readable and maintainable.
+- Clear function names
 
 ### 6. Version Control with Git
 
 The project uses Git for version control. It follows the standard best practices:
 
-    Regular commits with clear, concise messages.
-    A .gitignore file is included to prevent unnecessary files (such as virtual environments and IDE-specific files) from being tracked by Git.
+- Regular commits with clear, concise messages.
+- A .gitignore file is included to prevent unnecessary files (such as virtual environments and IDE-specific files) from
+  being tracked by Git.
