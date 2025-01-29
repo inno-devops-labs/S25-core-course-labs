@@ -1,0 +1,17 @@
+html, body, #app {
+  height: 100%;
+  margin: 0;
+
+  --accent-col: rgb(107, 44, 255);
+  --accent-col-darker: rgb(76, 30, 184);
+}
+
+body, #app {
+  font-family: Arial, sans-serif;
+  position: relative;
+}
+
+@font-face {
+  font-family: barndoms;
+  src: url(barndoms.ttf);
+}
