@@ -15,7 +15,7 @@ git clone https://github.com/UFA-MOROZOV/S25-core-course-labs.git
 - Go to `app_python` folder.
 
 ```bash
-cd S24-core-course-labs/app_python
+cd S25-core-course-labs/app_python
 ```
 
 - Install the dependencies:
