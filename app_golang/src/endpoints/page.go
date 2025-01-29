@@ -3,7 +3,7 @@ package endpoints
 import (
 	"net/http"
 
-	"github.com/danmaninc/S25-core-course-labs/app_golang/utils"
+	"github.com/danmaninc/S25-core-course-labs/app_golang/src/utils"
 	"github.com/gin-gonic/gin"
 )
 

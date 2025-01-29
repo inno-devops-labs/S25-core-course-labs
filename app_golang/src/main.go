@@ -1,8 +1,8 @@
 package main
 
 import (
-	docs "github.com/danmaninc/S25-core-course-labs/app_golang/docs"
-	"github.com/danmaninc/S25-core-course-labs/app_golang/endpoints"
+	docs "github.com/danmaninc/S25-core-course-labs/app_golang/src/docs"
+	"github.com/danmaninc/S25-core-course-labs/app_golang/src/endpoints"
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -16,7 +16,7 @@ func main() {
 	docs.SwaggerInfo.BasePath = "/"
 
 	// Load templates
-	router.LoadHTMLGlob("templates/*")
+	router.LoadHTMLGlob("src/templates/*")
 
 	// Register endpoints
 	v1 := router.Group("/")
