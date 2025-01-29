@@ -21,13 +21,13 @@ cd S25-core-course-labs/app_python
 - Install the dependencies:
 
 ```bash
-  pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 - Run the application:
 
 ```bash
-  python app/app.py
+python app/app.py
 ```
 
 - Open the app using the link:
