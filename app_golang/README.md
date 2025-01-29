@@ -39,3 +39,68 @@ go build src/main.go
 curl http://localhost
 curl http://localhost/joke
 ```
+
+## Docker
+
+### How to build?
+
+You can build the Docker image using the following command:
+
+```bash
+docker build app_golang -t app_golang
+```
+
+### How to pull?
+
+To pull the latest image from Docker Hub, use the following command:
+
+```bash
+docker pull dnworks/app_golang:latest
+```
+
+### How to run?
+
+Run the Docker container:
+> **NB!** Port 80 must be exposed so you can access the web application at 80 port (`http://localhost/`).
+
+- Self-built image:
+
+```bash
+docker run -p 80:80 app_golang
+```
+
+- From Docker Hub:
+
+```bash
+docker run -p 80:80 dnworks/app_golang:latest
+```
+
+## Distroless Image Version
+
+### How to build?
+
+```bash
+docker build -f app_golang/distroless.Dockerfile app_golang -t app_golang_dstlss
+```
+
+### How to pull?
+
+```bash
+docker pull dnworks/app_golang_dstlss:latest
+```
+
+### How to run?
+
+> **NB!** Port 80 must be exposed so you can access the web application at 80 port (`http://localhost/`).
+
+- Self-built image:
+
+```bash
+docker run -p 80:80 app_golang_dstlss
+```
+
+- From Docker Hub:
+
+```bash
+docker run -p 80:80 dnworks/app_golang_dstlss:latest
+```
