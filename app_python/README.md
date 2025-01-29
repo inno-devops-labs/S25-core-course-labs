@@ -59,3 +59,23 @@ This is a simple Python web application built using the Flask framework. It disp
 - Optimized for performance by reducing redundant server requests.
 
 
+
+# Docker
+## How to build?
+In case you copied this repo and want to build your own docker image
+```sh
+   docker build -t your-user-name/app-name .
+```
+## How to pull?
+In case you just want to download ready docker image from docker-hub
+```sh
+   docker pull forygg/moscow-never-sleeps:v1.0 
+   ## my image used for example
+```
+## How to run?
+After you pulled the image or built it you can run it
+```sh
+   docker run forygg/moscow-never-sleeps:v1.0 
+   ## replace with your image name if needed
+```
+Now you will be able to access it in browser using this address http://172.17.0.2:5000/ or the one provided to you in shell after running
