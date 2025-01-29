@@ -11,9 +11,6 @@ COPY src/ /app_python/src/
 
 FROM gcr.io/distroless/python3:nonroot AS run
 
-HEALTHCHECK --interval=30s --timeout=3s \
-    CMD curl -f http://localhost/ || exit 1
-
 WORKDIR /app_python
 
 COPY --from=build /app_python /app_python

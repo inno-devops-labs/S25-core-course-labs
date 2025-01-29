@@ -10,9 +10,6 @@ RUN go mod download && go build src/main.go
 
 FROM gcr.io/distroless/static-debian12:nonroot AS run
 
-HEALTHCHECK --interval=30s --timeout=3s \
-    CMD curl -f http://localhost/ || exit 1
-
 WORKDIR /app_golang
 
 COPY --from=build /app_golang/main /app_golang/.
