@@ -89,7 +89,7 @@ Containerized version of the web application:
 
 ---
 
-### 🐳 Distroless Image Version
+### Distroless Image Version
 
 Containerized version of the web application:
 
