@@ -12,4 +12,4 @@
 - Dockerfile was linted using [hadolint](https://hadolint.github.io/hadolint/)
 - Only one necessary port is exposed (`80`).
 - Trusted base image was used in this Dockerfile ([python](https://hub.docker.com/_/python) - Docker Official Image)
-- `HEALTHCHECK` instruction was included to ensure that the web application is healthy and manage to restart the service otherwise.
+- `HEALTHCHECK` instruction was included to ensure that the web application is healthy.
