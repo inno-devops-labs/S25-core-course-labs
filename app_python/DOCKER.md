@@ -9,6 +9,7 @@
 
 ## running the container
 
+```bash
 docker pull meowal/msk-time-app:latest
 
 docker run -p 5000:5000 meowal/msk-time-app:latest
