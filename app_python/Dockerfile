@@ -13,15 +13,10 @@ COPY requirements.txt /app_python
 
 RUN pip install --no-cache-dir --upgrade -r /app_python/requirements.txt
 
-COPY main.py \
-    models.py \
-    utils.py \
-    /app_python
-
-COPY templates/ /app_python/templates/
+COPY src/ /app_python/src/
 
 USER fastapi
 
 EXPOSE 80/tcp
 
-CMD ["fastapi", "run", "main.py", "--port", "80"]
+CMD ["fastapi", "run", "src/main.py", "--port", "80"]

@@ -3,7 +3,7 @@
 ## Best practices employed
 
 - No root user inside, so the container will run safely.
-- Using `COPY` to copy only specific files (`requirements.txt`, application files, and `time.html` template file).
+- Using `COPY` to copy only specific files (`requirements.txt`, application files, and `time.html` template file) from the application folder so that confidential files if such exist are not exposed.
 - Layer sanity - the commands are grouped as tight as possible to prevent appearance of extra layers. Moreover, the commands that are less likely to change and easier to cache are placed first.
 - Using a `.dockerignore` file.
 - Using a precise version of the base image and language (`python:3-alpine3.21`)
