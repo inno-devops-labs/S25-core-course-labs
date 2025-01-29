@@ -23,20 +23,20 @@ Open http://localhost:5000 in browser. Refresh page to update time.
 - Auto HTML escaping
 - Version-pinned dependencies
 
-##Run with Docker
+## Run with Docker
 
 This application is Dockerized for easy deployment. Follow the steps below to run it using Docker.
 
-###Prerequisites
+### Prerequisites
 
 Docker must be installed on your system. 
 
-###How to Build the Docker Image
+### How to Build the Docker Image
 ```bash
 sudo docker build -t vika123vika/app-python:latest .
 ```
 
-###How to Pull the Docker Image from Docker Hub
+### How to Pull the Docker Image from Docker Hub
 ```bash
 sudo docker pull vika123vika/app-python:latest
 ```
@@ -46,5 +46,5 @@ sudo docker pull vika123vika/app-python:latest
 sudo docker run -p 5000:5000 vika123vika/app-python:latest
 ```
 
-###Go to localhost:
+### Go to localhost:
 Open http://localhost:5000 in browser.
