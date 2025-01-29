@@ -30,12 +30,12 @@ open http://127.0.0.1:5000 in your browser
 ##How to build?
 ```bash
 docker build -t meowal/msk-time-app .
-
+```
 ##How to pull?
 ```bash
 docker pull meowal/msk-time-app:latest
-
+```
 ##How to run?
 ```bash
 docker run -p 5000:5000 meowal/msk-time-app:latest
-
+```
