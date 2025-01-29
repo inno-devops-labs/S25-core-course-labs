@@ -13,7 +13,7 @@ COPY internal/ internal/
 # build app
 RUN go build -o build/main cmd/main.go
 
-FROM alpine:3.21
+FROM gcr.io/distroless/static-debian12:nonroot
 
 WORKDIR /app
 
@@ -21,12 +21,6 @@ WORKDIR /app
 COPY --from=build /app/build/main .
 COPY internal/templates/ internal/templates/
 COPY static/ static/
-
-# using nonroot user
-RUN addgroup --system user && \
-    adduser --system --ingroup user user && \
-    chown -R user:user /app
-USER user
 
 EXPOSE 8080
 
