@@ -10,3 +10,5 @@ This is a web application that displays the current time in Moscow using Gin.
    ```bash
    go run main.go
    ```
+
+Then go to http://localhost:8080/

@@ -20,3 +20,4 @@ This is a web application that displays the current time in Moscow using FastAPI
    ```bash
    uvicorn main:app --reload
    ```
+Then go to http://localhost:8000/docs#/
