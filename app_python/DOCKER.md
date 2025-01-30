@@ -1,4 +1,4 @@
-#Docker Best Practices for moscow-time-app
+# Docker Best Practices for moscow-time-app
 
 ## Best Practices Implemented
 ### Use a Minimal Base Image
