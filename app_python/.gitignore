@@ -1,7 +1,13 @@
 # Python
 __pycache__/
 *.py[cod]
-venv
+
+# Virtual environments
+.env/
+venv/
+
+# Logs
+*.log
 
 # PyCharm
 .idea/
@@ -12,7 +18,3 @@ venv
 
 # macOS
 .DS_Store
-
-# Build
-build
-moscow_time_webapp.egg-info
