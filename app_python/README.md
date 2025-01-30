@@ -31,3 +31,7 @@ The project follows **best practices**, including:
 **How to run?**  
   
 - Use **docker run --rm -p 5000:5000 utkanosss/moscow-time-app**
+
+---
+
+Repository link: https://hub.docker.com/repository/docker/utkanosss/moscow-time-app/general
