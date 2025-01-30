@@ -53,7 +53,7 @@ This project can be easily run in a Docker container. Follow the instructions be
 2. In the root folder of the project, build the Docker image with the following command:
 
    ```bash
-   docker build -t python-app .
+   docker build -t kira354/app-python .
    ```
 
 ### How to Pull
@@ -61,7 +61,7 @@ This project can be easily run in a Docker container. Follow the instructions be
 If you want to use the pre-built image from Docker Hub, run the following command:
 
 ```bash
-docker pull kira354/python-app:latest
+docker pull kira354/app-python:latest
 ```
 
 ### How to Run
@@ -69,7 +69,7 @@ docker pull kira354/python-app:latest
 After building or pulling the image, run the following command to start the application:
 
 ```bash
-docker run -p 5000:5000 python-app
+docker run -p 5000:5000 kira354/app-python
 ```
 
 This will run the application inside the Docker container and map port 5000 of the container to port 5000 on your local machine. You can now access the application by visiting [http://localhost:5000](http://localhost:5000) in your browser.

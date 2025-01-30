@@ -1,4 +1,4 @@
-FROM python:3-alpine3.15
+FROM python:3.12-slim
 
 # Set a working directory
 WORKDIR /app
@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY main.py .
 
 # Create and switch to a non-root user
-RUN adduser -D appuser
+RUN useradd --system appuser
 USER appuser
 
 # Expose the port the app will run on

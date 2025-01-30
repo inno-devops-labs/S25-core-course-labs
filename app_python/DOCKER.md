@@ -29,10 +29,10 @@ In this task, the following Docker best practices were implemented to ensure tha
 
 ### 4. **Precise Base Image Versioning**
 
-- To ensure a stable and reproducible build, a specific version of the base image (`python:3-alpine3.15`) was used instead of the latest version. This helps in minimizing the final image size.
+- To ensure a stable and reproducible build, a specific version of the base image (`python:3.12-slim`) was used instead of the latest version. This helps in minimizing the final image size.
 
      ```dockerfile
-     FROM python:3-alpine3.15
+     FROM python:3.12-slim
      ```
 
 ### 5. **Application Binding to 0.0.0.0**
@@ -58,12 +58,12 @@ In this task, the following Docker best practices were implemented to ensure tha
 ### **Differences Between Distroless and Previous Images**
 
 1. **Size**:
-   - **Distroless Image**: ~72 MB.
-   - **Previous Python Image**: ~68 MB.
-   - **Reason**: Distroless images contain only the application and essential runtime dependencies, without unnecessary tools. But I copied python3.*/site-packages and set the PYTHONPATH environment variable for my flask app to work. Thats why I copy it and "make my distroless image bigger", than I could. I tried different versions of distroless.Dockerfile and only the one like the one I submitted worked.
+   - **Distroless Image**: ~72 MB
+   - **Previous Python Image**: ~138 MB  
+   **Reason**: Distroless images are minimal and include only the application code and essential runtime dependencies, excluding unnecessary tools and utilities. This results in a smaller image size, making it more efficient for deployment.
 
 2. **Security**:
-   - **Distroless Image**: Contains only runtime dependencies, no shell or package manager, reducing the attack surface.
-   - **Previous Python Image**: Includes a shell and package manager, which increase potential security risks.
+   - **Distroless Image**: No shell or package manager, significantly reducing the attack surface. With fewer components, there are fewer potential vulnerabilities to exploit.
+   - **Previous Python Image**: Includes a shell and package manager, which introduces additional security risks and potential attack vectors, as any vulnerabilities in these tools could be exploited.
 
-![Images compare](/app_python/images_compare.jpg)
+![Images compare](/app_python/images_compare.png)
