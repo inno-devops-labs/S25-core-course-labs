@@ -12,7 +12,10 @@ moscow_time_app/
 │   └── main.py              # FastAPI application code
 ├── tests/
 │   └── test_main.py         # Unit tests for the application
+├── .dockerignore            # List of files that ignores by docker
 ├── .gitignore               # List of files that ignores by git
+├── DOCKER.md                # Docker documentation
+├── Dockerfile               # Configuration file for docker
 ├── PYTHON.md                # Justification for my salary as a Python developer :-)
 ├── README.md                # Project documentation
 └── requirements.txt         # Project dependencies
@@ -67,6 +70,34 @@ uvicorn app_python.src.main:app --reload
 - The `--reload` flag enables auto-reloading, so the server restarts whenever you make changes to the code.
 - Open your browser and navigate to `http://127.0.0.1:8000/get_moscow_time`. You should see the current time in Moscow displayed in JSON format.
 - To see the SwaggerUI documentation navigate to `http://127.0.0.1:8000/docs`.
+
+---
+
+## Docker
+
+Or you can simply use docker to run and build the application:
+
+1. **How to build?**
+To build the Docker image locally, navigate to the project directory (app_python) and run the following command. This will create a Docker image tagged as `moscow-time-app`.
+
+   ```bash
+   docker build -t moscow-time-app .
+   ```
+
+2. **How to run?**
+To run the Docker container, use the following command. The `-d` flag runs the container in detached mode, and `-p 8000:8000` maps port 8000 on your local machine to port 8000 in the container.
+
+   ```bash
+   docker run -d -p 8000:8000 moscow-time-app:1.0
+   ```
+
+3. **How to pull?**
+You can pull docker image from DockerHub [repo](https://hub.docker.com/repository/docker/konstantinqwertin/moscow-time-app/general).
+
+   ```bash
+   docker pull konstantinqwertin/moscow-time-app:1.0
+   docker run -d -p 8000:8000 konstantinqwertin/moscow-time-app:1.0
+   ```
 
 ---
 
