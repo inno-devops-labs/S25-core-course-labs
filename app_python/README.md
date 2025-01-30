@@ -22,8 +22,9 @@ app_python/
 │── requirements.txt    # Dependencies
 │── PYTHON.md           # Justification & Best Practices
 │── README.md           # Documentation
+│── DOCKER.md           # Docker documentation
 │── .gitignore          # Ignore unnecessary files
-
+│── Dockerfile          # Dockerfile for containerization
 ```
 
 ---
@@ -85,6 +86,28 @@ The server will run on **`http://127.0.0.1:5000/`**. Open your browser and visit
 
 ---
 
+## 🛠️ Docker Instructions
+
+### **Build the Docker Image**
+
+```bash
+docker build -t em1999jay/moscow-time-app .
+```
+
+### **Run the Container**
+
+```bash
+docker run -p 5000:5000 em1999jay/moscow-time-app
+```
+
+### **Pull the Image from Docker Hub**
+
+```bash
+docker pull em1999jay/moscow-time-app:v1
+```
+
+---
+
 ## 🧪 Testing
 
 To verify that the application updates time correctly:
@@ -97,24 +120,25 @@ To verify that the application updates time correctly:
 
 ## 📌 Deployment
 
-This Flask app can be deployed on **Heroku, AWS, or Docker**. Example Docker deployment:
+This Flask app can be deployed on **Heroku, AWS, or Docker**.
 
-1. **Create a** `Dockerfile`:
+### **1. Create a `Dockerfile`**
 
-   ```dockerfile
-   FROM python:3.9
-   WORKDIR /app
-   COPY . .
-   RUN pip install -r requirements.txt
-   CMD ["python", "app.py"]
-   ```
+```dockerfile
+FROM python:3.9-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY app.py .
+CMD ["python", "app.py"]
+```
 
-2. **Build & Run the Container**:
+### **2. Build & Run the Container**
 
-   ```bash
-   docker build -t flask-moscow-time .
-   docker run -p 5000:5000 flask-moscow-time
-   ```
+```bash
+docker build -t em1999jay/moscow-time-app .
+docker run -p 5000:5000 em1999jay/moscow-time-app
+```
 
 ---
 
