@@ -11,7 +11,11 @@ To prepare virtual environment run:
  
 ```
 virtualenv venv
-
+source venv/bin/activate
+```
+or
+```
+python -m venv venv
 source venv/bin/activate
 ```
 
