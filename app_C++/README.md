@@ -24,3 +24,28 @@ g++ app.cpp -o web_server
 ./web_server
 ```
 It will be able in 0.0.0.0:8080
+
+## Docker
+
+There is an ability to use application in Docker. You may build it manually or use image from Docker Hub.
+
+#### Building
+
+To build image manually run:
+```
+docker build --no-cache -t <name> .
+```
+
+#### Pulling
+
+To pull image from Docker Hub run:
+```
+docker pull voronm1522/devops:cpp-app
+```
+
+#### Running
+
+To run image run:
+```
+docker run <name>
+```
