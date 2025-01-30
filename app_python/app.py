@@ -14,6 +14,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def show_time():
+    """Returns the current time in Moscow."""
     moscow_tz = pytz.timezone('Europe/Moscow')
     current_time = datetime.now(moscow_tz).strftime("%Y-%m-%d %H:%M:%S")
     
@@ -38,4 +39,4 @@ def show_time():
 
 if __name__ == "__main__":
     logging.info("Starting Flask application...")
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True)
