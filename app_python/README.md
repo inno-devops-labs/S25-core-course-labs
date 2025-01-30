@@ -21,3 +21,20 @@ This Python web application displays the current time in Moscow using Flask.
    ```
 4. Open `http://127.0.0.1:5000/` in your browser.
 
+## 🐳 Running with Docker
+
+### How to Build?
+```sh
+cd app_python
+docker build -t  my-python-app .
+```
+
+### How to Pull?
+```sh
+docker pull emiliogain/my-python-app:latest
+```
+
+How to Run?
+```sh
+docker run -p 8080:5000 emiliogain/my-python-app
+```
