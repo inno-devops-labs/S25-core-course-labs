@@ -31,7 +31,7 @@ gcc -I./mongoose mongoose/mongoose.c app.c -o app.exe -lwsock32
 
 app.exe can be replaced by any other name, just make sure to keep the exe extension.
 
-### Linux
+#### Linux
 
 From the command line, inside the repository directory, run
 
