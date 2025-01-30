@@ -7,5 +7,5 @@ app = Flask(__name__)
 def start():
     return render_template('index.html')
 
-if __name__ == 'main':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8000)
