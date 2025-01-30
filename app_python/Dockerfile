@@ -24,4 +24,4 @@ USER appuser
 EXPOSE $PORT
 
 # Run Gunicorn 
-CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT} --access-logfile - --error-logfile - app"]
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT} --access-logfile - --error-logfile - app:app"]
