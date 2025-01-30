@@ -1,21 +1,17 @@
 # Moscow Time Web Application
 
 ## Overview
-Displays the current time in Moscow using Flask.
+This is a simple web application that displays the current time in Moscow. It is built using **Python** and **Flask**, and containerized using **Docker**.
 
-## Installation
-1. Clone the repository.
-2. Navigate to `app_python`.
-3. Set up a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # OR for Windowa venv\Scripts\activate
-4. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
+---
 
-5. Run the application:
-   ```bash
-   python app.py
+## Docker Instructions
 
-6. Visit http://localhost:5000 to view the time.
+### **How to Build**
+1. Clone the repository:
+   ```bash
+   git clone git clone --branch lab2 https://github.com/Ali12hamdan/S25-core-course-labs.git
+
+   docker pull ali12hamdan/moscow-time:1.0
+
+   docker run -p 5001:5001 ali12hamdan/moscow-time-app:1.0
