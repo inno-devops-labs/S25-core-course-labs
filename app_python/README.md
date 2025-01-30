@@ -16,3 +16,18 @@ The project follows **best practices**, including:
 - Install **requirements** from requirements.txt.
 - Open folder **app_python**.
 - Run **app.py**.
+
+---
+
+## Docker
+**How to build?**  
+  
+- Use **docker build -t utkanosss/moscow-time-app .**  
+  
+**How to pull?**  
+  
+- Use **docker pull utkanosss/moscow-time-app**  
+  
+**How to run?**  
+  
+- Use **docker run --rm -p 5000:5000 utkanosss/moscow-time-app**
