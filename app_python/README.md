@@ -28,4 +28,4 @@
 
 - **Pushing** and **Pulling** from DockerHub:
 
-![Alt text](image/pushingAndPulling.png)
+![Alt text](images/pushingAndPulling.png)
