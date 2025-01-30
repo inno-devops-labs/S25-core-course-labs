@@ -29,3 +29,23 @@ uvicorn app:app --port 8000 --reload
 ```bash
 curl http://localhost:8000
 ```
+
+## Docker
+
+### Pull the image
+
+```bash
+docker pull fallenchromium/moscow-timezone-app:latest
+```
+
+### Run the image
+
+```bash
+docker run -p 8000:8000 fallenchromium/moscow-timezone-app:latest
+```
+
+### Build the image
+
+```bash
+docker build -t fallenchromium/moscow-timezone-app:latest .
+```
