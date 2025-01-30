@@ -20,3 +20,5 @@ coverage.xml
 .pytest_cache/
 .vscode/
 .idea/
+.DS_Store
+*.md
