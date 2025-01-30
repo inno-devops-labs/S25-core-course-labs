@@ -1,7 +1,9 @@
 # Python Web Application Documentation
 
 ## Chosen Framework: Flask
+
 I chose [Flask](https://flask.palletsprojects.com/en/stable/) because:
+
 - it is beginner-friendly and great for small projects like this one
 - it has a flexible structure, so I can customize the code as needed
 - easy and clear documentation for quick start
