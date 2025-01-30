@@ -28,3 +28,26 @@ The current time in Moscow will be displayed.  Refresh the page to see the time 
 ## Contributing
 
 Contributions are welcome!  Please fork the repository and submit a pull request.
+
+## Docker
+
+This application is containerized using Docker for easy deployment and portability.
+
+### Building the Docker Image
+
+```bash
+docker build -t moscow-timezone .
+```
+
+### Pulling the Docker Image
+
+```bash
+docker pull monitorpc/moscow-timezone:latest # for defualt version   
+docker pull monitorpc/moscow-timezone:rootless # for rootless version
+```
+
+### Running the Docker Container
+
+```bash
+docker run -d -p 5000:5000 monitorpc/moscow-timezone   
+```
