@@ -52,6 +52,12 @@ The repository [fastapi-best-practices](https://github.com/zhanymkanov/fastapi-b
     - Verifying the endpoint response.
       - Validating the time format.
       - Ensuring the time updates between requests.
+     To run tests:
+
+     ```bash
+     pip install pytest
+     pytest
+     ```
 
 ### 6. **Code Formatting**
 
@@ -59,6 +65,7 @@ The repository [fastapi-best-practices](https://github.com/zhanymkanov/fastapi-b
      To run styler formater run the following command in root directory:
 
      ```bash
+     pip install black
      black .
      ```
 
