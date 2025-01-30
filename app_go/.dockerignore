@@ -1,0 +1,13 @@
+*.md
+README.*
+LICENSE
+*.png
+
+.git/
+.gitignore
+
+Dockerfile
+.dockerignore
+
+.vscode/
+.idea/

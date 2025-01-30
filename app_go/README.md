@@ -29,3 +29,39 @@ This is a simple web-based "Guess the Number" game built using the Gin framework
 
 4. Access at:
     http://localhost:8080
+
+## Docker
+
+### Build the container
+```sh
+docker build -t gin-mt .
+```
+
+### Run the container
+```sh
+docker run -p 8080:8080 gin-mt
+```
+
+### Run via Docker Hub
+```sh
+docker pull iucd/gin-mt:latest
+docker run -p 8080:8080 iucd/gin-mt
+```
+
+## Distroless Image Version
+
+### Build the container
+```sh
+docker build -t gin-mt:distroless -f distroless.Dockerfile .
+```
+
+### Run the container
+```sh
+docker run -p 8080:8080 gin-mt:distroless
+```
+
+### Run via Docker Hub
+```sh
+docker pull iucd/gin-mt:distroless
+docker run -p 8080:8080 iucd/gin-mt:distroless
+```
