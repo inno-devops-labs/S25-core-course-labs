@@ -1,6 +1,7 @@
 # Docker Configuration
 
 ## Docker Hub Repository
+
 The Docker image for this application is available on Docker Hub:
 [eleanorpi/moscow-time-app](https://hub.docker.com/repository/docker/eleanorpi/moscow-time-app/general)
 
@@ -48,27 +49,32 @@ The Docker image for this application is available on Docker Hub:
 ## Building and Running
 
 1. Build the image locally:
+
    ```bash
    docker build -t eleanorpi/moscow-time-app .
    ```
 
 2. Pull from Docker Hub:
+
    ```bash
    docker pull eleanorpi/moscow-time-app
    ```
 
 3. Run the container:
+
    ```bash
    docker run -d -p 5000:5000 --name moscow-time eleanorpi/moscow-time-app
    ```
 
 4. Check container health:
+
    ```bash
    docker inspect --format='{{json .State.Health}}' moscow-time
    ```
 
 5. Access the application:
-   ```
+
+   ```bash
    http://localhost:5000
    ```
 
@@ -78,4 +84,4 @@ The Docker image for this application is available on Docker Hub:
 - No unnecessary build tools in final image
 - Non-root user for security
 - Regular security updates via base image
-- Health checks for monitoring 
+- Health checks for monitoring
