@@ -1,0 +1,16 @@
+
+---
+
+## **Updated `.dockerignore` for Django**  
+
+```plaintext
+__pycache__/
+*.pyc
+*.pyo
+.env
+.git
+.gitignore
+README.md
+db.sqlite3
+media/
+staticfiles/
