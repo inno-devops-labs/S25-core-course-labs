@@ -1,9 +1,9 @@
-### Framework choice
+# Framework choice
 
 I have chosen Flask as I have some experience with it.
 It is suitable for such a simple application.
 
-### Coding standards and practices
+## Coding standards and practices
 
 1. **Separation of concerns**. The `main.py` file is responsible for running the app and rendering the page, while all
    other files including `html` and `css` files are placed into separate folders.

@@ -1,4 +1,4 @@
-### Best Docker practices description
+# Best Docker practices description
 
 * A slim version of python image is used to ensure minimum size without any redundant functionality.
 * Copying only the specific files needed to run the application.
