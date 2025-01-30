@@ -20,21 +20,37 @@ This is a simple Python web application using **Flask** that displays the **curr
     source venv/bin/activate  # On Windows: venv\Scripts\activate
     pip install -r requirements.txt
     python app.py 
+    docker build -t suleimankrimeddin/app_python:latest .
    ```
 
+# Docker Best Practices
 
-## Framework Choice: Flask
-I chose **Flask** for this project because:
-- It is lightweight and easy to set up.
-- It allows rapid development with minimal boilerplate code.
-- It supports extensions and scalability for future improvements.
+## Best Practices Implemented
 
-## Best Practices Followed
-1. **Clean Code:** Code is structured with meaningful variable names.
-2. **Code Readability:** Used proper indentation and formatting.
-3. **Error Handling:** Flask has built-in error handling; can be expanded if needed.
-4. **Time Handling:** Used `pytz` to ensure the correct Moscow timezone.
+1. **Rootless Container**: The application runs as a non-root user (`appuser`).
+2. **Minimal Base Image**: Used `python:3.11-alpine3.18` for security and efficiency.
+3. **Layer Optimization**:
+   - Only copied required files (`COPY requirements.txt ./` first, then `COPY app.py ./`).
+   - Used `--no-cache-dir` to reduce image size.
+4. **.dockerignore Usage**: Prevents unnecessary files from being included in the image.
+5. **Exposed Only Required Ports**: Used `EXPOSE 5000` to keep attack surface minimal.
+6. **Environment Variables & Security**:
+   - No hardcoded credentials inside the image.
+   - Uses Alpine to minimize vulnerabilities.
 
-## Testing and Code Quality
-- The app was tested by running it locally and refreshing the page to check if the time updates.
-- Used Flask's `debug=True` mode for easy debugging.
+## **Testing and Deployment**
+- Built and tested the image locally before pushing to Docker Hub.
+- Ensured proper functionality by running the container and accessing the web app.
+- docker pull suleimankrimeddin/app_python:v1.0
+- docker run -p 5000:5000 suleimankrimeddin/app_python:v1.0
+
+- docker pull suleimankrimeddin/app_python:distroless-v1.0
+- docker run -p 5000:5000 suleimankrimeddin/app_python:distroless-v1.0
+
+## **🔍 Image Size Comparison**
+   - Image Version	Size
+   - Regular Image	~100MB
+   - Multi-Stage Image	~80MB
+   - Distroless Image	~50MB
+
+
