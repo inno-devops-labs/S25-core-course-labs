@@ -7,7 +7,7 @@ I chose Flask web framework because it is a widely used minimalistic framework (
 
 ## Best practices
 
-The small size of the application does not allow for many practices. I have endeavored to keep the code readable and the comments comprehensive. This was accomplished by splitting the code into functions, adding comments, and checking for standards compliance. I also tried to keep it minimalistic. Finally, I use configuration file for more flexibility and better maintaining.
+The small size of the application does not allow for many practices. I have endeavored to keep the code readable and the comments comprehensive. This was accomplished by splitting the code into functions, adding comments, and checking for standards compliance. I also tried to keep it minimalistic. I also use `requirements.txt` with specified versions of packages. Finally, I use configuration file for more flexibility and better maintaining.
 
 
 ## Coding standards, testing, code quality

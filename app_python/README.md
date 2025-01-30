@@ -8,6 +8,7 @@ A simple web application built with Flask that displays the current time timezon
 #### Installation
 
 To prepare virtual environment run:
+
 ```
 virtualenv venv
 source venv/bin/activate
@@ -34,6 +35,9 @@ In case of a configuration error, Moscow time is displayed.
 To disable debugging mode change the last line in `app.py` use `debug=False` instead `debug=True`.
 
 ## Using
+```
+pip install -r requirements.txt
+```
 
 To use this application run `python app.py`.
 
@@ -41,6 +45,11 @@ To use this application run `python app.py`.
 ## Docker
 
 There is an ability to use application in Docker. You may build it manually or use image from Docker Hub.
+=======
+```
+>>> import pytz
+>>> pytz.all_timezones
+```
 
 #### Building
 
