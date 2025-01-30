@@ -1,0 +1,4 @@
+app_go/url-shortener
+app_go/.env
+app_go/config/*.yaml
+app_go/storage/storage.db
