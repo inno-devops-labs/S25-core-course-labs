@@ -1,35 +1,29 @@
-# Docker Usage
-The application can also be run inside a Docker container.
+# Best Practices Implemented
 
-### 1. Building the Docker Image
-To build the Docker image, run:
+1. Using a Specific Base Image Version / Using a Minimal Image (Alpine)
+   
+   ``FROM python:3.12.8-alpine3.21@sha256:ba13ef990f6e5d13014e9e8d04c02a8fdb0fe53d6dccf6e19147f316e6cc3a84``
+2. Running as a Non-Root User
+   
+   ``
+   RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+   ``
+   
+   ``USER appuser``
+3. Using Multi-Stage Dependency Installation 
+   ```dockerfile
+    RUN apk add --no-cache --virtual .build-deps \
+        gcc=14.2.0-r4 \
+        musl-dev=1.2.5-r8 \
+        libffi-dev=3.4.6-r0 && \
+        pip install --no-cache-dir --upgrade pip==25.0 && \
+        pip install --no-cache-dir -r requirements.txt && \
+        apk del .build-deps
+    ```
+4. Avoiding Cache in pip Install
 
-``docker build -t moscow-time-app .``
+    ``pip install --no-cache-dir -r requirements.txt``
 
-### 2. Running the Container
-Run the application using Docker:
+5. Exposing Only the Required Port
 
-``docker run -d -p 5000:5000 moscow-time-app``
-
-Now, open your web browser and go to:
-
-``http://localhost:5000``
-
-### 3. Pushing the Image to Docker Hub
-
-1. Log in to Docker Hub: ``docker login``
-2. Tag the image: ``docker tag moscow-time-app your-dockerhub-username/moscow-time-app``
-3. Push the image: ``docker push your-dockerhub-username/moscow-time-app``
-
-
-### 4. Pulling and Running the Image from Docker Hub
-
-To pull and run the image from Docker Hub, execute:
-
-``
-docker pull your-dockerhub-username/moscow-time-app
-``
-
-``
-docker run -d -p 5000:5000 your-dockerhub-username/moscow-time-app
-``
+   ``EXPOSE 5000``
