@@ -2,9 +2,10 @@
 
 ## Overview
 
-This application uses Python, Flask and Waitress to host a web page to shown
-the current time in Moscow. The app serves a single webpage, which contains
-the current time and date in Moscow, along with some minimalistic
+This application uses [Python](https://www.python.org),
+[Flask](https://flask.palletsprojects.com) and [Waitress](https://github.com/Pylons/waitress)
+to host a web page to shown the current time in Moscow. The app serves a single webpage,
+which contains the current time and date in Moscow, along with some minimalistic
 formatting. You can find the source code in [app.py](app.py), the [HTML](resources/templates)
 and [CSS](resources/static) files in [resources](resources). Required python packages are in
 [requirements.txt](requirements.txt) and some implementation justifications are in [PYTHON.md](PYTHON.md)

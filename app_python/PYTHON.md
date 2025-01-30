@@ -27,10 +27,10 @@ I used the following techniques to ensure code standarts and code quality:
 
 I tested the application in different timezones, and it provided me with the
 same time as before, the Moscow time. The time is neatly formatted and even
-displays nicely on mobile devices. Css sheet loads correctly and affects page.
+displays nicely on mobile devices. CSS sheet loads correctly and affects page.
 
 ### Other
 
-I have maintained a clean requirements.txt file, since the program only requires Flask
-to run. Furthermore, instead of inlining the html and css, I moved them into their respective
+I have maintained a clean requirements.txt file, since the program only requires Flask and Waitress
+to run. Furthermore, instead of inlining the HTML and CSS, I moved them into their respective
 directories, so that they can be changed independently of the code.
