@@ -2,13 +2,6 @@
 __pycache__/
 *.py[cod]
 
-# Virtual environments
-.env/
-venv/
-
-# Logs
-*.log
-
 # PyCharm
 .idea/
 
