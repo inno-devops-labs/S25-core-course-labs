@@ -40,3 +40,26 @@ This is a simple web application that displays the current time in Moscow. It is
 
 * Manually test the application by refreshing the page to ensure the time updates.
 * Verify the error handling by entering an invalid time zone.
+
+
+## Docker
+
+### Build the Docker Image
+    ```sh
+    docker build -t louayfarah/current_timezone_app:latest .
+    ```
+
+### Push the Docker Image to Docker Hub
+    ```sh
+    docker push louayfarah/current_timezone_app:latest  
+    ```
+
+### Pull the Docker Image to Docker Hub
+    ```sh
+    docker pull louayfarah/current_timezone_app:latest  
+    ```
+
+### Run the Docker Image
+    ```sh
+    docker run -p 8000:8000 -h localhost louayfarah/current_timezone_app:latest
+    ```
