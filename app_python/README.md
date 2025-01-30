@@ -29,7 +29,7 @@ To set up and run the application locally, follow these steps:
 
    ```bash
    git clone https://github.com/MattWay224/S25-core-course-labs.git
-   cd python-moscow-time
+   cd /<your-path>/S25-core-course-labs/app_python/
     ```
 
 2. Create a virtual environment:
