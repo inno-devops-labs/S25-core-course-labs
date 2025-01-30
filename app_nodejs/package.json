@@ -1,0 +1,16 @@
+{
+    "name": "app_nodejs",
+    "version": "1.0.0",
+    "description": "Node.js web app",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "keywords": [],
+    "author": "Mohamed Aymen Daassi",
+    "license": "MIT",
+    "dependencies": {
+      "express": "^4.18.2"
+    }
+  }
+  
