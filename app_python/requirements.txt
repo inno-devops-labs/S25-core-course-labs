@@ -1,0 +1,4 @@
+fastapi
+fastapi-cli
+uvicorn
+pytz
