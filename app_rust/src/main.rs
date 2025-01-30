@@ -25,11 +25,11 @@ async fn index() -> Result<HttpResponse> {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    println!("Server running at http://localhost:8080");
+    println!("Server running at http://localhost:8080 Enjoy!");
     HttpServer::new(|| {
         App::new().service(index)
     })
-    .bind("127.0.0.1:8080")?
+    .bind("0.0.0.0:8080")?
     .run()
     .await
 }
