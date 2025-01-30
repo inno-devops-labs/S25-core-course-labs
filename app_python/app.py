@@ -1,6 +1,4 @@
-﻿#!/usr/bin/python
-# -*- coding: utf-8 -*-
-from datetime import datetime, timezone, timedelta
+﻿from datetime import datetime, timezone, timedelta
 from flask import Flask, render_template
 
 app = Flask(__name__)

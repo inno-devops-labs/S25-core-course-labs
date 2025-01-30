@@ -61,3 +61,11 @@ input that name for the next step if you chose this approach.
 ```bash
 docker run -p 8000:8000 magel0n/moscowtimeimagephp:latest 
 ```
+
+# Distroless Image Version
+To run the disroless image, whilst following the same steps as the building option, use this:
+```bash
+docker build -t magel0n/moscowtimeimagephp:latest -f distroless.Dockerfile .
+```
+The ```-f distroless.Dockerfile``` will signal `Docker` to use the other image creation.
+Then, proceed as with the other example.

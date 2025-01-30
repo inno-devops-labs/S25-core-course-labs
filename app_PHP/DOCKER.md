@@ -30,3 +30,16 @@ Nothing to decouple
 There is no sorting
 ## Build and test your images in CI
 I believe I will get to do that in the future labs
+
+# Distroless
+
+The Distroless images are slower to load, since they require something else to load their dependencies, 
+but that is the only downside.
+On the other hand, Distroless images are more lightweight (since there is now literally nothing but the application in them),
+have little ways of being attacked (there is no interface for your general user, there is just the program) and 
+they are a little easier to manage, since they limit you in your abilities, so the lack of options makes programming surprisingly straightforward.
+
+I must admit, whilst the images themselves have much lower weight, I do not see another metric in `Docker Desktop` and 
+I suppose that this is not the weight of the final image, but rather the entire process with the in-between image. 
+After countless tries, I admit that I need help finding the other ways of weights, but I must show some picture, so here it is:
+![image](distrolessOrNot.png)

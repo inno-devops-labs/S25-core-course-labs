@@ -1,4 +1,4 @@
-﻿FROM python:3.9-alpine3.20 AS builder
+﻿FROM python:3.11-alpine3.20 AS build
 
 COPY requirements.txt /
 RUN pip install --no-cache-dir -r requirements.txt
@@ -13,9 +13,7 @@ EXPOSE 8000
 
 ENV PYTHONPATH=/app/site-packages
 
-COPY --from=builder /usr/local/lib/python3.9/site-packages /app/site-packages
-COPY --from=builder /usr/local/bin /usr/local/bin
+COPY --from=build /usr/local/lib/python3.11/site-packages /app/site-packages
+COPY --from=build /usr/local/bin /usr/local/bin
 
-CMD ["/usr/local/bin/python", "app.py"]
-
-# This fails and I do not know why
+CMD ["app.py"]
