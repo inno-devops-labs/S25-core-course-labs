@@ -35,3 +35,25 @@ Visit: http://127.0.0.1:5000/ in your browser.
 - Python 3.x
 - Flask
 - pytz (for time zone handling)
+
+
+## 📦 Running with Docker
+
+This section explains how to build, pull, and run the application using Docker.
+### 🔨 How to Build the Docker Image?
+If you want to build the image locally, run:
+```bash
+docker build -t moscow-time-app .
+```
+This will create a Docker image named moscow-time-app.
+### 🔽 How to Pull from Docker Hub?
+The image is available on Docker Hub, you can pull it directly using:
+```bash
+docker pull anasalatasi/moscow-time-app:latest
+```
+### 🚀 How to Run the Container?
+Once the image is built or pulled, start the container by running:
+```bash
+docker run -p 5000:5000 moscow-time-app
+```
+Then visit: http://localhost:5000
