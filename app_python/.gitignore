@@ -1,0 +1,14 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+env/
+
+# OS files
+.DS_Store
+
+# IDE settings (PyCharm, VSCode, etc.)
+.idea/
+.vscode/
