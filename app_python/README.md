@@ -46,7 +46,7 @@ This Python web application displays the current time in Moscow. It updates ever
 
 2. **Access in Browser:**
 
-   - Navigate to `http://localhost:5000/`
+   - Navigate to `http://localhost:8080/`
 
 ## Project Structure
 
@@ -61,4 +61,27 @@ This Python web application displays the current time in Moscow. It updates ever
 A clean `.gitignore` file is maintained to exclude:
 
 - `venv/` - Virtual environment files.
-- `pycache/` - Python cache files.
+- `__pycache__/` - Python cache files.
+
+---
+
+## Docker
+
+The application is containerized using Docker for ease of deployment and consistency across environments.
+
+### 5.1. Containerization process
+
+This section provides instructions on how to containerize the application using Docker. It covers how to build the Docker image locally, how to pull it from a Docker registry (if available), and how to run the Docker container.
+
+### 5.2. How to build?
+
+`docker build -t achulakov/app_python:v1.0 .`
+
+### 5.3.  How to pull?
+
+`docker pull achulakov/app_python:v1.0`
+
+### 5.4. How to run?
+
+`cd .\app_python\`
+`docker run -p 8080:8080 achulakov/app_python:v1.0`

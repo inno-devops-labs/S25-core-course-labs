@@ -1,0 +1,8 @@
+venv
+.git
+.gitignore
+PYTHON.md
+DOCKER.md
+README.md
+__pycache__
+*.pyc
