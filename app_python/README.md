@@ -12,8 +12,14 @@ This is a simple Python web application using **Flask** that displays the **curr
 ### Steps to Run Locally
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-repo/app_python.git
-   cd app_python
+    https://github.com/SuleimanKarimEddin/S25-core-course-labs/tree/master
+    cd S25-core-course-labs
+    git checkout lab1
+    cd app_python
+    python3 -m venv venv
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
+    pip install -r requirements.txt
+    python app.py 
    ```
 
 

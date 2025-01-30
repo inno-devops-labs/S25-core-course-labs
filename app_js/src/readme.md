@@ -12,6 +12,7 @@ This is a simple JavaScript web application using **Node.js & Express.js** that 
 1. Clone this repository:
    ```bash
     https://github.com/SuleimanKarimEddin/S25-core-course-labs/tree/master
+    cd S25-core-course-labs
     git checkout lab1
     cd app_js
     npm install
