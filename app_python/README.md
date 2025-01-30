@@ -17,3 +17,5 @@ Displays the current time in Moscow using Flask.
 5. Run the application:
    ```bash
    python app.py
+
+6. Visit http://localhost:5000 to view the time.
