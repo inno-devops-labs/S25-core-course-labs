@@ -1,0 +1,8 @@
+# Ignore everything by default
+**
+
+# Allow only necessary files
+!app.py
+!DOCKER.md
+!README.md
+!Dockerfile
