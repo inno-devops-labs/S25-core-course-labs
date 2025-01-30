@@ -30,7 +30,7 @@ FROM gcr.io/distroless/cc-debian11:nonroot AS runtime
 
 WORKDIR /app
 COPY --from=builder /build/target/release/quote_app /app/
-COPY templates templates/
+COPY --from=builder /build/templates templates/
 
 EXPOSE 8080
 
