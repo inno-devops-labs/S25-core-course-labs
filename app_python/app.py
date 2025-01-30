@@ -1,3 +1,5 @@
+﻿#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from datetime import datetime, timezone, timedelta
 from flask import Flask, render_template
 
@@ -13,4 +15,4 @@ def time_request():
 
 
 if __name__ == "__main__":
-    app.run(debug=False, host='0.0.0.0')
+    app.run(debug=False, host='0.0.0.0', port=5000)

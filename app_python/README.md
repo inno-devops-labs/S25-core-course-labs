@@ -42,3 +42,24 @@ python app.py
     
 The link will be in the terminal, or simply go to ``http://127.0.0.1:5000/`` to view the application.
 
+# Dedicated Docker section
+
+If you wish to simplify your downloading experience and you have `Docker`, then you may do the following:
+
+1. **Move to the application folder (app_python)**
+2. **Build the Docker container:**
+```bash
+docker build -t magel0n/moscowtimeimagepython:latest .
+```
+Feel free to change the name from my username to yours and change the name of the image.
+
+Also, if you wish not to download this repository at all, you may pull my image using this:
+```bash
+docker pull magel0n/moscowtimeimagepython
+```
+Please note that your image will default to ```docker.io/magel0n/moscowtimeimagepython:latest```,
+input that name for the next step if you chose this approach.
+3. **Run the docker container:**
+```bash
+docker run -p 5000:5000 magel0n/moscowtimeimagepython:latest 
+```

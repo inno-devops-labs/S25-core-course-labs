@@ -40,3 +40,24 @@ you may need to use the .exe file instead if you do not want to update the path 
     
 Go to ``http://127.0.0.1:8000/`` in your browser to view the application.
 
+# Dedicated Docker section
+
+If you wish to simplify your downloading experience and you have `Docker`, then you may do the following:
+
+1. **Move to the application folder (app_python)**
+2. **Build the Docker container:**
+```bash
+docker build -t magel0n/moscowtimeimagephp:latest .
+```
+Feel free to change the name from my username to yours and change the name of the image.
+
+Also, if you wish not to download this repository at all, you may pull my image using this:
+```bash
+docker pull magel0n/moscowtimeimagephp
+```
+Please note that your image will default to ```docker.io/magel0n/moscowtimeimagephp:latest```,
+input that name for the next step if you chose this approach.
+3. **Run the docker container:**
+```bash
+docker run -p 8000:8000 magel0n/moscowtimeimagephp:latest 
+```
