@@ -1,18 +1,14 @@
 # Docker Best Practices
 
 ## Security Enhancements
-- **No root user**: The container runs with a dedicated non-root user (`appuser`) to minimize security risks.
 - **Minimal base image**: We use `python:3.11-slim`, reducing attack surface and image size.
-- **Least privilege principle**: The application files are owned by `appuser` to prevent unauthorized access.
 
 ## Performance Improvements
 - **No-cache pip installs**: The `--no-cache-dir` option prevents unnecessary storage usage.
-- **Explicit file ownership**: `COPY --chown=appuser:appuser` ensures correct ownership of files.
 
 ## Dockerfile Best Practices
 - **Work directory setup**: We use `WORKDIR /app` instead of `cd` for better readability and consistency.
 - **Port exposure**: Explicitly exposing port `5000` for clarity.
-- **CMD instead of ENTRYPOINT**: Allows flexibility when running the container.
 
 ## Running the Container
 To build and run the Docker container:
