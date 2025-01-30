@@ -29,3 +29,8 @@
 ### Why Use Regular Images?
 - **Ease of Debugging**: Includes tools like `bash` and `curl`.
 - **Flexibility**: Easier to modify during development.
+
+### Some problems...
+In this case distroless image is bigger than the regular one  
+![image](https://github.com/user-attachments/assets/5217f5c9-7a00-4d93-ae40-60689273f7df)
+
