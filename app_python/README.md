@@ -10,7 +10,7 @@ This is a simple web application that displays the current time in Moscow. The a
 ## Local Installation
 
 ### Prerequisites
-- Python 3.x
+- Python 3.7+
 - Flask
 - pytz
 
@@ -24,3 +24,16 @@ This is a simple web application that displays the current time in Moscow. The a
    ```sh
    pip install -r requirements.txt
    python3 app.py
+
+## Docker
+
+### Clone and Build the Docker Image
+   ```sh
+    git clone https://github.com/Muhhhibullo/S25-core-course-labs.git
+    cd S25-core-course-labs.git/app_python
+    docker build -t lab2 .
+   ```
+### Pull and Run the Docker Image from Docker Hub
+   ```sh
+    docker pull deedjei/lab2
+    docker run -p 5000:5000 deedjei/lab2
