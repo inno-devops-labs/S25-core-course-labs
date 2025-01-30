@@ -20,4 +20,3 @@ FastAPI was chosen for this project for several reasons:
 2. **Type Hints**: Used Python type hints for better code clarity and IDE support.
 3. **Clean Code**: Followed PEP 8 style guide for Python code.
 4. **Separation of Concerns**: Structured HTML and styling separately from the Python logic.
-5. **Documentation**: Included clear comments and documentation.
