@@ -52,12 +52,10 @@
 
 4. **Run the Application**
    ```bash
-    python app.py
-    or 
-    python3 app.py
+   flask run -h 0.0.0.0 -p 3000
    ```
 
-5. **Open your browser and navigate to `http://localhost:5000`**
+5. **Open your browser and navigate to `http://localhost:3000`**
 
 ## 🧪 Testing
 
