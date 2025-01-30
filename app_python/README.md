@@ -1,0 +1,54 @@
+# Moscow Time Web Application
+
+## Overview
+
+Flask-based web application that displays current Moscow time (MSK) with automatic updates. Features both web interface
+and REST API.
+
+## Features
+
+- Real-time MSK time display
+- Auto-refresh every second
+- REST API endpoint
+- Minimalist UI
+- Timezone-aware calculations
+
+## Installation
+
+1. **Clone repository**:
+   ```bash
+   git clone https://github.com/EzzySoft/S25-core-course-labs.git
+   cd web-lab1/app_python
+   ```
+
+2. **Install dependencies:**:
+   ```bash
+   python3 -m venv venv
+   source ./venv/bin/activate
+   pip3 install -r requirements.txt
+   ```
+
+3. **Run application:**:
+   ```bash
+    python3 app.py
+   ```
+
+4. **Access in browser:**
+    ```
+   http://localhost:5000
+   ```
+
+## API Documentation
+
+### Get Current Time
+
+```http request
+GET /api/time/
+```
+### Response:
+
+```json
+{
+  "time":"19:41:37"
+}
+```
