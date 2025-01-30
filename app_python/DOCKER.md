@@ -1,6 +1,7 @@
 # 🐙 Dockerization of Python Web App
 
 ## 💪 Best Practices Implemented
+
 - **Rootless User**: Runs as a **non-root user** to enhance security.
 - **Slim Base Image**: Uses `python:3.12-alpine` for smaller size and efficiency.
 - **Layer Optimization**: Installs dependencies before copying the full application to leverage Docker layer caching.
@@ -11,16 +12,19 @@
 ## 🏰 How to Build & Run
 
 ### **🌟 Build the Docker Image**
+
 ```bash
 docker build -t em1999jay/moscow-time-app .
 ```
 
 ### **🌟 Run the Container**
+
 ```bash
 docker run -p 5000:5000 em1999jay/moscow-time-app
 ```
 
 ### **🌟 Pull the Image from Docker Hub**
+
 ```bash
 docker pull em1999jay/moscow-time-app:v1
 ```
@@ -28,6 +32,7 @@ docker pull em1999jay/moscow-time-app:v1
 ---
 
 ## 🧪 Distroless Findings
+
 - **What is Distroless?** Distroless images contain only the essential application and dependencies, minimizing security risks.
 - **Smaller Image Size**: The distroless image is significantly smaller than `python:3.12-alpine`, reducing deployment time.
 - **Security Enhancements**: Removes unnecessary OS components, making the container more secure.
@@ -38,17 +43,21 @@ docker pull em1999jay/moscow-time-app:v1
 ## 💪 Running the Fixed Distroless Container
 
 ### **🌟 Build the Distroless Image**
+
 ```bash
 docker build -t em1999jay/moscow-time-app-distroless -f distroless.Dockerfile .
 ```
 
 ### **🌟 Run the Distroless Container**
+
 ```bash
 docker run -p 5000:5000 em1999jay/moscow-time-app-distroless:v11
 ```
 
 ### **🌟 Compare Image Sizes**
+
 Run the following command to compare:
+
 ```bash
 docker images | grep moscow-time-app
 ```
@@ -56,9 +65,8 @@ docker images | grep moscow-time-app
 ---
 
 ## 📊 Image Size Comparison Screenshot
+
 ![Image Size Comparison](Screenshot.jpg)
-
-
 
 ### 📊 Analysis of Image Size Comparison
 
