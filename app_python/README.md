@@ -15,18 +15,19 @@ the user. The application is built using Flask.
 
 Make sure you have Python 3.x and libraries from requirements.txt installed on your system.
 
-## Installation
+## Docker
 
-1. **Clone the Repository:**
-   git clone https://github.com/Kartofanych/S25-core-course-labs.git
-2. **Install Dependencies:**
-   Install the required packages using the requirements.txt file:
-   ```
-   pip install -r requirements.txt
-   ```
-3. **Run the Application:**
-   ```
-   python app.py
-   ```
+### How to build?
+```
+podman build -t app_python .
+```
+
+### How to pull?
+```
+podman pull docker.io/kartofanych/app_python:latest
+```
    
-
+### How to run?
+```
+podman run -p 8080:8080 app_python
+```
