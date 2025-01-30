@@ -30,7 +30,7 @@ This web application displays the current time in Moscow using Flask.
      To build the Docker image, run:
            
 
-      docker build -t yourusername/app_python:latest .
+      docker build -t yourusername/app_python:latest 
      
 ### Pull the Image
    To pull the image from Docker Hub, run:
@@ -44,7 +44,13 @@ To run the Docker container, execute:
 
      docker run --rm yourusername/app_python:latest
      
-     
+    ## Distroless Image Version
+
+###   To build and run the Distroless version of the application, use:
+   
+
+      docker build -t username/app_python:distroless -f distroless.Dockerfile_extra
+      docker run --rm username/app_python:distroless    
 
 ## License
 This project is licensed under the MIT License.
