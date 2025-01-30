@@ -1,4 +1,4 @@
-# Django Moscow Time Web App
+# 
 
 ## Description
 A simple Django application that displays the current time in Moscow.
