@@ -20,12 +20,7 @@
     <body>
         <div class="time-container">
             <h2>Moscow time</h2>
-            <h1 id="time">Load time...</h1>
+            <h1>{{ time }}</h1>
         </div>
-        <script>
-            fetch('/api/time')
-                .then(response => response.json())
-                .then(data => {document.getElementById('time').textContent = data.time;});
-        </script>
     </body>
 </html>
