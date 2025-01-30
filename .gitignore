@@ -32,3 +32,13 @@ htmlcov/
 # System files
 .DS_Store
 Thumbs.db
+
+# Rust
+target/
+**/*.rs.bk
+*.pdb
+
+# Rust profiling and debugging
+flamegraph.svg
+perf.data
+perf.data.old
