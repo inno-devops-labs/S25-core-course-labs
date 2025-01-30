@@ -57,3 +57,25 @@ This web application displays the current time in Moscow using the Flask framewo
     ```
 
 7. Open the browser and go to `http://127.0.0.1:5000/` to check the app
+
+## Docker
+
+### Build the Docker Image
+
+To build the Docker image for this application, run the following command:
+
+   ```bash
+   docker build -f Dockerfile.python -t app-python .
+   ```
+
+### Run the Docker Image
+
+   ```bash
+   docker run --name app-python-container -p 5000:5000 app-python
+   ```
+
+### Pull the Docker Image
+
+   ```bash
+   docker pull your-docker-username/app-python:latest
+   ```
