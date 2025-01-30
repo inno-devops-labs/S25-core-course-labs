@@ -1,0 +1,18 @@
+# Python cache files
+__pycache__/
+
+# Virtual environment
+venv/
+
+# Compiled Python files
+*.pyc
+
+# IDE-specific files and directories
+.idea/
+.vscode/
+
+# Log files
+*.log
+
+# Environment variable files (e.g., .env for environment variables)
+.env
