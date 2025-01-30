@@ -95,3 +95,13 @@ python app.py
 ```
 Откройте браузер и перейдите по адресу http://127.0.0.1:5000/ чтобы увидеть текущее время в Москве.
 
+### Установка с помощью Docker
+
+```bash
+# pull образа
+docker pull gleb2005/flask-moscow-time:1.0
+# запуск образа
+docker run -p 5000:5000  gleb2005/flask-moscow-time:1.0
+# сборка образа
+docker build -t gleb2005/flask-moscow-time:1.0 .
+```
