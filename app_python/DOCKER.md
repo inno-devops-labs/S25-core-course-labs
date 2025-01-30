@@ -1,70 +1,116 @@
-# Docker Implementation Best Practices
+# Docker Implementation Guide
 
-## Docker Hub
+## Overview
+This document outlines the Docker implementation for the Moscow Time Display application, highlighting the best practices employed to ensure security, efficiency, and maintainability.
 
-The Docker image is available on Docker Hub:
-- Repository: [sergeipolin/moscow-time](https://hub.docker.com/r/sergeipolin/moscow-time)
+## Best Practices Implemented
 
-## Security Best Practices
+### 1. Security Best Practices
+- **Non-root User**
+  - Created dedicated non-root user `appuser` with specific UID/GID (1001)
+  - Restricted shell access using `/sbin/nologin`
+  - All processes run with limited privileges
+  - Explicit file permissions (755) for application files
 
-1. **Non-root User**
-   - Created a dedicated non-root user `appuser`
-   - Application runs with limited privileges
-   - Prevents potential security vulnerabilities
+- **Multi-stage Build**
+  - Separate builder stage for compilation and dependencies
+  - Final stage contains only runtime components
+  - Reduced attack surface and image size
 
-2. **Multi-stage Build**
-   - Uses a builder stage for compilation and dependencies
-   - Final image contains only necessary runtime components
-   - Significantly reduces attack surface
+- **Security Configurations**
+  - No sensitive data in image layers
+  - Proper file ownership and permissions
+  - Proxy headers handling for security behind reverse proxies
 
-## Image Optimization
+### 2. Image Optimization
+- **Base Image Selection**
+  - `python:3.11-slim-bullseye` for minimal footprint
+  - Specific version pinning for reproducibility
+  - Slim variant to reduce attack surface
 
-1. **Base Image Selection**
-   - Uses `python:3.11-slim-bullseye` for minimal footprint
-   - Slim variant reduces image size while maintaining functionality
-   - Specific version pinning for reproducibility
+- **Layer Optimization**
+  - Strategic layer ordering for optimal caching
+  - Minimal number of layers
+  - Combined RUN commands where appropriate
+  - Cleaned package manager caches
 
-2. **Layer Optimization**
-   - Requirements installed separately to leverage Docker cache
-   - Only necessary files copied to final image
-   - Proper ordering of layers for cache efficiency
+- **File Management**
+  - `.dockerignore` for excluding unnecessary files
+  - Selective file copying with explicit ownership
+  - Only production-required files included
 
-3. **File Selection**
-   - Implemented `.dockerignore` to exclude unnecessary files
-   - Only production-required files are copied
-   - Reduces build context size and final image size
+### 3. Build Time Optimizations
+- **Dependency Management**
+  - Requirements installed with `--no-cache-dir` and `--no-compile`
+  - Separate layer for pip installations
+  - Cleaned apt caches after package installation
 
-## Runtime Configuration
+- **Build Arguments and Labels**
+  - Build-time arguments for versioning
+  - OCI standard labels for metadata
+  - Source code reference and maintainer information
 
-1. **Environment Variables**
-   - `PYTHONDONTWRITEBYTECODE=1`: Prevents Python from writing bytecode
-   - `PYTHONUNBUFFERED=1`: Ensures Python output is sent straight to terminal
-   - Proper PATH configuration for the non-root user
+### 4. Runtime Optimizations
+- **Environment Configuration**
+  - `PYTHONDONTWRITEBYTECODE=1`: Prevents bytecode generation
+  - `PYTHONUNBUFFERED=1`: Unbuffered output
+  - `PYTHONPATH` and `PATH` properly configured
+  - Timezone setting for application functionality
 
-2. **Port Configuration**
-   - Explicit port exposure (8000)
-   - Clear documentation of network requirements
+- **Health Monitoring**
+  - Implemented HEALTHCHECK
+  - Regular health status monitoring
+  - Configurable check intervals and thresholds
 
-## Build and Runtime Optimization
+### 5. Container Runtime Security
+- **Process Isolation**
+  - Non-root user execution
+  - Limited file system access
+  - Explicit port exposure
 
-1. **Dependency Management**
-   - Dependencies installed with `--no-cache-dir` to reduce image size
-   - Requirements file copied first to leverage build cache
-   - System packages cleaned up after installation
+- **Resource Management**
+  - Clear port specifications
+  - Process running as non-privileged user
+  - Proper signal handling
 
-2. **File System Organization**
-   - Clear WORKDIR structure
-   - Proper ownership and permissions
-   - Organized file copying strategy
+## Usage Instructions
 
-## Development Considerations
+### Building the Image
+```bash
+# Build with build-time arguments
+docker build -t moscow-time \
+  --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
+  --build-arg VERSION=1.0 \
+  .
+```
 
-1. **Maintainability**
-   - Clear, documented Dockerfile
-   - Separation of build and runtime stages
-   - Consistent naming conventions
+### Running the Container
+```bash
+# Run with recommended settings
+docker run -d \
+  --name moscow-time \
+  -p 8000:8000 \
+  --security-opt no-new-privileges \
+  --cap-drop ALL \
+  moscow-time
+```
 
-2. **Reproducibility**
-   - Specific version pinning
-   - Deterministic build process
-   - Documented build and run procedures 
+### Health Check
+The container includes a health check that runs every 30 seconds:
+```bash
+# View container health status
+docker inspect --format='{{.State.Health.Status}}' moscow-time
+```
+
+## Security Considerations
+1. The container runs as a non-root user (UID 1001)
+2. Minimal base image to reduce attack surface
+3. No unnecessary packages or tools installed
+4. Proper file permissions and ownership
+5. Security-related flags enabled for runtime
+
+## Maintenance
+- Regular base image updates recommended
+- Monitor security advisories for dependencies
+- Review logs for health check status
+- Update build arguments for new versions
