@@ -8,15 +8,17 @@ A modern web application that displays the current time in Moscow, Russia, built
 - RESTful API endpoints
 - Type-safe implementation
 - Comprehensive error handling
+- Containerized deployment with Docker
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Python 3.8 or higher
-- pip (Python package installer)
+- Python 3.8 or higher (for local development)
+- Docker (for containerized deployment)
+- pip (Python package installer, for local development)
 
-### Installation
+### Local Installation
 
 1.Clone the repository:
 
@@ -40,7 +42,9 @@ pip install -r requirements.txt
 
 ### Running the Application
 
-1. Start the development server:
+#### Local Development
+
+1.Start the development server:
 
 ```bash
 python main.py
@@ -51,6 +55,62 @@ python main.py
 - Web Interface: <http://localhost:8000>
 - API Documentation: <http://localhost:8000/docs>
 
+## 🐳 Docker Deployment
+
+### Building the Image
+
+1.Build the Docker image locally:
+
+```bash
+docker build -t moscow-time \
+  --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
+  --build-arg VERSION=1.0 \
+  .
+```
+
+### Running with Docker
+
+1.Run the container with recommended security settings:
+
+```bash
+docker run -d \
+  --name moscow-time \
+  -p 8000:8000 \
+  --security-opt no-new-privileges \
+  --cap-drop ALL \
+  moscow-time
+```
+
+2.Access the application:
+
+- Web Interface: <http://localhost:8000>
+- API Documentation: <http://localhost:8000/docs>
+
+### Docker Management
+
+#### Health Check
+
+Monitor container health:
+
+```bash
+docker inspect --format='{{.State.Health.Status}}' moscow-time
+```
+
+#### Stop and Remove
+
+```bash
+docker stop moscow-time
+docker rm moscow-time
+```
+
+#### View Logs
+
+```bash
+docker logs moscow-time
+```
+
+For more detailed Docker implementation information, see [DOCKER.md](DOCKER.md).
+
 ## 🛠️ Technical Stack
 
 - **Backend Framework**: FastAPI
@@ -58,6 +118,7 @@ python main.py
 - **Time Management**: pytz
 - **Configuration**: pydantic-settings
 - **Development Server**: uvicorn
+- **Container Runtime**: Docker
 
 ## 📚 API Documentation
 
@@ -85,8 +146,11 @@ app_python/
 ├── main.py              # Main application file
 ├── config.py            # Configuration settings
 ├── requirements.txt     # Project dependencies
-├── .env                 # Environment variables
+├── Dockerfile          # Docker configuration
+├── .dockerignore       # Docker ignore rules
+├── .env                # Environment variables
 ├── README.md           # Project documentation
+├── DOCKER.md           # Docker best practices
 ├── PYTHON.md           # Python best practices
 ├── templates/          # HTML templates
 │   └── index.html     # Main page template
@@ -95,9 +159,10 @@ app_python/
 
 ## 👥 Author
 
-- Sergei Polin - Initial work
+- Sergei Polin
 
 ## 🙏 Acknowledgments
 
 - FastAPI team for the excellent framework
 - Python community for the amazing ecosystem
+- Docker team for container runtime
