@@ -7,7 +7,7 @@ This Flask-based web application displays the current time in Moscow.
 
 1. **Clone the Repository:**
    ```sh
-   git clone <repository-url>
+   git clone https://github.com/whatislav/S25-core-course-labs
    cd app_python
    ```
 2. **Create a Virtual Environment:**
