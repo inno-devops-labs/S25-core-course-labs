@@ -40,3 +40,28 @@ Open your browser and navigate to `http://localhost:5173`
 
 ## Development
 - Build for production: `npm run build`
+
+<img src="md_assets/image.png" width="800">
+
+
+# Docker Images
+
+## Standard Image
+```bash
+# Build
+docker build -t react-app .
+
+# Run
+docker run -p 3000:3000 react-app
+```
+
+## Distroless Version
+```bash
+# Build
+docker build -t react-app-distroless -f distroless.Dockerfile .
+
+# Run
+docker run -p 3000:3000 react-app-distroless
+```
+
+![alt text](md_assets/docker-comparison.png)

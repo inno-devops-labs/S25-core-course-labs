@@ -55,3 +55,22 @@ After running either local or Docker Hub image, access:
 - Web Interface: http://localhost:8000
 
 - API Documentation: http://localhost:8000/docs
+
+### Distroless Version
+
+A minimal, secure version of the container is available:
+
+```bash
+# Build
+docker build -t python-app-distroless -f distroless.Dockerfile .
+
+# Run
+docker run -p 8000:8000 python-app-distroless
+```
+
+The distroless version provides:
+- Smaller image size (73.5MB vs 154MB)
+
+- Enhanced security
+
+- Faster deployment

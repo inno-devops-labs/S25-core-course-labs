@@ -19,3 +19,16 @@ Document that outlines the Docker best practices implemented in project Dockerfi
 ## Environment
 - PYTHONDONTWRITEBYTECODE=1: Prevents Python from writing .pyc files
 - PYTHONUNBUFFERED=1: Ensures Python output is sent straight to terminal
+
+
+# Docker Implementation
+
+## Image Size Comparison
+
+- Standard image: 154MB
+
+- Distroless image: 73.5MB
+
+- Size reduction: ~52%
+
+![alt text](md_assets/image.png)
