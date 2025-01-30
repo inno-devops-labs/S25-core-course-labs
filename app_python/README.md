@@ -30,23 +30,21 @@ bash
 
      ### Build the Image
      To build the Docker image, run:
+           
+      ### bash
+      docker build -t yourusername/app_python:latest .
      
-bash
-     ```docker build -t yourusername/app_python:latest .````
+### Pull the Image
+   To pull the image from Docker Hub, run:
      
-
-     ### Pull the Image
-     To pull the image from Docker Hub, run:
+      bash
+     docker pull yourusername/app_python:latest
      
-bash
-     ```docker pull yourusername/app_python:latest```
+### Run the Image
+To run the Docker container, execute:
      
-
-     ### Run the Image
-     To run the Docker container, execute:
-     
-bash
-     ```docker run --rm yourusername/app_python:latest```
+      bash
+     docker run --rm yourusername/app_python:latest
      
      
 
