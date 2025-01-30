@@ -13,10 +13,28 @@ A simple web application built with FastAPI that displays the current time in Mo
 
 ## Prerequisites
 
+- Docker installed on your system
+OR
 - Python 3.8+
 - pip package manager
 
 ## Installation
+
+### Using Docker (Recommended)
+
+1. Pull the image from Docker Hub:
+
+    ```bash
+    docker pull haidarjbeily/moscow-time-app
+    ```
+
+2. Run the container:
+
+    ```bash
+    docker run -p 8000:8000 -t haidarjbeily/moscow-time-app
+    ```
+
+### Manual Installation
 
 1. Install dependencies:
 
@@ -28,6 +46,23 @@ A simple web application built with FastAPI that displays the current time in Mo
 
     ```bash
     uvicorn main:app --reload
+    ```
+
+### Building Docker Image Locally
+
+If you want to build the Docker image yourself:
+
+1. Clone the repository
+2. Build the image:
+
+    ```bash
+    docker build -t moscow-time-app .
+    ```
+
+3. Run the container:
+
+    ```bash
+    docker run -p 8000:8000 -t moscow-time-app
     ```
 
 ## Usage
