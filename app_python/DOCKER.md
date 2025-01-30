@@ -90,3 +90,5 @@
    - Optimized for production deployments
    - Better security posture
    - Faster container startup
+
+![Image Size Comparison](docker-sizes.png)
