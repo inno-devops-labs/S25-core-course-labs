@@ -36,7 +36,7 @@ This is a simple python web application that has a functionality of showing curr
 
 ## Docker
 
-This application also is containerised and there is to options of running container:
+This application also is containerised and there are two options of running container:
 
 1. Build and run the Docker image:
 
