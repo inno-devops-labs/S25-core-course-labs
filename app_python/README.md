@@ -19,22 +19,30 @@ This application uses the Flask framework to create a web server. When accessed,
 ---
 
 ## How to run
+
 - **Clone the repository:**
+
     ```bash
     git https://github.com/ThePinkPanther77/S25-core-course-labs.git
     cd S25-core-course-labs/app_python
     ```
-- **Install the dependencies:** 
+
+- **Install the dependencies:**
+
     ```bash
     pip install -r ./requirements.txt
     ```
+
 - **Run the application:**
-    ```bash 
+
+    ```bash
     flask --app main.py run
     ```
+
 - **Access the application:** Check the app by opening the browser and navigating to `http://127.0.0.1:5000`
 
 ## Docker
+
 This section explains how to build, pull, and run the containerized Flask application.
 
 ### 1. How to build the docker image?
@@ -57,10 +65,13 @@ docker pull hayderuni/moscow-time-flask
 ```
 
 ### 3. How to run the docker container?
+
 After building or pulling the docker image you can run it using the following command:
+
 ```bash
 docker run -p 5000:5000 [image_name]
 ```
+
 **Note:** If the image was pulled from Docker Hub, the name of the image should be: `hayderuni/moscow-time-flask`
 
 After running the the app should be running on `localhost:5000`
