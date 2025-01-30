@@ -35,3 +35,5 @@ A simple web application built with Actix-web that displays random inspirational
 - Open your web browser and navigate to `http://localhost:8080`
 - The application displays a random inspirational quote
 - Refresh the page to see a new quote
+
+![Random Quote App](usage.png)
