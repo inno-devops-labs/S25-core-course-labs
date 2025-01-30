@@ -1,0 +1,12 @@
+blinker==1.9.0
+certifi==2024.12.14
+charset-normalizer==2.0.12
+click==8.1.8
+Flask==3.1.0
+idna==3.10
+itsdangerous==2.2.0
+Jinja2==3.1.5
+MarkupSafe==3.0.2
+requests==2.26.0
+urllib3==1.26.20
+Werkzeug==3.1.3
