@@ -1,7 +1,7 @@
 # Docker Best Practices
 
 ## Introduction
-This file describes the Docker best practices implemented in the `app_python` containerization process. Following these best practices ensures security, performance, and maintainability.
+This file describes the Docker best practices implemented in the `app_js` containerization process. Following these best practices ensures security, performance, and maintainability.
 
 ## Best Practices
 
@@ -15,54 +15,31 @@ USER appuser
 ```
 
 ### 2. Use a Minimal and Specific Base Image
-
-- I used `python:3.9-slim` instead of a generic `python:latest` to reduce attack surface and image size.
+- I used `node:20-alpine` for the build stage and `gcr.io/distroless/nodejs20:nonroot` for the runtime stage
 
 ```dockerfile
-FROM python:3.9-slim
+FROM node:20-alpine AS builder
+
+FROM gcr.io/distroless/nodejs20:nonroot
 ```
 
 ### 3. Efficient Layer Management
-
 - The `COPY` command is used in a structured manner to optimize caching.
 - Dependencies are installed before copying the entire source code to avoid unnecessary rebuilds.
 
 ```dockerfile
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
+COPY package*.json ./  # Install dependencies first to optimize caching
+RUN npm ci --omit=dev   # Install only production dependencies
+COPY . .               # Copy the application code
 ```
 
-### 4. Use .dockerignore
-
-- A `.dockerignore` file is included to prevent unnecessary files from being copied, reducing image size and build time.
-
-```text
-
-```
-
-### 5. Expose Only Required Ports
-
-- Only the necessary port `(5000)` is exposed to reduce attack surface.
+### 4. Expose Only Required Ports
+- Only the necessary port `(3000)` is exposed to reduce the attack surface.
 
 ```dockerfile
-EXPOSE 5000
+EXPOSE 3000
 ```
 
-### 6. Define a Clear Entry Point
-
+### 5. Define a Clear Entry Point
 - The application is started using the `CMD` instruction to allow easy overriding.
 
-```dockerfile
-CMD ["python", "app.py"]
-```
-
-### 7. Use a Non-Blocking Command
-
-- The `CMD` command runs in the foreground to keep the container active without unnecessary background processes.
-
-
-
-## Conclusion
-
-Following these best practices results in a secure, lightweight, and maintainable Docker container. Additional improvements can include multi-stage builds and the use of Distroless images for further optimization.
