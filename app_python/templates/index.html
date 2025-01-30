@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moscow Time</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Current Local Time in Moscow, Russia</h1>
+        <div class="time-display">
+            {{ current_time.strftime('%H:%M:%S') }}
+        </div>
+        <div class="date-display">
+            {{ current_time.strftime('%A, %B %d, %Y') }}
+        </div>
+        <p class="refresh-note">For the latest time, please reload this page</p>
+    </div>
+</body>
+</html> 
