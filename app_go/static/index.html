@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <h1>Random Integer Generator</h1>
+
+    <script>
+        function GenerateNumber() {
+            var mindoc = document.getElementById("min")
+            var maxdoc = document.getElementById("max")
+            var min = mindoc.value
+            var max = maxdoc.value
+            
+            if (min > max
+                || min < 0
+                || max < 0) {
+                document.getElementById("generate").style.color='#FF0000'
+            } else {
+                document.getElementById("generate").style.color='#000000'
+                var result = min*1 + Math.floor(Math.random() * (max - min + 1))
+                document.getElementById("result").value = result
+            }
+        }
+    </script>
+</head>
+
+<body onload="random-generator.reset();">
+
+<form id="random-generator" autocomplete='off'>
+    <label for="max">Max:</label>
+    <input type="text"
+       style="width:100px; height:20px;" 
+       id="max"/>
+       <br><br>
+    <label for="min">Min:</label>
+    <input type="text"
+       style="width:100px; height:20px;"
+       id="min"/>
+    <br><br>
+    <label for="result">
+        <input type="button" id="generate" value="Generate" onclick="GenerateNumber();">
+    </label>
+    <input type="text"
+       style="width:100px; height:20px;"
+       id="result"/>
+</form>
+
+</body>
+
+</html>
