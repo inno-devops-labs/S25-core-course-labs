@@ -13,6 +13,5 @@ The project follows **best practices**, including:
 
 ## ⚡ Installation & Setup 
 - Clone the repository.
-- Install **requirements** from requirements.txt.
 - Open folder **app_js**.
 - Run **npm install** and **npm start**.
