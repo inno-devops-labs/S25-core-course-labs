@@ -80,10 +80,3 @@ app_python/
 
 ---
 
-**Key Updates:**  
-1. Added detailed Docker instructions for pull/build/run/push  
-2. Included security badges and practices  
-3. Streamlined project structure with Docker-related files  
-4. Explicitly linked to companion docs (`DOCKER.md`, `PYTHON.md`)  
-5. Added production vs development environment notes  
-
