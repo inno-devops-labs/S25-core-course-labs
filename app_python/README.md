@@ -9,7 +9,7 @@ A simple web application built with Flask that displays the current time timezon
 
 To prepare virtual environment run:
  
-`virtualenv venv`
+`virtualenv venv` or `python3 -m venv venv`
 
 `source venv/bin/activate`
 
@@ -28,9 +28,9 @@ Edit the `config.txt` file to set the time zone of interest. To do this, delete 
 Using the python interpreter in the console.
 In case of a configuration error, Moscow time is displayed.
 
-To disable debugging mode change the last line in `app.py`:
+To enable debugging mode change the last line in `app.py`:
 
-use `debug=False` instead `debug=True`.
+use `debug=True` instead `debug=False`.
 
 ## Using
 
