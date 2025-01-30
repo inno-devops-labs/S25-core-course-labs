@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Microsoft.AspNet.FriendlyUrls</name>
+  </assembly>
+  <members>
+    <member name="T:Microsoft.AspNet.FriendlyUrls.FriendlyUrl"></member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.FriendlyUrl.Href(System.String,System.Object[])"></member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.FriendlyUrl.Resolve(System.String)">
+      <summary> Преобразовывает виртуальный путь обработчика файлов в URL-адрес, удобный для поисковых систем, используя зарегистрированные сопоставители. </summary>
+      <returns>URL-адрес, удобный для поисковых систем.</returns>
+      <param name="virtualPath">Виртуальный путь обработчика.</param>
+    </member>
+    <member name="P:Microsoft.AspNet.FriendlyUrls.FriendlyUrl.Segments">
+      <summary> Сегменты URL, оставленные после того, как URL-адреса, удобные для поисковых систем, сопоставили этот запрос с файлом. </summary>
+    </member>
+    <member name="T:Microsoft.AspNet.FriendlyUrls.FriendlyUrlSettings">
+      <summary>Представляет параметры, используемые при включении URL-адресов, удобных для поисковых систем.</summary>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.FriendlyUrlSettings.#ctor">
+      <summary>Создает новый экземпляр класса FriendlyUrlSettings со значениями по умолчанию.</summary>
+    </member>
+    <member name="P:Microsoft.AspNet.FriendlyUrls.FriendlyUrlSettings.AutoRedirectMode">
+      <summary>Тип перенаправления, преобразовывающий URL-адреса, не подходящие для поисковых систем, в URL-адреса, удобные для поисковых систем. Значения по умолчанию выключены.</summary>
+    </member>
+    <member name="P:Microsoft.AspNet.FriendlyUrls.FriendlyUrlSettings.ResolverCachingMode"></member>
+    <member name="P:Microsoft.AspNet.FriendlyUrls.FriendlyUrlSettings.SwitchViewRouteName">
+      <summary>Имя маршрута, который обрабатывает запросы пользователей на переключения между представлениями. По умолчанию используется значение AspNet.FriendlyUrls.SwitchView.</summary>
+    </member>
+    <member name="P:Microsoft.AspNet.FriendlyUrls.FriendlyUrlSettings.SwitchViewUrl">
+      <summary>URL-адрес, на который отправляются запросы на переключения между представлениями. По умолчанию используется значение __FriendlyUrls_SwitchView/{представление}.</summary>
+    </member>
+    <member name="T:Microsoft.AspNet.FriendlyUrls.HttpRequestExtensions">
+      <summary>Предоставляет методы расширений для работы с URL-адресами, удобными для поисковых систем.</summary>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.HttpRequestExtensions.GetFriendlyUrlFileExtension(System.Web.HttpRequest)">
+      <summary> Возвращает расширение файла, с которыми URL-адреса, удобные для поисковых систем, сопоставили этот запрос. </summary>
+      <returns>Расширение файла, например .aspx.</returns>
+      <param name="httpRequest">Объект HttpRequest.</param>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.HttpRequestExtensions.GetFriendlyUrlFileExtension(System.Web.HttpRequestBase)">
+      <summary> Возвращает расширение файла, с которыми URL-адреса, удобные для поисковых систем, сопоставили этот запрос. </summary>
+      <returns>Расширение файла, например .aspx.</returns>
+      <param name="httpRequest">Объект HttpRequestBase.</param>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.HttpRequestExtensions.GetFriendlyUrlFileVirtualPath(System.Web.HttpRequest)">
+      <summary> Возвращает виртуальный путь файла, с которым URL-адреса, удобные для поисковых систем, сопоставили этот запрос. </summary>
+      <returns>Виртуальный путь файла.</returns>
+      <param name="httpRequest">Объект HttpRequest.</param>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.HttpRequestExtensions.GetFriendlyUrlFileVirtualPath(System.Web.HttpRequestBase)">
+      <summary> Возвращает виртуальный путь файла, с которым URL-адреса, удобные для поисковых систем, сопоставили этот запрос. </summary>
+      <returns>Виртуальный путь файла.</returns>
+      <param name="httpRequest">Объект HttpRequestBase.</param>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.HttpRequestExtensions.GetFriendlyUrlSegments(System.Web.HttpRequest)">
+      <summary> Возвращает сегменты URL-адреса, оставленные после того, как URL-адреса, удобные для поисковых систем, сопоставили этот запрос с файлом. </summary>
+      <returns>Сегменты URL-адреса.</returns>
+      <param name="httpRequest">Объект HttpRequest.</param>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.HttpRequestExtensions.GetFriendlyUrlSegments(System.Web.HttpRequestBase)">
+      <summary> Возвращает сегменты URL-адреса, оставленные после того, как URL-адреса, удобные для поисковых систем, сопоставили этот запрос с файлом. </summary>
+      <returns>Сегменты URL-адреса.</returns>
+      <param name="httpRequest">Объект HttpRequestBase.</param>
+    </member>
+    <member name="T:Microsoft.AspNet.FriendlyUrls.PreApplicationStartCode"></member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.PreApplicationStartCode.Start"></member>
+    <member name="T:Microsoft.AspNet.FriendlyUrls.RedirectMode">
+      <summary>Представляет режим перенаправления, который необходимо использовать во время автоматического перенаправления на URL-адреса, удобные для поисковых систем.</summary>
+    </member>
+    <member name="F:Microsoft.AspNet.FriendlyUrls.RedirectMode.Permanent">
+      <summary>Выполняет постоянное перенаправление (код ответа 301).</summary>
+    </member>
+    <member name="F:Microsoft.AspNet.FriendlyUrls.RedirectMode.Temporary">
+      <summary>Выполняет временное перенаправление (код ответа 302).</summary>
+    </member>
+    <member name="F:Microsoft.AspNet.FriendlyUrls.RedirectMode.Off">
+      <summary>Не выполняет автоматическое перенаправление (отключено).</summary>
+    </member>
+    <member name="T:Microsoft.AspNet.FriendlyUrls.ResolverCachingMode"></member>
+    <member name="F:Microsoft.AspNet.FriendlyUrls.ResolverCachingMode.Static">
+      <summary />
+    </member>
+    <member name="F:Microsoft.AspNet.FriendlyUrls.ResolverCachingMode.Dynamic">
+      <summary />
+    </member>
+    <member name="F:Microsoft.AspNet.FriendlyUrls.ResolverCachingMode.Disabled">
+      <summary />
+    </member>
+    <member name="T:Microsoft.AspNet.FriendlyUrls.RouteCollectionExtensions"></member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.RouteCollectionExtensions.EnableFriendlyUrls(System.Web.Routing.RouteCollection)">
+      <summary> Включает URL-адреса, удобные для поисковых систем, для страниц веб-форм. </summary>
+      <param name="routes">Коллекция маршрутов.</param>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.RouteCollectionExtensions.EnableFriendlyUrls(System.Web.Routing.RouteCollection,Microsoft.AspNet.FriendlyUrls.FriendlyUrlSettings)">
+      <summary>Включает URL-адреса, удобные для поисковых систем, для страниц веб-форм.</summary>
+      <param name="routes">Коллекция маршрутов.</param>
+      <param name="settings">Параметры, которые необходимо использовать при включении URL-адресов, удобных для поисковых систем.</param>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.RouteCollectionExtensions.EnableFriendlyUrls(System.Web.Routing.RouteCollection,Microsoft.AspNet.FriendlyUrls.FriendlyUrlSettings,Microsoft.AspNet.FriendlyUrls.Resolvers.IFriendlyUrlResolver[])">
+      <summary> Включает URL-адреса, удобные для поисковых систем, используя пройденные сопоставители. </summary>
+      <param name="routes">Коллекция маршрутов.</param>
+      <param name="settings">Параметры, которые необходимо использовать при включении URL-адресов, удобных для поисковых систем.</param>
+      <param name="resolvers">Используемые сопоставители URL-адресов, удобных для поисковых систем.</param>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.RouteCollectionExtensions.EnableFriendlyUrls(System.Web.Routing.RouteCollection,Microsoft.AspNet.FriendlyUrls.Resolvers.IFriendlyUrlResolver[])">
+      <summary> Включает URL-адреса, удобные для поисковых систем используя указанные сопоставители. </summary>
+      <param name="routes">Коллекция маршрутов.</param>
+      <param name="resolvers">Используемые сопоставители URL-адресов, удобных для поисковых систем.</param>
+    </member>
+    <member name="T:Microsoft.AspNet.FriendlyUrls.Resolvers.FriendlyUrlResolver">
+      <summary>Сопоставляет URL-адрес, удобный для поисковых систем, для обработчика HTTP-данных.</summary>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.Resolvers.FriendlyUrlResolver.#ctor(System.String)">
+      <summary>Создает сопоставитель FriendlyUrlResolver для предоставленного расширения.</summary>
+      <param name="fileExtension">Расширение физического файла, понятное для этого сопоставителя. Расширение должно содержать точку в начале, например «.aspx».</param>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.Resolvers.FriendlyUrlResolver.ConvertToFriendlyUrl(System.String)">
+      <summary>Преобразует обычный URL-адрес с расширением в URL-адрес, удобный для поисковых систем, без расширения.</summary>
+      <returns>URL-адрес, удобный для поисковых систем (без расширения), если этот сопоставитель может автоматически сопоставлять URL-адреса без расширения с физическими файлами с предоставленным расширением. В противном случае — Null.</returns>
+      <param name="path">Исходный путь, содержащий расширение файла.</param>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.Resolvers.FriendlyUrlResolver.GetExtensions(System.Web.HttpContextBase)">
+      <summary>Получает расширения, которые необходимо использовать, при сопоставлении обработчика HTTP-данных из URL-адреса, удобного для поисковых систем, например .aspx, .ashx, .mobile.aspx</summary>
+      <returns>Список расширений.</returns>
+      <param name="httpContext">Текущий объект HttpContext.</param>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.Resolvers.FriendlyUrlResolver.PreprocessRequest(System.Web.HttpContextBase,System.Web.IHttpHandler)"></member>
+    <member name="T:Microsoft.AspNet.FriendlyUrls.Resolvers.GenericHandlerFriendlyUrlResolver">
+      <summary>Преобразовывает URL-адреса, удобные для поисковых систем, для универсальных обработчиков, т.е. в файлы *.ashx.</summary>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.Resolvers.GenericHandlerFriendlyUrlResolver.#ctor"></member>
+    <member name="T:Microsoft.AspNet.FriendlyUrls.Resolvers.IFriendlyUrlResolver"></member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.Resolvers.IFriendlyUrlResolver.ConvertToFriendlyUrl(System.String)"></member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.Resolvers.IFriendlyUrlResolver.GetExtensions(System.Web.HttpContextBase)"></member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.Resolvers.IFriendlyUrlResolver.PreprocessRequest(System.Web.HttpContextBase,System.Web.IHttpHandler)"></member>
+    <member name="T:Microsoft.AspNet.FriendlyUrls.Resolvers.WebFormsFriendlyUrlResolver">
+      <summary>Преобразовывает URL-адреса, удобные для поисковых систем, в страницы веб-форм.</summary>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.Resolvers.WebFormsFriendlyUrlResolver.#ctor"></member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.Resolvers.WebFormsFriendlyUrlResolver.GetExtensions(System.Web.HttpContextBase)">
+      <returns>Возвращает значение <see cref="T:System.Collections.Generic.IList`1" />.</returns>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.Resolvers.WebFormsFriendlyUrlResolver.IsMobileExtension(System.Web.HttpContextBase,System.String)">
+      <returns>Возвращает значение <see cref="T:System.Boolean" />.</returns>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.Resolvers.WebFormsFriendlyUrlResolver.IsMobileView(System.Web.HttpContextBase)">
+      <summary>Определяет, с учетом браузера клиента, преобразованы и/или переопределены ли текущие URL-адреса, удобные для поисковых систем, в представление для мобильных устройств.</summary>
+      <returns>Является ли текущее представление представлением для мобильных устройств.</returns>
+      <param name="httpContext">Страница.</param>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.Resolvers.WebFormsFriendlyUrlResolver.PreprocessRequest(System.Web.HttpContextBase,System.Web.IHttpHandler)"></member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.Resolvers.WebFormsFriendlyUrlResolver.TrySetMasterPageFile(System.Web.UI.Page,System.String)">
+      <summary>Пытается установить свойство MasterPageFile для заданной страницы на основании существования главной страницы.</summary>
+      <returns>Логическое значение, указывающее, была ли установлена главная страница.</returns>
+      <param name="page">Страница.</param>
+      <param name="masterPageFile">Виртуальный путь к файлу главной страницы.</param>
+    </member>
+    <member name="M:Microsoft.AspNet.FriendlyUrls.Resolvers.WebFormsFriendlyUrlResolver.TrySetMobileMasterPage(System.Web.HttpContextBase,System.Web.UI.Page,System.String)">
+      <summary>Пытается установить свойство MasterPageFile для заданной страницы на главной странице, предназначенной для мобильных устройств.</summary>
+      <returns>Логическое значение, указывающее, была ли установлена главная страница.</returns>
+      <param name="httpContext">Контекст HTTP.</param>
+      <param name="page">Страница.</param>
+    </member>
+    <member name="F:Microsoft.AspNet.FriendlyUrls.Resolvers.WebFormsFriendlyUrlResolver.ViewSwitcherCookieName"></member>
+  </members>
+</doc>
