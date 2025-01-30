@@ -1,6 +1,7 @@
 #include <time.h>
 #include <mongoose.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 const int TIMEZONE = 3;
 
