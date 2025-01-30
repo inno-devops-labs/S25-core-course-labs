@@ -51,3 +51,42 @@
 - Slim-based minimal image
 - No unnecessary packages
 - Pinned base image with SHA256 hash for reproducibility
+
+## Distroless Image Comparison
+
+### Image Size Comparison
+
+#### Regular Docker Image
+
+- Base: python:3.11-slim
+- Size: ~141MB
+- Contains: Python runtime, pip, shell, package manager
+
+#### Distroless Image
+
+- Base: gcr.io/distroless/python3-debian11
+- Size: ~92MB
+- Contains: Only Python runtime and necessary libraries
+
+## Key Differences
+
+1. **Reduced Attack Surface**
+   - No shell access
+   - No package manager
+   - No unnecessary system tools
+   - Minimal system libraries
+
+2. **Security Benefits**
+   - Smaller attack surface
+   - No ability to install additional packages
+   - Reduced vulnerability footprint
+
+3. **Size Optimization**
+   - Only includes required runtime components
+   - No development tools or debugging utilities
+   - Efficient multi-stage build process
+
+4. **Production Ready**
+   - Optimized for production deployments
+   - Better security posture
+   - Faster container startup
