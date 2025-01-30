@@ -15,7 +15,7 @@ This web application displays the current time in Moscow using the Flask framewo
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-repo-name.git
+    git clone git clone https://github.com/Friedox/S25-core-course-labs.git
     ```
 
 2. Navigate to the project directory:
