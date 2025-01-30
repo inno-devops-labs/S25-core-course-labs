@@ -9,6 +9,7 @@
 ## Best practices
 
 - Type linter in the IDE is used to check for potential type errors.
-- TzInfo is used. Who knows what kind of deranged regulations might be applied to this time zone in the future?
+- TzInfo is used. Who knows what kind of deranged regulations might be applied to Moscow time zone in the future?
 - Ruff is used for linting and formatting (code readability is important). It's same as Black but faster (and contains isort and flake8 functionality as well)
 - Since the code is time sensitive, I've moved the time retrieving logic to a separate class and mocked its response in the tests that are not related to the time retrieving logic itself.
+- venv is proposed to the user as a way to isolate dependencies.
