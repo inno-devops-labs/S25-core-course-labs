@@ -1,0 +1,6 @@
+ktor:
+    application:
+        modules:
+            - ru.nai1ka.ApplicationKt.module
+    deployment:
+        port: 8080
