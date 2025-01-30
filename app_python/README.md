@@ -8,13 +8,11 @@ This web application displays the current time in Moscow using Flask.
 2. Navigate to the app_python directory.
 3. Install dependencies:
    
-bash
-   ```pip install -r requirements.txt```
+           pip install -r requirements.txt
    
 4. Run the application:
    
-bash
-   ```python app.py```
+         python app.py
    
 
 ## Requirements
@@ -31,19 +29,19 @@ bash
      ### Build the Image
      To build the Docker image, run:
            
-      ### bash
+
       docker build -t yourusername/app_python:latest .
      
 ### Pull the Image
    To pull the image from Docker Hub, run:
      
-      bash
+
      docker pull yourusername/app_python:latest
      
 ### Run the Image
 To run the Docker container, execute:
      
-      bash
+
      docker run --rm yourusername/app_python:latest
      
      
