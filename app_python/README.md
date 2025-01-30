@@ -24,6 +24,10 @@ This application uses the Flask framework to create a web server. When accessed,
     git https://github.com/ThePinkPanther77/S25-core-course-labs.git
     cd S25-core-course-labs/app_python
     ```
+- **Install the dependencies:** 
+    ```bash
+    pip install -r ./requirements.txt
+    ```
 - **Run the application:**
     ```bash 
     flask --app main.py run
