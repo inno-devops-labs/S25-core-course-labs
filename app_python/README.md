@@ -19,17 +19,24 @@ This application uses the Flask framework to create a web server. When accessed,
 ---
 
 ## How to run
+
 - **Clone the repository:**
+
     ```bash
     git https://github.com/ThePinkPanther77/S25-core-course-labs.git
     cd S25-core-course-labs/app_python
     ```
-- **Install the dependencies:** 
+
+- **Install the dependencies:**
+
     ```bash
     pip install -r ./requirements.txt
     ```
+
 - **Run the application:**
-    ```bash 
+
+    ```bash
     flask --app main.py run
     ```
+
 - **Access the application:** Check the app by opening the browser and navigating to `http://127.0.0.1:5000`
