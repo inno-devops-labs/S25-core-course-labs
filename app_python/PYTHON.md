@@ -48,19 +48,19 @@ FastAPI was chosen as the web framework for this application for several key rea
 
 ## Development Setup
 
-1. Install dependencies:
+1.Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Run the application:
+2.Run the application:
 
 ```bash
 python main.py
 ```
 
-4. Access the application:
+3.Access the application:
 
 - Web Interface: <http://localhost:8000>
 - API Documentation: <http://localhost:8000/docs>
