@@ -37,4 +37,25 @@ pip install -r requirements.txt
 
 # Run application
 python app.py
+```
+
+### Using Docker
+
+You can build the image locally:
+
+```bash
+docker build -t moscow-time-app .
+```
+
+Or pull it from Dockerhub:
+
+```bash
+docker pull pr0ventu5/moscow-time-app
+```
+
+To run the container, use the following command (PORT environment variable can be specified, by default it is 8080):
+
+```bash
+docker run -p 8080:8080 moscow-time-app:latest
+```
 
