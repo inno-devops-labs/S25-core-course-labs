@@ -15,7 +15,6 @@ Before running the application, ensure you have the following installed:
 ---
 
 
-
 ## Installation & Usage
 ---
 1. Clone the repository:
@@ -36,7 +35,32 @@ Before running the application, ensure you have the following installed:
 
 4. Open the application in your browser:
     ```
-    http://127.0.0.1:5000
+    http://127.0.0.1:9200
+    ```
+
+---
+
+
+## Docker usage
+---
+1. Build image
+    ```bash
+    docker build -t devopsapp .
+    ```
+
+2. Install dependencies:
+    ```bash
+    docker pull daniilzimin4/devopsapp:latest
+    ```
+
+3. Run:
+    ```bash
+    docker run -p 9200:9200 daniilzimin4/devopsapp:latest
+    ```
+
+4. Open in browser:
+    ```
+    http://127.0.0.1:9200
     ```
 
 ---
