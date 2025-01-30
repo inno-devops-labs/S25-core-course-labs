@@ -1,5 +1,3 @@
-# Python MSK Time Application
-
 ## Overview
 
 A simple Python web application built with Flask that displays the current time in Moscow (MSK). The time updates upon every page refresh.
@@ -14,14 +12,14 @@ A simple Python web application built with Flask that displays the current time 
 
 1. **Clone the repository**:
 
-   ```bash
+   ```
    git clone https://github.com/MohamadSafi/S25-core-course-labs.git
    cd S25-core-course-labs
    ```
 
 2. **Create and activate a virtual environment** (recommended):
 
-   ```bash
+   ```
    python -m venv venv
    source venv/bin/activate  # Linux/Mac
    # or
@@ -30,7 +28,7 @@ A simple Python web application built with Flask that displays the current time 
 
 3. **Install dependencies**:
 
-   ```bash
+   ```
    pip install -r requirements.txt
    ```
 
@@ -38,10 +36,46 @@ A simple Python web application built with Flask that displays the current time 
 
 1. **Run the Flask application**:
 
-   ```bash
+   ```
    python main.py
    ```
 
-2. **Open a browser** at http://127.0.0.1:5000/ (default Flask port).
+2. **Open a browser** at http://127.0.0.1:5050 (if Flask is configured to run on port 5050).
 
    You should see the current time in Moscow displayed. Refresh the page to watch it update.
+
+## Docker
+
+### Build the Docker Image
+
+To containerize the application, build the Docker image:
+
+```
+docker build -t billyboone/python-moscow-time:latest .
+```
+
+### Run the Docker Container
+
+To run the container locally:
+
+```
+docker run --rm -p 5050:5050 billyboone/python-moscow-time:latest
+```
+
+Then open your browser at:
+
+- **http://127.0.0.1:5050**
+
+### Push the Docker Image to Docker Hub
+
+If you want to push your image to Docker Hub:
+
+### Pull and Run from Docker Hub
+
+To pull and run the container from Docker Hub on another machine:
+
+```
+docker pull billyboone/python-moscow-time:latest
+
+docker run --rm -p 5050:5050 billyboone/python-moscow-time:latest
+```
