@@ -4,13 +4,13 @@
 
 - **Create and use a non-root user:** A non-root user was created to avoid running the container as root increasing the security
 
-- **Switch to the non-root user:** Switching to the non-root user created to ensure all commands are executed throgh that user
+- **Switch to the non-root user:** Switching to the non-root user created to ensure all commands are executed through that user
 
-- **Set a dedicated working directory:** Setting a work directory to organize the files with the container
+- **Set a dedicated working directory:** Setting a work directory to organize the files within the container
 
-- **Copy files with the correct ownership:** Giving permissions to the right user, ensuring that the user can access and modify the files
+- **Copy files with the correct ownership:** Giving permissions to the right user, ensuring that the user can access and modify certain files
 
-- **Copy necessary files only:** Which imporves layers sanity
+- **Copy necessary files only:** Imporves layers sanity
 
 - **Install dependencies efficiently:** Installing dependencies while ensuring that no caching is being done to reduce the size of the final image
 
