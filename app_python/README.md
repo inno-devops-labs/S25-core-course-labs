@@ -31,3 +31,22 @@ This Flask-based web application displays the current time in Moscow.
 - `services/get_time_service.py` - Service class handling time retrieval.
 - `config.py` - Stores configuration settings (timezone).
 - `templates/current_time.html` - HTML template for displaying time.
+
+
+### Docker Support
+
+#### How to Build the Docker Image:
+```sh
+docker build -t moscow-time-app .
+```
+
+#### How to Run the Container:
+```sh
+docker run -p 5000:5000 moscow-time-app
+```
+
+#### How to Pull and Run from Docker Hub:
+```sh
+docker pull whatislav/moscow-time-app:1.0
+docker run -p 5000:5000 whatislav/moscow-time-app:1.0
+```
