@@ -9,6 +9,7 @@ moscow_tz = pytz.timezone('Europe/Moscow')
 
 TIME_API_URL = "https://www.timeapi.io/api/time/current/zone?timeZone=Europe%2FMoscow"
 
+
 def get_time_from_api():
     try:
         response = requests.get(TIME_API_URL, timeout=5)

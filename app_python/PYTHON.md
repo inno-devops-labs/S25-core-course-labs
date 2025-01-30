@@ -25,6 +25,18 @@ The web application performs the following steps:
 - **Separation of concerns**: The business logic (Flask app) is kept separate from the presentation layer (HTML and JavaScript).
 
 
+## Coding Standards and Code Quality
+
+- **Flake8**: I used **Flake8** to check for PEP8 compliance and catch potential issues in the code, ensuring high-quality, error-free code.
+- **Requests Library**: For API interactions, I used the **requests** library to handle HTTP requests, ensuring easy error handling and reliable communication with external services.
+
+## Testing
+
+- **Manual Testing**: I tested the application by running it locally and checking the displayed time in Moscow through the browser.
+- **Automatic Time Update**: I ensured that the time is updated every second, without needing to refresh the page.
+- **Fallback Testing**: I tested the error handling by simulating a failure to fetch time from the API (disabling internet access) and verified that the server time was returned as a fallback.
+- **Code Coverage**: Although not automated in this simple application, the code is structured to be easily testable, with external dependencies isolated and clear return values.
+
 ## Start the application
 
 `pip install Flask requests pytz`
