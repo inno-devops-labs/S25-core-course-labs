@@ -1,0 +1,6 @@
+.git
+.gitignore
+**.md
+__pycache__
+.venv
+**.png
