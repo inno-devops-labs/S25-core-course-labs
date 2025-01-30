@@ -28,7 +28,7 @@
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/TimurZheksimbaev/S25-core-course-labs/tree/lab1
+   git clone https://github.com/TimurZheksimbaev/S25-core-course-labs.git
    cd app_python
    ```
 
@@ -52,9 +52,9 @@
 
 4. **Run the Application**
    ```bash
-    python main.py
+    python app.py
     or 
-    python3 main.py
+    python3 app.py
    ```
 
 5. **Open your browser and navigate to `http://localhost:5000`**
