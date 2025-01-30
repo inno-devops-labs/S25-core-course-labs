@@ -1,0 +1,4 @@
+Flask==2.0.1
+Werkzeug==2.0.3
+pytz==2021.3
+pytest==7.1.2
