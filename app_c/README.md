@@ -69,6 +69,7 @@ app.exe 127.0.0.1:8080
 ```bash
 ./app 127.0.0.1:8080
 ```
+
 The app.exe/app will be the name of your built binary file, if you changed it
 in building, make sure to change it here too.
 
