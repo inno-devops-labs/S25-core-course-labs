@@ -48,3 +48,48 @@ This application serves an HTML page displaying the current time in **Moscow (MS
     ```bash
     http://127.0.0.1:8000/time/moscow
     ```
+
+## Docker
+
+### Introduction
+The application can be containerized using Docker to ensure consistency across different environments. This section provides instructions on how to build, pull, and run the Docker image.
+
+### How to Build?
+
+To build the Docker image, navigate to the `app_python` directory and run the following command:
+
+```bash
+docker build -t region-time-api .
+```
+
+### How to Pull?
+
+You can pull the project from Dockerhub, example in my case:
+
+```bash
+docker pull nickwidbestie/region-time-api:latest
+```
+
+### How to Run?
+
+#### Running Pulled Image
+
+After pulling the image, you can run it with the following command.
+
+```bash
+docker run -d -p 80:80 nickwidbestie/region-time-api:latest
+```
+
+#### Running Locally Built Image
+
+After building the image locally, you can run it with the following command:
+
+```bash
+docker run -d -p 80:80 region-time-api
+```
+
+Once the container is running, you can access the application at:
+
+```bash
+http://localhost/time/moscow
+```
