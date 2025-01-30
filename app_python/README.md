@@ -40,3 +40,37 @@ Once the application is running, you can access it via:
 - **API Endpoint:** `http://127.0.0.1:8000` (or another specified host/port)
 - **Interactive API Documentation:**
   - Swagger UI: `http://127.0.0.1:8000/docs`
+
+## Docker Instructions
+
+This application can be built and run as a Docker container.
+
+### Build the Docker Image
+
+To build the Docker image, run:
+
+```bash
+docker build -t my-fastapi-app .
+```
+
+### Run the Docker Container
+
+To run the container:
+
+```bash
+docker run -d -p 8000:8000 my-fastapi-app
+```
+
+### Pull the Docker Image
+
+If you have pushed your Docker image to Docker Hub, pull it using:
+
+```bash
+docker pull karamkhaddourpro/my-fastapi-app
+```
+
+### Running the Pulled Image
+
+```bash
+docker run -d -p 8000:8000 karamkhaddourpro/my-fastapi-app
+```
