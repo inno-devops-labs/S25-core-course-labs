@@ -18,11 +18,9 @@ COPY app.py .
 # Use Distroless as the runtime image
 FROM gcr.io/distroless/python3-debian12:nonroot AS runtime
 
-# Copy application files and user info from builder
+# Copy application files from builder
 WORKDIR /app
 COPY --from=builder /app /app
-COPY --from=builder /etc/passwd /etc/passwd
-COPY --from=builder /etc/group /etc/group
 COPY --from=builder /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.11/site-packages
 ENV PYTHONPATH=/usr/local/lib/python3.11/site-packages
 
