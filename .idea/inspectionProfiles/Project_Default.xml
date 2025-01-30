@@ -1,0 +1,68 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="41">
+            <item index="0" class="java.lang.String" itemvalue="referencing" />
+            <item index="1" class="java.lang.String" itemvalue="protobuf" />
+            <item index="2" class="java.lang.String" itemvalue="pydeck" />
+            <item index="3" class="java.lang.String" itemvalue="smmap" />
+            <item index="4" class="java.lang.String" itemvalue="python-dateutil" />
+            <item index="5" class="java.lang.String" itemvalue="numpy" />
+            <item index="6" class="java.lang.String" itemvalue="requests" />
+            <item index="7" class="java.lang.String" itemvalue="gitdb" />
+            <item index="8" class="java.lang.String" itemvalue="st-star-rating" />
+            <item index="9" class="java.lang.String" itemvalue="markupsafe" />
+            <item index="10" class="java.lang.String" itemvalue="markdown-it-py" />
+            <item index="11" class="java.lang.String" itemvalue="jsonschema-specifications" />
+            <item index="12" class="java.lang.String" itemvalue="rpds-py" />
+            <item index="13" class="java.lang.String" itemvalue="mdurl" />
+            <item index="14" class="java.lang.String" itemvalue="certifi" />
+            <item index="15" class="java.lang.String" itemvalue="tenacity" />
+            <item index="16" class="java.lang.String" itemvalue="urllib3" />
+            <item index="17" class="java.lang.String" itemvalue="gitpython" />
+            <item index="18" class="java.lang.String" itemvalue="jsonschema" />
+            <item index="19" class="java.lang.String" itemvalue="pygments" />
+            <item index="20" class="java.lang.String" itemvalue="blinker" />
+            <item index="21" class="java.lang.String" itemvalue="pyarrow" />
+            <item index="22" class="java.lang.String" itemvalue="six" />
+            <item index="23" class="java.lang.String" itemvalue="tornado" />
+            <item index="24" class="java.lang.String" itemvalue="streamlit" />
+            <item index="25" class="java.lang.String" itemvalue="tzdata" />
+            <item index="26" class="java.lang.String" itemvalue="rich" />
+            <item index="27" class="java.lang.String" itemvalue="packaging" />
+            <item index="28" class="java.lang.String" itemvalue="typing-extensions" />
+            <item index="29" class="java.lang.String" itemvalue="toml" />
+            <item index="30" class="java.lang.String" itemvalue="click" />
+            <item index="31" class="java.lang.String" itemvalue="attrs" />
+            <item index="32" class="java.lang.String" itemvalue="altair" />
+            <item index="33" class="java.lang.String" itemvalue="jinja2" />
+            <item index="34" class="java.lang.String" itemvalue="pandas" />
+            <item index="35" class="java.lang.String" itemvalue="toolz" />
+            <item index="36" class="java.lang.String" itemvalue="charset-normalizer" />
+            <item index="37" class="java.lang.String" itemvalue="cachetools" />
+            <item index="38" class="java.lang.String" itemvalue="pillow" />
+            <item index="39" class="java.lang.String" itemvalue="pytz" />
+            <item index="40" class="java.lang.String" itemvalue="idna" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N803" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="dict.*" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
