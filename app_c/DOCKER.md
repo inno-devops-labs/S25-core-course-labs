@@ -44,3 +44,21 @@ I have implemented the following Docker best practices:
   User is changed from root
 
   Working directory is specified using full path
+
+## Difference between distro and distroless
+
+Surprisingly, the distroless image was larger that the normal
+one:
+
+![sizes of images](Image sizes.png)
+
+In this case, I think it is because there were some problems
+with the build and previous image was included somehow, even
+though that is not supposed to happen.
+
+The main thing about distroless images is that they do not
+contain an operating system. That means that they generally
+require less space, have less attack vectors, and are more
+specialized.
+
+ 

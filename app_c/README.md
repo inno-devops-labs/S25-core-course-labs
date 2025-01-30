@@ -75,3 +75,15 @@ in building, make sure to change it here too.
 
 After hosting, you can connect to the web app from any browser using
 the provided ip and port, which will also be shown in the terminal.
+
+### Distroless Docker
+
+### Building the image
+
+From the command line, inside the repository directory, run
+
+```batch
+docker build -f distroless.Dockerfile -t c_msk_time_distroless:latest .
+```
+
+Running the image is the same as with regular Docker, just replace the image name

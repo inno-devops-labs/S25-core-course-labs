@@ -1,2 +1,2 @@
-Flask
-waitress
+Flask==3.0.3
+waitress==3.0.2

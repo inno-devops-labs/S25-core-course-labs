@@ -44,3 +44,13 @@ I have implemented the following Docker best practices:
   User is changed from root
 
   Working directory is specified using full path
+
+## Difference between distro and distroless
+Surprisingly, the distroless image was larger that the normal
+one:
+
+![sizes of images](Image sizes.png)
+
+In this case, this is because originally, I was using scratch
+image, so there was literally nothing there. Now, there are some
+unnecessary tools that bloated the size of the image a bit

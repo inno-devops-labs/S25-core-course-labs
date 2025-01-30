@@ -97,3 +97,15 @@ docker run -p 8000:8000 -t docker.io/tedor49/python_msk_time:latest
 ```
 
 depending on whether you built or pulled the image.
+
+### Distroless Docker
+
+### Building the image
+
+From the command line, inside the repository directory, run
+
+```batch
+docker build -f distroless.Dockerfile -t python_msk_time_distroless:latest .
+```
+
+Running the image is the same as with regular Docker, just replace the image name
