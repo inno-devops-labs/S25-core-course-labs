@@ -35,3 +35,5 @@ A simple web application built with FastAPI that displays the current time in Mo
 - Open your web browser and navigate to `http://localhost:8000`.
 - The application displays the current time in Moscow.
 - The time is updated automatically when the page is refreshed.
+
+![Moscow Time App](usage.png)
