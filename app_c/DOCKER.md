@@ -50,7 +50,7 @@ I have implemented the following Docker best practices:
 Surprisingly, the distroless image was larger that the normal
 one:
 
-![sizes of images](Image sizes.png)
+![Image sizes](https://github.com/user-attachments/assets/ade5a061-8cdf-4605-bb21-09db23fa1296)
 
 In this case, I think it is because there were some problems
 with the build and previous image was included somehow, even
