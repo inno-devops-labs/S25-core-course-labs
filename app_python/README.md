@@ -33,16 +33,23 @@ This application provides an endpoint that displays the current Moscow time. It'
     ```
 
 ## Usage
+1. **Build docker image**
 
-1. **Run the FastAPI server:**
+    For this you'll need a docker runing in your environment
 
     ```bash
-    python run.py
+    docker build --no-cache -t time_app .
     ```
 
-2. **Access the main endpoint:**
+2. **Run the FastAPI server:**
 
-    Visit `http://127.0.0.1:8000` to see the current Moscow time displayed.
+    ```bash
+    docker run -d -p 8000:8000 time_app
+    ```
+
+3. **Access the main endpoint:**
+
+    Visit `http://localhost:8000` to see the current Moscow time displayed.
 
 ## Testing
 
