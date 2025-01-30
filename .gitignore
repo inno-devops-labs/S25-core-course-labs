@@ -1,0 +1,12 @@
+.env
+
+__pycache__/
+node_modules/
+
+npm-debug.log*
+*.log
+
+.vscode/
+.idea/
+
+package-lock.json
