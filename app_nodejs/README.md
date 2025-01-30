@@ -33,3 +33,53 @@ A simple web application built with Express.js that displays the current time in
 - Proper error handling
 - Efficient dependency management with package.json
 - Comprehensive documentation
+
+## Docker Support
+
+### Standard Docker Image
+
+#### Building the Image
+```bash
+docker build -t your-dockerhub-username/moscow-time-nodejs:latest .
+```
+
+#### Pulling from Docker Hub
+```bash
+docker pull your-dockerhub-username/moscow-time-nodejs:latest
+```
+
+#### Running the Container
+```bash
+docker run -d -p 3000:3000 your-dockerhub-username/moscow-time-nodejs:latest
+```
+
+### Distroless Image Version
+
+The application is also available as a distroless image for enhanced security and smaller size.
+
+#### Building the Distroless Image
+```bash
+docker build -t your-dockerhub-username/moscow-time-nodejs:distroless -f distroless.Dockerfile .
+```
+
+#### Pulling the Distroless Image
+```bash
+docker pull your-dockerhub-username/moscow-time-nodejs:distroless
+```
+
+#### Running the Distroless Container
+```bash
+docker run -d -p 3000:3000 your-dockerhub-username/moscow-time-nodejs:distroless
+```
+
+### Image Comparison
+- Standard Image (Alpine-based): ~150MB
+- Distroless Image: ~126MB
+
+The distroless version offers enhanced security through:
+- Minimal attack surface
+- No shell access
+- No package manager
+- Runs as non-root user
+
+Choose the distroless version for production deployments where security is a priority.
