@@ -1,15 +1,19 @@
-from flask import Flask
+from flask import Flask, render_template
 from datetime import datetime
 import pytz
 
 app = Flask(__name__)
 
-@app.route('/')
-def moscow_time():
+def get_moscow_time():
+    """Fetches the current time in Moscow timezone."""
     moscow_tz = pytz.timezone('Europe/Moscow')
-    current_time = datetime.now(moscow_tz).strftime('%Y-%m-%d %H:%M:%S')
-    return f"<h1>Current Time in Moscow: {current_time}</h1>"
+    return datetime.now(moscow_tz).strftime('%Y-%m-%d %H:%M:%S')
+
+@app.route('/')
+def home():
+    """Renders the main page displaying Moscow time."""
+    current_time = get_moscow_time()
+    return render_template('index.html', time=current_time)
 
 if __name__ == '__main__':
     app.run(debug=True)
-
