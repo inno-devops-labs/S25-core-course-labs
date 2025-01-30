@@ -1,0 +1,6 @@
+__pycache__
+.pytest_cache
+README.md
+PYTHON.md
+DOCKER.md
+test.py
