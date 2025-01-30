@@ -1,4 +1,6 @@
-# Framework choice
+# Python web application design
+
+## Framework choice
 
 I decided to use [Flask](https://flask.palletsprojects.com) for this task since
 it is easy to deploy, lightweight and concise, so I can focus more on troubleshooting
@@ -9,23 +11,26 @@ For hosting the WSGI server, I used [Waitress](https://github.com/Pylons/waitres
 cross-platform, decently fast, and easy to deploy. Also, it is written in pure Python, so it does
 not require any more dependencies, which contributes to the cleanliness of the project.
 
-# Best practices
+## Best practices
 
-## Code quality
+### Code quality
+
 I used the following techniques to ensure code standarts and code quality:
+
 - Moving the timezone into a global constant variable
 - Commenting
 - Following PEP8 style
 - Using tools such as pylint to check the code
 - Descriptive variable names
 
-## Testing
+### Testing
 
-I tested the application in different timezones, and it provided me with the 
+I tested the application in different timezones, and it provided me with the
 same time as before, the Moscow time. The time is neatly formatted and even
 displays nicely on mobile devices. Css sheet loads correctly and affects page.
 
-## Other
+### Other
+
 I have maintained a clean requirements.txt file, since the program only requires Flask
 to run. Furthermore, instead of inlining the html and css, I moved them into their respective
-directories, so that they can be changed independently of the code. 
+directories, so that they can be changed independently of the code.
