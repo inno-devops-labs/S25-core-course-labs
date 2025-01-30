@@ -17,13 +17,13 @@ and some implementation justifications are in [C.md](C.md).
 Download GCC compiler from any distribution suitable for your system, and make sure to add it to PATH.
 
 I have built this application using [MinGW-W64](https://github.com/niXman/mingw-builds-binaries/releases)
-on Windows 11
+on Windows 11 and default GCC installation on Ubuntu 22.04
 
 ### Compiling the application
 
-#### Windows
-
 From the command line, inside the repository directory, run
+
+#### Windows
 
 ```batch
 gcc -I./mongoose mongoose/mongoose.c app.c -o app.exe -lwsock32
@@ -32,8 +32,6 @@ gcc -I./mongoose mongoose/mongoose.c app.c -o app.exe -lwsock32
 app.exe can be replaced by any other name, just make sure to keep the exe extension.
 
 #### Linux
-
-From the command line, inside the repository directory, run
 
 ```bash
 gcc -I./mongoose mongoose/mongoose.c app.c -o app
@@ -45,18 +43,33 @@ app in output can be replaced by any other name.
 
 Run your built application from the command line by using:
 
+#### Windows
+
 ```batch
 app.exe your_ip:your_port
+```
+
+#### Linux
+
+```bash
+./app your_ip:your_port
 ```
 
 your_ip and your_port have to be replaced by the ip you wish to host on
 and the port number respectively, for example:
 
+#### Windows
+
 ```batch
 app.exe 127.0.0.1:8080
 ```
 
-The app.exe will be the name of your built binary file, if you changed it
+#### Linux
+
+```bash
+./app 127.0.0.1:8080
+```
+The app.exe/app will be the name of your built binary file, if you changed it
 in building, make sure to change it here too.
 
 After hosting, you can connect to the web app from any browser using
