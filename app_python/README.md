@@ -27,12 +27,14 @@ This web application provides real-time Moscow time display with a clean, respon
 ## Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/elpicode/S25-core-course-labs.git
    cd app_python
    ```
 
 2. Create and activate a virtual environment:
+
    ```bash
    python -m venv venv
    # On macOS/Linux:
@@ -42,17 +44,19 @@ This web application provides real-time Moscow time display with a clean, respon
    ```
 
 3. Install required dependencies:
+
    ```bash
    pip install -r requirements.txt
    ```
 
-
 4. Run the application:
+
    ```bash
    flask run --host=0.0.0.0 --port=5000
    ```
 
 5. Open your web browser and navigate to:
-   ```
+
+   ```bash
    http://127.0.0.1:5000
    ```

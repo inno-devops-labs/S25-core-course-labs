@@ -13,24 +13,28 @@ I chose Flask as the web framework for this application for the following reason
 ## Best Practices Applied
 
 ### Code Organization
+
 - Followed modular project structure
 - Used proper package organization
 - Implemented D.R.Y. (Don't Repeat Yourself) principles
 - Used relative imports appropriately
 
 ### Code Standards
+
 - Followed PEP 8 style guide for Python code
 - Used type hints for better code readability
 - Added meaningful comments while avoiding redundancy
 - Kept functions small and focused
 
 ### Documentation
+
 - Added docstrings following PEP 257 conventions
 - Maintained clear code documentation
 - Created comprehensive README.md
 - Documented all dependencies in requirements.txt
 
 ### Testing
+
 - Implemented unit tests for time conversion logic
 - Added integration tests for web endpoints
 - Used pytest as testing framework
@@ -38,6 +42,7 @@ I chose Flask as the web framework for this application for the following reason
 - Ensured time updates on page refresh
 
 ### Moscow Time Implementation
+
 - Used pytz library for proper timezone handling
 - Set up 'Europe/Moscow' timezone
 - Implemented accurate time conversion
@@ -45,6 +50,7 @@ I chose Flask as the web framework for this application for the following reason
 - Displayed time in user-friendly format
 
 ### Code Quality
+
 - Used pylint for code quality checks
 - Added try/except blocks for timezone conversion errors
 - Specified exact dependency versions in requirements.txt

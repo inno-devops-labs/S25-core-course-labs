@@ -18,10 +18,13 @@ A web application that displays the most popular song for a randomly selected ye
 
 1. Clone the repository
 2. Navigate to the app_javascript directory:
+
    ```bash
    cd app_javascript
    ```
+
 3. Install dependencies:
+
    ```bash
    npm install
    ```
@@ -29,11 +32,14 @@ A web application that displays the most popular song for a randomly selected ye
 ## Running the Application
 
 1. Start the server:
+
    ```bash
    npm start
    ```
+
 2. Open your web browser and navigate to:
-   ```
+
+   ```bash
    http://localhost:3000
    ```
 
@@ -47,7 +53,6 @@ A web application that displays the most popular song for a randomly selected ye
 
 ## Project Structure
 
-```
 app_javascript/
 ├── public/
 │   ├── css/
@@ -58,4 +63,3 @@ app_javascript/
 ├── server.js
 ├── package.json
 └── README.md
-``` 
