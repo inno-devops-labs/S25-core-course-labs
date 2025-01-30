@@ -1,4 +1,4 @@
-import { Parser } from './parser';
+import { ASTNode, Parser } from './parser';
 import { isCNF } from './cnf_checker';
 import './styles.css';
 import { buildPCNF } from './pcnf_builder';
@@ -62,7 +62,7 @@ class PropositionalLogicUI {
 
             const pcnf = buildPCNF(formula);
             this.showResult('PCNF of the formula:', 'success');
-            this.showAST(pcnf);
+            this.showPCNF(pcnf);
         } catch (error: any) {
             this.showError(error.message);
         }
@@ -77,8 +77,12 @@ class PropositionalLogicUI {
         this.showResult(message, 'error');
     }
 
-    private showAST(ast: any): void {
-        this.astOutput.textContent = JSON.stringify(ast, null, 2);
+    private showAST(ast: ASTNode): void {
+        this.astOutput.textContent = JSON.stringify(ast, null, 4);
+    }
+
+    private showPCNF(pcnf: string): void {
+        this.astOutput.textContent = pcnf;
     }
 }
 
