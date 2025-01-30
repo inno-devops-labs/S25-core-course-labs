@@ -26,6 +26,22 @@ pip install -r requirements.txt
 python app.py
 ```
 
+### 🐳 *Run via Docker image from Dockerhub*
+
+```bash
+docker pull enot0704/moscow-time-app:v1.0
+docker run -d -p 5000:5000 enot0704/moscow-time-app:v1.0
+```
+
+### 🐳 *Local Build Image and Run*
+
+```bash
+git clone https://github.com/Andrew-dev-cmd/S25-core-course-labs.git
+cd S25-core-course-labs/app_python
+docker build -t name .
+docker run -d -p 5000:5000 name
+```
+
 ### 📖 *Open in your Browser*
 
 `http://127.0.0.1:5000/`
