@@ -50,14 +50,12 @@
    pip3 install -r requirements.txt
    ```
 
-4. **Run the Application**
+4. **Run the Application** (choose on which port to run )
    ```bash
-    python main.py
-    or 
-    python3 main.py
+   flask run -g 0.0.0.0 -p 3000
    ```
 
-5. **Open your browser and navigate to `http://localhost:5000`**
+5. **Open your browser and navigate to `http://localhost:3000`**
 
 ## 🧪 Testing
 
@@ -71,4 +69,43 @@ pytest
 View test coverage:
 ```bash
 pytest --cov=app tests/
+```
+
+
+
+## 🐳 Docker 
+
+### Building the Image
+
+1. Clone the repository:
+```bash
+git clone https://github.com/TimurZheksimbaev/S25-core-course-labs.git
+cd app_python
+```
+
+2. Build the Docker image:
+```bash
+docker build -t timurzheksimbaev/time_web_application:latest .
+```
+
+### Pulling the Image
+
+Pull the image from Docker Hub:
+```bash
+docker pull timurzheksimbaev/time_web_application
+```
+
+### Running the Container
+
+1. Run the container:
+```bash
+docker run -d -p 3000:3000 --name time_web_application timurzheksimbaev/time_web_application
+```
+
+2. Access the application:
+- Open your browser and go to `http://localhost:3000`
+
+3. Stop the Container
+```bash
+docker stop time_web_application
 ```
