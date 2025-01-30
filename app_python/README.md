@@ -26,4 +26,54 @@ To run this application locally, follow these steps:
     ```bash
     uvicorn main:app --reload
 5. **Access the application**:
-    Open your browser and go to http://127.0.0.1:8000/.
+    Open your browser and go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
+
+## Docker
+This application is containerized using Docker. Below are instructions for building, running and deploying the Docker image.
+
+### Building the Docker Image
+
+1. Navigate to the `app_python` directory:
+    ```bash
+    cd app_python
+    ```
+
+2. Build the Docker image:
+    ```bash
+    docker build -t your_dockerhub_username/python-app:latest .
+    ```
+   Replace `your_dockerhub_username` with your Docker Hub username.
+
+### Running the Docker Container
+
+1. Run the Docker container:
+    ```bash
+    docker run -d -p 80:80 your_dockerhub_username/python-app:latest
+    ```
+
+2. Access the application:
+    Open your browser and go to [http://localhost:80/](http://localhost:80/).
+
+### Pushing the Docker Image to Docker Hub
+
+1. Log in to Docker Hub:
+    ```bash
+    docker login
+    ```
+
+2. Push the Docker image:
+    ```bash
+    docker push your_dockerhub_username/python-app:latest
+    ```
+
+### Pulling and Running the Docker Image from Docker Hub
+
+1. Pull the Docker image:
+    ```bash
+    docker pull your_dockerhub_username/python-app:latest
+    ```
+
+2. Run the Docker container:
+    ```bash
+    docker run -d -p 80:80 your_dockerhub_username/python-app:latest
+    ```
