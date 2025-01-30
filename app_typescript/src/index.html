@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propositional Logic Parser</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Propositional Logic Parser</h1>
+        
+        <div class="input-section">
+            <textarea id="formula-input" 
+                      placeholder="Enter your formula (e.g., (A/\B))"
+                      rows="3"></textarea>
+            <div class="buttons">
+                <button id="check-cnf">Check CNF</button>
+                <button id="build-pcnf">Build PCNF</button>
+            </div>
+        </div>
+
+        <div class="output-section">
+            <div id="result" class="result-box"></div>
+            <div id="ast-output" class="ast-box"></div>
+        </div>
+    </div>
+    <script type="module" src="./index.ts"></script>
+</body>
+</html> 
