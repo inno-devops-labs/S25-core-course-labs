@@ -1,0 +1,13 @@
+{
+  "name": "moscow-time-nodejs",
+  "version": "1.0.0",
+  "description": "A web application displaying Moscow time",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "moment-timezone": "^0.5.43"
+  }
+}
