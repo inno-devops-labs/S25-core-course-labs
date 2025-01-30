@@ -22,16 +22,28 @@ OR
 
 ### Using Docker (Recommended)
 
-1. Pull the image from Docker Hub:
+1. Pull the regular image from Docker Hub:
 
     ```bash
     docker pull haidarjbeily/random-quote-app
     ```
 
-2. Run the container:
+   Or pull the distroless image for enhanced security:
+
+    ```bash
+    docker pull haidarjbeily/distroless-random-quote-app
+    ```
+
+2. Run the container (regular):
 
     ```bash
     docker run -p 8080:8080 -t haidarjbeily/random-quote-app
+    ```
+
+   Or run the distroless container:
+
+    ```bash
+    docker run -p 8080:8080 -t haidarjbeily/distroless-random-quote-app
     ```
 
 ### Manual Installation
@@ -53,16 +65,28 @@ OR
 If you want to build the Docker image yourself:
 
 1. Clone the repository
-2. Build the image:
+2. Build the regular image:
 
     ```bash
     docker build -t random-quote-app .
     ```
 
-3. Run the container:
+   Or build the distroless image:
+
+    ```bash
+    docker build -f distroless.Dockerfile -t distroless-random-quote-app .
+    ```
+
+3. Run the container (regular):
 
     ```bash
     docker run -p 8080:8080 -t random-quote-app
+    ```
+
+   Or run the distroless container:
+
+    ```bash
+    docker run -p 8080:8080 -t distroless-random-quote-app
     ```
 
 ## Usage
