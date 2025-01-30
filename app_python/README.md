@@ -36,6 +36,33 @@ python app.py
 
 > *Note*: Ensure your system's timezone settings are correct to display the accurate Moscow time.
 
+## Docker commands
+### Build the Docker Image
+
+```bash
+docker build -t shelma13/devops-lab2 .
+```
+
+### Run the container locally
+
+```bash
+docker run -p 5000:5000 shelma13/devops-lab2
+```
+
+### Push Image to Docker Hub
+
+```bash
+docker tag shelma13/devops-lab2 shelma13/devops-lab2:latest
+docker push shelma13/devops-lab2:latest
+```
+
+### Pull and Run from Docker Hub
+
+```bash
+docker pull shelma13/devops-lab2:latest
+docker run -p 5000:5000 shelma13/devops-lab2:latest
+```
+
 ### Requirements
 
 - Python 3
