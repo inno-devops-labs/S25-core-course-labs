@@ -52,3 +52,15 @@ GET /api/time/
   "time":"19:41:37"
 }
 ```
+
+## Docker Build & Run Commands
+```bash
+# Build
+docker build moscow-time .
+
+# Pull
+docker pull yourusername/moscow-time:1.0
+
+# Run
+docker run -p 5000:5000 ezzysoft/moscow-time:1.0
+```
