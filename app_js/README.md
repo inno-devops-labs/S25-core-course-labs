@@ -19,3 +19,14 @@ npm run dev
 ```bash
 npm run-script dev 
 ```
+## Docker run
+
+Build and run both docker images.
+
+```bash
+docker build -t yourusername/app_js .
+docker run -p 80:80 yourusername/app_js
+
+docker build -f distroless.Dockerfile -t yourusername/app_js:distroless .
+docker run -p 80:80 yourusername/app_js:distroless
+```
