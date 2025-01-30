@@ -18,3 +18,27 @@ It uses the `pytz` library to handle the time zone for Moscow.
 ```bash
 pip install -r requirements.txt
 python lab1.py
+```
+
+# Docker
+
+## The application automatically installs all dependencies and runs inside the container.
+
+## How to build?
+
+```bash
+docker build -t lab2:latest .
+```
+
+## How to run?
+
+```bash
+docker run -d -p 5000:5000 lab2
+```
+## How to pull?
+
+```bash
+docker pull ksenon9/lab2:latest
+docker run -p 5000:5000 ksenon9/lab2:latest
+```
+
