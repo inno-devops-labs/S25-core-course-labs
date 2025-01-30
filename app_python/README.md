@@ -49,3 +49,21 @@ docker run -p 8000:8000 fastapi-mt
 docker pull iucd/fastapi-mt:latest
 docker run -p 8000:8000 iucd/fastapi-mt
 ```
+
+## Distroless Image Version
+
+### Build the container
+```sh
+docker build -t fastapi-mt:distroless -f distroless.Dockerfile .
+```
+
+### Run the container
+```sh
+docker run -p 8000:8000 fastapi-mt:distroless
+```
+
+### Run via Docker Hub
+```sh
+docker pull iucd/fastapi-mt:distroless
+docker run -p 8000:8000 iucd/fastapi-mt:distroless
+```

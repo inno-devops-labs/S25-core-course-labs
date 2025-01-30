@@ -27,3 +27,20 @@
 
 ## 8. Environment Variables
 - Set environment variables to optimize Python's behavior within the container.
+
+# Distroless Image
+
+## Key Differences
+- Size: 121MB for Latest image tag VS 83.1MB for Distroless version of image.
+- Base OS: Alpine VS No traditional OS for distroless image.
+- Security: More dependencies, larger attack surface VS reduced attack surface for distroless image.
+- Shell Acceess: Shell VS No /bin/sh or /bash for distroless image.
+- Package Manager: apk/apt VS nothing.
+
+## Explanations
+- Distroless images strip away unnecessary OS-level utilities, reducing the final image size.
+- Since Distroless images do not include package managers, shells, or debugging tools, they minimize potential security vulnerabilities.
+- Distroless images follow best security practices by only including the runtime environment needed for the application.
+
+## Screenshot
+![alt text](image.png)

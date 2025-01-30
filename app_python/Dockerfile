@@ -5,7 +5,7 @@ ENV PYTHONUNBUFFERED=1
 
 RUN addgroup -S webgroup && adduser -S webuser -G webgroup && \
     mkdir /app && \
-    apk add --no-cache curl ?? \
+    apk add --no-cache curl && \
     chown webuser:webgroup /app
 
 WORKDIR /app
