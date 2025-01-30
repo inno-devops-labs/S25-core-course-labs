@@ -22,4 +22,3 @@ dependencies = []
 
 [project.urls]
 "Source" = "https://github.com/dantetemplar/fork-S25-core-course-labs/blob/lab1/app_python"
-"Documentation" = "https://github.com/dantetemplar/fork-S25-core-course-labs/blob/lab1/app_python/README.md"
