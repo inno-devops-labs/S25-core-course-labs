@@ -49,7 +49,7 @@ I have implemented the following Docker best practices:
 Surprisingly, the distroless image was larger that the normal
 one:
 
-![sizes of images](Image sizes.png)
+![Image sizes](https://github.com/user-attachments/assets/1013aa5a-12da-4a57-89d4-885a27519f82)
 
 In this case, this is because originally, I was using scratch
 image, so there was literally nothing there. Now, there are some
