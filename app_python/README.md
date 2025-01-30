@@ -7,7 +7,7 @@ the current time in Moscow. The app serves a single webpage, which contains
 the current time and date in Moscow, along with some minimalistic 
 formatting. You can find the source code in [app.py](app.py), the [HTML](resources/templates)
 and [CSS](resources/static) files in [resources](resources). Required python packages are in
-[requirements.txt](requirements.txt) and some implementation justifications are in [README.md](README.md)
+[requirements.txt](requirements.txt) and some implementation justifications are in [PYTHON.md](PYTHON.md)
 
 ## Setup
 
