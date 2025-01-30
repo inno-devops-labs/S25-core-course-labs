@@ -1,0 +1,10 @@
+Dockerfile
+
+**/node_modules
+.gitignore
+.git
+
+.env
+*.md
+
+LICENCE
