@@ -1,0 +1,1 @@
+TIMEZONE_NAME = "Europe/Moscow"
