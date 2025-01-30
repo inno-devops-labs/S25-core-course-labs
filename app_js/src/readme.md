@@ -11,9 +11,12 @@ This is a simple JavaScript web application using **Node.js & Express.js** that 
 ### Steps to Run Locally
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-repo/app_js.git
-   cd app_js
-
+    https://github.com/SuleimanKarimEddin/S25-core-course-labs/tree/master
+    git checkout lab1
+    cd app_js
+    npm install
+    npm run start
+    
 
 ## Framework Choice: Express.js
 I chose **Express.js** for this project because:
