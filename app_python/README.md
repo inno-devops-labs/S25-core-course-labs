@@ -44,3 +44,42 @@ To ensure that the app is working properly, you can run them yourself with:
 python -m unittest tests/
 ```
 
+## Docker
+
+### How to Build
+
+Run the command:
+
+```bash
+docker build -t moscow-time-app .
+```
+
+### How to Pull
+
+Do this command (I hope I won't forget to make it public):
+
+```bash
+docker pull gendiro/moscow-time-app:latest
+```
+
+### How to Run
+
+If you build it yourself, do
+```bash
+docker run -p 8000:8000 moscow-time-app
+```
+
+If you decided to load dockerhub servers for fun, it's a bit different:
+```bash
+docker run -p 8000:8000 gendiro/moscow-time-app:latest
+```
+
+Add `-d` flag to run the app in detached mode or change port in `-p` flag if you feel like it.
+
+### Distroless
+
+Also, you can also build the distroless version using the `distroless.Dockerfile`:
+
+```bash
+docker build -t moscow-time-distroless -f distroless.Dockerfile .
+```
