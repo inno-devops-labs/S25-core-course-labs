@@ -13,10 +13,7 @@
     "type": "git",
     "url": "https://github.com/dantetemplar/fork-S25-core-course-labs.git"
   },
-  "bugs": {
-    "url": "https://github.com/dantetemplar/fork-S25-core-course-labs/issues"
-  },
-  "homepage": "https://github.com/dantetemplar/fork-S25-core-course-labs#readme",
+  "homepage": "https://github.com/dantetemplar/fork-S25-core-course-labs/blob/lab1/app_nodejs",
   "engines": {
     "node": ">=18.0.0"
   },
