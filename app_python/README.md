@@ -9,30 +9,42 @@ A simple web app that shows the current time in Moscow. Built with Flask, update
 - Works on phones too
 - Nice clean design
 
-## How to Install
-
-1. Clone this repo
+## Docker Usage
+### How to Build
 ```bash
-git clone <your-repo-url>
+docker build -t marketer7/flask-time:v1 .
 ```
 
+### How to Pull
+```bash
+docker pull marketer7/flask-time:v1
+```
+
+### How to Run
+```bash
+docker run -d -p 8000:8000 marketer7/flask-time:v1
+```
+Then open http://localhost:8000 in your browser
+
+## Standard Installation
+1. Clone this repo
+```bash
+git clone https://github.com/MarketerKA/S25-core-course-labs.git
+```
 2. Go to the project folder
 ```bash
 cd app_python
 ```
-
 3. Install what you need (better use a virtual environment)
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
-
 4. Run it!
 ```bash
 python app.py
 ```
-
 5. Open http://127.0.0.1:8000 in your browser
 
 ## Pull Requests
@@ -44,16 +56,17 @@ I made 2 PRs for this project:
 - Python + Flask
 - HTML & CSS
 - pytz for Moscow time
+- Docker for containerization
 
 ## Local Setup Tips
 - Make sure you have Python 3.x
 - Virtual environment recommended
 - Check requirements.txt for dependencies
 - Needs internet for Moscow timezone data
+- Docker as alternative deployment option
 
 ## Notes
 - Time is always Moscow time (MSK)
 - Refreshes every second
 - Works offline once loaded
-
-Made with ☕ and Python
+- Container runs as non-root user for security
