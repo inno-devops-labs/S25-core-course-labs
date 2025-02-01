@@ -101,3 +101,12 @@ jobs:
           context: app_python/
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/app_python:latest
           cache-to: type=inline
+
+      - name: Distroless Build and Push to DockerHub
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: "${{ secrets.DOCKER_USERNAME }}/app_python_distroless:latest"
+          context: app_python/distroless.dockerfile
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/app_python_distroless:latest
+          cache-to: type=inline
