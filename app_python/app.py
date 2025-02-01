@@ -10,7 +10,8 @@ import pytz
 
 app = FastAPI()
 STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static") # specify the folder with static files
+# specify the folder with static files
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), "templates")
 templates = Jinja2Templates(directory=TEMPLATES_DIR) # html template folder
@@ -23,4 +24,5 @@ async def read_root(request: Request):
     return templates.TemplateResponse(request, "index.html", {"msc_time": time})
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=int(8000)) # ip address and port to run the web application
+    # ip address and port to run the web application
+    uvicorn.run(app, host="127.0.0.1", port=int(8000))
