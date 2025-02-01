@@ -6,8 +6,8 @@ import pytest
 from app import create_app
 
 
-@pytest.fixture
-def app_instance():
+@pytest.fixture(scope="module", name="app_instance")
+def fixture_app_instance():
     """
     Fixture to create and configure the Flask app instance for testing.
     """
