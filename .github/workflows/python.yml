@@ -33,9 +33,9 @@ jobs:
           flake8 .
 
       - name: Tests
+        working-directory: ./
         run: |
-          pip install pytest
-          pytest
+          python -m unittest app_python/tests/test_app.py
 
   docker-build-and-push:
     runs-on: ubuntu-latest
