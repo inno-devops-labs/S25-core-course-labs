@@ -2,13 +2,16 @@ name: CI
 
 on:
   push:
-    branches: [ master, lab3, lab4 ]
-  pull_request:
-    branches: [ master ]
+    paths:
+      - 'app_python/**'
+      - '.github/workflows/**'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app_python
 
     steps:
       - name: Checkout code
