@@ -24,6 +24,6 @@ Check ~/.github/worflows/flutter.yml for the source code
   [here](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions)
 
 - **External services**:
-    * [DockerHub](https://hub.docker.com/repository/docker/paranid5/app_piton/general) is used to publish actual Docker image.
+    * [DockerHub](https://hub.docker.com/repository/docker/paranid5/app_flutter/general) is used to publish actual Docker image.
 
 **Note on Snyk:** Snyk does not support Dart language and Flutter applications.
