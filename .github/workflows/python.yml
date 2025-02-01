@@ -45,6 +45,13 @@ jobs:
         run: |
           python -m unittest app_python/tests/test_app.py
 
+      - name: Snyk Vulnerability Check
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          npm install -g snyk
+          snyk test
+
   docker-build-and-push:
     runs-on: ubuntu-latest
     needs: build
