@@ -7,7 +7,7 @@ from app import create_app
 
 
 @pytest.fixture
-def flask_app():
+def app_instance():
     """
     Fixture to create and configure the Flask app instance for testing.
     """
@@ -19,8 +19,8 @@ def flask_app():
 
 
 @pytest.fixture
-def client(app):
+def client(app_instance):
     """
     Fixture to create a test client for making requests to the app.
     """
-    return app.test_client()
+    return app_instance.test_client()
