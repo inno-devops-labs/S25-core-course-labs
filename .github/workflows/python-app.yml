@@ -27,6 +27,9 @@ jobs:
           # Optional - x64 or x86 architecture, defaults to x64
           architecture: 'x64'
 
+
+      - name: Enter the directory
+        run: cd lab3
       - name: Install dependencies
         run: |
             python -m pip install --upgrade pip
