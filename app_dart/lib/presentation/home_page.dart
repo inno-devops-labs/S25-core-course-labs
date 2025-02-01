@@ -1,5 +1,6 @@
 import 'package:app_dart/domain/formatting.dart';
 import 'package:app_dart/domain/time_zone_interactor.dart';
+import 'package:app_dart/test_tag.dart';
 import 'package:flutter/material.dart';
 
 final class HomePage extends StatelessWidget {
@@ -17,6 +18,7 @@ final class HomePage extends StatelessWidget {
           children: [
             Text(
               'Current Time in Yekaterinburg:',
+              key: Key(TestTag.homePageTitle),
               style: TextStyle(
                 fontSize: 32,
                 color: Colors.black,
@@ -29,6 +31,7 @@ final class HomePage extends StatelessWidget {
               stream: interactor.nowChanges,
               builder: (context, now) => Text(
                 now.data?.appFormat ?? interactor.now.appFormat,
+                key: Key(TestTag.homePageTime),
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.black,

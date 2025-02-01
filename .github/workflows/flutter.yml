@@ -3,47 +3,44 @@ name: CI
 on:
   push:
     paths:
-      - 'app_python/**'
-      - '.github/workflows/python.yml'
+      - 'app_dart/**'
+      - '.github/workflows/dart.yml'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./app_python
+        working-directory: ./app_dart
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          python-version: '3.9'
+          flutter-version: 3.27.3
 
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+          path: |
+            .dart_tool/
+            .pub-cache/
+          key: ${{ runner.os }}-flutter-${{ hashFiles('pubspec.lock') }}
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+      - name: Install Dependencies
+        run: flutter pub get
 
-      - name: Linter
-        run: |
-          pip install flake8
-          flake8 .
+      - name: Analyzer & Linter
+        run: flutter analyze
 
-      - name: Tests
-        working-directory: ./
-        run: |
-          python -m unittest app_python/tests/test_app.py
+      - name: Perform code generation via build_runner
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Run Tests
+        run: flutter test
 
       - name: Snyk Vulnerability Check
         env:
@@ -69,6 +66,6 @@ jobs:
       - name: Build and Push Docker image
         uses: docker/build-push-action@v3
         with:
-          context: ./app_python
+          context: ./app_dart
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/app_piton:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/app_dart:latest
