@@ -14,3 +14,19 @@ Consequently, the selection of FastAPI was driven by the pursuit of maximally ra
 - Manual testing was performed to verify information updates, including cross-browser and mobile device testing.
 - Using requirements.txt to install the necessary dependencies.
 - Using the latest recommended version of python and libraries. 
+
+## Unit tests
+
+### test_server_start
+**Purpose:** To check the server's operability.  
+**Results:** The unit test sends a GET request and checks the response code to ensure the server is working correctly.
+
+### test_time_check
+**Purpose:** To verify the correct Moscow time in the web application.  
+**Results:** We send a GET request to retrieve the HTML page, then parse the page and compare the time indicated on the page with the time obtained during the unit test using the same `pytz.timezone` library.
+
+### Best practices
+- Unit tests are isolated.
+- Test names convey the purpose of the test.
+- Tests are commented.
+- Tests are not 'fragile'; for example, using `assertAlmostEqual(delta)` to account for possible deviations due to delays and other factors.

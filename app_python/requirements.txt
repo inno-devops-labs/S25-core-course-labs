@@ -2,3 +2,7 @@ fastapi
 uvicorn
 Jinja2
 pytz
+unittest
+bs4
+sys
+os

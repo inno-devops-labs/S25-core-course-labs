@@ -96,3 +96,34 @@ You can access the web app at `127.0.0.1:8000`.
 docker ps
 docker stop <container_id>
 ```
+
+## Unit-tests
+The following will provide instructions on how to run unit tests. 
+1. Go to the app_python directory 
+   ```
+   cd app_python
+   ```
+2. Running unit testing   
+   For detailed output of test information:
+   ```
+   python -m unittest unit_test/app_test.py -v 
+   ```
+   Minimum testing information: 
+   ```
+   python -m unittest unit_test/app_test.py
+   ```
+
+   Your output should be similar to this(when tested correctly):
+   ```
+   Ran 2 tests in 0.243s
+
+   OK
+   ```
+
+## CI/CD Github Actions
+The project has github actions configured to automatically deploy the web-app application when push or pull request to the master branch. 
+
+Settings for workflows:
+1.  Navigate to the repository settings: Settings → Secrets → Actions
+2.  Create two secrets: `DOCKER_USERNAME` - your Docker login, and `DOCKER_PASSWORD` - your Docker login password.
+
