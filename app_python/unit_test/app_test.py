@@ -30,7 +30,7 @@ class Test_Web_App(unittest.TestCase):
 
         timezone = pytz.timezone('Europe/Moscow')
         time_in_test = datetime.now(timezone).timestamp()
-        time_in_site = datetime.strptime(time_str_from_response, '%d-%m-%Y %H:%M:%S').timestamp()
+        time_in_site = timezone.localize(datetime.strptime(time_str_from_response, '%d-%m-%Y %H:%M:%S')).timestamp()
 
 
         self.assertAlmostEqual(time_in_test, time_in_site, delta = 5)
