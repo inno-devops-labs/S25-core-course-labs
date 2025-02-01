@@ -62,7 +62,6 @@ jobs:
         with:
           push: true
           context: "{{defaultContext}}:app_python"
-          file: ./app_python/Dockerfile
           tags: ${{ vars.DOCKERHUB_USERNAME }}/app_python:app_python-prod-ci-1.0.0
       -
         name: Build and push distroless
@@ -70,5 +69,4 @@ jobs:
         with:
           push: true
           context: "{{defaultContext}}:app_python"
-          file: ./app_python/Dockerfile.distroless
           tags: ${{ vars.DOCKERHUB_USERNAME }}/app_python:app_python-distroless-prod-ci-1.0.0
