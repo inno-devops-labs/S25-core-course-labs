@@ -1,4 +1,6 @@
-"""Bottle web application that shows the current time and date in Moscow."""
+"""Bottle web application that shows the current time and date in Moscow.
+Author: Evgeny B.
+"""
 
 from datetime import datetime, timedelta, timezone
 
