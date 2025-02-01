@@ -61,7 +61,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          context: ./app_python
+          context: "{{defaultContext}}:app_python"
           file: ./app_python/Dockerfile
           tags: ${{ vars.DOCKERHUB_USERNAME }}/app_python:app_python-prod-ci-1.0.0
       -
@@ -69,6 +69,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          context: ./app_python
+          context: "{{defaultContext}}:app_python"
           file: ./app_python/Dockerfile.distroless
           tags: ${{ vars.DOCKERHUB_USERNAME }}/app_python:app_python-distroless-prod-ci-1.0.0
