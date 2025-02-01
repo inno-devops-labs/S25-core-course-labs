@@ -6,6 +6,7 @@ require 'tzinfo'
 set :bind, '0.0.0.0'
 
 get '/' do
+  content_type 'text/plain'
   # Set the timezone to Omsk
   timezone = TZInfo::Timezone.get('Asia/Omsk')
 
