@@ -11,6 +11,15 @@ void main() async {
     timezone: AppConfig.timezone,
   );
 
+  /**
+   * Expects that page shows the correct time in format:
+   *
+   * Current time in Yekaterinburg:
+   * hh:mm:ss dd.mm.yyyy
+   *
+   * Test runs for 5 ticks (seconds)
+   */
+
   testWidgets('Yekaterinburg time test', (WidgetTester tester) async {
     await tester.pumpWidget(App(interactor: interactor));
 
