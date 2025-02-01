@@ -69,10 +69,16 @@ jobs:
 
       - name: Run Snyk to Check for Vulnerabilities
         uses: snyk/actions/python-3.10@master
-        with:
-          args: --skip-unresolved app_python/
+        continue--on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --sarif-file-output=snyk.sarif
+
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
 
   build_push:
     timeout-minutes: 10
