@@ -1,5 +1,7 @@
 # Moscow Time Web Application
 
+[![CI for app_python](https://github.com/cuprum-acid/devops-labs/actions/workflows/app_python.yml/badge.svg?branch=lab3)](https://github.com/cuprum-acid/devops-labs/actions/workflows/app_python.yml)
+
 ## Overview
 
 This is a web app that shows current date and time in Moscow. It is written in Python with Bottle framework.
@@ -115,3 +117,14 @@ docker run -d --name msk-distroless -p 8081:8080 ebob/moscow-time:v1.0-distroles
 ```
 
 Now it is available on `localhost:8081`
+
+### Continuous Integration
+
+This repository contains a CI pipeline configuration for the python application. The CI pipeline is managed with `GitHub Actions` and includes multiple jobs to ensure the code quality, functionality, security, and successful deployment of the application.
+
+The pipeline consists of these main jobs:
+
+1. Lint and Format: Ensures the code follows linting and formatting standards.
+2. Test: Runs tests to verify the correctness of the application.
+3. Security Scan: Checks for security vulnerabilities in the codebase using `Snyk` tool.
+4. Docker Build and Push: Builds and pushes a Docker image to the DockerHub and ghcr.
