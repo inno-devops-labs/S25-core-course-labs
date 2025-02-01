@@ -5,14 +5,12 @@ on:
     paths:
       - 'app_python/**'
       - '.github/workflows/app_python.yaml'
-    paths-ignore:
-      - 'app_python/*.md'
+      - '!**/*.md'
   pull_request:
     paths:
       - 'app_python/**'
       - '.github/workflows/app_python.yaml'
-      paths-ignore:
-      - 'app_python/*.md'
+      - '!**/*.md'
 
 jobs:
   lint:
