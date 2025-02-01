@@ -112,3 +112,24 @@ docker run -p 8000:8000 raleksan/app_python_distroless:v0.1
 ```bash
 curl 127.0.0.1:8000
 ```
+
+## CI Workflow
+
+### CI lint
+
+CI starts with linting using `black` linter (`Run Black Linter` job).
+
+### CI test
+
+After 1st job, CI installs dependencied and run `pytest` (`Run Pytest` job).
+
+### CI SNYK
+
+After two jobs above completed `SNYK` security check starts, `Run Snyk Security Scan` job runs.
+This job works using `SNYK_TOKEN` repository secret.
+
+### CI Docker build image & image push
+
+- Job starts with logging into Dockerhub using `DOCKER_USERNAME` and `DOCKER_TOKEN` secrets.
+- Then it builds and pushes an usual and distroless image to Dockerhub.
+- Build is cached in order to optimize future pipelines.
