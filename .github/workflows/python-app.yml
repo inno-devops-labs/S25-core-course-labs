@@ -57,16 +57,18 @@ jobs:
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       -
-        name: Build and push
+        name: Build and push normal image
         uses: docker/build-push-action@v6
         with:
           push: true
-          context: app_python
+          context: ./app_python
+          file: ./app_python/Dockerfile
           tags: ${{ vars.DOCKERHUB_USERNAME }}/app_python:app_python-prod-ci-1.0.0
       -
-        name: Build and push
+        name: Build and push distroless
         uses: docker/build-push-action@v6
         with:
           push: true
-          context: app_python
+          context: ./app_python
+          file: ./app_python/Dockerfile.distroless
           tags: ${{ vars.DOCKERHUB_USERNAME }}/app_python:app_python-distroless-prod-ci-1.0.0
