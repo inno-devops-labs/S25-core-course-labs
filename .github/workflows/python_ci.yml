@@ -50,7 +50,7 @@ jobs:
         working-directory: app_python
 
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v3 
     - uses: actions/setup-python@v5
       with:
         python-version: '3.12'
@@ -63,6 +63,8 @@ jobs:
 
     - name: Snyk
       uses: snyk/actions/python@master
+      with:
+        args: test --file=requirements.txt --package-manager=pip
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
