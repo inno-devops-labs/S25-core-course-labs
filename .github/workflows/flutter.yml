@@ -1,4 +1,4 @@
-name: CI
+name: CI (Flutter)
 
 on:
   push:
@@ -41,13 +41,6 @@ jobs:
 
       - name: Run Tests
         run: flutter test --platform chrome
-
-      - name: Snyk Vulnerability Check
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: |
-          npm install -g snyk
-          snyk test
 
   docker-build-and-push:
     runs-on: ubuntu-latest
