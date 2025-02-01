@@ -11,10 +11,11 @@ This is a simple web application that displays the current time in Moscow, Russi
 3. [Installation](#installation)
 4. [Running the Application](#running-the-application)
 5. [Testing](#testing)
-6. [Docker](#docker)
-7. [Distroless Image Version](#distroless-image-version)
-8. [Code Quality Checks](#code-quality-checks)
-9. [Author](#author)
+6. [Unit Tests](#unit-tests)
+7. [Docker](#docker)
+8. [Distroless Image Version](#distroless-image-version)
+9. [Code Quality Checks](#code-quality-checks)
+10. [Author](#author)
 
 ---
 
@@ -127,6 +128,37 @@ To ensure the application works correctly:
 
 1. Run the application and verify that the displayed time matches the current time in Moscow.
 2. Refresh the page to confirm that the time updates dynamically.
+
+---
+
+## Unit Tests
+
+Unit tests have been implemented to validate the functionality of the application. These tests ensure that the application behaves as expected and adheres to best practices. The tests are written using the `pytest` framework and cover the following scenarios:
+
+- **Home Route**: Ensures the home route (`/`) returns a 200 status code.
+- **HTML Structure**: Verifies that the response contains an `<h1>` tag with the current time in Moscow.
+- **Time Accuracy**: Validates that the time displayed on the page matches the current time in Moscow.
+- **Time Format**: Ensures the time is displayed in the correct format (`HH:MM:SS`).
+- **Timezone**: Verifies that the time is correctly localized to the Moscow timezone.
+
+### **Running the Tests**
+
+To run the unit tests, follow these steps:
+
+1. Ensure the virtual environment is activated.
+2. Install the test dependencies (if not already installed):
+
+   ```bash
+   pip3 install -r requirements.txt
+   ```
+
+3. Run the tests using `pytest`:
+
+   ```bash
+   pytest
+   ```
+
+   > **Note**: The `pytest` command will automatically discover and run all test files in the `tests` directory.
 
 ---
 
