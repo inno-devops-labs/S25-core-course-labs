@@ -16,12 +16,19 @@ class TimeAppTests(unittest.TestCase):
 
     def test_time_display(self):
         """
-        Checks if home page is accessible and shows current time in Moscow
+        Checks if home page (/) is accessible and
+        shows current time in Moscow in format hh:mm:ss dd.mm.yyyy
         """
 
         self.check_web_page()
 
     def test_continuous_time_display(self):
+        """
+        Checks whether the homepage is accessible for 5 seconds and
+        whether the current time in Moscow is displayed
+        correctly every second in format hh:mm:ss dd.mm.yyyy.
+        """
+
         for i in range(0, 5):
             self.check_web_page()
             sleep(1)

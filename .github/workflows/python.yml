@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'app_python/**'
-      - '.github/workflows/**'
+      - '.github/workflows/python.tml'
 
 jobs:
   build:
