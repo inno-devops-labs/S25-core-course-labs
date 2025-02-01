@@ -1,5 +1,6 @@
 """Tests for the Bottle application."""
 
+import re
 import threading
 import time
 import unittest
@@ -9,6 +10,21 @@ from subprocess import Popen
 import pytest
 import requests
 from app import MSK_TIMEZONE, app
+
+BASE_URL = "http://127.0.0.1:8080/"
+
+
+def wait_for_server(url, timeout=5):
+    """Utility function to wait for the server to be up."""
+    start_time = time.time()
+    while time.time() - start_time < timeout:
+        try:
+            response = requests.get(url, timeout=1)
+            if response.status_code == 200:
+                return True
+        except requests.exceptions.ConnectionError:
+            time.sleep(0.5)
+    raise RuntimeError("Server did not start in time")
 
 
 class TestAppUnit(unittest.TestCase):
@@ -30,42 +46,41 @@ class TestAppUnit(unittest.TestCase):
         formatted_date = now.strftime("%d.%m.%Y")
         self.assertEqual(formatted_date, "01.01.2025")
 
+    def test_leap_year(self):
+        """Test if the application handles leap years correctly."""
+        leap_date = datetime(2024, 2, 29, tzinfo=MSK_TIMEZONE)
+        formatted_date = leap_date.strftime("%d.%m.%Y")
+        self.assertEqual(formatted_date, "29.02.2024")
 
-# Define the base URL for the local server
-BASE_URL = "http://127.0.0.1:8080/"
+    def test_midnight_rollover(self):
+        """Test if the application correctly handles midnight rollover."""
+        before_midnight = datetime(2025, 1, 1, 23, 59, 59, tzinfo=MSK_TIMEZONE)
+        after_midnight = before_midnight + timedelta(seconds=1)
+        self.assertEqual(after_midnight.strftime("%H:%M:%S"), "00:00:00")
 
 
 @pytest.fixture(scope="module", autouse=True)
 def start_server():
     """Fixture to start the Bottle server before tests and stop after."""
 
-    # Start the Bottle app as a subprocess
     with Popen(["python", "app.py"]) as process:
-        time.sleep(3)  # Wait for the server to start up
-        yield  # This marks the point where the test code runs
-        process.terminate()  # Stop the server after tests
+        wait_for_server(BASE_URL, timeout=5)
+        yield
+        process.terminate()
 
 
 def test_root_route():
     """Test if the root route returns the correct HTML response."""
-    # Make a request to the root route
     response = requests.get(BASE_URL, timeout=5)
 
-    # Check the status code
+    # Verify response status and headers
     assert response.status_code == 200
+    assert response.headers["Content-Type"].startswith("text/html")
 
-    # Check that the response contains the expected HTML content
+    # Verify response content
     assert "Current time and date in Moscow" in response.text
-    assert "Time:" in response.text
-    assert "Date:" in response.text
-
-    # Additional checks for the format of the time and date
-    assert (
-        len(response.text.split("<p>Time: ")[1].split("</p>")[0]) == 8
-    )  # Time format H:M:S
-    assert (
-        len(response.text.split("<p>Date: ")[1].split("</p>")[0]) == 10
-    )  # Date format dd.mm.yyyy
+    assert re.search(r"<p>Time: \d{2}:\d{2}:\d{2}</p>", response.text)
+    assert re.search(r"<p>Date: \d{2}\.\d{2}\.\d{4}</p>", response.text)
 
 
 class TestAppE2E(unittest.TestCase):
@@ -81,7 +96,7 @@ class TestAppE2E(unittest.TestCase):
             daemon=True,
         )
         cls.server_thread.start()
-        time.sleep(1)  # Give the server time to start
+        wait_for_server(BASE_URL, timeout=5)
 
     @classmethod
     def tearDownClass(cls):
@@ -90,8 +105,10 @@ class TestAppE2E(unittest.TestCase):
 
     def test_root_endpoint(self):
         """Test if the '/' endpoint returns the correct response."""
-        response = requests.get("http://127.0.0.1:8080/", timeout=5)
+        response = requests.get(BASE_URL, timeout=5)
         self.assertEqual(response.status_code, 200)
         self.assertIn("Current time and date in Moscow", response.text)
         self.assertIn("Time:", response.text)
         self.assertIn("Date:", response.text)
+        self.assertRegex(response.text, r"<p>Time: \d{2}:\d{2}:\d{2}</p>")
+        self.assertRegex(response.text, r"<p>Date: \d{2}\.\d{2}\.\d{4}</p>")

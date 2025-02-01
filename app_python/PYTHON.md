@@ -34,7 +34,21 @@ I implemented following Python best practices:
 
 ## Testing code
 
-In addition to testing by running the application locally and comparing it with the current time, I have written several automated tests in `test_app.py` file.
+For automatic code testing I use [`pytest`](https://docs.pytest.org/) framework.
+
+Here are a few code testing best practices I've learned and applied:
+
+1. Use a Clear Testing Strategy
+    * Apply **unit tests** for individual functions or components.
+    * Use **integration tests** to verify how different parts interact.
+    * Implement **end-to-end tests** to ensure the whole application behaves correctly.
+
+2. Isolate Unit Tests
+    * Unit tests should not depend on external systems (e.g., databases, APIs, file systems).
+    * Mock external dependencies where needed.
+
+3. Test Edge Cases
+    * Validate boundary conditions (e.g., leap years).
 
 ### How to run tests?
 
