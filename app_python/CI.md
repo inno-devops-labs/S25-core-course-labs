@@ -1,5 +1,7 @@
 # Github CI best practices
 
+[![CI Status](https://github.com/Raleksan/S25-core-course-labs/actions/workflows/app_python.yaml/badge.svg)](https://github.com/Raleksan/S25-core-course-labs/actions/workflows/app_python.yaml?event=push)
+
 ## 1. Set timeouts for each jobs
 
 In order to prevent endless jobs that can be caused by misconfiguration,

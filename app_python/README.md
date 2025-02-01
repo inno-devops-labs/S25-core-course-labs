@@ -1,5 +1,7 @@
 # Python Sample Application
 
+[![CI Status](https://github.com/Raleksan/S25-core-course-labs/actions/workflows/app_python.yaml/badge.svg)](https://github.com/Raleksan/S25-core-course-labs/actions/workflows/app_python.yaml?event=push)
+
 ## Overview
 
 This is a simple python web application that shows current time in Moscow.
