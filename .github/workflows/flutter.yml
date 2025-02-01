@@ -40,7 +40,7 @@ jobs:
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Run Tests
-        run: flutter test
+        run: flutter test --platform chrome
 
       - name: Snyk Vulnerability Check
         env:
