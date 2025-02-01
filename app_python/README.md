@@ -118,7 +118,7 @@ docker run -d --name msk-distroless -p 8081:8080 ebob/moscow-time:v1.0-distroles
 
 Now it is available on `localhost:8081`
 
-### Continuous Integration
+## Continuous Integration
 
 This repository contains a CI pipeline configuration for the python application. The CI pipeline is managed with `GitHub Actions` and includes multiple jobs to ensure the code quality, functionality, security, and successful deployment of the application.
 

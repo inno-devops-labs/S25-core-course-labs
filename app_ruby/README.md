@@ -1,5 +1,7 @@
 # Ruby Web Application
 
+[![CI for app_ruby](https://github.com/cuprum-acid/devops-labs/actions/workflows/app_ruby.yml/badge.svg)](https://github.com/cuprum-acid/devops-labs/actions/workflows/app_ruby.yml)
+
 ## Overview
 
 This application shows current time in **Omsk**
@@ -97,3 +99,14 @@ docker run -d --name omsk-distroless -p 4568:4567 ebob/omsk-time:v1.0-distroless
 ```
 
 Now it is available on `localhost:4568`
+
+## Continuous Integration
+
+This repository contains a CI pipeline configuration for the python application. The CI pipeline is managed with `GitHub Actions` and includes multiple jobs to ensure the code quality, functionality, security, and successful deployment of the application.
+
+The pipeline consists of these main jobs:
+
+1. Lint and Format: Ensures the code follows linting and formatting standards.
+2. Test: Runs tests to verify the correctness of the application.
+3. Security Scan: Checks for security vulnerabilities in the codebase using `Snyk` tool.
+4. Docker Build and Push: Builds and pushes a Docker image to the DockerHub and ghcr.
