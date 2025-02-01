@@ -1,5 +1,7 @@
 # Python Moscow Time Web App
 
+[![CI](https://github.com/dinaraparanid/devops/actions/workflows/python.yml/badge.svg?branch=lab3)](https://github.com/dinaraparanid/devops/actions/workflows/python.yml)
+
 ### Developer
 
 [Arseny Savchenko](https://github.com/dinaraparanid)
