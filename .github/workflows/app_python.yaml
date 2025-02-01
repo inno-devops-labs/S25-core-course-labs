@@ -97,16 +97,16 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: "${{ secrets.DOCKER_USERNAME }}/app_python:latest"
+          tags: "${{ secrets.DOCKER_USERNAME }}/app_python:v0.1"
           context: app_python/
-          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/app_python:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/app_python:v0.1
           cache-to: type=inline
 
       - name: Distroless Build and Push to DockerHub
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: "${{ secrets.DOCKER_USERNAME }}/app_python_distroless:latest"
+          tags: "${{ secrets.DOCKER_USERNAME }}/app_python_distroless:v0.1"
           context: app_python/
-          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/app_python_distroless:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/app_python_distroless:v0.1
           cache-to: type=inline
