@@ -71,7 +71,7 @@ def get_current_time(name):
 # Create tables and run the application
 if __name__ == '__main__':
     try:
-        app.run(host='127.0.0.1', port=8080, debug=True)
+        app.run(host='0.0.0.0', port=8080, debug=True)
         logger.Info("App is running successfully")
     except Exception as e:
         logger.error(f"Error starting the application: {e}")
