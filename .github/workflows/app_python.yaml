@@ -54,7 +54,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Tests with Pytest
-        run: pytest tests/
+        run: pytest tests/tests.py
 
   snyk_check:
     needs: [lint, test]
