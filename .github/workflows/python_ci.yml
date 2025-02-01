@@ -62,8 +62,6 @@ jobs:
       uses: snyk/actions/python@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        target_dir: app_python
 
   docker: 
     runs-on: ubuntu-latest
@@ -88,6 +86,7 @@ jobs:
     - name: docker build and push
       uses: docker/build-push-action@v4
       with:
+        context: ./app_python
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/python-web-app:latest
         cache-from: type=gha,scope=primary
