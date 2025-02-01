@@ -3,11 +3,15 @@ FROM python:3.12.8-alpine3.21 AS build
 
 WORKDIR /app_python
 
-COPY app.py requirements.txt ./
-COPY templates/ ./templates/
+# Copy dependecies
+COPY requirements.txt ./
 
+# Install dependecies
 RUN pip install --no-cache-dir -r requirements.txt &&\
     cp $(which gunicorn) /app_python
+
+# Copy sources
+COPY app ./app/
 
 # Step 2: Distroless Runtime Stage
 FROM gcr.io/distroless/python3 AS final
@@ -20,4 +24,4 @@ WORKDIR /app_python
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app:wsgi_app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app:wsgi_app",  "--chdir", "app"]

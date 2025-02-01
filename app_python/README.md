@@ -41,6 +41,14 @@ python3 app.py
 curl 127.0.0.1:8000
 ```
 
+## Unit Tests
+
+- To run the unit tests, use the following command:
+
+```bash
+pytest tests/tests.py
+```
+
 ## Docker
 
 - Build Docker container

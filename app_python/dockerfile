@@ -5,16 +5,18 @@ RUN adduser python_usr --system --shell=/bin/false
 
 WORKDIR /app_python
 
-# Copy sources
-COPY --chown=python_usr:python_usr app.py requirements.txt ./
-COPY --chown=python_usr:python_usr templates/ ./templates/
+# Copy dependecies
+COPY --chown=python_usr:python_usr requirements.txt ./
 
 # Install dependecies
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy sources
+COPY --chown=python_usr:python_usr app/ ./app/
 
 USER python_usr
 EXPOSE 8000
 
 # Run application
 ENTRYPOINT ["gunicorn"]
-CMD ["--bind", "0.0.0.0:8000", "app:wsgi_app"]
+CMD ["--bind", "0.0.0.0:8000", "app:wsgi_app", "--chdir", "app"]
