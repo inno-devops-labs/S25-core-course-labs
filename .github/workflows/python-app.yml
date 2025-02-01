@@ -41,4 +41,4 @@ jobs:
 
       - name: Test with pytest
         working-directory: app_python
-        run: pytest-3 tests --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
+        run: pytest tests --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
