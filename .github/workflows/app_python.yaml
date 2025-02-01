@@ -107,6 +107,6 @@ jobs:
         with:
           push: true
           tags: "${{ secrets.DOCKER_USERNAME }}/app_python_distroless:latest"
-          context: app_python/distroless.dockerfile
+          context: app_python/
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/app_python_distroless:latest
           cache-to: type=inline
