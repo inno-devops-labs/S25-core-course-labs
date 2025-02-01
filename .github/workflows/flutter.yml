@@ -55,6 +55,6 @@ jobs:
       - name: Build and Push Docker image
         uses: docker/build-push-action@v3
         with:
-          context: ./app_flutter
+          context: ./app_dart
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/app_flutter:latest
