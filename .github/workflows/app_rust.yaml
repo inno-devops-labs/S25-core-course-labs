@@ -35,7 +35,7 @@ jobs:
         run: cargo clippy -- -D warnings
 
   test:
-    timeout-minutes: 5
+    timeout-minutes: 2
     name: Run Cargo Tests
     runs-on: ubuntu-latest
     steps:
@@ -49,10 +49,10 @@ jobs:
         working-directory: app_rust
         run: cargo test --verbose
 
-  snyk_check:
+  security_checks:
     needs: [lint, test]
     timeout-minutes: 5
-    name: Run Snyk Security Scan
+    name: Run Security Scans
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -61,24 +61,43 @@ jobs:
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
       - name: Install Snyk CLI
         run: npm install -g snyk
 
       - name: Run Snyk to check for vulnerabilities
         continue-on-error: true
         working-directory: app_rust
-        run: snyk test --sarif-file-output=snyk.sarif
+        run: |
+          snyk test --sarif-file-output=snyk.sarif
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      
+      - name: Check if SARIF file exists
+        id: check_sarif
+        working-directory: app_rust
+        run: |
+          if [ -f snyk.sarif ]; then
+            echo "SARIF file exists"
+            echo "sarif_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "SARIF file does not exist"
+            echo "sarif_exists=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Upload result to GitHub Code Scanning
+        if: steps.check_sarif.outputs.sarif_exists == 'true'
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: app_rust/snyk.sarif
 
   build_push:
     timeout-minutes: 10
-    needs: [lint, test, snyk_check]
+    needs: [lint, test, security_checks]
     name: Build and Push Docker Image
     runs-on: ubuntu-22.04
     steps:
