@@ -1,0 +1,60 @@
+name: CI (Flutter)
+
+on:
+  push:
+    paths:
+      - 'app_dart/**'
+      - '.github/workflows/flutter.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app_dart
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install and cache Flutter
+        uses: actions/cache@v1
+        with:
+          path: /opt/hostedtoolcache/flutter
+          key: ${{ runner.OS }}-flutter-install-cache-${{ env.FLUTTER_VERSION }}
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Analyzer & Linter
+        run: flutter analyze
+
+      - name: Perform code generation via build_runner
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Run Tests
+        run: flutter test --platform chrome
+
+  docker-build-and-push:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log into Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and Push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./app_dart
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/app_flutter:latest
