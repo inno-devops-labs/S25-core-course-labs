@@ -67,3 +67,15 @@ docker pull rwkals/app_python_distroless:latest
 ```shell
 docker run -p 5000:5000 rwkals/app_python_distroless:latest
 ```
+
+## Unit tests implementation
+Unit tests are implemented for the Flask app to verify its functionality.
+They check the main routes and ensure the application responds as expected. 
+
+Tests execution:
+
+```shell
+python -m unittest tests/test_app.py
+```
+
+More details are in [PYTHON.md](PYTHON.md)
