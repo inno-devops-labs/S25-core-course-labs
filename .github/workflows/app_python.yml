@@ -59,7 +59,7 @@ jobs:
           snyk test --file=app_python/requirements.txt --sarif-file-output=app_python/snyk.sarif --severity-threshold=high
 
       - name: Upload Snyk results to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: app_python/snyk.sarif
 
