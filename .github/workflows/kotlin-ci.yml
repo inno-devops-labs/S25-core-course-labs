@@ -2,7 +2,7 @@ name: Ktor CI/CD
 
 on:
   push:
-    branches: [ "main", "lab" ]
+    branches: [ "main", "lab3" ]
   pull_request:
     branches: [ "main" ]
 
