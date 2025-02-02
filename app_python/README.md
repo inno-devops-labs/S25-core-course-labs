@@ -1,3 +1,5 @@
+![CI py](https://github.com/YOUR_USERNAME/YOUR_REPO/actions/workflows/ci.yml/badge.svg)
+
 # Python Web Application: Moscow Time
 
 ## Overview
@@ -86,3 +88,22 @@ page is refreshed.
    ```bash
    docker run -p 5000:5000 milanamilana/python-distroless-web-app:latest
    ```
+
+## Unit Tests
+
+To run tests
+
+   ```bash
+   pytest
+   ```
+
+## Continuous Integration (CI)
+
+This project uses GitHub Actions for Continuous Integration.
+
+## CI workflow
+
+- **Dependencies:** Installs required Python packages
+- **Linter:** Runs `flake8` to check code quality
+- **Tests:** Runs `pytest` to ensure functionality
+- **Docker Integration:** Logs into Docker Hub, builds and pushes a Docker image to Docker Hub
