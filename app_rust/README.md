@@ -1,5 +1,7 @@
 # Rust Sample Application
 
+[![CI Status](https://github.com/Raleksan/S25-core-course-labs/actions/workflows/app_rust.yaml/badge.svg)](https://github.com/Raleksan/S25-core-course-labs/actions/workflows/app_rust.yaml?event=push)
+
 ## Overview
 
 This is a simple rust web application that shows current time in Moscow.
@@ -33,6 +35,14 @@ cargo run
 
 ```bash
 curl 127.0.0.1:8000
+```
+
+## Unit Tests
+
+- To run the unit tests, use the following command:
+
+```bash
+cargo test
 ```
 
 ## Docker
@@ -98,3 +108,26 @@ docker run -p 8000:8000 raleksan/app_rust_distroless:v0.1
 ```bash
 curl 127.0.0.1:8000
 ```
+
+## GitHub Actions Workflow
+
+The CI process includes the following steps:
+
+- Runs Clippy to check for linting issues.
+- Runs unit tests using `cargo test` to verify functionality.
+- ~~Performs a `Snyk` security scan to identify vulnerabilities.~~ `Snyk` currently do not support `Rust` -_- .
+- Builds a Docker image and pushes it to Docker Hub.
+
+### CI Jobs
+
+1. **Linting (Clippy)**
+   - Uses Clippy to ensure the Rust code in `app_rust` follows best practices and is free of warnings.
+
+2. **Testing (Cargo Test)**
+   - Runs `cargo test` to execute unit tests and validate functionality.
+
+3. **Security Scan (Snyk)**
+   - Uses Snyk to check for vulnerabilities in dependencies and uploads results to GitHub Code Scanning.
+
+4. **Build and Push Docker Image**
+   - Builds the Docker image using Buildx and pushes it to Docker Hub under the provided credentials.
