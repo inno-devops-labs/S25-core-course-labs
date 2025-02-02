@@ -23,6 +23,7 @@ jobs:
         working-directory: app_python
 
     if: |
+      echo "Changed files: ${{ toJSON(github.event.pull_request.changed_files) }}" |
       github.event_name == 'push' ||
       (github.event_name == 'pull_request' &&
        contains(toJSON(github.event.pull_request.changed_files), 'app_python') ||
