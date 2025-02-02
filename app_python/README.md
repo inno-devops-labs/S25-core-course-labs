@@ -118,3 +118,14 @@ Lightweight image for mostly production use, without tools for debugging and OS 
   ```bash
   docker run -d -p 5000:5000 --name watch catorleader/python-watch:distroless
   ```
+
+---
+
+### Unit Testing
+
+To properly keep the code quality on the significant level, project has covered by an exhausitve set of unit tests.
+It is obvious that the project's functionality is not rich enough to create a lot of tests, so it was decided to
+keep two different tests for the following functionality:
+
+* Config Loading
+* Main Page / Incorrect Page Route loading

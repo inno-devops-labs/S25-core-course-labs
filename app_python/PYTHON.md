@@ -30,3 +30,22 @@ Let's separate the practice I used by parts, to properly investigate all the stu
 In addition, I added the GitHub Actions that lint & test my code after it finds the open PR to the default branch (main, master). I also protect the main branch to not push on it without PR beforehand.
 
 And that is mostly all. Information about the application you can see in the `README.md`.
+
+# Lab 3
+
+## Task 1
+
+I created the next two types of unit tests:
+
+- Tests to check the correct application functionality, like getting 200 HTTP and time in UTC+3 (MSC), or
+404 when we route onto an undefined endpoint
+- Tests to define the possibility of the config loader to handle different types of variables and change them
+in runtime
+
+The Best Practices:
+
+- **Test Separation**: Separate tests into the different files to make them clearly understandable
+- **Naming**: I use the proper naming for the tests to understand the main test's goal by the name only
+- **Automated Tests**: To properly run tests in the different environments, I use the `unittest.main()` to automatize it
+- **SetUp**: The usage of special setUp functions that configure the necessary test's environment keep the code
+  clear and concise
