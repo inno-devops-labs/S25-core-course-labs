@@ -1,6 +1,8 @@
 
 # Service deployment
 
+![workflow](https://github.com/Processor228/S25-core-course-labs/actions/workflows/app_python.yaml/badge.svg)
+
 ## Local installation and testing
 
 Optional: you may wanna set up venv
@@ -49,3 +51,7 @@ To run distroless:
 docker build -f distroless.dockerfile -t dless .
 docker run dless
 ```
+
+## CI workflow
+
+CI workflow was implemented, that verifies code is well-formatted, runs tests, and lints all the code with pylint. After all these steps are performed, SNYK vulnirability check is run, and then the docker image is built and pushed to dockerhub.
