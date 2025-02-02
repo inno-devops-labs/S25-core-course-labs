@@ -7,15 +7,15 @@ import (
 	"net/http"
 )
 
-type Random_Number_Data struct {
-	Random_Number int
+type RandomNumberData struct {
+	RandomNumber int
 }
 
 func main()  {
 	static_file_dir := http.Dir("static")
     file_server := http.FileServer(static_file_dir)
     http.Handle("/static/", http.StripPrefix("/static/", file_server))
-	http.HandleFunc("/", handle_time)
+	http.HandleFunc("/", handleTime)
 
 	port := "8000" // the port on which the web application will run 
 	answer := http.ListenAndServe(":"+port, nil)
@@ -23,16 +23,16 @@ func main()  {
 	if answer != nil{
 		fmt.Println("Server startup error: ", answer)
 		return
-	} else {
-		fmt.Println("Server started successfully on port:", port)
-	} 
+	}
+
+	fmt.Println("Server started successfully on port:", port)
 }
 
-func handle_time(w http.ResponseWriter, r *http.Request) {
+func handleTime(w http.ResponseWriter, r *http.Request) {
 
-	random_number := rand.Intn(101) // generate a random number from 0 to 100
-	data := Random_Number_Data{
-		Random_Number: random_number,
+	RandomNumber := rand.Intn(101) // generate a random number from 0 to 100
+	data := RandomNumberData{
+		RandomNumber: RandomNumber,
 	}
 
 	temp, err := template.ParseFiles("templates/index.html")

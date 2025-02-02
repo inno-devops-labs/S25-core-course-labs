@@ -10,7 +10,7 @@ import (
 
 // Server performance testing
 func TestServerIsUp(t *testing.T) {
-	handl := http.HandlerFunc(handle_time)
+	handl := http.HandlerFunc(handleTime)
 	serv := httptest.NewServer((handl))
 
 	response, err := http.Get(serv.URL)
@@ -31,7 +31,7 @@ func TestNumber(t *testing.T) {
 	}
 
 	new_record := httptest.NewRecorder()
-	handler := http.HandlerFunc(handle_time)
+	handler := http.HandlerFunc(handleTime)
 	handler.ServeHTTP(new_record, request)
 
 	body := new_record.Body.String()
