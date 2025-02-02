@@ -72,7 +72,6 @@ The following secrets need to be configured in your GitHub repository:
 
 2. **Build Process**
 
-   - Multi-stage Docker builds
    - Layer caching
    - Minimal final image
 
