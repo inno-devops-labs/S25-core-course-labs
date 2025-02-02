@@ -2,7 +2,6 @@
 
 [![Java Application Build](https://github.com/CatOrLeader/S25-core-course-labs/actions/workflows/app_java.yml/badge.svg?branch=lab3)](https://github.com/CatOrLeader/S25-core-course-labs/actions/workflows/app_java.yml)
 [![Python Application Lint & Test & Push](https://github.com/CatOrLeader/S25-core-course-labs/actions/workflows/app_python.yml/badge.svg?branch=lab3)](https://github.com/CatOrLeader/S25-core-course-labs/actions/workflows/app_python.yml)
-[![Lint & Test CI/CD](https://github.com/CatOrLeader/S25-core-course-labs/actions/workflows/app_python.yaml/badge.svg?branch=lab3)](https://github.com/CatOrLeader/S25-core-course-labs/actions/workflows/app_python.yaml)
 
 ## Introduction
 
