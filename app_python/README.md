@@ -22,3 +22,10 @@ python -m unittest tests/test_app.py
 
 ## Logs
 Logs are saved to app.log and printed to the console.
+
+## Docker 
+
+```bash
+docker pull jlfkajlkifj/python-web-app:latest
+docker run -d -p 8000:8000 jlfkajlkifj/python-web-app:latest
+```
