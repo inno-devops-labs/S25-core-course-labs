@@ -34,3 +34,17 @@ Moreover, I made sure it works properly for smaller browser tab window.
 **Code quality:**
 
 The code runs without errors, the code is light and scalable.
+
+## Unit Tests
+
+### Describe the unit tests and the best practices you applied
+
+Unit tests are written using pytest.
+test_current_time_status_code - checks if the response returns code 200 (success)
+test_current_time_content - checks if the string "Current time in Moscow" is present in the response
+
+I have applied the following practices:
+
+1) Used pytest.fixture to provide a reusable Flask test client
+2) The TESTING mode is enabled to disable error catching and improve debugging
+3) Isolation of Tests: each test function is independent
