@@ -32,10 +32,10 @@ jobs:
           cd app_kotlin
           chmod +x gradlew
 
-      - name: Build with Gradle
+      - name: Build Ktor application
         run: |
           cd app_kotlin
-          ./gradlew build
+          ./gradlew assemble
 
       - name: Run tests with Gradle
         run: |
