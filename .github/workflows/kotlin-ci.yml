@@ -24,17 +24,21 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+            app_kotlin/.gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('app_kotlin/**/*.gradle*', 'app_kotlin/**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
       - name: Grant execute permission for gradlew
+        working-directory: app_kotlin
         run: chmod +x gradlew
 
       - name: Build with Gradle
+        working-directory: app_kotlin
         run: ./gradlew build
 
       - name: Run ktlint check
+        working-directory: app_kotlin
         run: ./gradlew ktlintCheck
 
   security-check:
@@ -47,6 +51,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
+          working-directory: app_kotlin
           args: --skip-unresolved
 
   docker:
@@ -67,14 +72,14 @@ jobs:
       - name: Build and push main Docker image
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: app_kotlin
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/app-ktor:latest
 
       - name: Build and push Distroless image
         uses: docker/build-push-action@v2
         with:
-          context: .
-          file: distroless.Dockerfile
+          context: app_kotlin
+          file: app_kotlin/distroless.Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/app-ktor:distroless
