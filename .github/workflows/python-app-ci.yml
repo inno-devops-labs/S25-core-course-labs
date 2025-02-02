@@ -27,7 +27,7 @@ jobs:
     - name: Debug event info
       run: |
         echo "Event name: ${{ github.event_name }}"
-        echo "Changed files: ${{ toJSON(github.event.pull_request.changed_files) }}"
+        echo "Changed files: ${{ toJSON(github.event.pull_request) }}"
 
     - uses: actions/checkout@v3
 
