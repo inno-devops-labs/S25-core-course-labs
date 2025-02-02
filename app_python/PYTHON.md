@@ -11,4 +11,7 @@ For the web application fastapi framework was chosen due to the following streng
 - Configuration via environment variables. 
 
 ## Testing 
-- Meanual tested that time is updated after page reload and does not depend on machine time zone.
+- pytest is chosen as a test framework. Pytest is more flexible and prices compared to unittests
+- tests follow AAA pattern: arrange, act, assert
+- using fixtures for test configuration
+- tests check response status, text and that returned time does not depend on a machine timezone

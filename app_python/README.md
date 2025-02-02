@@ -1,6 +1,7 @@
 # Lab 1
 The web application to display moscow time
 
+![CI Workflow](https://github.com/macoyshev/s25-core-course-labs/actions/workflows/app_python.yml/badge.svg)
 ## Installation
 ```bash
 make install
@@ -34,6 +35,11 @@ docker run --rm --name moscow-time-app -p 8000:8000 macoyshev/moscow-time
 ### Pull image
 ```bash
 docker pull macoyshev/moscow-time
+```
+
+### Run tests
+```bash
+make test
 ```
  
 ## Requirenments

@@ -12,7 +12,7 @@ COPY --chown=appuser . .
 EXPOSE 8000
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
-FROM base_image AS realise_image
+FROM base_image AS release_image
 COPY --chown=appuser . .
 EXPOSE 8000
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
