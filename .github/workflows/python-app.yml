@@ -17,8 +17,11 @@ jobs:
       - uses: actions/checkout@master
         with:
           ref: lab3
+
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/python-3.10@master
+        uses: snyk/actions/python-3.9@master
+        with:
+          command: code test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
