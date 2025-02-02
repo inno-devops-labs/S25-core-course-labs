@@ -115,23 +115,25 @@ docker run -p 8000:8000 raleksan/app_python_distroless:v0.1
 curl 127.0.0.1:8000
 ```
 
-## CI Workflow
+## GitHub Actions Workflow
 
-### CI lint
+The CI process includes the following steps:
 
-CI starts with linting using `black` linter (`Run Black Linter` job).
+- Runs the Black linter to ensure code formatting consistency.
+- Runs unit tests using `pytest` to verify functionality.
+- Performs a `Snyk` security scan to identify vulnerabilities.
+- Builds a Docker image and pushes it to Docker Hub.
 
-### CI test
+### CI Jobs
 
-After 1st job, CI installs dependencied and run `pytest` (`Run Pytest` job).
+1. **Linting (Black)**
+   - Checks that Python code in the `app_python` directory follows to the Black formatting style.
 
-### CI SNYK
+2. **Testing (Pytest)**
+   - Installs dependencies and runs `pytest` on the test suite.
 
-After two jobs above completed `SNYK` security check starts, `Run Snyk Security Scan` job runs.
-This job works using `SNYK_TOKEN` repository secret.
+3. **Security Scan (Snyk)**
+   - Uses `Snyk` to check for vulnerabilities in dependencies and uploads results to GitHub Code Scanning.
 
-### CI Docker build image & image push
-
-- Job starts with logging into Dockerhub using `DOCKER_USERNAME` and `DOCKER_TOKEN` secrets.
-- Then it builds and pushes an usual and distroless image to Dockerhub.
-- Build is cached in order to optimize future pipelines.
+4. **Build and Push Docker Image**
+   - Builds the Docker image using Buildx and pushes it to Docker Hub under the provided credentials.
