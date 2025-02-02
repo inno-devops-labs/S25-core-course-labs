@@ -3,10 +3,10 @@ name: Flask Web Application (Moscow Time)
 on:
   push:
     branches: [ "lab3", "master" ]
-    # paths: [ "app_python" ]
+    paths: [ "app_python" ]
   pull_request:
     branches: [ "master" ]
-    # paths: [ "app_python" ]
+    paths: [ "app_python" ]
 
 
 permissions:
@@ -84,7 +84,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          context: app_python  
+          context: "{{defaultContext}}:app_python"  
           tags: ${{ vars.DOCKERHUB_USERNAME }}/app_python:app_python-prod-ci-1.0.0
           cache-from: type=gha,scope=container
           cache-to: type=gha,mode=max,scope=container
@@ -93,7 +93,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          context: app_python  
+          context: "{{defaultContext}}:app_python" 
           tags: ${{ vars.DOCKERHUB_USERNAME }}/app_python:app_python-distroless-prod-ci-1.0.0
           cache-from: type=gha,scope=container
           cache-to: type=gha,mode=max,scope=container
