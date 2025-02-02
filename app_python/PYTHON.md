@@ -55,7 +55,6 @@ FastAPI was chosen for this project for several reasons:
 1. **Isolation**
    - Each test is independent
    - No shared state between tests
-   - Clean setup and teardown
 
 2. **Naming Conventions**
    - Descriptive test names

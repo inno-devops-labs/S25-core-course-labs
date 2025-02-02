@@ -89,9 +89,9 @@ If you want to build the Docker image yourself:
 
 ![Moscow Time App](usage.png)
 
-
 ## Unit Tests
 
+Tests follow best practices including isolation, clear naming, and comprehensive assertions.
 The application includes comprehensive unit tests to ensure reliability and functionality:
 
 ### Test Coverage
@@ -117,14 +117,12 @@ The application includes comprehensive unit tests to ensure reliability and func
 
 3. Run with coverage report
 
-```bash
-pytest --cov=. tests/
-```
+    ```bash
+    pytest --cov=. tests/
+    ```
 
 ### Test Structure
 
 - `/tests` - Contains all test files
 - `test_main.py` - Core application tests
 - `pytest.ini` - Test configuration
-
-Tests follow best practices including isolation, clear naming, and comprehensive assertions.
