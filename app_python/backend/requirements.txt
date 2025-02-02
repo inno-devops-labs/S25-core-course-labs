@@ -1,0 +1,7 @@
+Flask==3.0.3
+Flask-CORS==5.0.0
+python-dotenv==1.0.1
+pytz==2024.1
+psycopg2-binary==2.9.9
+SQLAlchemy==2.0.29
+flask-sqlalchemy==3.1.1
