@@ -13,11 +13,11 @@ on:
 jobs:
   lint:
     timeout-minutes: 2
-    name: Run black linter
+    name: Run flake8 linter
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - uses: psf/black@stable
+      - uses: py-actions/flake8@v2
 
   test:
     timeout-minutes: 2
@@ -39,7 +39,8 @@ jobs:
           pip install -r requirements.txt
       - name: Test with pytest
         run: |
-          PYTHONPATH=. pytest
+          cd service
+          PYTHONPATH=. python3 -m pytest tests/
 
   snyk_check:
     needs: [lint, test]
