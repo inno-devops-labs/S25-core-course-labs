@@ -1,7 +1,7 @@
 
 # Service deployment
 
-![workflow](https://github.com/Processor228/S25-core-course-labs/actions/workflows/app_python.yaml/badge.svg)
+![workflow](https://github.com/Processor228/S25-core-course-labs/actions/workflows/app_python.yml/badge.svg)
 
 ## Local installation and testing
 
