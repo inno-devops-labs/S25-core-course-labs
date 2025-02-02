@@ -1,3 +1,5 @@
+[![Python package](https://github.com/RwKaLs/S25-core-course-labs/actions/workflows/python-ci.yml/badge.svg?branch=lab3)](https://github.com/RwKaLs/S25-core-course-labs/actions/workflows/python-ci.yml)
+
 # Overview
 
 This web application displays the current time in Moscow and updates it every second. It uses Flask web framework and follows the best Python web practices.
@@ -79,3 +81,11 @@ python -m unittest tests/test_app.py
 ```
 
 More details are in [PYTHON.md](PYTHON.md)
+
+## Continuous Integration Workflow
+
+The project uses Github Actions for continuous integration. 
+CI workflow includes python dependencies installation, linting the code using `flake8`, 
+and running unit tests with `unittest`.
+Moreover, it integrates docker steps: logging into Docker Hub, building and pushing the image.
+
