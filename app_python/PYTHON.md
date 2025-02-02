@@ -16,8 +16,19 @@
 
 ## Testing
 
+### Best practices
+
 - Pytest for unit tests.
 - Tests in the tests/ directory.
+- Mock modules for code that depends on them
+- use `assert` for validation
+- use regular expressions to validation
+
+### Unit tests
+
+- Add App test to test that web appliccation returns 200 with Moscow time
+- Add unit tests with datetime module mock in order to
+  test get_current_time_in_moscow() function
 
 ## Code Quality
 

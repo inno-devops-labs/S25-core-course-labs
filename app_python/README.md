@@ -34,7 +34,7 @@ pip install -r requirements.txt
    http://127.0.0.1:8080
    ```
 
-## Testing
+## Testing (Unit Tests)
 
 Run pytest:
 
