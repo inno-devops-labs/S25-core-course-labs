@@ -36,4 +36,4 @@ def create_app():
 # Run the application only if executed directly
 if __name__ == '__main__':
     flask_app = create_app()
-    flask_app.run(debug=True)
+    flask_app.run()
