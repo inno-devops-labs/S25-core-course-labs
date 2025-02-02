@@ -88,3 +88,43 @@ If you want to build the Docker image yourself:
 - The time is updated automatically when the page is refreshed.
 
 ![Moscow Time App](usage.png)
+
+
+## Unit Tests
+
+The application includes comprehensive unit tests to ensure reliability and functionality:
+
+### Test Coverage
+
+- Endpoint functionality testing
+- Time zone validation
+- Template rendering verification
+- Error handling scenarios
+
+### Running Tests
+
+1. Install test dependencies:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+2. Run tests:
+
+    ```bash
+    pytest
+    ```
+
+3. Run with coverage report
+
+```bash
+pytest --cov=. tests/
+```
+
+### Test Structure
+
+- `/tests` - Contains all test files
+- `test_main.py` - Core application tests
+- `pytest.ini` - Test configuration
+
+Tests follow best practices including isolation, clear naming, and comprehensive assertions.

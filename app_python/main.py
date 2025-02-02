@@ -16,8 +16,9 @@ async def get_moscow_time(request: Request):
         formatted_time = moscow_time.strftime("%Y-%m-%d %H:%M:%S %Z")
         
         return templates.TemplateResponse(
+            request,
             "index.html",
-            {"request": request, "formatted_time": formatted_time}
+            {"formatted_time": formatted_time}
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) 
