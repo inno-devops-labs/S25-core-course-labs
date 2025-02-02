@@ -4,9 +4,11 @@ on:
   push:
     paths:
       - "app_go/**"
+      - '.github/workflows/app_go_ci.yml'
   pull_request:
     paths:
       - "app_go/**"
+      - '.github/workflows/app_go_ci.yml'
 
 jobs:
   build:
