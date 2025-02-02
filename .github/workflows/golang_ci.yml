@@ -84,7 +84,6 @@ jobs:
 
   security:
     runs-on: ubuntu-latest
-    needs: build
     defaults:
       run:
         working-directory: app_golang
@@ -95,3 +94,5 @@ jobs:
       uses: snyk/actions/golang@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: test ./app_golang
