@@ -12,9 +12,9 @@ type RandomNumberData struct {
 }
 
 func main()  {
-	static_file_dir := http.Dir("static")
-    file_server := http.FileServer(static_file_dir)
-    http.Handle("/static/", http.StripPrefix("/static/", file_server))
+	staticFileDir := http.Dir("static")
+    fileServer := http.FileServer(staticFileDir)
+    http.Handle("/static/", http.StripPrefix("/static/", fileServer))
 	http.HandleFunc("/", handleTime)
 
 	port := "8000" // the port on which the web application will run 

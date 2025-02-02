@@ -30,19 +30,19 @@ func TestNumber(t *testing.T) {
 		t.Fatal("Request error :", err)
 	}
 
-	new_record := httptest.NewRecorder()
+	newRecord := httptest.NewRecorder()
 	handler := http.HandlerFunc(handleTime)
-	handler.ServeHTTP(new_record, request)
+	handler.ServeHTTP(newRecord, request)
 
-	body := new_record.Body.String()
+	body := newRecord.Body.String()
 	re := regexp.MustCompile(`>\s*(\d+)\s*<`)
 	match := re.FindStringSubmatch(body)
 	if len(match) < 2 {
 		t.Fatalf("Not find a number: %v", body)
 	}
-	number_str := match[1]
+	numberStr := match[1]
 
-    number, _ := strconv.Atoi(number_str)
+    number, _ := strconv.Atoi(numberStr)
 
 	if number < 0 || number > 100 {
 		t.Errorf("number less than 0 or greater than 100 %d", number)
