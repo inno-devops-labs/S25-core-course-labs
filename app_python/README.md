@@ -126,3 +126,22 @@ The application includes comprehensive unit tests to ensure reliability and func
 - `/tests` - Contains all test files
 - `test_main.py` - Core application tests
 - `pytest.ini` - Test configuration
+
+## Continuous Integration
+
+This project uses GitHub Actions for continuous integration. The CI pipeline includes the following steps:
+
+### Build and Test Pipeline
+
+- **Dependencies**: Installs Python dependencies from requirements.txt
+- **Linter**: Runs flake8 to ensure code quality
+- **Tests**: Executes pytest suite
+
+### Docker Pipeline
+
+- **Login**: Authenticates with Docker Hub
+- **Build & Push**: Builds and pushes Docker image to Docker Hub
+
+### CI Status
+
+![CI Status](https://github.com/{username}/{repo-name}/actions/workflows/ci.yml/badge.svg)
