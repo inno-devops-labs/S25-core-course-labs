@@ -11,6 +11,18 @@ permissions:
     contents: read
 
 jobs:
+  security:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@master
+        with:
+          ref: lab3
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python-3.10@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+
   build:
     name: Build & Test
     timeout-minutes: 10
@@ -31,16 +43,6 @@ jobs:
           
           # Optional - x64 or x86 architecture, defaults to x64
           architecture: 'x64' 
-
-
-      - name: Cache pip dependencies  
-        id: pip-cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: pip-cache-${{ runner.os }}-${{ hashFiles('app_python/requirements.txt') }}
-          restore-keys: |
-            pip-cache-${{ runner.os }}-
 
       - name: Install dependencies
         working-directory: app_python
