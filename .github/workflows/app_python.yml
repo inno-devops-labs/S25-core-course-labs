@@ -3,7 +3,6 @@ name: Python Application Lint & Test & Push
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  LOWER_IMAGE_NAME: ${{ toLower(github.repository) }}
 
 on:
   pull_request:
@@ -68,6 +67,11 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Convert IMAGE_NAME to lowercase
+        shell: bash
+        run: |
+          echo "LOWER_IMAGE_NAME=$(echo '${{ env.IMAGE_NAME }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
