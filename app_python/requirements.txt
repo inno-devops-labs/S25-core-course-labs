@@ -1,2 +1,5 @@
 fastapi
 uvicorn[standard]
+pytest
+mypy
+pylint

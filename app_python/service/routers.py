@@ -1,5 +1,5 @@
 """
- In this module we implement routers for simplistic web service 
+ In this module we implement routers for simplistic web service
  that provides current time in Moscow.
 
  SPDX-LICENCE: no-licence
