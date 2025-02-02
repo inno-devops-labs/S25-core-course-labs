@@ -1,3 +1,5 @@
+![example workflow](https://github.com/Lekski1/S25-core-course-labs/actions/workflows/golang_ci.yml/badge.svg)
+
 # Random Number Generator Web Application
 
 ## Overview
@@ -93,4 +95,24 @@ You can access the web app at `127.0.0.1:8000`.
 ```
 docker ps
 docker stop <container_id>
+```
+
+## Unit-test
+Below are the instructions for running unit tests.
+
+### Navigating to the correct directory
+```
+cd app_golang
+```
+
+### Running the tests
+```
+go test
+```
+
+### Expected output for successful tests
+```
+C:\Users\Honor\Desktop\S25-core-course-labs\app_golang>go test
+PASS
+ok      app_go  0.954s
 ```
