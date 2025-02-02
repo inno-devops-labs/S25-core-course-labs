@@ -1,3 +1,5 @@
+![Go App CI](https://github.com/your-username/your-repo/actions/workflows/ci-go.yml/badge.svg)
+
 # Go Web Application - Daily Predictions
 
 This is a simple Go web application that displays a random daily prediction every time the page is refreshed.
@@ -79,3 +81,42 @@ Follow the steps below to install and run the application locally:
    ```bash
    docker run -p 8080:8080 milanamilana/go-distroless-web-app:latest
    ```
+
+## Unit Tests
+
+To run tests
+
+   ```bash
+   go mod init app_go
+   go mod tidy
+
+   go test ./...
+   ```
+
+### Continuous Integration (CI) workflow
+
+1. **Checkout Code**  
+   - Retrieves the latest changes from the repository.
+
+2. **Set Up Go Environment**  
+   - Uses `actions/setup-go` to install Go (version `1.21`).
+
+3. **Cache Dependencies**  
+   - Caches Go modules to speed up build times.
+
+4. **Install Dependencies**  
+   - Runs `go mod tidy` to install necessary dependencies.
+
+5. **Linting**  
+   - Uses `golint` to check for potential issues in the code.
+
+6. **Run Tests**  
+   - Executes `go test` to ensure functionality.
+
+7. **Docker Integration**  
+   - Logs into **Docker Hub** using GitHub Secrets.  
+   - Builds the Docker image for deployment.  
+   - Pushes the image to Docker Hub.
+
+8. **Security Scan**  
+   - Uses **Snyk** to scan for vulnerabilities in dependencies.

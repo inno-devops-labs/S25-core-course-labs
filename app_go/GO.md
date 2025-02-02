@@ -30,3 +30,20 @@ Obviously, I checked that the web application generates and displays a random pr
 **Code quality:**
 
 The code runs without errors, the code is light and scalable.
+
+## Unit Tests
+
+### Describe the unit tests and the best practices you applied
+
+The unit tests check that:
+
+- The HTTP endpoint (`/`) returns a valid JSON response.  
+- The response contains a `prediction` field.  
+- The predictions are randomly selected from the predefined list.  
+
+I have applied the following practices:
+
+- **Isolation**: Each test runs independently without side effects.  
+- **Table-Driven Tests**: Structured test cases improve coverage.  
+- **Error Handling**: Ensures proper HTTP responses and JSON encoding.  
+- **Automated Execution**: Integrated into GitHub Actions for continuous validation.  
