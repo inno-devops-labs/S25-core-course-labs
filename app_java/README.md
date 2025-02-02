@@ -1,5 +1,7 @@
 # Vacation Payment Calculator
 
+[![Java Application Build](https://github.com/CatOrLeader/S25-core-course-labs/actions/workflows/app_java.yml/badge.svg?branch=lab3)](https://github.com/CatOrLeader/S25-core-course-labs/actions/workflows/app_java.yml)
+
 ## Overview
 
 Vacation... What can actually be better than this? However, alongside with the "chill" time, there is another

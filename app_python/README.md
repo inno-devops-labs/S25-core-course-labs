@@ -1,5 +1,7 @@
 # PyWatch
 
+[![Python Application Lint & Test & Push](https://github.com/CatOrLeader/S25-core-course-labs/actions/workflows/app_python.yml/badge.svg?branch=lab3)](https://github.com/CatOrLeader/S25-core-course-labs/actions/workflows/app_python.yml)
+
 ## Overview
 
 How many times you check the time on your laptop and think something like 'O-oh, this kind of boring...'?
