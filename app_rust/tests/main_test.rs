@@ -1,5 +1,5 @@
 use actix_web::{test, App};
-use quote_app::*;  // assuming we'll move our main app logic to lib.rs
+use quote_app::*; // assuming we'll move our main app logic to lib.rs
 
 #[actix_web::test]
 async fn test_get_quote() {
@@ -23,9 +23,11 @@ async fn test_get_quote() {
     assert!(body_str.contains("quote-container"));
     assert!(body_str.contains("quote"));
     assert!(body_str.contains("author"));
-    assert!(body_str.contains("Steve Jobs") || 
-           body_str.contains("Cory House") || 
-           body_str.contains("John Johnson"));
+    assert!(
+        body_str.contains("Steve Jobs")
+            || body_str.contains("Cory House")
+            || body_str.contains("John Johnson")
+    );
 }
 
 #[actix_web::test]
@@ -57,4 +59,4 @@ async fn test_template_rendering() {
     assert!(body_str.contains(r#"class="quote-container""#));
     assert!(body_str.contains(r#"class="quote""#));
     assert!(body_str.contains(r#"class="author""#));
-} 
+}
