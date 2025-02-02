@@ -28,15 +28,15 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle.kts', '**/gradle-wrapper.properties') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('app_kotlin/**/*.gradle.kts', 'app_kotlin/**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
       - name: Grant execute permission for Gradle wrapper
-        run: chmod +x gradlew
+        run: chmod +x app_kotlin/gradlew
 
       - name: Build and run tests
-        run: ./gradlew clean build test
+        run: cd app_kotlin && ./gradlew clean build test
 
   lint:
     runs-on: ubuntu-latest
@@ -61,7 +61,7 @@ jobs:
         run: ktlint --verbose
 
       - name: Run detekt for static analysis
-        run: ./gradlew detekt
+        run: cd app_kotlin && ./gradlew detekt
 
   docker:
     needs: [ build, lint ]
@@ -83,14 +83,14 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: app_kotlin
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/ktor-app:latest
 
       - name: Build and push Distroless Docker image
         uses: docker/build-push-action@v3
         with:
-          context: .
-          file: Dockerfile.distroless
+          context: app_kotlin
+          file: app_kotlin/Dockerfile.distroless
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/ktor-app:distroless
