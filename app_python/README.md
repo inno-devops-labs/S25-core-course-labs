@@ -145,7 +145,3 @@ This project uses GitHub Actions for continuous integration. The CI pipeline inc
 
 - **Login**: Authenticates with Docker Hub
 - **Build & Push**: Builds and pushes Docker image to Docker Hub
-
-### CI Status
-
-![CI Status](https://github.com/{username}/{repo-name}/actions/workflows/ci.yml/badge.svg)

@@ -4,6 +4,10 @@
 
 A simple web application built with Actix-web that displays random inspirational quotes. The application shows a new quote each time the page is refreshed and features a clean, minimalist interface.
 
+## CI Status
+
+[![Rust App CI](https://github.com/HaidarJbeily7/s25-core-course-labs/actions/workflows/rust-app-ci.yml/badge.svg)](https://github.com/HaidarJbeily7/s25-core-course-labs/actions/workflows/rust-app-ci.yml)
+
 ## Features
 
 - Displays random inspirational quotes
@@ -96,3 +100,45 @@ If you want to build the Docker image yourself:
 - Refresh the page to see a new quote
 
 ![Random Quote App](usage.png)
+
+## Unit Tests
+
+Tests follow best practices including isolation, clear naming, and comprehensive assertions.
+The application includes comprehensive unit tests to ensure reliability and functionality:
+
+### Test Coverage
+
+- Endpoint functionality testing
+- Quote generation validation
+- Template rendering verification
+- Error handling scenarios
+
+### Running Tests
+
+1. Install test dependencies:
+
+    ```bash
+    cargo test
+    ```
+
+2. Run with coverage report:
+
+    ```bash
+    cargo install cargo-tarpaulin
+    cargo tarpaulin
+    ```
+
+## Continuous Integration
+
+This project uses GitHub Actions for continuous integration. The CI pipeline includes the following steps:
+
+### Build and Test Pipeline
+
+- **Dependencies**: Installs Rust toolchain and dependencies
+- **Linter**: Runs clippy to ensure code quality
+- **Tests**: Executes cargo test suite
+
+### Docker Pipeline
+
+- **Login**: Authenticates with Docker Hub
+- **Build & Push**: Builds and pushes Docker image to Docker Hub
