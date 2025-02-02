@@ -87,5 +87,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.LOWER_IMAGE_NAME }}/buildcache:latest
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.LOWER_IMAGE_NAME }}/buildcache:latest,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.LOWER_IMAGE_NAME }}/app_python_buildcache:latest
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.LOWER_IMAGE_NAME }}/app_python_buildcache:latest,mode=max
