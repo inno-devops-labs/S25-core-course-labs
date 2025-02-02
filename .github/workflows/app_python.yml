@@ -3,6 +3,7 @@ name: Python Application Lint & Test & Push
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  LOWER_IMAGE_NAME: ${{ toLower(github.repository) }}
 
 on:
   pull_request:
@@ -72,7 +73,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/app_python
+          images: ${{ env.REGISTRY }}/${{ env.LOWER_IMAGE_NAME }}/app_python
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
@@ -82,5 +83,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/buildcache:latest
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/buildcache:latest,mode=max
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.LOWER_IMAGE_NAME }}/buildcache:latest
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.LOWER_IMAGE_NAME }}/buildcache:latest,mode=max
