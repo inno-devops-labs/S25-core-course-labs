@@ -129,3 +129,17 @@ keep two different tests for the following functionality:
 
 * Config Loading
 * Main Page / Incorrect Page Route loading
+
+---
+
+### CI Workflow
+
+The CI workflow of this application is quite ordinary: there are three main stages, such as
+
+* Lint: Check the application's code quality.
+* Test: Assure that the application works correctly.
+* Push: Push the latest application image into the GitHub Docker Registry.
+
+The workflow takes place only when a PR is opened to the master/main branch. Why? Because we have a simple project,
+and it will be too resource-consuming and messy if we start our jobs on each push to the remote repository (IMO).
+In the production environments, there are CI/CD almost every push because companies have self-hosted VMs (runners).
