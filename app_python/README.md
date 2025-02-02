@@ -4,6 +4,10 @@
 
 A simple web application built with FastAPI that displays the current time in Moscow. The application updates the time when the page is refreshed and features a clean, minimalist interface.
 
+## CI Status
+
+[![Python App CI](https://github.com/HaidarJbeily7/s25-core-course-labs/actions/workflows/python-app-ci.yml/badge.svg)](https://github.com/HaidarJbeily7/s25-core-course-labs/actions/workflows/python-app-ci.yml)
+
 ## Features
 
 - Displays current Moscow time in real-time

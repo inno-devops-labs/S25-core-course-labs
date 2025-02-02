@@ -26,17 +26,20 @@ FastAPI was chosen for this project for several reasons:
 ### Unit Tests Implementation
 
 1. **Test Structure**
+
    - Organized tests in dedicated `/tests` directory
    - Used pytest as the testing framework
    - Implemented TestClient for FastAPI endpoint testing
 
 2. **Test Coverage**
+
    - Main endpoint functionality testing
    - Response format validation
    - Template rendering verification
    - Error handling scenarios
 
 3. **Best Practices Applied**
+
    - Isolated test cases
    - Clear test naming conventions
    - Proper assertion messages
@@ -44,6 +47,7 @@ FastAPI was chosen for this project for several reasons:
    - Comprehensive HTTP response testing
 
 4. **Running Tests**
+
    ```bash
    pytest
    # With coverage report
@@ -53,15 +57,18 @@ FastAPI was chosen for this project for several reasons:
 ### Testing Best Practices
 
 1. **Isolation**
+
    - Each test is independent
    - No shared state between tests
 
 2. **Naming Conventions**
+
    - Descriptive test names
    - Clear purpose indication
    - Consistent naming pattern
 
 3. **Assertions**
+
    - Specific assertions
    - Clear failure messages
    - Multiple validation points
