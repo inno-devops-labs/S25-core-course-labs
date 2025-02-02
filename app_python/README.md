@@ -1,5 +1,7 @@
 # Python Sample Application
 
+[![CI Status](https://github.com/Raleksan/S25-core-course-labs/actions/workflows/app_python.yaml/badge.svg)](https://github.com/Raleksan/S25-core-course-labs/actions/workflows/app_python.yaml?event=push)
+
 ## Overview
 
 This is a simple python web application that shows current time in Moscow.
@@ -39,6 +41,14 @@ python3 app.py
 
 ```bash
 curl 127.0.0.1:8000
+```
+
+## Unit Tests
+
+- To run the unit tests, use the following command:
+
+```bash
+pytest tests/tests.py
 ```
 
 ## Docker
@@ -104,3 +114,26 @@ docker run -p 8000:8000 raleksan/app_python_distroless:v0.1
 ```bash
 curl 127.0.0.1:8000
 ```
+
+## GitHub Actions Workflow
+
+The CI process includes the following steps:
+
+- Runs the Black linter to ensure code formatting consistency.
+- Runs unit tests using `pytest` to verify functionality.
+- Performs a `Snyk` security scan to identify vulnerabilities.
+- Builds a Docker image and pushes it to Docker Hub.
+
+### CI Jobs
+
+1. **Linting (Black)**
+   - Checks that Python code in the `app_python` directory follows to the Black formatting style.
+
+2. **Testing (Pytest)**
+   - Installs dependencies and runs `pytest` on the test suite.
+
+3. **Security Scan (Snyk)**
+   - Uses `Snyk` to check for vulnerabilities in dependencies and uploads results to GitHub Code Scanning.
+
+4. **Build and Push Docker Image**
+   - Builds the Docker image using Buildx and pushes it to Docker Hub under the provided credentials.

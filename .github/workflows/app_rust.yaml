@@ -1,0 +1,132 @@
+name: app_rust
+
+on:
+  push:
+    paths:
+      # Check sources and actions dirs
+      - 'app_rust/**'
+      - '.github/workflows/app_rust.yaml'
+      # Ignore markdown update
+      - '!**/*.md'
+  pull_request:
+    paths:
+      # Check sources and actions dirs
+      - 'app_rust/**'
+      - '.github/workflows/app_rust.yaml'
+      # Ignore markdown update
+      - '!**/*.md'
+
+jobs:
+  lint:
+    timeout-minutes: 2
+    name: Run Clippy Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+
+      - name: Run Clippy
+        working-directory: app_rust
+        run: cargo clippy -- -D warnings
+
+  test:
+    timeout-minutes: 2
+    name: Run Cargo Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Run Tests
+        working-directory: app_rust
+        run: cargo test --verbose
+
+  security_checks:
+    needs: [lint, test]
+    timeout-minutes: 5
+    name: Run Security Scans
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      - name: Run Snyk to check for vulnerabilities
+        continue-on-error: true
+        working-directory: app_rust
+        run: |
+          snyk test --sarif-file-output=snyk.sarif
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      
+      - name: Check if SARIF file exists
+        id: check_sarif
+        working-directory: app_rust
+        run: |
+          if [ -f snyk.sarif ]; then
+            echo "SARIF file exists"
+            echo "sarif_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "SARIF file does not exist"
+            echo "sarif_exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upload result to GitHub Code Scanning
+        if: steps.check_sarif.outputs.sarif_exists == 'true'
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: app_rust/snyk.sarif
+
+  build_push:
+    timeout-minutes: 10
+    needs: [lint, test, security_checks]
+    name: Build and Push Docker Image
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build and Push to DockerHub
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: "${{ secrets.DOCKER_USERNAME }}/app_rust:v0.1"
+          context: app_rust/
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/app_rust:v0.1
+          cache-to: type=local,dest=/tmp/.buildx-cache
+
+      - name: Distroless Build and Push to DockerHub
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: "${{ secrets.DOCKER_USERNAME }}/app_rust_distroless:v0.1"
+          context: app_rust/
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/app_rust_distroless:v0.1
+          cache-to: type=local,dest=/tmp/.buildx-cache
