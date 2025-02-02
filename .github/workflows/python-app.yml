@@ -19,11 +19,13 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: "lab3"
 
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python-3.9@master
         with:
-          command: test  
+          command: code test  
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
@@ -35,6 +37,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: "lab3"
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
