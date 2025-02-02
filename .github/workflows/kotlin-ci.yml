@@ -3,12 +3,8 @@ name: Kotlin Ktor App
 on:
   push:
     branches: [ "master", "lab3" ]
-    paths:
-      - 'app_kotlin/**'
   pull_request:
-    branches: [ "master", "lab3" ]
-    paths:
-      - 'app_kotlin/**'
+    branches: [ "master" ]
 
 jobs:
   build:
