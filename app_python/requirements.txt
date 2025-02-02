@@ -6,3 +6,4 @@ pylint
 
 # need this for client in testing.
 httpx
+beautifulsoup4
