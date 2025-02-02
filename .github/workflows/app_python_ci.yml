@@ -80,12 +80,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-docker-
 
-      - name: Run Snyk Vulnerability Check
-        uses: snyk/actions/python@master
-        with:
-          args: --file=requirements.txt
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python-3.10@master
+        continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --sarif-file-output=snyk.sarif --file=app_python/requirements.txt --package-manager=pip --skip-unresolved
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
 
 
 
