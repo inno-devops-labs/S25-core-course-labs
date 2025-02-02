@@ -52,8 +52,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          entrypoint: app_python
-          args: --sarif-file-output=app_python/snyk.sarif --file=app_python/requirements.txt --severity-threshold=high
+          args: --sarif-file-output=app_python/snyk.sarif --file=app_python/requirements.txt --severity-threshold=high app_python/
 
       - name: Upload Snyk results to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
