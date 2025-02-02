@@ -3,6 +3,8 @@ name: Moscow Current Time
 on: 
     push:
         branches: [ "lab3" ]
+    pull_request:
+        branches: [ "master" ]
 
 
 permissions:
@@ -29,6 +31,16 @@ jobs:
           
           # Optional - x64 or x86 architecture, defaults to x64
           architecture: 'x64' 
+
+
+      - name: Cache pip dependencies  
+        id: pip-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-cache-${{ runner.os }}-${{ hashFiles('app_python/requirements.txt') }}
+          restore-keys: |
+            pip-cache-${{ runner.os }}-
 
       - name: Install dependencies
         working-directory: app_python
