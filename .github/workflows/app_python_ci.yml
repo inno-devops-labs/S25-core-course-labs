@@ -44,10 +44,6 @@ jobs:
   docker:
     needs: build
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: app_python
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -59,7 +55,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/flask-app:latest .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/flask-app:latest ./app_python
 
       - name: Push Docker Image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/flask-app:latest
@@ -75,7 +71,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r app_python/requirements.txt
 
       - name: Cache Docker layers
         uses: actions/cache@v4
@@ -91,7 +87,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --sarif-file-output=snyk.sarif --file=requirements.txt --package-manager=pip --skip-unresolved
+          args: --sarif-file-output=snyk.sarif --file=app_python/requirements.txt --package-manager=pip --skip-unresolved
 
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v2
