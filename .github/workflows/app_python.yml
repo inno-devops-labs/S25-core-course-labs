@@ -24,7 +24,7 @@ jobs:
     defaults:
       run:
         working-directory: app_python
-    name: Run pytest
+    name: Run pytest and lint
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -57,7 +57,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/python-3.11@master
+        uses: snyk/actions/python-3.10@master # just 3.10 exists as of now
         with:
           args: --skip-unresolved app_python/
         env:
