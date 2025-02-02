@@ -46,17 +46,14 @@ jobs:
           cd app_python
           python -m unittest discover -s tests -p "*.py"
 
-      - name: Install Snyk CLI
-        uses: snyk/actions/setup@master
-        with:
-          version: 'latest'
-
-      - name: Run Snyk to check for vulnerabilities
+      - name: Snyk Test
+        uses: snyk/actions/python@master
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: |
-          snyk test --file=app_python/requirements.txt --sarif-file-output=app_python/snyk.sarif --severity-threshold=high
+        with:
+          project-directory: app_python
+          args: --sarif-file-output=app_python/snyk.sarif --file=app_python/requirements.txt --severity-threshold=high
 
       - name: Upload Snyk results to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
