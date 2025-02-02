@@ -6,6 +6,9 @@ env:
 
 on:
   pull_request:
+    paths:
+      - app_python
+      - .github/workflows/app_python.yml
     branches:
       - main
       - master
@@ -42,6 +45,19 @@ jobs:
         run: |
           cd app_python
           python -m unittest discover -s tests -p "*.py"
+
+      - name: Snyk Test
+        uses: snyk/actions/python@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --sarif-file-output=app_python/snyk.sarif --file=app_python/requirements.txt --severity-threshold=high
+
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: app_python/snyk.sarif
 
   build-push:
     runs-on: ubuntu-latest
@@ -89,3 +105,5 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.LOWER_IMAGE_NAME }}/app_python_buildcache:latest
           cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.LOWER_IMAGE_NAME }}/app_python_buildcache:latest,mode=max
+
+
