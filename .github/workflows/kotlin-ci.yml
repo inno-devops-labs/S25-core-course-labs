@@ -27,6 +27,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Grant execute permissions for gradlew
+        run: |
+          cd app_kotlin
+          chmod +x gradlew
+
       - name: Build with Gradle
         run: |
           cd app_kotlin
