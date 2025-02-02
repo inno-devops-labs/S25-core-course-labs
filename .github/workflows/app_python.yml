@@ -52,7 +52,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          project-directory: app_python
+          entrypoint: app_python
           args: --sarif-file-output=app_python/snyk.sarif --file=app_python/requirements.txt --severity-threshold=high
 
       - name: Upload Snyk results to GitHub Code Scanning
