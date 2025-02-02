@@ -87,3 +87,4 @@ jobs:
         context: app_python
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/app-python:latest
+        
