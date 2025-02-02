@@ -25,7 +25,7 @@ jobs:
     if: |
       github.event_name == 'push' ||
       (github.event_name == 'pull_request' &&
-       contains(toJSON(github.event.pull_request.changed_files), 'app_python/') ||
+       contains(toJSON(github.event.pull_request.changed_files), 'app_python') ||
        contains(toJSON(github.event.pull_request.changed_files), '.github/workflows/python-app-ci.yml'))
 
     steps:
