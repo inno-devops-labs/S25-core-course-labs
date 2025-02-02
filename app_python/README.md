@@ -127,5 +127,5 @@ The project has github actions configured to automatically deploy the web-app ap
 
 Settings for workflows:
 1.  Navigate to the repository settings: Settings → Secrets → Actions
-2.  Create two secrets: `DOCKER_USERNAME` - your Docker login, and `DOCKER_PASSWORD` - your Docker login password.
+2.  Create two secrets: `DOCKER_USERNAME` - your Docker login, `DOCKER_PASSWORD` - your Docker login password and `SNYK_TOKEN` - your Snyk api token
 

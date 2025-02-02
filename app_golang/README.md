@@ -116,3 +116,10 @@ C:\Users\Honor\Desktop\S25-core-course-labs\app_golang>go test
 PASS
 ok      app_go  0.954s
 ```
+
+## CI/CD Github Actions
+The project has github actions configured to automatically deploy the web-app application when push or pull request to the master branch. 
+
+Settings for workflows:
+1.  Navigate to the repository settings: Settings → Secrets → Actions
+2.  Create two secrets: `DOCKER_USERNAME` - your Docker login, `DOCKER_PASSWORD` - your Docker login password and `SNYK_TOKEN` - your Snyk api token
