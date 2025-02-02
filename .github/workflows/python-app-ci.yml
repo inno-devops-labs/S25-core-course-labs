@@ -2,9 +2,9 @@ name: Python App CI
 
 on:
   push:
-    branches: [ "haidar/solution-lab-03", "master" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "haidar/solution-lab-03", "master" ]
+    branches: [ "master" ]
 
 env:
   DOCKER_IMAGE: haidarjbeily/distroless-moscow-time-app
