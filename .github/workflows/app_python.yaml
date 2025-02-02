@@ -1,0 +1,47 @@
+name: app_python
+
+on:
+  push:
+    paths:
+      - "app_python/**"
+      - ".github/workflows/app_python.yaml"
+  pull_request:
+    paths:
+      - "app_python/**"
+      - ".github/workflows/app_python.yaml"
+
+jobs:
+  lint:
+    name: Run linter Black
+    timeout-minutes: 2
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: psf/black@stable
+
+  test:
+    name: Run Tests with Pytest
+    timeout-minutes: 2
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: app_python
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Seting up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+          cache: "pip"
+
+      - name: Installing dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Execute Tests with Pytest
+        run: |
+          PYTHONPATH=. pytest
