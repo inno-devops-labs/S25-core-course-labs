@@ -1,8 +1,6 @@
 fastapi
 uvicorn[standard]
 pytest
-mypy
-pylint
 
 # need this for client in testing.
 httpx

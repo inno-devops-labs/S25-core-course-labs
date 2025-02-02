@@ -42,6 +42,11 @@ jobs:
           cd service
           PYTHONPATH=. python3 -m pytest tests/
 
+      - name: Run pylint
+        run: |
+          pip install pylint
+          pylint --output-format=colorized $(git ls-files '*.py')
+
   snyk_check:
     needs: [lint, test]
     timeout-minutes: 5
@@ -52,7 +57,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/python-3.10@master
+        uses: snyk/actions/python-3.11@master
         with:
           args: --skip-unresolved app_python/
         env:

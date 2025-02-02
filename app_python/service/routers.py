@@ -11,7 +11,7 @@ from datetime import datetime, timedelta, timezone
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
 
-import templates
+from service import templates
 
 TIMEZONE = "Europe/Moscow"
 

@@ -9,7 +9,7 @@
 import os
 import uvicorn
 from fastapi import FastAPI
-from routers import time_router
+from service.routers import time_router
 
 app = FastAPI()
 
@@ -21,7 +21,7 @@ if __name__ == "__main__":
     uvicorn.run(
         app,
         host="0.0.0.0",
-        port=int(os.getenv("PORT", 8080)),
-        log_level=os.getenv('LOG_LEVEL', "info"),
+        port=int(os.getenv("PORT", "8080")),
+        log_level=os.getenv("LOG_LEVEL", "info"),
         proxy_headers=True
     )

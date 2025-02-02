@@ -1,12 +1,22 @@
-from main import app
+"""
+    In this file we test our service.
+"""
+
+from datetime import datetime
+
 from fastapi.testclient import TestClient
 from bs4 import BeautifulSoup
-from datetime import datetime
+
+from service.main import app
 
 client = TestClient(app)
 
 
 def test_read_main():
+    """
+        Simply perform a request, check its code, check that html
+        contains some information and verify that time is reasonable.
+    """
     response = client.get("/")
     assert response.status_code == 200
 
