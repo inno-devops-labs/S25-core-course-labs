@@ -1,8 +1,6 @@
 # Flask Web Application: Moscow Time
 
-This is a simple web application that displays the current time in Moscow, Russia. The application is built using the Flask framework and follows best practices for Python web development.
-
----
+[![Flask Web Application (Moscow Time)](https://github.com/Mohammed-Nour/S25-core-course-labs/actions/workflows/python-app.yml/badge.svg)](https://github.com/Mohammed-Nour/S25-core-course-labs/actions/workflows/python-app.yml)
 
 ## Table of Contents
 
@@ -14,8 +12,9 @@ This is a simple web application that displays the current time in Moscow, Russi
 6. [Unit Tests](#unit-tests)
 7. [Docker](#docker)
 8. [Distroless Image Version](#distroless-image-version)
-9. [Code Quality Checks](#code-quality-checks)
-10. [Author](#author)
+9. [CI Workflow](#ci-workflow)
+10. [Code Quality Checks](#code-quality-checks)
+11. [Author](#author)
 
 ---
 
@@ -155,7 +154,7 @@ To run the unit tests, follow these steps:
 3. Run the tests using `pytest`:
 
    ```bash
-   pytest
+   pytest tests app.py
    ```
 
    > **Note**: The `pytest` command will automatically discover and run all test files in the `tests` directory.
@@ -272,6 +271,35 @@ This application is also available in a **Distroless** version, which is a minim
    ```
 
 2. Run the container as described in the "How to Run the Distroless Docker Image" section.
+
+---
+
+## CI Workflow
+
+This repository uses GitHub Actions to automate the build, test, and deployment processes. The CI workflow is defined in the file and incorporates the following key features:
+
+- **Trigger Conditions**:  
+  The workflow runs on:
+  - **Push events** on the `lab3` and `master` branches when changes occur in the `app_python` folder.
+  - **Pull requests** targeting the `master` branch (also filtered to changes in the `app_python` folder).
+
+- **Workflow Jobs**:  
+  The CI pipeline is divided into three main jobs:
+  1. **Security**:  
+     - Runs Snyk vulnerability checks to detect and flag known security issues in the project.
+  2. **Build & Test**:  
+     - Installs project dependencies.
+     - Executes linting using Flake8 and Pylint.
+     - Runs unit tests using pytest.
+  3. **Docker**:  
+     - Login into Docker Hub.
+     - Sets up the necessary build environment with QEMU and Docker Buildx.
+     - Builds and pushes both a standard Docker image and a distroless version.
+  
+- **Efficiency and Best Practices**:  
+  - The workflow makes use of caching for pip dependencies and Docker layers to speed up build times.
+  - The integration of Snyk enhances security by continuously scanning for vulnerabilities.
+  - The status badge at the top of this README provides immediate visibility into the current build status.
 
 ---
 
