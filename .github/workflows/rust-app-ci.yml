@@ -23,12 +23,6 @@ jobs:
       run:
         working-directory: app_rust
 
-    if: |
-      github.event_name == 'push' ||
-      (github.event_name == 'pull_request' &&
-       contains(toJSON(github.event.pull_request.changed_files), 'app_rust/') ||
-       contains(toJSON(github.event.pull_request.changed_files), '.github/workflows/rust-app-ci.yml'))
-
     steps:
     - uses: actions/checkout@v3
 
