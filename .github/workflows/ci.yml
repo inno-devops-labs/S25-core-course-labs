@@ -58,9 +58,10 @@ jobs:
 
       # Step 7: Snyk Vulnerability Check
       - name: Run Snyk Vulnerability Scan
-        uses: snyk/snyk-action@master
+        uses: snyk/snyk-action@3
         with:
-          args: test --severity-threshold=high
+          command: test
+          severity-threshold: high
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
