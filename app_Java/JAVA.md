@@ -24,7 +24,7 @@
    - Utilized Java's **ZoneId** and **ZonedDateTime** classes to ensure accurate and reliable timezone handling for Omsk.
    - Ensured the application dynamically retrieves the current time for the Omsk timezone (Asia/Omsk), keeping it accurate even if the timezone rules change in the future.
 
-## Code Testing for
+## Code Testing
 ### Best Practices Applied
     - Followed Java Code Style Guidelines (Google Java Style Guide) for clean and readable code.
     - Used JUnit 5 Framework for writing automated tests.
