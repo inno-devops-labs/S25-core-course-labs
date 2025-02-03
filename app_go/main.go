@@ -47,7 +47,11 @@ func updateKernelRepositoryData() {
 			}
 		}
 
-		resp.Body.Close()
+		err = resp.Body.Close()
+		if err != nil {
+			println("Couldnt close response body: ", err.Error())
+		}
+
 		time.Sleep(10 * time.Second)
 	}
 }
