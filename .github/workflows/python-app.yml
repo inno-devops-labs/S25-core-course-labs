@@ -3,17 +3,16 @@ name: Time-App-Py
 on:
   push:
     branches: [ "master" ]
-    paths: [ "app_python/**" ]
+    paths: [ "app_python/**", "!app_python/*.MD" ]
   pull_request:
     branches: [ "master" ]
-    paths: [ "app_python/**" ]
+    paths: [ "app_python/**", "!app_python/*.MD" ]
 
 permissions:
   contents: read
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -46,4 +45,4 @@ jobs:
       with:
         context: "{{defaultContext}}:app_python"
         push: true
-        tags: unileonid/time-app-py:latest
+        tags: ${{ vars.DOCKERHUB_USERNAME }}/time-app-py:latest
