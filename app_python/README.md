@@ -79,3 +79,8 @@ docker pull wellnotwell/lab2
 ```bash
 docker run -p 5000:5000 wellnotwell/lab2
 ```
+
+## Unit Tests
+
+1. `test_moscow_time_calc`: Checks that the displayed Moscow time is correctly calculated and formatted.
+2. `test_home_page_rendering`: Checks that the homepage (`/`) renders the correct template containing "Moscow Time:".
