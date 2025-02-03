@@ -595,6 +595,8 @@ resource "yandex_compute_instance" "vm-1" {
 }
 ```
 
+<img width="1399" alt="Yandex Cloud VM" src="https://github.com/user-attachments/assets/048762b4-3700-4909-a949-a3406ea2713f" />
+
 ## GitHub Terraform
 
 ### Import with `terraform import`
