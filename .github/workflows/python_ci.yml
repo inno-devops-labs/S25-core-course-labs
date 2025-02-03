@@ -45,30 +45,14 @@ jobs:
           pytest app_python/
 
   snyk-security:
+    runs-on: ubuntu-22.04
     needs: build-and-test
-    runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Set Up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - name: Snyk Security Scan
+        uses: snyk/actions/python-3.10@master
         with:
-          python-version: "3.11"
-
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r app_python/requirements.txt
-
-      - name: Install Snyk
-        uses: snyk/actions/setup@master
-        with:
-          version: latest
-
-      - name: Run Snyk Security Scan
-        run: snyk test --file=app_python/requirements.txt --skip-unresolved
+          args: --skip-unresolved app_python/
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         
