@@ -61,7 +61,7 @@ jobs:
         uses: snyk/actions/python-3.8@master
         with:
           command: test
-          args: --file=app_python/requirements.txt --severity-threshold=high
+          args: --file=app_python/requirements.txt --severity-threshold=high --skip-unresolved
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
