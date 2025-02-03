@@ -322,7 +322,7 @@ However, configuration of cloud resources is quite understandable.
 ### `terraform plan`
 
 ```bash
-╰─➤  terraform plan    
+╰─➤  terraform plan                                                                                                                                     130 ↵
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   + create
@@ -379,7 +379,7 @@ Terraform will perform the following actions:
           + ipv6               = (known after apply)
           + ipv6_address       = (known after apply)
           + mac_address        = (known after apply)
-          + nat                = false
+          + nat                = true
           + nat_ip_address     = (known after apply)
           + nat_ip_version     = (known after apply)
           + security_group_ids = (known after apply)
@@ -435,23 +435,15 @@ It was successfull.
 
 yandex_vpc_network.devops-net: Creating...
 yandex_compute_disk.vm-disk: Creating...
-yandex_vpc_network.devops-net: Still creating... [10s elapsed]
-yandex_compute_disk.vm-disk: Still creating... [10s elapsed]
-yandex_vpc_network.devops-net: Creation complete after 17s [id=enp5h657khsm97ub4alf]
+yandex_vpc_network.devops-net: Creation complete after 2s [id=enpql5sn4bril90hd7uk]
 yandex_vpc_subnet.devops-subnet: Creating...
-yandex_vpc_subnet.devops-subnet: Creation complete after 2s [id=e9bej29fr6sn33tnv11f]
-yandex_compute_disk.vm-disk: Creation complete after 20s [id=fhm6j9vhan1i2dmaip4k]
+yandex_vpc_subnet.devops-subnet: Creation complete after 1s [id=e9biqqi0fjjdc11pf84m]
+yandex_compute_disk.vm-disk: Creation complete after 7s [id=fhmlusn0bctokhpmtqbh]
 yandex_compute_instance.vm: Creating...
 yandex_compute_instance.vm: Still creating... [10s elapsed]
 yandex_compute_instance.vm: Still creating... [20s elapsed]
 yandex_compute_instance.vm: Still creating... [30s elapsed]
-yandex_compute_instance.vm: Still creating... [40s elapsed]
-yandex_compute_instance.vm: Still creating... [50s elapsed]
-yandex_compute_instance.vm: Still creating... [1m0s elapsed]
-yandex_compute_instance.vm: Still creating... [1m10s elapsed]
-yandex_compute_instance.vm: Still creating... [1m20s elapsed]
-yandex_compute_instance.vm: Still creating... [1m30s elapsed]
-yandex_compute_instance.vm: Creation complete after 1m35s [id=fhmuijl2jakhdtcamfof]
+yandex_compute_instance.vm: Creation complete after 32s [id=fhm647360sm4kq0isi36]
 
 Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
 ```

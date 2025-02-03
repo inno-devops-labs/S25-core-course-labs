@@ -50,6 +50,7 @@ resource "yandex_compute_instance" "vm" {
   network_interface {
     index     = 1
     subnet_id = yandex_vpc_subnet.devops-subnet.id
+    nat = true
   }
 
   metadata = {
