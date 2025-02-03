@@ -8,6 +8,14 @@ This is a simple web application that is built using Python and FastAPI to show 
 
 ---
 
+## 🔄 CI/CD
+
+### Status
+
+[![CI Pipeline for Python Web Appplication](https://github.com/MagicWinnie/S25-core-course-labs/actions/workflows/app_python.yml/badge.svg)](https://github.com/MagicWinnie/S25-core-course-labs/actions/workflows/app_python.yml)
+
+---
+
 ## 💻 Local Installation
 
 ### Prerequisites
