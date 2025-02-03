@@ -34,7 +34,7 @@ So, for small projects like this one, **Flask** is one of the best choice from m
 
 ## Unit Tests
 
-The unit tests for the Flask application are implemented using Python's built-in framework `unittest`.
+Unit tests for the Flask application are implemented using Python's built-in framework `unittest`.
 
 ### Unit Testing Best Practices
 

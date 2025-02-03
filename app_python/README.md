@@ -126,3 +126,13 @@ This application also is containerized using the Docker as an Distroless image (
 4. Go to <http://127.0.0.1:5000> and see the current Moscow time.
 
 -----
+
+### Unit Tests
+
+After steps 1-3 of `Installation` section, run the following commant to run tests localy:
+
+```bash
+python3 -m unittest discover -s tests
+```
+
+-----
