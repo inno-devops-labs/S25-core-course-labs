@@ -8,10 +8,9 @@
 
 * **Set Python version to `3.9`:** This allows us to avoid compatibility issues at the future.
 
-* **Cache Python dependencies:**
-* **Lint and test:** It ensures code quality and code integration.
+**Lint and test:** It ensures code quality and code integration.
 
-* **Secure login to Docker Hub**: Secrets are used to hide personal access token from Docker Hub.
+* **Secure login to Docker Hub and Snyk**: Secrets are used to hide personal access token from Docker Hub and Snyk.
 
 * **Use variables**: Variables are used in workflow to increase maintainability by reducing duplication of data that
   probably can be changed later.
