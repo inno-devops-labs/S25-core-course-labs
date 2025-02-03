@@ -37,6 +37,10 @@ jobs:
         working-directory: app_kotlin
         run: ./gradlew build
 
+      - name: Run tests
+        working-directory: app_kotlin
+        run: ./gradlew test --info
+
       - name: Run ktlint check
         working-directory: app_kotlin
         run: ./gradlew ktlintCheck
