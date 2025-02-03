@@ -15,8 +15,6 @@ defaults:
   run:
     working-directory: app_python
 
-  runs-on: ubuntu-22.04
-
 jobs:
   format:
     name: Run Black formatter
@@ -59,6 +57,7 @@ jobs:
 
   test:
     name: Run pytest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout code
