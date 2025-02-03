@@ -52,6 +52,7 @@ jobs:
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
       - name: Run Snyk to check for vulnerabilities
+        working-directory: app_kotlin
         run: snyk monitor --file=build.gradle.kts
 
   docker:
@@ -83,4 +84,3 @@ jobs:
           file: app_kotlin/distroless.Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/app-ktor:distroless
-
