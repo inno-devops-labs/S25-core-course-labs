@@ -312,7 +312,149 @@ python_container_ports = tolist([
 
 ## Yandex Cloud
 
-Do not have access to free plan :(
+I was struggling a lot with receival of start grant on Yandex Cloud.
+Because I have already left a trace of my phone number in YC, so there were
+no opportunity to receive a grant.
+I did certain "приседание" (workaround trick) to do overcome free access issues.
+
+However, configuration of cloud resources is quite understandable.
+
+### `terraform plan`
+
+```bash
+╰─➤  terraform plan    
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # yandex_compute_disk.vm-disk will be created
+  + resource "yandex_compute_disk" "vm-disk" {
+      + block_size  = 4096
+      + created_at  = (known after apply)
+      + folder_id   = (known after apply)
+      + id          = (known after apply)
+      + image_id    = "fd85u0rct32prepgjlv0"
+      + name        = "devops-disk"
+      + product_ids = (known after apply)
+      + size        = 20
+      + status      = (known after apply)
+      + type        = "network-hdd"
+      + zone        = "ru-central1-a"
+    }
+
+  # yandex_compute_instance.vm will be created
+  + resource "yandex_compute_instance" "vm" {
+      + created_at                = (known after apply)
+      + folder_id                 = (known after apply)
+      + fqdn                      = (known after apply)
+      + gpu_cluster_id            = (known after apply)
+      + hardware_generation       = (known after apply)
+      + hostname                  = (known after apply)
+      + id                        = (known after apply)
+      + maintenance_grace_period  = (known after apply)
+      + maintenance_policy        = (known after apply)
+      + metadata                  = {
+          + "ssh-keys" = (sensitive value)
+        }
+      + name                      = "devops-vm"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v1"
+      + service_account_id        = (known after apply)
+      + status                    = (known after apply)
+      + zone                      = "ru-central1-a"
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = (known after apply)
+        }
+
+      + network_interface {
+          + index              = 1
+          + ip_address         = (known after apply)
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = false
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = (known after apply)
+        }
+
+      + resources {
+          + core_fraction = 20
+          + cores         = 2
+          + memory        = 2
+        }
+
+      + scheduling_policy {
+          + preemptible = true
+        }
+    }
+
+  # yandex_vpc_network.devops-net will be created
+  + resource "yandex_vpc_network" "devops-net" {
+      + created_at                = (known after apply)
+      + default_security_group_id = (known after apply)
+      + folder_id                 = (known after apply)
+      + id                        = (known after apply)
+      + labels                    = (known after apply)
+      + name                      = "devops-network"
+      + subnet_ids                = (known after apply)
+    }
+
+  # yandex_vpc_subnet.devops-subnet will be created
+  + resource "yandex_vpc_subnet" "devops-subnet" {
+      + created_at     = (known after apply)
+      + folder_id      = (known after apply)
+      + id             = (known after apply)
+      + labels         = (known after apply)
+      + name           = (known after apply)
+      + network_id     = (known after apply)
+      + v4_cidr_blocks = [
+          + "192.168.0.0/16",
+        ]
+      + v6_cidr_blocks = (known after apply)
+      + zone           = "ru-central1-a"
+    }
+
+Plan: 4 to add, 0 to change, 0 to destroy.
+```
+
+### `terraform apply`
+
+It was successfull.
+
+```bash
+...
+
+yandex_vpc_network.devops-net: Creating...
+yandex_compute_disk.vm-disk: Creating...
+yandex_vpc_network.devops-net: Still creating... [10s elapsed]
+yandex_compute_disk.vm-disk: Still creating... [10s elapsed]
+yandex_vpc_network.devops-net: Creation complete after 17s [id=enp5h657khsm97ub4alf]
+yandex_vpc_subnet.devops-subnet: Creating...
+yandex_vpc_subnet.devops-subnet: Creation complete after 2s [id=e9bej29fr6sn33tnv11f]
+yandex_compute_disk.vm-disk: Creation complete after 20s [id=fhm6j9vhan1i2dmaip4k]
+yandex_compute_instance.vm: Creating...
+yandex_compute_instance.vm: Still creating... [10s elapsed]
+yandex_compute_instance.vm: Still creating... [20s elapsed]
+yandex_compute_instance.vm: Still creating... [30s elapsed]
+yandex_compute_instance.vm: Still creating... [40s elapsed]
+yandex_compute_instance.vm: Still creating... [50s elapsed]
+yandex_compute_instance.vm: Still creating... [1m0s elapsed]
+yandex_compute_instance.vm: Still creating... [1m10s elapsed]
+yandex_compute_instance.vm: Still creating... [1m20s elapsed]
+yandex_compute_instance.vm: Still creating... [1m30s elapsed]
+yandex_compute_instance.vm: Creation complete after 1m35s [id=fhmuijl2jakhdtcamfof]
+
+Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
+```
 
 ## GitHub
 
