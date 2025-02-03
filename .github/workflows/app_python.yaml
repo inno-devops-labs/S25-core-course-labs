@@ -16,19 +16,6 @@ defaults:
     working-directory: app_python
 
 jobs:
-  format:
-    name: Run Black formatter
-
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Black formatter
-        uses: psf/black@stable
-        with:
-          options: "--check --diff"
-          src: "./app_python"
 
   lint:
     name: Run Pylint check
@@ -54,6 +41,12 @@ jobs:
 
       - name: Run Pylint
         run: pylint main.py
+
+      - name: Set up Black formatter
+        uses: psf/black@stable
+        with:
+          options: "--check --diff"
+          src: "./app_python"
 
   test:
     name: Run pytest
@@ -89,6 +82,6 @@ jobs:
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python-3.10@master
         with:
-          args: --skip-unresolved .
+          args: --skip-unresolved app_python/
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
