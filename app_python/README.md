@@ -102,3 +102,56 @@ Go to localhost:
 ```bash
 http://localhost:8000
 ```
+
+## Unit Tests
+
+This project includes unit tests to ensure the correctness of the application.
+
+### Running Tests
+
+Navigate to ```app_python``` if you are not already in:
+
+```bash
+cd app_python/
+```
+
+Run tests and see the report:
+
+```bash
+pytest test_app.py
+```
+
+Expected result:
+
+```bash
+============================= test session starts =============================
+...
+collected 3 items                                                              
+
+tests/test_app.py ...                                                  [100%]
+
+============================== 3 passed in 0.12s ==============================
+```
+
+## CI Workflow
+
+### Overview
+
+This project uses **GitHub Actions** to automate building, testing, and deploying the application. The CI/CD pipeline consists of:
+
+1. **Dependency Installation**
+2. **Code Linting**
+3. **Running Tests**
+4. **Docker Login, Build & Push**
+
+### How CI Workflow works
+
+- **On every push or pull request to ```master```**, GitHub Actions:
+  1. Installs dependencies.
+  2. Runs a Python linter (```flake8```) to enforce code style.
+  3. Runs all unit tests using ```pytest```.
+
+- **On successful testing**, the workflow:
+  1. Logs into Docker Hub.
+  2. Builds the Docker image.
+  3. Pushes the image to Docker Hub.
