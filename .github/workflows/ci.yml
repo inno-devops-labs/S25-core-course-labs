@@ -82,4 +82,6 @@ jobs:
       uses: snyk/actions/python@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: --file=app_python/requirements.txt --package-manager=pip
 
