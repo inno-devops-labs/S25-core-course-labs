@@ -16,7 +16,7 @@ Manual testing was performed by opening the webpage and comparing the showed tim
 
 ### Automated
 
-Automated tests are performed using `pytest` together with `FastAPI.TestClient`.
+Automated tests are performed using `pytest` together with `FastAPI.TestClient` to simulate HTTP requests.
 
 Currently, there is only one test that checks the response of my single endpoint:
 
@@ -48,7 +48,7 @@ TOTAL                27      0   100%
 - Using Makefile to structure the different stages of development;
 - `markdownlint` was used to check the Markdown files;
 - Each test is independent and does not rely on results of other tests;
-- Mocking external dependencies using `FastAPI.TestClient`;
+- Mocking API using `FastAPI.TestClient`;
 - High coverage of the tests;
 - Using specific assertions to validate expected outcomes;
 - Using popular testing framework `pytest`;

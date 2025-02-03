@@ -139,3 +139,11 @@ Containerized version of the web application:
     ```bash
     make build
     ```
+
+### Unit Tests
+
+Package `testing` is used for testing. Tests can be run using `Makefile`:
+
+```bash
+make test
+```
