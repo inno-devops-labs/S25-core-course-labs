@@ -1,4 +1,5 @@
 # Go
 build/
+coverage.out
 # Git
 .git/
