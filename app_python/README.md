@@ -122,4 +122,3 @@ This project includes a GitHub Actions CI pipeline to automate testing and deplo
 
 The CI pipeline is triggered on pushes and pull requests for the app_python/ directory.
 
-

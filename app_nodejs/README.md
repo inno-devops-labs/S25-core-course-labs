@@ -1,5 +1,7 @@
 # Node.js Web Application
 
+[![Nodejs CI](https://github.com/IlsiyaNasibullina/S25-core-course-labs/actions/workflows/app_nodejs.yml/badge.svg)](https://github.com/IlsiyaNasibullina/S25-core-course-labs/actions/workflows/app_nodejs.yml)
+
 ## Overview
 
 This web application displays the current time in Abu Dabi. It is built using Node.js and Express, with a client-side HTML page that dynamically fetches the time.
@@ -100,3 +102,17 @@ To execute the test suite, run:
 ```bash
   npm test
 ```
+
+## CI Pipeline
+  
+This project includes a GitHub Actions CI pipeline to automate testing and deployment. The workflow follows these stages:
+  
+- Dependencies - Installs required dependencies.
+- Lint - Checks code for style and syntax issues.
+- Snyk - Checks for security vulnerabilities.
+- Run - Starts the application.
+- Test - Runs unit tests to verify functionality.
+- Docker - Builds and pushes the Docker image to Docker Hub.
+
+The CI pipeline is triggered on pushes and pull requests for the app_nodejs/ directory.
+
