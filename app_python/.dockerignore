@@ -5,3 +5,5 @@ __pycache__
 .venv
 **.png
 tests/
+.coverage
+.pytest_cache

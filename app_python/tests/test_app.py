@@ -48,3 +48,8 @@ def test_404_error(client):
     """Ensure that a non-existent route returns a 404 status."""
     response = client.get("/nonexistent")
     assert response.status_code == 404
+
+
+def test_debug_mode():
+    app.debug = True
+    assert app.debug is True

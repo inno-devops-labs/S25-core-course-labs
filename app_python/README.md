@@ -1,5 +1,7 @@
 # Python Web Application
 
+![Python CI](https://github.com/IlsiyaNasibullina/S25-core-course-labs/actions/workflows/app_python.yml/badge.svg)
+
 ## Overview
 
 This web application displays the current time in Moscow. The app is written in Python and built using Flask .
