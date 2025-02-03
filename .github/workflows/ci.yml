@@ -22,7 +22,8 @@ jobs:
           pip install -r app_python/requirements.txt
 
       - name: Run Linter (flake8)
-        run: flake8 app_python/ --max-line-length=88
+        run: |
+          flake8 app_python/ --max-line-length=88
 
       - name: Run Unit Tests
         run: |
