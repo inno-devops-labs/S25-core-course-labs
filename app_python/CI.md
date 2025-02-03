@@ -12,3 +12,4 @@
 ## Snyk Security Integration
 - Scans Python dependencies for vulnerabilities.
 - Helps keep dependencies secure and up to date.
+
