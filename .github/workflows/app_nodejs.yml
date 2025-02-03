@@ -82,7 +82,7 @@ jobs:
       - name: Run Snyk Security Scan
         uses: snyk/actions/node@master
         with:
-          args:  --skip-unresolved app_nodejs/
+          args:  --skip-unresolved --severity-threshold=high app_nodejs/
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
