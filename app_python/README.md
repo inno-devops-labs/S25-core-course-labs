@@ -1,3 +1,5 @@
+![GitHub Workflow Status](https://github.com/oth33r/S25-core-course-labs/actions/workflows/app_python.yml/badge.svg)
+
 # Steps
 
 1. Clone repository using `git clone https://github.com/oth33r/S25-core-course-labs.git`
