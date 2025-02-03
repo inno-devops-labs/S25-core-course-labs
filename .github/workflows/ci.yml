@@ -55,8 +55,8 @@ jobs:
 
       # Step 7: Build Docker Image
       - name: Build and Push Docker Image
-        working-directory: ./app_python
         uses: docker/build-push-action@v3
+        working-directory: ./app_python
         with:
           context: .
           file: Dockerfile
@@ -65,8 +65,8 @@ jobs:
 
       # Step 8: Build Docker Distroless Image
       - name: Build and Push Docker Image
-        working-directory: ./app_python
         uses: docker/build-push-action@v3
+        working-directory: ./app_python
         with:
           context: .
           file: distroless.Dockerfile
