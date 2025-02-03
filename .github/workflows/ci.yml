@@ -42,6 +42,7 @@ jobs:
 
       # Step 5: Run Unit Tests
       - name: Run Unit Tests
+        working-directory: ./app_python
         run: |
           python -m unittest discover -s app_python/tests
 
