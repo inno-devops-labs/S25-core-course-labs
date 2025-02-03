@@ -96,7 +96,9 @@ jobs:
         working-directory: app_python 
 
       - name: Run Tests
-        run: pytest --disable-warnings --maxfail=3
+        run: |
+          source venv/bin/activate
+          pytest --disable-warnings --maxfail=3
         working-directory: app_python 
 
   docker:
