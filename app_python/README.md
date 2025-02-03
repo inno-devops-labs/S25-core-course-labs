@@ -104,6 +104,7 @@ docker run -p 5000:5000 <dockerhub-username>/app-dist
 Unit tests for this application are written using `unittest`. To run the tests:
 ```bash
 python -m unittest discover
+```
 
 ## Continuous Integration (CI) Workflow
 
