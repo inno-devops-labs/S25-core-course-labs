@@ -77,5 +77,4 @@ jobs:
         with:
           context: .
           push: true
-          file: ./Dockerfile
           tags: ${{ secrets.DOCKER_USERNAME }}/app:latest
