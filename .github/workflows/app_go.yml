@@ -51,7 +51,8 @@ jobs:
 
   snyk_check:
     defaults:
-      run: working-directory: app_go
+      run:
+        working-directory: app_go
     needs: [lint, test]
     timeout-minutes: 5
     name: Run Snyk
