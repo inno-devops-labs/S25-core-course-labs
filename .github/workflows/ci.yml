@@ -76,7 +76,7 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        pip install -r requirements.txt
+        pip install -r app_python/requirements.txt
 
     - name: Run Snyk Security Scan
       uses: snyk/actions/python@master
