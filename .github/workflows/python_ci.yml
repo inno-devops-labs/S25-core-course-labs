@@ -49,13 +49,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - name: Security Scan
-        uses: snyk/actions/python-3.11@master
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
         with:
-          args: --skip-unresolved app_python/
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r app_python/requirements.txt
+
+      - name: Install Snyk
+        uses: snyk/actions/setup@v2
+        with:
+          version: latest
+
+      - name: Run Snyk Security Scan
+        run: snyk test --file=app_python/requirements.txt --skip-unresolved
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        
 
   docker:
     needs: build-and-test
@@ -88,5 +104,5 @@ jobs:
           context: app_python  
           file: app_python/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/moscow-time-app:latest
+          tags: pupolina07/moscow-time-app:latest
 
