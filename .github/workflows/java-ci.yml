@@ -58,10 +58,10 @@ jobs:
         npm install -g snyk
 
     - name: Run Snyk Security Scan
-      run: |
-        snyk test --file=app_Java/pom.xml --package-manager=maven
+      run: snyk test --file=app_Java/pom.xml --package-manager=maven --fail-on=upgradable
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
 
   docker-build-push:
     needs: build-test
