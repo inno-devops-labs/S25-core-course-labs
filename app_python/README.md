@@ -105,3 +105,34 @@ Unit tests for this application are written using `unittest`. To run the tests:
 ```bash
 python -m unittest discover
 
+## Continuous Integration (CI) Workflow
+
+This project uses **GitHub Actions** for automated Continuous Integration (CI). The CI pipeline ensures:
+- **Code quality** through linting (`flake8`)
+- **Automated unit tests** using `unittest`
+- **Building and pushing Docker images** to Docker Hub
+
+### **CI Workflow Steps**
+1. **Checkout Code:** The workflow fetches the latest code from the repository.
+2. **Set Up Python Environment:** Installs Python 3.9 and dependencies from `requirements.txt`.
+3. **Run Code Linter:** Uses `flake8` to check code style and quality.
+4. **Execute Unit Tests:** Runs `unittest` to validate application functionality.
+5. **Build Docker Image:** Creates a Docker image for the application.
+6. **Push to Docker Hub:** After passing tests, the built image is pushed to Docker Hub.
+
+### **How to View CI Results**
+To see the latest CI results, visit the **https://github.com/DoryShibkova/S25-core-course-labs/actions**.
+
+### **Run CI Locally**
+To manually test CI steps locally:
+```bash
+# Run linter
+flake8 web_app.py test_web_app.py
+
+# Run unit tests
+python -m unittest discover
+
+# Build and run Docker container
+docker build -t myapp .
+docker run -p 5000:5000 myapp
+
