@@ -59,7 +59,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: app_python//Dockerfile
+          file: Dockerfile
           push: true
           tags: ${{ env.DOCKERHUB_USERNAME }}/python-msk-time-app:latest
 
@@ -69,6 +69,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: app_python//distroless.Dockerfile
+          file: distroless.Dockerfile
           push: true
           tags: ${{ env.DOCKERHUB_USERNAME }}/python-msk-time-app-distroless:latest
