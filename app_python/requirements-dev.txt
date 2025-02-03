@@ -1,6 +1,9 @@
 -r requirements.txt
 black~=24.10.0
+httpx~=0.28.0  # for FastAPI TestClient
 isort~=5.13.0
 mypy~=1.14.0
 types-pytz==2024.2.0.20241221  # for mypy
 pylint~=3.3.0
+pytest~=8.3.0
+pytest-cov~=6.0.0
