@@ -21,3 +21,17 @@
 
 3. **Timezone Menegement**
    - Utilized the **pytz** library to ensure accurate, dynamic and reliable timezone handling for Moscow.
+
+## Code Testing
+
+### Best Practices Applied
+    - Followed PEP 8 guidelines for clean and readable code.
+    - Used unittest framework for writing automated tests.
+    - Checked edge cases, such as incorrect timezones or missing dependencies.
+    - Tested the Flask route to ensure it returns the expected response.
+
+### Unit Tests
+I wrote unit tests for:
+- Checking if the Flask app initializes correctly.
+- Validating the HTTP response from / route.
+- Ensuring the returned time format is correct.
