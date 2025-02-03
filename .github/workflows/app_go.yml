@@ -32,8 +32,7 @@ jobs:
           echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
 
       - name: Run golangci-lint
-        run: golangci-lint run --exclude-use-default=false --exclude "opt/hostedtoolcache/go/"
-
+        run: golangci-lint run --modules-download-mode=readonly
   test:
     timeout-minutes: 5
     defaults:
