@@ -93,4 +93,30 @@ To build the image:
   docker build -t python-app:distroless -f distroless.Dockerfile .
 ```
 
+## Unit Tests
+
+The tests validate:
+
+- Correct time is displayed based on the Moscow timezone.
+- Homepage and error pages return expected status codes.
+- Time format is properly rendered in the template.
+
+To run the tests, use this command in `app_python/` folder:
+
+```bash
+  pytest tests/
+```
+
+## CI Pipeline
+
+This project includes a GitHub Actions CI pipeline to automate testing and deployment. The workflow follows these stages:
+
+- Dependencies - Installs required dependencies.
+- Lint - Checks code for style and syntax issues.
+- Run - Starts the application.
+- Test - Runs unit tests to verify functionality.
+- Docker - Builds and pushes the Docker image to Docker Hub.
+
+The CI pipeline is triggered on pushes and pull requests for the app_python/ directory.
+
 

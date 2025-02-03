@@ -25,3 +25,21 @@ Additionally, I used the `pytz` library to handle timezone conversion.
 - Tested the application to verify that the current Moscow time updates correctly upon refreshing.
 - Manually checked the responsiveness and usability of the web interface.
 
+## Unit Tests
+
+### Unit Tests Overview
+
+The tests verify:
+
+- The homepage loads successfully (200 OK).
+- The displayed time is correctly formatted and matches a mocked value.
+- The template renders valid time output.
+- A non-existent route returns a 404 Not Found error.
+
+### Best Practices Applied
+
+- Used pytest.fixture to create a reusable test client.
+- Ensured deterministic tests by mocking the current time using monkeypatch.
+- Extracted and verified the time format in responses instead of relying on hardcoded text.
+- Included a test for incorrect routes to verify proper error handling.
+
