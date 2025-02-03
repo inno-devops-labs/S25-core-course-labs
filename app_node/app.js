@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 const express = require('express');
 const app = express();
 const PORT = 3001;
@@ -23,10 +24,12 @@ app.get('/', (req, res) => {
 });
 
 // Start the server (only if not in test mode)
+// eslint-disable-next-line no-undef
 if (require.main === module) {
   app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on  http://localhost:${PORT}`);
   });
 }
 
+// eslint-disable-next-line no-undef
 module.exports = app; // Export the app for testing

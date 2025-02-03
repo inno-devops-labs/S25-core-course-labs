@@ -1,0 +1,36 @@
+name: CI Pipeline Node App
+
+on:
+  pull_request:
+    paths:
+    - 'app_node/**'
+    - '.github/workflows/app_node.yml'
+
+jobs:
+  node:
+    defaults:
+      run:
+        working-directory: app_node
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Run ESLint
+        run: npx eslint app.test.js
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

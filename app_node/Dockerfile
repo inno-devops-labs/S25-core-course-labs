@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM node:14 AS builder
+FROM node:16-slim4 AS builder
 
 # Set the working directory
 WORKDIR /app
@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Stage 2: Run the application
-FROM node:14
+FROM node:16-slim
 
 # Set the working directory
 WORKDIR /app

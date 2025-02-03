@@ -1,43 +1,25 @@
-# Flask Application
+# Unit Tests
 
-This is a simple Flask application that displays the current time in Moscow.
+These tests ensure that the application behaves as expected and handles edge cases correctly.
 
-# Docker Instructions
+# Running Tests
+To execute the unit tests locally, use the following command:
 
-# How to Build the Docker Image
-To build the Docker image locally:
-```bash
-docker build -t flask-app .
+```sh
+python -m unittest discover -s . -p 'test_app.py'
 ```
 
-# How to Pull the Docker Image
-To pull the Docker image from Docker Hub:
+# Test Coverage
+- Ensures correct datetime format and proper error handling.
+- Validates responses from `/` and error pages.
+- Ensures compliance with coding standards using `flake8`.
 
-```bash
-docker pull twentythree3/flask-app
+
+# Workflow Status Badge
+
+```md
+![CI Workflow](https://github.com/AskArtwentythree/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)
 ```
 
-# How to Run the Docker Image
-To run the container locally after building or pulling:
-
-```bash
-docker run -d -p 5000:5000 twentythree3/flask-app
-```
-
-You can then access the application in your browser at: [link](http://localhost:5000)
-
-# Features
-- Displays the current time in Moscow.
-- Lightweight Docker image.
-- Runs securely as a non-root container.
-
-
-Screenshots:
-![](3.png)
-
-DockerHub:
-![](4.png)
-
-Pull and run image from docker hub:
-![](5.png)
+This badge displays the latest CI workflow status directly in the repository.
 
