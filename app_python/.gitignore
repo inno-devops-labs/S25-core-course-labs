@@ -3,3 +3,4 @@ __pycache__/
 .venv/
 .mypy_cache/
 .coverage
+coverage.json

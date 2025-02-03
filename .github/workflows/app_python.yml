@@ -33,6 +33,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
 
-      - name: Run Checks
+      - name: Run Linter
         run: |
           make check
+
+      - name: Run Tests
+        run: |
+          make test
