@@ -4,12 +4,15 @@ import pytz
 
 app = Flask(__name__)
 
+
 def some_function(x):
-    return x * x  
+    return x * x
+
 
 @app.route("/")
 def home():
-    moscow_time = datetime.now(pytz.timezone("Europe/Moscow")).strftime("%Y-%m-%d %H:%M:%S")
+    moscow_time = datetime.now(pytz.timezone(
+        "Europe/Moscow")).strftime("%Y-%m-%d %H:%M:%S")
     return render_template_string("""
     <!DOCTYPE html>
     <html>
@@ -23,6 +26,6 @@ def home():
     </html>
     """, time=moscow_time)
 
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
-

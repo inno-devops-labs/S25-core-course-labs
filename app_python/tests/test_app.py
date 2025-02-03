@@ -1,5 +1,6 @@
 import unittest
-from app_python.app import some_function  
+from app_python.app import some_function
+
 
 class TestApp(unittest.TestCase):
     def test_some_function_case1(self):
@@ -17,6 +18,6 @@ class TestApp(unittest.TestCase):
     def test_some_function_case5(self):
         self.assertEqual(some_function(6), 36)
 
+
 if __name__ == "__main__":
     unittest.main()
-
