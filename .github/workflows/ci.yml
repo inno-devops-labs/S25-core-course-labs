@@ -16,6 +16,7 @@ jobs:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
     steps:
       # Step 1: Checkout the repository
@@ -55,14 +56,22 @@ jobs:
         run: |
           python -m unittest discover -s tests
 
-      # Step 7: Log in to Docker Hub
+      # Step 7: Snyk Vulnerability Check
+      - name: Run Snyk Vulnerability Scan
+        uses: snyk/snyk-action@master
+        with:
+          args: test --severity-threshold=high
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      # Step 8: Log in to Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ env.DOCKER_USERNAME }}
           password: ${{ env.DOCKER_PASSWORD }}
 
-      # Step 8: Build and Push Docker Image
+      # Step 9: Build and Push Docker Image
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
         with:
@@ -71,7 +80,7 @@ jobs:
           push: true
           tags: ${{ env.DOCKERHUB_USERNAME }}/python-msk-time-app:latest
 
-      # Step 9: Build and Push Docker Distroless Image
+      # Step 10: Build and Push Docker Distroless Image
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
         with:
