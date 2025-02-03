@@ -1,0 +1,35 @@
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+
+  govet:
+    check-shadowing: true
+
+  staticcheck:
+    checks: ["all"]
+
+run:
+  timeout: 2m
+  modules-download-mode: readonly
+  skip-files:
+    - ".*_test.go" # Skip test files if you don't want them linted
+
+linters:
+  enable:
+    - govet
+    - errcheck
+    - staticcheck
+    - gofmt
+    - ineffassign
+    - unused
+
+issues:
+  max-same-issues: 3
+  max-issues-per-linter: 0
+  exclude-rules:
+    - path: "vendor/.*"
+    - path: "/usr/local/go/src/.*" # Ignore Go standard library
+    - linters:
+        - gofmt
+      text: "file is not formatted"
