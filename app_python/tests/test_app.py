@@ -69,7 +69,7 @@ class TestMoscowTimeApp(unittest.TestCase):
         # Compare the times
         time_difference = abs((current_moscow_time -
                                moscow_time_in_response).total_seconds())
-        self.assertLessEqual(time_difference, allowed_margin, 
+        self.assertLessEqual(time_difference, allowed_margin,
                              f"Displayed time '{moscow_time_in_response}'" +
                              "does not match current Moscow time" +
                              f"'{current_moscow_time}'")
