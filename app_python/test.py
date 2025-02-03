@@ -1,8 +1,14 @@
+"""
+This module contains test cases for the Python Web Application.
+"""
+
 from datetime import datetime, timezone, timedelta
 from fastapi.testclient import TestClient
+from fastapi.templating import Jinja2Templates
 from main import app
 
 client = TestClient(app)
+
 
 def test_root_endpoint():
     """
@@ -20,7 +26,7 @@ def test_root_endpoint():
     zone = timezone(timedelta(hours=3))
     time = datetime.now(timezone.utc).astimezone(zone)
 
-    assert str(time.replace(microsecond=0)).split('+')[0] in response.text
+    assert str(time.replace(microsecond=0)).split("+", maxsplit=1)[0] in response.text
 
 
 def test_static_files_served():
@@ -39,10 +45,9 @@ def test_templates_configured():
     """
     Verify that Jinja2 templates are correctly configured.
     """
-    from fastapi.templating import Jinja2Templates
 
     try:
         templates = Jinja2Templates(directory="templates")
         assert templates is not None
-    except Exception as e:
+    except ImportError as e:
         assert False, f"Failed to configure Jinja2 templates: {e}"
