@@ -52,7 +52,7 @@ jobs:
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
       - name: Run Snyk to check for vulnerabilities
-        run: snyk monitor --all-projects
+        run: snyk monitor --file=build.gradle.kts
 
   docker:
     needs: [ build ]
