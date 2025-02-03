@@ -1,5 +1,7 @@
 # Java Web Application - Omsk Timezone
 
+![CI Workflow](https://github.com/DoryShibkova/S25-core-course-labs/actions/workflows/java-ci.yml/badge.svg)
+
 ## Overview
 This project is a simple Java web application that displays the current time in Omsk. The application uses the Spark framework for creating the web server and Java's built-in **ZonedDateTime** and **ZoneId** classes for timezone management.
 ## Features
