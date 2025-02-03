@@ -11,28 +11,23 @@ on:
       - '.github/workflows/app_go.yaml'
 
 jobs:
+
   lint:
-    timeout-minutes: 2
-    defaults:
-      run:
-        working-directory: app_go
-    name: Run golangci-lint
+    name: Run golang-ci lint
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Go
-        uses: actions/setup-go@v5
+      - uses: actions/setup-go@v5
         with:
           go-version: 1.23
-          cache: true
+          cache-dependency-path: "**/*.sum"
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          working-directory: app_go
+          args: --config=.golangci.yml
+          version: v1.60
 
-      - name: Install golangci-lint
-        run: |
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.54.2
-          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
-
-      - name: Run golangci-lint
-        run: golangci-lint run --modules-download-mode=readonly
   test:
     timeout-minutes: 5
     defaults:
