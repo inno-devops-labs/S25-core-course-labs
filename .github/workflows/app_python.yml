@@ -11,19 +11,12 @@ on:
       - .github/workflows/app_python.yml
 
 jobs:
-  linter:
-    name: Linter
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run linter
-        run: flake8 .
-
   test:
     name: Tests
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app_python
     steps:
       - uses: actions/checkout@v4
         name: Set up Python
@@ -38,6 +31,16 @@ jobs:
 
       - name: Test using pytest
         run: pytest
+
+  linter:
+    name: Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run linter
+        run: flake8 .
 
   snyk:
     needs: [linter, test]
