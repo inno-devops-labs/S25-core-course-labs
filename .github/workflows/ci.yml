@@ -40,10 +40,10 @@ jobs:
           pip install flake8
           flake8 .
 
-    # Step 5: Run Unit Tests
-    - name: Run Unit Tests
-      run: |
-        PYTHONPATH=app_python python -m unittest discover -s app_python/tests
+      # Step 5: Run Unit Tests
+      - name: Run Unit Tests
+        run: |
+          python -m unittest discover -s app_python/tests
 
       # Step 6: Log in to Docker Hub
       - name: Log in to Docker Hub
