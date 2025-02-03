@@ -58,6 +58,7 @@ jobs:
 
       # Step 7: Snyk Vulnerability Check
       - name: Run Snyk Vulnerability Scan
+        working-directory: ./app_python
         uses: snyk/actions/python-3.8@master
         with:
           command: test
