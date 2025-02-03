@@ -63,7 +63,7 @@ jobs:
           command: test
           args: --file=app_python/requirements.txt --severity-threshold=high --skip-unresolved
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_TOKEN: ${{ env.SNYK_TOKEN }}
 
       # Step 8: Log in to Docker Hub
       - name: Log in to Docker Hub
