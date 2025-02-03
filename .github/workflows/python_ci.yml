@@ -63,7 +63,7 @@ jobs:
           pip install -r app_python/requirements.txt
 
       - name: Install Snyk
-        uses: snyk/actions/setup@v2
+        uses: snyk/actions/setup@master
         with:
           version: latest
 
@@ -104,5 +104,5 @@ jobs:
           context: app_python  
           file: app_python/Dockerfile
           push: true
-          tags: pupolina07/moscow-time-app:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/moscow-time-app:latest
 
