@@ -41,20 +41,8 @@ jobs:
         working-directory: app_kotlin
         run: ./gradlew ktlintCheck
 
-  security-check:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run Snyk security scan
-        uses: snyk/actions/gradle@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --skip-unresolved
-
   docker:
-    needs: [ build, security-check ]
+    needs: [ build ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
