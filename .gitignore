@@ -2,3 +2,4 @@
 .metals/
 .vscode/
 .scala-build
+__pycache__

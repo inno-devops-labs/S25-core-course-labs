@@ -29,3 +29,18 @@ So, for small projects like this one, **Flask** is one of the best choice from m
 - PEP 8 guidelines for Python;
 - Meaningful names for variables;
 - Comments where needed.
+
+-----
+
+## Unit Tests
+
+The unit tests for the Flask application are implemented using Python's built-in framework `unittest`.
+
+### Unit Testing Best Practices
+
+- **Timezone Awareness**: Both naive and aware datetime objects are handled appropriately to avoid errors during comparisons.
+- **Tests Should Be Simple**: Low cyclomatic complexity for low number of possible execution paths.
+- **Test Shouldn’t Duplicate Implementation Logic**: In order not to make the same mistake in the code and in tests, implementation logic of the code and tests made in different ways.
+- **Tests Should Be Readable**: Commented tests, Assert pattern for tests, one assertion per test method.
+
+-----
