@@ -23,8 +23,8 @@ class FlaskAppTests(unittest.TestCase):
 
         moscow_tz = pytz.timezone('Europe/Moscow')
         current_time = datetime.now(moscow_tz).strftime('%Y-%m-%d %H:%M:%S')
-
-        self.assertIn(current_time[:10], response.data.decode())  # Check date match
+        # Check date match
+        self.assertIn(current_time[:10], response.data.decode())
 
 
 if __name__ == "__main__":
