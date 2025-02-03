@@ -139,6 +139,8 @@ python3 -m unittest discover -s tests
 
 ### CI Workflow
 
+[![CI Status](https://github.com/BugaevGleb/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)](https://github.com/BugaevGleb/S25-core-course-labs/actions)
+
 For this project the CI is configured using GitHub actions. CI Workflow consists of the following steps:
 
 - Checkout the repository
