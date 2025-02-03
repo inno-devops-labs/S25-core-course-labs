@@ -56,19 +56,17 @@ jobs:
       # Step 7: Build Docker Image
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
-        working-directory: ./app_python
         with:
-          context: .
-          file: Dockerfile
+          context: ./app_python
+          file: ./app_python/Dockerfile
           push: true
           tags: ${{ env.DOCKERHUB_USERNAME }}/python-msk-time-app:latest
 
       # Step 8: Build Docker Distroless Image
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
-        working-directory: ./app_python
         with:
-          context: .
-          file: distroless.Dockerfile
+          context: ./app_python
+          file: ./app_python/distroless.Dockerfile
           push: true
           tags: ${{ env.DOCKERHUB_USERNAME }}/python-msk-time-app-distroless:latest
