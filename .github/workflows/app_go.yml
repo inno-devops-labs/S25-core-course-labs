@@ -13,6 +13,9 @@ on:
 jobs:
   lint:
     timeout-minutes: 2
+    defaults:
+      run:
+        working-directory: app_go
     name: Run golangci-lint
     runs-on: ubuntu-22.04
     steps:
