@@ -18,7 +18,7 @@ python -m unittest discover -s . -p 'test_app.py'
 # Workflow Status Badge
 
 ```md
-![CI Workflow](https://github.com/AskArtwentythree/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)
+[CI Workflow](https://github.com/AskArtwentythree/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)
 ```
 
 This badge displays the latest CI workflow status directly in the repository.
