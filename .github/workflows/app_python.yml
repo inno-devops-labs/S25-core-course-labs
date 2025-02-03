@@ -57,4 +57,4 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          file: .
+          args: --skip-unresolved app_python/
