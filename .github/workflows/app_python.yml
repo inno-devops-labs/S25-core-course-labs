@@ -48,9 +48,6 @@ jobs:
 
   snyk:
     needs: [linter, test]
-    defaults:
-      run:
-        working-directory: app_python
     name: SNYK
     runs-on: ubuntu-latest
     steps:
@@ -59,3 +56,5 @@ jobs:
         uses: snyk/actions/python-3.10@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          file: .
