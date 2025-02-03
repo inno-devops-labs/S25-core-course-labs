@@ -12,8 +12,6 @@ linters-settings:
 run:
   timeout: 2m
   modules-download-mode: readonly
-  skip-files:
-    - ".*_test.go" # Skip test files if you don't want them linted
 
 linters:
   enable:
@@ -28,8 +26,12 @@ issues:
   max-same-issues: 3
   max-issues-per-linter: 0
   exclude-rules:
-    - path: "vendor/.*"
-    - path: "/usr/local/go/src/.*" # Ignore Go standard library
     - linters:
         - gofmt
       text: "file is not formatted"
+    - path: "vendor/.*"
+      linters:
+        - all
+    - path: "/usr/local/go/src/.*"
+      linters:
+        - all
