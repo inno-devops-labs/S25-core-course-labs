@@ -48,3 +48,19 @@ python app.py
 ```
 
 Open [http://127.0.0.1:5000/](http://127.0.0.1:5000/) in your browser.
+
+### Docker
+
+Build and run the Docker image:
+
+```sh
+docker build -t moscow-time-app .
+docker run -p 5000:5000 -d moscow-time-app
+```
+
+Get the latest image from Docker Hub:
+
+```sh
+docker pull bakinasa/moscow-time-app:latest
+docker run -p 5000:5000 -d bakinasa/moscow-time-app:latest
+```
