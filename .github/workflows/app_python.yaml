@@ -2,9 +2,9 @@ name: Python app workflow
 
 on:
   push:
-#    paths:
-#      - 'app_python/**'
-#      - '.github/workflows/app_python.yml'
+  #    paths:
+  #      - 'app_python/**'
+  #      - '.github/workflows/app_python.yml'
 
   pull_request:
     paths:
@@ -77,3 +77,18 @@ jobs:
 
       - name: Test with Pytest
         run: pytest test.py
+
+
+  snyk:
+    name: Run Skyk
+    runs-on: ubuntu-22.04
+    needs: [ lint, test ]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python-3.10@master
+        with:
+          args: --skip-unresolved .
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
