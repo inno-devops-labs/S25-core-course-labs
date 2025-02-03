@@ -9,4 +9,6 @@ I chose FastAPI because it's very popular, easy to learn and can be used for hig
 
 ## Testing
 
-Just tested that time updates with page refresh
+1. Test for response status code, if code 200 - everything is fine
+2. Test for html validity, if `<html>`, `<head>` and title "Текущее Московское время" in response html - everything is fine
+3. Test for time validity, check if current time hours and minutes are in html, if so - everything is fine
