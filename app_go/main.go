@@ -27,11 +27,6 @@ func updateKernelRepositoryData() {
 			time.Sleep(20 * time.Minute)
 			continue
 		}
-		defer func() {
-			if err := resp.Body.Close(); err != nil {
-				fmt.Println("Error closing response body:", err)
-			}
-		}()
 
 		// Extract the 'Link' section from header
 		linkHeader := resp.Header.Get("link")
@@ -52,6 +47,7 @@ func updateKernelRepositoryData() {
 			}
 		}
 
+		resp.Body.Close()
 		time.Sleep(10 * time.Second)
 	}
 }
