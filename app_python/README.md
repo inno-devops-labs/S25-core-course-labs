@@ -145,9 +145,11 @@ For this project the CI is configured using GitHub actions. CI Workflow consists
 
 - Checkout the repository
 - Set up Python environment
+- Cache dependencies
 - Install dependencies
 - Run Linter
 - Run Unit Tests
+- Snyk Vulnerability Check
 - Log in to Docker Hub
 - Build and Push Docker Image
 - Build and Push Docker Distroless Image
