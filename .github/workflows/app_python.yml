@@ -48,6 +48,9 @@ jobs:
 
   snyk:
     needs: [linter, test]
+    defaults:
+      run:
+        working-directory: app_python
     name: SNYK
     runs-on: ubuntu-latest
     steps:
