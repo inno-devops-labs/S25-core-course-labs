@@ -71,5 +71,9 @@ This project uses GitHub Actions for automated testing and Docker deployment.
 4. **Login to Docker Hub** – Authenticates with Docker registry.
 5. **Build & push Docker image** – Creates and pushes a new image.
 
+## CI/CD Status
+![CI Status](https://github.com/VilaPat7/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)
+
+
 The workflow runs automatically on every `push` and `pull request`.
 
