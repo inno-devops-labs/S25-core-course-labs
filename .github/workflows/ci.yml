@@ -32,7 +32,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r ./requirements.txt
+          pip install -r app_python/requirements.txt
 
       # Step 4: Run Linter (e.g., flake8)
       - name: Lint with flake8
@@ -43,7 +43,7 @@ jobs:
       # Step 5: Run Unit Tests
       - name: Run Unit Tests
         run: |
-          python -m unittest discover -s tests
+          python -m unittest discover -s app_python/tests
 
       # Step 6: Log in to Docker Hub
       - name: Log in to Docker Hub
@@ -57,7 +57,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./Dockerfile
+          file: app_python//Dockerfile
           push: true
           tags: ${{ env.DOCKERHUB_USERNAME }}/python-msk-time-app:latest
 
@@ -66,6 +66,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./distroless.Dockerfile
+          file: app_python//distroless.Dockerfile
           push: true
           tags: ${{ env.DOCKERHUB_USERNAME }}/python-msk-time-app-distroless:latest
