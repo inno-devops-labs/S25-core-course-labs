@@ -23,15 +23,8 @@ linters:
     - unused
 
 issues:
-  max-same-issues: 3
-  max-issues-per-linter: 0
   exclude-rules:
-    - linters:
-        - gofmt
-      text: "file is not formatted"
-    - path: "vendor/.*"
+    - path: _test\.go
       linters:
-        - all
-    - path: "/usr/local/go/src/.*"
-      linters:
-        - all
+        - errcheck
+  exclude-use-default: false
