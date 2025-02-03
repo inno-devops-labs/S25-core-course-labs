@@ -37,6 +37,13 @@ jobs:
         working-directory: app_kotlin
         run: ./gradlew build
 
+      - name: Run Snyk test for vulnerabilities
+        uses: snyk/snyk-action@v1
+        with:
+          snyk_token: ${{ secrets.SNYK_TOKEN }}
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
       - name: Run tests
         working-directory: app_kotlin
         run: ./gradlew test --info
