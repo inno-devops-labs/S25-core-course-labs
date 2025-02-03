@@ -3,8 +3,10 @@ name: Time-App-Py
 on:
   push:
     branches: [ "master" ]
+    paths: [ "app_python/**" ]
   pull_request:
     branches: [ "master" ]
+    paths: [ "app_python/**" ]
 
 permissions:
   contents: read

@@ -52,3 +52,11 @@ docker run -p 8080:8080 unileonid/time-app-py:latest
 ```
 
 Timezone for the app can be changed via `APP_TIMEZONE` environment variable (it is `Europe/Moscow` by default).
+
+### CI Workflow
+
+1. Install dependencies
+2. Lint application
+3. Test application
+4. Login to Docker Hub
+5. Build and push Docker image
