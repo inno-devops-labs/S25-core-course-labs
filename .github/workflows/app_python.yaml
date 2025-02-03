@@ -76,4 +76,4 @@ jobs:
           pip install -r requirements.txt
 
       - name: Test with Pytest
-        run: pytest main.py
+        run: pytest test.py
