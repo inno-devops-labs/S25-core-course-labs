@@ -1,5 +1,7 @@
 # Python web application - Moscow Timezone
 
+![CI Workflow](https://github.com/DoryShibkova/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)
+
 ## Overview
 This project is a simple Python web application that displays the current time in Moscow. The application uses the **Flask** framework for creating the web server and **pytz** for timezone management.
 
