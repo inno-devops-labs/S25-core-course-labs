@@ -20,5 +20,41 @@ for formatting markdown files.
 
 ## Testing
 
-The application is tested manually by me by comparing output
-with [timeanddate.com](https://www.timeanddate.com/worldclock/russia/moscow)
+### Tests Created
+
+#### `test_root_endpoint()`
+- **Purpose**: Validate root endpoint ("/") functionality
+- **Checks performed**:
+  - Successful HTTP response (status code 200)
+  - Correct HTML content type
+  - Accurate time representation
+
+#### `test_static_files_served()`
+- **Purpose**: Verify static file serving mechanism
+- **Checks performed**:
+  - Confirm static files can be accessed
+  - Handle potential absence of static files
+
+#### `test_templates_configured()`
+- **Purpose**: Ensure Jinja2 templates are correctly set up
+- **Checks performed**:
+  - Validate template directory configuration
+  - Catch configuration errors
+
+### Best Practices Applied
+
+#### Testing Principles
+- Comprehensive coverage of application features
+- Isolation of individual components
+- Minimal external dependencies
+- Clear, descriptive test names
+
+#### Testing Tools
+- `pytest` for test framework
+- `TestClient` for simulating HTTP requests
+- Datetime manipulation for time-related tests
+
+#### Recommendations
+- Keep tests independent
+- Use minimal setup and teardown
+- Prioritize readability and maintainability

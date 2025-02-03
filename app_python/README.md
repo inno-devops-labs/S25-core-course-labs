@@ -117,3 +117,9 @@ fastapi dev main.py
    ```bash
    docker run -d -p 8000:8000 dmhd6219/inno_devops_lab2_python_bonus:latest
    ```
+   
+## Unit Tests
+
+```bash
+pytest test.py
+```
