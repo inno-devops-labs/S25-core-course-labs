@@ -48,6 +48,13 @@ jobs:
       - name: Run Tests
         run: |
           make test
+      
+      - name: Snyk Security Scan
+        uses: snyk/actions/python-3.10@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=medium
 
       - name: Code Coverage Results
         uses: actions/upload-artifact@v4
