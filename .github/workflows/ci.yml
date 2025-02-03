@@ -1,6 +1,12 @@
-name: Python CI
+name: Python CI with Security and Docker
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - 'app_python/**'
+  pull_request:
+    paths:
+      - 'app_python/**'
 
 jobs:
   build-test:
@@ -9,23 +15,23 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
-        
+
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.9'
-        
+
     - name: Cache Dependencies
       uses: actions/cache@v3
       with:
         path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        key: ${{ runner.os }}-pip-${{ hashFiles('app_python/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
 
     - name: Install Dependencies
       run: |
-        python -m pip install --upgrade pip
+        pip install --upgrade pip
         pip install -r app_python/requirements.txt
 
     - name: Run Linter (flake8)
@@ -33,34 +39,9 @@ jobs:
         pip install flake8
         flake8 app_python/web_app.py app_python/test_web_app.py
 
-    - name: Run Tests
+    - name: Run Unit Tests
       run: |
         python -m unittest discover app_python
-        
-  docker-build-push:
-    needs: build-test
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
-
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-
-    - name: Build Docker Image
-      run: |
-        cd app_python
-        docker build -t myapp:latest .
-
-    - name: Push Docker Image
-      run: |
-        docker tag myapp:latest ${{ secrets.DOCKER_USERNAME }}/myapp:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/myapp:latest
-
 
   security-scan:
     needs: build-test
@@ -76,7 +57,6 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        pip install --upgrade pip
         pip install -r app_python/requirements.txt
 
     - name: Run Snyk Security Scan
@@ -86,3 +66,25 @@ jobs:
       with:
         args: --file=app_python/requirements.txt --package-manager=pip --skip-unresolved
 
+  docker-build-push:
+    needs: build-test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build Docker Image
+      run: |
+        cd app_python
+        docker build -t myapp:latest .
+
+    - name: Tag and Push Docker Image
+      run: |
+        docker tag myapp:latest ${{ secrets.DOCKER_USERNAME }}/myapp:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/myapp:latest
