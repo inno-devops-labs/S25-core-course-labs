@@ -39,6 +39,7 @@ jobs:
 
       - name: Run Linter
         run: |
+          go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
           make check
 
       - name: Run Tests
