@@ -33,6 +33,7 @@ jobs:
         run: pytest
 
   linter:
+    needs: [test]
     name: Linter
     runs-on: ubuntu-latest
     steps:
