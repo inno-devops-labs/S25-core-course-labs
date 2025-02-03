@@ -37,17 +37,6 @@ jobs:
         working-directory: app_kotlin
         run: ./gradlew build
 
-      - name: Run Snyk test for vulnerabilities
-        jobs:
-          security:
-            runs-on: ubuntu-latest
-            steps:
-              - uses: actions/checkout@master
-              - name: Run Snyk to check for vulnerabilities
-                uses: snyk/actions/gradle-jdk17@master
-                env:
-                  SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
       - name: Run tests
         working-directory: app_kotlin
         run: ./gradlew test --info
@@ -55,6 +44,15 @@ jobs:
       - name: Run ktlint check
         working-directory: app_kotlin
         run: ./gradlew ktlintCheck
+
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      - name: Authenticate Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      - name: Run Snyk to check for vulnerabilities
+        run: snyk monitor --all-projects
 
   docker:
     needs: [ build ]
