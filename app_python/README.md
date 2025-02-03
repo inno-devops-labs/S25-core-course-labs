@@ -135,6 +135,8 @@ tests/test_app.py ...                                                  [100%]
 
 ## CI Workflow
 
+![CI/CD Pipeline](https://github.com/Pupolina7/S25-core-course-labs/actions/workflows/python_ci.yml/badge.svg)
+
 ### Overview
 
 This project uses **GitHub Actions** to automate building, testing, and deploying the application. The CI/CD pipeline consists of:
@@ -155,3 +157,12 @@ This project uses **GitHub Actions** to automate building, testing, and deployin
   1. Logs into Docker Hub.
   2. Builds the Docker image.
   3. Pushes the image to Docker Hub.
+
+## Security Scan with Snyk
+
+This project integrates **Snyk** for vulnerability scanning of Python dependencies.
+
+### How It Works
+
+- Every **push or pull request** triggers a **Snyk security scan**.
+- If vulnerabilities are found, the workflow fails, preventing unsafe deployments.
