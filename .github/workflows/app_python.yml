@@ -54,7 +54,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --file=app_python/requirements.txt --package-manager=pip ./app_python
+          args: --file=app_python/requirements.txt --package-manager=pip
 
       - name: Code Coverage Results
         uses: actions/upload-artifact@v4
