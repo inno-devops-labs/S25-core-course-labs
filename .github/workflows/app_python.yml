@@ -3,10 +3,10 @@ name: CI Pipeline for Python Web Appplication
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
     paths:
       - ".github/workflows/app_python.yml"
       - "app_python/**"
