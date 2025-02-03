@@ -27,7 +27,11 @@ func updateKernelRepositoryData() {
 			time.Sleep(20 * time.Minute)
 			continue
 		}
-		defer resp.Body.Close()
+		defer func() {
+			if err := resp.Body.Close(); err != nil {
+				fmt.Println("Error closing response body:", err)
+			}
+		}()
 
 		// Extract the 'Link' section from header
 		linkHeader := resp.Header.Get("link")
@@ -118,7 +122,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	`
 	w.Header().Set("Content-Type", "text/html")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(html))
+	_, err := w.Write([]byte(html))
+	if err != nil {
+		println("Couldn't write header: ", err.Error())
+	}
 }
 
 func main() {
@@ -129,5 +136,9 @@ func main() {
 	http.HandleFunc("/", handler)
 
 	fmt.Println("Server running on http://localhost:8080")
-	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", nil)
+
+	if err != nil {
+		println("Server died with error: ", err.Error())
+	}
 }
