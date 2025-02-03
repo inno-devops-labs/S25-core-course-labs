@@ -5,7 +5,6 @@ import pytz
 
 
 class FlaskAppTests(unittest.TestCase):
-    
     def setUp(self):
         """Set up a test client for Flask app."""
         self.app = app.test_client()
