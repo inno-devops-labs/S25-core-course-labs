@@ -1,16 +1,15 @@
 package com.ktor
 
-import io.ktor.server.application.*
-import io.ktor.server.testing.*
-import io.ktor.http.*
-import kotlin.test.*
-import io.ktor.server.routing.*
-import io.ktor.server.response.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
+import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.testing.testApplication
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class ApplicationTest {
     @Test
@@ -20,7 +19,7 @@ class ApplicationTest {
         val response = client.get("/time")
         assertEquals(HttpStatusCode.OK, response.status)
 
-        DateTimeFormatter
+        val expectedTime = DateTimeFormatter
             .ofPattern("HH:mm:ss")
             .withZone(ZoneOffset.UTC)
             .format(Instant.now())
