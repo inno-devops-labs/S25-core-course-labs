@@ -3,8 +3,12 @@ name: Ktor Application CI
 on:
   push:
     branches: [ "master", "lab3" ]
+    paths:
+      - 'app_kotlin/**'
   pull_request:
     branches: [ "master" ]
+    paths:
+      - 'app_kotlin/**'
 
 jobs:
   build:

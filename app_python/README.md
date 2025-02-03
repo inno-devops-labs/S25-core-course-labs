@@ -1,6 +1,6 @@
-[![Python package](https://github.com/RwKaLs/S25-core-course-labs/actions/workflows/python-ci.yml/badge.svg?branch=lab3)](https://github.com/RwKaLs/S25-core-course-labs/actions/workflows/python-ci.yml)
-
 # Overview
+
+[![Python package](https://github.com/RwKaLs/S25-core-course-labs/actions/workflows/python-ci.yml/badge.svg?branch=lab3)](https://github.com/RwKaLs/S25-core-course-labs/actions/workflows/python-ci.yml)
 
 This web application displays the current time in Moscow and updates it every second. It uses Flask web framework and follows the best Python web practices.
 
@@ -71,8 +71,9 @@ docker run -p 5000:5000 rwkals/app_python_distroless:latest
 ```
 
 ## Unit tests implementation
+
 Unit tests are implemented for the Flask app to verify its functionality.
-They check the main routes and ensure the application responds as expected. 
+They check the main routes and ensure the application responds as expected.
 
 Tests execution:
 
@@ -84,8 +85,7 @@ More details are in [PYTHON.md](PYTHON.md)
 
 ## Continuous Integration Workflow
 
-The project uses Github Actions for continuous integration. 
-CI workflow includes python dependencies installation, linting the code using `flake8`, 
+The project uses Github Actions for continuous integration.
+CI workflow includes python dependencies installation, linting the code using `flake8`,
 and running unit tests with `unittest`.
 Moreover, it integrates docker steps: logging into Docker Hub, building and pushing the image.
-

@@ -1,5 +1,7 @@
 # Overview
 
+[![Kotlin package](https://github.com/RwKaLs/S25-core-course-labs/actions/workflows/kotlin-ci.yml/badge.svg?branch=lab3)](https://github.com/RwKaLs/S25-core-course-labs/actions/workflows/kotlin-ci.yml)
+
 This web application displays the current UTC time and updates it every second. It uses Ktor web framework and follows the best Kotlin web practices.
 
 ## Tools
@@ -67,3 +69,10 @@ docker pull rwkals/app_kotlin_distroless:latest
 ```shell
 docker run -p 8080:8080 rwkals/app_kotlin_distroless:latest
 ```
+
+## Continuous Integration Workflow
+
+The project uses GitHub Actions for continuous integration.
+The CI workflow includes Kotlin dependencies installation, linting the code using `ktlint`,
+and running tests with `Gradle`.
+Moreover, it integrates Docker steps: logging into Docker Hub, building, and pushing the image.
