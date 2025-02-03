@@ -58,7 +58,7 @@ jobs:
 
       # Step 7: Snyk Vulnerability Check
       - name: Run Snyk Vulnerability Scan
-        uses: snyk/snyk-action@3
+        uses: snyk/actions/python-3.8@master
         with:
           command: test
           severity-threshold: high
