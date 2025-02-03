@@ -83,3 +83,4 @@ jobs:
           file: app_kotlin/distroless.Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/app-ktor:distroless
+
