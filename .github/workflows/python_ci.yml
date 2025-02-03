@@ -65,7 +65,7 @@ jobs:
       - name: Install Snyk
         uses: snyk/actions/setup@master
         with:
-          version: latest
+          snyk-version: latest
 
       - name: Authenticate Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
@@ -74,8 +74,6 @@ jobs:
         run: snyk test --file=app_python/requirements.txt --skip-unresolved
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        
-        
 
   docker:
     needs: build-and-test
