@@ -25,3 +25,10 @@ or distroless build:
 docker build -f distroless.dockerfile -t go_serv_dless .
 docker run go_serv_dless
 ```
+
+# Unit testing
+
+The following functionality was covered with unit-tests:
+
+- Correct time calculation
+- Extraction of commit numbers
