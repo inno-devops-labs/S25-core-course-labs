@@ -32,7 +32,8 @@ jobs:
 
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
-        with:
-          args: --skip-unresolved app_node/
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
+          args: --skip-unresolved app_node/ --target-reference="${{ github.head_ref }}"
