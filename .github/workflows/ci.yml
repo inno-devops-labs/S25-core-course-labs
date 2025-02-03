@@ -45,6 +45,7 @@ jobs:
 
     - name: Build Docker Image
       run: |
+        cd app_python
         docker build -t myapp:latest .
 
     - name: Push Docker Image
