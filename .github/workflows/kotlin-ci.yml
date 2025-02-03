@@ -51,7 +51,6 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          working-directory: app_kotlin
           args: --skip-unresolved
 
   docker:
