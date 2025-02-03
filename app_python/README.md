@@ -136,3 +136,19 @@ python3 -m unittest discover -s tests
 ```
 
 -----
+
+### CI Workflow
+
+For this project the CI is configured using GitHub actions. CI Workflow consists of the following steps:
+
+- Checkout the repository
+- Set up Python environment
+- Install dependencies
+- Run Linter
+- Run Unit Tests
+- Log in to Docker Hub
+- Build and Push Docker Image
+- Build and Push Docker Distroless Image
+
+-----
+

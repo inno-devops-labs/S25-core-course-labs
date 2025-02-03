@@ -53,7 +53,7 @@ jobs:
           username: ${{ env.DOCKER_USERNAME }}
           password: ${{ env.DOCKER_PASSWORD }}
 
-      # Step 7: Build Docker Image
+      # Step 7: Build and Push Docker Image
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
         with:
@@ -62,7 +62,7 @@ jobs:
           push: true
           tags: ${{ env.DOCKERHUB_USERNAME }}/python-msk-time-app:latest
 
-      # Step 8: Build Docker Distroless Image
+      # Step 8: Build and Push Docker Distroless Image
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
         with:
