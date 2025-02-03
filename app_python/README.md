@@ -115,6 +115,7 @@ This project includes a GitHub Actions CI pipeline to automate testing and deplo
 
 - Dependencies - Installs required dependencies.
 - Lint - Checks code for style and syntax issues.
+- Snyk - Checks for security vulnerabilities.
 - Run - Starts the application.
 - Test - Runs unit tests to verify functionality.
 - Docker - Builds and pushes the Docker image to Docker Hub.

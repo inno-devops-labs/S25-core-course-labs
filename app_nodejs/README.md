@@ -2,8 +2,7 @@
 
 ## Overview
 
-This web application displays the current time in Abu Dabi. It is built using Node.js and Express, with a client-side HTML page that dynamically fetches the 
-time.
+This web application displays the current time in Abu Dabi. It is built using Node.js and Express, with a client-side HTML page that dynamically fetches the time.
 
 ## Installation
 
@@ -17,20 +16,18 @@ time.
 1. Clone the repository.
 2. Install dependencies using command:
 
-    ```bash
-     npm install
-    ```
+   ```bash
+    npm install
+   ```
 
 3. Run the application:
 
-    ```bash
-     node app.js
-    ```
+   ```bash
+    node app.js
+   ```
 
 4. Open browser and go to:
-`
-   http://localhost:3000
-`
+   `   http://localhost:3000`
 
 ## DOCKER
 
@@ -47,7 +44,7 @@ To build the Docker image:
 To pull the Docker image:
 
 ```bash
-  docker pull ilsiia/app_nodejs:latest  
+  docker pull ilsiia/app_nodejs:latest
 ```
 
 ### Run
@@ -96,4 +93,10 @@ To build the distroless image:
   docker build -t nodejs_app:distroless -f distroless.Dockerfile .
 ```
 
+## Unit Tests
 
+To execute the test suite, run:
+
+```bash
+  npm test
+```
