@@ -1,0 +1,80 @@
+name: Python app workflow
+
+on:
+  push:
+    paths:
+      - 'app_python/**'
+      - '.github/workflows/app_python.yml'
+
+  pull_request:
+    paths:
+      - 'app_python/**'
+      - '.github/workflows/app_python.yml'
+
+defaults:
+  run:
+    working-directory: app_python
+
+  runs-on: ubuntu-22.04
+
+jobs:
+  format:
+    name: Run Black formatter
+
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Black formatter
+        uses: psf/black@stable
+        with:
+          options: "--check --diff"
+          src: "./app_python"
+
+  lint:
+    name: Run Pylint check
+
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Pylint
+        run: pip install pylint
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Pylint
+        run: pylint main.py
+
+  test:
+    name: Run pytest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install httpx
+          pip install -r requirements.txt
+
+      - name: Test with Pytest
+        run: pytest main.py
