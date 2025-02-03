@@ -58,11 +58,10 @@ jobs:
 
       # Step 7: Snyk Vulnerability Check
       - name: Run Snyk Vulnerability Scan
-        working-directory: ./app_python
         uses: snyk/actions/python-3.8@master
         with:
           command: test
-          args: --severity-threshold=high
+          args: --file=app_python/requirements.txt --severity-threshold=high
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
