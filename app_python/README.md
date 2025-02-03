@@ -144,3 +144,11 @@ Containerized version of the web application:
    ```bash
    make check
    ```
+
+### Unit Tests
+
+Pytest is used for testing. Tests can be run using `Makefile`:
+
+```bash
+make test
+```
