@@ -68,3 +68,5 @@ jobs:
           file: ./app_python/distroless.Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/simple-python-web-app-distroless:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
