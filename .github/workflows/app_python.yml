@@ -57,10 +57,14 @@ jobs:
           context: "{{defaultContext}}:app_python"
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/flask-app:latest
           cache-to: type=inline
+      - name: Print branch name
+        run: |
+          echo "Source branch: ${{ github.head_ref }}"
 
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/python-3.10@master
-        with:
-          args: --skip-unresolved app_python/
+        uses: snyk/actions/python-3.9@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
+          args: --file=app_python/requirements.txt --skip-unresolved --target-reference="${{ github.head_ref }}"
