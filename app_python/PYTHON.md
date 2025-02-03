@@ -13,13 +13,30 @@ I chose lightweight `Bottle` framework.
 * **Configuration of `Production` and `Test` applications is separated**: One configuration does not affect the other
   in any way.
 
-* **Mock services in `Test` application**: Unit tests without mocking are actually integration tests, which are always
-  heavier and more complex, and if there are some changes in several services, it is harder to find where the error is.
-
 * **There are arguments for timezone, host and port**: It allows you to easily change configuration of application
   without changing the source code.
 
-## Tests
+## Unit Tests
 
-1. `TestController`, which mocks all services and checks that controller is working correctly.
-2. `TestZonedTimeService`, which checks that `ZonedTimeService` is working correctly.
+### Applied best practice
+
+* **Mock services in `Test` application**: Unit tests without mocking are actually integration tests, which are always
+  heavier and more complex, and if there are some changes in several services, it is harder to find where the error is.
+
+* **Isolate side effects**: Also, mocks are very useful due to isolation from the world: for example, when some
+  controller is tested, it is unnecessary to test external states like databases, real time, etc.
+
+* **Use `setUp`**: This method is used in all test classes to initialize required objects before each test, reducing
+  code duplication.
+
+* **Use `assert`**: Each test has `assert` usage to not only verify that there are no errors, but also test expected
+  behavior.
+
+* **Tests with real time use time ranges in `assert`:** The retrieved time in such tests is compared with `start` and
+  `end` timestamps.
+
+### Tests lists
+
+1. `TestController`, which mocks all services and checks that controller works correctly.
+2. `TestZonedTimeService`, which checks that `ZonedTimeService` works correctly.
+3. `TestAppConfiguration`, which checks that production application has correct configuration and works correctly.

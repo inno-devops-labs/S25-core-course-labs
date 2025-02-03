@@ -2,11 +2,12 @@ from typing import List
 import unittest
 from zoneinfo import ZoneInfo
 
+from bs4 import BeautifulSoup
 from webtest import TestApp
-from datetime import datetime, timezone
+from datetime import datetime
 
 from app import TimeService, TemplateService, create_app
-from app_start import ZonedTimeService
+from app_start import ZonedTimeService, HtmlTemplateService
 
 
 class MockTimeService(TimeService):
@@ -55,6 +56,26 @@ class TestZonedTimeService(unittest.TestCase):
         assert start <= time, f'Expected {start} <= {time}'
         assert time <= end, f'Expected {time} <= {end}'
         assert time.tzinfo == self.zone
+
+
+class TestAppConfiguration(unittest.TestCase):
+    def setUp(self):
+        zone = 'Europe/Moscow'
+        self.zone = ZoneInfo(zone)
+        self.app = TestApp(create_app(ZonedTimeService(zone), HtmlTemplateService()))
+
+    def test_app(self):
+        start = datetime.now(self.zone)
+        response = self.app.get('/')
+        end = datetime.now(self.zone)
+
+        bs = BeautifulSoup(response.text, 'html.parser')
+
+        time_str = bs.find('a', {'id': 'current-time'})
+        time = datetime.fromisoformat(time_str.text)
+
+        assert start <= time, f'Expected {start} <= {time}'
+        assert time <= end, f'Expected {time} <= {end}'
 
 
 if __name__ == '__main__':

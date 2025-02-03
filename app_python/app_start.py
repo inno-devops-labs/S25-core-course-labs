@@ -7,7 +7,7 @@ from sys import stderr
 
 
 class ZonedTimeService(TimeService):
-    def __init__(self, zone):
+    def __init__(self, zone: str):
         self.zone = ZoneInfo(zone)
 
     def current_time(self) -> datetime:
