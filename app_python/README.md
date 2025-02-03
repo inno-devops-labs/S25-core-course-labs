@@ -99,3 +99,9 @@ docker pull <dockerhub-username>/app-dist
 docker run -p 5000:5000 <dockerhub-username>/app-dist
 ```
 **Open browser and go to:** http://127.0.0.1:5000/
+
+## Unit Tests
+Unit tests for this application are written using `unittest`. To run the tests:
+```bash
+python -m unittest discover
+
