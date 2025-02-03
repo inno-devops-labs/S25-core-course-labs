@@ -1,9 +1,6 @@
 name: CI Pipeline for Python Web Appplication
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
     branches:
       - master
