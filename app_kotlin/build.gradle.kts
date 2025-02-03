@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.ktor)
+    id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
 }
 
 group = "com.ktor"
@@ -26,4 +27,10 @@ dependencies {
     implementation(libs.ktor.server.config.yaml)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
+}
+
+tasks {
+    ktlintCheck {
+        dependsOn("build")
+    }
 }

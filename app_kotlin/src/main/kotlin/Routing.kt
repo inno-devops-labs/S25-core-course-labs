@@ -1,19 +1,18 @@
 package com.ktor
 
-import io.ktor.server.application.*
-import io.ktor.server.http.content.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.server.application.Application
+import io.ktor.server.http.content.staticFiles
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
+import io.ktor.server.routing.routing
+import java.io.File
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 fun Application.configureRouting() {
     routing {
-        static("/") {
-            resources("")
-            defaultResource("index.html")
-        }
+        staticFiles("/", File("static"))
         get("/time") {
             val utcTime = DateTimeFormatter
                 .ofPattern("HH:mm:ss")
