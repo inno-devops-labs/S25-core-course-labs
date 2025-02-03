@@ -28,7 +28,7 @@ jobs:
         run: npm test
 
       - name: Run ESLint
-        run: npx eslint app.test.js
+        run: npx eslint . --ext .js,.ts,.jsx,.tsx
 
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
