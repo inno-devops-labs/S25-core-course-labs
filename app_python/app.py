@@ -4,10 +4,11 @@ import pytz
 import logging
 
 logging.basicConfig(level=logging.INFO,
-                    format="%(asctime)s %(levelname)s %(message)s", 
+                    format="%(asctime)s %(levelname)s %(message)s",
                     datefmt="%Y-%m-%d %H:%M:%S")
 
 app = FastAPI()
+
 
 def get_moscow_time() -> str:
     logging.info("Getting current Moscow time...")
@@ -19,6 +20,7 @@ def get_moscow_time() -> str:
     except Exception as e:
         logging.info("Failed to get current Moscow time!")
         return f"Error: {str(e)}"
+
 
 @app.get("/")
 def read_root() -> dict[str, str]:
