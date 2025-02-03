@@ -155,4 +155,3 @@ For this project the CI is configured using GitHub actions. CI Workflow consists
 - Build and Push Docker Distroless Image
 
 -----
-
