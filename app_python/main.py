@@ -39,9 +39,8 @@ async def index(request: Request):
     zone = timezone(timedelta(hours=3))
     time = datetime.now(timezone.utc).astimezone(zone)
 
-    return templates.TemplateResponse(
-        name="item.html", context={"request": request, "time": time}
-    )
+    return templates.TemplateResponse(request, "item.html", {"time": time})
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
