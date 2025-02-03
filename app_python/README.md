@@ -48,3 +48,28 @@ sudo docker run -p 5000:5000 vika123vika/app-python:latest
 
 ### Go to localhost:
 Open http://localhost:5000 in browser.
+
+## Unit Tests
+
+This project includes unit tests to ensure the correct functionality of the core features.
+
+### Running Unit Tests
+To execute the tests locally, use the following command:
+
+```bash
+PYTHONPATH=$(pwd) python3 -m unittest discover app_python/tests -v
+```
+
+## CI/CD Workflow
+
+This project uses GitHub Actions for automated testing and Docker deployment.
+
+### CI/CD Steps:
+1. **Install dependencies** – Ensures all required packages are available.
+2. **Run linter (flake8)** – Checks code for style issues.
+3. **Run unit tests** – Executes all unit tests.
+4. **Login to Docker Hub** – Authenticates with Docker registry.
+5. **Build & push Docker image** – Creates and pushes a new image.
+
+The workflow runs automatically on every `push` and `pull request`.
+

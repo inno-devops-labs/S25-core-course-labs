@@ -4,6 +4,9 @@ import pytz
 
 app = Flask(__name__)
 
+def some_function(x):
+    return x * x  
+
 @app.route("/")
 def home():
     moscow_time = datetime.now(pytz.timezone("Europe/Moscow")).strftime("%Y-%m-%d %H:%M:%S")

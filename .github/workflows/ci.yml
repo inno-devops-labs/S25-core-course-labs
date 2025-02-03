@@ -1,0 +1,50 @@
+name: Python CI with Docker
+
+on: [push, pull_request]  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r app_python/requirements.txt
+          pip install flake8
+
+      - name: Run linter
+        run: |
+          flake8 app_python/ --max-line-length=88
+
+      - name: Run unit tests
+        run: |
+          PYTHONPATH=$(pwd) python3 -m unittest discover app_python/tests -v
+
+  docker:
+    needs: build  
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/app-python:latest .
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/app-python:latest
+
