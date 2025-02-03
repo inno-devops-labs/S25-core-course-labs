@@ -17,16 +17,14 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        cd app_python
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install -r app_python/requirements.txt
 
     - name: Run Linter (flake8)
       run: |
-        cd app_python
         pip install flake8
-        flake8 web_app.py test_web_app.py
+        flake8 app_python/web_app.py app_python/test_web_app.py
 
     - name: Run Tests
       run: |
-        python -m unittest discover
+        python -m unittest discover app_python
