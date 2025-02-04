@@ -3,7 +3,7 @@ import logging
 from flask import Flask, jsonify
 from flask_cors import CORS
 import pytz
-from database.db import db, Zones
+from .database.db import db, Zones
 from dotenv import load_dotenv
 import os
 
