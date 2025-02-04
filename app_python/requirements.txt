@@ -1,0 +1,4 @@
+Flask==3.0.2
+pytz==2024.1
+pytest
+flake8

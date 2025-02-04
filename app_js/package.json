@@ -1,0 +1,13 @@
+{
+  "name": "moscow-time-app",
+  "version": "1.0.0",
+  "description": "A simple web application displaying the current time in Moscow using Node.js and Express.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ejs": "^3.1.9"
+  }
+}
