@@ -2,6 +2,7 @@
 .venv
 .gitignore
 .dockerignore
+.pytest_cache
 __pycache__
 pyproject.toml
 PYTHON.md
