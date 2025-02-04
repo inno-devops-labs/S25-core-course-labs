@@ -31,7 +31,7 @@ jobs:
       - name: Run linter (flake8)
         run: |
           pip install flake8
-          flake8 --max-line-length=88 --ignore=E203,W503 app_python/app.py tests/
+          flake8 --max-line-length=88 --ignore=E203,W503 app_python/app.py app_python/tests/
 
       - name: Run unit tests
         run: |
