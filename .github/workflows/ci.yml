@@ -59,9 +59,12 @@ jobs:
         run: cd app_go
 
       - name: Run Snyk Security Scan
-        uses: snyk/actions/golang@master
+        run: |
+          cd app_go
+          snyk test --all-projects --detection-depth=4
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
 
   docker:
     name: Build and Push Docker Image
