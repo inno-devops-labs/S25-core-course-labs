@@ -3,12 +3,14 @@ import re
 # Import the Flask application
 from main import app
 
+
 # Fixture to set up the test client
 @pytest.fixture
 def setUp():
     app.testing = True
     # Create a test client using the Flask application
     return app.test_client()
+
 
 # Test the home page
 def test_home(setUp):
