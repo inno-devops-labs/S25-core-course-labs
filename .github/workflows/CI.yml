@@ -27,7 +27,9 @@ jobs:
       working-directory: app_python
         
     - name: Run linter (Flake8)
-      run: flake8 app_python
+      run: |
+        pip install flake8
+        flake8 .
       working-directory: app_python
 
     - name: Run tests with pytest
