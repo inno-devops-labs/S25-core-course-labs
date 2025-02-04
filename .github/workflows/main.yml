@@ -52,13 +52,13 @@ jobs:
       - name: Run Unit Tests
         run: pytest app_python/tests/ -v
 
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+      
       - name: Run Snyk Vulnerability Scan
-        uses: snyk/actions/python@v3
-        with:
-          command: monitor
-          args: --file=app_python/requirements.txt
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          snyk auth ${{ secrets.SNYK_TOKEN }}
+          snyk test --file=app_python/requirements.txt
 
   build:
     needs: [lint, test]
