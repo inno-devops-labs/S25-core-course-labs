@@ -41,6 +41,9 @@ jobs:
     needs: install
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Run linter (flake8)
         run: |
           pip install flake8
@@ -51,9 +54,11 @@ jobs:
     needs: install
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Run unit tests
         run: |
-          pip install pytest
           python -m unittest app_python/tests/test.py
 
   docker:
