@@ -101,4 +101,4 @@ The project includes a GitHub Actions CI workflow to automate testing and Docker
 2. **Docker Build and Push**:
    - Logs in to Docker Hub using GitHub Secrets.
    - Builds the Docker image.
-   - Pushes the images (original and distroless) to Docker Hub.
+   - Pushes the images (original and distroless) to Docker Hub.!

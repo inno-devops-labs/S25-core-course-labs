@@ -55,11 +55,13 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      - name: Move to go directory
+        run: cd app_go
+
       - name: Run Snyk Security Scan
         uses: snyk/actions/golang@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        working-directory: app_go
 
   docker:
     name: Build and Push Docker Image
