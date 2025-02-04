@@ -12,6 +12,9 @@ app = FastAPI()
 
 @app.get("/", response_class=HTMLResponse)
 def show_time(request: Request):
+    """
+    Shows the current time in Moscow.
+    """
     return get_time(request)
 
 

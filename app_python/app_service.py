@@ -15,7 +15,8 @@ def get_time(request: Request, timezone: str = "Europe/Moscow") -> str:
     """
     Returns the current time in the given timezone.
     :param timezone: The timezone to get the current time from. (Optional, default: Europe/Moscow)
-    :request: Request object essential for passing the necessary context (like session data or query parameters).
+    :request: Request object essential for passing
+      the necessary context (like session data or query parameters).
     """
 
     return templates.TemplateResponse(
