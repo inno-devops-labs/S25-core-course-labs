@@ -26,6 +26,8 @@ jobs:
 
       - name: Cache Rust dependencies
         uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: app_rust
 
       - name: Dependencies
         working-directory: ./app_rust
