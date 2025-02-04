@@ -53,3 +53,4 @@ jobs:
         with:
           push: true
           tags: ${{ vars.DOCKERHUB_USERNAME }}/app_python:latest
+          context: ./app_python
