@@ -58,6 +58,7 @@ jobs:
   snyk:
     name: Run Skyk security checks
     runs-on: ubuntu-22.04
+    needs: [ lint, test ]
 
     steps:
       - uses: actions/checkout@master
