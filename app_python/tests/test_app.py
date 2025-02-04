@@ -3,15 +3,16 @@ import re
 from datetime import datetime
 from time import sleep
 
-from src.app import app # Test
+from src.app import app
+
 
 client = TestClient(app)
+
 
 def test_read_time():
     response = client.get("/")
     assert response.status_code == 200
-    
-    
+
     data = response.json()
     assert "Moscow Time" in data
 
