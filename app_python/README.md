@@ -1,5 +1,7 @@
 # Moscow time API
 
+![CI/CD Pipeline](https://github.com/NikaChek/S25-core-course-labs/actions/workflows/ci.yml/badge.svg?branch=lab3)
+
 ## Project Overview
 
 The web application that provides the current time in Moscow.
