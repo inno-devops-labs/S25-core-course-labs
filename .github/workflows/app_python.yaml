@@ -93,7 +93,17 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push multi-arch image
+      - name: Build and push basic image
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          context: "{{defaultContext}}:app_python"
+          file: Dockerfile
+          tags: "${{ secrets.DOCKERHUB_USERNAME }}/inno_devops_lab2_python_basic:latest"
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/inno_devops_lab2_python_basic:latest
+          cache-to: type=inline
+
+      - name: Build and push distroless image
         uses: docker/build-push-action@v6
         with:
           push: true
