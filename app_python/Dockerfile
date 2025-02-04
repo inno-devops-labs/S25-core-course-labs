@@ -5,9 +5,9 @@ USER nonroot
 
 WORKDIR /src
 
-COPY main.py requirements.txt ./
-COPY templates/ ./templates/
-COPY static/ ./static
+COPY api/main.py requirements.txt ./
+COPY api/templates/ ./templates/
+COPY api/static/ ./static
 
 RUN pip install --no-cache-dir -r requirements.txt
 
