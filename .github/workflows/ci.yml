@@ -59,9 +59,7 @@ jobs:
         uses: snyk/actions/golang@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        continue-on-error: true
-        with:
-          args: test --detection-depth=3 --file=app_go/go.mod
+        working-directory: app_go
 
   docker:
     name: Build and Push Docker Image
