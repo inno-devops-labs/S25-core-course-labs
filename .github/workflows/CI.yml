@@ -24,10 +24,13 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+      working-directory: app_python
         
     - name: Run linter (Flake8)
       run: flake8  
+      working-directory: app_python
 
     - name: Run tests with pytest
       run: pytest
+      working-directory: app_python
       
