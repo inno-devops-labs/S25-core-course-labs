@@ -125,7 +125,7 @@ Lightweight image for mostly production use, without tools for debugging and OS 
 
 ### Unit Testing
 
-To properly keep the code quality on the significant level, project has covered by an exhausitve set of unit tests.
+To properly keep the code quality on the significant level, project has covered by an exhaustive set of unit tests.
 It is obvious that the project's functionality is not rich enough to create a lot of tests, so it was decided to
 keep two different tests for the following functionality:
 

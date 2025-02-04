@@ -117,3 +117,9 @@ Lightweight image for mostly production use, without tools for debugging and OS 
   ```bash
   docker run -d -p 8080:8080 --name watch catorleader/vacation_calculator:distroless
   ```
+
+---
+
+### Unit Tests
+
+To properly keep the code quality on the significant level, project has covered by an exhaustive set of unit tests.

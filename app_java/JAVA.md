@@ -40,3 +40,25 @@ need to exhaustively comment our code if it is already understandable.
 When I was making this part of lab 1, I already knew that Dockerfiles is the next lab part, so
 in the app_python there is a Dockerfile, and in the app_java I stopped on the .jar usage
 (for now).
+
+---
+
+# Lab 2
+
+---
+
+For this application unit testing, I create the exhaustive set of tests that covered almost all the business logic
+related codebase.
+Only this functionality was tested because, in the specific Java language, there are a lot of frameworks, and this is
+unnecessary to test each one's functionality.
+
+## The main features
+
+- Business logic functionality: tests are mostly covered indeed; the business functionality that will deliver
+  the final answer to the user
+- Separate Logic: Tests are separated into different files to make it more concise to read the tests and maintain
+  them
+- Naming: I use the given...when...then... test case naming to properly introduce the purpose of the
+  specific test
+- Separate context: to make tests more isolated, the library junit5 recreates the context for each test class.
+  (context is a way of environment control provided by the Spring Boot framework)
