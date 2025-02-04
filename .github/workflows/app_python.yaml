@@ -98,6 +98,6 @@ jobs:
           push: true
           context: "{{defaultContext}}:app_python"
           file: distroless.Dockerfile
-          tags: "${{ secrets.DOCKER_USERNAME }}/inno_devops_lab2_python_bonus:latest"
-          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/inno_devops_lab2_python_bonus:latest
+          tags: "${{ secrets.DOCKERHUB_USERNAME }}/inno_devops_lab2_python_bonus:latest"
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/inno_devops_lab2_python_bonus:latest
           cache-to: type=inline
