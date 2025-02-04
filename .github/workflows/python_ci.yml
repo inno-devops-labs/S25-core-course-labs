@@ -46,7 +46,7 @@ jobs:
     - name: UnitTests
       run: |
         python -m unittest unit_test/app_test.py -v
-        
+
   security:
     runs-on: ubuntu-latest
     needs: build
@@ -88,5 +88,3 @@ jobs:
         tags: ${{ secrets.DOCKER_USERNAME }}/python-web-app:latest
         cache-from: type=gha,scope=primary
         cache-to: type=gha,scope=primary
-
-  security:
