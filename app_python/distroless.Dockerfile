@@ -32,5 +32,5 @@ EXPOSE 5000
 ENV PYTHONPATH=/python_app/lib
 ENV FLASK_APP=app.py
 
-# Run the app
+# Run the application
 ENTRYPOINT ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
