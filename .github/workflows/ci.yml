@@ -62,5 +62,6 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v6
         with:
+          context: ./app_python
           push: true
           tags: xrvst/time_app:latest
