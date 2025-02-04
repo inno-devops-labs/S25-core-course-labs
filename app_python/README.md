@@ -74,6 +74,20 @@ docker run -p 8001:8001 azamatbayramov/s25-devops-py-dl
 
 3. Open your web browser and navigate to `http://0.0.0.0:8001/` to view the current time in Moscow.
 
+## Unit Tests
+
+1. Install the required dependencies using the following command:
+
+```bash
+pip install -r requirements-test.txt
+```
+
+2. Run the unit tests using the following command:
+
+```bash
+pytest test_main.py
+```
+
 ## Endpoints
 
 - `/` - Displays the current time in Moscow as an HTML response using `/api/time` endpoint.
