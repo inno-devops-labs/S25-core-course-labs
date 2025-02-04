@@ -10,16 +10,17 @@ jobs:
       - name: Set up Python 3.10
         uses: actions/setup-python@v4
         with: 
-          python-version: '3.10'
+          python-version: "3.10"
 
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          key: pip-${{ hashFiles('requirements.txt') }}
 
       - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pytest flake8
 
@@ -29,10 +30,10 @@ jobs:
       - name: Run Tests
         run: pytest tests/ -v
 
-      - name: Install Node.js for Snyk  # Добавьте этот шаг
+      - name: Setup Node.js for Snyk
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '18.x'  # Явное указание версии Node
 
       - name: Install Snyk CLI
         run: npm install -g snyk
@@ -54,9 +55,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/moscow-time:latest
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/moscow-time:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/moscow-time:${{ github.sha }}
