@@ -1,5 +1,7 @@
 # app_python
 
+[![app-python](https://github.com/2IMT/S25-core-course-labs/actions/workflows/app-python.yml/badge.svg)](https://github.com/2IMT/S25-core-course-labs/actions/workflows/app-python.yml)
+
 This web application displays current time in Moscow
 
 ## Running
