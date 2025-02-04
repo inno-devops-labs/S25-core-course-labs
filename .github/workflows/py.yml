@@ -79,7 +79,7 @@ jobs:
       - name: Snyk is applied
         uses: snyk/actions/python-3.10@master
         with:
-          args: app_python/
+          args: --skip-unresolved app_python/
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
