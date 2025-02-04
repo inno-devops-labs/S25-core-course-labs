@@ -1,5 +1,7 @@
 # Go Web Application
 
+[![CI Pipeline for Go Web Appplication](https://github.com/MagicWinnie/S25-core-course-labs/actions/workflows/app_go.yml/badge.svg)](https://github.com/MagicWinnie/S25-core-course-labs/actions/workflows/app_go.yml)
+
 ## 📘 Overview
 
 This is a simple web application that is built using Go and Gin to calculate person's age by their date of birth!
