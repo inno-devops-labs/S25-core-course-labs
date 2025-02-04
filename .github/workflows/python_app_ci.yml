@@ -44,6 +44,9 @@ jobs:
   security:
     needs: [build-test]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app_python
     steps:
       - uses: actions/checkout@v4
       - name: Run Snyk to check for vulnerabilities
@@ -51,7 +54,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --severity-threshold=high --target-dir=app_python
+          args: --skip-unresolved app_python/
 
   docker:
     name: Docker Build&Push
