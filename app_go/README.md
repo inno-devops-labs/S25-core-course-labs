@@ -102,6 +102,3 @@ The project includes a GitHub Actions CI workflow to automate testing and Docker
    - Logs in to Docker Hub using GitHub Secrets.
    - Builds the Docker image.
    - Pushes the images (original and distroless) to Docker Hub.
-
-### Running CI Manually
-The CI pipeline runs automatically on every push and pull request to the `main` branch. To trigger it manually, navigate to the GitHub Actions tab and run the workflow.
