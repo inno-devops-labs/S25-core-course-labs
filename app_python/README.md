@@ -81,9 +81,9 @@ This application has been containerized using Docker to make deployment easier a
    ``` bash
    docker run -p 8000:8000 moscow-time-api
    ```
-   
+  
    If you're running the image from Docker Hub, use the following command:
-   
+  
    ``` bash
    docker run -p 8000:8000 nikachek/moscow-time-api:latest
    ```
@@ -95,6 +95,7 @@ This application has been containerized using Docker to make deployment easier a
 This project includes unit tests to ensure the reliability of the Moscow Time API.
 
 ### Running Tests
+
 To execute unit tests, run the following command from the app_pyrthon folder:
 
 ```bash
