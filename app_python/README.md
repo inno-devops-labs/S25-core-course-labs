@@ -58,3 +58,4 @@ pytest .
 - **Linting**: Runs `flake8` to check the code style and potential issues.
 - **Testing**: Runs tests using `pytest` to ensure the project is functioning correctly.
 - **Docker**: Builds and pushes a Docker image to Docker Hub.
+- **Security**: Checks for vulnerabilities using Snyk.
