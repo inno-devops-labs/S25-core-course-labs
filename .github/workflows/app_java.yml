@@ -79,18 +79,19 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Snyk Security Test
-        uses: snyk/actions/maven-3-jdk-21@master
-        continue-on-error: true
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Set up Snyk CLI
+        uses: snyk/actions/setup@master
         with:
-          args: --skip-unresolved --sarif-file-output=app_java/snyk.sarif --severity-threshold=high app_java/
+          version: 'latest'
+          token: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Snyk Security Test
+        run: snyk test --file=pom.xml --sarif-file-output=snyk.sarif --severity-threshold=high
 
       - name: Upload Snyk results to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: app_java/snyk.sarif
+          sarif_file: snyk.sarif
 
   build-push:
     runs-on: ubuntu-latest
