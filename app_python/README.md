@@ -3,6 +3,7 @@
 ![Python Version](https://img.shields.io/badge/Python-3.9%2B-blue.svg)
 ![Flask Version](https://img.shields.io/badge/Flask-2.2%2B-green.svg)
 ![License](https://img.shields.io/badge/License-MIT-orange.svg)
+![CI/CD Pipeline](https://github.com/Azaki-san/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)
 
 ## 🖥️ Overview
 

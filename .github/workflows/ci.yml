@@ -38,8 +38,23 @@ jobs:
       run: |
         pytest test_app.py
 
-  docker:
+  security-scan:
     needs: build-and-test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/python@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: --severity-threshold=high
+
+  docker:
+    needs: [build-and-test, security-scan]
     runs-on: ubuntu-latest
 
     steps:
@@ -54,5 +69,5 @@ jobs:
 
     - name: Build and Push Docker Image
       run: |
-        docker build -t azazaki/app_python:latest ./app_python
+        docker build --cache-from=azazaki/app_python:latest -t azazaki/app_python:latest ./app_python
         docker push azazaki/app_python:latest
