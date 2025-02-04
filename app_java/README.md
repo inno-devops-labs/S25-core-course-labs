@@ -123,3 +123,7 @@ Lightweight image for mostly production use, without tools for debugging and OS 
 ### Unit Tests
 
 To properly keep the code quality on the significant level, project has covered by an exhaustive set of unit tests.
+The covered business functionality by tests:
+
+* `/calculate` - the single endpoint that evaluated by different HTTP status codes that returned
+* Util Classes which are used for the calculation process
