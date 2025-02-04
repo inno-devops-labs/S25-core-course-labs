@@ -97,6 +97,9 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [lint_and_format, test, security_scan]
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Get short commit hash
         id: commit
         run: echo "SHORT_COMMIT_HASH=$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_ENV
