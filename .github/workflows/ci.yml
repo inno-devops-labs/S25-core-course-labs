@@ -76,4 +76,4 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/moscow-time-app:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/moscow-time-app:latest
