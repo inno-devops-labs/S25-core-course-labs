@@ -31,10 +31,9 @@ jobs:
           source venv/bin/activate
           python -m pip install --upgrade pip
           pip install -r app_python/requirements.txt
-      - name: Verify Installed Packages
-        run: pip list
       - name: Run Linter (flake8)
         run: |
+          ./venv/bin/python -m pytest app_python/tests/
           pip install flake8
           flake8 app_python --max-line-length=100
       - name: Run Tests
