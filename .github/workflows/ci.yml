@@ -41,6 +41,7 @@ jobs:
         pytest
   docker-login:
     runs-on: ubuntu-latest
+    environment: default
     steps:
       -
         name: Login to Docker Hub
@@ -63,3 +64,5 @@ jobs:
         with:
           push: true
           tags: xrvst/time_app:latest
+        run: |
+          cd app_python
