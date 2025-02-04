@@ -29,7 +29,7 @@
 
         <revision>0.1</revision>
 
-        <skip.unit.tests>true</skip.unit.tests>
+        <skip.unit.tests>false</skip.unit.tests>
 
         <!-- Spring -->
         <spring-boot.version>3.2.2</spring-boot.version>
