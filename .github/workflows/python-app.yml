@@ -32,9 +32,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f ./app_python/backend/requirements.txt ]; then
-          echo "Exists"
-        else
-          echo "Not exist"
+          pip install -r app_python/requirements.txt
         fi
     - name: Lint with flake8
       run: |
