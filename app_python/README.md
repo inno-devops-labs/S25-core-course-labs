@@ -1,5 +1,7 @@
 # Python Web Application
 
+[![Python package](https://github.com/Angelika2707/S25-core-course-labs/actions/workflows/pipeline.yml/badge.svg?branch=lab3)](https://github.com/Angelika2707/S25-core-course-labs/actions/workflows/pipeline.yml)
+
 ## Description
  A Python web application that displays the current time in Moscow.
 
@@ -72,3 +74,14 @@ docker run -p 5000:5000 angelika2707/lab2
 1. **test_index_route**: Test verifies that the `/` route returns a 200 status and contains the text "Current Time in Moscow".
 
 2. **test_moscow_time_correctness**: Test verifies the Moscow time rendered in the template matches the expected time.
+
+# CI Pipeline
+- Checkout repository
+- Set up Python environment
+- Install dependencies
+- Linter - flake8
+- Run tests
+- Run Snyk security scan
+- Set up Docker Buildx
+- Login to Docker Hub
+- Build and push Docker image
