@@ -1,4 +1,4 @@
-name: Python app workflow
+name: Typescript app workflow
 
 on:
   push:
