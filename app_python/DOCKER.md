@@ -1,4 +1,4 @@
-# Best practices used:
+# Best practices used
 
 - **Use a minimal base image:** A lightweight and minimal base image was used to reduce the image size and the attack surface
 
