@@ -324,16 +324,16 @@ I have implemented configuration using manual of Yandex Cloud and examples from 
 get some compute instance in Yandex Cloud without any fee and without connecting bank card.
 
 ## Github
-
-1. Importing repo: `terraform import "github_repository.repo" "S25-core-course-labs"`
+0. Prerequisites: import a GitHub access token (fine-grained is better)
 
 ```bash
-~ terraform import "github_repository.repo" "S25-core-course-labs"
-var.github_pat
-  Specifies the GitHub PAT token or `GITHUB_TOKEN`
+export TF_VAR_token="your_github_personal_access_token"
+```
 
-  Enter a value:
+1. Importing repo: `terraform import github_repository.repo S25-core-course-labs`
 
+```bash
+~ terraform import github_repository.repo S25-core-course-labs
 github_repository.repo: Importing from ID "S25-core-course-labs"...
 github_repository.repo: Import prepared!
   Prepared github_repository for import
@@ -348,7 +348,7 @@ your Terraform state and will henceforth be managed by Terraform.
 2. Apply changes: `terraform apply`
 
 ```bash
-~ terraform apply                                                 
+~ terraform apply
 github_repository.repo: Refreshing state... [id=S25-core-course-labs]
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
@@ -357,20 +357,22 @@ Terraform used the selected providers to generate the following execution plan. 
 
 Terraform will perform the following actions:
 
-  # github_branch_default.master will be created
-  + resource "github_branch_default" "master" {
+  # github_branch_default.main will be created
+  + resource "github_branch_default" "main" {
       + branch     = "master"
+      + etag       = (known after apply)
       + id         = (known after apply)
-      + repository = "devops-labs"
+      + rename     = false
+      + repository = "S25-core-course-labs"
     }
 
   # github_branch_protection.default will be created
   + resource "github_branch_protection" "default" {
       + allows_deletions                = false
       + allows_force_pushes             = false
-      + blocks_creations                = false
       + enforce_admins                  = true
       + id                              = (known after apply)
+      + lock_branch                     = false
       + pattern                         = "master"
       + repository_id                   = "S25-core-course-labs"
       + require_conversation_resolution = true
@@ -378,15 +380,22 @@ Terraform will perform the following actions:
       + required_linear_history         = false
 
       + required_pull_request_reviews {
-          + required_approving_review_count = 0
+          + require_last_push_approval      = false
+          + required_approving_review_count = 1
         }
     }
 
   # github_repository.repo will be updated in-place
   ~ resource "github_repository" "repo" {
       ~ auto_init                   = false -> true
+      - has_downloads               = true -> null
+      ~ has_issues                  = false -> true
+      - has_projects                = true -> null
         id                          = "S25-core-course-labs"
-        # (31 unchanged attributes hidden)
+        name                        = "S25-core-course-labs"
+        # (32 unchanged attributes hidden)
+
+        # (1 unchanged block hidden)
     }
 
 Plan: 2 to add, 1 to change, 0 to destroy.
@@ -397,19 +406,31 @@ Do you want to perform these actions?
 
   Enter a value: yes
 
+github_repository.repo: Modifying... [id=S25-core-course-labs]
+github_repository.repo: Modifications complete after 3s [id=S25-core-course-labs]
+github_branch_default.main: Creating...
+github_branch_default.main: Creation complete after 1s [id=S25-core-course-labs]
+github_branch_protection.default: Creating...
+github_branch_protection.default: Creation complete after 5s [id=BPR_kwDONuj7fc4DiS-8]
+
+Apply complete! Resources: 2 added, 1 changed, 0 destroyed.
+
 ```
 
 ## GitHub teams
 
+Link into GitHub team: <https://github.com/Raleksan-devops-teams>
+
+0. Prerequisites: import a GitHub access token (fine-grained is better)
+
+```bash
+export TF_VAR_github_token="your_github_personal_access_token"
+```
+
 1. Apply changes: `terraform apply`
 
 ```bash
-~ terraform apply 
-var.github_token
-  GitHub token
-
-  Enter a value: 
-
+~ terraform apply
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   + create
@@ -419,7 +440,9 @@ Terraform will perform the following actions:
   # github_branch_default.main_branch will be created
   + resource "github_branch_default" "main_branch" {
       + branch     = "main"
+      + etag       = (known after apply)
       + id         = (known after apply)
+      + rename     = false
       + repository = "devops-teams-test"
     }
 
@@ -427,9 +450,9 @@ Terraform will perform the following actions:
   + resource "github_branch_protection" "repo_protection" {
       + allows_deletions                = false
       + allows_force_pushes             = false
-      + blocks_creations                = false
       + enforce_admins                  = true
       + id                              = (known after apply)
+      + lock_branch                     = false
       + pattern                         = "main"
       + repository_id                   = (known after apply)
       + require_conversation_resolution = true
@@ -437,6 +460,7 @@ Terraform will perform the following actions:
       + required_linear_history         = false
 
       + required_pull_request_reviews {
+          + require_last_push_approval      = false
           + required_approving_review_count = 1
         }
     }
@@ -449,7 +473,6 @@ Terraform will perform the following actions:
       + allow_squash_merge          = true
       + archived                    = false
       + auto_init                   = true
-      + branches                    = (known after apply)
       + default_branch              = (known after apply)
       + delete_branch_on_merge      = false
       + description                 = "Collaborative project for test"
@@ -465,13 +488,18 @@ Terraform will perform the following actions:
       + merge_commit_title          = "MERGE_MESSAGE"
       + name                        = "devops-teams-test"
       + node_id                     = (known after apply)
+      + primary_language            = (known after apply)
       + private                     = (known after apply)
       + repo_id                     = (known after apply)
       + squash_merge_commit_message = "COMMIT_MESSAGES"
       + squash_merge_commit_title   = "COMMIT_OR_PR_TITLE"
       + ssh_clone_url               = (known after apply)
       + svn_url                     = (known after apply)
+      + topics                      = (known after apply)
       + visibility                  = "public"
+      + web_commit_signoff_required = false
+
+      + security_and_analysis (known after apply)
     }
 
   # github_team.contributors will be created
@@ -483,6 +511,8 @@ Terraform will perform the following actions:
       + members_count             = (known after apply)
       + name                      = "Project contributors"
       + node_id                   = (known after apply)
+      + parent_team_read_id       = (known after apply)
+      + parent_team_read_slug     = (known after apply)
       + privacy                   = "closed"
       + slug                      = (known after apply)
     }
@@ -496,6 +526,8 @@ Terraform will perform the following actions:
       + members_count             = (known after apply)
       + name                      = "Project maintainers"
       + node_id                   = (known after apply)
+      + parent_team_read_id       = (known after apply)
+      + parent_team_read_slug     = (known after apply)
       + privacy                   = "closed"
       + slug                      = (known after apply)
     }
@@ -525,5 +557,25 @@ Do you want to perform these actions?
   Only 'yes' will be accepted to approve.
 
   Enter a value: yes
+
+github_team.contributors: Creating...
+github_team.maintainers: Creating...
+github_repository.repository: Creating...
+github_team.contributors: Still creating... [10s elapsed]
+github_team.maintainers: Still creating... [10s elapsed]
+github_repository.repository: Still creating... [10s elapsed]
+github_team.maintainers: Creation complete after 14s [id=12108696]
+github_team.contributors: Creation complete after 15s [id=12108699]
+github_repository.repository: Creation complete after 15s [id=devops-teams-test]
+github_team_repository.contributors: Creating...
+github_team_repository.maintainers: Creating...
+github_branch_default.main_branch: Creating...
+github_branch_protection.repo_protection: Creating...
+github_branch_default.main_branch: Creation complete after 6s [id=devops-teams-test]
+github_team_repository.maintainers: Creation complete after 7s [id=12108696:devops-teams-test]
+github_team_repository.contributors: Creation complete after 7s [id=12108699:devops-teams-test]
+github_branch_protection.repo_protection: Creation complete after 9s [id=BPR_kwDON0QM1M4DiTgk]
+
+Apply complete! Resources: 7 added, 0 changed, 0 destroyed.
 
 ```

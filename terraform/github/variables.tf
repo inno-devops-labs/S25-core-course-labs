@@ -1,5 +1,6 @@
+
 variable "token" {
   type        = string
-  description = "GitHub access token"
+  description = "GitHub Personal Access Token"
   sensitive   = true
 }

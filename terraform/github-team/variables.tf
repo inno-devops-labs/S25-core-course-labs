@@ -1,3 +1,4 @@
+
 variable "github_token" {
   type        = string
   description = "GitHub token"
@@ -7,5 +8,5 @@ variable "github_token" {
 variable "github_organization" {
   type        = string
   description = "Organization"
-  default     = "raleksan-dev_ops-teams"
+  default     = "Raleksan-devops-teams"
 }
