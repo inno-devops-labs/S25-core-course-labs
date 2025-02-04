@@ -51,5 +51,5 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t utkanosss/moscow-time-app:latest -f app_python/Dockerfile .
+          docker build -t utkanosss/moscow-time-app:latest -f app_python/Dockerfile /app_python
           docker push utkanosss/moscow-time-app:latest
