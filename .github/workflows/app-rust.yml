@@ -24,6 +24,9 @@ jobs:
           override: true
           toolchain: stable
 
+      - name: Cache Rust dependencies
+        uses: Swatinem/rust-cache@v2
+
       - name: Dependencies
         working-directory: ./app_rust
         run: |
