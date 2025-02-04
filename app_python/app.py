@@ -2,7 +2,13 @@ from flask import Flask, jsonify, render_template
 from datetime import datetime
 import pytz
 
-app = Flask(__name__)
+
+def create_app():
+    _app = Flask(__name__)
+    return _app
+
+
+app = create_app()
 
 
 def get_current_time():

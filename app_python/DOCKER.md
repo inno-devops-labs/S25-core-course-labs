@@ -1,9 +1,3 @@
-# Python Web Application Development
-
-I chose Flask for this web application because it is lightweight, easy to set up, and well-suited for small projects
-like displaying current time. Flask provides a simple setup and allows for quick development and testing of web
-applications.
-
 ## Development Best Practices
 
 - **Use a Minimal Base Image** The python:3.9-slim image is used to reduce the size of the final Docker image.
