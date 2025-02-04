@@ -33,7 +33,7 @@ jobs:
           pip install -r app_python/requirements.txt
       - name: Run Linter (flake8)
         run: |
-          ./venv/bin/python -m pytest app_python/tests/
+          source venv/bin/activate
           pip install flake8
           flake8 app_python --max-line-length=100
       - name: Run Tests
