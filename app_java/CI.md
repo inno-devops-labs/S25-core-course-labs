@@ -13,28 +13,23 @@ Let's dive deeply into all the optimizations and features I used during the CI c
 
 ### Selectors
 
-- Before jobs there are specified selectors on the triggers to run another pipeline.
-  I set actions to start on PR (main, master branch) and changes in the source code/files..yaml
+- Before jobs, there are specified selectors on the triggers to run another pipeline.
+  I set actions to start on PR (main, master branch) and changes in the source code/files or yaml
 
 ### Separating jobs
 
-- Separated jobs for linting, testing, Snyk testing, and pushing the Docker image.
+- Separated jobs for (checkstyle, testing), Snyk testing, and (building & pushing the Docker image).
   in the GitHub registry
 
-### Dependencies Cache
+### Dependencies & Maven Cache
 
-- The goal of dependency caching is to reduce the amount of time/space that can be consumed by the
+- The goal of dependency and maven caching is to reduce the amount of time/space that can be consumed by the
   repeatable steps of environment configuration
-
-### Snyk Actions
-
-- My .yaml file was configured with the GitHub actions mostly, and to keep everywhere
-  when possible, the same style, the `snyk-actions...` used (not manual snyk installation)
 
 ### Jobs dependency
 
-- The build-push job mostly depended on the previous job. This was made to avoid
-  building and pushing images that do not satisfy the common criteria: high code quality,
+- The jobs one-by-one mostly depended on the previous ones.
+  This was made to avoid building and pushing images that do not satisfy the common criteria: high code quality,
   correct functionality, no security vulnerabilities
 
 ### Docker cache
@@ -42,7 +37,12 @@ Let's dive deeply into all the optimizations and features I used during the CI c
 - This is a new feature for me, but we can get caches from the layer using the already
   pushed image to the registry. This is simply cool that we can use the cache from
   the remote place, and instantly use it in our current building process, without
-  necessary need to rebuild something again. I also store the app_python_buildcache
+  necessary need to rebuild something again. I also store the app_java_buildcache
   in the GitHub registry
+
+### Coverage Report
+
+- To instantly see the results of the new updates on the codebase, the jacoco report for the tests code coverage
+  pushed to the PR as a message from the bot
 
 ---
