@@ -212,3 +212,64 @@ container_port = tolist([
   },
 ])
 ```
+
+## GitHub
+
+### `terraform apply`
+
+```bash
+
+var.token
+  GitHub PAT
+
+  Enter a value:
+
+github_repository.repo: Refreshing state... [id=devops-terraform]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_branch_default.master will be created
+  + resource "github_branch_default" "master" {
+      + branch     = "main"
+      + id         = (known after apply)
+      + repository = "devops-terraform"
+    }
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + blocks_creations                = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + pattern                         = "main"
+      + repository_id                   = "devops-terraform"
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + required_approving_review_count = 1
+        }
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_branch_default.master: Creating...
+github_branch_default.master: Creation complete after 1s [id=devops-terraform]
+github_branch_protection.default: Creating...
+github_branch_protection.default: Creation complete after 5s [id=BPR_kwDON0PfZM4DiTQA]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+
+
+```
