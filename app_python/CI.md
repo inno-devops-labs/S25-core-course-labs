@@ -8,7 +8,6 @@ Our CI workflow consists of three main jobs:
 
 - Runs unit tests and linting
 - Uses Python 3.8 with dependency caching
-- Generates coverage reports
 
 ### 2. Docker job
 
