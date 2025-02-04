@@ -24,7 +24,6 @@ To pull the image from docker hub use: `docker pull mishablin/devops-labs`
 
 To run the container use: `docker run -p 5000:5000 mishablin/devops-labs`
 
-
 ## Unit tests
 
-To run unit tests run: `pytest` 
+To run unit tests run: `pytest`

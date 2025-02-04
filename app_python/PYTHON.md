@@ -20,7 +20,8 @@ It is suitable for such a simple application.
 The application uses unit tests to check if the home page is available and the correct moscow time is shown.
 
 The following practices were used:
+
 1. **Separation of concerns**. Each unit test tests a different part of the program.
 2. **Clear assertions**. Each assertion is precise and checks only one part of the logic at a time.
 3. **Context freezeing**. The test freezes the flask context time to get consistent results.
-4. **Fixtures**. Pytest fixtures are used to separate the _arrangement_ stage and the _run_ stage. 
+4. **Fixtures**. Pytest fixtures are used to separate the _arrangement_ stage and the _run_ stage.
