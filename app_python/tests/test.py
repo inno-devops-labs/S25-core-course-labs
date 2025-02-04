@@ -2,7 +2,7 @@ import unittest
 import pytz
 import time
 
-from app import app, get_current_time, TIMEZONE, set_new_timezone
+from app_python.app import app, get_current_time, TIMEZONE, set_new_timezone
 from datetime import datetime
 
 
