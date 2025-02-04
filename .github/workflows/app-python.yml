@@ -16,6 +16,7 @@ jobs:
         step: ["lint", "test"]
     steps:
       - uses: actions/checkout@v4
+
       - name: Python 3.11 Setup
         uses: actions/setup-python@v3
         with:
@@ -61,8 +62,18 @@ jobs:
   security:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js and npm
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/python-3.8@master
+        run: snyk test --file=requirements.txt
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        working-directory: ./app_python
