@@ -53,7 +53,7 @@ jobs:
 
       - name: Build and push
         uses: docker/build-push-action@v6
-        working-directory: app_python
         with:
+          context: app_python
           push: true
           tags: angelika2707/lab2:latest
