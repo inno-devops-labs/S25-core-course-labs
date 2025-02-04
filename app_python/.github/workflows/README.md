@@ -1,2 +1,0 @@
-- **Steps**: Install dependencies, lint, test, build/push Docker image.
-- **Status**: ![CI](https://github.com/<Durmazz1>/<https://github.com/Durmazz1/S25-core-course-labs/tree/lab3-python>/actions/workflows/ci.yml/badge.svg)
