@@ -10,7 +10,9 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-
+    defaults:
+          run:
+            working-directory: app_python
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -24,13 +26,11 @@ jobs:
 
     - name: Install dependencies
       run: pip install -r requirements.txt
-      working-directory: app_python
 
     - name: Run linter (Flake8) & Tests (pytest)
       run: |
         flake8 .
         pytest
-      working-directory: app_python
 
   security:
     runs-on: ubuntu-latest
