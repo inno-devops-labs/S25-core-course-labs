@@ -18,7 +18,7 @@ defaults:
 jobs:
 
   lint:
-    name: Run formatting check with ESLint
+    name: Run formatting check with ESLint and Prettier
 
     runs-on: ubuntu-22.04
     steps:
