@@ -48,7 +48,7 @@ jobs:
         run: npm install -g snyk
 
       - name: Run Snyk Vulnerability Scan
-        uses: snyk/actions/python@master
+        uses: snyk/actions/setup@master
       - run: snyk test app_python
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
