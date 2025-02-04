@@ -24,7 +24,7 @@ Our CI workflow consists of three main jobs:
 
 1. **Build cache optimization**
    - **Python dependencies cache**
-     - Uses GitHub Actions' built-in pip caching
+     - Uses GitHub Actions built-in pip caching
      - Speeds up dependency installation
      - Automatically invalidated when requirements.txt changes
 
