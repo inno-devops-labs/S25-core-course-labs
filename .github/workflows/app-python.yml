@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - app_python/**
+  workflow_dispatch:
 
 permissions:
   contents: read
