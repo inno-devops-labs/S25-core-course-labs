@@ -51,7 +51,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --severity-threshold=high
+          args: --skip-unresolved app_go/
 
   docker:
     name: Docker Build&Push
