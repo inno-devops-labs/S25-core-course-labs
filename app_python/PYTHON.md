@@ -2,7 +2,7 @@
 
 This document contains some frequently asked questions and our answers. Use it to get justification of why the application is written as it is.
 
-## Why you are not using Django, FastAPI, *insert framework name* instead of old slow Flask?
+## Why you are not using Django, FastAPI, _insert framework name_ instead of old slow Flask?
 
 We are aware that there are some pretty nice frameworks for python on the market, that could suite our needs. However, our team is small (1 person basically) and we want to keep our code neat and tidy. Also, we want to have a simple (yet nice) frontend for our application and it is not that could be accomplished neatly with FastAPI.
 
@@ -23,3 +23,20 @@ Alternatives Considered:
 
 Flask provides the perfect balance between simplicity and functionality for this time-display application. Its minimalistic approach aligns with our requirements while maintaining flexibility for potential future enhancements. The choice ensures efficient development, easy maintenance, and optimal resource usage.
 
+## Why Unit Tests done this way?
+
+The tests are organized into a separate tests/ directory, and we use Python’s built-in unittest framework. Why bother complex testing for such simple app?
+
+The key tests include:
+
+1. Valid Timezone Test to verify that get_moscow_time returns the correctly formatted date and time when provided with a valid timezone.
+2. Invalid Timezone Test. Ensure that an invalid timezone configuration raises a pytz.exceptions.UnknownTimeZoneError.
+3. Successful Render Test to confirm that the main endpoint (/) renders the index template correctly with a 200 status code when get_moscow_time succeeds.
+
+### Best Practices Applied
+
+1. Separation of Test and Production Code
+2. Isolation of Dependencies
+3. Descriptive Naming Conventions
+4. Use of Context Managers and Clean-Up
+5. Focused Unit Testing

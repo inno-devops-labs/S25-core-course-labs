@@ -59,3 +59,10 @@ To run the container, use the following command (PORT environment variable can b
 docker run -p 8080:8080 moscow-time-app:latest
 ```
 
+### Running the Tests
+
+The tests are in the tests/ directory, you can run them using:
+
+```bash
+python -m unittest discover
+```
