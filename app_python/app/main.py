@@ -4,6 +4,7 @@ import pytz
 
 app = FastAPI()
 
+
 @app.get("/")
 def get_moscow_time():
     timezone = pytz.timezone("Europe/Moscow")
