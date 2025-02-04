@@ -6,11 +6,25 @@ terraform {
     }
   }
 }
+variable "yc_token" {
+  description = "Yandex Cloud IAM Token"
+  type        = string
+  sensitive   = true
+}
 
+variable "cloud_id" {
+  description = "Yandex Cloud Cloud ID"
+  type        = string
+}
+
+variable "folder_id" {
+  description = "Yandex Cloud Folder ID"
+  type        = string
+}
 provider "yandex" {
-  token = "y0__xC6s-3PBBjB3RMghcHQlxLmGLprAkyFoA68OFblvfKh4fG5iQ"
-  cloud_id  = "b1ghbtq5gj9uf3o742m3"
-  folder_id = "b1guu2aobu6m1g2af9ou"
+  token     = var.yc_token
+  cloud_id  = var.cloud_id
+  folder_id = var.folder_id
 }
 
 variable "instance_name" {
