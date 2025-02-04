@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from datetime import datetime
 from pytz import timezone
 
+
 router = APIRouter()
 
 @router.get("/")
