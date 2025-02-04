@@ -51,7 +51,7 @@ jobs:
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        args: --severity-threshold=high
+        args: app_python/requirements.txt --severity-threshold=high
 
   docker:
     needs: [build-and-test, security-scan]
