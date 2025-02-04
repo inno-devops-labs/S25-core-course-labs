@@ -1,5 +1,6 @@
 # Moscow Time Display 🕰️
 
+![CI Status](https://github.com/ArturLukianov/S25-core-course-labs/actions/workflows/app_python.yaml/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 ![Flask Version](https://img.shields.io/badge/flask-3.1.0-lightgrey)
 
