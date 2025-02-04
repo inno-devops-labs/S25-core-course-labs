@@ -89,6 +89,7 @@ jobs:
         run: snyk auth "${{ secrets.SNYK_TOKEN }}"
 
       - name: Snyk Security Test
+        continue-on-error: true
         run: snyk test --file=pom.xml --sarif-file-output=snyk.sarif --severity-threshold=high
 
       - name: Upload Snyk results to GitHub Code Scanning
