@@ -1,0 +1,33 @@
+name: Moscow Time Web Application CI
+
+on:
+  push:
+    branches:
+      - main
+      - lab3
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.10
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Run linter (Flake8)
+      run: flake8  
+
+    - name: Run tests with pytest
+      run: pytest
+      
