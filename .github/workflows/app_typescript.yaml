@@ -1,0 +1,38 @@
+name: Python app workflow
+
+on:
+  push:
+#    paths:
+#      - 'app_typescript/**'
+#      - '.github/workflows/app_typescript.yaml'
+
+  pull_request:
+#    paths:
+#      - 'app_typescript/**'
+#      - '.github/workflows/app_typescript.yaml'
+
+defaults:
+  run:
+    working-directory: app_typescript
+
+jobs:
+
+  lint:
+    name: Run formatting check with ESLint
+
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Pylint
+        run: eslint .
