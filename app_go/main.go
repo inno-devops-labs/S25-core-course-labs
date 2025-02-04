@@ -12,16 +12,19 @@ import (
 
 var secretNumber int
 
+var rng = rand.New(rand.NewSource(time.Now().UnixNano()))
+
 func main() {
 	r := setupRouter()
-	r.Run(":8080")
+	if err := r.Run(":8080"); err != nil {
+		panic(err)
+	}
 }
 
 func setupRouter() *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 
-	rand.Seed(time.Now().UnixNano())
 	resetSecretNumber()
 
 	r.SetHTMLTemplate(template.Must(template.New("index").Parse(`
@@ -61,5 +64,5 @@ func setupRouter() *gin.Engine {
 }
 
 func resetSecretNumber() {
-	secretNumber = rand.Intn(100) + 1
+	secretNumber = rng.Intn(100) + 1
 }
