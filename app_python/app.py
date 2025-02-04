@@ -23,6 +23,9 @@ def get_current_time(str_timezone):
         app.logger.error(f"Unknown time zone: {str_timezone}")
         return None
 
+def set_new_timezone(new_tz):
+    global TIMEZONE
+    TIMEZONE = new_tz
 
 # rendering the home (main) page
 @app.route('/')
