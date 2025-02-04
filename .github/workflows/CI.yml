@@ -46,7 +46,7 @@ jobs:
           cache: 'pip'
 
       - name: Install dependencies
-        run: pip install -r app_python/requirements.txt
+        run: pip install -r requirements.txt
         working-directory: app_python
 
       - name: Run Snyk to check for vulnerabilities
