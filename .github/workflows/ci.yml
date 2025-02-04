@@ -39,7 +39,7 @@ jobs:
         cd app_python
         export PYTHONPATH=$(pwd)
         pytest
-  docker-build-push:
+  docker-login-build-push:
     runs-on: ubuntu-latest
     environment: default
     steps:
