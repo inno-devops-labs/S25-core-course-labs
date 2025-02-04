@@ -35,3 +35,40 @@ jobs:
 
       - name: Run ESLint
         run: npm run lint
+
+  test:
+    name: Run tests with Vitest
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Test with Vitest
+        run: npm run test
+
+  snyk:
+    name: Run Skyk security checks
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: snyk/actions/setup@master
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Snyk monitor
+        run: snyk test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
