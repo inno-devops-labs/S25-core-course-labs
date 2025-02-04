@@ -2,9 +2,9 @@ name: Python app workflow
 
 on:
   push:
-#    paths:
-#      - 'app_typescript/**'
-#      - '.github/workflows/app_typescript.yaml'
+  #    paths:
+  #      - 'app_typescript/**'
+  #      - '.github/workflows/app_typescript.yaml'
 
   pull_request:
 #    paths:
@@ -25,14 +25,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Set Up Node.js
+        uses: actions/setup-node@v4
         with:
-          python-version: '3.11'
-          cache: 'pip'
+          node-version: 22
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run Pylint
+      - name: Run ESLint
         run: eslint .
