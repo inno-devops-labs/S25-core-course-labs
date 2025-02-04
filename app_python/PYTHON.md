@@ -28,3 +28,43 @@ It is appropriate for this application because it is easy and fast to develop wi
 
 ![First Opening](img/app_python_hand_test_1.png)
 ![Second Opening](img/app_python_hand_test_2.png)
+
+## Unit Testing
+
+### Technologies
+
+For the unit tests, I used the following technologies:
+
+- [Pytest](https://docs.pytest.org) - testing framework.
+- [Httpx](https://www.python-httpx.org) - HTTP client for Python.
+- [FastAPI TestClient](https://fastapi.tiango.com) - test client for FastAPI applications.
+
+### Description
+
+#### Unit test `test_get_current_time()`
+
+This test verifies that the `/api/time` endpoint:
+
+- Returns a `200` status code.
+- Has the correct `JSON` content type.
+- Contains a `time` field in the response.
+- Ensures the `time` field is a valid string.
+- Confirms the time format is correct using `datetime.strptime()`.
+- Compares the returned time with the actual time in the specified timezone.
+- Ensures the time difference between the server and response is within 1 second.
+
+#### Unit test `test_get_current_time_html()`
+
+This test verifies that the root (`/`) endpoint:
+
+- Returns a `200` status code.
+- Has the correct `HTML` content type.
+
+### Best Practices
+
+- __Constants for readability__ – defined `SECONDS_IN_HOUR`, `SECONDS_IN_MINUTE`, `MAX_DIFF`.
+- __Clear assertions with messages__ – helps debugging.
+- __Error handling for time parsing__ – catches incorrect formats.
+- __Reusable function__ – `get_seconds(t: time) -> int` improves clarity.
+- __Strict time validation__ – ensures minimal time difference (<= 1 sec).
+- __Content-Type checks__ – confirms correct response format.
