@@ -180,7 +180,7 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
         with:
-          context: ./app_scala/time_application_project
+          context: ./app_scala
           file: ./app_scala/Dockerfile
           push: true
           tags: ${{ env.DOCKERHUB_USERNAME }}/scala-msk-time-app:latest
@@ -189,7 +189,7 @@ jobs:
       - name: Build and Push Docker Distroless Image
         uses: docker/build-push-action@v3
         with:
-          context: ./app_scala/time_application_project
+          context: ./app_scala
           file: ./app_scala/distroless.Dockerfile
           push: true
           tags: ${{ env.DOCKERHUB_USERNAME }}/scala-msk-time-app-distroless:latest
