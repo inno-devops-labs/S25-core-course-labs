@@ -5,7 +5,7 @@ FROM python:3.10-alpine
 WORKDIR /app
 
 # Copy and run the requirements file into the container
-COPY requirements.txt .
+COPY app_python/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
