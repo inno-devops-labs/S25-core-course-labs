@@ -54,6 +54,29 @@ docker pull nickolaus899/py-distroless:latest
 
 #### Working directory: `/app`
 
-### Verification and testing
-Manuaaly tested the container and pulling for the DockerHub.
+### Verification and manual testing
+Manualy tested the container and pulling for the DockerHub.
 
+## Unit tests
+Firstly, you will need `flask-testing`
+```
+pip install flask-testing
+```
+
+Then, you can run tests with a command (in the folder `app_python`)
+```
+python3 -m unittest discover tests
+```
+
+
+# CI/CD
+GitHub Actions were added to the project. I use `ci.yml` for automated
+actions. 
+
+### Workflow:
+1. **Dependencies:**: install from `requirements.txt`
+2. **Linter:**: check code quality using `flake8`
+3. **Tests:**: run unit tests with `pytest`
+4. **Docker:**: build and push a Docker image to DockerHub
+
+I set secret variables related to DockerHub account to the Git repo.
