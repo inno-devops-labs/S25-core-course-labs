@@ -79,7 +79,5 @@ actions.
 3. **Tests:**: run unit tests with `pytest`
 4. **Docker:**: build and push a Docker image to DockerHub
 
-I set secret variables related to DockerHub account to the Git repo.
-
 ### Workflow Budge
 [![Python CI with Docker](https://github.com/Nickolaus-899/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)](https://github.com/Nickolaus-899/S25-core-course-labs/actions/workflows/ci.yml)
