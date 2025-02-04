@@ -3,3 +3,4 @@
 *.pyc
 __pycache__
 .gitignore
+.pytest_cache
