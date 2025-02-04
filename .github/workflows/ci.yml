@@ -61,7 +61,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         continue-on-error: true
         with:
-          args: test --all-projects --detection-depth=3 --file=app_go/go.mod
+          args: test --detection-depth=3 --file=app_go/go.mod
 
   docker:
     name: Build and Push Docker Image
