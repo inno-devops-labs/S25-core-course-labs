@@ -2,13 +2,14 @@ import unittest
 import pytz
 import time
 
-from app import app, get_current_time, TIMEZONE, CITY, set_new_timezone
+from app import app, get_current_time, TIMEZONE, set_new_timezone
 from datetime import datetime
 
 
 STATUS_OK = 200
 STATUS_FAILED = 400
 INVALID_TIMEZONE = "Unexists/notcity"
+
 
 class Testing(unittest.TestCase):
     @classmethod
@@ -60,9 +61,6 @@ class Testing(unittest.TestCase):
         self.assertIn('timezone', response.text)
 
         set_new_timezone(TIMEZONE)
-
-
-
 
 
 if __name__ == '__main__':
