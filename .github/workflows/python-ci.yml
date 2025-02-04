@@ -44,6 +44,9 @@ jobs:
           pip install flake8
           flake8 app_python
 
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
       - name: Run Snyk Vulnerability Scan
         uses: snyk/actions/python@master
       - run: snyk test app_python
