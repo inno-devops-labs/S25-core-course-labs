@@ -70,7 +70,7 @@ jobs:
           context: app_rust
           file: app_rust/Dockerfile
           push: true
-          tags: app_rust:latest
+          tags: 2imt/app_rust:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
 
