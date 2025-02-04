@@ -75,7 +75,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: install
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
       - name: Snyk is applied
         uses: snyk/actions/python-3.10@master
         with:
