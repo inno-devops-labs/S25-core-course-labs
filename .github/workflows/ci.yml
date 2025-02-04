@@ -26,17 +26,17 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r app_python/requirements.txt
 
       - name: Run linter (flake8)
         run: |
           pip install flake8
-          flake8 --max-line-length=88 --ignore=E203,W503 app.py tests/
+          flake8 --max-line-length=88 --ignore=E203,W503 app_python/app.py tests/
 
       - name: Run unit tests
         run: |
           pip install pytest
-          pytest tests/
+          pytest app_python/tests/
 
   docker:
     needs: build-test
@@ -54,7 +54,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/python-msk-time:latest .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/python-msk-time:latest app_python
 
       - name: Push Docker image to DockerHub
         run: |
