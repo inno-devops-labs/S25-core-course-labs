@@ -105,8 +105,8 @@ docker pull saleemasekrea/distroless_python_app:latest
 ```bash
 docker run -p 8001:8001 saleemasekrea/distroless_python_app 
 ```
-The application will be available at [localhost:8001](http://localhost:8001/)
 
+The application will be available at [localhost:8001](http://localhost:8001/)
 
 ## Development
 
@@ -129,9 +129,10 @@ coverage report
 
 ### CI Workflow
 
-A CI workflow is maintained in the `.github/workflows/python_app.yaml` file. This workflow lints and tests the application, and builds and pushes docker image. Workflow is triggered only if there is a push .
+A CI workflow is maintained in the `.github/workflows/python_app.yaml` file. This workflow lints and tests the application,checks code vulnerability using SNYK ,and builds and pushes docker image. Workflow is triggered only if the there is a change in the app_python directory or the workflow file itself.
 
-The CI workflow contains 2 jobs. Each job has a specific set of tasks to perform:
+The CI workflow contains 3 jobs. Each job has a specific set of tasks to perform:
 
 - Build: This job lints and tests the application
-- Docker: This job builds and pushes the docker image to the Docker Hub. The job is carried out only if the build jobs are successful.
+- Security: This job checks code vulnerability using SNYK
+- Docker: This job builds and pushes the docker image to the Docker Hub. The job is carried out only if the previous jobs are successful.
