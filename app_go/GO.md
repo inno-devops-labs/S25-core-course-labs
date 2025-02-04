@@ -22,4 +22,22 @@ This application is a simple "Guess the Number" game where:
    - The game resets automatically when the user guesses correctly.
 
 ## Testing
-This application was manually tested by interacting with the web interface to ensure proper functionality and feedback.
+Unit tests were written to ensure the correctness and reliability of the application using the `httptest` package for simulating HTTP requests and `testify/assert` for structured assertions. The following key scenarios were tested:
+
+1. **Homepage Loading**:
+   - Ensures the main page loads successfully with a valid HTTP response and contains the expected HTML structure.
+
+2. **Invalid Input Handling**:
+   - Tests form submission with a non-numeric guess to verify the application properly handles errors and returns an appropriate message.
+
+3. **Guess Evaluation**:
+   - Tests various numeric inputs to verify whether the server correctly responds with "Too Low", "Too High", or "Correct" feedback.
+
+4. **Game Reset Mechanism**:
+   - Ensures the game resets after a correct guess by verifying that the secret number changes.
+
+These tests follow best practices by:
+- Using known values for deterministic testing.
+- Checking both success and failure cases.
+- Ensuring proper error handling and response codes.
+- Keeping tests isolated and independent.
