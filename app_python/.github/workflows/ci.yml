@@ -1,5 +1,15 @@
 name: CI Workflow Python App
 
+
+on:
+  push:
+    branches:
+      - main
+      - Lab3
+  pull_request:
+    branches:
+      - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
