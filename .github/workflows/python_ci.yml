@@ -46,11 +46,23 @@ jobs:
     - name: UnitTests
       run: |
         python -m unittest unit_test/app_test.py -v
+        
+  security:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - uses: actions/checkout@v3
 
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/python@master
+      with:
+        args: --skip-unresolved app_python/
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   docker: 
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, security]
     defaults:
       run:
         working-directory: app_python
@@ -78,20 +90,3 @@ jobs:
         cache-to: type=gha,scope=primary
 
   security:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: app_python
-
-    steps:
-    - uses: actions/checkout@master
-    - name: Debug SNYK_TOKEN
-      run: echo "Token is set" || echo "Token is missing"
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-    - name: Snyk
-      uses: snyk/actions/python@master
-      with:
-        args: test --file=requirements.txt --package-manager=pip
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
