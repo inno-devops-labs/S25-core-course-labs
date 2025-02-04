@@ -71,6 +71,24 @@ jobs:
         run: |
           python -m unittest app_python/tests/test.py
 
+  snyk:
+    runs-on: ubuntu-latest
+    needs: install
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Snyk CLI
+        run: |
+          npm install -g snyk
+
+      - name: Authentication with Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      - name: Test for vulnerabilities
+        run: snyk test
+
   docker:
     needs: install
     runs-on: ubuntu-latest

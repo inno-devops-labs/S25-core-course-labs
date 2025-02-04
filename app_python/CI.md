@@ -1,11 +1,9 @@
 # CI/CD
 
-
 ### Best practices
-* **Caching**: used to speed up building (installation) part
+* **Caching**: used to speed up building and installation parts
+(applied for the `install` and `docker` stages)
 * **Parallel computations**: `lint`, `test`, `docker` stages
 are performed in parallel after `install` stage was completed
-
-
-#### Cache
-Using this command, 
+* **Security**: I set secret variables related to 
+DockerHub account to the Git repo.
