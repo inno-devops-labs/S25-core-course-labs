@@ -45,7 +45,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-sbt-
 
-      # Step 4: Install dependencies using requirements.sh
+      # Step 4: Install dependencies using
       - name: Install Dependencies
         run: |
           chmod +x ./app_scala/requirements.sh
@@ -56,16 +56,16 @@ jobs:
         working-directory: ./app_scala/time_application_project
         run: sbt compile
 
-      # Step 6: Run Unit Tests
-      - name: Run Unit Tests
-        working-directory: ./app_scala/time_application_project
-        run: sbt test
-
-      # Step 7: Run Linter (e.g., Scalafmt)
+      # Step 6: Run Linter (e.g., Scalafmt)
       - name: Lint with Scalafmt
         working-directory: ./app_scala/time_application_project
         run: |
           sbt scalafmtCheckAll
+
+      # Step 7: Run Unit Tests
+      - name: Run Unit Tests
+        working-directory: ./app_scala/time_application_project
+        run: sbt test
 
       # Step 8: Install Snyk CLI
       - name: Install Snyk CLI

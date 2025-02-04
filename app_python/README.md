@@ -129,7 +129,7 @@ This application also is containerized using the Docker as an Distroless image (
 
 ### Unit Tests
 
-After steps 1-3 of `Installation` section, run the following commant to run tests localy:
+After steps 1-3 of `Installation` section, run the following command to run tests localy:
 
 ```bash
 python3 -m unittest discover -s tests

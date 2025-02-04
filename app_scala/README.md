@@ -48,7 +48,7 @@ All of it can be installed by requirements.sh bash file (included into the Insta
 
    OR (just another way):
 
-   ```bashV
+   ```bash
    cd time_application_project
    sbt reload
    sbt update
@@ -134,3 +134,38 @@ This application also is containerized using the Docker as an Distroless image (
 4. Go to <http://0.0.0.0:9090/> and see the current Moscow time.
 
 -----
+
+### Unit Tests
+
+After steps 1-2 of `Installation` section, run the following commands to run tests localy:
+
+```bash
+cd time_application_project
+sbt clean
+sbt compile
+sbt test
+```
+
+-----
+
+### CI Workflow
+
+[![CI Status](https://github.com/BugaevGleb/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)](https://github.com/BugaevGleb/S25-core-course-labs/actions)
+
+For this project the CI is configured using GitHub actions. CI Workflow consists of the following steps:
+
+- Checkout the repository
+- Set up Java and Scala environment
+- Cache dependencies (sbt)
+- Install dependencies
+- Compile and Build the Project
+- Run Linter
+- Run Unit Tests
+- Install Snyk CLI
+- Snyk Vulnerability Check
+- Log in to Docker Hub
+- Build and Push Docker Image
+- Build and Push Docker Distroless Image
+
+-----
+
