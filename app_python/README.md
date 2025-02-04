@@ -1,5 +1,7 @@
 # Moscow Time Web Application
 
+![CI Pipeline](https://github.com/tolmachdr/S25-core-course-labs/actions/workflows/python_app_ci.yml/badge.svg?branch=lab3)
+
 This is a Python web application built with FastAPI that displays the current time in Moscow.
 
 ## Application setup

@@ -1,5 +1,8 @@
 # Moscow Time Web Application
 
+![CI Pipeline](https://github.com/tolmachdr/S25-core-course-labs/actions/workflows/python_go_ci.yml/badge.svg?branch=lab3)
+
+
 This is a Go web application that displays the current time in Moscow.
 
 ## Application setup
