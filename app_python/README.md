@@ -12,7 +12,11 @@ This is a simple web application that is built using Python and FastAPI to show 
 
 ## 🔄 CI/CD
 
-TODO
+This project uses GitHub Actions for CI/CD to automate testing, security scanning, and Docker image building. The workflow is triggered on pull requests to `master` branch when changes occur in the `app_python/` directory.
+
+You can view workflow runs [here](https://github.com/MagicWinnie/S25-core-course-labs/actions/workflows/app_python.yml).
+
+---
 
 ## 💻 Local Installation
 
