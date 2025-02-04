@@ -1,3 +1,5 @@
-app_python/__pycache__
+app_python/__pycache__/
 app_go/go.mod
 app_go/go.sum
+app_python/.pytest_cahce/
+app_python/tests/__pycache__/

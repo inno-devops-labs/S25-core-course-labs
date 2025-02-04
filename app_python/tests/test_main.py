@@ -13,18 +13,20 @@ def test_get_moscow_time():
     assert "<title>Moscow time</title>" in response.text
     assert "<p>Time in Moscow</p>" in response.text
 
+
 def test_moscow_time_format():
     """Test if the returned time follows HH:MM:SS format."""
     response = client.get("/")
     assert response.status_code == 200
 
     matches = re.findall(r"<p>(\d{2}:\d{2}:\d{2})</p>", response.text)
-    
+
     assert matches, "Could not find a valid time format in the response"
-    returned_time = matches[0]  
+    returned_time = matches[0]
 
     assert len(returned_time) == 8, "Returned time format is incorrect"
     assert returned_time.count(":") == 2, "Time should contain exactly two colons"
+
 
 def test_unsupported_methods():
     """Test that unsupported HTTP methods return 405 Method Not Allowed."""
@@ -47,6 +49,7 @@ def test_internal_server_error(monkeypatch):
     response = client.get("/")
     assert response.status_code == 500
     assert "<p>Error</p>" in response.text
+
 
 if __name__ == "__main__":
     pytest.main()
