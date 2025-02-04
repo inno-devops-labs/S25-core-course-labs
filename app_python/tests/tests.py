@@ -57,4 +57,3 @@ def test_time_updates(client):
     time2 = response2.data.decode("utf-8").strip().split(": ", 1)[-1]
 
     assert time1 != time2, f"Time did not update: {time1} == {time2}"
-
