@@ -54,5 +54,5 @@ jobs:
 
     - name: Build and Push Docker Image
       run: |
-        docker build -t azazaki/app_python:latest .
+        docker build -t azazaki/app_python:latest ./app_python
         docker push azazaki/app_python:latest
