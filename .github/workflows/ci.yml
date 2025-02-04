@@ -157,10 +157,9 @@ jobs:
 
       # Step 8: Snyk Vulnerability Check
       - name: Run Snyk Vulnerability Scan
-        uses: snyk/actions/sbt@master
-        with:
-          command: test
-          args:  --file=app_scala/requirements.sh --severity-threshold=high --skip-unresolved
+        run: |
+          cd ./app_scala/time_application_project
+          snyk test --severity-threshold=high --skip-unresolved
         env:
           SNYK_TOKEN: ${{ env.SNYK_TOKEN }}
 
