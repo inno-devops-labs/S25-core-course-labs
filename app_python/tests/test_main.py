@@ -9,7 +9,7 @@ class TestCurrentTime(unittest.TestCase):
         moscow_time = datetime.now(pytz.timezone('Europe/Moscow'))
         result = current_time()  # Simulate calling the route
         expected = f"Current time in Moscow: \
-            {moscow_time.strftime('%Y-%m-%d %H:%M:%S')}"
+        {moscow_time.strftime('%Y-%m-%d %H:%M:%S')}"
         self.assertEqual(result, expected)
 
 
