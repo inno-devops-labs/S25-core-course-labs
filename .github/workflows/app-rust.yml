@@ -53,16 +53,26 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build Docker Image
-        working-directory: ./app_rust
-        run: |
-          docker build --build-arg CACHEBUST=$(date +%s) -t app_rust .
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
 
-      - name: Push Docker Image
-        working-directory: ./app_rust
-        run: |
-          docker tag app_rust:latest ${{ secrets.DOCKER_USERNAME }}/app_rust:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/app_rust:latest
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and Push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: app_rust
+          file: app_rust/Dockerfile
+          push: true
+          tags: app_rust:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
 
   security:
     runs-on: ubuntu-latest
