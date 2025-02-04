@@ -67,3 +67,8 @@ docker pull angelika2707/lab2
 ```bash
 docker run -p 5000:5000 angelika2707/lab2
 ```
+
+# Unit tests
+1. **test_index_route**: Test verifies that the `/` route returns a 200 status and contains the text "Current Time in Moscow".
+
+2. **test_moscow_time_correctness**: Test verifies the Moscow time rendered in the template matches the expected time.
