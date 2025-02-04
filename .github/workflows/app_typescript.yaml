@@ -2,14 +2,14 @@ name: Typescript app workflow
 
 on:
   push:
-  #    paths:
-  #      - 'app_typescript/**'
-  #      - '.github/workflows/app_typescript.yaml'
+      paths:
+        - 'app_typescript/**'
+        - '.github/workflows/app_typescript.yaml'
 
   pull_request:
-#    paths:
-#      - 'app_typescript/**'
-#      - '.github/workflows/app_typescript.yaml'
+    paths:
+      - 'app_typescript/**'
+      - '.github/workflows/app_typescript.yaml'
 
 defaults:
   run:
