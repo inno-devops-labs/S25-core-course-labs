@@ -28,7 +28,7 @@ async function ComicFetch() {
         date.textContent = ComicDate.toLocaleDateString();
 
     } catch (error) {
-        if (error instanceof FetchIdError || error instanceof FetchComicError) {
+        if (error instanceof FetchComicError) {
             console.error(error.message);
         } else {
             console.error('An unexpected error occurred:', error);
@@ -46,3 +46,6 @@ if (comic) {
         comic.classList.add('hidden');
     });
 }
+
+// Export functions for testing
+module.exports = { ComicFetch, FetchComicError };
