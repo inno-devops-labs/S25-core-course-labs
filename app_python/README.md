@@ -1,5 +1,7 @@
 # Moscow time API
 
+![CI/CD Pipeline](https://github.com/NikaChek/S25-core-course-labs/actions/workflows/ci.yml/badge.svg?branch=lab3)
+
 ## Project Overview
 
 The web application that provides the current time in Moscow.
@@ -107,21 +109,22 @@ To execute unit tests, run the following command from the app_pyrthon folder:
 This project uses **GitHub Actions** to automate testing, linting, and Docker image deployment.
 
 ### **CI/CD Pipeline Overview**
+
 Whenever code is pushed to the `lab3` branch or a pull request is created, the **GitHub Actions CI/CD pipeline** runs the following steps:
 
-1. **Install Dependencies** → Ensures all required Python packages are installed. 
-2. **Run Linter (`flake8`)** → Checks for code formatting issues. 
-3. **Run Tests (`pytest`)** → Runs unit tests to verify application functionality. 
+1. **Install Dependencies** → Ensures all required Python packages are installed.
+2. **Run Linter (`flake8`)** → Checks for code formatting issues.
+3. **Run Tests (`pytest`)** → Runs unit tests to verify application functionality.
 4. **Build and Push Docker Image** → If tests pass, a Docker image is built and pushed to **Docker Hub**.
 
 ### **How the Workflow Works**
-- **CI/CD Triggers:** 
-  - Runs on **every push** to `lab3`. 
-  - Runs on **pull requests** to `lab3`. 
-- **Test Execution:** 
-  - Runs `pytest` to validate API behavior. 
-- **Linting:** 
-  - Uses `flake8` to check code style. 
-- **Docker Deployment:** 
-  - If all tests pass, the workflow **builds and pushes the Docker image** to Docker Hub.
 
+* **CI/CD Triggers:**
+  * Runs on **every push** to `lab3`.
+  * Runs on **pull requests** to `lab3`.
+* **Test Execution:**
+  * Runs `pytest` to validate API behavior.
+* **Linting:**
+  * Uses `flake8` to check code style.
+* **Docker Deployment:**
+  * If all tests pass, the workflow **builds and pushes the Docker image** to Docker Hub.
