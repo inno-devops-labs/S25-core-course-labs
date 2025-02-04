@@ -29,13 +29,18 @@ jobs:
       - name: Run Tests
         run: pytest tests/ -v
 
+      - name: Install Node.js for Snyk  # Добавьте этот шаг
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
       - name: Snyk Security Scan
-        uses: snyk/actions/python@v3
+        run: snyk test --file=requirements.txt
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test
-          args: --file=requirements.txt
 
   docker-publish:
     runs-on: ubuntu-latest
