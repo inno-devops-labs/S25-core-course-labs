@@ -80,11 +80,11 @@ jobs:
           distribution: 'temurin'
 
       - name: Snyk Security Test
-        uses: snyk/actions/maven-3-jdk-21@master
+        uses: snyk/actions/java@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --skip-unresolved --file=pom.xml --sarif-file-output=app_java/snyk.sarif --severity-threshold=high app_java/
+          args: --skip-unresolved --sarif-file-output=app_java/snyk.sarif --severity-threshold=high app_java/
 
       - name: Upload Snyk results to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
