@@ -5,17 +5,18 @@ on:
     branches: [ "master", "lab3" ]
     paths:
       - 'app_python/**'
+      - '.github/workflows/python_ci.yml'
   pull_request:
     branches: [ "master" ]
     paths:
       - 'app_python/**'
-
+      - '.github/workflows/python_ci.yml'
 jobs:
   test:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./app_python
+        working-directory: app_python
     steps:
       - uses: actions/checkout@v3
 
@@ -67,6 +68,9 @@ jobs:
   security:
     needs: test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app_python
     steps:
       - uses: actions/checkout@v3
 
@@ -76,4 +80,4 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: test
-          args: --file=./app_python/requirements.txt --package-manager=pip --command=python3 
+          args: --skip-unresolved app_python/
