@@ -1,9 +1,19 @@
 name: Python Application
 
 on:
-  push:
+  pull_request:
+    branches:
+      - master
     paths:
-      - 'app_python/'
+      - '.github/workflows/ci.yml'
+      - 'app_python/**'
+  push:
+    branches:
+      - lab3
+      - master
+    paths:
+      - '.github/workflows/ci.yml'
+      - 'app_python/**'
 
 jobs:
   build:
