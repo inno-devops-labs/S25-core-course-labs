@@ -11,10 +11,10 @@ import akka.http.scaladsl.model.ContentTypes
 class MoscowTimeAppTest extends AnyWordSpec with Matchers {
 
   // Helper function to generate Moscow time
-  private def getMoscowTime: String = {
-    ZonedDateTime.now(ZoneId.of("Europe/Moscow"))
+  private def getMoscowTime: String =
+    ZonedDateTime
+      .now(ZoneId.of("Europe/Moscow"))
       .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-  }
 
   "MoscowTimeApp" should {
 
@@ -57,7 +57,7 @@ class MoscowTimeAppTest extends AnyWordSpec with Matchers {
            |    </head>
            |    <body>
            |    <h1>Current Time in Moscow</h1>
-           |    <div id="time" class="time">${moscowTime}</div>
+           |    <div id="time" class="time">$moscowTime</div>
            |    </body>
            |</html>
            |""".stripMargin
@@ -65,7 +65,7 @@ class MoscowTimeAppTest extends AnyWordSpec with Matchers {
       // Check if the HTML contains the expected structure
       htmlContent should include("<title>Current Time in Moscow</title>")
       htmlContent should include("<h1>Current Time in Moscow</h1>")
-      htmlContent should include(s"""<div id="time" class="time">${moscowTime}</div>""")
+      htmlContent should include(s"""<div id="time" class="time">$moscowTime</div>""")
       htmlContent should include("""fetch('/time')""")
     }
 
@@ -104,7 +104,7 @@ class MoscowTimeAppTest extends AnyWordSpec with Matchers {
            |    </head>
            |    <body>
            |    <h1>Current Time in Moscow</h1>
-           |    <div id="time" class="time">${moscowTime}</div>
+           |    <div id="time" class="time">$moscowTime</div>
            |    </body>
            |</html>
            |""".stripMargin
@@ -121,13 +121,14 @@ class MoscowTimeAppTest extends AnyWordSpec with Matchers {
       val generatedMoscowTime = ZonedDateTime.now(ZoneId.of("Europe/Moscow"))
 
       // Parse the generated time into a comparable format
-      val generatedFormattedTime = generatedMoscowTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+      val generatedFormattedTime =
+        generatedMoscowTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
       // Fetch the actual current time in the Europe/Moscow timezone
       val actualMoscowTime = ZonedDateTime.now(ZoneId.of("Europe/Moscow"))
 
       // Allow for a small tolerance (±5 second) due to potential delays
-      val tolerance = java.time.Duration.ofSeconds(5)
+      val tolerance  = java.time.Duration.ofSeconds(5)
       val lowerBound = actualMoscowTime.minus(tolerance)
       val upperBound = actualMoscowTime.plus(tolerance)
 
@@ -137,7 +138,10 @@ class MoscowTimeAppTest extends AnyWordSpec with Matchers {
 
       // Optionally, print both times for debugging purposes
       println(s"Generated Moscow Time: $generatedFormattedTime")
-      println(s"Actual Moscow Time: ${actualMoscowTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))}")
+      println(
+        s"Actual Moscow Time: ${actualMoscowTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))}"
+      )
     }
   }
+
 }

@@ -15,6 +15,7 @@ import scala.concurrent.duration._
 
 // Main object
 object MoscowTimeApp extends App {
+
   implicit val system = ActorSystem("MoscowTimeSystem")
   import system.dispatcher
 
@@ -24,7 +25,8 @@ object MoscowTimeApp extends App {
       get {
 
         // Current time in Moscow
-        val moscowTime = ZonedDateTime.now(ZoneId.of("Europe/Moscow"))
+        val moscowTime = ZonedDateTime
+          .now(ZoneId.of("Europe/Moscow"))
           .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
         // Return an HTML response
@@ -62,7 +64,7 @@ object MoscowTimeApp extends App {
                 </head>
                 <body>
                 <h1>Current Time in Moscow</h1>
-                <div id="time" class="time">${moscowTime}</div>
+                <div id="time" class="time">$moscowTime</div>
                 </body>
             </html>
             """
@@ -73,6 +75,7 @@ object MoscowTimeApp extends App {
 
   // Start the server
   val bindingFuture = Http().newServerAt("0.0.0.0", 9090).bind(route)
+
   bindingFuture.onComplete {
     case Success(binding) =>
       println(s"Server online at http://0.0.0.0:9090/")
@@ -91,4 +94,5 @@ object MoscowTimeApp extends App {
 
   // Block the main thread to keep the server running
   Await.result(system.whenTerminated, Duration.Inf)
+
 }
