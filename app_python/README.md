@@ -54,4 +54,14 @@ pytest test_app.py
 
 ## CI
 
+The project uses GitHub Actions for continuous integration. The workflow includes:
 
+1. Installs required Python libraries
+
+2. `flake8` checks for code style issues
+
+3. `pytest` tests API 
+
+4. `Snyk` detects and reports vulnerabilities
+
+5. Builds and pushes the image to Docker Hub
