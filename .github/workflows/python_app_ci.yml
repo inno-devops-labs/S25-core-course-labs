@@ -1,6 +1,10 @@
 name: Python app CI
 
 on:
+  push:
+    paths:
+      - 'app_python/**'
+      - '.github/workflows/python_app_ci.yml'
   pull_request:
     paths:
     - 'app_python/**'
@@ -38,7 +42,7 @@ jobs:
         run: pytest test_app.py
 
   security:
-    needs: build-test
+    needs: [build-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
