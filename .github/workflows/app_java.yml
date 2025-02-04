@@ -80,7 +80,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Snyk Security Test
-        uses: snyk/actions/maven@master
+        uses: snyk/actions/maven-3-jdk-21@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
