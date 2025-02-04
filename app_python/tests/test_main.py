@@ -35,6 +35,7 @@ def test_invalid_endpoint():
     response = client.get("/invalid")
     assert response.status_code == 404
 
+
 def test_time_updates_on_reload():
     """
     Tests whether the time updates when the page is reloaded.
