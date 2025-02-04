@@ -2,13 +2,11 @@ name: Python CI with Docker
 
 on:
   push:
-    paths:
-      - 'app_python/**'
-      - '.github/workflows/py.yml'
+    branches:
+      - lab*
   pull_request:
-    paths:
-      - 'app_python/**'
-      - '.github/workflows/py.yml'
+    branches:
+      - lab*
 
 jobs:
   install:
