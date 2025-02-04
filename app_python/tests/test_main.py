@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 
 from fastapi.testclient import TestClient
@@ -33,3 +34,25 @@ def test_invalid_endpoint():
     """
     response = client.get("/invalid")
     assert response.status_code == 404
+
+def test_time_updates_on_reload():
+    """
+    Tests whether the time updates when the page is reloaded.
+    """
+    response1 = client.get("/")
+    assert response1.status_code == 200
+    data1 = response1.json()
+    assert "moscow_time" in data1
+    time1 = data1["moscow_time"]
+
+    time.sleep(2)
+
+    response2 = client.get("/")
+    assert response2.status_code == 200
+    data2 = response2.json()
+    assert "moscow_time" in data2
+    time2 = data2["moscow_time"]
+
+    assert time1 != time2, "Time did not update on reload"
+
+    print(f"Test was passed! Time updated from {time1} to {time2}")

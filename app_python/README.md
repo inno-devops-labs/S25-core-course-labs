@@ -77,3 +77,40 @@ This application is containerized using Docker. Below are instructions for build
     ```bash
     docker run -d -p 80:80 your_dockerhub_username/python-app:latest
     ```
+   
+## Unit Tests
+
+The application includes comprehensive unit tests written using the `pytest` framework. These tests ensure the correctness of the application's functionality.
+
+### Key Tests
+
+1. **`test_get_moscow_time`**:
+   - Verifies that the `/` endpoint correctly returns the current time in Moscow.
+   - Ensures the response contains the `"moscow_time"` key.
+   - Validates that the time format matches `YYYY-MM-DD HH:MM:SS`.
+
+2. **`test_invalid_endpoint`**:
+   - Checks the application's behavior when accessing invalid endpoints.
+   - Confirms that a `404 Not Found` status code is returned.
+
+3. **test_time_updates_on_reload**:
+   - Checks time updates after reloading the page.
+
+### How to Run Tests Locally
+
+To execute the unit tests locally, follow these steps:
+
+1. Ensure all dependencies are installed:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+2. Install `pytest` if it's not already installed:
+    ```bash
+    pip install pytest
+    ```
+
+3. Run the tests:
+    ```bash
+    pytest tests/
+    ```
