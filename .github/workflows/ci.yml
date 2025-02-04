@@ -28,16 +28,16 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m venv venv
-          source venv/bin/activate
-          python -m pip install --upgrade pip
-          pip install -r app_python/requirements.txt
+          ./venv/bin/python -m pip install --upgrade pip
+          ./venv/bin/pip install -r app_python/requirements.txt
       - name: Run Linter (flake8)
         run: |
           source venv/bin/activate
           pip install flake8
           flake8 app_python --max-line-length=100
       - name: Run Tests
-        run: pytest app_python/tests/
+        run: |
+          ./venv/bin/python -m pytest app_python/tests/
   docker-build:
     name: Docker Build & Push
     runs-on: ubuntu-latest
