@@ -1,2 +1,8 @@
 lab2.md
 snyk.exe
+config.auto.tfvars
+.terraform
+terraform.tfstate
+terraform.tfstate.*
+deploy.tfplan
+hashicorp.gpg
