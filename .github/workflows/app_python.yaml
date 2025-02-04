@@ -78,7 +78,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-  docker-push:
+  docker-basic-push:
     name: Build Docker image and push it to DockerHub
     needs: [ lint, test, snyk ]
     runs-on: ubuntu-22.04
@@ -102,6 +102,22 @@ jobs:
           tags: "${{ secrets.DOCKERHUB_USERNAME }}/inno_devops_lab2_python_basic:latest"
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/inno_devops_lab2_python_basic:latest
           cache-to: type=inline
+
+
+  docker-bonus-push:
+    name: Build Docker image and push it to DockerHub
+    needs: [ lint, test, snyk ]
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push distroless image
         uses: docker/build-push-action@v6
