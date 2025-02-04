@@ -52,4 +52,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ${{ vars.DOCKER_HUB_USERNAME }}/app_python:latest
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/app_python:latest
