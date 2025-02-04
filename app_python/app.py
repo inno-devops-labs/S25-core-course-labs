@@ -23,9 +23,11 @@ def get_current_time(str_timezone):
         app.logger.error(f"Unknown time zone: {str_timezone}")
         return None
 
+
 def set_new_timezone(new_tz):
     global TIMEZONE
     TIMEZONE = new_tz
+
 
 # rendering the home (main) page
 @app.route('/')
@@ -33,7 +35,7 @@ def home():
     localized_time = get_current_time(TIMEZONE)
     if localized_time is None:
         return "Invalid given timezone", 400
-    
+
     cur_time = localized_time.strftime('%d/%m/%Y %H:%M:%S')
 
     return render_template('home.html', cur_time=cur_time, city=CITY)
