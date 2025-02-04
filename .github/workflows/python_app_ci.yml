@@ -55,6 +55,9 @@ jobs:
 
   docker:
     name: Docker Build&Push
+    defaults:
+      run:
+        working-directory: app_python
     needs: [build-test, security]
     runs-on: ubuntu-latest
 
