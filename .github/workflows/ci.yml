@@ -36,7 +36,7 @@ jobs:
       - name: Run unit tests
         run: |
           pip install pytest
-          python -m unittest discover app_python/tests
+          python -m unittest app_python/tests/test.py
 
   docker:
     needs: build-test
