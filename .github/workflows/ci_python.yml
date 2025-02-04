@@ -1,0 +1,95 @@
+name: CI Pipeline for Python Application
+
+on:
+  push:
+    paths:
+      - 'app_python/**'
+    branches:
+      - '*'
+  pull_request:
+    paths:
+      - 'app_python/**'
+    branches:
+      - '*'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      # Step 3: Cache dependencies
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('app_python/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      # Step 4: Install dependencies
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r app_python/requirements.txt
+
+      # Step 5: Run Linter (e.g., flake8)
+      - name: Lint with flake8
+        run: |
+          pip install flake8
+          flake8 .
+
+      # Step 6: Run Unit Tests
+      - name: Run Unit Tests
+        working-directory: ./app_python
+        run: |
+          python -m unittest discover -s tests
+
+      # Step 7: Snyk Vulnerability Check
+      - name: Run Snyk Vulnerability Scan
+        uses: snyk/actions/python-3.8@master
+        with:
+          command: test
+          args: --file=app_python/requirements.txt --severity-threshold=high --skip-unresolved
+        env:
+          SNYK_TOKEN: ${{ env.SNYK_TOKEN }}
+
+      # Step 8: Log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
+
+      # Step 9: Build and Push Docker Image
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./app_python
+          file: ./app_python/Dockerfile
+          push: true
+          tags: ${{ env.DOCKERHUB_USERNAME }}/python-msk-time-app:latest
+
+      # Step 10: Build and Push Docker Distroless Image
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./app_python
+          file: ./app_python/distroless.Dockerfile
+          push: true
+          tags: ${{ env.DOCKERHUB_USERNAME }}/python-msk-time-app-distroless:latest
