@@ -74,23 +74,17 @@ jobs:
   snyk:
     runs-on: ubuntu-latest
     needs: install
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Install Snyk CLI
-        run: |
-          npm install -g snyk
-
-      - name: Authentication with Snyk
-        run: snyk auth ${{ secrets.SNYK_TOKEN }}
-
-      - name: Test for vulnerabilities
-        run: snyk test
+      - uses: actions/checkout@v4
+      - name: Snyk is applied
+        uses: snyk/actions/python-3.10@master
+        with:
+          args: app_python/
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   docker:
-    needs: install
+    needs: [install, lint, test, snyk]
     runs-on: ubuntu-latest
 
     steps:
