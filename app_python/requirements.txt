@@ -1,0 +1,4 @@
+fastapi
+uvicorn
+pytz
+idna==3.7
