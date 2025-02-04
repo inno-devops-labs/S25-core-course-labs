@@ -1,6 +1,7 @@
-variable "iam_token" {
+variable "sa_key_file" {
   type        = string
-  description = "Specifies IAM token for auth in Yandex Cloud"
+  description = "Path to the service account JSON key file"
+  default     = "~/.yandex-cloud/key.json"
   sensitive   = true
 }
 
@@ -17,14 +18,8 @@ variable "cloud_id" {
 
 variable "folder_id" {
   type        = string
-  description = "Foder ID within the cloud"
+  description = "Folder ID within the cloud"
   sensitive   = true
-}
-
-variable "vm_image_id" {
-  type        = string
-  description = "Base image for virtual machines"
-  default     = "fd83s8u085j3mq231ago" # ubuntu-22-04-lts-v20240129
 }
 
 variable "vm_name" {
