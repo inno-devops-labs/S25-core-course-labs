@@ -1,4 +1,4 @@
-# Python Web App - CI Best Practices
+# Scala Web App - CI Best Practices
 
 -----
 
@@ -6,7 +6,7 @@
 
 ### Workflow and Efficiency
 
-1. **Build Cache**: Dependency caching using `actions/cache@v3` to reduce installation time for Python packages.
+1. **Build Cache**: Dependency caching using `actions/cache@v3` to reduce installation time for Scala packages and sbt.
 2. **Conditional Execution**: Docker image building and pushing are executed only on pushes to avoid unnecessary builds.
 3. **Workflow Status Badge**: Added a workflow status badge to the `README.md` file for quick visibility of CI pipelint status.
 4. **Linting and Testing**: Code linter and unit tests are run on each pipeline to ensure code well-formatting and correctness.
