@@ -28,7 +28,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install flake8 pytest
-        if [ -f backend/requirements.txt]; then pip install -r backend/requirements.txt; fi
+        if [ -f app_python/backend/requirements.txt]; then pip install -r app_python/backend/requirements.txt; fi
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -57,7 +57,7 @@ jobs:
     - name: Build and push database Docker image
       uses: docker/build-push-action@v3
       with:
-        context: ./backend/databse
+        context: ./app_python/backend/databse
         push: true
         tags: jmartynova123/dev-lab3-db:latest
         build-args: |
@@ -66,13 +66,13 @@ jobs:
     - name: Build and push frontend Docker image
       uses: docker/build-push-action@v3
       with:
-        context: ./frontend
+        context: ./app_python/frontend
         push: true
         tags: jmartynova/dev-lab3-front:latest
     - name: Build and push backend Docker image
       uses: docker/build-push-action@v3
       with:
-        context: ./backend
+        context: ./app_python/backend
         push: true
         tags: jmartynova/dev-lab3-back:latest
     - name: Run Docker Compose
