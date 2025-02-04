@@ -2,11 +2,13 @@ name: Python CI with Docker
 
 on:
   push:
-    branches:
-      - lab*
+    paths:
+      - 'app_python/**'
+      - '.github/workflows/py.yml'
   pull_request:
-    branches:
-      - lab*
+    paths:
+      - 'app_python/**'
+      - '.github/workflows/py.yml'
 
 jobs:
   install:
@@ -44,7 +46,7 @@ jobs:
           pip install flake8
           flake8 --max-line-length=88 --ignore=E203,W503 app_python/app.py app_python/tests/
 
-   test:
+  test:
     runs-on: ubuntu-latest
     needs: install
 
