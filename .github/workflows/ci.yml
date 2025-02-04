@@ -80,10 +80,12 @@ jobs:
 
       - name: Build and Push Standard Docker Image
         run: |
+          cd app_go
           docker build --cache-from ${{ secrets.DOCKER_USERNAME }}/gin-mt:latest -t ${{ secrets.DOCKER_USERNAME }}/gin-mt:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/gin-mt:latest
 
       - name: Build and Push Distroless Docker Image
         run: |
+          cd app_go
           docker build --cache-from ${{ secrets.DOCKER_USERNAME }}/gin-mt:distroless -t ${{ secrets.DOCKER_USERNAME }}/gin-mt:distroless -f distroless.Dockerfile .
           docker push ${{ secrets.DOCKER_USERNAME }}/gin-mt:distroless

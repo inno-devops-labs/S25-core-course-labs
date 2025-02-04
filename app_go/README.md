@@ -84,7 +84,7 @@ Unit tests have been implemented to ensure the correctness and reliability of th
    - Ensures the game resets after a correct guess by verifying that the secret number changes.
 
 ### Running Tests
-To execute the tests, use the following command in app_go folder:
+To execute the tests, use the following command:
 ```sh
 go test ./...
 ```
