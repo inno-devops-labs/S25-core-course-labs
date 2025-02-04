@@ -46,10 +46,10 @@ jobs:
 
       - name: Run Snyk Vulnerability Scan
         uses: snyk/actions/python@master
+      - run: snyk test app_python
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: test
+        
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
