@@ -38,7 +38,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          pytest tests/test_app.py
+          PYTHONPATH=$(pwd) pytest tests/
   
   security-checks:
     runs-on: ubuntu-22.04
