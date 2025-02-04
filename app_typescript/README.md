@@ -97,3 +97,9 @@ npm run dev
    ```bash
    docker run -d -p 8080:8080 dmhd6219/inno_devops_lab2_typescript_bonus:latest
    ```
+
+## Unit Tests
+
+```bash
+pytest test.py
+```
