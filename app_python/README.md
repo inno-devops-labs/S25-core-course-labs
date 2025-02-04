@@ -49,3 +49,10 @@ docker run --rm -p 8000:8000 2imt/app_python:1.2
 ```console
 pytest .
 ```
+
+## CI Workflow
+
+- **Dependencies**: Installs the required Python dependencies.
+- **Linting**: Runs `flake8` to check the code style and potential issues.
+- **Testing**: Runs tests using `pytest` to ensure the project is functioning correctly.
+- **Docker**: Builds and pushes a Docker image to Docker Hub.
