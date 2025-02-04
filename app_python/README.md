@@ -37,3 +37,15 @@ docker pull 2imt/app_python:1.2
 ```console
 docker run --rm -p 8000:8000 2imt/app_python:1.2
 ```
+
+## Unit Tests
+
+### Dependencies
+
+`pytest`
+
+### Running Tests
+
+```console
+pytest .
+```
