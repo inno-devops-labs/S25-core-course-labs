@@ -102,5 +102,3 @@ To execute unit tests, run the following command from the app_pyrthon folder:
    pytest tests/
 ```
 
-## CI workflow
-
