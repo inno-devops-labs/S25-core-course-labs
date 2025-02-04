@@ -5,13 +5,14 @@ import pytz
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route("/")
 def home():
-    moscow_time = datetime.now(pytz.timezone('Europe/Moscow')) \ 
-    .strftime('%Y-%m-%d %H:%M:%S')
+    moscow_time = datetime.now(pytz.timezone("Europe/Moscow")).strftime(
+        "%Y-%m-%d %H:%M:%S"
+    )
     return f"Current time in Moscow: {moscow_time}"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
 
