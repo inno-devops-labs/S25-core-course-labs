@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r app_python/requirements.txt
+          pip install -r requirements.txt
           pip install flake8
 
       - name: Run linting
@@ -82,7 +82,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r app_python/requirements.txt
 
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python-3.8@master

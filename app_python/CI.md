@@ -29,7 +29,6 @@ Our CI workflow consists of three main jobs:
      - Automatically invalidated when requirements.txt changes
 
    - **Docker layer cache**
-     - Registry-based caching strategy
      - Stores layers in Docker Hub with buildcache tag
      - Optimizes build time for subsequent runs
      - Preserves layer cache between workflow runs
