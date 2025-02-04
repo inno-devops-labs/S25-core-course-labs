@@ -55,7 +55,7 @@ jobs:
         uses: madrapps/jacoco-report@v1.6.1
         if: ${{ github.event_name != 'workflow_dispatch' }}
         with:
-          paths: ${{ github.workspace }}/target/site/jacoco/jacoco.xml
+          paths: ${{ github.workspace }}/app_java/target/site/jacoco/jacoco.xml
           token: ${{ secrets.GITHUB_TOKEN }}
           min-coverage-overall: 30
           min-coverage-changed-files: 30
