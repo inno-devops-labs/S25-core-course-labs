@@ -40,3 +40,30 @@ JavaScript was chosen for the frontend because it naturally integrates with HTML
 - **Asynchronous Fetching**: The app uses `async/await` to handle the fetching of comic data, ensuring the UI remains responsive.
 - **Error Handling**: Proper error handling is implemented to provide feedback if an issue arises during the comic fetch or any other unexpected errors.
 - **Separation of Concerns**: HTML, CSS, and JavaScript are kept in separate files, making the project more maintainable and scalable.
+
+## Unit Tests
+
+### Overview
+
+Unit tests are essential for ensuring the reliability of the JavaScript application. I have written test cases using Jest and Supertest to validate the behavior of both backend (Express server) and frontend JavaScript functions.
+
+### Tests Implemented
+
+#### 1. **Express Server Tests** (server.test.js)
+
+- **GET /**: Ensures the root endpoint serves `index.html` correctly.
+- **GET /nonexistent**: Verifies that a nonexistent route returns a 404 status.
+- **GET /myapp.js**: Confirms that the JavaScript file is served correctly.
+
+#### 2. **Frontend Logic Tests** (myapp.test.js)
+
+- **DOM Manipulation**: Checks that the `ComicFetch` function correctly updates the DOM elements when fetching comic data.
+- **Error Handling**: Ensures errors are properly logged when fetching fails.
+- **Event Handling**: Validates that clicking the comic button triggers a fetch and updates UI elements.
+
+### Best Practices Applied
+
+- **Mocking API Calls**: I used `jest.fn()` to mock the `fetch` API and simulate different responses.
+- **Isolation of Tests**: Each test runs independently using `beforeEach` and `afterEach` hooks.
+- **DOM Setup and Cleanup**: The test suite sets up a mock DOM and resets it after each test.
+- **Error Handling Verification**: The jest spy on `console.error` to ensure error logs are generated when necessary.

@@ -1,6 +1,6 @@
 # Python Web Application - Current Time in Moscow
 
-![CI Status](https://github.com/Kazan-Strelnikova/S25-core-course-labs/actions/workflows/python-ci.yml/badge.svg)
+[![CI Status](https://github.com/Kazan-Strelnikova/S25-core-course-labs/actions/workflows/python-ci.yml/badge.svg)](https://github.com/Kazan-Strelnikova/S25-core-course-labs/actions)
 
 This is a simple web application built using **Python** and the **Flask** framework to display the current time in **Moscow**, Russia.
 
@@ -130,7 +130,6 @@ This project uses GitHub Actions to automatically build, test, lint, and deploy 
 
 The CI pipeline consists of the following essential steps:
 
-
 1. **Dependencies Installation:**  
    - The workflow sets up the Python environment using Python 3.10.
    - It then installs the required dependencies from the `app_python/requirements.txt` file.
@@ -211,5 +210,4 @@ This CI pipeline automates key processes, ensuring that:
 - Automated tests validate code functionality.
 - The Docker image is built and deployed to Docker Hub for consistent and reliable delivery.
 
-Every commit and pull request that affects the relevant parts of the repository triggers this workflow, ensuring continuous integration and delivery best practices are maintained.
-
+Every commit and pull request that affects the relevant parts of the repository(app_python folder) triggers this workflow, ensuring continuous integration and delivery best practices are maintained.
