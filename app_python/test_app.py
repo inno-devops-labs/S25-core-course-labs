@@ -25,5 +25,5 @@ def test_get():
     current_time = get_time()
 
     time_diff = abs(current_time - response_time).total_seconds()
-    #allow 2 sec difference cause of execution delay
+    # allow 2 sec difference cause of execution delay
     assert time_diff < 2

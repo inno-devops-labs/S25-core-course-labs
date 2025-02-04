@@ -45,5 +45,13 @@ docker pull dtolmach/python-app:latest
 docker run -p 8000:8000 python-app
 ```
 
+## Unit tests
+
+You can test the application using
+```aiignore
+pytest test_app.py
+```
+
+## CI
 
 
