@@ -6,11 +6,8 @@ struct AppState {
     rng: Mutex<StdRng>,
 }
 
-#[get("/")]
-async fn root(state: web::Data<AppState>) -> impl Responder {
-    let mut rng = state.rng.lock().unwrap();
-
-    web::Html::new(format!(
+fn create_html_string(number: u64) -> String {
+    format!(
         "
 <!doctype html>
 <html>
@@ -19,14 +16,20 @@ async fn root(state: web::Data<AppState>) -> impl Responder {
     </head>
     <body>
         <p>Your random unsigned 64-bit integer is:</p>
-        <p>{}</p>
+        <p>{number}</p>
     </body>
     <script>
     </script>
 </html>
-",
-        (*rng).next_u64(),
-    ))
+"
+    )
+}
+
+#[get("/")]
+async fn root(state: web::Data<AppState>) -> impl Responder {
+    let mut rng = state.rng.lock().unwrap();
+
+    web::Html::new(create_html_string(rng.next_u64()))
 }
 
 #[actix_web::main]
@@ -53,5 +56,22 @@ async fn main() {
     if let Err(e) = server.run().await {
         log::error!("Failed to run server: {e}");
         std::process::exit(1);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn create_html_string_inserts_a_number() {
+        let string = create_html_string(20);
+        assert!(string.contains("20"));
+
+        let string = create_html_string(1382838);
+        assert!(string.contains("1382838"));
+
+        let string = create_html_string(1337);
+        assert!(string.contains("1337"));
     }
 }
