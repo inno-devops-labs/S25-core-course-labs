@@ -64,3 +64,18 @@ docker run -p 5000:5000 [image_name]
 **Note:** If the image was pulled from Docker Hub, the name of the image should be: `hayderuni/moscow-time-flask`
 
 After running the the app should be running on `localhost:5000`
+
+## Unit tests
+This section is about unit tests included in the project to to verify its functionality.
+
+### How to run the tests
+Simply run the following command in the app directory
+```bash
+pytest test_main.py
+```
+### Test overview
+- **`test_home`:** This test sends a GET request to the home page (/) of the application and verifies:
+    - The response status code is `200`.
+    - The response contains the correct HTML headings.
+    - The response includes the current time in a correct format.
+
