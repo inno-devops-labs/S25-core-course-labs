@@ -55,8 +55,8 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Move to go directory
-        run: cd app_go
+      - name: Install Snyk CLI
+        run: npm install -g snyk
 
       - name: Run Snyk Security Scan
         run: |
