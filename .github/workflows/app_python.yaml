@@ -18,7 +18,7 @@ defaults:
 jobs:
 
   lint:
-    name: Run Pylint check
+    name: Run formatting check with Pylint
 
     runs-on: ubuntu-22.04
     steps:
@@ -44,7 +44,7 @@ jobs:
           src: "./app_python"
 
   test:
-    name: Run pytest
+    name: Run tests with Pytest
     runs-on: ubuntu-22.04
 
     steps:
@@ -65,7 +65,7 @@ jobs:
 
 
   snyk:
-    name: Run Skyk
+    name: Run Skyk security checks
     runs-on: ubuntu-22.04
     needs: [ lint, test ]
 
@@ -79,6 +79,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   docker-push:
+    name: Build Docker image and push it to DockerHub
     needs: [ lint, test, snyk ]
     runs-on: ubuntu-22.04
 
