@@ -40,5 +40,25 @@ docker pull dtolmach/go-app:latest
 docker run -p 8080:8080 go-app
 ```
 
+## Unit tests
+
+You can test the application using
+```aiignore
+go test -v
+```
+
+## CI
+
+The project uses GitHub Actions for continuous integration. The workflow includes:
+
+1. Installs required Go dependencies
+
+2. `go vet` checks for potential code issues
+
+3. `go test` tests API 
+
+4. `Snyk` detects and reports vulnerabilities
+
+5. Builds and pushes the image to Docker Hub
 
 
