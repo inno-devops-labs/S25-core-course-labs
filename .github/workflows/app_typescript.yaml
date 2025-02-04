@@ -78,7 +78,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   docker-basic-push:
-    name: Build Docker image and push it to DockerHub
+    name: Build basic Docker image and push it to DockerHub
     needs: [ lint, test, snyk ]
     runs-on: ubuntu-22.04
 
@@ -103,7 +103,7 @@ jobs:
           cache-to: type=inline
 
   docker-bonus-push:
-    name: Build Docker image and push it to DockerHub
+    name: Build distroless Docker image and push it to DockerHub
     needs: [ lint, test, snyk ]
     runs-on: ubuntu-22.04
 
