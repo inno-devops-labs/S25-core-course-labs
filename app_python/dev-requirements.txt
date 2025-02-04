@@ -1,2 +1,3 @@
 fastapi[standard]
 jinja2
+pytest

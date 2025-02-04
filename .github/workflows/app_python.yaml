@@ -34,11 +34,6 @@ jobs:
       - name: Install Pylint
         run: pip install pylint
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
       - name: Run Pylint
         run: pylint main.py
 
@@ -63,10 +58,7 @@ jobs:
           cache: 'pip'
 
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install httpx
-          pip install -r requirements.txt
+        run: pip install -r dev-requirements.txt
 
       - name: Test with Pytest
         run: pytest test.py

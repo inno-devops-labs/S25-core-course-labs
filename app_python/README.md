@@ -40,7 +40,7 @@ This is a simple python web application on FastAPI that shows current time in Mo
    * If you have **no** [Poetry](https://python-poetry.org/docs/) installed:
 
     ```bash
-    pip install -r requirements.txt
+    pip install -r dev-requirements.txt
     ```
 
 4. Run the application
