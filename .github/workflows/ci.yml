@@ -64,5 +64,3 @@ jobs:
         with:
           push: true
           tags: xrvst/time_app:latest
-        run: |
-          cd app_python
