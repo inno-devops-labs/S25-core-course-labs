@@ -67,12 +67,20 @@ jobs:
   security:
     needs: test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app_python
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+          cache: 'pip'
+
       - name: Install dependencies
         run: |
-          cd app_python
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
@@ -82,5 +90,4 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: test
-          args: --severity-threshold=high --file=app_python/requirements.txt
-          working-directory: app_python 
+          args: --file=requirements.txt 

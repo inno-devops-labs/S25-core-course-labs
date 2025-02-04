@@ -1,6 +1,6 @@
 # Moscow time web application
 
-[![Python CI](https://github.com/nikita-drozdov/S25-core-course-labs/actions/workflows/python-ci.yml/badge.svg?branch=lab3)](https://github.com/nikita-drozdov/S25-core-course-labs/actions/workflows/python-ci.yml)
+[![Python CI](https://github.com/MikitaDrazdou/S25-core-course-labs/actions/workflows/python-ci.yml/badge.svg?branch=lab3)](https://github.com/MikitaDrazdou/S25-core-course-labs/actions/workflows/python-ci.yml)
 
 ## Overview
 
