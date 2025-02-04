@@ -22,6 +22,14 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Cache pip dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('app_python/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -36,6 +44,13 @@ jobs:
           pip install flake8
           flake8 app_python
 
+      - name: Run Snyk Vulnerability Scan
+        uses: snyk/actions/python@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: test
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -49,3 +64,5 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_HUB_NAME }}/app_python-distroless:latest
+
+

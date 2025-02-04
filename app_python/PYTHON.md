@@ -20,3 +20,19 @@ I have decided to create this Python application using Flask. According to what 
    - The application follows **PEP 8** coding standards for readability and consistency.
    - The time is generated dynamically, and it is updated each time the page is refreshed.
    - Testing was done manually to verify the functionality by refreshing the browser and using a virtual machine with different timezones to ensure the correct time is displayed.
+
+## Unit tests
+
+Unit tests are essential to ensure that the code behaves as expected. For my Flask application, I have created a unit test to verify the behavior of the `current_time` function, which returns the current time in Moscow.
+
+### Test File Structure
+
+- **File Location:** `app_python/tests/test_main.py`
+- **Purpose:** Validate that the `current_time` function returns the correct formatted time string for Moscow.
+
+### **Best Practices Applied**
+
+- Isolate tests into functions to make them reusable and maintainable.
+- Use assertions to check for expected outcomes.
+- Mock any external API calls or database interactions if necessary.
+- The assertEqual method is used to validate that the actual output matches the expected output.
