@@ -20,6 +20,7 @@ def test_dynamuc_time(client):
     assert response.status_code == 200
     assert expected_time[:16] in response.data.decode('utf-8')
 
+
 def test_static_time(mock_datetime, client):
     moscow = timezone('Europe/Moscow')
     fixed_time = datetime(2024, 2, 4, 12, 0, 0, tzinfo=moscow)
