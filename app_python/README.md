@@ -1,5 +1,9 @@
 # Moscow Time Web Application
 
+## CI/CD Pipeline Status
+
+![CI Pipeline](https://github.com/Dyddxd/S25-core-course-labs/actions/workflows/ci.yml/badge.svg?branch=lab3)
+
 ## Overview
 This is a simple Python web application built using FastAPI. It displays the current time in Moscow and updates on each page refresh.
 
@@ -48,4 +52,12 @@ This is a simple Python web application built using FastAPI. It displays the cur
    ```bash
    docker run -d -p 8000:8000 --name fastapi_distroless zerohalf/fastapi-distroless:nonroot
    curl localhost:8000
+   ```
+
+## Unit Tests
+1. Run tests:
+   ```bash
+   cd app_python
+   pytest tests/
+   PYTHONPATH=$(pwd) pytest tests/ # In case of any error
    ```
