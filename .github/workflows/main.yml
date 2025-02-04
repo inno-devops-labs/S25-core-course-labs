@@ -32,7 +32,8 @@ jobs:
       - name: Run Unit Tests
         run: |
           pip install pytest pytest-mock
-          pytest app_python/tests/
+          export PYTHONPATH=$PYTHONPATH:$GITHUB_WORKSPACE/app_python
+          python -m pytest app_python/tests/ -v
 
   docker:
     needs: build
