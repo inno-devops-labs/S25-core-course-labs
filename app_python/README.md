@@ -1,5 +1,7 @@
 # Python Web Application
 
+[![CI/CD](https://github.com/WellNotWell/DevOps-labs/actions/workflows/app_python.yml/badge.svg?branch=lab-3)](https://github.com/WellNotWell/DevOps-labs/actions/workflows/app_python.yml)
+
 ## Overview
 
 This is a simple Python web application that displays the current time in the Moscow timezone.
