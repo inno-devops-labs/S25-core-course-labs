@@ -29,15 +29,20 @@ jobs:
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python-3.10@master
+        
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --severity-threshold=high
+          args: --severity-threshold=high --file=python_app/requirements.txt
+        
 
   docker:
     runs-on: ubuntu-22.04
     timeout-minutes: 5
-    needs: build
+    needs:
+      - security
+      - build
+    if: ${{ needs.security.result == 'success' && needs.build.result == 'success'}}
 
     steps:
       - name: Checkout Repository
