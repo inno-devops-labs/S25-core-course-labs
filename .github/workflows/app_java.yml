@@ -85,6 +85,9 @@ jobs:
           version: 'latest'
           token: ${{ secrets.SNYK_TOKEN }}
 
+      - name: Authenticate Snyk CLI
+        run: snyk auth "${{ secrets.SNYK_TOKEN }}"
+
       - name: Snyk Security Test
         run: snyk test --file=pom.xml --sarif-file-output=snyk.sarif --severity-threshold=high
 
