@@ -66,3 +66,17 @@ docker pull 2imt/app_rust:1.0
 ```console
 docker run --rm -p 8080:8080 2imt/app_rust:1.0
 ```
+
+## Unit Tests
+
+```console
+cargo test
+```
+
+## CI Workflow
+
+- **Dependencies**: Installs the required Rust dependencies.
+- **Linting**: Runs `rustfmt` and `cargo-clippy` to check the code style and potential issues.
+- **Testing**: Runs tests using `cargo-nextest` to ensure the project is functioning correctly.
+- **Docker**: Builds and pushes a Docker image to Docker Hub.
+- **Security**: Checks for vulnerabilities using `cargo-audit`.
