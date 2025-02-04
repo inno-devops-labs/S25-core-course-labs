@@ -11,7 +11,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        step: ["lint", "test"]
     steps:
       - uses: actions/checkout@v4
       - name: Python 3.11 Setup
@@ -25,11 +27,13 @@ jobs:
           pip install flake8 pytest
           pip install -r requirements.txt
       - name: Linting
+        if: matrix.step == 'lint'
         working-directory: ./app_python
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Testing
+        if: matrix.step == 'test'
         working-directory: ./app_python
         run: |
           pytest .
@@ -42,7 +46,7 @@ jobs:
       - name: Build Docker Image
         working-directory: ./app_python
         run: |
-          docker build -t app_python .
+          docker build --build-arg CACHEBUST=$(date +%s) -t app_python .
 
       - name: Push Docker Image
         working-directory: ./app_python
