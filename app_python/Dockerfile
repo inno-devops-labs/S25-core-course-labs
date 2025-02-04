@@ -11,6 +11,7 @@ RUN chown appuser:appgroup /app
 
 COPY --chown=appuser:appgroup requirements.txt /app/requirements.txt
 COPY --chown=appuser:appgroup main.py /app/main.py
+COPY --chown=appuser:appgroup app_python.py /app/app_python.py
 
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
