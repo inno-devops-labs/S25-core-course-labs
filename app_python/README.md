@@ -84,3 +84,17 @@ docker run -p 5000:5000 wellnotwell/lab2
 
 1. `test_moscow_time_calc`: Checks that the displayed Moscow time is correctly calculated and formatted.
 2. `test_home_page_rendering`: Checks that the homepage (`/`) renders the correct template containing "Moscow Time:".
+
+## CI Pipeline
+
+The CI pipeline includes the following steps:
+
+1. Check out the code from the repository.
+2. Set up the Python environment.
+3. Install project dependencies.
+4. Lint the Python code using `flake8`.
+5. Run unit tests.
+6. Install and authenticate Snyk.
+7. Run Snyk test to check for vulnerabilities in dependencies.
+8. Log in to Docker Hub.
+9. Build and Push the Docker image to Docker Hub.
