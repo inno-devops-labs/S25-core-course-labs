@@ -38,7 +38,7 @@ Our CI workflow consists of three main jobs:
    - Parallel execution where possible
    - Optimized job dependencies
 
-3. **Quality & Security**
+3. **Quality & security**
    - Automated testing and linting
    - Code coverage tracking
    - Vulnerability scanning
