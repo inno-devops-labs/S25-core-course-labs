@@ -53,7 +53,7 @@ jobs:
 
       - name: Build and Tag Docker Image
         run: |
-          docker build -t nikachek/moscow-time-api:lab3 -f app_python/Dockerfile .
+          docker build -t nikachek/moscow-time-api:lab3 -f app_python/Dockerfile app_python/
 
       - name: Push Docker Image to Docker Hub
         run: |
