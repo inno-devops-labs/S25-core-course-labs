@@ -155,7 +155,13 @@ jobs:
         run: |
           sbt scalafmtCheckAll
 
-      # Step 8: Snyk Vulnerability Check
+      # Step 8: Install Snyk CLI
+      - name: Install Snyk CLI
+        run: |
+          curl -sL https://static.snyk.io/cli/latest/snyk-linux -o /usr/local/bin/snyk
+          chmod +x /usr/local/bin/snyk
+
+      # Step 9: Run Snyk Vulnerability Check
       - name: Run Snyk Vulnerability Scan
         run: |
           cd ./app_scala/time_application_project
@@ -163,14 +169,14 @@ jobs:
         env:
           SNYK_TOKEN: ${{ env.SNYK_TOKEN }}
 
-      # Step 9: Log in to Docker Hub
+      # Step 10: Log in to Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ env.DOCKER_USERNAME }}
           password: ${{ env.DOCKER_PASSWORD }}
 
-      # Step 10: Build and Push Docker Image
+      # Step 11: Build and Push Docker Image
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
         with:
@@ -179,7 +185,7 @@ jobs:
           push: true
           tags: ${{ env.DOCKERHUB_USERNAME }}/scala-msk-time-app:latest
 
-      # Step 11: Build and Push Docker Distroless Image
+      # Step 12: Build and Push Docker Distroless Image
       - name: Build and Push Docker Distroless Image
         uses: docker/build-push-action@v3
         with:
@@ -187,3 +193,4 @@ jobs:
           file: ./app_scala/distroless.Dockerfile
           push: true
           tags: ${{ env.DOCKERHUB_USERNAME }}/scala-msk-time-app-distroless:latest
+          
