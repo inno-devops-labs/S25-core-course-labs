@@ -59,7 +59,7 @@ jobs:
       with:
         context: ./backend/databse
         push: true
-        tags: jmartynova123/dev-lab1-db:latest
+        tags: jmartynova123/dev-lab3-db:latest
         build-args: |
           POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
 
