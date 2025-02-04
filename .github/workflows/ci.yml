@@ -72,6 +72,8 @@ jobs:
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/moscow-time-app:latest -f Dockerfile .
-          docker push ${{ secrets.DOCKER_USERNAME }}/moscow-time-app:latest
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/moscow-time-app:latest
