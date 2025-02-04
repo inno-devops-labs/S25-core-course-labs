@@ -47,7 +47,7 @@ WORKDIR /app
 # Copy the JAR file from the builder stage
 COPY --from=builder /app_scala/target/scala-2.13/MoscowTimeApp-assembly-0.1.jar ./app.jar
 
-# Expose the port for the app
+# Expose the port for the application
 EXPOSE 9090
 
 # Java environment variable
