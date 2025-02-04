@@ -7,7 +7,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -41,9 +40,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python-3.11@master
-        working-directory: app_python
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --file=app_python/requirements.txt
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
