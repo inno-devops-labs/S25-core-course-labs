@@ -1,6 +1,6 @@
 # Go Web Application: Guess the Number Game
 
-![CI Status](https://github.com/creepydanunity/S25-core-course-labs/actions/workflows/ci.yml/badge.svg?branch=lab3)
+[![Go CI/CD Pipeline](https://github.com/creepydanunity/S25-core-course-labs/actions/workflows/ci.yml/badge.svg?branch=lab3)](https://github.com/creepydanunity/S25-core-course-labs/actions/workflows/ci.yml)
 
 ## Overview
 This is a simple web-based "Guess the Number" game built using the Gin framework. The server generates a random number between 1 and 100, and the user has to guess it. Feedback is provided on each guess.
