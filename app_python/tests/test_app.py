@@ -23,6 +23,7 @@ def test_read_time():
 
     print("Extracted time:", current_time)
 
+
 def test_time_increases_on_refresh():
     response1 = client.get("/")
     data1 = response1.json()
