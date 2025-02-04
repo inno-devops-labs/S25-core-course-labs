@@ -6,7 +6,6 @@ app = FastAPI()
 
 @app.get("/")
 def get_moscow_time():
-    # Set the timezone to MSK
     moscow_time = datetime.now(pytz.timezone("Europe/Moscow"))
     return {"current_time": moscow_time.strftime("%Y-%m-%d %H:%M:%S")}
 
