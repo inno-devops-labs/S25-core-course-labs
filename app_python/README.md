@@ -10,6 +10,9 @@ This is a simple web application that displays the current time in Moscow. The a
     - [Manual](#manual)
     - [Docker](#docker)
     - [Distroless Image Version](#distroless-image-version)
+  - [Development](#development)
+    - [Unit Tests](#unit-tests)
+    - [CI Workflow](#ci-workflow)
 
 ## Installation
 
@@ -101,3 +104,32 @@ docker pull saleemasekrea/distroless_python_app:latest
 docker run -p 8001:8001 saleemasekrea/distroless_python_app 
 ```
 The application will be available at [localhost:8001](http://localhost:8001/)
+
+
+## Development
+
+Contributions are not accepted at the moment as this is just a lab assignment. You can fork the repository for your own use.
+
+### Unit Tests
+
+Unit tests are maintained in the `test.py` file. To run the tests, use the following command:
+
+```bash
+python -m unittest app_python/test.py # Make sure that you are in the parent directory of app_python
+```
+
+To check the code coverage, use the following command:
+
+```bash
+coverage run -m unittest app_python/test.py
+coverage report
+```
+
+### CI Workflow
+
+A CI workflow is maintained in the `.github/workflows/python_app.yaml` file. This workflow lints and tests the application, and builds and pushes docker image. Workflow is triggered only if there is a push .
+
+The CI workflow contains 2 jobs. Each job has a specific set of tasks to perform:
+
+- Build: This job lints and tests the application
+- Docker: This job builds and pushes the docker image to the Docker Hub. The job is carried out only if the build jobs are successful.
