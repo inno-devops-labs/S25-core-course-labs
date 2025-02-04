@@ -1,0 +1,68 @@
+name: CI Pipeline
+on: [push, pull_request]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with: 
+          python-version: "3.10"
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ hashFiles('requirements.txt') }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest flake8
+
+      - name: Run Linter
+        run: flake8 app.py --max-line-length=127
+
+      - name: Run Tests
+        run: pytest tests/ -v
+
+      - name: Setup Node.js for Snyk
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      - name: Snyk Security Scan
+        run: snyk test --file=requirements.txt
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  docker-publish:
+    runs-on: ubuntu-latest
+    needs: build-test
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/moscow-time:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/moscow-time:${{ github.sha }}
