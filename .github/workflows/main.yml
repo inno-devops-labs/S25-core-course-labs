@@ -50,7 +50,9 @@ jobs:
           pip install pytest pytest-mock
 
       - name: Run Unit Tests
-        run: pytest app_python/tests/ -v
+        run: |
+          export PYTHONPATH=$PYTHONPATH:$GITHUB_WORKSPACE/app_python
+          pytest app_python/tests/ -v
 
       - name: Install Snyk CLI
         run: npm install -g snyk
