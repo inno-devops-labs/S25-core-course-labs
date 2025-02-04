@@ -31,8 +31,8 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: Install Pylint
-        run: pip install pylint
+      - name: Install dependencies
+        run: pip install -r dev-requirements.txt
 
       - name: Run Pylint
         run: pylint main.py
