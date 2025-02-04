@@ -67,11 +67,14 @@ jobs:
   security:
     needs: test
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./app_python
     steps:
       - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          cd app_python
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python-3.8@master
@@ -79,4 +82,5 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: test
-          args: --severity-threshold=high 
+          args: --severity-threshold=high --file=app_python/requirements.txt
+          working-directory: app_python 
