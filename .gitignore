@@ -4,3 +4,8 @@
 .scala-build
 __pycache__
 .idea
+*.tfstate
+*.tfstate.backup
+*.lock.hcl
+.terraform
+*.tfvars
