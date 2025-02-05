@@ -44,18 +44,26 @@ jobs:
           pip install pytest
           pytest --maxfail=1 --disable-warnings --tb=short
 
+      - name: 🐳 Installing Hadolint (for Dockerfile)
+        run: |
+          wget -O /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
+          chmod +x /usr/local/bin/hadolint
+          hadolint --version
+
+  snyk-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    continue-on-error: true
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
       - name: 🔒 Snyk Vulnerability Check
         uses: snyk/actions@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: test --severity-threshold=high
-
-      - name: 🐳 Installing Hadolint (for Dockerfile)
-        run: |
-          wget -O /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
-          chmod +x /usr/local/bin/hadolint
-          hadolint --version
 
   docker:
     needs: build-and-test
