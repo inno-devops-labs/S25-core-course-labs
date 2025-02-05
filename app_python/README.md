@@ -1,3 +1,5 @@
+[![Python application](https://github.com/favelanky/S25-core-course-labs/actions/workflows/python-app.yml/badge.svg?branch=lab3)](https://github.com/favelanky/S25-core-course-labs/actions/workflows/python-app.yml)
+
 # Python Web App (Flask)
 ## Overview
 A simple Flask web application that displays the current time in Moscow.
