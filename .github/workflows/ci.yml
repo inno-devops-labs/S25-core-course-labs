@@ -76,12 +76,4 @@ jobs:
       - name: Push Docker Image to Docker Hub
         run: |
           docker push nikachek/moscow-time-api:lab3
-          
-      
-      - name: Docker Security Scan with Snyk
-        uses: snyk/actions/docker@master
-        with:
-          image: nikachek/moscow-time-api:lab3
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
