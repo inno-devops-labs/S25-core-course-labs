@@ -10,7 +10,7 @@ import (
 )
 
 func setupTestQuotes() {
-	file, err := os.ReadFile("quotes.txt")
+	file, err := os.ReadFile("app_golang/quotes.txt")
 	if err != nil {
 		log.Fatalf("Failed to read quotes file: %v", err)
 	}
@@ -19,7 +19,6 @@ func setupTestQuotes() {
 
 // Test if the homepage returns a 200 OK status
 func TestHomepageStatus(t *testing.T) {
-	setupTestQuotes() // Ensure quotes are not empty
 
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
