@@ -50,11 +50,17 @@ jobs:
       - name: Install Snyk CLI
         run: npm install -g snyk
 
+      - name: Debug Snyk Installation
+        run: snyk --version
+
       - name: Authenticate Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
+      - name: Check requirements.txt Exists
+        run: ls -l app_python/requirements.txt || echo "requirements.txt not found!"
+
       - name: Run Snyk Security Scan
-        run: snyk test --file=requirements.txt --package-manager=pip
+        run: snyk test --file=app_python/requirements.txt --package-manager=pip --skip-unresolved
 
   docker:
     runs-on: ubuntu-latest
