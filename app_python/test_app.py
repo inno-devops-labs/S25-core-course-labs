@@ -10,7 +10,9 @@ def client():
 
 
 def test_home_page(client):
-    """Test that the home page loads successfully and contains the expected text."""
+    """
+    Test that the home page loads successfully
+    and contains the expected text."""
     response = client.get('/')
 
     assert response.status_code == 200
