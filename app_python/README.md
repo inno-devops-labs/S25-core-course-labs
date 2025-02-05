@@ -107,7 +107,7 @@ docker run -p 80:80 app_python_dstlss
 docker run -p 80:80 dnworks/app_python_dstlss:latest
 ```
 
-## Testing
+## Unit Tests
 
 Tests are located in the `src/tests` directory. \
 You may run existing tests using the following commands:
@@ -124,7 +124,7 @@ pytest src/tests
 This repository contains Github Actions CI workflow. \
 It has the following job structure:
 
-**TLDR:** Pipeline runs CI tasks (installs dependencies, formats code, runs linter and tests), and then builds and pushes the updated image to Docker Hub.
+**TLDR:** Pipeline runs CI tasks (installs dependencies, formats code, runs linter and tests), then tests app for vulnerabilities using Snyk, and then builds and pushes the updated image to Docker Hub.
 
 1. CI tasks (`ci`)
    - Checkout
@@ -134,7 +134,10 @@ It has the following job structure:
    - Install linter
    - Linter (run linter)
    - Tests (run tests)
-2. Docker tasks (`docker`)
+2. Snyk tasks (`snyk`)
+   - Checkout
+   - Run Snyk
+3. Docker tasks (`docker`)
    - Checkout
    - Docker meta (set metadata: tags, labels, etc.)
    - Login (login to Docker)
