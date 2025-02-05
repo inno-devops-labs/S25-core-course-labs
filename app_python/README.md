@@ -1,5 +1,7 @@
 # Python Web Application
 
+[![Python Package CI](https://github.com/UFA-MOROZOV/S25-core-course-labs/actions/workflows/app_python.yml/badge.svg)](https://github.com/UFA-MOROZOV/S25-core-course-labs/actions/workflows/app_python.yml)
+
 ## Overview
 
 This is a simple python web application that has a functionality of showing current Moscow time.
