@@ -1,0 +1,19 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+myenv/
+
+# Environment variables
+.env
+
+# VS Code settings
+.idea/
+
+# macOS
+.DS_Store
