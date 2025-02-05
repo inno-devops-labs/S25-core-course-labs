@@ -64,3 +64,16 @@ docker pull nickolaus899/js-cities-dist:latest
 ```
 docker pull nickolaus899/js-distroless:latest
 ```
+
+# CI/CD
+GitHub Actions were added to the project. I use `js.yml` for automated
+actions. 
+
+### Workflow:
+1. **Dependencies:**: install from `package.json`
+2. **Linter:**: check code quality using `standard`
+3. **Tests:**: run unit tests with `jest`
+4. **Docker:**: build and push a Docker image to DockerHub
+
+### Workflow Budge
+[![Node.js CI with Docker](https://github.com/Nickolaus-899/S25-core-course-labs/actions/workflows/js.yml/badge.svg)](https://github.com/Nickolaus-899/S25-core-course-labs/actions/workflows/js.yml)
