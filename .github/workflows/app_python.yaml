@@ -1,4 +1,4 @@
-name: Install, lint and test Python app
+name: Python tests
 on:
     pull_request:
       branches: [ master ]

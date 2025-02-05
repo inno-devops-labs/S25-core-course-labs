@@ -1,5 +1,7 @@
 # Propositional Logic Parser & Analyzer
 
+![test workflow](https://github.com/FallenChromium/s25-core-course-labs/actions/workflows/app_typescript.yaml/badge.svg)
+
 A web-based tool for working with propositional logic formulas. Parse, analyze, and convert propositional logic expressions without sending any data to the server.
 
 ## Features
