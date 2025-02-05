@@ -57,3 +57,39 @@ Once the image is built or pulled, start the container by running:
 docker run -p 5000:5000 moscow-time-app
 ```
 Then visit: http://localhost:5000
+
+
+---
+
+## 🧪 Unit Tests
+
+This project includes **unit tests** to ensure the core functionality of the Moscow time web app works correctly.
+
+### How to Run the Tests
+
+1. **Clone the Repository**:
+```bash
+git clone https://github.com/anasalatasiuni/S25-core-course-labs.git
+cd app_python
+```
+
+2. **Install Dependencies**:
+```bash
+pip install -r requirements.txt
+```
+
+3. **Run Unit Tests**:
+```bash
+python -m unittest test_app.py
+```
+
+This will run all the unit tests and show the results in the terminal.
+
+### Test Coverage:
+- **Home page load**  
+- **Moscow time format**  
+- **Correct Moscow timezone**
+
+Ensure your tests pass successfully to confirm the app is functioning as expected.
+
+---
