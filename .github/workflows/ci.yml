@@ -27,8 +27,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r app_python/requirements.txt
           
-      - name: Authenticate with Snyk
-        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+      - name: Verify Installed Packages
+        run: |
+          pip list
 
       - name: Snyk Security Scan (Python Dependencies)
         uses: snyk/actions/python@master
