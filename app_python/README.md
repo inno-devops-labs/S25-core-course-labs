@@ -15,3 +15,10 @@ This is a simple web application that displays the current time in Moscow. It is
    docker pull ali12hamdan/moscow-time:1.0
 
    docker run -p 5001:5001 ali12hamdan/moscow-time-app:1.0
+
+
+
+## Unit Tests
+Run tests with:
+```bash
+pytest test_app.py -v
