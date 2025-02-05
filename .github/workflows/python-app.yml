@@ -6,7 +6,7 @@ name: Python application
 on:
   pull_request:
     branches:
-      - master
+      - lab3
     paths:
       - ".github/workflows/app_python.yml"
       - "app_python/**"
