@@ -9,11 +9,13 @@ jobs:
             - uses: actions/checkout@v4
             - uses: actions/setup-python@v4
               with:
-                python-version: '3.9'  
+                python-version: '3.9'
+            - name: Install Snyk
+              run: npm install -g snyk
             - name: Run Snyk to check for vulnerabilities
               run: |
                 pip install -r app_python/requirements.txt
-                snyk test
+                snyk test --file=app_python/requirements.txt
               env:
                 SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
