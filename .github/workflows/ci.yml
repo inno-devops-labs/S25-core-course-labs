@@ -16,7 +16,6 @@ jobs:
               env:
                 SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
               with:
-                command: code test
                 args: --file=app_python/requirements.txt
 
     build:
