@@ -1,5 +1,5 @@
 import unittest
-from app import app, get_moscow_time
+from app_python.app import app, get_moscow_time
 import json
 from datetime import datetime
 import pytz
