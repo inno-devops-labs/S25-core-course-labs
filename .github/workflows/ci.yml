@@ -87,10 +87,10 @@ jobs:
         working-directory: ${{ env.WORKING_DIR }}  # Set working directory for all steps
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          path: lab3  # Checkout to lab3 subdirectory
+      # - name: Checkout code
+      #   uses: actions/checkout@v4
+      #   with:
+      #     path: lab3  # Checkout to lab3 subdirectory
 
       - name: Debug file structure
         run: pwd && ls -R  # Verify directory structure
