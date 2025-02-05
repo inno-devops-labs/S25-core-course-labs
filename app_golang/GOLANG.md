@@ -17,4 +17,15 @@ I have chosen:
 
 ## Testing
 
-This application was tested manually by refreshing the page and checking if the joke was fetched and displayed correctly.
+This application was tested automatically using `testing` package. There are two tests:
+
+- `TestJokeJson`: tests if the random joke is returned correctly in JSON format. It checks if the status code is 200, and then checks if the JSON body contains a random joke.
+- `TestJoke`: tests the web page containing a random joke. Basically it tries to open the web page, checks if the status code is 200, and then checks if the web page contains a random joke.
+
+Best practices applied:
+
+- tests have only private dependencies (they are not shared), so the tests may be run independently
+- tests are protecting from bugs - they test that the displayed time is correct (and therefore changing)
+- tests are resistive to code refactoring - they only test the web application logic (i.e. the correctness of time)
+- tests have a quick feedback since they run fast
+- tests are simple to understand from the code and easy to run
