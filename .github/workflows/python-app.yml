@@ -17,6 +17,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app_python
     steps:
       - uses: actions/checkout@v4
       
@@ -57,7 +60,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: monitor
-          args: --file=app_python/requirements.txt
+          args: --file=requirements.txt --project-name=flask-time
 
   docker:
     needs: test
