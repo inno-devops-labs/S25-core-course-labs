@@ -4,11 +4,13 @@ on:
   push:
     paths:
       - 'app_python/**'
+      - '.github/workflows/app_python.yml'
     branches:
       - '**'
   pull_request:
     paths:
       - 'app_python/**'
+      - '.github/workflows/app_python.yml'
 
 jobs:
   build:
@@ -22,6 +24,7 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.12'
+        cache: 'pip'
 
     - name: Install dependencies
       run: |
