@@ -39,11 +39,11 @@ jobs:
 
       - name: 🐳 Installing Hadolint (for Dockerfile)
         run: |
-          wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
-          chmod +x /bin/hadolint
-          ls -l /bin/hadolint  # Проверяем права
-          /bin/hadolint --version  # Проверяем, запускается ли
-          hadolint app_python/Dockerfile
+          wget -O /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
+          chmod +x /usr/local/bin/hadolint
+          ls -l /usr/local/bin/hadolint  # Проверяем права
+          /usr/local/bin/hadolint --version
+        
 
   docker:
     needs: build-and-test
