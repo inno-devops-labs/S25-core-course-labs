@@ -37,3 +37,7 @@ Once the application is running, open it in your browser at http://localhost:808
    docker run -d -p 8080:8080 vechkanovvv/app_java:v1
 
 Now your Spring Boot application is running at http://localhost:8080/quotes/random.
+
+**Status**:
+
+![CI](https://github.com/VechkanovVV/S25-core-course-labs/actions/workflows/java.yml/badge.svg)

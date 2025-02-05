@@ -39,3 +39,21 @@ A web application that displays Moscow time, built using Python and Flask.
    docker run -d -p 8080:8080 vechkanovvv/app_python:v1
 
 Now your application is running at http://localhost:8080
+
+### CI Workflow
+
+- **Trigger:** On push or pull request to the `master` branch.
+- **Build-Test-Lint Job:**  
+  - Installs dependencies.
+  - Runs tests with `pytest`.
+  - Checks code style using `flake8`.
+- **Docker Build-Push Job:**  
+  - Runs after tests pass.
+  - Logs into Docker Hub using GitHub secrets.
+  - Builds the Docker image from the `app_python` directory and pushes it as `latest`.
+
+*Docker Hub credentials (`DOCKERHUB_USERNAME` and `DOCKERHUB_PASSWORD`) are stored as GitHub secrets.*
+
+**Status**:
+
+![CI](https://github.com/VechkanovVV/S25-core-course-labs/actions/workflows/python.yml/badge.svg)

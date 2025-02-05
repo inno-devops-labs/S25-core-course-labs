@@ -9,5 +9,15 @@ For this exercise, I chose Flask due to its simplicity. The task doesn’t requi
 - Using **Docker container** for easy deployment
 
 ---
-## Testing
-I tested manually
+### Unit Tests
+
+#### ✅ Test Cases Implemented
+
+- **test_moscow_time**: Ensures that the endpoint `/` returns a successful response and contains the expected "Moscow time :" text.
+- **test_time_format**: Validates that the returned timestamp follows the format `%Y-%m-%d %H:%M:%S`.
+
+#### 🧪 Testing Approach
+
+- Used `pytest` for writing and executing tests.
+- Applied the `pytest.fixture` mechanism to set up a test client for the Flask app.
+- Verified response status codes and output correctness.
