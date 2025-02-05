@@ -709,7 +709,99 @@ internal_ip_address_vm_1 = "192.168.0.11"
 
 ## 👾 Github
 
-TODO
+### `terraform import`
+
+<details>
+<summary>Open output</summary>
+
+```cmd
+terraform\github> terraform import "github_repository.repo" "S25-core-course-labs"
+github_repository.repo: Importing from ID "S25-core-course-labs"...
+github_repository.repo: Import prepared!
+  Prepared github_repository for import
+github_repository.repo: Refreshing state... [id=S25-core-course-labs]
+
+Import successful!
+
+The resources that were imported are shown above. These resources are now in
+your Terraform state and will henceforth be managed by Terraform.
+```
+
+</details>
+
+### `terraform apply`
+
+<details>
+<summary>Open output</summary>
+
+```cmd
+terraform\github> terraform apply
+github_repository.repo: Refreshing state... [id=S25-core-course-labs]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # github_branch_default.master will be created
+  + resource "github_branch_default" "master" {
+      + branch     = "master"
+      + id         = (known after apply)
+      + repository = "S25-core-course-labs"
+    }
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + blocks_creations                = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + pattern                         = "master"
+      + repository_id                   = "S25-core-course-labs"
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + required_approving_review_count = 1
+        }
+    }
+
+  # github_repository.repo will be updated in-place
+  ~ resource "github_repository" "repo" {
+      ~ auto_init                   = false -> true
+      + description                 = "DevOps course labs solution"
+      + gitignore_template          = "Python"
+      - has_downloads               = true -> null
+      - has_projects                = true -> null
+      ~ has_wiki                    = true -> false
+        id                          = "S25-core-course-labs"
+      + license_template            = "mit"
+        name                        = "S25-core-course-labs"
+        # (28 unchanged attributes hidden)
+    }
+
+Plan: 2 to add, 1 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_repository.repo: Modifying... [id=S25-core-course-labs]
+github_repository.repo: Modifications complete after 2s [id=S25-core-course-labs]
+github_branch_default.master: Creating...
+github_branch_default.master: Creation complete after 2s [id=S25-core-course-labs]
+github_branch_protection.default: Creating...
+github_branch_protection.default: Creation complete after 4s [id=BPR_kwDONudjxc4DicAO]
+
+Apply complete! Resources: 2 added, 1 changed, 0 destroyed.
+```
+
+</details>
 
 ## 🤝 Github Teams
 
