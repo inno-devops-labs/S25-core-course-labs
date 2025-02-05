@@ -4,9 +4,13 @@
 name: Python application
 
 on:
-  push:
+  pull_request:
+    branches:
+      - master
     paths:
-      - 'app_python/**'
+      - ".github/workflows/app_python.yml"
+      - "app_python/**"
+
 
 permissions:
   contents: read
