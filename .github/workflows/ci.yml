@@ -51,7 +51,7 @@ jobs:
         uses: snyk/actions/python-3.8@master
         with:
           command: monitor
-          args: --file=app_python/requirements.txt --skip-unresolved
+          args: --file=app_python/app/requirements.txt --skip-unresolved
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
