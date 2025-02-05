@@ -16,6 +16,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: 3.11
+          cache: "pip"
 
       - name: Dependencies
         run: |
@@ -73,3 +74,5 @@ jobs:
           context: app_python
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ vars.DH_USERNAME }}/${{ vars.DH_IMAGE_NAME_PY }}:latest
+          cache-to: type=inline
