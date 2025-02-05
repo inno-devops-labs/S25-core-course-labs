@@ -112,4 +112,4 @@ jobs:
         with:
           context: ./app_python
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/python-msk-time:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/python-msk-time:latest
