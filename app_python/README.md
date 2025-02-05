@@ -2,6 +2,8 @@
 
 Simple web application displaying current Moscow time, built with FastAPI
 
+![Workflow Status](https://github.com/dExNight/S25-core-course-labs/actions/workflows/python-app.yml/badge.svg)
+
 ## Features
 - Real-time Moscow time display
 - Auto-update every second
