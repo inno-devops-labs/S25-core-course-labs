@@ -70,7 +70,7 @@ python3 -m unittest discover tests
 
 
 # CI/CD
-GitHub Actions were added to the project. I use `ci.yml` for automated
+GitHub Actions were added to the project. I use `py.yml` for automated
 actions. 
 
 ### Workflow:
@@ -80,4 +80,4 @@ actions.
 4. **Docker:**: build and push a Docker image to DockerHub
 
 ### Workflow Budge
-[![Python CI with Docker](https://github.com/Nickolaus-899/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)](https://github.com/Nickolaus-899/S25-core-course-labs/actions/workflows/ci.yml)
+[![Python CI with Docker](https://github.com/Nickolaus-899/S25-core-course-labs/actions/workflows/py.yml/badge.svg)](https://github.com/Nickolaus-899/S25-core-course-labs/actions/workflows/py.yml)
