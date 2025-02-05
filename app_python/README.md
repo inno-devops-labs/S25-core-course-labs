@@ -1,5 +1,7 @@
 # Moscow time app
 
+![CI Workflow Status](https://github.com/Egor-Salnikov/S25-core-course-labs/ci/badge.svg)
+
 This application provides an endpoint that displays the current Moscow time. It's built with [FastAPI](https://fastapi.tiangolo.com/), a modern, fast (high-performance) web framework for building APIs with Python 3.7+ based on standard Python type hints.
 
 ## Table of Contents
