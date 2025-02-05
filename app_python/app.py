@@ -9,23 +9,23 @@ TIME_ZONE = ""
 CONFIG_FILE = "config.txt"
 
 
-def get_timezone() -> str():
+def get_timezone(file=CONFIG_FILE) -> pytz.timezone:
     """
     Loading timezone frome configuration file
     """
     try:
-        with open(CONFIG_FILE, "r") as config_file:
+        with open(file, "r") as config_file:
             time_zone = config_file.read().strip()
 
-        return time_zone if time_zone else "Europe/Moscow"
+        return pytz.timezone(time_zone)
     except Exception:
 
         # Default value
-        return "Europe/Moscow"
+        return pytz.timezone("Europe/Moscow")
 
 
 @app.route("/")
-def current_time() -> str():
+def current_time() -> str:
     """
     Returns the current time in timezone formatted as HH:MM:SS.
     """
@@ -33,15 +33,10 @@ def current_time() -> str():
 
     # Set up TIME_ZONE if it was not
     if TIME_ZONE == "":
-        time_zone = get_timezone()
-
-        try:
-            TIME_ZONE = pytz.timezone(time_zone)
-        except Exception:
-            TIME_ZONE = pytz.timezone("Europe/Moscow")
+        TIME_ZONE = get_timezone()
 
     time = datetime.now(TIME_ZONE)
-    return f"Current time in {TIME_ZONE} is {time.strftime("%H:%M:%S")}"
+    return f"Current time in {TIME_ZONE} is {time.strftime('%H:%M:%S')}"
 
 
 if __name__ == "__main__":
