@@ -14,7 +14,7 @@ jobs:
             - name: Run Snyk to check for vulnerabilities
               run: |
                 pip install -r app_python/requirements.txt
-                snyk test
+                snyk test --file=app_python/requirements.txt
               env:
                 SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     build:
