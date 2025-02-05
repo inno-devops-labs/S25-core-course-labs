@@ -9,6 +9,10 @@ on:
   pull_request:
     branches: [ "**" ]
 
+defaults:
+  run:
+    working-directory: ./app_python
+
 permissions:
   contents: read.
 
