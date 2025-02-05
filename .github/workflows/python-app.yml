@@ -65,6 +65,9 @@ jobs:
 
     - name: Run snyk
       uses: snyk/actions/python-3.10@master
+      with:
+        command: test
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       working-directory: ./app_python
+      
