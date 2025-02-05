@@ -49,4 +49,6 @@ jobs:
         file: ./app_python/Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/moscow_time:latest
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
     
