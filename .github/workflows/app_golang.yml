@@ -23,10 +23,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Go 1.20
+      - name: Setup Go 1.23.4
         uses: actions/setup-go@v4
         with:
-          go-version: "1.20"
+          go-version: "1.23.4"
           cache-dependency-path: go.sum
 
       - name: Dependencies
@@ -43,7 +43,7 @@ jobs:
         with:
           version: "latest"
           install-go: false
-          cache-key: "1.20"
+          cache-key: "1.23.4"
 
       - name: Build
         run: go build -v src/main.go
