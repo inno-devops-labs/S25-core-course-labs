@@ -16,7 +16,7 @@ jobs:
               env:
                 SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
               with:
-                args: --file=app_python/requirements.txt
+                command: pip install -r app_python/requirements.txt
 
     build:
         runs-on: ubuntu-latest
