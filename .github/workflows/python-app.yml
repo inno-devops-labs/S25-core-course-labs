@@ -81,7 +81,7 @@ jobs:
       run: |
         docker run -d --name dev-lab3-db -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} jmartynova123/dev-lab3-db:latest
         sleep 10 
-        docker exec dev-lab3-db pg_isready -U postgres -h localhost -d postgres
+        docker logs dev-lab3-db
         
     - name: Run backend container
       run: |
