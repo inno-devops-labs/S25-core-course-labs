@@ -33,7 +33,7 @@ jobs:
 
     - name: Run tests
       run: go test -v ./...
-      working-directory: app_go
+      working-directory: app_golang
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
