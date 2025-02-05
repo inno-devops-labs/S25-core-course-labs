@@ -79,11 +79,11 @@ jobs:
         tags: jmartynova123/dev-lab3-back:latest
     - name: Run Docker Compose
       run: |
-        docker-compose up --build -d
+        docker-compose -f app_python/docker-compose.yml up --build -d
 
     - name: Run tests with Docker Compose
       run: |
-        docker-compose exec backend pytest
+        docker-compose -f app_python/docker-compose.yml exec backend pytest
   snyk:
     runs-on: ubuntu-latest
 
