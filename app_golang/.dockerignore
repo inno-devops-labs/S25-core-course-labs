@@ -3,3 +3,4 @@
 *.md
 Dockerfile
 *.png
+src.test.*
