@@ -60,4 +60,4 @@ jobs:
     # Step 4: Push Docker Image to Docker Hub
     - name: Push Docker Image
       run: |
-        docker push moscow-time-app
+        docker push ${{secrets.DOCKER_USERNAME}}/moscow-time-app:latest
