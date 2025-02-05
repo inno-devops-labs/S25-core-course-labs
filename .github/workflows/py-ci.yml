@@ -52,7 +52,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --severity-threshold=high
-          working-directory: ./app_python
+          working-directory: app_python/
           
   docker-build-push:
     needs: build-and-test
