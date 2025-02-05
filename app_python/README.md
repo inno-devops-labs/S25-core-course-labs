@@ -1,4 +1,4 @@
-# Moscow Time Web Application
+<!-- # Moscow Time Web Application
 
 A Flask-based web application that displays the current time in Moscow (MSK) in `HH:MM:SS` format.  
 **Containerized with Docker for production-ready deployment.**
@@ -79,4 +79,77 @@ app_python/
 - **DOCKER.md**: Docker implementation details  
 
 ---
+ -->
+# Moscow Time Web Application
 
+![CI Status](https://github.com/YehiaSobeh/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)
+
+A production-ready Flask application that displays the current time in Moscow (MSK) with automated CI/CD, security scanning, and Docker deployment.
+
+---
+
+## Features
+- 🕒 **Real-Time Clock**: Timezone-aware (UTC+3) with `pytz`
+- 🐳 **Dockerized**: Non-root user, Alpine Linux base image
+- 🔒 **Security**: Snyk vulnerability scans for Python and Docker
+- 🤖 **CI/CD**: GitHub Actions pipeline with linting, testing, and automated deploys
+
+---
+
+## Quick Start
+
+### Local Development
+```bash
+# Clone and navigate to project
+git clone --branch lab3 https://github.com/YehiaSobeh/S25-core-course-labs.git
+cd S25-core-course-labs/lab3/app_python
+
+# Set up virtual environment
+python -m venv venv
+source venv/bin/activate  # macOS/Linux
+venv\Scripts\activate     # Windows
+
+# Install dependencies and run
+pip install -r requirements.txt
+python app.py
+```
+
+### Docker Deployment
+```bash
+docker pull yehiasobeh/moscow-time-app:latest
+docker run -p 5000:5000 yehiasobeh/moscow-time-app
+```
+
+Access: [http://localhost:5000](http://localhost:5000)
+
+### Testing
+```bash
+# Run unit tests
+python -m pytest tests/ -v
+
+# Expected output:
+# 2 passed in 0.12s
+```
+
+---
+
+## Documentation
+
+| Document      | Description                      |
+|--------------|--------------------------------|
+| PYTHON.md    | Python implementation details |
+| CI.md        | CI/CD pipeline architecture   |
+| Dockerfile   | Containerization strategy    |
+
+---
+
+## Project Structure
+```
+lab3/
+├── .github/             # CI/CD workflows
+└── app_python/
+    ├── tests/           # Unit tests
+    ├── app.py           # Flask application
+    ├── Dockerfile       # Production container setup
+    ├── requirements.txt # Dependency manifest
+    └── *.md             # Documentation
