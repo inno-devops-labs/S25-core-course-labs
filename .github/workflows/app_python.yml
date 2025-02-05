@@ -8,14 +8,13 @@ on:
       
 jobs:
   build:
-
     runs-on: ubuntu-latest
     defaults: 
       run: 
         working-directory: ./app_python
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python 3.10
+    - name: Set up Python 3.12
       uses: actions/setup-python@v3
       with:
         python-version: "3.12"
