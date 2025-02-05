@@ -24,6 +24,14 @@ jobs:
         with:
           python-version: '3.9'
 
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+            path: ~/.cache/pip
+            key: ${{ runner.os }}-pip-${{ hashFiles('app_python/requirements.txt') }}
+            restore-keys: |
+              ${{ runner.os }}-pip-
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -38,6 +46,14 @@ jobs:
         run: |
           pip install pytest
           pytest app_python/tests/
+
+      - name: Snyk vulnerability check
+        uses: snyk/snyk-action@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test
+          args: --severity-threshold=high
 
   docker-login:
       needs: build

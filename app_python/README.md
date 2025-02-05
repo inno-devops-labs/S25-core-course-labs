@@ -125,7 +125,7 @@ Continuous Integration (CI) is implemented using GitHub Actions to automate test
 
 1. **Checkout Code**: Clones the repository.
 2. **Set Up Python**: Installs Python 3.9.
-3. **Install Dependencies**: Installs project dependencies from `requirements.txt`.
+3. **Install Dependencies**: Caches and Installs project dependencies from `requirements.txt`.
 4. **Run Linter**: Executes `flake8` to check code quality.
 5. **Run Tests**: Executes all unit tests using `pytest`.
 6. **Docker Login**: Logs into Docker Hub using secrets (`DOCKER_PASSWORD`).
