@@ -2,11 +2,9 @@ name: CI for Moscow time app
 
 on:
   push:
-    branches:
-      - main
+    branches: [main, lab3]
   pull_request:
-    branches:
-      - main
+    branches: [main, lab3]
 
 jobs:
   build:
