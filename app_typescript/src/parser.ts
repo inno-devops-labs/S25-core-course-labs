@@ -1,28 +1,28 @@
-import { Token, TOKENS, tokenize } from "./tokenizer";
+import { type Token, TOKENS, tokenize } from "./tokenizer";
 
 // AST Node types
-type Identifier = {
+interface Identifier {
     type: 'Identifier';
     value: string;
-};
+}
 
-type Constant = {
+interface Constant {
     type: 'Constant';
     value: boolean;
-};
+}
 
-type UnaryOperation = {
+interface UnaryOperation {
     type: 'UnaryOperation';
     operator: TOKENS.NEG;
     child: ASTNode;
-};
+}
 
-type BinaryOperation = {
+interface BinaryOperation {
     type: 'BinaryOperation';
     operator: TOKENS.DISJ | TOKENS.CONJ | TOKENS.EQUA | TOKENS.IMPL;
     left: ASTNode;
     right: ASTNode;
-};
+}
 
 export type ASTNode = Identifier | Constant | UnaryOperation | BinaryOperation;
 
@@ -35,12 +35,12 @@ export function EvaluateAST(node: ASTNode, values: Map<string, boolean>): boolea
             return evaluateUnaryFormula(node, values);
         }
         case 'Identifier': {
-            try {
-                return values.get(node.value)!;
-            } catch (e) {
-                throw new Error('Undefined variable in the table: ' + node.value);
-            }
+            const val = values.get(node.value) 
+            if (val != undefined) { return val }
+            else {
+             throw new Error('Undefined variable in the table: ' + node.value);
         }
+    }
         case 'Constant': {
             return node.value
         }
@@ -49,8 +49,8 @@ export function EvaluateAST(node: ASTNode, values: Map<string, boolean>): boolea
 }
 
 function evaluateBinaryFormula(node: BinaryOperation, values: Map<string, boolean>): boolean {
-    let left = EvaluateAST(node.left, values)
-    let right = EvaluateAST(node.right, values)
+    const left = EvaluateAST(node.left, values)
+    const right = EvaluateAST(node.right, values)
     switch (node.operator) {
         case TOKENS.DISJ: {
             return left || right;
@@ -72,6 +72,7 @@ function evaluateBinaryFormula(node: BinaryOperation, values: Map<string, boolea
 
 function evaluateUnaryFormula(node: UnaryOperation, values: Map<string, boolean>): boolean {
     switch (node.operator) {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         case TOKENS.NEG: {
             return !EvaluateAST(node.child, values);
         }
@@ -85,7 +86,7 @@ export class Parser {
     private tokens: Token[];
     private position: number;
     private formula: string;
-    private _variables: Array<string>;
+    private _variables: string[];
 
     constructor(formula: string) {
         this.tokens = [];
@@ -174,9 +175,9 @@ export class Parser {
 
     private match_formula(): ASTNode | null {
         return (
-            this.match_CONST() ||
-            this.match_IDTF() ||
-            this.match_unary_formula() ||
+            this.match_CONST() ??
+            this.match_IDTF() ??
+            this.match_unary_formula() ??
             this.match_binary_formula()
         );
     }
@@ -186,16 +187,16 @@ export class Parser {
         if (this.tokens.length === 0) {
             return null;
         }
-        let parsed = this.match_formula()
+        const parsed = this.match_formula()
         if (parsed && this.position === this.tokens.length) {
             return parsed;
         }
         else {
-            throw new Error("Parsing didn't succeed on token " + (this.position + 1) + ": \" " + this.tokens[this.position].value) + "\"";
+            throw new Error("Parsing didn't succeed on token " + String(this.position + 1) + ": \" " + this.tokens[this.position].value);
         }
     }
 
-    get variables(): Array<string> {
+    get variables(): string[] {
         return this._variables;
     }
 

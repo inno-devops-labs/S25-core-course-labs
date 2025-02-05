@@ -1,4 +1,4 @@
-import { ASTNode, EvaluateAST, Parser } from "./parser";
+import { type ASTNode, EvaluateAST, Parser } from "./parser";
 
 function binary_combinations(n: number) {
     const combinations: boolean[][] = [];
@@ -15,11 +15,15 @@ function binary_combinations(n: number) {
 }
 
 function build_closure(interpretation: Map<string, boolean>): string {
-    let variables = Array.from(interpretation.keys());
+    const variables = Array.from(interpretation.keys());
     for (let i = 0; i < variables.length; i++) {
         const variable = variables[i];
+        const var_value = interpretation.get(variable)
+        if (var_value == undefined) {
+            throw new Error(`Variable ${variable} is not in the interpretation`);
+        }
         // negate the variable if it's truthy in the current interpretation
-        variables[i] = interpretation.get(variable)! ? `(!${variable})` : variable;
+        variables[i] = var_value ? `(!${variable})` : variable;
     }
     const closure: string[] = [];
     for (let i = 0; i < variables.length; i++) {
@@ -66,9 +70,9 @@ type TruthTable = { result: boolean, combination: Map<string, boolean> }[];
 
 function build_truth_table(combs: boolean[][], variables: string[], ast: ASTNode): TruthTable {
     const table: TruthTable = [];
-    for (let i = 0; i < combs.length; i++) {
-        const variable_map: Map<string, boolean> = new Map();
-        variables.forEach((key, idx) => variable_map.set(key, combs[i][idx]));
+    for (const comb of combs) {
+        const variable_map = new Map<string, boolean>();
+        variables.forEach((key, idx) => variable_map.set(key, comb[idx]));
 
         const result: boolean = EvaluateAST(ast, variable_map);
         table.push({ result: result, combination: variable_map });
@@ -98,11 +102,15 @@ export function buildPCNF(formula: string): string {
         // build truth table
         const table = build_truth_table(combs, variables, ast);
         // for each interpretation that yielded false
-        const falsy_interpretations = table.filter((interpretation) => interpretation.result === false);
+        const falsy_interpretations = table.filter((interpretation) => !interpretation.result);
         return build_closures(falsy_interpretations);
     }
-    catch (e: any) {
-        throw new Error(e.message);
+    catch (e) {
+        if (typeof e === "string") {
+            throw new Error(e)
+        } else if (e instanceof Error) {
+            throw new Error(e.message)
+        }
+        return ''
     }
 }
-

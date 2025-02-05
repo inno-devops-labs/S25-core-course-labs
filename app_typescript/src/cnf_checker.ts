@@ -1,4 +1,4 @@
-import { ASTNode } from './parser'
+import type { ASTNode } from './parser'
 import { TOKENS } from './tokenizer'
 
 function isLiteral(node: ASTNode): boolean {
@@ -6,6 +6,8 @@ function isLiteral(node: ASTNode): boolean {
         return true;
     }
     // only identifiers or their negations are allowed
+    // eslint disabled since technically negative token is the only unary operator but I who said I will not change it one day
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (node.type === 'UnaryOperation' && node.operator === TOKENS.NEG && node.child.type === 'Identifier') {
         return true;
     }
