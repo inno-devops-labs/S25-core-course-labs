@@ -60,6 +60,31 @@ This document provides an overview of the Python-based web application developed
 
 ---
 
+## 🧪 Unit Testing
+
+To ensure the reliability of the Moscow Time Web Application, **unit tests were written using `pytest`**.
+
+### ✅ What Tests Were Implemented?
+1. **Homepage Status Code**
+   - Ensures the `/` route returns a `200 OK` response.
+2. **Correct Moscow Time Format**
+   - Checks if the displayed time follows the `YYYY-MM-DD HH:MM:SS` format.
+   - Compares it against the expected Moscow timezone.
+
+### ✅ Best Practices Applied
+- **Isolated Test Cases**: Each test function checks only **one aspect** of the application.
+- **Fixtures for Test Clients**: Uses `pytest.fixture` to create a test Flask client.
+- **Regular Expression Matching**: Ensures the time format is always valid.
+
+### ✅ Running Tests
+To run tests locally:
+```bash
+pytest test_app.py
+```
+
+These tests are also executed automatically in the CI/CD pipeline on every push or pull request.
+
+---
 ## Conclusion
 
 This Python web application exemplifies adherence to best practices, coding standards, and quality assurance methods. Flask was chosen for its simplicity and flexibility, and the `pytz` library guarantees accurate timezone handling for Moscow (MSK). By following these principles, the application is reliable, maintainable, and scalable for future improvements.

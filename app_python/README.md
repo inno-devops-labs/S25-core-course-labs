@@ -3,7 +3,7 @@
 ![Python Version](https://img.shields.io/badge/Python-3.9%2B-blue.svg)
 ![Flask Version](https://img.shields.io/badge/Flask-2.2%2B-green.svg)
 ![License](https://img.shields.io/badge/License-MIT-orange.svg)
-![CI/CD Pipeline](https://github.com/Azaki-san/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)
+![CI/CD Pipeline](https://github.com/Azaki-san/S25-core-course-labs/actions/workflows/app_python_ci.yml/badge.svg)
 
 ## 🖥️ Overview
 
@@ -42,7 +42,7 @@ Follow these steps to set up and run the application locally:
    ```bash
    python app.py
 
-5. **Access the Web App Open your browser and go to http://127.0.0.1:5000 to view the Moscow time.**
+5. **Access the Web App Open your browser and go to http://127.0.0.1:5001 to view the Moscow time.**
 
 ## 🖥️ Example Output
 
@@ -57,6 +57,64 @@ Here’s how the page will look:
 |     Refresh the page for updates!    |
 ----------------------------------------
 ```
+
+## 🐳 Distroless Image Version
+
+I implemented a **Distroless-based** image for the Python Moscow Time web application to enhance security and optimize performance.
+
+---
+
+### 📏 Image Size Comparison
+
+| Image Type       | Base Image Used                        | Approx. Size |
+|------------------|---------------------------------------|-------------|
+| **Standard Image** | `python:3.11-alpine3.18`             | **62MB**     |
+| **Distroless Image** | `gcr.io/distroless/base:nonroot`    | **71MB**     |
+
+The **Distroless Python image is actually larger than the Alpine-based image**.
+
+---
+
+### 📥 How to Build the Distroless Image
+
+```bash
+docker build -f distroless.Dockerfile -t azazaki/app_python:distroless .
+```
+
+---
+## 🧪 Unit Tests
+
+Automated unit tests ensure the Moscow Time Web Application functions correctly.
+
+### ✅ How to Run Tests Locally
+1. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+2. **Run Unit Tests**
+   ```bash
+   pytest test_app.py
+   ```
+
+### ✅ What’s Tested?
+- Server Status: Ensures the / route is reachable (200 OK).
+- Correct Time Format: Verifies that the displayed Moscow time is correctly formatted.
+
+These tests are executed **automatically** in the CI/CD pipeline on every push and pull request.
+
+---
+## 🔄 CI/CD Pipeline
+
+The CI/CD pipeline automates testing, security scanning, and Docker deployment.
+
+### 🚀 What Happens on Every Push or PR?
+1. **📦 Dependencies** → Installs required Python packages.
+2. **🔍 Linter** → Runs `flake8` to check code quality.
+3. **🧪 Unit Tests** → Runs `pytest` to ensure correct functionality.
+4. **🛡️ Security Scan** → Uses Snyk to detect vulnerabilities.
+5. **🐳 Docker Build & Push** → Builds and pushes a Docker image to Docker Hub.
+
+---
 
 ## 🚀 Contributing
 
@@ -79,28 +137,4 @@ This web application is created for educational purposes. Feel free to enhance i
 - Showing other time zones.
 - Adding API integration for real-time data.
 - Enhancing the design with more modern styling.
-
----
-
-## 🐳 Distroless Image Version
-
-I implemented a **Distroless-based** image for the Python Moscow Time web application to enhance security and optimize performance.
-
----
-
-### 📏 Image Size Comparison
-
-| Image Type       | Base Image Used                        | Approx. Size |
-|------------------|---------------------------------------|-------------|
-| **Standard Image** | `python:3.11-alpine3.18`             | **62MB**     |
-| **Distroless Image** | `gcr.io/distroless/base:nonroot`    | **71MB**     |
-
-Unlike the Go application, the **Distroless Python image is actually larger than the Alpine-based image**.
-
----
-
-### 📥 How to Build the Distroless Image
-
-```bash
-docker build -f distroless.Dockerfile -t azazaki/app_python:distroless .
 
