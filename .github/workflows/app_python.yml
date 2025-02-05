@@ -5,12 +5,12 @@ on:
     paths:
       - 'app_python/**'
     branches:
-      - '*'
+      - '**'
   pull_request:
     paths:
       - 'app_python/**'
     branches:
-      - '*'
+      - '**'
 
 jobs:
   build:
