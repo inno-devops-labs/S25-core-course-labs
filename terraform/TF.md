@@ -823,4 +823,149 @@ Apply complete! Resources: 2 added, 1 changed, 0 destroyed.
 
 ## 🤝 Github Teams
 
-TODO
+<details>
+<summary>Open output</summary>
+
+```cmd
+terraform\github_teams> terraform apply
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_branch_default.main will be created
+  + resource "github_branch_default" "main" {
+      + branch     = "main"
+      + id         = (known after apply)
+      + repository = "Sus25-core-course-labs"
+    }
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + blocks_creations                = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + pattern                         = "main"
+      + repository_id                   = (known after apply)
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + required_approving_review_count = 1
+        }
+    }
+
+  # github_repository.repo will be created
+  + resource "github_repository" "repo" {
+      + allow_auto_merge            = false
+      + allow_merge_commit          = true
+      + allow_rebase_merge          = true
+      + allow_squash_merge          = true
+      + archived                    = false
+      + auto_init                   = true
+      + branches                    = (known after apply)
+      + default_branch              = (known after apply)
+      + delete_branch_on_merge      = false
+      + description                 = "DevOps course labs solution"
+      + etag                        = (known after apply)
+      + full_name                   = (known after apply)
+      + git_clone_url               = (known after apply)
+      + gitignore_template          = "Go"
+      + has_issues                  = false
+      + has_wiki                    = false
+      + html_url                    = (known after apply)
+      + http_clone_url              = (known after apply)
+      + id                          = (known after apply)
+      + license_template            = "mit"
+      + merge_commit_message        = "PR_TITLE"
+      + merge_commit_title          = "MERGE_MESSAGE"
+      + name                        = "Sus25-core-course-labs"
+      + node_id                     = (known after apply)
+      + private                     = (known after apply)
+      + repo_id                     = (known after apply)
+      + squash_merge_commit_message = "COMMIT_MESSAGES"
+      + squash_merge_commit_title   = "COMMIT_OR_PR_TITLE"
+      + ssh_clone_url               = (known after apply)
+      + svn_url                     = (known after apply)
+      + visibility                  = "public"
+    }
+
+  # github_team.dev_team will be created
+  + resource "github_team" "dev_team" {
+      + create_default_maintainer = false
+      + description               = "Team responsible for development"
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "Developers"
+      + node_id                   = (known after apply)
+      + privacy                   = "closed"
+      + slug                      = (known after apply)
+    }
+
+  # github_team.qa_team will be created
+  + resource "github_team" "qa_team" {
+      + create_default_maintainer = false
+      + description               = "Quality assurance team"
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "QA"
+      + node_id                   = (known after apply)
+      + privacy                   = "closed"
+      + slug                      = (known after apply)
+    }
+
+  # github_team_repository.dev_team_access will be created
+  + resource "github_team_repository" "dev_team_access" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "push"
+      + repository = "Sus25-core-course-labs"
+      + team_id    = (known after apply)
+    }
+
+  # github_team_repository.qa_team_access will be created
+  + resource "github_team_repository" "qa_team_access" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "triage"
+      + repository = "Sus25-core-course-labs"
+      + team_id    = (known after apply)
+    }
+
+Plan: 7 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_team.dev_team: Creating...
+github_team.qa_team: Creating...
+github_repository.repo: Creating...
+github_team.dev_team: Still creating... [10s elapsed]
+github_team.qa_team: Still creating... [10s elapsed]
+github_repository.repo: Still creating... [10s elapsed]
+github_team.dev_team: Creation complete after 14s [id=12119265]
+github_team.qa_team: Creation complete after 14s [id=12119266]
+github_repository.repo: Creation complete after 14s [id=Sus25-core-course-labs]
+github_team_repository.qa_team_access: Creating...
+github_branch_default.main: Creating...
+github_team_repository.dev_team_access: Creating...
+github_branch_protection.default: Creating...
+github_branch_default.main: Creation complete after 2s [id=Sus25-core-course-labs]
+github_team_repository.qa_team_access: Creation complete after 8s [id=12119266:Sus25-core-course-labs]
+github_team_repository.dev_team_access: Creation complete after 9s [id=12119265:Sus25-core-course-labs]
+github_branch_protection.default: Still creating... [10s elapsed]
+github_branch_protection.default: Creation complete after 10s [id=BPR_kwDON0waXs4DicR4]
+
+Apply complete! Resources: 7 added, 0 changed, 0 destroyed.
+```
+
+</details>
