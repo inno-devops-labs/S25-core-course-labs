@@ -42,12 +42,19 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Run Snyk Security Scan
-        uses: snyk/actions/python@master
+      - name: Install Node.js (for Snyk)
+        uses: actions/setup-node@v4
         with:
-          args: --file=requirements.txt
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          node-version: '20'
+
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      - name: Authenticate Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      - name: Run Snyk Security Scan
+        run: snyk test --file=requirements.txt
 
   docker:
     runs-on: ubuntu-latest
