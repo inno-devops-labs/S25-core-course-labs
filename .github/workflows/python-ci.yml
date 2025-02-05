@@ -31,7 +31,7 @@ jobs:
     - name: Run tests with pytest
       run: |
         cd app_python/test
-        pytest test_app.py --cov=. --cov-report=xml
+        pytest 
 
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/python@master
