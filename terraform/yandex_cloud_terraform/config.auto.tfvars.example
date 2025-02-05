@@ -1,0 +1,4 @@
+zone      = "ru-central1-a"
+iam_token = "<your iam_token>"
+cloud_id  = "<your cloud_id>"
+folder_id = "<your folder_id>"

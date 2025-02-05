@@ -212,6 +212,57 @@
     ```
 3. Result: Looking at the obtained results and accessing the web-app applications through the browser, everything was configured correctly.
 
+## Yandex cloud terraform 
+1. I have completed the steps in the Terraform guide for Yandex Cloud.  The service account has been granted the necessary permissions to make changes and create various services in Yandex Cloud.
+2. The results of applying the created Terraform infrastructure will be provided below.
+   **terraform validate**
+   ```
+   Success! The configuration is valid.
+   ```
+
+   **terraform plan**
+   ```
+    ...
+
+    Plan: 6 to add, 0 to change, 0 to destroy.
+
+    Changes to Outputs:
+    + external_ip_address_vm_1 = (known after apply)
+    + external_ip_address_vm_2 = (known after apply)
+    + internal_ip_address_vm_1 = (known after apply)
+    + internal_ip_address_vm_2 = (known after apply)
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+
+    Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
+    ```
+
+3. The provided `main.tf` file on the page https://yandex.cloud/ru/docs/tutorials/infrastructure-management/terraform-quickstart#linux-macos_1 contains outdated values related to the ID of the image being installed, network zone mismatches, and storage volume size (now a minimum of 30 GB). These discrepancies need to be corrected, after which `terraform apply` should succeed.
+4. **terraform apply**
+    ```
+    ...
+
+    Apply complete! Resources: 5 added, 0 changed, 3 destroyed.
+
+    Outputs:
+
+    external_ip_address_vm_1 = "158.160.32.223"
+    external_ip_address_vm_2 = "158.160.56.87"
+    internal_ip_address_vm_1 = "192.168.10.5"
+    internal_ip_address_vm_2 = "192.168.10.30"
+    ```
+4. Result: 
+
+   ![alt text](images/yandex_cloud_complete.png)
+
+5. And finally, I deleted the created virtual machines, because I have better uses for 1000 rubles than running servers.)
+    **terraform destroy**
+    ```
+    yandex_vpc_network.network-1: Destruction complete after 0s
+
+    Destroy complete! Resources: 6 destroyed.
+    ```
+
 ## Github terraform
 
 1. I configured the infrastructure for GitHub as specified in the link in the lab assignment and then applied it.
@@ -489,4 +540,5 @@
     Plan: 7 to add, 0 to change, 0 to destroy.
     ```
 3. Then I ran `terraform apply`, and below in the screenshot, you can see confirmation that it worked.
-    ![alt text](bonus_task_image.png)
+
+    ![alt text](images/bonus_task_image.png)
