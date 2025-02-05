@@ -43,7 +43,6 @@ jobs:
           chmod +x /usr/local/bin/hadolint
           ls -l /usr/local/bin/hadolint  # Проверяем права
           /usr/local/bin/hadolint --version
-        
 
   docker:
     needs: build-and-test
@@ -65,4 +64,4 @@ jobs:
           context: app_python
           file: app_python/Dockerfile
           push: true
-          tags: your-dockerhub-username/moscow-time-app:latest
+          tags: friji/moscow-time-app:latest
