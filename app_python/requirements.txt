@@ -3,3 +3,4 @@ fastapi[standard]==0.115.7
 pydantic==2.10.6
 pytz==2024.2
 beautifulsoup4==4.12.3
+pytest==8.2.2
