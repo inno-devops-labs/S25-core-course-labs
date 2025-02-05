@@ -40,11 +40,11 @@ jobs:
           pip install -r requirements.txt
           
       - name: Run Snyk to check for vulnerabilities
-        working-directory: ./app_python
-        run: |
-          snyk test --file=requirements.txt --package-manager=pip --severity-threshold=high
+        uses: snyk/actions/python@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --file=app_python/requirements.txt --severity-threshold=high
         continue-on-error: true
           
       - name: Lint with flake8
