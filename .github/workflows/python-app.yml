@@ -40,12 +40,9 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Set up test database
-      run: |
-        export SQLALCHEMY_DATABASE_URI='sqlite:///:memory:'
     - name: Test with pytest
       run: |
-        export SQLALCHEMY_DATABASE_URI='postgresql://myuser:mypassword@localhost:5432/times'
+        export DATABASE_URI='postgresql://myuser:mypassword@localhost:5432/times'
         pytest
   docker:
     runs-on: ubuntu-latest
