@@ -5,6 +5,7 @@ on: [push]
 jobs:
   ci:
     runs-on: ubuntu-24.04
+    environment: ci
     defaults:
       run:
         working-directory: ./app_python
