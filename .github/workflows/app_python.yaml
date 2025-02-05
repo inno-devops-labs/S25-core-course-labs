@@ -38,24 +38,8 @@ jobs:
             run: ruff check .
           - name: Run formatter check
             run: ruff format --check .
-    security:
-      name: Snyk Security Check
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v4
-        - uses: actions/setup-python@v5
-          with:
-            python-version: "3.11"
-            cache: 'pip'
-        - name: Install dependencies
-          run: |
-              pip install -r requirements.txt
-              pip install -r requirements.dev.txt
-        - uses: actions/checkout@master
-        - name: Run Snyk to check for vulnerabilities
-          uses: snyk/actions/python-3.10@master
-          env:
-            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-          with:
-            args: --severity-threshold=high --file=./app_python/requirements.txt
-          
+          - uses: snyk/actions/setup@master
+          - name: Security check
+            run: snyk test
+            env:
+              SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
