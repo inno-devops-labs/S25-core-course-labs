@@ -42,7 +42,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run tests
-        run: pytest ./app_python/web.py -v
+        run: pytest ./app_python/unit_test.py -v
 
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python-3.10@master
