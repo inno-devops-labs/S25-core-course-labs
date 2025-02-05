@@ -1,5 +1,5 @@
 """
-This is a python web application using flask framework that shows current time in Moscow.
+This is a python web application using Flask framework that shows current time in Moscow.
 """
 
 from datetime import datetime, timezone, timedelta
@@ -12,7 +12,7 @@ web_app = Flask(__name__)
 @web_app.route("/")
 def index():
     """
-    Returns html page with current time in Moscow
+    Returns rendered template with current time in Moscow timezone
     """
     utc_now = datetime.now(timezone.utc)
     moscow_tz = timezone(timedelta(hours=3))
