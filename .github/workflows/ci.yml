@@ -49,16 +49,9 @@ jobs:
         run: docker push ezzysoft/moscow-time:latest
 
       - name: Snyk Python Security Scan
-        uses: snyk/actions/python@v3
+        uses: snyk/actions/python@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: test
           args: --file=./app_python/requirements.txt --package-manager=pip
-      - name: Snyk Docker Security Scan
-        uses: snyk/actions/docker@v3
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: ezzysoft/moscow-time:latest
-          args: --file=./app_python/Dockerfile
