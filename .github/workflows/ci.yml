@@ -2,6 +2,9 @@ name: CI Workflow
 
 on:
   push:
+    branches:
+      - master
+      - lab3
     paths:
       - 'app_python/'
 
