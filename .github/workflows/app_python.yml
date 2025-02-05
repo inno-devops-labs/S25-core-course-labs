@@ -45,7 +45,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v6
       with:
-        context: ./moscow_time
+        context: ./app_python
         file: theanushervon/moscow_time
         push: true
         tags: user/app:latest
