@@ -39,7 +39,8 @@ jobs:
 
       - name: Docker Build & Push
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/python-app:latest .
-          docker push ${{ secrets.DOCKER_USERNAME }}/python-app:latest
+          docker build -t em1999jay/python-app:latest .
+          docker push em1999jay/python-app:latest
+      
 
       
