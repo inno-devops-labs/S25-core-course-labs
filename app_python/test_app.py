@@ -20,7 +20,7 @@ class FlaskTestCase(unittest.TestCase):
     def test_moscow_time_format(self):
         """Test if the Moscow time format is correct"""
         moscow_time = get_moscow_time()
-        #check if the time format is 'YYYY-MM-DD HH:MM:SS'
+        # Check if the time format is 'YYYY-MM-DD HH:MM:SS'
         try:
             datetime.strptime(moscow_time, '%Y-%m-%d %H:%M:%S')
         except ValueError:
@@ -31,7 +31,7 @@ class FlaskTestCase(unittest.TestCase):
         moscow_tz = pytz.timezone('Europe/Moscow')
         current_time = datetime.now(moscow_tz)
         moscow_time = get_moscow_time()
-        #check if Moscow time is correct.
+        # Test if the time returned matches Moscow time
         self.assertTrue(current_time.strftime('%Y-%m-%d %H:%M:%S') == moscow_time[:19])
 
 if __name__ == '__main__':
