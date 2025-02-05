@@ -9,8 +9,11 @@ on:
       - lab_3
 
 jobs:
-  build:
+  build-lint-test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app_python
 
     steps:
       # Step 1: Check out the repository
@@ -48,6 +51,9 @@ jobs:
         run: |
           pytest app_python/tests/
 
+  security:
+    runs-on: ubuntu-latest
+    steps:
       # Step 7: Install Snyk
       - name: Install Snyk
         run: npm install -g snyk
@@ -58,6 +64,12 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
+  docker-worker:
+   runs-on: ubuntu-latest
+   defaults:
+     run:
+       working-directory: ./app_python
+   steps:
       # Step 9: Log in to Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
