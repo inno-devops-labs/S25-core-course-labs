@@ -5,10 +5,6 @@ import pytz
 app = Flask(__name__)
 
 # for testing workflow
-# for testing workflow
-# for testing workflow
-# for testing workflow
-# for testing workflow
 
 def get_moscow_time():
     moscow_tz = pytz.timezone('Europe/Moscow')
