@@ -9,5 +9,14 @@
 - Python's PEP 8 standards
 - Structure: the code has good name variables that ensures readability
 
-## Testing
-- Manual testing: the application was tested locally by refreshing the web-page in the browser
+## Testing Description
+For the testing of the application we have 3 tests:
+
+- First test: check that page loads succesfully with HTTP code 200
+- Second test: check if the response contains text "Current time in Moscow, Russia:"
+- Third test: check if the time displays
+
+## Best practices for code testing
+- Fast: unit tests take not a much time
+- Self-checking: automatic detection of its results
+- Isolated: unit tests are standalone in a single 'test_cases.py' file

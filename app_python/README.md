@@ -1,3 +1,5 @@
+![Python app](https://github.com/your-username/your-repo/actions/workflows/ci.yml/badge.svg)
+
 # Python Application to display Moscow time
 
 ## Description
@@ -57,6 +59,22 @@ timezone**
    docker pull dew1769/application-real-time:v1
    docker run -p 5000:5000 dew1769/application-real-time:v1
 
+## Unit Tests
+The file 'test_cases.py' contains simple unit tests to check the correctness:
+1. Page loading with HTTP code 200
+2. Containing text about the time
+3. The page displays the time
+
+- Local usage (use the following command): `pytest app_python/test_cases.py`
+
+## CI workflow
+Git hub Actions (`.github/workflows/ci.yml`):
+
+- Security check using `synk`
+- Set up Python and dependencies
+- Unit tests
+- Docker Build & Push
+
 ## Usage
 **After the application has been launched locally or with the use of Docker, open your browser and enter the address in
 the search bar and test the application: 
@@ -66,3 +84,5 @@ the search bar and test the application:
 - Flask documentation
 - pytz
 - Docker
+- synk
+- Github Actions
