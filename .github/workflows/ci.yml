@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Navigate to app_python
-        run: cd lab3/app_python  # Adjust path to match your structure
+        run: cd app_python  # Adjust path to match your structure
 
       - name: Set up Python 3.9
         uses: actions/setup-python@v4
