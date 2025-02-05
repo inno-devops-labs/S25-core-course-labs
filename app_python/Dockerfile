@@ -1,22 +1,21 @@
-# Use a lightweight specific version of Python
+# Use a lightweight Python base image
 FROM python:3.9-slim
 
-# Create a non-root user
-RUN useradd --create-home appuser
+# Set a working directory for the app
 WORKDIR /home/appuser
 
-# Set the non-root user
-USER appuser
+# Copy application files first while still running as root
+COPY app.py requirements.txt ./
 
-# Copy only necessary files
-COPY requirements.txt .
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application files
-COPY app.py .
+# Create a non-root user and switch to it
+RUN useradd --create-home appuser && chown -R appuser:appuser /home/appuser
+USER appuser
 
-# Expose the application port
+# Expose port 5000
 EXPOSE 5000
 
-# Run the application
-CMD ["python", "app.py"]
+# Set default entrypoint
+ENTRYPOINT ["python", "app.py"]
