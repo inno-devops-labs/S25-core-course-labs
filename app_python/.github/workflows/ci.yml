@@ -1,0 +1,82 @@
+name: CI Pipeline
+on: [push, pull_request]  # Triggers on code push or PR
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest  # Use GitHub-hosted runner
+    steps:
+      # Step 1: Checkout code from repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Python 3.9
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'  # Matches Dockerfile version
+
+      # Step 3: Cache pip dependencies to speed up future runs
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      # Step 4: Install dependencies
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt  # Install app dependencies
+          pip install flake8 pytest        # Install dev tools
+
+      # Step 5: Lint code with flake8 (PEP8 compliance)
+      - name: Run linter (flake8)
+        run: flake8 . --count --show-source --statistics  # Enforce code style
+
+      # Step 6: Run unit tests
+      - name: Run tests
+        run: pytest -v tests/  # Verbose test output
+
+      # Step 7: Snyk Python vulnerability scan
+      - name: Snyk Python Scan
+        uses: snyk/actions/python@v3
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  # From GitHub Secrets
+        with:
+          command: test
+          args: --severity-threshold=high  # Fail on high-severity issues
+
+  docker-publish:
+    needs: lint-and-test  # Depends on successful lint/test
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Log in to Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}  # Docker Hub username
+          password: ${{ secrets.DOCKERHUB_TOKEN }}     # Docker Hub access token
+
+      # Step 3: Build and push Docker image
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .  # Use current directory as build context
+          push: true  # Push to registry after build
+          tags: |
+            yehiasobeh/moscow-time-app:latest
+            yehiasobeh/moscow-time-app:${{ github.sha }}  # Commit SHA tag
+
+      # Step 4: Snyk Docker image scan
+      - name: Snyk Container Scan
+        uses: snyk/actions/docker@v3
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: yehiasobeh/moscow-time-app:latest  # Scan the built image
+          args: --severity-threshold=high
