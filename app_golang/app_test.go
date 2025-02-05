@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func TestGetMoscowTimeStatusCode(t *testing.T) {
+func TestStatusCode(t *testing.T) {
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
 		t.Fatal(err)
@@ -24,7 +24,7 @@ func TestGetMoscowTimeStatusCode(t *testing.T) {
 	}
 }
 
-func TestGetMoscowTimeAccuracy(t *testing.T) {
+func TestAccuracy(t *testing.T) {
 	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
 		t.Fatal(err)
