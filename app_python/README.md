@@ -1,5 +1,7 @@
 # Moscow Time Web Application
 
+![CI Status](https://github.com/Ali12hamdan/S25-core-course-labs/actions/workflows/py-ci.yml/badge.svg)
+
 ## Overview
 This is a simple web application that displays the current time in Moscow. It is built using **Python** and **Flask**, and containerized using **Docker**.
 
@@ -18,7 +20,15 @@ This is a simple web application that displays the current time in Moscow. It is
 
 
 
-## Unit Tests
+### Unit Tests
 Run tests with:
 ```bash
 pytest test_app.py -v
+```
+
+### CI/CD
+This project uses GitHub Actions for continuous integration:
+
+ - **Tests**: Linting, unit tests, and Docker builds run on every push.
+
+ - **Docker Image**: Automatically built and pushed to Docker Hub.
