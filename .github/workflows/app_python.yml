@@ -4,7 +4,10 @@ on: [push]
 
 jobs:
   ci:
-    runs-on: ubuntu-24.04
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-24.04, windows-2022, macos-14]
     defaults:
       run:
         working-directory: ./app_python
@@ -24,7 +27,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Format (Black)
-        uses: psf/black@stable
+        uses: psf/black@24.10.0
         with:
           options: "--verbose --check"
 
