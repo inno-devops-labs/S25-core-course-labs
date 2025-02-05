@@ -122,5 +122,4 @@ jobs:
       run: npm install -g snyk
 
     - name: Run snyk vulnerability test
-      run: snyk test --file=app_python/requirements.txt --skip-unresolved
-
+      run: snyk test --skip-unresolved
