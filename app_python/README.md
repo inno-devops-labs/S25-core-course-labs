@@ -1,4 +1,4 @@
-![Python app](https://github.com/your-username/your-repo/actions/workflows/ci.yml/badge.svg)
+![Python app](https://github.com/dew1769/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)
 
 # Python Application to display Moscow time
 
