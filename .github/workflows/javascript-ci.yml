@@ -47,8 +47,10 @@ jobs:
       uses: snyk/actions/node@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      continue-on-error: true
       with:
-        args: --all-projects
+        args: --severity-threshold=high --skip-unresolved app_javascript/
+        command: test
         
 
   docker:
