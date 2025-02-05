@@ -166,3 +166,48 @@ app_python/
 - FastAPI team for the excellent framework
 - Python community for the amazing ecosystem
 - Docker team for container runtime
+
+## Unit Tests
+
+The application includes comprehensive unit tests using pytest. The tests cover:
+
+- Core time formatting functionality
+- API endpoints
+- Configuration validation
+- HTML template rendering
+- Error handling
+
+To run the tests:
+
+```bash
+# Install test dependencies
+pip install -r requirements.txt
+
+# Run tests with coverage
+pytest --cov=.
+```
+
+For detailed testing documentation, see [PYTHON.md](PYTHON.md).
+
+## CI/CD Pipeline
+
+This project uses GitHub Actions for continuous integration and delivery. The pipeline includes:
+
+### Testing Stage
+- Python environment setup
+- Dependency installation
+- Code linting with flake8
+- Unit tests with coverage reporting
+- Coverage report upload to Codecov
+
+### Docker Stage
+- Automated builds on main branch
+- Login to GitHub Container Registry
+- Build and push Docker image with tags:
+  - latest
+  - commit SHA
+
+The complete workflow configuration can be found in `.github/workflows/python-ci.yml`.
+
+### CI/CD Status
+[![Python CI/CD](https://github.com/{owner}/{repo}/actions/workflows/python-ci.yml/badge.svg)](https://github.com/{owner}/{repo}/actions/workflows/python-ci.yml)

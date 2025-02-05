@@ -77,3 +77,86 @@ The project uses several tools to maintain code quality:
    - Black for code formatting
    - isort for import sorting
    - flake8 for style guide enforcement
+
+# Python Application Testing Documentation
+
+## Testing Strategy
+
+Our application implements comprehensive testing using pytest as the primary testing framework. The testing strategy follows these best practices:
+
+### Unit Tests
+Located in the `tests/` directory, our unit tests cover:
+
+1. **Core Functionality Tests**
+   - Time formatting and timezone handling
+   - Data type and structure validation
+   - Error handling and edge cases
+
+2. **API Endpoint Tests**
+   - Response status codes
+   - Response content validation
+   - Content-type headers
+   - Async functionality
+
+3. **Configuration Tests**
+   - Timezone validity
+   - Settings validation
+
+### Test Coverage
+We use pytest-cov to maintain high test coverage:
+- All core functions are tested
+- Edge cases and error conditions are verified
+- Async operations are properly tested
+- HTML template rendering is validated
+
+### Best Practices Applied
+1. **Test Organization**
+   - Clear test file structure
+   - Descriptive test names
+   - Comprehensive docstrings
+   - Isolated test cases
+
+2. **Code Quality**
+   - Flake8 for linting
+   - Coverage reporting
+   - Async testing support
+   - Proper test isolation
+
+3. **CI Integration**
+   - Automated testing in CI pipeline
+   - Coverage reporting in CI
+   - Linting checks
+   - Docker build verification
+
+## Running Tests
+
+To run the tests locally:
+
+```bash
+# Install test dependencies
+pip install -r requirements.txt
+
+# Run tests with coverage
+pytest --cov=.
+
+# Run specific test file
+pytest tests/test_main.py
+
+# Run with verbose output
+pytest -v
+```
+
+## Test Configuration
+
+The `pytest.ini` file configures:
+- Test discovery patterns
+- Coverage reporting
+- Async test mode
+- Verbose output
+
+## Continuous Integration
+
+Tests are automatically run in GitHub Actions:
+1. On every push to main
+2. On pull requests
+3. Before Docker image builds
