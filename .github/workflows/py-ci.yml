@@ -33,6 +33,7 @@ jobs:
           
       - name: Run tests
         run: |
+          cd app_python
           pytest test_app.py -v
 
   docker-build-push:
