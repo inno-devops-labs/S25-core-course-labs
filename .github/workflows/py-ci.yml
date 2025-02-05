@@ -17,6 +17,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd app_python/
           pip install -r requirements.txt
 
       - name: Run linter (flake8)
