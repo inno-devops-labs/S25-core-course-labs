@@ -11,12 +11,12 @@ terraform {
 provider "docker" {}
 
 resource "docker_image" "python_app" {
-  name = "nickolaus899/python-msk-time:latest"
+  name         = "nickolaus899/python-msk-time:latest"
   keep_locally = false
 }
 
 resource "docker_image" "node_app" {
-  name = "nickolaus899/js-cities-dist:latest"
+  name         = "nickolaus899/js-cities-dist:latest"
   keep_locally = false
 }
 
