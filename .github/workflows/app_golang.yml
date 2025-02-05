@@ -37,6 +37,7 @@ jobs:
     
     - name: Snyk scan
       uses: snyk/actions/golang@master
+    - run: cd app_golang 
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
