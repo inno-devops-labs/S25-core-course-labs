@@ -1,5 +1,7 @@
 # Current Moscow time web application
 
+![Workflow status badge](https://github.com/danmaninc/S25-core-course-labs/actions/workflows/app_python.yml/badge.svg)
+
 ## Overview
 
 This web application displays the current time in Moscow. It supports two formats of the output:
