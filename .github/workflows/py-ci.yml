@@ -24,7 +24,12 @@ jobs:
         run: |
           pip install flake8
           flake8 . --count --show-source --statistics || true
-
+          
+      - name: Start My App
+        run: |
+          cd app_python
+          python app.py
+          
       - name: Run tests
         run: |
           pytest test_app.py -v
