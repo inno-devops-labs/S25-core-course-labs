@@ -34,6 +34,13 @@ jobs:
     - name: Run tests
       run: go test -v ./...
       working-directory: app_golang
+    
+    - name: Snyk scan
+      uses: snyk/actions/golang@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: app_golang/ --severity-threshold=high --skip-unresolved
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
