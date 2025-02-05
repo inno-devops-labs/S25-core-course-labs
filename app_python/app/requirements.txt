@@ -3,3 +3,4 @@ uvicorn
 pytz
 jinja2
 pytest
+httpx
