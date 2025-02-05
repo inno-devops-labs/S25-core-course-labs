@@ -1097,3 +1097,6 @@ I followed the guide `https://yandex.cloud/en-ru/docs/tutorials/infrastructure-m
 
       Apply complete! Resources: 10 added, 0 changed, 0 destroyed.
     ```
+As a result, the teams were created:
+
+![Created teams](./lab4-teams.png)
