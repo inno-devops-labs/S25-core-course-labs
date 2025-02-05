@@ -38,6 +38,14 @@ jobs:
           pip install flake8 pytest
           cd app_python
           pip install -r requirements.txt
+
+       - name: Run Snyk to check for vulnerabilities
+         uses: snyk/actions/python-3.8@master
+         env:
+           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+         with:
+           args: --severity-threshold=high
+         continue-on-error: true
       
       - name: Lint with flake8
         run: |
@@ -49,7 +57,7 @@ jobs:
         run: |
           cd app_python
           pytest
-      
+
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
