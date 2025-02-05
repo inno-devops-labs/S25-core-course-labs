@@ -12,28 +12,28 @@ provider "github" {
 }
 
 resource "github_repository" "repo" {
-  name               = "S25-core-course-labs"
-  description        = "DevOps course labs solution"
-  visibility         = "public"
-  has_issues         = false
-  has_wiki           = false
-  auto_init          = true
-  license_template   = "mit"
-  gitignore_template = "Python"
+  name               = var.repo_name
+  description        = var.repo_desc
+  visibility         = var.repo_visibility
+  has_issues         = var.repo_has_issues
+  has_wiki           = var.repo_has_wiki
+  auto_init          = var.repo_auto_init
+  license_template   = var.repo_license
+  gitignore_template = var.repo_gitignore
 }
 
 resource "github_branch_default" "master" {
   repository = github_repository.repo.name
-  branch     = "master"
+  branch     = var.default_branch
 }
 
 resource "github_branch_protection" "default" {
   repository_id                   = github_repository.repo.id
-  pattern                         = github_branch_default.master.branch
-  require_conversation_resolution = true
-  enforce_admins                  = true
+  pattern                         = var.default_branch
+  require_conversation_resolution = var.require_conversation_resolution
+  enforce_admins                  = var.enforce_admins
 
   required_pull_request_reviews {
-    required_approving_review_count = 1
+    required_approving_review_count = var.required_approving_review_count
   }
 }
