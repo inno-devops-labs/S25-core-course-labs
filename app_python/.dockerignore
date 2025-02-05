@@ -4,6 +4,8 @@ __pycache__/
 *.pyd
 *.png
 
+.pytest_cache
+
 *.md
 README.*
 LICENSE

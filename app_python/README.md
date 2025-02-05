@@ -67,3 +67,35 @@ docker run -p 8000:8000 fastapi-mt:distroless
 docker pull iucd/fastapi-mt:distroless
 docker run -p 8000:8000 iucd/fastapi-mt:distroless
 ```
+
+## Unit Tests
+Unit tests have been implemented to ensure the correctness and reliability of the application. The tests cover the following key scenarios:
+
+1. **Homepage Loading**:
+   - Ensures the main page loads successfully with a valid HTTP response and contains the expected HTML structure.
+
+2. **Time Format Validation**:
+   - Extracts the displayed Moscow time from the response and verifies that it follows the expected `dd.mm.YYYY HH:MM:SS` format.
+
+3. **Time Accuracy Validation**:
+   - Compares the extracted Moscow time with the actual Moscow time at the moment of request to ensure accuracy (within a few seconds tolerance).
+
+### Running Tests
+To execute the tests, use the following command:
+```sh
+pytest test_main.py
+```
+
+## Continuous Integration (CI)
+The project includes a GitHub Actions CI workflow to automate testing and Docker builds. The workflow consists of:
+
+1. **Build and Test**:
+   - Checks out the repository.
+   - Sets up Python and installs dependencies.
+   - Runs a linter for code quality checks.
+   - Executes unit tests to validate functionality.
+
+2. **Docker Build and Push**:
+   - Logs in to Docker Hub using GitHub Secrets.
+   - Builds the Docker image.
+   - Pushes the images (original and distroless) to Docker Hub.

@@ -27,17 +27,38 @@
    - A `requirements.txt` file is created to specify the dependencies, ensuring that application can be easily installed.
 
 ## Testing and Code Quality
-1. **Testing**:
-   - Used `pytest` for unit testing.
-   - Verified that the application correctly renders the current Moscow date in `dd.mm.YYYY HH:MM:SS` format.
-   - Validated the HTML structure in the response.
+1. **Response Status Code**:
+    - Ensures that the HTTP response returns 200 OK, confirming that the endpoint is accessible.
 
-2. **Testing By Hand**:
-    - Checked by hand in browser.
-    - Simulated high load (100 users per second)
+2. **Content-Type Validation**:
+    - Verifies that the response contains text/html in the Content-Type header, ensuring the returned data is HTML.
 
-3. **Code Quality**:
-   - Used meaningful variable and function names for better readability.
+3. **Time Format Validation**:
+    - Extracts the timestamp from the HTML response using regular expressions to match the format dd.mm.YYYY HH:MM:SS.
+    - Checks that the extracted timestamp is present and correctly formatted.
 
-4. **Git Practices**:
-   - Maintained a clean `.gitignore` file to exclude unnecessary files (e.g., `__pycache__`).
+4. **Timezone Awareness and Time Accuracy**:
+   - Converts the extracted timestamp into a timezone-aware datetime object using MOSCOW_TZ.localize(extracted_time).
+   - Retrieves the current Moscow time from the system (datetime.now(MOSCOW_TZ)) and calculates the time difference.
+   - Asserts that the difference between the response time and the actual time is less than 5 seconds.
+
+## Best Practices Applied for Testing
+1. **Isolation of Test Cases**  
+   - The test runs independently of external dependencies, such as a network calls. The FastAPI `TestClient` is used to simulate API requests.
+
+2. **Validation of Response Type and Format**  
+   - Ensures that the API response is structured correctly as an HTML page.
+   - Uses a **regular expression** to extract and validate the timestamp format.
+
+3. **Handling Timezone Differences**  
+   - Avoids `TypeError` (caused by naive vs. aware datetime comparison) by explicitly making the extracted timestamp **timezone-aware** with `MOSCOW_TZ.localize()`.
+
+4. **Tolerance for Execution Delays**  
+   - Allows a small time difference (≤ 5 seconds) to prevent flakiness due to execution lag.
+
+5. **Maintainability and Readability**  
+   - Uses clear variable names (`now_moscow`, `extracted_time`, `time_difference`).
+   - Includes assertions with **meaningful error messages** to make debugging easier.
+
+6. **Automated Testing with `pytest`**  
+   - The test is compatible with `pytest`, allowing seamless execution and integration into CI/CD pipelines.
