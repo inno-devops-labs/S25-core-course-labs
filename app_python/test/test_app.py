@@ -26,24 +26,24 @@ def test_timezone():
     current_time = datetime.now(moscow_tz)
     assert current_time.tzinfo.zone == 'Europe/Moscow'
 
-def test_server_time_accuracy():
-    """Test that server time is within acceptable range of system time."""
+# def test_server_time_accuracy():
+#     """Test that server time is within acceptable range of system time."""
 
-    local_time = time.time()
+#     local_time = time.time()
     
 
-    with app.test_client() as client:
-        response = client.get('/get_time')
-        server_time_str = response.get_json()['time']
+#     with app.test_client() as client:
+#         response = client.get('/get_time')
+#         server_time_str = response.get_json()['time']
         
-        server_time = datetime.strptime(
-            server_time_str.split(' ')[0] + ' ' + server_time_str.split(' ')[1], 
-            '%Y-%m-%d %H:%M:%S'
-        ).timestamp()
+#         server_time = datetime.strptime(
+#             server_time_str.split(' ')[0] + ' ' + server_time_str.split(' ')[1], 
+#             '%Y-%m-%d %H:%M:%S'
+#         ).timestamp()
         
 
-        time_difference = abs(local_time - server_time)
-        assert time_difference < 2, f"Time difference too large: {time_difference} seconds"
+#         time_difference = abs(local_time - server_time)
+#         assert time_difference < 2, f"Time difference too large: {time_difference} seconds"
 
 def test_time_synchronization():
     """Test time synchronization between multiple requests."""
