@@ -63,11 +63,13 @@ jobs:
         push: true
         tags: ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
 
-    - name: Run snyk
-      uses: snyk/actions/python-3.10@master
-      with:
-        command: test
+    - name: Install snyk
+      run: npm install -g snyk
+
+    - name: Run snyk 
+      run: |
+        cd app_python
+        snyk test
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      working-directory: ./app_python
       
