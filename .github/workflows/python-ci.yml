@@ -20,16 +20,19 @@ jobs:
 
     - name: Install dependencies
       run: |
+        cd app_python
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
     - name: Run linter
       run: |
+        cd app_python
         pip install flake8
         flake8 .
 
     - name: Run tests
       run: |
+        cd app_python
         pip install pytest
         pytest
 
@@ -41,8 +44,10 @@ jobs:
 
     - name: Build Docker image
       run: |
+        cd app_python
         docker build -t lab2:latest .
 
     - name: Push Docker image
       run: |
+        cd app_python
         docker push ${{ secrets.DOCKER_USERNAME }}/lab2:latest
