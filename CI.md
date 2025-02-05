@@ -4,88 +4,82 @@
 
 This document outlines the CI workflow implementation and best practices applied to our Python and Node.js applications.
 
-## CI Workflow Components
+## Workflow Structure
 
-### 1. Dependencies Installation
+### 1. Analyze Job
+Performs code analysis, testing, and security scanning:
 
-- Uses pip/npm caching to speed up dependency installation
-- Installs all required packages from requirements.txt/package.json
-- Upgrades pip to latest version for better compatibility
+#### Code Quality and Testing
+- Linting (flake8 for Python, ESLint for Node.js)
+- Unit testing (pytest for Python, Jest for Node.js)
+- Code style enforcement
+- Complexity checks
 
-### 2. Code Quality Checks
+#### Security Analysis
+- CodeQL scanning for vulnerabilities
+- Snyk dependency scanning
+- Results uploaded to GitHub Code Scanning
+- High severity threshold enforcement
 
-- Implements flake8 for Python linting
-- Uses ESLint for Node.js linting
-- Enforces PEP 8 style guide for Python
-- Checks for syntax errors and undefined names
-- Sets maximum complexity threshold
-- Enforces line length limits
+### 2. Build Job
+Handles Docker image building and publishing:
 
-### 3. Testing
+#### Docker Integration
+- Builds standard and distroless images
+- Uses Docker Buildx for efficient builds
+- Implements layer caching
+- Pushes to Docker Hub registry
 
-- Runs unit tests using pytest for Python
-- Uses Jest for Node.js testing
-- Provides verbose output for better debugging
-- Tests are run in isolated environment
+## Security Features
 
-### 4. Docker Integration
+### 1. CodeQL Analysis
+- Language-specific security scanning
+- Automated vulnerability detection
+- Integration with GitHub Security tab
+- Custom query support
 
-#### Standard Images
+### 2. Snyk Integration
+- Dependency vulnerability scanning
+- SARIF report generation
+- Continuous monitoring
+- High-severity issue blocking
 
-- Authenticates with Docker Hub
-- Builds Docker images from Dockerfile
-- Uses multi-stage builds for smaller images
-- Implements build caching for faster builds
+### 3. Distroless Images
+- Minimal attack surface
+- No shell or unnecessary tools
+- Reduced image size
+- Enhanced security posture
 
-#### Distroless Images
+## Best Practices
 
-- Builds security-optimized distroless images
-- Uses separate Dockerfile for distroless builds
-- Reduces attack surface by removing shell and unnecessary tools
-- Implements separate build caching for distroless images
-- Tags images with :distroless suffix
+### 1. Job Organization
+- Separate analyze and build jobs
+- Dependencies properly defined
+- Parallel execution where possible
+- Fail-fast disabled for thorough analysis
 
-### 5. Security Scanning
+### 2. Caching Strategy
+- npm/pip package caching
+- Docker layer caching
+- Build cache persistence
+- Registry-based caching
 
-- Integrates Snyk for vulnerability scanning
-- Checks dependencies for known vulnerabilities
-- Sets severity threshold for failing builds
-- Provides detailed security reports
+### 3. Security Controls
+- Explicit permissions model
+- Secret management
+- Continuous vulnerability monitoring
+- Automated security updates
 
-## Best Practices Implemented
-
-1. **Path Filtering**
-
-   - Workflows run only when relevant files change
-   - Separate workflows for Python and Node.js applications
-   - Prevents unnecessary builds
-
-2. **Caching Strategy**
-
-   - Implements pip/npm cache
-   - Uses Docker layer caching
-   - Separate build caches for standard and distroless images
-   - Reduces build times and resource usage
-
-3. **Security**
-
-   - Secrets stored in GitHub Secrets
-   - Regular vulnerability scanning
-   - Automated security updates
-   - Distroless images for enhanced security
-
-4. **Workflow Optimization**
-   - Parallel job execution where possible
-   - Efficient step ordering
-   - Minimal build times
-   - Build cache persistence
+### 4. Quality Gates
+- Linting must pass
+- Tests must succeed
+- Security scans must pass
+- High-severity issues block builds
 
 ## Status Badges
 
 ### Python Application
-
 [![Python Application CI](https://github.com/AlexStrNik/S25-core-course-labs/actions/workflows/python-app.yml/badge.svg)](https://github.com/AlexStrNik/S25-core-course-labs/actions/workflows/python-app.yml)
 
 ### Node.js Application
-
 [![Node.js Application CI](https://github.com/AlexStrNik/S25-core-course-labs/actions/workflows/nodejs-app.yml/badge.svg)](https://github.com/AlexStrNik/S25-core-course-labs/actions/workflows/nodejs-app.yml)

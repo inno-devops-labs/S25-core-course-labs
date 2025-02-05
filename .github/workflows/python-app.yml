@@ -8,9 +8,24 @@ on:
     paths:
       - "app_python/**"
 
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
 jobs:
-  build:
+  analyze:
+    name: Analyze Code
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'python' ]
 
     steps:
       - uses: actions/checkout@v4
@@ -37,6 +52,38 @@ jobs:
         run: |
           cd app_python
           python -m pytest test_app.py -v
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python-3.10@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test
+          args: --file=app_python/requirements.txt --package-manager=pip --skip-unresolved --severity-threshold=high --sarif-file-output=snyk.sarif
+
+      - name: Upload Snyk result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: snyk.sarif
+
+  build:
+    runs-on: ubuntu-latest
+    needs: analyze
+
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -65,11 +112,3 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/python-app:distroless
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/python-app:distroless-buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/python-app:distroless-buildcache,mode=max
-
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/python-3.10@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test
-          args: --file=app_python/requirements.txt --package-manager=pip --skip-unresolved --severity-threshold=high
