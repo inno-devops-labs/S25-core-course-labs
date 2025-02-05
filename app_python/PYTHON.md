@@ -36,8 +36,9 @@
    mypy app.py
    black --check app.py
    ```
-   
+
 ### 4. Architecture
+
 ```
 app_python/
 ├── .gitignore
@@ -45,6 +46,34 @@ app_python/
 ├── templates/
 ├── static/
 ├── requirements.txt
+├── tests/
 ├── PYTHON.md
 └── README.md
 ```
+
+### 5. Unit Tests for the Project
+
+#### Test Descriptions
+
+- `test_get_current_time_format`
+
+  Verifies that the get_current_time function returns time in the "HH:MM:SS" format.
+
+
+- `test_show_time_route`
+
+  Uses a Flask test client to access the main page ("/"). This test checks:
+
+    - A 200 response status.
+    - The presence of the "MOSCOW TIME" header.
+    - The existence of a container with id time-container and a `<p id="time">` element.
+- `test_api_time_route`
+
+    Tests the API endpoint `/api/time/`, ensuring that the JSON response contains the key `time` and that its value matches the expected current time.
+
+
+#### Best Practices Applied
+- Independence of tests.
+- Use of `pytest` fixtures to create the test client.
+- Validation of the correct time format using datetime.strptime.
+- Precise testing of key HTML elements.
