@@ -5,10 +5,14 @@ on:
     paths:
       - "app_nodejs/**"
       - ".github/workflows/app_nodejs.yml"
+    branches:
+      - '**'
   pull_request:
     paths:                            
       - "app_nodejs/**"
       - ".github/workflows/app_nodejs.yml"
+    branches:
+      - '**'
 
 jobs:
   dependencies:

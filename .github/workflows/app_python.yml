@@ -6,13 +6,13 @@ on:
       - "app_python/**"
       - ".github/workflows/app_python.yml"
     branches:
-      - **
+      - '**'
   pull_request:
     paths:                            
       - "app_python/**"
       - ".github/workflows/app_python.yml"
     branches:
-      - **
+      - '**'
 jobs:
   dependencies:
     name: Dependencies
