@@ -46,6 +46,7 @@ jobs:
 
   snyk:
     runs-on: ubuntu-24.04
+    environment: ci
     steps:
       - name: Checkout
         uses: actions/checkout@v4
