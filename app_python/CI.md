@@ -17,9 +17,7 @@
 
 ```mermaid
 graph LR
-    A[Lint] --> D[Docker Build]
+    A[Lint] --> D
     B[Test] --> D
-    style A fill:#f9f,stroke:#333
-    style B fill:#f9f,stroke:#333
-    style D fill:#8f8,stroke:#333
+    D[Security] --> C[Docker Build]
 ```
