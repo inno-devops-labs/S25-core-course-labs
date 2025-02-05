@@ -1,5 +1,10 @@
 --init.sql
-CREATE SCHEMA public;
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = 'public') THEN
+        CREATE SCHEMA public;
+    END IF;
+END $$;
 GRANT ALL ON SCHEMA public TO myuser;
 CREATE TABLE zone (
     id SERIAL NOT NULL,
