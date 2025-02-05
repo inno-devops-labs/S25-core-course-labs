@@ -1,3 +1,20 @@
+# Applied Best Practices
+
+* **Use `.gitignore` for terraform files**: it is bad practice to include `.terraform` folder with its lock and also
+  `terraform.tfstate`.
+
+* **Use `terraform fmt`**: ensures that configs are formatted properly.
+
+* **Use `terraform plan`**: it allows to analyze the future state before applying new changes.
+
+* **Configure `outputs.tf`**: it is useful for automation.
+
+* **Configure `variables.tf`**: it is always bad practice to hardcode values that can be configured, because
+  configuration provides more flexibility.
+
+* **Use `sensitive = true` property at sensitive information like tokens:** it prevents displaying of such data in
+  outputs or logs, enhancing security.
+
 # `Docker`
 
 ## `terraform init`:
@@ -194,9 +211,7 @@ time_app_py_container_image = "unileonid/time-app-py"
 time_app_py_container_name = "unileonid_time_app_py"
 ```
 
-
 # `Yandex.Cloud`
-
 
 ## To complete this task:
 
@@ -205,12 +220,10 @@ time_app_py_container_name = "unileonid_time_app_py"
 3. Get familiar with config for Yandex.Cloud
 4. Configure network, subnet and virtual machine
 
-
 ## Encountered challenges:
 
 1. There was some problems with service accounts due to permission problems
 2. It took me a long time to find how to properly configure network and subnet
-
 
 ## `terraform init`:
 
@@ -378,3 +391,145 @@ yandex_compute_instance.vm-1: Creation complete after 35s [id=epd705hur0ap18v01q
 Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 ```
 
+# `GitHub`
+
+I have faced with many problems when trying to
+configure [UniLeonid/S25-core-course-labs](https://github.com/UniLeonid/S25-core-course-labs) repository, so I
+configured [S25-core-course-labs-terraform](http://github.com/UniLeonid/S25-core-course-labs-terraform) instead of it.
+
+## `terraform init`:
+
+```
+Initializing the backend...
+Initializing provider plugins...
+- Finding integrations/github versions matching "~> 6.0"...
+- Installing integrations/github v6.5.0...
+- Installed integrations/github v6.5.0 (signed by a HashiCorp partner, key ID 38027F80D7FD5FB2)
+Partner and community providers are signed by their developers.
+If you'd like to know more about provider signing, you can read about it here:
+https://www.terraform.io/docs/cli/plugins/signing.html
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+```
+
+## `terraform apply`:
+
+```
+var.github_token
+  Personal access token for GitHub
+
+  Enter a value:
+
+
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_branch.main will be created
+  + resource "github_branch" "main" {
+      + branch        = "main"
+      + etag          = (known after apply)
+      + id            = (known after apply)
+      + ref           = (known after apply)
+      + repository    = "S25-core-course-labs-terraform"
+      + sha           = (known after apply)
+      + source_branch = "main"
+      + source_sha    = (known after apply)
+    }
+
+  # github_branch_default.main will be created
+  + resource "github_branch_default" "main" {
+      + branch     = "main"
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + rename     = false
+      + repository = "S25-core-course-labs-terraform"
+    }
+
+  # github_branch_protection.core_repo will be created
+  + resource "github_branch_protection" "core_repo" {
+      + allows_deletions                = true
+      + allows_force_pushes             = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + lock_branch                     = false
+      + pattern                         = "main"
+      + repository_id                   = (known after apply)
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + require_last_push_approval      = false
+          + required_approving_review_count = 1
+        }
+    }
+
+  # github_repository.core_repo will be created
+  + resource "github_repository" "core_repo" {
+      + allow_auto_merge            = false
+      + allow_merge_commit          = true
+      + allow_rebase_merge          = true
+      + allow_squash_merge          = true
+      + archived                    = false
+      + auto_init                   = true
+      + default_branch              = (known after apply)
+      + delete_branch_on_merge      = false
+      + description                 = "such dirty legend like"
+      + etag                        = (known after apply)
+      + full_name                   = (known after apply)
+      + git_clone_url               = (known after apply)
+      + html_url                    = (known after apply)
+      + http_clone_url              = (known after apply)
+      + id                          = (known after apply)
+      + merge_commit_message        = "PR_TITLE"
+      + merge_commit_title          = "MERGE_MESSAGE"
+      + name                        = "S25-core-course-labs-terraform"
+      + node_id                     = (known after apply)
+      + primary_language            = (known after apply)
+      + private                     = (known after apply)
+      + repo_id                     = (known after apply)
+      + squash_merge_commit_message = "COMMIT_MESSAGES"
+      + squash_merge_commit_title   = "COMMIT_OR_PR_TITLE"
+      + ssh_clone_url               = (known after apply)
+      + svn_url                     = (known after apply)
+      + topics                      = (known after apply)
+      + visibility                  = "public"
+      + web_commit_signoff_required = false
+
+      + security_and_analysis (known after apply)
+    }
+
+Plan: 4 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_repository.core_repo: Creating...
+github_repository.core_repo: Creation complete after 5s [id=S25-core-course-labs-terraform]
+github_branch.main: Creating...
+github_branch.main: Creation complete after 2s [id=S25-core-course-labs-terraform:main]
+github_branch_default.main: Creating...
+github_branch_default.main: Creation complete after 1s [id=S25-core-course-labs-terraform]
+github_branch_protection.core_repo: Creating...
+github_branch_protection.core_repo: Creation complete after 4s [id=BPR_kwDON1Atuc4Difxv]
+
+Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
+```
