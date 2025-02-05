@@ -1,54 +1,123 @@
-name: CI Pipeline
+# name: CI Pipeline
 
+# on: [push, pull_request]
+
+# jobs:
+#   lint-and-test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+
+#       - name: Debug file structure
+#         run: ls -R
+          
+#       - name: Set up Python 3.9
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: '3.9'
+
+#       - name: Install dependencies
+#         # working-directory: lab3/app_python
+#         run: |
+#           cd app_python
+#           pip install -r requirements.txt
+
+#       - name: Run linter (flake8)
+#         # working-directory: lab3/app_python
+#         run: |
+#           cd app_python
+#           ls
+          
+#           flake8 . --count --show-source --statistics || true
+#       - name: Start Flask App
+#         run: |
+#           cd app_python
+#           python app.py &  # Run in background
+#           sleep 5  # Wait for the server to start
+
+
+#       - name: Run tests
+#         # working-directory: lab3/app_python
+#         run: |
+#           cd app_python
+#           pytest -v tests/
+
+#   docker-publish:
+#     needs: lint-and-test
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+
+#       - name: Login to Docker Hub
+#         uses: docker/login-action@v3
+#         with:
+#           username: ${{ secrets.DOCKERHUB_USERNAME }}
+#           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+#       - name: Build and push Docker image
+#         uses: docker/build-push-action@v5
+#         with:
+#           context: app_python  # Path to Dockerfile location
+#           push: true
+#           tags: yehiasobeh/moscow-time-app:latest
+
+
+
+
+name: CI/CD Pipeline
 on: [push, pull_request]
+
+env:
+  WORKING_DIR: "app_python"  # Centralized directory management
+  PYTHON_VERSION: "3.9"      # Explicit Python version
+  DOCKER_IMAGE: "yehiasobeh/moscow-time-app"
 
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIR }}  # No more manual cd commands
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug file structure
-        run: ls -R
-          
-      - name: Set up Python 3.9
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'  # Automatic dependency caching
+          cache-dependency-path: requirements.txt
 
       - name: Install dependencies
-        # working-directory: lab3/app_python
-        run: |
-          cd app_python
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Run linter (flake8)
-        # working-directory: lab3/app_python
-        run: |
-          cd app_python
-          ls
-          
-          flake8 . --count --show-source --statistics || true
-      - name: Start Flask App
-        run: |
-          cd app_python
-          python app.py &  # Run in background
-          sleep 5  # Wait for the server to start
+        run: flake8 . --count --show-source --statistics  # Removed || true to enforce linting
 
+      - name: Run tests with coverage
+        run: pytest -v tests/ --cov=app --cov-report=xml
 
-      - name: Run tests
-        # working-directory: lab3/app_python
-        run: |
-          cd app_python
-          pytest -v tests/
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v3  # Track test coverage
 
   docker-publish:
     needs: lint-and-test
     runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx  # Multi-platform support
+        uses: docker/setup-buildx-action@v3
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -56,9 +125,21 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: app_python  # Path to Dockerfile location
+          context: ${{ env.WORKING_DIR }}
           push: true
-          tags: yehiasobeh/moscow-time-app:latest
+          tags: |
+            ${{ env.DOCKER_IMAGE }}:latest
+            ${{ env.DOCKER_IMAGE }}:${{ github.sha }}  # Immutable SHA tag
+          cache-from: type=gha  # Docker layer caching
+          cache-to: type=gha,mode=max
+
+      - name: Container vulnerability scan  # Security check
+        uses: snyk/actions/docker@v0.4.0
+        with:
+          image: ${{ env.DOCKER_IMAGE }}
+          args: --severity-threshold=high
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
