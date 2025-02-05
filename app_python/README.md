@@ -61,3 +61,19 @@ Run container locally providing ```<host_port>:<container_port>```
 docker run -p 8000:8000 theanushervon/moscow_time:latest
 ```
 Go to ```http://localhost:8000```
+
+## Unit Testing 
+
+### Where to look :
+ ```test_views.py``` has tests 
+
+ ### How to run: 
+ ```bash 
+ python3 manage.py test
+ ```
+
+ ### Test coverage: 
+```bash
+coverage run --source="display_time" manage.py test
+coverage report 
+``` 
