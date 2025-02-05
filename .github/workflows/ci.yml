@@ -48,12 +48,11 @@ jobs:
           pytest app_python/tests/
 
       - name: Snyk vulnerability check
-        uses: snyk/actions/python@v3
+        uses: snyk/actions/python@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          command: test
-          args: --severity-threshold=high
+          args: --file=app_python/requirements.txt --severity-threshold=high
 
   docker-login:
       needs: build
