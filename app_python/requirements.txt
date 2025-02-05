@@ -1,2 +1,2 @@
-Flask
-pytz
+Flask==3.1.0
+pytz==2024.2
