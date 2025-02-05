@@ -49,6 +49,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./Dockerfile
+          file: ./app_python/Dockerfile
           push: true
           tags: fridorovich04/python-app:latest
