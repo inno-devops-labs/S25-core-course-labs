@@ -26,10 +26,11 @@ func LoadQuotes(filename string) {
 // randomQuoteHandler renders the HTML template with a random quote
 func randomQuoteHandler(w http.ResponseWriter, r *http.Request) {
 	// Seed random number generator
-	rand.Seed(time.Now().UnixNano())
+	src := rand.NewSource(time.Now().UnixNano())
+	rng := rand.New(src)
 
 	// Select a random quote
-	randomIndex := rand.Intn(len(quotes))
+	randomIndex := rng.Intn(len(quotes))
 	randomQuote := quotes[randomIndex]
 
 	// Parse the HTML template
