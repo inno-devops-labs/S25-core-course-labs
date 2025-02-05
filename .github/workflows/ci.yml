@@ -29,6 +29,11 @@ jobs:
       - name: Run tests
         run: pytest ./app_python/ -v
 
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python-3.8@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
   docker:
     runs-on: ubuntu-latest
     needs: build-and-test
@@ -47,11 +52,3 @@ jobs:
 
       - name: Push Docker image
         run: docker push ezzysoft/moscow-time:latest
-
-      - name: Snyk Python Security Scan
-        uses: snyk/actions/python@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test
-          args: --file=./app_python/requirements.txt --package-manager=pip
