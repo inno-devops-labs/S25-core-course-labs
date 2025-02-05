@@ -39,8 +39,6 @@ jobs:
       uses: snyk/actions/golang@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        args: --file=app_golang/go.mod --severity-threshold=high --skip-unresolved
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
