@@ -30,6 +30,12 @@ jobs:
           ls
           
           flake8 . --count --show-source --statistics || true
+      - name: Start Flask App
+        run: |
+          cd app_python
+          python app.py &  # Run in background
+          sleep 5  # Wait for the server to start
+
 
       - name: Run tests
         # working-directory: lab3/app_python
