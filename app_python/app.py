@@ -36,7 +36,7 @@ def current_time() -> str:
         TIME_ZONE = get_timezone()
 
     time = datetime.now(TIME_ZONE)
-    return f"Current time in {TIME_ZONE} is {time.strftime("%H:%M:%S")}"
+    return f"Current time in {TIME_ZONE} is {time.strftime('%H:%M:%S')}"
 
 
 if __name__ == "__main__":
