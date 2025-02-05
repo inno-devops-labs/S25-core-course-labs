@@ -2,7 +2,8 @@ import pytest
 from unittest.mock import patch
 from datetime import datetime
 import pytz
-from app import app
+from freezegun import freeze_time
+from app import app,get_msk_time
 
 @pytest.fixture
 def client():
@@ -27,9 +28,14 @@ def test_time_updates(mock_datetime, client):
 
 
 
+@freeze_time("2024-01-01 12:00:00")  # Mock system time to UTC
+def test_get_msk_time():
+    # Moscow is UTC+3 in winter
+    msk_time = get_msk_time().strftime('%H:%M:%S')
+    assert msk_time == "15:00:00"  # Verify timezone conversion
 
-
-
-
-
+def test_time_formatting():
+    with freeze_time("2024-01-01 12:00:00"):
+        msk_time = get_msk_time().strftime('%H:%M:%S')
+        assert len(msk_time) == 8  # Validate HH:MM:SS format
 
