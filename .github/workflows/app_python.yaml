@@ -58,8 +58,21 @@ jobs:
       - name: Run Tests
         run: python -m unittest discover -v
 
-  docker:
+  security:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app_python
     needs: [lint, test]
+    steps:
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python-3.10@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  docker:
+    needs: [lint, test, security]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -74,3 +87,5 @@ jobs:
           push: true
           tags: ${{ vars.DOCKERHUB_USERNAME }}/app_python:latest
           context: ./app_python
+
+  
