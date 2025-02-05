@@ -1,0 +1,91 @@
+name: CI Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Run Linter
+        run: |
+          pip install flake8
+          flake8 app.py
+
+      - name: Run Unit Tests
+        run: pytest tests/
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Tag Docker Image
+        run: docker build -t your-dockerhub-username/your-image-name:latest .
+
+      - name: Push Docker Image
+        run: docker push your-dockerhub-username/your-image-name:latest
+
+name: CI Workflow with Docker
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v2
+
+    # Set up Python for testing (Optional if already in your workflow)
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run tests with pytest
+      run: |
+        pytest tests/
+
+    # Docker - Login to Docker Hub
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    # Docker - Build the Docker image
+    - name: Build Docker image
+      run: |
+        docker build -t myusername/myapp:${{ github.sha }} .
+
+    # Docker - Push the Docker image to Docker Hub
+    - name: Push Docker image
+      run: |
+        docker push myusername/myapp:${{ github.sha }}

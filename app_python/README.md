@@ -76,3 +76,27 @@ docker logs CONTAINER_ID
 - Minimal base image (python:3.10-alpine).
 - Uses multi-stage builds.
 - Optimized layer caching.
+
+
+## Unit Tests
+
+### Running Tests
+To run unit tests, use:
+```bash
+pytest tests/
+```
+
+## Continuous Integration (CI)
+
+We use GitHub Actions for CI.
+
+### Workflow Steps:
+1. Checkout repository.
+2. Install dependencies.
+3. Run linter and unit tests.
+4. Build and push Docker image (if changes are made).
+
+### Running CI Locally
+To manually run tests:
+```bash
+pytest tests/
