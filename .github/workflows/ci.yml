@@ -115,7 +115,7 @@ jobs:
         uses: codecov/codecov-action@v3  # Track test coverage
 
       - name: Snyk Python security scan
-        uses: snyk/actions/python@v0.4.0
+        uses: snyk/actions/python@v3  # Correct Snyk Python action
         with:
           command: test
           args: --severity-threshold=high
@@ -157,7 +157,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Snyk container scan
-        uses: snyk/actions/docker@v0.4.0
+        uses: snyk/actions/docker@v3  # Correct Snyk Docker action
         with:
           image: ${{ env.DOCKER_IMAGE }}
           args: --severity-threshold=high
