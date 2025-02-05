@@ -93,7 +93,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build --cache-from=chr1st1na/app_python:latest -t chr1st1na/app_python:latest .
+        docker build --cache-from=chr1st1na/app_python:latest -t chr1st1na/app_python:latest -f app_python/Dockerfile app_python
 
     - name: Push Docker image
       run: |
