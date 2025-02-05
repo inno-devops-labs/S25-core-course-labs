@@ -32,7 +32,6 @@ jobs:
       # Step 4: Lint Code
       - name: Lint Code
         run: |
-          pip install flake8
           flake8 app_python/
 
       # Step 5: Run Tests
