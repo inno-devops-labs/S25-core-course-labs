@@ -78,7 +78,7 @@ jobs:
 
       # Step 10: Build Docker Image
       - name: Build Docker Image
-        working-directory: ./app_python
+        working-directory: app_python
         run: |
           docker build -t nickwidbestie/region-time-api:$GITHUB_SHA -f Dockerfile .
 
