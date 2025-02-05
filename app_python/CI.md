@@ -6,7 +6,7 @@
 
 3. **Code linting**: Using `flake8` to perform code linting, which checks the Python code for style and syntax errors. This helps maintain code quality and consistency across the project.
 
-4. **Unit testing**: Running unit tests with `python -m unittest` to ensure that the code behaves as expected and to catch any regressions introduced by new changes.
+4. **Unit testing**: Running unit tests with `pytest` to ensure that the code behaves as expected and to catch any regressions introduced by new changes.
 
 5. **Vulnerability scanning**: Integrating Snyk for vulnerability scanning of project dependencies. This helps identify and remediate security vulnerabilities in the project dependencies.
 

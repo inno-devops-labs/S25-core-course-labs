@@ -36,13 +36,12 @@ jobs:
       - name: Lint code
         run: |
           cd app_python
-          pip install flake8
           flake8 .
 
       - name: Run tests
         run: |
           cd app_python
-          python -m unittest
+          pytest
 
       - name: Install Snyk CLI
         run: npm install -g snyk
