@@ -27,7 +27,7 @@ Thumbs.db
 .git/*.lock
 
 provider.tf registry.terraform.io/
-.lock.hcl
+terraform.lock.hcl
 
 /out/
 /dist/
@@ -35,6 +35,7 @@ provider.tf registry.terraform.io/
 /generated/
 /coverage/
 
+meta.txt
 .dockerenv
 .dockerinit
 Dockerfile*
