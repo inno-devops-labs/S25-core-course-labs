@@ -1,2 +1,4 @@
 Flask
-pytz    
+pytest
+Flask-Testing
+pytz

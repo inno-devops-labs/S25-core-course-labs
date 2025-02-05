@@ -84,6 +84,34 @@ docker run -p 5000:5000 chr1st1na/app_python:latest
 
 After running the container, open your web browser and navigate to `http://127.0.0.1:5000/` to see the application in action.
 
+## Unit Tests
+To run unit tests, execute:
+
+``` sh
+pytest test_app.py
+```
+
+This will check:
+
+If the homepage is accessible (HTTP 200).
+If the page contains the correct Moscow time.
+If the template includes the required elements.
+If invalid URLs return a 404 error.
+
+## CI Workflow
+
+This project uses GitHub Actions for continuous integration. The workflow is triggered on every push to the main branch or on pull requests.
+
+### Workflow Details
+
+1. **Dependencies**: Installs all the necessary Python dependencies from `requirements.txt`.
+2. **Linter**: Runs `flake8` to ensure the code follows PEP8 style guidelines.
+3. **Tests**: Executes unit tests using `pytest`.
+4. **Docker**: Builds a Docker image of the application and pushes it to Docker Hub.
+
+The workflow configuration can be found in `.github/workflows/ci.yml`.
+
+
 ## Conclusion
 
 This README provides an overview of the application, its features, and instructions for both local installation and Docker usage. For more details on Docker best practices, refer to the [DOCKER.md](DOCKER.md) file.
