@@ -96,7 +96,7 @@ class TestFlaskApp(unittest.TestCase):
         except Exception:
             time_zone = pytz.timezone("Europe/Moscow")
 
-        self.assertEqual(current_time(), f"Current time in {time_zone} is {datetime.now(time_zone).strftime("%H:%M:%S")}")
+        self.assertEqual(current_time(), f"Current time in {time_zone} is {datetime.now(time_zone).strftime('%H:%M:%S')}")
             
 
 
