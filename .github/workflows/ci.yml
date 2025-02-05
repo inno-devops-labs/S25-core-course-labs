@@ -48,7 +48,7 @@ jobs:
           pytest test_app.py --disable-warnings --maxfail=1
 
       - name: Run Snyk scan
-        uses: snyk/actions/python-3.8@master
+        uses: snyk/actions/python@master
         with:
           command: monitor
           args: --file=app_python/app/requirements.txt --skip-unresolved
