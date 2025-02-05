@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.env
+Dockerfile
+DOCKER.md
+README.md
+PYTHON.md
