@@ -115,7 +115,7 @@ jobs:
         uses: codecov/codecov-action@v3  # Track test coverage
 
       - name: Snyk Python security scan
-        uses: snyk/actions/python@v3  # Correct Snyk Python action
+        uses: snyk/actions/python-3.9@master  # Correct Snyk Python action
         with:
           command: test
           args: --severity-threshold=high
