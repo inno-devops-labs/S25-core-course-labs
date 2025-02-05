@@ -6,13 +6,14 @@ This project is a simple Python web application that displays a static page with
 
 ```bash
 # clone this repo
+git clone https://github.com/FallenChromium/
 # change the directory name to the app root
 cd app_python
 # Create a virtual environment
 python -m venv .venv
-# Linux / macOS
+## Linux / macOS
 source .venv/bin/activate
-# Windows
+## Windows
 .venv\Scripts\activate
 # install dependencies
 pip install -r requirements.txt
@@ -31,7 +32,7 @@ Tests are located in the `test.py`. You can run the test suite by executing `pyt
 ## Use the app
 
 ```bash
-curl http://localhost:8000
+curl http://localhost:8000 # or open this url in the browser
 ```
 
 ## Docker
