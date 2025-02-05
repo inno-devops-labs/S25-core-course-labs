@@ -86,3 +86,20 @@ This repository includes unit tests to ensure the application works as expected.
 
 ```bash
 pytest
+```
+
+## Continuous Integration (CI)
+
+This project uses GitHub Actions for CI. The workflow is triggered on pushes and pull requests to the `main` branch and includes the following steps:
+
+- **Dependencies**: Installs the required Python packages.
+- **Linter**: Runs `flake8` to check code style.
+- **Tests**: Executes unit tests using `pytest`.
+
+Once these steps pass, the workflow proceeds with Docker operations:
+
+- **Login**: Logs into Docker Hub using stored secrets.
+- **Build**: Builds the Docker image using the provided Dockerfile.
+- **Push**: Tags and pushes the Docker image to Docker Hub.
+
+For further details, refer to the [GitHub Actions workflow configuration](.github/workflows/ci.yml).
