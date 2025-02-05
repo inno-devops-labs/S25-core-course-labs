@@ -2,7 +2,25 @@
 
 ## ✅ Best Practices
 
-TODO
+### Code organization
+
+Terraform code is separated into `main.tf`, `variables.tf`, and `outputs.tf` files to ensure modularity.
+
+### Version Constraints
+
+Specifying Terraform and provider versions to avoid unexpected updates.
+
+### Secrets
+
+Secrets are stored in a `terraform.tfvars` file, which is added to the `.gitignore` file to prevent accidental pushes to VCS.
+
+### Validating and Formating
+
+Using `terraform validate` and `terraform fmt` to ensure the code is correct.
+
+### Checking Changes
+
+Using `terraform plan` to check the changes and review them.
 
 ## 🐳 Docker
 
