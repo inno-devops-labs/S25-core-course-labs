@@ -3,6 +3,7 @@ from app import app
 from datetime import datetime, timedelta
 import pytz
 
+
 class TestApp(unittest.TestCase):
 
     def setUp(self):
@@ -10,15 +11,20 @@ class TestApp(unittest.TestCase):
         self.app.testing = True
 
     def test_status_code(self):
-        result = self.app.get('/')
+        result = self.app.get("/")
         self.assertEqual(result.status_code, 200)
 
     def test_accuracy(self):
-        result = self.app.get('/')
+        result = self.app.get("/")
         self.assertEqual(result.status_code, 200)
 
         # Extract the time from the response
-        webapp_time_str = result.data.decode('utf-8').split('Time in Moscow - ')[1].split('<')[0].strip()
+        webapp_time_str = (
+            result.data.decode("utf-8")
+            .split("Time in Moscow - ")[1]
+            .split("<")[0]
+            .strip()
+        )
         webapp_time = datetime.strptime(webapp_time_str, "%H:%M:%S")
 
         # Get the current time in Moscow
@@ -29,7 +35,12 @@ class TestApp(unittest.TestCase):
         inaccuracy = timedelta(seconds=10)
 
         # Check if the webapp time is within the allowed inaccuracy
-        self.assertTrue((current_time - inaccuracy).time() <= webapp_time.time() <= (current_time + inaccuracy).time())
+        self.assertTrue(
+            (current_time - inaccuracy).time()
+            <= webapp_time.time()
+            <= (current_time + inaccuracy).time()
+        )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
