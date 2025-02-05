@@ -59,6 +59,7 @@ docker pull dnworks/app_python:latest
 ### How to run?
 
 Run the Docker container:
+
 > **NB!** Port 80 must be exposed so you can access the web application at 80 port (`http://localhost/`).
 
 - Self-built image:
@@ -101,4 +102,16 @@ docker run -p 80:80 app_python_dstlss
 
 ```bash
 docker run -p 80:80 dnworks/app_python_dstlss:latest
+```
+
+## Testing
+
+Tests are located in the `src/tests` directory. \
+You may run existing tests using the following commands:
+
+```bash
+# 1. Change directory to app_python: so you are located in the same folder as `src`
+cd app_python
+# 2. Run tests from the folder
+pytest src/tests
 ```
