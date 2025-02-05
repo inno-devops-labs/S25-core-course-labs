@@ -16,7 +16,7 @@
 4. Modern and accessible UI where possible (i.e. `aria-label`)
 5. No extra comments - code should speak for itself
 
-## Testing
+## Unit Testing
 
 By breaking down the system into the minimal logical units that are represented by functions, it becomes
 very easy to test the entire system using mocking and unit tests. Also introduction of `REST API`

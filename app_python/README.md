@@ -35,7 +35,7 @@ class TimeData(BaseModel):
 
 Also, don't forget that FastAPI provides `/docs` and `/redoc` endpoint for documentation.
 
-## Testing
+## Unit tests
 
 The tests are done with `unittest` and `TestCleint`. 
 
@@ -43,6 +43,9 @@ To ensure that the app is working properly, you can run them yourself with:
 ```bash
 python -m unittest tests/
 ```
+
+The current tests are not using heavy testing tools like `selenium`, so it's not a 100% coverage when it
+comes to front-end part.
 
 ## Docker
 
