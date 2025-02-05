@@ -53,7 +53,7 @@ jobs:
       working-directory: app_python
       run: |
         pip install pytest-cov
-        pytest --cov=app --cov-report=xml -v tests/
+        pytest --cov=app --cov-report=xml -v
 
   docker-build:
     runs-on: ubuntu-latest
