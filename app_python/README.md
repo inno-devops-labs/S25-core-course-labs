@@ -115,3 +115,30 @@ cd app_python
 # 2. Run tests from the folder
 pytest src/tests
 ```
+
+## CI Workflow
+
+This repository contains Github Actions CI workflow. \
+It has the following job structure:
+
+**TLDR:** Pipeline runs CI tasks (installs dependencies, formats code, runs linter and tests), and then builds and pushes the updated image to Docker Hub.
+
+1. CI tasks (`ci`)
+   - Checkout
+   - Setup Python 3.11
+   - Dependencies
+   - Format (using Black formatter)
+   - Install linter
+   - Linter (run linter)
+   - Tests (run tests)
+2. Docker tasks (`docker`)
+   - Checkout
+   - Docker meta (set metadata: tags, labels, etc.)
+   - Login (login to Docker)
+   - Setup QEMU
+   - Setup Docker Buildx
+   - Build & Push
+
+Additionally, the corresponding _semver_ tag (e.g. `v1.2`) and `latest` tag are set automatically for the Docker image.
+
+> Note: semver tag is set only if commit has a correct _semver_ Git tag.
