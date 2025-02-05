@@ -27,6 +27,8 @@ jobs:
         # working-directory: lab3/app_python
         run: |
           cd app_python
+          ls
+          
           flake8 . --count --show-source --statistics || true
 
       - name: Run tests
