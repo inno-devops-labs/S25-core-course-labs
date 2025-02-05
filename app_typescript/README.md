@@ -31,7 +31,7 @@ Examples of valid formulas:
 - ((A∨B)∧(B∨C)) # Complex expression
 - (((A∨B)∧(C->D))~E) # Using all operators
 
-Special symbols in the examples are used for prettiness, you should use slashes for conjunction and disjunction symbols in the input field.
+> Note: Special symbols in the examples are used for prettiness, you should use slashes for conjunction and disjunction symbols in the input field.
 
 ### Running Locally
 
@@ -49,8 +49,12 @@ npm run dev
 
 Open your browser and navigate to `http://localhost:9000`.
 
-### Running Tests
+### Unit tests
+
+You can run the tests by executing this command (it will auto-rerun on code changes)
 
 ```bash
 npm test
 ```
+
+Add tests by creating `*.test.ts` files in the `src` directory.

@@ -1,9 +1,13 @@
 name: Install, lint and test Python app
 on:
     pull_request:
-      branches:
-        - main
-        - master
+      branches: [ master ]
+      paths:
+      - 'app_python/**'
+    push:
+      branches: [ master ]
+      paths:
+      - 'app_python/**'
     workflow_dispatch: {}
 
 defaults:
@@ -12,20 +16,30 @@ defaults:
 
 jobs:
     check-python:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - uses: actions/setup-python@v4
-              with:
-                  python-version: '3.10'
-            - name: Install dependencies
-              run: |
-                  pip install -r requirements.txt
-                  pip install -r requirements.dev.txt
-            - name: Run tests
-              run: pytest test.py
-            - name: Run linter
-              run: ruff check .
-            - name: Run formatter check
-              run: ruff format --check .
-        
+      name: Run tests and lint
+      strategy:
+        matrix:
+          python: ["3.9", "3.11", "3.13"]
+          os: [ubuntu-latest]
+      runs-on: ${{ matrix.os }}
+      steps:
+          - uses: actions/checkout@v4
+          - uses: actions/setup-python@v5
+            with:
+                python-version: ${{ matrix.python }}
+                cache: 'pip'
+          - name: Install dependencies
+            run: |
+                pip install -r requirements.txt
+                pip install -r requirements.dev.txt
+          - name: Run tests
+            run: pytest test.py
+          - name: Run linter
+            run: ruff check .
+          - name: Run formatter check
+            run: ruff format --check .
+          - uses: snyk/actions/setup@master
+          - name: Security check
+            run: snyk test
+            env:
+              SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

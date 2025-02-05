@@ -23,7 +23,7 @@ export interface Token {
 }
 
 export function tokenize(str: string): Token[] {
-    let tokens: Array<Token> = [];
+    const tokens: Token[] = [];
     for (let i = 0; i < str.length; ++i) {
         switch (str[i]) {
             case '(': tokens.push({ type: TOKENS.LPARENTHESIS, value: '(' }); break;
@@ -68,11 +68,11 @@ export function tokenize(str: string): Token[] {
             case CONSTS[1]: tokens.push({ type: TOKENS.CONST, value: CONSTS[1]}); break;
             default: {
                 // check if it's a valid identifier
-                if (IDTFS.indexOf(str[i]) > -1) {
+                if (IDTFS.includes(str[i])) {
                     tokens.push({ type: TOKENS.IDTF, value: str[i] });
                 }
                 else {
-                    throw Error('Invalid symbol "' + str[i] + '"' + ' at position ' + (i+1));
+                    throw Error('Invalid symbol "' + str[i] + '"' + ' at position ' + String(i+1));
                 }
                 break;
             }

@@ -84,7 +84,7 @@ export const CNF_tests: TestCase[] = [
 export function TestCNF(testCase: TestCase): void {
     const parser = new Parser(testCase.formula);
     const ast = parser.parse();
-    const result = isCNF(ast!);
+    const result = isCNF(ast);
     
     expect(result).toBe(testCase.expected);
 }

@@ -1,4 +1,4 @@
-import { ASTNode, Parser } from './parser';
+import { type ASTNode, Parser } from './parser';
 import { isCNF } from './cnf_checker';
 import './styles.css';
 import { buildPCNF } from './pcnf_builder';
@@ -21,8 +21,8 @@ class PropositionalLogicUI {
     }
 
     private initializeEventListeners(): void {
-        this.checkCnfButton.addEventListener('click', () => this.checkCNF());
-        this.buildPcnfButton.addEventListener('click', () => this.buildPCNF());
+        this.checkCnfButton.addEventListener('click', () => { this.checkCNF(); });
+        this.buildPcnfButton.addEventListener('click', () => { this.buildPCNF(); });
     }
 
     private checkCNF(): void {
@@ -47,8 +47,16 @@ class PropositionalLogicUI {
                 isCnf ? 'success' : 'error'
             );
             this.showAST(ast);
-        } catch (error: any) {
-            this.showError(error);
+        } catch (error) {
+            if (error instanceof Error) {
+                this.showError(error.message);
+            }
+            else if (typeof error === 'string') {
+                this.showError(error);
+            }
+            else {
+                this.showError('An error occurred');
+            }
         }
     }
 
@@ -63,12 +71,20 @@ class PropositionalLogicUI {
             const pcnf = buildPCNF(formula);
             this.showResult('PCNF of the formula:', 'success');
             this.showPCNF(pcnf);
-        } catch (error: any) {
-            this.showError(error.message);
+        } catch (error) {
+            if (error instanceof Error) {
+                this.showError(error.message);
+            }
+            else if (typeof error === 'string') {
+                this.showError(error);
+            }
+            else {
+                this.showError('An error occurred');
+            }
         }
     }
 
-    private showResult(message: string, className: string = ''): void {
+    private showResult(message: string, className = ''): void {
         this.resultDiv.textContent = message;
         this.resultDiv.className = 'result-box ' + className;
     }
