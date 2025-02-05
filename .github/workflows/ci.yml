@@ -28,8 +28,10 @@ jobs:
         run: flake8 . --count --show-source --statistics
 
       - name: Run tests
-        working-directory: lab3/app_python
-        run: pytest -v tests/
+        # working-directory: lab3/app_python
+        run: |
+          cd app_python
+          pytest -v tests/
 
   docker-publish:
     needs: lint-and-test
