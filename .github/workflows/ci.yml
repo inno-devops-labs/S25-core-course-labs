@@ -60,5 +60,5 @@ jobs:
 
         - name: Build and Push Docker Image
           run: |
-            docker build -t fridorovich04/python-app:latest -f app_python/Dockerfile app_python/
-            docker push fridorovich04/python-app:latest
+            docker build -t fridorovich04/app_python:latest -f app_python/Dockerfile app_python/
+            docker push fridorovich04/app_python:latest
