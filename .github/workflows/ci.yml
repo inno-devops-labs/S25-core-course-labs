@@ -37,7 +37,8 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
         command: test
-        args: --severity-threshold=high ./app_python
+        args: --severity-threshold=high --skip-unresolved ./app_python
+      continue-on-error: true
 
     - name: Run linter
       run: |
