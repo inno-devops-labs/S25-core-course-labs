@@ -48,6 +48,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v6
       with:
+        context: ./app_python
         file: ./app_python/Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/python_moscow_time:latest
