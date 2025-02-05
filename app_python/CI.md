@@ -26,9 +26,11 @@ on:
           - '.github/workflows/app_python_ci.yml'
 ```
 
-### **Benefits**
+### **✅ Benefits**
 - **Optimized CI/CD execution** → Only runs when Python-related files are modified.
 - **Faster feedback loop** → Ensures CI/CD resources are used efficiently.
+
+---
 
 ## ⚡ Dependency and Docker Caching
 
@@ -41,7 +43,7 @@ with:
     python-version: '3.11'
     cache: 'pip'
 ```
-### **Benefits**
+### **✅ Benefits**
 - **Faster builds** → Dependencies do not need to be downloaded on every run.
 - **Less network usage** → Reduces bandwidth and speeds up workflow execution.
 
@@ -54,11 +56,13 @@ run: |
     docker push azazaki/app_python:latest
 ```
 
-### **Benefits**
+### **✅ Benefits**
 - **Speeds up** builds by reusing unchanged layers.
 - **Reduces** redundant computation and optimizes deployment.
 
-### 🔍 Static Code Analysis with Flake8
+---
+
+## 🔍 Static Code Analysis with Flake8
 The CI/CD pipeline runs flake8 to enforce PEP 8 coding standards.
 
 ```yaml
@@ -69,9 +73,11 @@ run: |
     flake8 app.py test_app.py --max-line-length=120
 ```
 
-### **Benefits**
+### **✅ Benefits**
 - **Ensures** consistent code style across the project.
 - **Prevents** syntax errors before merging changes.
+
+---
 
 ## 🧪 Automated Unit Testing
 
@@ -88,9 +94,11 @@ run: |
 - **Server Status Code** → Ensures the homepage loads successfully (200 OK).
 - **Correct Moscow Time Format** → Validates the response format.
 
-### **Benefits**
+### **✅ Benefits**
 - **Prevents broken code from being merged.**
 - **Ensures** application correctness before deployment.
+
+---
 
 ## 🛡️ Security Scanning with Snyk
 
@@ -104,10 +112,12 @@ with:
     args: --skip-unresolved --severity-threshold=high
 ```
 
-### **Benefits**
+### **✅ Benefits**
 
 - **Detects security vulnerabilities** in Python dependencies.
 - **Prevents insecure code** from being deployed.
+
+---
 
 ## 🔄 Future Enhancements
 

@@ -1,6 +1,7 @@
 # 🎉 Random Programming Quote Generator (Go)
 
-![Go Version](https://img.shields.io/badge/Go-1.20%2B-blue.svg)  
+![Go Version](https://img.shields.io/badge/Go-1.20%2B-blue.svg)
+![CI/CD Pipeline](https://github.com/Azaki-san/S25-core-course-labs/actions/workflows/app_golang_ci.yml/badge.svg)
 🌟 **A fun and inspirational app!**
 
 ---
@@ -61,6 +62,29 @@ Here’s how the page will look:
 
 ---
 
+## 🐳 Distroless Image Version
+
+I implemented a **Distroless-based** image for the Golang application to improve security and reduce image size.
+
+---
+
+### 📏 Image Size Comparison
+
+| Image Type       | Base Image Used                        | Approx. Size |
+|------------------|---------------------------------------|-------------|
+| **Standard Image** | `alpine:3.18`                        | **17MB**     |
+| **Distroless Image** | `gcr.io/distroless/static:nonroot`  | **12MB**     |
+
+The **Distroless image** is **5MB smaller** than the standard Alpine image.
+
+---
+
+### 📥 How to Build the Distroless Image
+
+```bash
+docker build -f distroless.Dockerfile -t azazaki/app_golang:distroless .
+```
+
 ## 🛠️ Tech Stack
 
 - **Language**: [Go (Golang)](https://golang.org)
@@ -70,6 +94,44 @@ Here’s how the page will look:
     - `fmt`: For string formatting and output generation.
 
 ---
+
+## 🧪 Unit Tests
+
+Automated unit tests ensure the **Random Programming Quote Generator** functions correctly.
+
+### ✅ How to Run Tests Locally
+1. **Ensure Go is Installed**
+   ```bash
+   go version
+   ```
+2. **Navigate to the Application Directory**
+   ```bash
+   cd app_golang
+   ```
+3. **Run Unit Tests**
+   ```bash
+   go test -v ./...
+   ```
+    
+### ✅ What’s Tested?
+- **Server Status Code** → Ensures the `/` route returns a `200 OK` response.
+- **Quote Retrieval** → Verifies that the response contains a valid quote.
+- **Error Handling** → Ensures that invalid requests are handled gracefully.
+
+These tests are executed **automatically** in the CI/CD pipeline on every push and pull request.
+
+---
+
+## 🔄 CI/CD Pipeline
+
+The CI/CD pipeline automates testing, security scanning, and Docker deployment for the Random Programming Quote Generator.
+
+### 🚀 What Happens on Every Push or PR?
+1. **📦 Dependencies** → Ensures all required Go modules are installed.
+2. **🔍 Linter** → Runs `golangci-lint` to enforce Go best practices.
+3. **🧪 Unit Tests** → Runs `go test` to verify application functionality.
+4. **🛡️ Security Scan** → Uses Snyk to detect vulnerabilities in dependencies.
+5. **🐳 Docker Build & Push** → Builds and pushes a Docker image to Docker Hub.
 
 ## 🚀 Contributing
 
@@ -100,25 +162,3 @@ This project is licensed under the **MIT License**. Feel free to use, modify, an
 
 The Random Programming Quote Generator is a simple yet fun application built to inspire developers. It combines Go's powerful standard library with creativity and scalability.
 Feel free to explore, extend, and share your own version of this app!
-
-## 🐳 Distroless Image Version
-
-I implemented a **Distroless-based** image for the Golang application to improve security and reduce image size.
-
----
-
-### 📏 Image Size Comparison
-
-| Image Type       | Base Image Used                        | Approx. Size |
-|------------------|---------------------------------------|-------------|
-| **Standard Image** | `alpine:3.18`                        | **17MB**     |
-| **Distroless Image** | `gcr.io/distroless/static:nonroot`  | **12MB**     |
-
-The **Distroless image** is **5MB smaller** than the standard Alpine image.
-
----
-
-### 📥 How to Build the Distroless Image
-
-```bash
-docker build -f distroless.Dockerfile -t azazaki/app_golang:distroless .
