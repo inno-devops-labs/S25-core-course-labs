@@ -1,3 +1,7 @@
-*
-!app/main.py
+__pycache__/
+*.pyc
+*.pyo
+
+venv/
+
 !requirements.txt
