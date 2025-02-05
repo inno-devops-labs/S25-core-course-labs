@@ -5,8 +5,8 @@ on:
 
 env:
   USERNAME: voronm1522
-  DOCKER_IMAGE: voronm1522/devops:python-app
-  DOCKER_TAG: latest
+  DOCKER_IMAGE: voronm1522/devops
+  DOCKER_TAG: python-app
 
 jobs:
   build-and-test:
