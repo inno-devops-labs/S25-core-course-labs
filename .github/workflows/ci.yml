@@ -38,7 +38,7 @@ jobs:
           args:
             --command=python3
             --file=./app_python/requirements.txt
-            --package-manager=pip
+            --package-manager=pip3
 
 
 
