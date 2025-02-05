@@ -1,6 +1,8 @@
 package main
 
 import (
+	"path/filepath"
+
 	docs "github.com/danmaninc/S25-core-course-labs/app_golang/src/docs"
 	"github.com/danmaninc/S25-core-course-labs/app_golang/src/endpoints"
 	"github.com/gin-gonic/gin"
@@ -10,13 +12,12 @@ import (
 
 // @BasePath /
 
-// The main function.
-func main() {
+func setupRouter() *gin.Engine {
 	router := gin.Default()
 	docs.SwaggerInfo.BasePath = "/"
 
 	// Load templates
-	router.LoadHTMLGlob("src/templates/*")
+	router.LoadHTMLGlob(filepath.Join("./src", "templates/*"))
 
 	// Register endpoints
 	v1 := router.Group("/")
@@ -27,5 +28,13 @@ func main() {
 
 	// Run router
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+
+	return router
+}
+
+// The main function.
+func main() {
+	router := setupRouter()
+	
 	router.Run(":80")
 }
