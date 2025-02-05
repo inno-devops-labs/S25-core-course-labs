@@ -27,7 +27,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest flake8 snyk
+          pip install pytest flake8
 
       - name: Run Linter
         run: flake8 --count --statistics --show-source --ignore=E501
@@ -54,7 +54,7 @@ jobs:
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
       - name: Run Snyk Security Scan
-        run: snyk test --file=requirements.txt
+        run: snyk test --file=requirements.txt --package-manager=pip
 
   docker:
     runs-on: ubuntu-latest
