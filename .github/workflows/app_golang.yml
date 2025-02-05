@@ -27,7 +27,7 @@ jobs:
 
     - name: Lint
       run: |
-        cd app_python/
+        cd app_golang/
         go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
         golangci-lint run ./...
 
