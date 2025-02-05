@@ -48,7 +48,7 @@ jobs:
           pytest app_python/tests/
 
       - name: Snyk vulnerability check
-        uses: snyk/actions/python-3.8@master
+        uses: snyk/actions/python@v3
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
