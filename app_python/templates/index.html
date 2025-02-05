@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moscow Time - Real-time</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .time-container {
+            text-align: center;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .time {
+            font-size: 2.5rem;
+            color: #1a73e8;
+            font-family: 'Courier New', monospace;
+        }
+        .date {
+            font-size: 1.2rem;
+            color: #5f6368;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="time-container">
+        <h1>Current Time in Moscow</h1>
+        <div id="time-display" class="time">{{ time }}</div>
+    </div>
+
+    <script>
+        function updateTime() {
+            fetch('/get_time')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('time-display').textContent = data.time;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+
+        // Initial update
+        updateTime();
+    </script>
+</body>
+</html>
