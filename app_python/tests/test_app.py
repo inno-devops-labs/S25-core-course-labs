@@ -1,6 +1,7 @@
 import unittest
 from app import app
 
+
 class TestAppRoutes(unittest.TestCase):
     def setUp(self):
         """Set up the Flask test client."""
@@ -24,6 +25,7 @@ class TestAppRoutes(unittest.TestCase):
         finally:
             # Restore the original timezone
             app.config.from_mapping(config)
+
 
 if __name__ == "__main__":
     unittest.main()

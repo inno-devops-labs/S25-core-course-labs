@@ -22,5 +22,6 @@ class TestGetTimeService(unittest.TestCase):
         # Ensure the result matches the expected format
         self.assertRegex(result, r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$")
 
+
 if __name__ == "__main__":
     unittest.main()

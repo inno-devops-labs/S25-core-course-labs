@@ -13,10 +13,12 @@ class GetTimeService:
         Retrieves the current time in the specified timezone.
 
         Args:
-            timezone (str): The timezone for which the current time is required.
+            timezone (str): The timezone for which the current time is
+            required.
 
         Returns:
-            str: The current time in the given timezone formatted as 'YYYY-MM-DD HH:MM:SS'.
+            str: The current time in the given timezone formatted as
+            'YYYY-MM-DD HH:MM:SS'.
 
         Raises:
             ValueError: If the provided timezone is invalid.
@@ -26,4 +28,3 @@ class GetTimeService:
             return datetime.now(time_tz).strftime('%Y-%m-%d %H:%M:%S')
         except pytz.UnknownTimeZoneError as e:
             raise ValueError(f"Invalid timezone: {timezone}") from e
-        
