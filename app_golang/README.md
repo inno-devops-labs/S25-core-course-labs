@@ -1,5 +1,7 @@
 # Random joke web application
 
+![Workflow status badge](https://github.com/danmaninc/S25-core-course-labs/actions/workflows/app_golang.yml/badge.svg)
+
 ## Overview
 
 This web application displays a random joke from the [public API](https://jokeapi.dev/). It supports two formats of the output:
@@ -61,6 +63,7 @@ docker pull dnworks/app_golang:latest
 ### How to run?
 
 Run the Docker container:
+
 > **NB!** Port 80 must be exposed so you can access the web application at 80 port (`http://localhost/`).
 
 - Self-built image:
