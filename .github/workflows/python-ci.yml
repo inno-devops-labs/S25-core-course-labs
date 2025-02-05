@@ -39,7 +39,7 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       continue-on-error: true
       with:
-        args: --severity-threshold=high
+        args: --severity-threshold=high --skip-unresolved app_python/
         command: test
 
   docker:
