@@ -1,0 +1,27 @@
+{
+  "name": "app_javascript",
+  "version": "1.0.0",
+  "description": "Test timer Jest",
+  "main": "src/script.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint src/**/*.js",
+    "stylelint": "stylelint src/**/*.css"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jsdom": "^22.1.0",
+    "eslint": "^8.0.1",
+    "@eslint/js": "^8.0.1",
+    "eslint-config-standard": "^17.1.0",
+    "stylelint": "^15.10.0",
+    "stylelint-config-standard": "^34.0.0"
+  },
+  "jest": {
+    "testEnvironment": "jest-environment-jsdom"
+  },
+  "peerDependencies": {
+    "stylelint": "^15.10.0"
+  }
+}
