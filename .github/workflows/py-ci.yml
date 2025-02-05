@@ -44,10 +44,6 @@ jobs:
           cd app_python
           pytest test_app.py -v
           
-      - name: Snyk Security Scan
-
-      - name: Checkout code
-        uses: actions/checkout@v3
 
       - name: Run Snyk
         uses: snyk/actions/python-3.9@master
