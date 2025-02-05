@@ -13,11 +13,9 @@ jobs:
             - name: Install Dependencies
               run: pip install -r app_python/requirements.txt
             - name: Run Snyk to check for vulnerabilities
-              uses: snyk/actions/python-3.9@master
-                env:
-                    SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-                with:
-                    args: --severity-threshold=high
+              uses: snyk/actions/python@master
+              env:
+                SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
     build:
         runs-on: ubuntu-latest
