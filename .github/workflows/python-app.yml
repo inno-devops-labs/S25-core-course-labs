@@ -45,9 +45,8 @@ jobs:
         uses: snyk/actions/python@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-          PRE_COMMAND: "pip install annotated-types anyio certifi click fastapi h11 httpcore httpx idna iniconfig jinja2 markupsafe packaging pluggy pydantic pydantic-core pytest python-multipart pytz sniffio starlette typing-extensions unicorn"
         with:
-          args: --severity-threshold=high
+          args: --skip-unresolved app_python/
         continue-on-error: true
 
       - name: Lint with flake8
