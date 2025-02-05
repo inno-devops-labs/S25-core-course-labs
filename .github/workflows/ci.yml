@@ -25,7 +25,9 @@ jobs:
         run: flake8 app_python/app.py --max-line-length=127
 
       - name: Run Tests
-        run: pytest tests/ -v
+        run: |
+          export PYTHONPATH=$PYTHONPATH:${{ github.workspace }}
+          pytest tests/ -v
 
   docker-publish:
     runs-on: ubuntu-latest
