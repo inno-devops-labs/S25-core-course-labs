@@ -1,3 +1,4 @@
+![CI Workflow](https://github.com/Galyusha/s25-core-course-labs/actions/workflows/ci.yml/badge.svg)
 #  Moscow Time Django App
 
 ## Description
