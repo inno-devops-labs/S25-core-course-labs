@@ -14,4 +14,4 @@ This document describes the best practices applied in the Dockerfile for applica
  This reduces the size of the final image.
 
 4. **Copying only necessary files** 
- The image is copied only `requirements.txt `and `main.py to minimize its size.
+ The image is copied only `requirements.txt` and `main.py` to minimize its size.

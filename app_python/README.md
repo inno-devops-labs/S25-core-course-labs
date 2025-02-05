@@ -128,7 +128,7 @@ Continuous Integration (CI) is implemented using GitHub Actions to automate test
 3. **Install Dependencies**: Installs project dependencies from `requirements.txt`.
 4. **Run Linter**: Executes `flake8` to check code quality.
 5. **Run Tests**: Executes all unit tests using `pytest`.
-6. **Docker Login**: Logs into Docker Hub using secrets (`DOCKER_USERNAME` and `DOCKER_PASSWORD`).
+6. **Docker Login**: Logs into Docker Hub using secrets (`DOCKER_PASSWORD`).
 7. **Build and Push Docker Image**: Builds the Docker image and pushes it to Docker Hub.
 
 ### Viewing CI Workflow Status
