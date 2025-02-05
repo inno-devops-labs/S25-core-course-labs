@@ -58,3 +58,11 @@ OR
 ```bash
     docker run -p 5000:5000 mangocandle/app_python:latest
 ```
+
+## Unit tests:
+
+For running tests, run the command:
+
+```bash
+pytest tests/
+```

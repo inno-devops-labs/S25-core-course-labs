@@ -16,6 +16,12 @@ Flask was chosen as a framework for this project as it is simple yet functional 
 
 - The current time is passed dynamically to the `index.html` template using Flask's `render_template` function.
 
-## Testing:
+## Code Testing
 
-Testing was done manually by checking if the time on the page update matches the real Moscow time zone time (which it does).
+### Best practices:
+
+1. Using 'pytest' for testing Flask application.
+2. Applying 'app.test_client()' for requests imitation.
+3. Checking status-code and responce content.
+4. Checking html structure correctness.
+5. Checking that with wrong command there will be an error in the responce.
