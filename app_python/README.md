@@ -1,5 +1,7 @@
 # Python Web Application: Moscow Time
 
+[![CI Workflow](https://github.com/dprostiruk/S25-core-course-labs/actions/workflows/ci.yml/badge.svg?branch=lab3)](https://github.com/dprostiruk/S25-core-course-labs/actions/workflows/ci.yml)
+
 ## Introduction
 
 This is a simple web application built with Python and Flask to display the current time in Moscow. The time updates whenever the page is refreshed.
