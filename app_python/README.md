@@ -93,3 +93,35 @@ This will run all the unit tests and show the results in the terminal.
 Ensure your tests pass successfully to confirm the app is functioning as expected.
 
 ---
+
+## 🏗 CI Workflow
+
+### How CI Works for Moscow Time Web Application
+
+This project uses **GitHub Actions** for Continuous Integration (CI). The CI pipeline consists of the following stages:
+
+### 1️⃣ **Test Stage**
+This stage is responsible for testing the code. It ensures the application runs as expected.
+
+- **Runs on**: `ubuntu-latest`
+- **Steps**:
+  1. **Checkout Code**: Pulls the latest code from the repository.
+  2. **Set up Python Environment**: Configures Python 3.10.
+  3. **Install Dependencies**: Installs all the required dependencies using `pip`.
+  4. **Run Linter**: Runs `flake8` to check for code quality issues and enforce style guides.
+  5. **Run Tests**: Uses `unittest` to execute the test suite and check if all the tests pass.
+
+### 2️⃣ **Docker Stage**
+This stage builds and pushes the Docker image to **Docker Hub** after successful tests.
+
+- **Runs on**: `ubuntu-latest`
+- **Steps**:
+  1. **Login to Docker Hub**: Authenticates using your Docker Hub credentials stored as GitHub secrets.
+  2. **Build Docker Image**: Builds the Docker image using the `Dockerfile` in the `app_python` directory.
+  3. **Push Docker Image**: Pushes the Docker image to **Docker Hub** under your Docker Hub username with the tag `moscow-time-app`.
+
+### CI Workflow File
+
+The CI pipeline is defined in the GitHub Actions workflow file: **.github/workflows/python-app-ci.yml**.
+
+---
