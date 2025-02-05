@@ -74,16 +74,13 @@ jobs:
       with:
         context: ./app_python/frontend
         push: true
-        tags: jmartynova/dev-lab3-front:latest
+        tags: jmartynova123/dev-lab3-front:latest
     - name: Build and push backend Docker image
       uses: docker/build-push-action@v3
       with:
         context: ./app_python/backend
         push: true
-        tags: jmartynova/dev-lab3-back:latest
-    - name: Run Docker Compose
-      run: |
-        docker-compose up --build -d
+        tags: jmartynova123/dev-lab3-back:latest
 
     - name: Run tests with Docker Compose
       run: |
