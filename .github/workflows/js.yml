@@ -121,12 +121,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-docker-
 
-      - name: Build Docker image
-        run: |
-          docker buildx create --use  # Set up buildx for caching support
-          docker build --cache-from=type=local,src=/tmp/.buildx-cache --tag ${{ secrets.DOCKER_USERNAME }}/js-cities-dist:latest app_js
-
-      - name: Push Docker image to DockerHub
-        run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/js-cities-dist:latest
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./app_js
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/js-cities-dist:latest
         
