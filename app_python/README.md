@@ -25,17 +25,21 @@ pip install -r requirements.txt
 uvicorn app:app --port 8000 --reload
 ```
 
+## Use the app
+
+```bash
+curl http://localhost:8000 # or open this url in the browser
+```
+
 ## Unit tests
 
 Tests are located in the `test.py`.
 To run them, you first need to install the dev dependencies of the project by running `pip install -r requirements.dev.txt`.
 Then you can run the test suite by executing `pytest test.py -v`.
 
-## Use the app
+## Continuous Integration
 
-```bash
-curl http://localhost:8000 # or open this url in the browser
-```
+This repo uses GitHub Actions to test and lint the app code on pull requests (see `.github/workflows/` folder). Make sure to use `ruff check .` and `ruff format .` before submitting a pull request. An action to build and push the Docker image to Docker Hub is also available but currently can be only run manually.
 
 ## Docker
 

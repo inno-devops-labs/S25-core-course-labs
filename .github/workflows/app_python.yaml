@@ -1,0 +1,31 @@
+name: Install, lint and test Python app
+on:
+    pull_request:
+      branches:
+        - main
+        - master
+    workflow_dispatch: {}
+
+defaults:
+ run:
+  working-directory: ./app_python
+
+jobs:
+    check-python:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-python@v4
+              with:
+                  python-version: '3.10'
+            - name: Install dependencies
+              run: |
+                  pip install -r requirements.txt
+                  pip install -r requirements.dev.txt
+            - name: Run tests
+              run: pytest test.py
+            - name: Run linter
+              run: ruff check .
+            - name: Run formatter check
+              run: ruff format --check .
+        
