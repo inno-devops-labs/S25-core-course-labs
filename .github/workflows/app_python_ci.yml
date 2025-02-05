@@ -82,5 +82,5 @@ jobs:
 
     - name: 📦 Build and Push Docker Image
       run: |
-        docker build --cache-from=azazaki/app_python:latest -t azazaki/app_python:latest ./app_python
+        docker build --cache-from=azazaki/app_python:latest -t azazaki/app_python:latest .
         docker push azazaki/app_python:latest
