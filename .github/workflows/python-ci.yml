@@ -4,11 +4,9 @@ on:
   push:
     paths:
       - 'app_python/**'
-    branches: [ lab3 ]
   pull_request:
     paths:
       - 'app_python/**'
-    branches: [ lab3 ]
 
 jobs:
   test:
