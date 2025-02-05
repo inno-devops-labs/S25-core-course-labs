@@ -24,6 +24,10 @@ pip install -r requirements.txt
 uvicorn app:app --port 8000 --reload
 ```
 
+## Unit tests
+
+Tests are located in the `test.py`. You can run the test suite by executing `pytest test.py -v`.
+
 ## Use the app
 
 ```bash
