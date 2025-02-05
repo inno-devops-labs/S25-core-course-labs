@@ -48,9 +48,6 @@ jobs:
         pytest test_app.py
 
   security-scan:
-    defaults:
-      run:
-        working-directory: app_python
     name: Security check
     needs: build-lint-test
     runs-on: ubuntu-latest
@@ -64,7 +61,7 @@ jobs:
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        args: --skip-unresolved --severity-threshold=high
+        args: --skip-unresolved --severity-threshold=high app_python/
 
   docker:
     needs: [build-lint-test, security-scan]
@@ -85,5 +82,5 @@ jobs:
 
     - name: 📦 Build and Push Docker Image
       run: |
-        docker build --cache-from=azazaki/app_python:latest -t azazaki/app_python:latest .
+        docker build --cache-from=azazaki/app_python:latest -t azazaki/app_python:latest ./app_python
         docker push azazaki/app_python:latest
