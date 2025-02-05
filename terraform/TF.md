@@ -288,3 +288,74 @@ Import successful!
 The resources that were imported are shown above. These resources are now in
 your Terraform state and will henceforth be managed by Terraform.
 ```
+
+## List All Managed Resources
+
+```bash
+terraform state list
+
+github_branch_protection.main
+github_repository.existing_repo
+github_repository.my_repo
+```
+
+## Display the State of a Specific Resource
+
+**Imported repository**
+```bash
+terraform state show github_repository.existing_repo         
+
+# github_repository.existing_repo:
+resource "github_repository" "existing_repo" {
+    allow_auto_merge            = false
+    allow_merge_commit          = true
+    allow_rebase_merge          = true
+    allow_squash_merge          = true
+    allow_update_branch         = false
+    archived                    = false
+    auto_init                   = false
+    default_branch              = "master"
+    delete_branch_on_merge      = false
+    description                 = "Existing repository managed by Terraform"
+    etag                        = "W/\"f973237cc1d54534da70f917a4ee2c6fc9319b216296228d8c553038c0e28241\""
+    full_name                   = "VilaPat7/S25-core-course-labs"
+    git_clone_url               = "git://github.com/VilaPat7/S25-core-course-labs.git"
+    has_discussions             = false
+    has_downloads               = false
+    has_issues                  = false
+    has_projects                = false
+    has_wiki                    = false
+    homepage_url                = null
+    html_url                    = "https://github.com/VilaPat7/S25-core-course-labs"
+    http_clone_url              = "https://github.com/VilaPat7/S25-core-course-labs.git"
+    id                          = "S25-core-course-labs"
+    is_template                 = false
+    merge_commit_message        = "PR_TITLE"
+    merge_commit_title          = "MERGE_MESSAGE"
+    name                        = "S25-core-course-labs"
+    node_id                     = "R_kgDONwNwcw"
+    primary_language            = null
+    private                     = false
+    repo_id                     = 922972275
+    squash_merge_commit_message = "COMMIT_MESSAGES"
+    squash_merge_commit_title   = "COMMIT_OR_PR_TITLE"
+    ssh_clone_url               = "git@github.com:VilaPat7/S25-core-course-labs.git"
+    svn_url                     = "https://github.com/VilaPat7/S25-core-course-labs"
+    topics                      = []
+    visibility                  = "public"
+    vulnerability_alerts        = false
+    web_commit_signoff_required = false
+
+    security_and_analysis {
+        secret_scanning {
+            status = "enabled"
+        }
+        secret_scanning_push_protection {
+            status = "enabled"
+        }
+    }
+}
+```
+
+## terraform-lab-repo:
+![Demo](./assets/screen.png)
