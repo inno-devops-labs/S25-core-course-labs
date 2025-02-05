@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - 'app_python/**'
-      - '.github/workflows/**'
     branches:
       - '**'
   pull_request:
@@ -38,6 +37,13 @@ jobs:
       run: |
         cd app_python/
         python -m unittest discover -s ./tests
+    
+    - name: Snyk scan
+      uses: snyk/actions/python@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: app_python/ --severity-threshold=high --skip-unresolved
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v3

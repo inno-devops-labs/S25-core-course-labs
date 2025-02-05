@@ -2,6 +2,8 @@
 
 ## Overview
 
+[![Python CI](https://github.com/azzyyzz/S25-core-course-labs/actions/workflows/app_python.yml/badge.svg)](https://github.com/azzyyzz/S25-core-course-labs/actions/workflows/app_python.yml)
+
 Simple Python web app to show time in Moscow.
 
 ![image](static/images/overview.png)
