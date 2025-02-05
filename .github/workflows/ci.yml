@@ -24,10 +24,10 @@ jobs:
 
       - name: Lint with flake8
         run: |
-          flake8 .\app_python\app.py
+          flake8 ./app_python/app.py
 
       - name: Run tests
-        run: pytest .\app_python\ -v
+        run: pytest ./app_python/ -v
 
   docker:
     runs-on: ubuntu-latest
