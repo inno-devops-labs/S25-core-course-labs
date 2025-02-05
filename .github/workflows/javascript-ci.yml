@@ -4,9 +4,11 @@ on:
   push:
     paths:
       - 'app_javascript/**'
+    branches: [ master ]
   pull_request:
     paths:
       - 'app_javascript/**'
+    branches: [ master ]
 
 jobs:
   test:
