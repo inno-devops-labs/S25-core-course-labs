@@ -36,8 +36,8 @@ jobs:
       working-directory: app_golang
     
     - name: Snyk scan
-      uses: snyk/actions/golang@master
-    - run: cd app_golang 
+      uses: snyk/actions/setup@master
+    - run: cd app_golang && snyk test
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
