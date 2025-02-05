@@ -1,0 +1,8 @@
+# Exclude virtual environment folder
+venv/
+
+# Exclude Python cache files
+*.pyc
+*.pyo
+__pycache__/
+.pytest_cache/
