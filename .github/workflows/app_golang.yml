@@ -44,6 +44,7 @@ jobs:
           version: "latest"
           install-go: false
           cache-key: "1.23.4"
+          working-directory: app_golang/src
 
       - name: Build
         run: go build -v src/main.go
