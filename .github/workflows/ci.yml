@@ -7,6 +7,7 @@ on:
       - lab3
     paths:
       - 'app_python/'
+      - '.github/workflows/ci.yml'
 
 jobs:
   build:
