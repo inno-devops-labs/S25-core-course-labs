@@ -1,5 +1,7 @@
 # Python Time Display Application
 
+![Python Workflow](https://github.com/unileonid/s25-core-course-labs/actions/workflows/python-app.yml/badge.svg)
+
 This application shows current time in the provided timezone at endpoint `/`.
 
 Timezone, host and port by default are `Europe/Moscow`, `0.0.0.0` and `8080` respectively, but they can be changed
