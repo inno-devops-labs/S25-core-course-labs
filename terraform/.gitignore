@@ -6,3 +6,5 @@
 *.tfvars
 
 .terraform.lock.hcl
+
+key.json
