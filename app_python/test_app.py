@@ -3,20 +3,20 @@ from app import app, get_time_from_api
 from unittest.mock import patch
 import requests
 
+
 @pytest.fixture
 def client():
-    """Создает тестовый клиент Flask."""
     with app.test_client() as client:
         yield client
 
+
 def test_root(client):
-    """Тест корневого маршрута (/)"""
     response = client.get('/')
     assert response.status_code == 200
-    assert b"<!DOCTYPE html>" in response.data  # Проверяем, что это HTML
+    assert b"<!DOCTYPE html>" in response.data
+
 
 def test_get_time(client):
-    """Тест API /time"""
     response = client.get('/time')
     assert response.status_code == 200
     json_data = response.get_json()
@@ -24,9 +24,9 @@ def test_get_time(client):
     assert "status" in json_data
     assert json_data["status"] in ["success", "error"]
 
+
 @patch('app.requests.get')
 def test_get_time_from_api(mock_get):
-    """Тест функции get_time_from_api с мокированным API"""
     mock_get.return_value.status_code = 200
     mock_get.return_value.json.return_value = {"dateTime": "2025-02-06T14:30:00"}
 
@@ -36,7 +36,6 @@ def test_get_time_from_api(mock_get):
 
 @patch("app.requests.get")
 def test_get_time_from_api_fail(mock_get):
-    """Тест ошибки в get_time_from_api"""
     mock_get.side_effect = requests.RequestException("API is down")
     time = get_time_from_api()
-    assert time is None  # Функция должна вернуть None при ошибке
+    assert time is None
