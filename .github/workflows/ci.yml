@@ -49,6 +49,7 @@ jobs:
           pytest app_python/tests/
 
   security:
+    needs: [build-lint-test]
     runs-on: ubuntu-latest
     steps:
       # Step 7: Install Snyk
@@ -62,6 +63,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   docker-worker:
+   needs: [build-lint-test, security]
    runs-on: ubuntu-latest
    steps:
       # Step 9: Log in to Docker Hub
