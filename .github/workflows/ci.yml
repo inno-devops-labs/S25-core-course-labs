@@ -44,10 +44,13 @@ jobs:
         run: |
           ./venv/bin/python -m pytest app_python/tests/
           
-      - name: Run Snyk to check for vulnerabilities
-        run: |
-          pip install snyk
-          snyk test --file=requirements.txt
+      - name: Install Snyk
+        uses: snyk/actions/setup@master
+        with:
+          snyk-version: latest
+
+      - name: Run Snyk Security Scan
+        run: snyk test --file=app_python/requirements.txt --skip-unresolved
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           
