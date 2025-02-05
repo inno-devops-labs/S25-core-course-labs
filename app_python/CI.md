@@ -10,7 +10,7 @@
 
 ### 2. Version Control
 - Using latest stable versions of GitHub Actions
-- Actions checkout@v3
+- Actions checkout@v4
 - setup-python@v4
 - docker/build-push-action@v4
 
