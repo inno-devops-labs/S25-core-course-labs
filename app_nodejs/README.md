@@ -22,10 +22,46 @@ A simple web application built with Express.js that displays the current time in
    ```
 5. Open your browser and visit `http://localhost:3000`
 
+## Testing and Quality Assurance
+
+### Running Tests
+```bash
+npm test
+```
+
+The test suite includes:
+- HTTP response validation
+- DOM structure verification
+- Time format checking
+- Moscow timezone accuracy testing
+
+### Code Quality
+```bash
+npm run lint
+```
+
+ESLint is configured to enforce:
+- Consistent code style
+- Best practices
+- Error prevention
+- Code quality standards
+
+### Continuous Integration
+The application is integrated with GitHub Actions CI pipeline that:
+- Runs on every push and pull request
+- Executes all tests automatically
+- Performs linting checks
+- Builds and pushes Docker images
+- Scans for vulnerabilities using Snyk
+
 ## Technologies Used
 - Node.js
 - Express.js - web framework
 - moment-timezone - timezone handling library
+- Jest - testing framework
+- ESLint - code quality tool
+- Supertest - HTTP testing
+- JSDOM - DOM testing
 
 ## Best Practices Applied
 - Modern JavaScript syntax
@@ -33,6 +69,8 @@ A simple web application built with Express.js that displays the current time in
 - Proper error handling
 - Efficient dependency management with package.json
 - Comprehensive documentation
+- Test-Driven Development (TDD)
+- Continuous Integration/Deployment
 
 ## Docker Support
 
