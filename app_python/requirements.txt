@@ -1,2 +1,9 @@
 Flask==2.2.5
 pytz==2023.3
+Flask==2.2.5
+pytz==2023.3
+
+pytest==7.4.0
+pytest-cov==4.1.0
+
+flake8==6.1.0

@@ -65,3 +65,17 @@ If you wish to use the Distroless version:
    ```bash
    docker run -it --rm -p 5000:5000 your-dockerhub-user/python-app:distroless
 3. Compare image sizes with the regular version.
+
+## Unit Tests
+
+This project includes basic **pytest** tests in the `tests/` folder:
+
+- **Running Tests**:
+  ```bash
+  cd app_python
+  pip install -r requirements.txt
+  pytest
+- **Test Coverage (optional)**:
+   ```bash
+  pytest --cov=main tests/
+These tests check that the Flask app’s main route responds correctly and includes the expected text.
