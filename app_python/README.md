@@ -70,3 +70,30 @@ I made 2 PRs for this project:
 - Refreshes every second
 - Works offline once loaded
 - Container runs as non-root user for security
+
+
+## Unit Tests
+The application includes a test suite that verifies core functionality:
+
+### Test Coverage
+- Page accessibility check
+- Time format validation (HH:MM:SS)
+- Date format validation (DD.MM.YYYY)
+- Moscow timezone verification
+
+### Running Tests
+```bash
+# Using unittest
+python -m unittest test_app.py
+```
+
+## CI Workflow Status
+![Python Flask App CI](https://github.com/MarketerKA/S25-core-course-labs/workflows/Python%20Flask%20App%20CI/badge.svg)
+
+### CI Pipeline Features
+- Automated testing on push and pull requests
+- Python 3.9 environment
+- Dependencies caching
+- Snyk security scanning
+- Flake8 linting
+- Docker image build and push

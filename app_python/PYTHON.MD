@@ -42,3 +42,37 @@ app_python/
 - Tested everything myself
 - Made the code easy to read
 - Kept it simple but effective
+
+
+## Testing Implementation
+
+Test Cases
+---------
+1. test_home_status_code: 
+   - Verifies that the home page returns HTTP 200 status code
+   - Ensures the application is running and accessible
+
+2. test_time_format:
+   - Checks if time is displayed in HH:MM:SS format
+   - Uses regex pattern \d{2}:\d{2}:\d{2} for validation
+
+3. test_date_format:
+   - Verifies date is shown in DD.MM.YYYY format
+   - Uses regex pattern \d{2}\.\d{2}\.\d{4} for validation
+
+4. test_moscow_timezone:
+   - Confirms the displayed time is in Moscow timezone
+   - Allows for ±1 hour tolerance to handle edge cases
+
+Usage
+-----
+Run tests using:
+python -m unittest test_app.py
+
+
+Requirements
+-----------
+- Python 3.x
+- Flask
+- pytz
+- unittest
