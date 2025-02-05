@@ -39,16 +39,26 @@ jobs:
           pip install pytest
           pytest app_python/tests/
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: fridorovich04
-          password: ${{ secrets.DOCKER_PASSWORD }}
+  docker-login:
+      needs: build
+      runs-on: ubuntu-latest
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          file: ./app_python/Dockerfile
-          push: true
-          tags: fridorovich04/python-app:latest
+      steps:
+        - name: Log in to Docker Hub
+          uses: docker/login-action@v2
+          with:
+            username: fridorovich04
+            password: ${{ secrets.DOCKER_PASSWORD }}
+
+  docker-build-push:
+      needs: docker-login
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+
+        - name: Build and Push Docker Image
+          run: |
+            docker build -t fridorovich04/python-app:latest -f app_python/Dockerfile app_python/
+            docker push fridorovich04/python-app:latest
