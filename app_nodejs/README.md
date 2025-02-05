@@ -1,5 +1,9 @@
 # Moscow Time Web Application (Node.js)
 
+## CI/CD Pipeline Status
+
+![CI Pipeline](https://github.com/Dyddxd/S25-core-course-labs/actions/workflows/nodejs-ci.yml/badge.svg?branch=lab3)
+
 ## Overview
 This is a simple Node.js web application built using Express. It displays the current time in Moscow and updates on each page refresh.
 
@@ -32,4 +36,11 @@ This is a simple Node.js web application built using Express. It displays the cu
    ```bash
    docker run -d -p 3000:3000 --name app_nodejs zerohalf/app_nodejs:nonroot
    curl localhost:3000
+   ```
+
+## Unit Tests
+1. Run tests
+   ```bash
+   cd app_nodejs
+   npm test
    ```

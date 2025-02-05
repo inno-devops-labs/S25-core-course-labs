@@ -2,7 +2,7 @@
 
 ## CI/CD Pipeline Status
 
-![CI Pipeline](https://github.com/Dyddxd/S25-core-course-labs/actions/workflows/ci.yml/badge.svg?branch=lab3)
+![CI Pipeline](https://github.com/Dyddxd/S25-core-course-labs/actions/workflows/python-ci.yml/badge.svg?branch=lab3)
 
 ## Overview
 This is a simple Python web application built using FastAPI. It displays the current time in Moscow and updates on each page refresh.
