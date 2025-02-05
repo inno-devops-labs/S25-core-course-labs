@@ -16,6 +16,11 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
+      - name: Set up Node.js (for Snyk CLI)
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
 
       - name: Install dependencies
         # working-directory: lab3/app_python
@@ -42,6 +47,13 @@ jobs:
         run: |
           cd app_python
           pytest -v tests/
+      - name: Run Snyk
+        run: |
+          cd app_python
+          npm install -g snyk
+          snyk auth ${{ secrets.SNYK_TOKEN }}
+          snyk test --severity-threshold=high
+
       # - name: Snyk Python Scan
       #   uses: snyk/actions/python-3.9@master
       #   env:
