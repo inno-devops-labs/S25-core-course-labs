@@ -2,6 +2,10 @@ name: Python app CI
 
 on: [push]
 
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+
 jobs:
   ci:
     runs-on: ${{ matrix.os }}
