@@ -1,5 +1,7 @@
 # Python Web Application: Moscow Time
 
+[![Python application](https://github.com/Fridorovich/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)](https://github.com/Fridorovich/S25-core-course-labs/actions/workflows/ci.yml)
+
 ## Overview
 This is a simple Python web application that displays the current time in Moscow. The application is built using FastAPI with Python 3.12+ based on standard Python type hints.
 
@@ -114,3 +116,21 @@ To execute the unit tests locally, follow these steps:
     ```bash
     pytest tests/
     ```
+   
+## CI Workflow
+
+Continuous Integration (CI) is implemented using GitHub Actions to automate testing, linting, and Docker image building/pushing processes.
+
+### CI Workflow Steps
+
+1. **Checkout Code**: Clones the repository.
+2. **Set Up Python**: Installs Python 3.9.
+3. **Install Dependencies**: Installs project dependencies from `requirements.txt`.
+4. **Run Linter**: Executes `flake8` to check code quality.
+5. **Run Tests**: Executes all unit tests using `pytest`.
+6. **Docker Login**: Logs into Docker Hub using secrets (`DOCKER_USERNAME` and `DOCKER_PASSWORD`).
+7. **Build and Push Docker Image**: Builds the Docker image and pushes it to Docker Hub.
+
+### Viewing CI Workflow Status
+
+You can view the status of the CI workflow in the "Actions" tab of this repository on GitHub.
