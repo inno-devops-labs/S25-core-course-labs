@@ -11,12 +11,14 @@ jobs:
             - uses: actions/setup-python@v4
               with:
                 python-version: '3.9'
+            - name: Install Dependencies
+              run: pip install -r app_python/requirements.txt
             - name: Run Snyk to check for vulnerabilities
               uses: snyk/actions/python@master
               env:
                 SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
               with:
-                command: pip install -r app_python/requirements.txt
+                args: --file=app_python/requirements.txt
 
     build:
         runs-on: ubuntu-latest
