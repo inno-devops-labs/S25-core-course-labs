@@ -44,4 +44,4 @@ jobs:
       with:
         context: app_python
         push: true
-        tags: ${{ env.DOCKER_REPO }}:${{ env.DOCKER_TAG }}
+        tags: ${{ env.DOCKER_REPO }}
