@@ -44,10 +44,9 @@ jobs:
           cd app_python
           pytest test_app.py -v
           
-      - name: Navigate to Python app directory
-        run: cd app_python
         
       - name: Run Snyk
+        run: cd app_python
         uses: snyk/actions/python-3.9@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
