@@ -83,7 +83,7 @@ jobs:
 
     - name: Run backend container
       run: |
-        docker run -d --name dev-lab3-back --link dev-lab1-db:db -e SQLALCHEMY_DATABASE_URI=postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@db:5432/postgres jmartynova/dev-lab3-back:latest
+        docker run -d --name dev-lab3-back --link dev-lab3-db:db -e SQLALCHEMY_DATABASE_URI=postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@db:5432/postgres jmartynova123/dev-lab3-back:latest
   snyk:
     runs-on: ubuntu-latest
 
