@@ -8,8 +8,8 @@ Main file for the web application. It includes two endpoints:
 from fastapi import FastAPI, Request, status
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
-from utils import get_time
-from models import Time
+from src.utils import get_time
+from src.models import Time
 
 
 # Create FastAPI application
