@@ -1,5 +1,7 @@
 # Python Web Application: Current Date in Moscow
 
+[![Python CI/CD Pipeline](https://github.com/creepydanunity/S25-core-course-labs/actions/workflows/python-ci.yml/badge.svg?branch=lab3)](https://github.com/creepydanunity/S25-core-course-labs/actions/workflows/python-ci.yml)
+
 ## Overview
 This web application built with **FastAPI** to display the current formatted date and time in Moscow. The application dynamically updates the date whenever the page is refreshed.
 
