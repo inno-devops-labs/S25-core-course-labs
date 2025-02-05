@@ -2,9 +2,9 @@ name: Python CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, lab3 ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, lab3 ]
 
 env:
   DOCKER_IMAGE: moscow-time-app
