@@ -11,9 +11,6 @@ on:
 jobs:
   build-lint-test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./app_python
 
     steps:
       # Step 1: Check out the repository
