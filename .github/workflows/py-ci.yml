@@ -43,7 +43,19 @@ jobs:
         run: |
           cd app_python
           pytest test_app.py -v
+          
+      - name: Snyk Security Scan
 
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Snyk
+        uses: snyk/actions/python-3.9@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+          
   docker-build-push:
     needs: build-and-test
     runs-on: ubuntu-latest
