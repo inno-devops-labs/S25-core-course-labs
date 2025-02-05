@@ -47,11 +47,9 @@ jobs:
       - name: Build Docker image
         run: docker build --cache-from=type=gha -t ezzysoft/moscow-time:latest ./app_python/
 
-      - name: Run Snyk to check Docker image for vulnerabilities
-        uses: snyk/actions/docker@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: ezzysoft/moscow-time:latest
-      - name: Push Docker image
-        run: docker push ezzysoft/moscow-time:latest
+          command: monitor
