@@ -37,3 +37,15 @@ This is a simple web application that displays the current time in Moscow. The a
    ```sh
     docker pull deedjei/lab2
     docker run -p 5000:5000 deedjei/lab2
+   ```
+
+## Unit Tests
+Test suite ensures:
+- Successful application startup
+- Correct timezone handling
+- Proper time formatting
+- Template rendering accuracy
+
+Run tests with:
+```bash
+pytest test_app.py

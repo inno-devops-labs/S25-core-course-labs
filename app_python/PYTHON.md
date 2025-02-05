@@ -6,3 +6,14 @@ I chose Flask for this web application because it is lightweight, easy to set up
 - **Timezone Handling**: I used the `pytz` library to handle timezone conversions accurately.
 - **Template Rendering**: Flask's `render_template` function is used to render HTML templates, ensuring a clean separation of concerns.
 - **Testing**: The application was tested manually by refreshing the page to ensure the time updates correctly.
+
+
+## Unit Tests
+- `test_home_route_status_code`: Verifies successful response (200 status)
+- `test_home_route_time_display`: Validates correct time formatting and display
+
+## Best Practices
+1. **Test Isolation**: Each test focuses on a single responsibility
+2. **Mocking**: Used to control time output for consistent testing
+3. **Parameterization**: Ready for future expansion with multiple test cases
+4. **CI Integration**: Tests automated in GitHub Actions
