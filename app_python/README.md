@@ -1,6 +1,6 @@
 # FastAPI app
 
-![CI Status](https://github.com/Poxidq/S25-core-course-labs/actions/workflows/python-app.yml/badge.svg)
+![CI Status](https://github.com/Poxidq/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)
 
 
 - Shows the current time in Moscow.
