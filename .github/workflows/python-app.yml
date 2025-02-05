@@ -24,40 +24,40 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.9'
-      
+          
       - name: Cache pip packages
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('app_python/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
-      
+            
       - name: Install dependencies
-        working-directory: .
+        working-directory: ./app_python
         run: |
           python -m pip install --upgrade pip
           pip install flake8 pytest
           pip install -r requirements.txt
-      
+          
       - name: Lint with flake8
-        working-directory: .
+        working-directory: ./app_python
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      
+          
       - name: Run tests
-        working-directory: .
+        working-directory: ./app_python
         run: |
           pytest test_app.py -v
-      
+          
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: monitor
-          args: --file=requirements.txt
+          args: --file=app_python/requirements.txt
 
   docker:
     needs: test
@@ -70,10 +70,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      
+          
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./app_python
           push: true
           tags: marketer7/flask-time:latest
