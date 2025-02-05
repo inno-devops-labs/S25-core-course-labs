@@ -18,10 +18,19 @@ I choose **FastAPI** for these reasons:
 - Used meaningful variable names and added comments where necessary.
 - Maintained a clean and organized file structure.
 
-## Testing
-- Unit tests are written using `unittest` to verify the functionality of the application.
-- Run tests using the command: `python -m unittest tests/test_app.py`.
-
 ## Code Quality
 - Used **type hints** for better code readability and maintainability.
 - Added logging to monitor the application's behavior and debug issues.
+
+## Testing
+The unit tests are written using pytest and focus on key functionalities of the application:
+To manually test the FastAPI app before pushing changes:
+```
+pytest -v app_python/app/test_app.py
+```
+
+**Unit tests implemented**:
+1. 404 Error Handling Test
+2. Moscow Time Format Test
+3. Root Endpoint Test
+
