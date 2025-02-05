@@ -1,0 +1,80 @@
+name: Go app CI
+
+on:
+  push:
+    paths:
+      - 'app_go/**'
+      - '.github/workflows/go_app_ci.yml'
+  pull_request:
+    paths:
+      - 'app_go/**'
+      - '.github/workflows/go_app_ci.yml'
+
+jobs:
+  build-test:
+    name: Build, Test, Lint
+    defaults:
+      run:
+        working-directory: app_go
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+          cache: true
+          cache-dependency-path: app_go/go.sum
+
+      - name: Install Dependencies
+        run: go mod tidy
+
+      - name: Run Linter
+        run: go vet ./...
+
+      - name: Run Unit Tests
+        run: go test -v ./...
+
+  security:
+    needs: [build-test]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app_go
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/golang@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --skip-unresolved app_go/
+
+  docker:
+    name: Docker Build&Push
+    defaults:
+      run:
+        working-directory: app_go
+    needs: [build-test, security]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: app_go
+          file: app_go/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/go-app:latest
