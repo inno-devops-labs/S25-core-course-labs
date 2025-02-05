@@ -7,7 +7,7 @@
 <details>
 <summary>Open output</summary>
 
-```console
+```cmd
 terraform\docker> terraform state list
 docker_container.go_webapp_container
 docker_container.python_webapp_container
@@ -20,7 +20,7 @@ docker_container.python_webapp_container
 <details>
 <summary>Open output for <code>terraform state show "docker_container.go_webapp_container"</code></summary>
 
-```console
+```cmd
 terraform\docker> terraform state show "docker_container.go_webapp_container"
 # docker_container.go_webapp_container:
 resource "docker_container" "go_webapp_container" {
@@ -95,7 +95,7 @@ resource "docker_container" "go_webapp_container" {
 <details>
 <summary>Open output for <code>terraform state show "docker_container.python_webapp_container"</code></summary>
 
-```console
+```cmd
 terraform\docker> terraform state show "docker_container.python_webapp_container"
 # docker_container.python_webapp_container:
 resource "docker_container" "python_webapp_container" {
@@ -179,7 +179,7 @@ resource "docker_container" "python_webapp_container" {
 <details>
 <summary>Open output</summary>
 
-```console
+```cmd
 terraform\docker> terraform apply
 docker_container.go_webapp_container: Refreshing state... [id=bca5ec05c65bd4389925295b5574fa0420f3e292783e7b5399b472e445b297d5]
 docker_container.python_webapp_container: Refreshing state... [id=086c159c3c0f4b79f25dd25976be3dcc82822c303f757cacf77e3f50f095f6fd]
@@ -366,7 +366,7 @@ python_webapp_container_ports = tolist([
 <details>
 <summary>Open output</summary>
 
-```console
+```cmd
 terraform\docker> terraform output
 go_webapp_container_id = "4543e13edccd66550643ea88efc43fabe8c0e9c0882e44d2cacd35aa745ba496"
 go_webapp_container_ports = tolist([
