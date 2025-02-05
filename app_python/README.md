@@ -6,6 +6,18 @@ Web-application for displaying current time in Moscow. Developed by Django frame
 - Displays current time in Moscow.
 - Dynamically shows time (no need for refreshing).
 
+## CI/CD
+
+This project uses GitHub Actions for CI/CD to automate testing, security scanning, and Docker image building.  
+The workflow is triggered on both **push** and **pull_request** events when changes occur in:
+- `app_python/**`
+- `.github/workflows/app_python.yml`
+
+This ensures that CI checks run for both direct pushes and pull requests.
+
+For more details, [click here](https://github.com/TheAnushervon/S25-core-course-labs/blob/lab3/.github/workflows/app_python.yml).
+
+
 ## How to launch 
 
 ### Prerequisites
