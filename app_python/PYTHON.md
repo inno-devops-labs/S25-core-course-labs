@@ -75,6 +75,7 @@ Unit tests were created to validate the functionality of the application. The te
 #### **Test Files**
 
 ##### **a. `conftest.py`**
+
 - **Purpose**: Contains pytest fixtures for setting up the Flask app and test client.
 - **Best Practices**:
   - Fixtures are reusable across all test files.
@@ -82,18 +83,21 @@ Unit tests were created to validate the functionality of the application. The te
   - The `client` fixture provides a test client for making HTTP requests.
 
 ##### **b. `test_h1_tag.py`**
+
 - **Purpose**: Verifies that the response contains an `<h1>` tag with the current time in Moscow.
 - **Best Practices**:
   - Uses `encode()` and `decode()` to handle byte strings for comparison.
   - Includes a descriptive error message for failed assertions.
 
 ##### **c. `test_home_route.py`**
+
 - **Purpose**: Ensures that the home route (`/`) returns a 200 status code.
 - **Best Practices**:
   - Simple and focused test to verify the home route is accessible.
   - Includes a descriptive error message for failed assertions.
 
 ##### **d. `test_time_accuracy.py`**
+
 - **Purpose**: Validates that the time displayed on the page matches the current time in Moscow.
 - **Best Practices**:
   - Uses a helper function (`get_current_moscow_time`) to avoid code duplication.
@@ -101,19 +105,14 @@ Unit tests were created to validate the functionality of the application. The te
   - Includes a descriptive error message for failed assertions.
 
 ##### **e. `test_time_format.py`**
+
 - **Purpose**: Ensures that the time displayed on the page follows the expected format (`HH:MM:SS`).
 - **Best Practices**:
   - Uses `datetime.strptime` to validate the time format.
   - Includes error handling and a descriptive error message for failed assertions.
 
-##### **f. `test_check_timezone.py`**
-- **Purpose**: Verifies that the time displayed on the page is correctly localized to the Moscow timezone.
-- **Best Practices**:
-  - Uses a helper function (`extract_time_from_response`) to extract the time string.
-  - Validates the time format and ensures the time is localized to the Moscow timezone.
-  - Includes descriptive error messages for failed assertions.
-
 ### **4. Manual Testing**
+
 - The application was run locally, and the displayed time was verified to match the current time in Moscow.
 - The page was refreshed multiple times to ensure the time updates correctly.
 
