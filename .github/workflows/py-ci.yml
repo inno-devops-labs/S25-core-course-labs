@@ -15,6 +15,11 @@ jobs:
         with:
           python-version: 3.9
 
+      - name: Set up Node.js (for Snyk CLI)
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
       - name: Cache pip dependencies
         uses: actions/cache@v3
         with:
