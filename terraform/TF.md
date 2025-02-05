@@ -309,6 +309,8 @@ Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
 contain_name = "custom_nginx"
 container_id = "4e996e40274cb4c51e4c1a07eaf8543e4da01493d31242928d951d86b6abf125"
 ```
+---
+
 # Yandex Cloud Setup: Steps and Challenges
 
 ## **Steps Taken**
@@ -558,7 +560,9 @@ vm_internal_ip = "10.129.0.22"
 vm_name = "terraform-instance"
 vm_status = "running"
 ```
-# GitHub Infrastructure Setup: Steps and Challenges
+---
+
+# GitHub: Steps and Challenges
 
 ## **Steps Taken**
 1. **Setting Up Terraform for GitHub**
@@ -603,27 +607,6 @@ vm_status = "running"
 - **Challenge:** Repository rename error
   *Solution: Kept the existing repository name or used `terraform state rm`*
 
-## **Terraform Best Practices for GitHub**
-1. **Avoid Hardcoding Secrets**
-   - Store API tokens in **environment variables** instead of Terraform files.
-
-2. **Use Version Control for Terraform Files**
-   - Store `.tf` files in Git and use proper versioning.
-
-3. **Use `terraform plan` Before Applying Changes**
-   - Always check planned changes to avoid unintended modifications.
-
-4. **Use `terraform import` for Existing Resources**
-   - Avoid duplication errors by importing existing repositories instead of creating new ones.
-
-5. **Apply Branch Protection Rules Carefully**
-   - GitHub requires Pro accounts for protected branches in private repos.
-
-6. **Keep Terraform State Secure**
-   - Use **remote backends** like S3 with state locking to avoid conflicts.
-
-7. **Modularize Terraform Configuration**
-   - Break down Terraform files into separate modules for better management.
 
 ## Terraform show - GitHub
 ```
@@ -794,4 +777,198 @@ Plan: 0 to add, 1 to change, 0 to destroy.
 Changes to Outputs:
   ~ repository_name = "S25-core-course-labs" -> "terraform-managed-repo"
 github_repository.my_repo: Modifying... [id=S25-core-course-labs]
+```
+---
+
+# GitHub Teams: Steps and Challenges
+
+## **Steps Taken**
+
+1. **Upgrading to a GitHub Organization**
+- Converted the personal GitHub account into an organization to enable team management.
+
+2. ***Defining Teams in Terraform**
+- Created teams with different access levels:
+
+3. **Applying Team Configuration**
+- Applied Terraform changes to add teams and grant access:
+  ```sh
+  terraform apply -auto-approve
+  ```
+- Verified team permissions in GitHub settings.
+
+## **Challenges Faced and Solutions**
+
+- **Challenge** Authentication issues due to incorrect token scope.
+  *Solution: Generated a new token with `repo` and `admin:org` scopes from GitHub.*
+
+
+## Terraform show - GitHub Teams
+```
+# github_team.teams["admins"]:
+resource "github_team" "teams" {
+    create_default_maintainer = false
+    description               = "Admin Team"
+    etag                      = "W/\"1b9c3f4a9f5f468c7228272bdfc427667af277d2ac44c4466e78220bbc545ab1\""
+    id                        = "12122396"
+    ldap_dn                   = null
+    members_count             = 0
+    name                      = "admins"
+    node_id                   = "T_kwDOC8y4YM4AuPkc"
+    parent_team_id            = null
+    parent_team_read_id       = null
+    parent_team_read_slug     = null
+    privacy                   = "closed"
+    slug                      = "admins"
+}
+
+# github_team.teams["developers"]:
+resource "github_team" "teams" {
+    create_default_maintainer = false
+    description               = "Development Team"
+    etag                      = "W/\"3cc679f92861fd51c4daa4d25c9690c0f5dc25a4e642c9925660c5984c269e98\""
+    id                        = "12122395"
+    ldap_dn                   = null
+    members_count             = 0
+    name                      = "developers"
+    node_id                   = "T_kwDOC8y4YM4AuPkb"
+    parent_team_id            = null
+    parent_team_read_id       = null
+    parent_team_read_slug     = null
+    privacy                   = "closed"
+    slug                      = "developers"
+}
+
+# github_team.teams["qa"]:
+resource "github_team" "teams" {
+    create_default_maintainer = false
+    description               = "Quality Assurance Team"
+    etag                      = "W/\"9a6b520fef63b8f7d5d3d5dd6325403757776f9623f9c46f4251cb887d4c7256\""
+    id                        = "12122398"
+    ldap_dn                   = null
+    members_count             = 0
+    name                      = "qa"
+    node_id                   = "T_kwDOC8y4YM4AuPke"
+    parent_team_id            = null
+    parent_team_read_id       = null
+    parent_team_read_slug     = null
+    privacy                   = "closed"
+    slug                      = "qa"
+}
+
+# github_team.teams["viewers"]:
+resource "github_team" "teams" {
+    create_default_maintainer = false
+    description               = "Read-Only Access"
+    etag                      = "W/\"2a06f7017a6278ec5f304b0781d671fd41769716169fbcd2c74a04dfb8fb986d\""
+    id                        = "12122399"
+    ldap_dn                   = null
+    members_count             = 0
+    name                      = "viewers"
+    node_id                   = "T_kwDOC8y4YM4AuPkf"
+    parent_team_id            = null
+    parent_team_read_id       = null
+    parent_team_read_slug     = null
+    privacy                   = "closed"
+    slug                      = "viewers"
+}
+
+
+Outputs:
+
+repository_access = {
+    "12122395" = "push"
+    "12122396" = "admin"
+    "12122398" = "triage"
+    "12122399" = "pull"
+}
+team_ids = {
+    admins     = "12122396"
+    developers = "12122395"
+    qa         = "12122398"
+    viewers    = "12122399"
+}
+```
+
+## Terraform state list - GitHub Teams
+```
+github_team.teams["admins"]
+github_team.teams["developers"]
+github_team.teams["qa"]
+github_team.teams["viewers"]
+```
+
+## Part of the log - GitHub Teams
+```
+Terraform used the selected providers to generate the following execution plan.
+Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_team_repository.team_access["admins"] will be created
+  + resource "github_team_repository" "team_access" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "admin"
+      + repository = "Terraform_lab4"
+      + team_id    = "12122396"
+    }
+
+  # github_team_repository.team_access["developers"] will be created
+  + resource "github_team_repository" "team_access" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "push"
+      + repository = "Terraform_lab4"
+      + team_id    = "12122395"
+    }
+
+  # github_team_repository.team_access["qa"] will be created
+  + resource "github_team_repository" "team_access" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "triage"
+      + repository = "Terraform_lab4"
+      + team_id    = "12122398"
+    }
+
+  # github_team_repository.team_access["viewers"] will be created
+  + resource "github_team_repository" "team_access" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "pull"
+      + repository = "Terraform_lab4"
+      + team_id    = "12122399"
+    }
+
+Plan: 4 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + repository_access = {
+      + "12122395" = "push"
+      + "12122396" = "admin"
+      + "12122398" = "triage"
+      + "12122399" = "pull"
+    }
+github_team_repository.team_access["admins"]: Creating...
+github_team_repository.team_access["developers"]: Creating...
+github_team_repository.team_access["qa"]: Creating...
+github_team_repository.team_access["viewers"]: Creating...
+```
+
+## Terraform output - GitHub
+```
+repository_access = {
+  "12122395" = "push"
+  "12122396" = "admin"
+  "12122398" = "triage"
+  "12122399" = "pull"
+}
+team_ids = {
+  "admins" = "12122396"
+  "developers" = "12122395"
+  "qa" = "12122398"
+  "viewers" = "12122399"
+}
 ```
