@@ -10,9 +10,6 @@ on:
       - 'app_python/'
       - '.github/workflows/python-app.yml'
 
-permissions:
-  contents: read
-
 jobs:
   build:
 
