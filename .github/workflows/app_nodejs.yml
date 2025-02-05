@@ -1,0 +1,140 @@
+name: Nodejs CI
+
+on:
+  push:
+    paths:
+      - "app_nodejs/**"
+      - ".github/workflows/app_nodejs.yml"
+    branches:
+      - '**'
+  pull_request:
+    paths:                            
+      - "app_nodejs/**"
+      - ".github/workflows/app_nodejs.yml"
+    branches:
+      - '**'
+
+jobs:
+  dependencies:
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: app_nodejs/package-lock.json
+
+      - name: Cache Node Modules
+        uses: actions/cache@v3
+        with:
+          path: app_nodejs/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('app_nodejs/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
+      - name: Install All Dependencies
+        run: npm install
+        working-directory: app_nodejs
+
+  lint:
+    name: Lint Code
+    runs-on: ubuntu-latest
+    needs: dependencies
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Restore Cached Node Modules
+        uses: actions/cache@v3
+        with:
+          path: app_nodejs/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('app_nodejs/package-lock.json') }}
+
+      - name: Run ESLint to lint code
+        run: npx eslint .
+        working-directory: app_nodejs
+
+  snyk:
+    name: Snyk Security Scan
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Restore Cached Node Modules
+        uses: actions/cache@v3
+        with:
+          path: app_nodejs/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('app_nodejs/package-lock.json') }}
+
+      - name: Run Snyk Security Scan
+        uses: snyk/actions/node@master
+        with:
+          args:  --skip-unresolved --severity-threshold=high app_nodejs/
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: snyk
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Restore Cached Node Modules
+        uses: actions/cache@v3
+        with:
+          path: app_nodejs/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('app_nodejs/package-lock.json') }}
+
+      - name: Run Jest Tests
+        run: npm test -- --ci --coverage
+        working-directory: app_nodejs
+
+  docker:
+    name: Build & Push Docker Image
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build & Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: "${{ vars.DOCKER_USERNAME }}/app_nodejs:latest"
+          context: ./app_nodejs
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
