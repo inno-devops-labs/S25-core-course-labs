@@ -2,6 +2,7 @@ import unittest
 import app
 import re
 
+
 class UnitTests(unittest.TestCase):
     def setUp(self):
         self.app = app.app.test_client()
