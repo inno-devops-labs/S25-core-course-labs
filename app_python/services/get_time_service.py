@@ -1,7 +1,6 @@
 import pytz
 from datetime import datetime
 
-from flask import render_template
 
 class GetTimeService:
     """
@@ -11,14 +10,20 @@ class GetTimeService:
     @staticmethod
     def get_time_by_timezone(timezone: str) -> str:
         """
-        Retrieves the current time in the specified timezone and renders it using a Flask template.
-        
+        Retrieves the current time in the specified timezone.
+
         Args:
             timezone (str): The timezone for which the current time is required.
-        
+
         Returns:
-            str: Rendered HTML template displaying the current time in the given timezone.
+            str: The current time in the given timezone formatted as 'YYYY-MM-DD HH:MM:SS'.
+
+        Raises:
+            ValueError: If the provided timezone is invalid.
         """
-        time_tz = pytz.timezone(timezone)
-        current_time = datetime.now(time_tz).strftime('%Y-%m-%d %H:%M:%S')
-        return render_template(f"current_time.html", current_time=current_time)
+        try:
+            time_tz = pytz.timezone(timezone)
+            return datetime.now(time_tz).strftime('%Y-%m-%d %H:%M:%S')
+        except pytz.UnknownTimeZoneError as e:
+            raise ValueError(f"Invalid timezone: {timezone}") from e
+        

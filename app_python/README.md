@@ -50,3 +50,25 @@ docker run -p 5000:5000 moscow-time-app
 docker pull whatislav/moscow-time-app:1.0
 docker run -p 5000:5000 whatislav/moscow-time-app:1.0
 ```
+
+### Unit Tests
+
+This application includes comprehensive unit tests to ensure its reliability and correctness. The tests are written using Python's `unittest` framework and cover both business logic and Flask routes.
+
+#### Running Unit Tests
+To execute the unit tests, follow these steps:
+
+1. Navigate to the project directory:
+   ```sh
+   cd app_python
+   ```
+
+2. Activate the virtual environment (if not already active):
+   ```sh
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. Run the tests:
+   ```sh
+   python -m unittest discover tests
+   ```

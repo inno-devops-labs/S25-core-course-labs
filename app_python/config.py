@@ -1,1 +1,1 @@
-TIMEZONE_NAME = "Europe/Moscow"
+config = {"TIMEZONE_NAME": "Europe/Moscow"}
