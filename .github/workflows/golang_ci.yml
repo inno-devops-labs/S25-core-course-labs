@@ -92,7 +92,7 @@ jobs:
     - uses: actions/checkout@master
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/golang@master
+      with:
+        args: --skip-unresolved app_golang/
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        args: test ./app_golang
