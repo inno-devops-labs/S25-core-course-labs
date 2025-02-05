@@ -64,3 +64,12 @@ docker pull yourusername/moscow-time:1.0
 # Run
 docker run -p 5000:5000 ezzysoft/moscow-time:1.0
 ```
+
+## Unit Tests
+Unit tests are used in the project to check correctness of functions and template display.
+
+To run the tests, execute the command in `project root directory`:
+
+```bash
+pytest .\app_python\ -v
+```
