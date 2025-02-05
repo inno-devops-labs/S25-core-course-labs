@@ -18,7 +18,7 @@ docker_container.python_webapp_container
 ### `terraform state show`
 
 <details>
-<summary>Open output for <code>terraform state show "docker_container.go_webapp_container"</code></summary>
+<summary>Open output for <code>go_webapp_container</code></summary>
 
 ```cmd
 terraform\docker> terraform state show "docker_container.go_webapp_container"
@@ -93,7 +93,7 @@ resource "docker_container" "go_webapp_container" {
 </details>
 
 <details>
-<summary>Open output for <code>terraform state show "docker_container.python_webapp_container"</code></summary>
+<summary>Open output for <code>python_webapp_container</code></summary>
 
 ```cmd
 terraform\docker> terraform state show "docker_container.python_webapp_container"
