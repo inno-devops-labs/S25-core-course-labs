@@ -52,7 +52,7 @@ jobs:
     - name: Run tests with coverage
       working-directory: app_python
       run: |
-        pytest -v
+        python -m pytest -v
 
   docker-build:
     runs-on: ubuntu-latest
