@@ -1,9 +1,9 @@
-from django.test import SimpleTestCase
+from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
 from django.utils.timezone import now 
-import pytz
 
-class TestHomePage(SimpleTestCase):
+
+class TestHomePage(TestCase):
     def test_home_page_status_code(self): 
         url = reverse('moscow_time')
         response = self.client.get(url) 
