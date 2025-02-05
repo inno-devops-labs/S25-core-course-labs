@@ -42,6 +42,14 @@ jobs:
         run: |
           cd app_python
           pytest -v tests/
+      - name: Snyk Python Scan
+        uses: snyk/actions/python@v3
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  # From GitHub Secrets
+        with:
+          command: test
+          args: --severity-threshold=high  # Fail on high-severity issues
+
 
   docker-publish:
     needs: lint-and-test
