@@ -70,4 +70,4 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           image: ${{ secrets.DOCKER_USERNAME }}/flask-app:latest
-          args: --file=Dockerfile monitor || true
+          args: --severity-threshold=monitor
