@@ -12,11 +12,12 @@ jobs:
                 python-version: '3.9'
             - name: Install Dependencies
               run: pip install -r app_python/requirements.txt
-            - name: Run Snyk Security Scan
-              run: |
-                pip install snyk
-                snyk auth ${{ secrets.SNYK_TOKEN }}
-                snyk test --severity-threshold=high
+            - name: Run Snyk to check for vulnerabilities
+              uses: snyk/actions/python-3.9@master
+                env:
+                    SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+                with:
+                    args: --severity-threshold=high
 
     build:
         runs-on: ubuntu-latest
@@ -41,7 +42,6 @@ jobs:
 
             - name: Lint Code
               run: |
-                pip install flake8
                 flake8 app_python
 
             - name: Run Unit Tests
