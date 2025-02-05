@@ -1,4 +1,5 @@
 name: CI Pipeline
+
 on: [push, pull_request]
 
 jobs:
@@ -8,21 +9,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Navigate to app_python
-        run: cd app_python  # Adjust path to match your structure
-
+      - name: Debug file structure
+        run: ls -R
+          
       - name: Set up Python 3.9
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt  # Now in app_python/
+        working-directory: lab3/app_python
+        run: pip install -r requirements.txt
 
       - name: Run linter (flake8)
+        working-directory: lab3/app_python
         run: flake8 . --count --show-source --statistics
 
       - name: Run tests
+        working-directory: lab3/app_python
         run: pytest -v tests/
 
   docker-publish:
