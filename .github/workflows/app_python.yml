@@ -4,10 +4,10 @@ on:
   push:
     branches: [ master ]
   pull_request:
-    branches: [ master, 'lab**' ]
-  paths:
-  - ".github/workflows/app_python.yml"
-  - "app_python/**"
+    branches: [ master ]
+    paths:
+    - ".github/workflows/app_python.yml"
+    - "app_python/**"
 
 jobs:
   build:
