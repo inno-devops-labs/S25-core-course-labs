@@ -1,0 +1,3 @@
+*.exe
+main
+src.test.*
