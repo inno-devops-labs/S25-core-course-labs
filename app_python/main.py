@@ -7,6 +7,7 @@ app = FastAPI()
 
 MOSCOW_TZ = pytz.timezone("Europe/Moscow")
 
+
 @app.get("/", response_class=HTMLResponse)
 def get_moscow_time():
     moscow_time = datetime.now(MOSCOW_TZ).strftime("%d.%m.%Y %H:%M:%S")
