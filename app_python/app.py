@@ -3,7 +3,6 @@ import socketserver
 from datetime import datetime, timezone, timedelta
 import json
 
-PORT = 8000
 
 # Moscow is UTC+3
 MOSCOW_TZ = timezone(timedelta(hours=3))
@@ -19,9 +18,9 @@ class MoscowTimeAPIHandler(http.server.SimpleHTTPRequestHandler):
         self.wfile.write(json.dumps(response).encode("utf-8"))
 
 
-def main():
-    with socketserver.TCPServer(("", PORT), MoscowTimeAPIHandler) as httpd:
-        print(f"Serving on port {PORT}")
+def main(port: int = 8000):
+    with socketserver.TCPServer(("", port), MoscowTimeAPIHandler) as httpd:
+        print(f"Serving on port {port}")
         httpd.serve_forever()
 
 
