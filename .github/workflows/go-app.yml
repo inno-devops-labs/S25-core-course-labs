@@ -1,0 +1,88 @@
+name: Go Web Application (Moscow Time)
+
+on:
+  push:
+    branches: [ "lab3", "master" ]
+    # paths: [ "app_go/" ]
+  pull_request:
+    branches: [ "master" ]
+    # paths: [ "app_go/" ]
+
+permissions:
+  contents: read
+
+jobs:
+  security:
+    name: Check for vulnerabilities
+    timeout-minutes: 10
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: "lab3"      
+
+      - name: Run Snyk for code vulnerabilities
+        uses: snyk/actions/golang@master
+        with:
+          command: code test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  build:
+    needs: [security]
+    name: Build & Test
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+          cache-dependency-path: app_go/go.sum
+
+      - name: Install dependencies
+        working-directory: app_go
+        run: go mod tidy
+
+      - name: Lint code
+        working-directory: app_go
+        run: |
+          go fmt
+          go vet
+
+      - name: Test with Go
+        working-directory: app_go
+        run: go test -v
+
+  docker:
+    needs: [build]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push normal image
+        uses: docker/build-push-action@v6
+        with:
+          context: "{{defaultContext}}:app_go"
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/app_go:app_go-prod-ci-1.0.0
+          push: true
+          cache-from: type=gha,scope=container
+          cache-to: type=gha,mode=max,scope=container
+
+      - name: Build and push distroless image
+        uses: docker/build-push-action@v6
+        with:
+          context: "{{defaultContext}}:app_go"
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/app_go:app_go-distroless-prod-ci-1.0.0
+          push: true
+          cache-from: type=gha,scope=container
+          cache-to: type=gha,mode=max,scope=container
