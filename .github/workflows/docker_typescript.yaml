@@ -2,7 +2,7 @@ name: Push to Docker Hub
 on:
   workflow_dispatch: {}
   push:
-    branches: [ $default-branch ]
+    branches: [ master ]
     paths:
     - app_typescript/**
 
