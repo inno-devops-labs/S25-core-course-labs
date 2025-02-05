@@ -46,8 +46,7 @@ jobs:
           
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python@master
-        with:
-          args: --file=app_python/requirements.txt
+        run: snyk test --file=requirements.txt
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           
