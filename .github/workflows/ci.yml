@@ -12,6 +12,8 @@ jobs:
                 python-version: '3.9'
             - name: Install Snyk
               run: npm install -g snyk
+            - name: Login in Snyk
+              run: snyk auth $SNYK_TOKEN
               env:
                 SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
             - name: Run Snyk to check for vulnerabilities
