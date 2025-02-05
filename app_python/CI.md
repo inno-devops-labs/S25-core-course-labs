@@ -59,3 +59,8 @@ The deployment automation system includes:
 - Automatic Docker image building
 - Docker Hub image publishing
 - Consistent deployment process
+
+
+# Snyk Errors
+I tried different api keys, however there are no solutions that worked
+![alt text](md_assets/snyk.png)
