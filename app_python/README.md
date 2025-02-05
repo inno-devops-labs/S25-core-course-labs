@@ -79,3 +79,10 @@ To build the Docker image for this application, run the following command:
    ```bash
    docker pull your-docker-username/app-python:latest
    ```
+
+## Unit Tests
+
+This repository includes unit tests to ensure the application works as expected. The tests use [pytest](https://docs.pytest.org/) and can be run locally by installing the dependencies and executing:
+
+```bash
+pytest
