@@ -45,4 +45,6 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
     - name: Run tests
-      run: python3 manage.py test
+      run: |
+        cd app_python/moscow_time
+        python3 manage.py test
