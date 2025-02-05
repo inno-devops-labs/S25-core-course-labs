@@ -46,13 +46,16 @@ jobs:
           
         
       - name: Run Snyk
-        # run: cd app_python
-        working-directory: app_python
-        uses: snyk/actions/python-3.9@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --severity-threshold=high
+        run: |
+          cd app_python
+          npm install -g snyk
+          snyk auth ${{ secrets.SNYK_TOKEN }}
+          snyk test --severity-threshold=high
+        # uses: snyk/actions/python-3.9@master
+        # env:
+        #   SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        # with:
+        #   args: --severity-threshold=high
 
           
   docker-build-push:
