@@ -33,10 +33,10 @@ jobs:
           pip install flake8
 
       - name: Run linter
-        run: flake8 app tests
+        run: flake8 .
 
       - name: Run tests
-        run: python -m unittest discover -s tests
+        run: python -m unittest tests
 
   docker:
     needs: build
