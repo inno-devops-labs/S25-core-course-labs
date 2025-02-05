@@ -5,7 +5,8 @@ on:
 
 env:
   USERNAME: voronm1522
-  DOCKER_IMAGE: voronm1522/devops:python-app
+  DOCKER_REPO: voronm1522/devops
+  DOCKER_TAG: python-app
 
 jobs:
   build-and-test:
@@ -44,4 +45,4 @@ jobs:
       with:
         context: app_python
         push: true
-        tags: ${{ env.DOCKER_IMAGE }}
+        tags: ${{ env.DOCKER_REPO }}:${{ env.DOCKER_TAG }}
