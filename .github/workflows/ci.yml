@@ -40,6 +40,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
+          cd app_python/
           docker build -t app_python:latest .
           docker tag shelma13/app_python:latest shelma13/app_python:latest
           docker push shelma13/app_python:latest
