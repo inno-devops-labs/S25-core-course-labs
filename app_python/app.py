@@ -6,7 +6,7 @@ import pytz
 app = FastAPI()
 
 
-app = FastAPI()  # ← Now has 2 blank lines above
+app = FastAPI()
 @app.get("/", response_class=HTMLResponse)
 async def get_time():
     msk_timezone = pytz.timezone("Europe/Moscow")
