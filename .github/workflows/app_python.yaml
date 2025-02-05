@@ -2,8 +2,12 @@ name: Install, lint and test Python app
 on:
     pull_request:
       branches: [ $default-branch ]
+      paths:
+      - 'app_python/**'
     push:
       branches: [ $default-branch ]
+      paths:
+      - 'app_python/**'
     workflow_dispatch: {}
 
 defaults:
