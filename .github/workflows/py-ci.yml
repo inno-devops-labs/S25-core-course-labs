@@ -28,7 +28,7 @@ jobs:
       - name: Start My App
         run: |
           cd app_python
-          python app.py
+          python app.py &
           sleep 5
           
       - name: Run tests
