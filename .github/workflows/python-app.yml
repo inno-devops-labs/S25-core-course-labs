@@ -63,7 +63,7 @@ jobs:
     - name: Build and push database Docker image
       uses: docker/build-push-action@v3
       with:
-        context: ./app_python/backend/databse
+        context: ./app_python/backend/database
         push: true
         tags: jmartynova123/dev-lab3-db:latest
         build-args: |
