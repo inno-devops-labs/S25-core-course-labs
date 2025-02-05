@@ -57,15 +57,12 @@ jobs:
 
       # Step 8: Run Snyk Vulnerability Check
       - name: Run Snyk Vulnerability Check
-        run: snyk test --file=/requirements.txt
+        run: snyk test --file=requirements.txt
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   docker-worker:
    runs-on: ubuntu-latest
-   defaults:
-     run:
-       working-directory: ./app_python
    steps:
       # Step 9: Log in to Docker Hub
       - name: Log in to Docker Hub
