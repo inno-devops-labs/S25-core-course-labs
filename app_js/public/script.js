@@ -69,4 +69,4 @@ async function calculateDistance () {
 }
 
 document.getElementById('calculate_button').addEventListener('click', calculateDistance)
-module.exports = {getCoordinates, haversineDistance}
+module.exports = { getCoordinates, haversineDistance }
