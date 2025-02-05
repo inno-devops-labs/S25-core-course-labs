@@ -1,6 +1,10 @@
 # Terraform
 
-## Docker
+## ✅ Best Practices
+
+TODO
+
+## 🐳 Docker
 
 ### `terraform state list`
 
@@ -389,3 +393,15 @@ python_webapp_container_ports = tolist([
 ```
 
 </details>
+
+## ☁️ Yandex Cloud
+
+TODO
+
+## 👾 Github
+
+TODO
+
+## 🤝 Github Teams
+
+TOOD
