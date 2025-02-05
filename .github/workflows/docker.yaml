@@ -1,6 +1,9 @@
-name: Install, lint and test Python app
+name: Push to Docker Hub
 on:
   workflow_dispatch: {}
+  push:
+    branches: 
+      - master
 
 jobs:
   docker-push:
@@ -28,3 +31,5 @@ jobs:
           file: ./app_python/Dockerfile
           push: true
           tags: ${{ vars.DOCKERHUB_USERNAME }}/moscow-timezone-app:latest
+          cache-from: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/moscow-timezone-app:buildcache
+          cache-to: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/moscow-timezone-app:buildcache,mode=max

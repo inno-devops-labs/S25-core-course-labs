@@ -12,20 +12,25 @@ defaults:
 
 jobs:
     check-python:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - uses: actions/setup-python@v4
-              with:
-                  python-version: '3.10'
-            - name: Install dependencies
-              run: |
-                  pip install -r requirements.txt
-                  pip install -r requirements.dev.txt
-            - name: Run tests
-              run: pytest test.py
-            - name: Run linter
-              run: ruff check .
-            - name: Run formatter check
-              run: ruff format --check .
+      strategy:
+        matrix:
+          python: ["3.9", "3.11", "3.13"]
+          os: [ubuntu-latest, windows-latest]
+      runs-on: ${{ matrix.os }}
+      steps:
+          - uses: actions/checkout@v4
+          - uses: actions/setup-python@v5
+            with:
+                python-version: ${{ matrix.python }}
+                cache: 'pip'
+          - name: Install dependencies
+            run: |
+                pip install -r requirements.txt
+                pip install -r requirements.dev.txt
+          - name: Run tests
+            run: pytest test.py
+          - name: Run linter
+            run: ruff check .
+          - name: Run formatter check
+            run: ruff format --check .
         
