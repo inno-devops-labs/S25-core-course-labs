@@ -14,7 +14,7 @@ defaults:
     working-directory: ./app_python
 
 permissions:
-  contents: read.
+  contents: read
 
 jobs:
   build:
