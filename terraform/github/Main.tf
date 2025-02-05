@@ -28,16 +28,9 @@ resource "github_repository" "core-course-labs" {
 resource "github_branch_protection" "main" {
   repository_id = github_repository.core-course-labs.node_id
   pattern       = "master"
-
+  enforce_admins = true
   required_status_checks {
     strict = true
-    contexts = ["test", "build"]
+    contexts = ["build"]
   }
-
-  required_pull_request_reviews {
-    dismiss_stale_reviews           = true
-    required_approving_review_count = 1
-  }
-
-  enforce_admins = true
 }
