@@ -56,7 +56,7 @@ jobs:
           path: app_nodejs/node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('app_nodejs/package-lock.json') }}
 
-      - name: Run ESLint
+      - name: Run ESLint to lint code
         run: npx eslint .
         working-directory: app_nodejs
 

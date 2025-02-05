@@ -1,0 +1,126 @@
+{
+  "version": 4,
+  "terraform_version": "1.10.5",
+  "serial": 4,
+  "lineage": "aeedaa59-bff9-953b-5723-0ce33afb5b77",
+  "outputs": {},
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "yandex_compute_instance",
+      "name": "vm-1",
+      "provider": "provider[\"registry.terraform.io/yandex-cloud/yandex\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "allow_recreate": null,
+            "allow_stopping_for_update": null,
+            "boot_disk": [
+              {
+                "auto_delete": true,
+                "device_name": "epdedhl9731k5f3fdd9s",
+                "disk_id": "epdedhl9731k5f3fdd9s",
+                "initialize_params": [
+                  {
+                    "block_size": 4096,
+                    "description": "",
+                    "image_id": "fd800c7s2p483i648ifv",
+                    "kms_key_id": "",
+                    "name": "",
+                    "size": 20,
+                    "snapshot_id": "",
+                    "type": "network-hdd"
+                  }
+                ],
+                "mode": "READ_WRITE"
+              }
+            ],
+            "created_at": "2025-02-05T07:24:52Z",
+            "description": "",
+            "filesystem": [],
+            "folder_id": "b1g5rr7vs8qnd5ikd5ee",
+            "fqdn": "epdfa69giemha7c73phn.auto.internal",
+            "gpu_cluster_id": "",
+            "hardware_generation": [
+              {
+                "generation2_features": [],
+                "legacy_features": [
+                  {
+                    "pci_topology": "PCI_TOPOLOGY_V1"
+                  }
+                ]
+              }
+            ],
+            "hostname": "",
+            "id": "epdfa69giemha7c73phn",
+            "labels": null,
+            "local_disk": [],
+            "maintenance_grace_period": "",
+            "maintenance_policy": null,
+            "metadata": {
+              "ssh-keys": "ubuntu:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFDrhU+dOoDk7+Csz5aYjumuAhegqx8UULl5rtMY0eoh ilsiyanasibullina@gmail.com\n"
+            },
+            "metadata_options": [
+              {
+                "aws_v1_http_endpoint": 1,
+                "aws_v1_http_token": 2,
+                "gce_http_endpoint": 1,
+                "gce_http_token": 1
+              }
+            ],
+            "name": "terraform-vm",
+            "network_acceleration_type": "standard",
+            "network_interface": [
+              {
+                "dns_record": [],
+                "index": 0,
+                "ip_address": "10.129.0.30",
+                "ipv4": true,
+                "ipv6": false,
+                "ipv6_address": "",
+                "ipv6_dns_record": [],
+                "mac_address": "d0:0d:f5:19:30:93",
+                "nat": true,
+                "nat_dns_record": [],
+                "nat_ip_address": "158.160.91.15",
+                "nat_ip_version": "IPV4",
+                "security_group_ids": [],
+                "subnet_id": "e2l71ei1siiqu1jguhh7"
+              }
+            ],
+            "placement_policy": [
+              {
+                "host_affinity_rules": [],
+                "placement_group_id": "",
+                "placement_group_partition": 0
+              }
+            ],
+            "platform_id": "standard-v1",
+            "resources": [
+              {
+                "core_fraction": 100,
+                "cores": 2,
+                "gpus": 0,
+                "memory": 2
+              }
+            ],
+            "scheduling_policy": [
+              {
+                "preemptible": false
+              }
+            ],
+            "secondary_disk": [],
+            "service_account_id": "",
+            "status": "running",
+            "timeouts": null,
+            "zone": "ru-central1-b"
+          },
+          "sensitive_attributes": [],
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjMwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9"
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}

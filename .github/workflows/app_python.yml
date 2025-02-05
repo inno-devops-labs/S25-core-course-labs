@@ -99,7 +99,7 @@ jobs:
           path: app_python/venv
           key: ${{ runner.os }}-venv-${{ hashFiles('app_python/requirements.txt') }}
 
-      - name: Start Application
+      - name: Start Application in Python
         run: |
           source venv/bin/activate
           nohup python app.py > app.log 2>&1 & 
