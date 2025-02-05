@@ -27,7 +27,7 @@ Thumbs.db
 .git/*.lock
 
 provider.tf registry.terraform.io/
-terraform.lock.hcl
+.terraform.lock.hcl
 
 /out/
 /dist/
