@@ -24,8 +24,10 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run linter (flake8)
-        working-directory: lab3/app_python
-        run: flake8 . --count --show-source --statistics
+        # working-directory: lab3/app_python
+        run: |
+          cd app_python
+          flake8 . --count --show-source --statistics
 
       - name: Run tests
         # working-directory: lab3/app_python
