@@ -6,3 +6,4 @@ DOCKER.md
 README.md
 __pycache__
 *.pyc
+../.idea/

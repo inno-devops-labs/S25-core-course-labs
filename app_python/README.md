@@ -1,3 +1,5 @@
+![workflow](https://github.com/MrTonyNeon/s25-core-course-labs/actions/workflows/main.yml/badge.svg)
+
 # Python Web Application - Moscow Time Display
 
 ## Overview
@@ -47,6 +49,27 @@ This Python web application displays the current time in Moscow. It updates ever
 2. **Access in Browser:**
 
    - Navigate to `http://localhost:8080/`
+
+## Unit Tests
+
+Unit tests have been implemented to ensure that the core functionality (including the correct display of Moscow's time) works as intended.  
+To run the tests, execute the following commands:
+
+   ```bash
+   pip install pytest
+   pytest
+   ```
+
+The detailed testing strategy and best practices are documented in PYTHON.md.
+
+## CI Workflow
+
+This project uses GitHub Actions to automate the build, linting, testing, and containerization processes. The CI workflow includes the following steps:
+
+- Dependencies Installation
+- Code Linting using flake8
+- Running Unit Tests
+- Docker Login, Build, and Push steps to maintain container consistency
 
 ## Project Structure
 
