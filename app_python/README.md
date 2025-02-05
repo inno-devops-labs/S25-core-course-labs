@@ -1,4 +1,3 @@
-![CI Workflow](https://github.com/Galyusha/s25-core-course-labs/actions/workflows/ci.yml/badge.svg)
 #  Moscow Time Django App
 
 ## Description
@@ -27,7 +26,7 @@ python manage.py test
 
 ### GitHub Actions Workflow
 This repository uses GitHub Actions to automate the following:
-1. **Linting**: Runs flake8 to enforce code style.
-2. **Unit Testing**: Runs Django's test suite.
-3. **Docker Build & Push**: If tests pass, the app is containerized and pushed to Docker Hub.
+1. Runs flake8 to enforce code style.
+2. Runs Django's test suite.
+3. If tests pass, the app is containerized and pushed to Docker Hub.
 
