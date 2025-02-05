@@ -5,11 +5,14 @@ on:
     paths:
       - "app_python/**"
       - ".github/workflows/app_python.yml"
+    branches:
+      - lab3
   pull_request:
     paths:                            
       - "app_python/**"
       - ".github/workflows/app_python.yml"
-
+    branches:
+      - lab3
 jobs:
   dependencies:
     name: Dependencies
