@@ -2,12 +2,9 @@ name: CI Pipeline
 
 on:
   push:
-    branches:
-      - main
+    branches: [ master, 'lab**' ]
   pull_request:
-    branches:
-      - main
-
+    branches: [ master, 'lab**' ]
 jobs:
   build:
     runs-on: ubuntu-latest
