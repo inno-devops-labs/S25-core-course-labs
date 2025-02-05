@@ -2,7 +2,7 @@ const DIST_URL = (city) => `/get-coordinates?city=${encodeURIComponent(city)}`
 
 // function to get coordinates of a city using Yandex Geocoder API
 // returns { longitude latitude } of the given city or an error
-export async function getCoordinates (city) {
+async function getCoordinates (city) {
   const response = await fetch(DIST_URL(city))
   if (!response.ok) {
     return null
@@ -15,7 +15,7 @@ export async function getCoordinates (city) {
 
 // function to calculate distance between two coordinates using the Haversine formula
 // (https://en.wikipedia.org/wiki/Haversine_formula)
-export function haversineDistance (coords1, coords2) {
+function haversineDistance (coords1, coords2) {
   const toRad = (value) => (value * Math.PI) / 180
   const R = 6371 // radius of the Earth in kilometers
 
@@ -69,3 +69,4 @@ async function calculateDistance () {
 }
 
 document.getElementById('calculate_button').addEventListener('click', calculateDistance)
+module.exports = {getCoordinates, haversineDistance}
