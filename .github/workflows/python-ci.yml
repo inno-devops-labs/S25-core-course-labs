@@ -59,4 +59,4 @@ jobs:
         with:
           context: ./app_python
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/moscow-time:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/python-moscow-time:latest

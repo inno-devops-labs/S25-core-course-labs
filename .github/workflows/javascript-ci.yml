@@ -73,6 +73,6 @@ jobs:
         with:
           context: ./app_javascript
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/moscow-time:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/node-moscow-time:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
