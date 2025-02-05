@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'app_python/**'
+      - '.github/workflow/**'
     branches:
       - '**'
   pull_request:
@@ -44,9 +45,6 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-    
     - name: Build and push
       uses: docker/build-push-action@v6
       with:
