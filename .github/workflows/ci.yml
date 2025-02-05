@@ -41,6 +41,8 @@ jobs:
         run: |
           wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
           chmod +x /bin/hadolint
+          ls -l /bin/hadolint  # Проверяем права
+          /bin/hadolint --version  # Проверяем, запускается ли
           hadolint app_python/Dockerfile
 
   docker:
