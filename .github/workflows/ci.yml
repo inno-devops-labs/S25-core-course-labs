@@ -75,7 +75,7 @@ name: CI/CD Pipeline
 on: [push, pull_request]
 
 env:
-  WORKING_DIR: "lab3/app_python"  # Correct path to app_python
+  WORKING_DIR: "app_python"  # Correct path to app_python
   PYTHON_VERSION: "3.9"           # Explicit Python version
   DOCKER_IMAGE: "yehiasobeh/moscow-time-app"  # Docker image name
 
