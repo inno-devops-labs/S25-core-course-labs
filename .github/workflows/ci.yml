@@ -43,7 +43,7 @@ jobs:
           cd app_python
           pytest -v tests/
       - name: Snyk Python Scan
-        uses: snyk/actions/python@latest
+        uses: snyk/actions/python-3.9@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  # From GitHub Secrets
         with:
