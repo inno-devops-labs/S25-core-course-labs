@@ -14,10 +14,12 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+      
       - name: Set Up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
+          
       - name: Cache Python dependencies
         uses: actions/cache@v3
         with:
@@ -25,19 +27,30 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('app_python/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
+            
       - name: Install Dependencies
         run: |
           python -m venv venv
           ./venv/bin/python -m pip install --upgrade pip
           ./venv/bin/pip install -r app_python/requirements.txt
+          
       - name: Run Linter (flake8)
         run: |
           source venv/bin/activate
           pip install flake8
           flake8 app_python --max-line-length=100
+          
       - name: Run Tests
         run: |
           ./venv/bin/python -m pytest app_python/tests/
+          
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python@master
+        with:
+          args: --file=app_python/requirements.txt
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          
   docker-build:
     name: Docker Build & Push
     runs-on: ubuntu-latest
@@ -60,4 +73,12 @@ jobs:
       - name: Push Docker Image to Docker Hub
         run: |
           docker push nikachek/moscow-time-api:lab3
+          
+      
+      - name: Docker Security Scan with Snyk
+        uses: snyk/actions/docker@master
+        with:
+          image: nikachek/moscow-time-api:lab3
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
