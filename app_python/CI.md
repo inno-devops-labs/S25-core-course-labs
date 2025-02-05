@@ -1,6 +1,6 @@
 # CI best practices implemented in the repo
 
-- [x] Status checks are enforced on the default branch
-- [x] Matrix of Python versions and OSes are tested
-- [x] Docker credentials are saved as env / secrets in the repo settings
-- [x] Docker buildcache and pip cache are enabled in the CI workflow
+- Status checks are enforced on the default branch
+- Matrix of Python versions and OSes are tested
+- Docker credentials are saved as env / secrets in the repo settings
+- Docker buildcache (layers are pushed to a separate tag in Docker Hub) and pip cache (enabled in the CI setup-python action) are making the CI workflow faster and more efficient.
