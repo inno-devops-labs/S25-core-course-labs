@@ -43,7 +43,13 @@ jobs:
       run: |
         cd moscow_time
         python manage.py test
-        
+    
+    - name: Run Snyk vulnerability check
+      uses: snyk/actions/python@master
+      continue-on-error: true
+      env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
       with: 
