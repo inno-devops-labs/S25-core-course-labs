@@ -26,25 +26,22 @@ jobs:
 
     - name: Install dependencies
       run: |
-        cd app_javascript
         npm install
 
     - name: Lint with ESLint
       run: |
-        cd app_javascript
         npm install eslint --no-save
         npx eslint .
 
     - name: Run tests with Jest
       run: |
-        cd app_javascript
         npm run test
         
     - name: Upload test coverage
       uses: actions/upload-artifact@v4
       with:
         name: coverage
-        path: app_javascript/coverage
+        path: ./coverage
 
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/node@master
