@@ -29,13 +29,7 @@ jobs:
       - name: Run tests
         run: pytest ./app_python/ -v
 
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/python-3.8@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test
-          args: --file=./app_python/requirements.txt --package-manager=pip
+
 
   docker:
     runs-on: ubuntu-latest
@@ -53,5 +47,11 @@ jobs:
       - name: Build Docker image
         run: docker build --cache-from=type=gha -t ezzysoft/moscow-time:latest ./app_python/
 
+      - name: Run Snyk to check Docker image for vulnerabilities
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ezzysoft/moscow-time:latest
       - name: Push Docker image
         run: docker push ezzysoft/moscow-time:latest
