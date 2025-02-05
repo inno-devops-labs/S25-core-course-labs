@@ -79,7 +79,7 @@ jobs:
         tags: jmartynova123/dev-lab3-back:latest
     - name: Run database container
       run: |
-        docker run -d --name dev-lab1-db -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} jmartynova123/dev-lab1-db:latest
+        docker run -d --name dev-lab1-db -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} jmartynova123/dev-lab3-db:latest
 
     - name: Run backend container
       run: |
