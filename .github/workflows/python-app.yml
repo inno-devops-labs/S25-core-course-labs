@@ -1,0 +1,75 @@
+name: Application CI
+
+on:
+  push:
+
+env:
+  USERNAME: voronm1522
+  DOCKER_IMAGE: voronm1522/devops
+  DOCKER_TAG: python-app
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Cache python
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ubuntu-python-${{ hashFiles('app_python/requirements.txt') }}
+        restore-keys: |
+          ubuntu-python-
+
+    - uses: actions/checkout@v3
+
+    - name: Set up python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies and linter
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8
+        pip install -r app_python/requirements.txt
+
+    - name: Lint with flake8
+      run: |
+        flake8 app_python/app.py
+
+    - name: Run tests
+      run: |
+        python app_python/unittests.py
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ env.USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    - name: Cache Docker layers
+      uses: actions/cache@v3
+      with:
+        path: /tmp/.buildx-cache
+        key: ubuntu-docker-${{ hashFiles('app_python/Dockerfile') }}
+        restore-keys: |
+          ubuntu-docker-
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: app_python
+        push: true
+        tags: ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
+
+    - name: Install snyk
+      run: npm install -g snyk
+
+    - name: Run snyk 
+      run: |
+        cd app_python
+        snyk test
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      
