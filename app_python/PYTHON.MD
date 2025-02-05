@@ -66,3 +66,29 @@ This project is a simple Python web application that displays the current time i
   - A bold heading displaying the current time in Moscow.
   - An image of Moscow for visual appeal.
   - Basic CSS for centering and responsiveness.
+
+
+## Unit Tests
+
+### Overview
+Unit tests have been implemented using the `pytest` framework to ensure the correctness of the `get_location_time` function. These tests validate both valid and invalid timezone inputs, ensuring robust functionality.
+
+### Test Cases
+1. **Valid Timezone**:
+   - Verifies that the function returns a `datetime` object for a valid timezone (e.g., `Europe/Moscow`).
+2. **Invalid Timezone**:
+   - Ensures the function raises a `ValueError` with an appropriate error message when an invalid timezone is provided.
+3. **Edge Case Timezones**:
+   - Tests edge-case timezones like `Etc/GMT+12` to ensure compatibility with non-standard timezone names.
+4. **Special Characters in Timezone**:
+   - Validates that the function handles timezones with special characters (e.g., `America/New_York`) correctly.
+
+### Best Practices Applied
+1. **Test Isolation**:
+   - Each test focuses on a single behavior of the `get_location_time` function, ensuring clarity and maintainability.
+2. **Assertions with Descriptive Messages**:
+   - Meaningful assertion messages provide clear feedback in case of test failures.
+3. **Edge Case Testing**:
+   - Includes tests for edge cases and uncommon timezone names to ensure comprehensive coverage.
+4. **Readable and Maintainable Code**:
+   - Tests are organized into a dedicated class (`TestGetLocationTime`) for better structure and readability.
