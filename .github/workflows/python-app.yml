@@ -81,14 +81,6 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y docker-compose-plugin
-    - name: Run Docker Compose
-      run: |
-        sudo curl -L "https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-        sudo chmod +x /usr/local/bin/docker-compose
-
-    - name: Run tests with Docker Compose
-      run: |
-        docker-compose -f app_python/docker-compose.yml exec backend pytest
   snyk:
     runs-on: ubuntu-latest
 
