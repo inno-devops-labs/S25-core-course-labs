@@ -1,9 +1,13 @@
 name: Python app CI
 
-on: [push]
+on:
+  push:
+    paths:
+      - ".github/workflows/app_python.yml"
+      - "app_python/**"
 
 concurrency:
-  group: ${{ github.workflow}}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
