@@ -1,3 +1,5 @@
+![CI Workflow Status](https://github.com/Friedox/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)
+
 # Python Web App
 
 ## Overview
