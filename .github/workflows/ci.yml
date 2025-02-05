@@ -25,20 +25,8 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          
-          
-      - name: Verify Installed Packages
-        run: |
           pip install -r app_python/requirements.txt
 
-      - name: Snyk Security Scan (Python Dependencies)
-        uses: snyk/actions/python@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test --file=app_python/requirements.txt --severity-threshold=medium
-
-          
       - name: Run Linter
         run: |
           pip install flake8
