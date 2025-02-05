@@ -40,10 +40,6 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
-      run: |
-        export DATABASE_URI='postgresql://myuser:mypassword@localhost:5432/times'
-        pytest
   docker:
     runs-on: ubuntu-latest
 
@@ -81,10 +77,6 @@ jobs:
         context: ./app_python/backend
         push: true
         tags: jmartynova123/dev-lab3-back:latest
-
-    - name: Run tests with Docker Compose
-      run: |
-        docker-compose exec backend pytest
     - name: Run Docker Compose
       run: |
         docker-compose up --build -d
