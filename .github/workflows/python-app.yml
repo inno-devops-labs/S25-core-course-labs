@@ -77,6 +77,10 @@ jobs:
         context: ./app_python/backend
         push: true
         tags: jmartynova123/dev-lab3-back:latest
+    - name: Install Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker-compose-plugin
     - name: Run Docker Compose
       run: |
         docker-compose -f app_python/docker-compose.yml up --build -d
