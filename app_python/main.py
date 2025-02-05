@@ -10,6 +10,9 @@ app = FastAPI(
 )
 
 
+link = "https://kudamoscow.ru/uploads/9151b31fb2ef1543969b65e6bc111bea.png"
+
+
 def get_location_time(region):
     """
     Function for getting the current time in the specified timezone.
@@ -23,8 +26,9 @@ def get_location_time(region):
 @app.get("/time/moscow", response_class=HTMLResponse)
 async def getTime():
     """
-    Endpoint function for getting the current Moscow time with simple HTML design.
+    Endpoint function for getting the current Moscow time with HTML design.
     """
+    time = get_location_time("Europe/Moscow")
     html_content = f"""
     <!DOCTYPE html>
     <html lang="en">
@@ -46,8 +50,8 @@ async def getTime():
         </style>
     </head>
     <body>
-        <h1><b>Current Time in Moscow:</b> {get_location_time("Europe/Moscow")}</h1>
-        <img src="https://kudamoscow.ru/uploads/9151b31fb2ef1543969b65e6bc111bea.png" alt="Moscow Image">
+        <h1><b>Current Time in Moscow:</b> {time}</h1>
+        <img src="{link}" alt="Moscow Image">
     </body>
     </html>
     """
