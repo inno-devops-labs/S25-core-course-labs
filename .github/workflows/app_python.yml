@@ -5,7 +5,6 @@ on: [push]
 jobs:
   ci:
     runs-on: ubuntu-24.04
-    environment: ci
     defaults:
       run:
         working-directory: ./app_python
@@ -38,6 +37,8 @@ jobs:
         run: pytest src/tests
 
   docker:
+    needs: ci
+    environment: ci
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
