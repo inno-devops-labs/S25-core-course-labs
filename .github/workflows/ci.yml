@@ -12,11 +12,11 @@ jobs:
               with:
                 python-version: '3.9'
             - name: Run Snyk to check for vulnerabilities
-              run: |
-                pip install -r app_python/requirements.txt
-                snyk test
+              uses: snyk/actions/python@master
               env:
                 SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+              with:
+                command: code test
 
     build:
         runs-on: ubuntu-latest
