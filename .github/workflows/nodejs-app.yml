@@ -13,62 +13,63 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-        cache: 'npm'
-        cache-dependency-path: app_nodejs/package-lock.json
-    
-    - name: Install dependencies
-      run: |
-        cd app_nodejs
-        npm ci
-    
-    - name: Run ESLint
-      run: |
-        cd app_nodejs
-        npm run lint
-    
-    - name: Run tests
-      run: |
-        cd app_nodejs
-        npm test
-    
-    - name: Login to Docker Hub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-    
-    - name: Build and push standard Docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: ./app_nodejs
-        push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/nodejs-app:latest
-        cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/nodejs-app:buildcache
-        cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/nodejs-app:buildcache,mode=max
-    
-    - name: Build and push distroless Docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: ./app_nodejs
-        file: ./app_nodejs/distroless.Dockerfile
-        push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/nodejs-app:distroless
-        cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/nodejs-app:distroless-buildcache
-        cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/nodejs-app:distroless-buildcache,mode=max
-    
-    - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/node@master
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        command: test
-        args: --severity-threshold=high
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'app_nodejs/package.json'
+
+      - name: Install dependencies
+        run: |
+          cd app_nodejs
+          npm ci
+
+      - name: Run ESLint
+        run: |
+          cd app_nodejs
+          npm run lint
+
+      - name: Run tests
+        run: |
+          cd app_nodejs
+          npm test
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push standard Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./app_nodejs
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nodejs-app:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/nodejs-app:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/nodejs-app:buildcache,mode=max
+
+      - name: Build and push distroless Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./app_nodejs
+          file: ./app_nodejs/distroless.Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nodejs-app:distroless
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/nodejs-app:distroless-buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/nodejs-app:distroless-buildcache,mode=max
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test
+          args: --severity-threshold=high
+          working-directory: app_nodejs

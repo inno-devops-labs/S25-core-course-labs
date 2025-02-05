@@ -73,3 +73,4 @@ jobs:
       with:
         command: test
         args: --severity-threshold=high
+        working-directory: app_python
