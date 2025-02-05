@@ -1,3 +1,6 @@
+![example workflow](https://github.com/Lekski1/S25-core-course-labs/actions/workflows/python_ci.yml/badge.svg)
+![example workflow](https://github.com/Lekski1/S25-core-course-labs/actions/workflows/golang_ci.yml/badge.svg)
+
 # DevOps Engineering Labs
 
 ## Introduction
