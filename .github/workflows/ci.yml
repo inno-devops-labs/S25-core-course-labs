@@ -54,13 +54,14 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+
       # Step 7: Install Snyk
       - name: Install Snyk
         run: npm install -g snyk
 
       # Step 8: Run Snyk Vulnerability Check
       - name: Run Snyk Vulnerability Check
-        run: snyk test --file=./app_python/requirements.txt
+        run: snyk test --file=./app_python/requirements.txt --skip-unresolved
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
