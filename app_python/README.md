@@ -56,3 +56,24 @@ docker pull <docker name>/moscow-time-app:latest
 docker run -p 5000:5000 <docker name>/moscow-time-app:latest
 
 ```
+
+## Running Unit Tests Locally
+
+```sh
+python -m pytest test_app.py
+```
+
+## GitHub Actions CI
+
+This project uses GitHub Actions to automate:
+
+- Code Testing  
+- Linting  
+- Docker Build & Push  
+
+### **Workflow Includes**
+
+1. **Install Dependencies**  
+2. **Run Linter (flake8)**  
+3. **Run Unit Tests (`pytest`)**  
+4. **Build & Push Docker Image**

@@ -19,3 +19,12 @@ I chose **Flask** because:
 
 - It fetches the current time in the **Europe/Moscow** timezone using `pytz`.
 - The time updates every time the page refreshes.
+
+## Unit Testing
+
+- **Using `pytest`**: A lightweight and powerful test framework.
+- **Fixture for test client**: Ensures Flask app is tested in isolation.
+- **Multiple test cases**:
+  - Homepage loads successfully.
+  - Moscow time is displayed correctly.
+- **Automated CI integration**: Tests run in GitHub Actions.
