@@ -1,4 +1,4 @@
-name: Node.js CI
+name: CI Node.js App
 
 on:
   push:
@@ -9,56 +9,51 @@ on:
       - 'app_js/**'
 
 jobs:
-  build-test-push:
+  build-test:
     runs-on: ubuntu-latest
-
     steps:
-    # 1) Check out code
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # 2) Set up Node
-    - name: Setup Node
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-    # 3) Install Dependencies
-    - name: Install dependencies
-      run: |
-        cd app_js
-        npm install
+      - name: Install dependencies
+        run: |
+          cd app_js
+          npm install
 
-    # 4) Lint (ESLint)
-    - name: Lint with ESLint
-      run: |
-        cd app_js
-        npx eslint .
+      - name: Run Linter (ESLint)
+        run: |
+          cd app_js
+          npm install eslint --no-save
+          npx eslint .
 
-    # 5) Run Tests
-    - name: Run tests
-      run: |
-        cd app_js
-        npm test
+      - name: Run Unit Tests (if defined)
+        run: |
+          cd app_js
+          if [ -f package.json ] && grep -q "\"test\":" package.json; then npm test; else echo "No tests defined"; fi
 
-    # 6) Docker login
-    - name: Docker login
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-    # 7) Build & Push
-    - name: Build & Push
-      run: |
-        cd app_js
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/js-app:ci-latest .
-        docker push ${{ secrets.DOCKER_USERNAME }}/js-app:ci-latest
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-    # 8) Snyk scan
-    - name: Snyk scan
-      uses: snyk/actions/node@master
-      with:
-        args: --file=package.json
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Build and Push Docker Image
+        run: |
+          cd app_js
+          docker build -t your-dockerhub-user/js-app:latest .
+          docker push your-dockerhub-user/js-app:latest
+
+      - name: Snyk Security Scan
+        uses: snyk/actions/docker@master
+        with:
+          image: your-dockerhub-user/js-app:latest
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

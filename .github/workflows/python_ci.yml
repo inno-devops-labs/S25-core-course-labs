@@ -1,4 +1,4 @@
-name: Python CI
+name: CI Python App
 
 on:
   push:
@@ -9,60 +9,53 @@ on:
       - 'app_python/**'
 
 jobs:
-  build-test-push:
+  build-test:
     runs-on: ubuntu-latest
-
     steps:
-    # 1) Check out code
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # 2) Set up Python
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
 
-    # 3) Install Dependencies
-    - name: Install dependencies
-      run: |
-        cd app_python
-        pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install pytest pytest-cov
+      - name: Install dependencies
+        run: |
+          cd app_python
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-    # 4) Lint (Example: flake8)
-    - name: Lint with flake8
-      run: |
-        cd app_python
-        pip install flake8
-        flake8 --max-line-length=88 .
+      - name: Run Linter (flake8)
+        run: |
+          cd app_python
+          pip install flake8
+          flake8 .
 
-    # 5) Run Tests
-    - name: Run tests
-      run: |
-        cd app_python
-        pytest --cov=main tests/
+      - name: Run Unit Tests
+        run: |
+          cd app_python
+          python -m unittest discover -v
 
-    # 6) Login to Docker Hub
-    - name: Docker login
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      # Docker steps
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-    # 7) Build & Push Docker image
-    - name: Build & Push
-      run: |
-        cd app_python
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/python-app:ci-latest .
-        docker push ${{ secrets.DOCKER_USERNAME }}/python-app:ci-latest
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-    # 8) Snyk Vulnerability Check
-    - name: Snyk scan
-      uses: snyk/actions/python@master
-      with:
-        # If you prefer to install modules differently, see Snyk docs
-        args: --file=requirements.txt --command=python
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Build and Push Docker Image
+        run: |
+          cd app_python
+          docker build -t your-dockerhub-user/python-app:latest .
+          docker push your-dockerhub-user/python-app:latest
+
+      - name: Snyk Security Scan
+        uses: snyk/actions/docker@master
+        with:
+          image: your-dockerhub-user/python-app:latest
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

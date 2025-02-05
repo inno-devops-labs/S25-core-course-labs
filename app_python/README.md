@@ -68,14 +68,27 @@ If you wish to use the Distroless version:
 
 ## Unit Tests
 
-This project includes basic **pytest** tests in the `tests/` folder:
+The application includes unit tests using Python's `unittest` framework. To run the tests, execute the following commands:
 
-- **Running Tests**:
-  ```bash
-  cd app_python
-  pip install -r requirements.txt
-  pytest
-- **Test Coverage (optional)**:
+1. Navigate to the `app_python` folder:
    ```bash
-  pytest --cov=main tests/
-These tests check that the Flask app’s main route responds correctly and includes the expected text.
+   cd app_python
+2. **Run the tests**:
+   ```bash
+    python -m unittest discover -v
+This will discover and run all tests defined in test_main.py.
+
+## Continuous Integration (CI)
+
+This project uses GitHub Actions for continuous integration. The CI workflow includes the following steps:
+- **Dependencies Installation**: Installs required packages.
+- **Linting**: Checks code quality using flake8.
+- **Unit Tests**: Executes the test suite using Python's unittest framework.
+- **Docker Steps**: Logs in to Docker Hub, builds the Docker image, and pushes it.
+- **Security Scan**: Runs Snyk to detect vulnerabilities in the Docker image.
+
+For details, please refer to the [CI documentation](../CI.md).
+
+### How to Trigger CI
+
+The workflow is automatically triggered on push or pull requests when changes occur in the `app_python/` folder.

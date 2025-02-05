@@ -60,3 +60,13 @@ We also provide a distroless.Dockerfile demonstrating a multi-stage build with a
    ```bash
    docker images | grep js-app
 - You should see js-app:latest (standard) and js-app:distroless.
+
+## Continuous Integration (CI)
+
+The Node.js application is integrated with GitHub Actions CI, which performs the following steps:
+- **Dependencies Installation**: Runs `npm install`.
+- **Linting**: Uses ESLint to ensure code quality.
+- **Docker Steps**: Logs in to Docker Hub, builds the Docker image, and pushes it.
+- **Security Scan**: Runs Snyk to scan the Docker image for vulnerabilities.
+
+The CI workflow runs automatically when changes are pushed to the `app_js/` folder.

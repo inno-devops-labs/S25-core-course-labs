@@ -30,18 +30,15 @@ I chose **Flask** for this Python web application because:
 2. Open [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
 3. Refresh to confirm the displayed time updates correctly.
 
+## Unit Testing
 
-## Unit Tests
+We have implemented unit tests for our Python web application using Python's built-in `unittest` framework. The tests are located in `test_main.py` and cover:
 
-We use **pytest** to test our Flask application. Our tests are located in the `tests/` directory. Main test points:
+- **Status Code Test**: Ensures that the main route (`/`) returns HTTP status code 200.
+- **Content Test**: Confirms that the response from the main route includes the expected text "Current time in Moscow".
 
-1. **Status Code Check**  
-   Ensures that the root endpoint (`/`) returns HTTP 200.
-2. **Content Check**  
-   Confirms the response contains specific text like `"Current time in Moscow"`.
+### Best Practices Applied
 
-### Best Practices in Our Tests
-
-- **Arrange-Act-Assert**: We set up the app in a testing mode, call the endpoint, then assert the response.
-- **Isolated Tests**: Each test only verifies a small piece of functionality.
-- **Pytest Fixtures**: Simplifies test client creation and teardown.
+- **Modular Testing**: Tests are split into separate test cases for clarity.
+- **Flask Test Client**: Utilizes Flask's built-in test client to simulate HTTP requests.
+- **CI Integration**: Unit tests are integrated into the CI workflow to guarantee continuous code quality.
