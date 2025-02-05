@@ -13,3 +13,25 @@ The small size of the application does not allow for many practices. I have ende
 ## Coding standards, testing, code quality
 
 To check compliance with code writing standards and evaluate its quality, pep8 (and pycodestyle) was used. At this stage, no automation of thesiting was performed. Everything is checked manually by sending additional requests (page refresh) and comparing the results. There were also tests with editing configuration file to ensure in correct configuration work.
+
+
+## Unit Tests
+
+There are 7 unit tests for application:
+    - Response code and template test;
+    - Test reading config file with:
+        - Valid time zone;
+        - Invalis timezone;
+        - Empty timezone;
+    - No configuration file test;
+    - Test time format in response;
+    - Test full response
+
+I used next best practices:
+    - Naming:
+        - Each unit test (function) has comprehensive name, which allows to understand test's goal without description
+    - AAA pattern (Arrange, Act and Assert)
+    - Single component testing
+    - One move
+    - Fast tests
+    - No "magic strings"

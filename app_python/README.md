@@ -62,3 +62,24 @@ To run image run:
 ```
 docker run <name>
 ```
+
+## Unit Tests
+
+There are unit tests for application in `unittests.py` file. To run it use:
+```
+python unittests.py
+```
+Output will contain `OK` in case of success or backtrace for function(s) with error.
+
+## CI
+
+CI triggers on push. It runs on ubuntu-latest. It clones (copy) repository using `actions/checkout@v3` and execute the next steps:
+    - Setting up python;
+    - Dependencies and linter (`flake8`) installation;
+    - Linting the app;
+    - Running tests (unit tests);
+    - Login to Docker Hub:
+        - I use username as a plain text (environment variable), since it is not a secret from the previous pushes and README.md, where I describe pulling it from Docker Hub public repository. However password is a sencetive data, so I use GitHub Secrets
+    - Build & Push Docker image
+
+As you can see, most of the steps use predefined workflaws.
