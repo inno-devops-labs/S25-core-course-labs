@@ -15,8 +15,8 @@ python app.py
 ### Build the Docker Image
 To build the Docker image, run:
 ```
-docker build -t yourusername/app_python .
-docker pull yourusername/app_python
-docker run -p 5000:5000 yourusername/app_python
+docker build -t favelanky/app_python .
+docker pull favelanky/app_python
+docker run favelanky/app_python
 ```
 
