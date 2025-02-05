@@ -80,8 +80,9 @@ jobs:
     - name: Run database container
       run: |
         docker run -d --name dev-lab3-db -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} jmartynova123/dev-lab3-db:latest
-        docker exec dev-lab3-db pg_isready -U postgres -h localhost -d postgres
         sleep 10 
+        docker exec dev-lab3-db pg_isready -U postgres -h localhost -d postgres
+        
     - name: Run backend container
       run: |
         docker run -d --name dev-lab3-back --link dev-lab3-db:db -e SQLALCHEMY_DATABASE_URI=postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@db:5432/postgres jmartynova123/dev-lab3-back:latest
