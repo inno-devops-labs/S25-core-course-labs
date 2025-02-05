@@ -6,7 +6,7 @@ RUN apk add --no-cache \
     make \
     wget \
     linux-headers
-RUN wget https://raw.githubusercontent.com/yhirose/cpp-httplib/master/httplib.h -O /usr/local/include/httplib.h
+RUN mkdir /usr/local/include && wget https://raw.githubusercontent.com/yhirose/cpp-httplib/master/httplib.h -O /usr/local/include/httplib.h
 RUN g++ app.cpp -o app 
 EXPOSE 8080
 CMD ["./app"]
