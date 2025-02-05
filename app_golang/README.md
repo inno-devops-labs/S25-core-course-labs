@@ -2,6 +2,8 @@
 
 ## Overview
 
+[![Golang CI](https://github.com/azzyyzz/S25-core-course-labs/actions/workflows/app_golang.yml/badge.svg)](https://github.com/azzyyzz/S25-core-course-labs/actions/workflows/app_golang.yml)
+
 Simple Go web app to show time in Moscow.
 
 ![image](static/images/overview.png)
@@ -41,4 +43,5 @@ docker run -p 8080:8080 azeeeez/go_moscow_time
 ```
 
 ### Distroless
+
 You can find distroless image in this [link](https://hub.docker.com/repository/docker/azeeeez/go_moscow_time_dist/general)
