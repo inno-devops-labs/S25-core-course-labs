@@ -1,9 +1,0 @@
-#cloud-config
-users:
-  - name: user1
-    groups: sudo
-    shell: /bin/bash
-    sudo: 'ALL=(ALL) NOPASSWD:ALL'
-    ssh_authorized_keys:
-      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCJy5apv9mW7/w84j5hQw6DO1bs20PSPRqhRpL0HXVlF8ba3hAjH3FAA4WEuudMOC1EvXauWAYNPIdnEADzmltuvM7UCMvc/7eoI4BhrphUUfmcPXc4TUk+d2vee0qg3/OTq5X4MmaEvKMEcqPG2ynhaUauDu7khihyizkT4yKTOK/gdh1G2V+wQa+oANj4p/XhTe1wsz5LA+qpaorr6vCm1aMYBts4DTKxR4rSPsjkZ/xHgbygSEXv7LXFiKUZHDFs3zPrGIUojBm0p7793HfY5XglQ31b1sEhZcDscNqqYGGCMLDn6zet47VVoffJf//zOQcwX376zkWh7JBrPyIzKDIhcPcf+k7BCdPCoYaBACh0XPoEc2Y3D4dwnx0f/NA7AOU7L44W/hRWJgu9ZvLsV+TRsNQOcuT5MYZHRUQTfSlY+u9LtvxCf0VKtxaKMMPWCZqKM6mVEY/R5gqs60z4/TfzrwJ+qdup5coLpVIeBoCEgZkf9g2nfOo7wGCi59laSrKtBF3OLvEsNjxk8LDT68ZjsiEzI35AbnqTG7DAF5JIUPFXgVipTs0Q3OF06KQ0awEYyvnPlUZtNuw7cOKZBlxQrCBiS4VT5LuEY3Hyei+gftQNedGjD8VpsvE8HYyabLlfpezihEjTiHx+hncolcH5yH+xXtSh9SKwAfPkWw== utkanossina@yandex.ru
-
