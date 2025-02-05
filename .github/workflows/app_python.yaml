@@ -1,9 +1,9 @@
 name: Install, lint and test Python app
 on:
     pull_request:
-      branches:
-        - main
-        - master
+      branches: [ $default-branch ]
+    push:
+      branches: [ $default-branch ]
     workflow_dispatch: {}
 
 defaults:
@@ -12,6 +12,7 @@ defaults:
 
 jobs:
     check-python:
+      name: Run tests and lint
       strategy:
         matrix:
           python: ["3.9", "3.11", "3.13"]
@@ -33,4 +34,15 @@ jobs:
             run: ruff check .
           - name: Run formatter check
             run: ruff format --check .
-        
+    security:
+      name: Snyk Security Check
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@master
+        - name: Run Snyk to check for vulnerabilities
+          uses: snyk/actions/python-3.10@master
+          env:
+            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          with:
+            args: --severity-threshold=high --file ./app_python/requirements.txt
+          
