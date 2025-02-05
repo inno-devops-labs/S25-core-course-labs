@@ -14,7 +14,7 @@ Please give your advices to me how to better implement such tools because I want
 
 ---
 
-## 'terraform state show <state_list_entry_i>'
+## `terraform state show <state_list_entry_i>`
 
 * `java_app_container`
 
@@ -232,3 +232,377 @@ yandex_compute_instance.vm: Creation complete after 1m22s [id=epdupbocj0edg6nbrk
 
 Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 ```
+
+---
+
+## Github
+
+## `terraform import ...`
+
+```bash
+D:\Studying\S25-core-course-labs\terraform\github>terraform import "github_repository.repo" "S25-core-course-labs"
+
+github_repository.repo: Importing from ID "S25-core-course-labs"...
+github_repository.repo: Import prepared!
+  Prepared github_repository for import
+github_repository.repo: Refreshing state... [id=S25-core-course-labs]
+
+Import successful!
+
+The resources that were imported are shown above. These resources are now in
+your Terraform state and will henceforth be managed by Terraform.
+```
+
+## `terraform apply`
+
+```bash
+D:\Studying\S25-core-course-labs\terraform\github>terraform apply
+
+github_repository.repo: Refreshing state... [id=devops-labs-repository]
+github_branch_default.main: Refreshing state... [id=devops-labs-repository]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + blocks_creations                = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + pattern                         = "master"
+      + repository_id                   = "devops-labs-repository"
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + required_approving_review_count = 1
+        }
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_branch_protection.default: Creating...
+github_branch_protection.default: Creation complete after 4s [id=BPR_kwDONug0SM4DiezQ]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+```
+
+## Best Practices
+
+I am not good enough in the terraform, so the single thing I made is to keep variables in another `variables.tf` file.
+
+---
+
+## GitHub Teams / Organization
+
+## `terraform plan`
+
+```bash
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_branch_default.main will be created
+  + resource "github_branch_default" "main" {
+      + branch     = (known after apply)
+      + id         = (known after apply)
+      + repository = "devops-labs-repository-teams"
+    }
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + blocks_creations                = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + pattern                         = (known after apply)
+      + repository_id                   = (known after apply)
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + required_approving_review_count = 1
+        }
+    }
+
+  # github_repository.repo will be created
+  + resource "github_repository" "repo" {
+      + allow_auto_merge            = false
+      + allow_merge_commit          = true
+      + allow_rebase_merge          = true
+      + allow_squash_merge          = true
+      + archived                    = false
+      + auto_init                   = true
+      + branches                    = (known after apply)
+      + default_branch              = (known after apply)
+      + delete_branch_on_merge      = false
+      + description                 = "This is repository that will be created by using the terraform for the labs on the DevOPs course"
+      + etag                        = (known after apply)
+      + full_name                   = (known after apply)
+      + git_clone_url               = (known after apply)
+      + gitignore_template          = "IntelliJ"
+      + has_issues                  = true
+      + has_wiki                    = true
+      + html_url                    = (known after apply)
+      + http_clone_url              = (known after apply)
+      + id                          = (known after apply)
+      + license_template            = "apache"
+      + merge_commit_message        = "PR_TITLE"
+      + merge_commit_title          = "MERGE_MESSAGE"
+      + name                        = "devops-labs-repository-teams"
+      + node_id                     = (known after apply)
+      + private                     = (known after apply)
+      + repo_id                     = (known after apply)
+      + squash_merge_commit_message = "COMMIT_MESSAGES"
+      + squash_merge_commit_title   = "COMMIT_OR_PR_TITLE"
+      + ssh_clone_url               = (known after apply)
+      + svn_url                     = (known after apply)
+      + visibility                  = "public"
+    }
+
+  # github_team.admins_team will be created
+  + resource "github_team" "admins_team" {
+      + create_default_maintainer = false
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "admin-team"
+      + node_id                   = (known after apply)
+      + privacy                   = "secret"
+      + slug                      = (known after apply)
+    }
+
+  # github_team.maintainers_team will be created
+  + resource "github_team" "maintainers_team" {
+      + create_default_maintainer = false
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "maintainers-team"
+      + node_id                   = (known after apply)
+      + privacy                   = "secret"
+      + slug                      = (known after apply)
+    }
+
+  # github_team_membership.admin_member_1 will be created
+  + resource "github_team_membership" "admin_member_1" {
+      + etag     = (known after apply)
+      + id       = (known after apply)
+      + role     = "member"
+      + team_id  = (known after apply)
+      + username = "CatOrLeader"
+    }
+
+  # github_team_membership.maintainer_member_1 will be created
+  + resource "github_team_membership" "maintainer_member_1" {
+      + etag     = (known after apply)
+      + id       = (known after apply)
+      + role     = "member"
+      + team_id  = (known after apply)
+      + username = "CatOrLeader"
+    }
+
+  # github_team_repository.admins_team will be created
+  + resource "github_team_repository" "admins_team" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "admin"
+      + repository = "devops-labs-repository-teams"
+      + team_id    = (known after apply)
+    }
+
+  # github_team_repository.maintainers_team will be created
+  + resource "github_team_repository" "maintainers_team" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "maintain"
+      + repository = "devops-labs-repository-teams"
+      + team_id    = (known after apply)
+    }
+
+Plan: 9 to add, 0 to change, 0 to destroy.
+```
+
+## `terraform apply`
+
+```bash
+D:\Studying\S25-core-course-labs\terraform\github-organization>terraform apply
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_branch_default.main will be created
+  + resource "github_branch_default" "main" {
+      + branch     = (known after apply)
+      + id         = (known after apply)
+      + repository = "devops-labs-repository-teams"
+    }
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + blocks_creations                = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + pattern                         = (known after apply)
+      + repository_id                   = (known after apply)
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + required_approving_review_count = 1
+        }
+    }
+
+  # github_repository.repo will be created
+  + resource "github_repository" "repo" {
+      + allow_auto_merge            = false
+      + allow_merge_commit          = true
+      + allow_rebase_merge          = true
+      + allow_squash_merge          = true
+      + archived                    = false
+      + auto_init                   = true
+      + branches                    = (known after apply)
+      + default_branch              = (known after apply)
+      + delete_branch_on_merge      = false
+      + description                 = "This is repository that will be created by using the terraform for organization task on devops course"
+      + etag                        = (known after apply)
+      + full_name                   = (known after apply)
+      + git_clone_url               = (known after apply)
+      + gitignore_template          = "VisualStudio"
+      + has_issues                  = true
+      + has_wiki                    = true
+      + html_url                    = (known after apply)
+      + http_clone_url              = (known after apply)
+      + id                          = (known after apply)
+      + license_template            = "mit"
+      + merge_commit_message        = "PR_TITLE"
+      + merge_commit_title          = "MERGE_MESSAGE"
+      + name                        = "devops-labs-repository-teams"
+      + node_id                     = (known after apply)
+      + private                     = (known after apply)
+      + repo_id                     = (known after apply)
+      + squash_merge_commit_message = "COMMIT_MESSAGES"
+      + squash_merge_commit_title   = "COMMIT_OR_PR_TITLE"
+      + ssh_clone_url               = (known after apply)
+      + svn_url                     = (known after apply)
+      + visibility                  = "public"
+    }
+
+  # github_team.admins_team will be created
+  + resource "github_team" "admins_team" {
+      + create_default_maintainer = false
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "admin-team"
+      + node_id                   = (known after apply)
+      + privacy                   = "secret"
+      + slug                      = (known after apply)
+    }
+
+  # github_team.maintainers_team will be created
+  + resource "github_team" "maintainers_team" {
+      + create_default_maintainer = false
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "maintainers-team"
+      + node_id                   = (known after apply)
+      + privacy                   = "secret"
+      + slug                      = (known after apply)
+    }
+
+  # github_team_membership.admin_member_1 will be created
+  + resource "github_team_membership" "admin_member_1" {
+      + etag     = (known after apply)
+      + id       = (known after apply)
+      + role     = "member"
+      + team_id  = (known after apply)
+      + username = "CatOrLeader"
+    }
+
+  # github_team_membership.maintainer_member_1 will be created
+  + resource "github_team_membership" "maintainer_member_1" {
+      + etag     = (known after apply)
+      + id       = (known after apply)
+      + role     = "member"
+      + team_id  = (known after apply)
+      + username = "CatOrLeader"
+    }
+
+  # github_team_repository.admins_team will be created
+  + resource "github_team_repository" "admins_team" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "admin"
+      + repository = "devops-labs-repository-teams"
+      + team_id    = (known after apply)
+    }
+
+  # github_team_repository.maintainers_team will be created
+  + resource "github_team_repository" "maintainers_team" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "maintain"
+      + repository = "devops-labs-repository-teams"
+      + team_id    = (known after apply)
+    }
+
+Plan: 9 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_team.maintainers_team: Creating...
+github_team.admins_team: Creating...
+github_repository.repo: Creating...
+github_team.maintainers_team: Still creating... [10s elapsed]
+github_team.admins_team: Still creating... [10s elapsed]
+github_repository.repo: Still creating... [10s elapsed]
+github_team.maintainers_team: Creation complete after 14s [id=12122907]
+github_team_membership.maintainer_member_1: Creating...
+github_team.admins_team: Creation complete after 15s [id=12122908]
+github_team_membership.admin_member_1: Creating...
+github_team_membership.maintainer_member_1: Creation complete after 4s [id=12122907:CatOrLeader]
+github_team_membership.admin_member_1: Creation complete after 4s [id=12122908:CatOrLeader]
+github_repository.repo: Creation complete after 19s [id=devops-labs-repository-teams]
+github_branch_default.main: Creating...
+github_team_repository.maintainers_team: Creating...
+github_team_repository.admins_team: Creating...
+github_team_repository.maintainers_team: Creation complete after 3s [id=12122907:devops-labs-repository-teams]
+github_branch_default.main: Creation complete after 4s [id=devops-labs-repository-teams]
+github_branch_protection.default: Creating...
+github_team_repository.admins_team: Creation complete after 6s [id=12122908:devops-labs-repository-teams]
+github_branch_protection.default: Creation complete after 6s [id=BPR_kwDON085GM4DifCd]
+
+Apply complete! Resources: 9 added, 0 changed, 0 destroyed.
+```
+
+But I create organization by myself (manually). I don't really know, If it is possible to automatize the
+organization creation either.
+
+![github_teams_output](res/github_teams_output.png)
+
+But this is great thing to do, really impressive. Thanks for the new features I opened because of this course!
