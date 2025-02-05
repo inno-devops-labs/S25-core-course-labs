@@ -3,14 +3,16 @@
 ## Optimizing CI Workflow
 1. **Parallel Jobs**: Splitted jobs into independent stages (e.g., testing, security scans, and Docker builds).
 2. **Dependency Caching**:
-   - Utilized `cache: true` in `setup-go` for caching Go modules and dependencies.
-   - Used `--cache-from` for Docker builds to avoid unnecessary rebuilds.
+   - Used pip cache in setup-python to speed up Python dependency installations.
+   - Applied --cache-from for Docker builds to prevent unnecessary rebuilds.
 3. **Security Checks**:
    - Integrated Snyk to scan for vulnerabilities before deployment.
 4. **Version Pinning**:
-   - Specified explicit versions for dependencies and actions to ensure consistent behavior.
+   - Explicitly specified dependency versions in requirements.txt for Python to ensure consistency.
+   - Defined fixed versions for GitHub Actions dependencies to avoid unexpected failures.
 5. **Automated Linting & Testing**:
-   - Ensured code quality with `golangci-lint`.
+   - Ensured code quality with `flake8`.
+   - Used pytest to run automated tests on Python code.
    - Run unit tests automatically on each commit.
 
 ## Security Enhancements
@@ -19,7 +21,7 @@ Snyk is used to scan the project for vulnerabilities before deployment.
 
 ## CI Efficiency Improvements
 1. **Workflow Triggers**:
-   - The Go workflow runs **only** when `app_go/**` changes.
+   - The Python workflow runs **only** when `app_python/**` changes.
    - This prevents redundant builds and speeds up CI execution.
 2. **Incremental Builds**:
    - Leveraged Docker layer caching for faster image builds.
@@ -27,3 +29,6 @@ Snyk is used to scan the project for vulnerabilities before deployment.
 3. **Fail Fast Strategy**:
    - Early test failures prevent unnecessary steps from running, saving resources and CI time.
    - Security scans are executed **only after tests pass** to avoid wasting resources on broken code.
+
+
+

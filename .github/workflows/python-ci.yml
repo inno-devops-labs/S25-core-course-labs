@@ -32,6 +32,13 @@ jobs:
           cd app_python
           pip install -r requirements.txt
 
+      - name: Run Linter
+        run: |
+          cd app_python
+          pip install flake8
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
       - name: Run Tests
         run: |
           cd app_python
@@ -45,6 +52,11 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+
+      - name: Install Python Dependencies
+        run: |
+          cd app_python
+          pip install -r requirements.txt
 
       - name: Install Snyk CLI
         run: npm install -g snyk
