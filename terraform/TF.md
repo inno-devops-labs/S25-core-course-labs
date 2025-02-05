@@ -119,3 +119,18 @@ docker_container.nginx: Creating...
 docker_container.nginx: Creation complete after 1s [id=1407231ed18783105a3cbcfabca831007d4b9acafba665a49705712d1dc11826]
 
 Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+
+# Yandex Cloud integration
+## Proccess
+#### 1. Create a service account on Yandex Cloud
+#### 2. Set up CLI
+#### 3. Write .terraformrc at the root
+#### 4. Generate service account key
+#### 5. Set up configs (folder id, cloud id, etc)
+#### 6. Configure a provider in .tf file
+#### 7. Choose a VM and set up network and subnetwork
+#### 8. Add ssh access
+#### 9. Add users
+#### And finally, fall asleep
+## Difficulties
+#### Some platforms (standart-v1) not available in current zone
