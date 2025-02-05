@@ -46,7 +46,7 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         context: ./app_python
-        file: theanushervon/moscow_time
+        file: ./app_python/Dockerfile
         push: true
         tags: user/app:latest
     
