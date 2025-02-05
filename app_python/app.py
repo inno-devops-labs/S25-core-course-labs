@@ -16,10 +16,7 @@ async def get_moscow_time():
         <head>
             <title>Текущее Московское время</title>
         </head>
-        <body style="display: flex; justify-content: center; " +
-             "align-items: center; font-family: Poppins, sans-serif; " +
-             "background-color: #222; height: 100vh; overflow: hidden; " +
-             "font-weight: 700;">
+        <body style="display: flex; justify-content: center; background: #222">
             <div style="display: inline-flex; justify-content: center;">
               <p style="font-size: 154px; color: #fbcb40; margin: 0;">
                 {current_time[0]}:{current_time[1]}
