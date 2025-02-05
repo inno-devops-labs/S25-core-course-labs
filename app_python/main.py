@@ -1,31 +1,30 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from datetime import datetime
-
 import pytz
 
-'''
-FastAPI entity
-'''
+
 app = FastAPI(
     title="Region Time API",
     version="0.0.1"
 )
 
-'''
-Function for getting the current time in the specified as the argument region
-'''
-def get_location_time(region):
-      try:
-          return datetime.now(pytz.timezone(region))
-      except pytz.UnknownTimeZoneError:
-          raise ValueError(f"Invalid timezone: {region}")
 
-'''
-Endpoint function for getting the current moscow time with some simple html design
-'''
+def get_location_time(region):
+    """
+    Function for getting the current time in the specified timezone.
+    """
+    try:
+        return datetime.now(pytz.timezone(region))
+    except pytz.UnknownTimeZoneError:
+        raise ValueError(f"Invalid timezone: {region}")
+
+
 @app.get("/time/moscow", response_class=HTMLResponse)
 async def getTime():
+    """
+    Endpoint function for getting the current Moscow time with simple HTML design.
+    """
     html_content = f"""
     <!DOCTYPE html>
     <html lang="en">
