@@ -36,6 +36,6 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t python_app:latest .
-          docker tag shelma13/python_app:latest shelma13/python_app:latest
-          docker push shelma13/python_app:latest
+          docker build -t app_python:latest .
+          docker tag shelma13/app_python:latest shelma13/app_python:latest
+          docker push shelma13/app_python:latest
