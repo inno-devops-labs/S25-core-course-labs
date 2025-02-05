@@ -138,7 +138,3 @@ It has the following job structure:
    - Setup QEMU
    - Setup Docker Buildx
    - Build & Push
-
-Additionally, the corresponding _semver_ tag (e.g. `v1.2`) and `latest` tag are set automatically for the Docker image.
-
-> Note: semver tag is set only if commit has a correct _semver_ Git tag.
