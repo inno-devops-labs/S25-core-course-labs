@@ -33,7 +33,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-modules-
 
-      - name: Install Dependencies
+      - name: Install All Dependencies
         run: npm install
         working-directory: app_nodejs
 
