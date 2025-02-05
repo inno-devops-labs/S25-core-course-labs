@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ master ]
 
+defaults:
+ run:
+  working-directory: ./app_typescript
+
 jobs:
   build:
     name: Check 
@@ -23,6 +27,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        cache-dependency-path: |
+          app_typescript/package-lock.json
     - name: Install dependencies
       run: npm ci
     - name: Build
@@ -41,4 +47,4 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --severity-threshold=high --file ./app_typescript/package.json
+          args: --severity-threshold=high --file=./app_typescript/package.json
