@@ -1,6 +1,7 @@
 # Current Moscow time web application
 
 ![Workflow status badge](https://github.com/danmaninc/S25-core-course-labs/actions/workflows/app_python.yml/badge.svg)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ## Overview
 
