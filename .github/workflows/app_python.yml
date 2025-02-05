@@ -2,12 +2,20 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ master, 'lab**' ]
+    branches: [ master ]
   pull_request:
-    branches: [ master, 'lab**' ]
+    branches: [ master ]
+  paths:
+  - ".github/workflows/app_python.yml"
+  - "app_python/**"
+
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+
+    defaults:
+      run:
+        working-directory: ./app_python
 
     steps:
       - name: Checkout code
@@ -32,7 +40,7 @@ jobs:
 
   docker:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout code
@@ -46,4 +54,5 @@ jobs:
 
       - name: Push Docker image
         run: docker push gendiro/moscow-time-app:latest
+
 
