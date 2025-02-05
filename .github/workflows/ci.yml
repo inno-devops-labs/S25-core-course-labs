@@ -11,12 +11,6 @@ jobs:
             - uses: actions/setup-python@v4
               with:
                 python-version: '3.9'
-            - name: Install and Login in Snyk
-              run: |
-                npm install -g snyk
-                snyk auth $SNYK_TOKEN
-              env:
-                SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
             - name: Run Snyk to check for vulnerabilities
               run: |
                 pip install -r app_python/requirements.txt
