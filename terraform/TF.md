@@ -58,11 +58,11 @@
 
 ## **Challenges Faced and Solutions**
 - **Challenge:** Terraform installation issues
-  *Solution: Used official HashiCorp repository and updated packages*
+- *Solution: Used official HashiCorp repository and updated packages*
 - **Challenge:** VPN needed for provider downloads
-  *Solution: Installed VPN to bypass restrictions*
+- *Solution: Installed VPN to bypass restrictions*
 - **Challenge:** Docker daemon not running
-  *Solution: Restarted Docker*
+- *Solution: Restarted Docker*
 
 ## Terraform show - docker
 ```
@@ -356,16 +356,16 @@ container_id = "4e996e40274cb4c51e4c1a07eaf8543e4da01493d31242928d951d86b6abf125
      ```
 
 ## **Challenges Faced and Solutions**
-- **Challenge:** Missing IAM permissions 
-  *Solution: Added `vpc.publicAdmin` & `compute.editor` roles manually*
-- **Challenge:** Subnet required for VM 
-  *Solution: Created a subnet using CLI and assigned it to Terraform*
+- **Challenge:** Missing IAM permissions
+- *Solution: Added `vpc.publicAdmin` & `compute.editor` roles manually*
+- **Challenge:** Subnet required for VM
+- *Solution: Created a subnet using CLI and assigned it to Terraform*
 - **Challenge:** Image ID not found
-  *Solution: Used `yc compute image list` to find valid images*
-- **Challenge:** Permission denied in CLI 
-  *Solution: Re-authenticated using `yc init` and verified IAM roles*
-- **Challenge:** Billing not activated 
-  *Solution: Linked a billing account to enable resource creation*
+- *Solution: Used `yc compute image list` to find valid images*
+- **Challenge:** Permission denied in CLI
+- *Solution: Re-authenticated using `yc init` and verified IAM roles*
+- **Challenge:** Billing not activated
+- *Solution: Linked a billing account to enable resource creation*
 
 
 ## Terraform show - yandex cloud
@@ -562,7 +562,7 @@ vm_status = "running"
 ```
 ---
 
-# GitHub: Steps and Challenges
+# GitHub Setup: Steps and Challenges
 
 ## **Steps Taken**
 1. **Setting Up Terraform for GitHub**
@@ -603,9 +603,9 @@ vm_status = "running"
 
 ## **Challenges Faced and Solutions**
 - **Challenge:** Branch protection misconfigurations
-  *Solution: Ensured proper branch protection rules in `.tf`*
+- *Solution: Ensured proper branch protection rules in `.tf`*
 - **Challenge:** Repository rename error
-  *Solution: Kept the existing repository name or used `terraform state rm`*
+- *Solution: Kept the existing repository name or used `terraform state rm`*
 
 
 ## Terraform show - GitHub
@@ -780,7 +780,7 @@ github_repository.my_repo: Modifying... [id=S25-core-course-labs]
 ```
 ---
 
-# GitHub Teams: Steps and Challenges
+# GitHub Teams Setup: Steps and Challenges
 
 ## **Steps Taken**
 
@@ -800,7 +800,7 @@ github_repository.my_repo: Modifying... [id=S25-core-course-labs]
 ## **Challenges Faced and Solutions**
 
 - **Challenge** Authentication issues due to incorrect token scope.
-  *Solution: Generated a new token with `repo` and `admin:org` scopes from GitHub.*
+- *Solution: Generated a new token with `repo` and `admin:org` scopes from GitHub.*
 
 
 ## Terraform show - GitHub Teams
