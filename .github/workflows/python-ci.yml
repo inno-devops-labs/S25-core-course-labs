@@ -39,6 +39,7 @@ jobs:
 
       - name: Docker Build & Push
         run: |
-          docker build -t myrepo/python-app:latest -f app_python/Dockerfile app_python/
-          docker push myrepo/python-app:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/python-app:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/python-app:latest
+
       
