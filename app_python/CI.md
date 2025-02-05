@@ -1,24 +1,22 @@
-# Best Practices for CI/CD in This Project
+# CI Workflow best practices
 
-## CI/CD Enhancements Implemented
+## **1. Workflow Status Badge**
 
-### **Workflow Status Badge**
+* Added a **GitHub Actions status badge** in `README.md`.
+* Helps track **build status** at a glance.
 
-- Added a **GitHub Actions status badge** in `README.md`.
-- Helps track **build status** at a glance.
+## **2. Python Dependency Caching**
 
-### **Python Virtual Environment in CI**
+* Used `actions/cache` to **cache Python dependencies**.
+* Significantly **reduces pipeline execution time**.
 
-- Ensures dependencies are installed **in an isolated virtual environment**.
-- Prevents system package conflicts.
+## **3. Docker Build Optimization**
 
-### **Dependency Caching**
+* Enabled **Docker Layer Caching** to **reuse existing image layers**.
+* Speeds up the build process and reduces resource usage.
 
-- Used `actions/cache` to **cache Python dependencies**.
-- Significantly **reduces pipeline execution time**.
+## **4. Linting for Code Quality**
 
-### **Docker Build Optimization**
-
-- Enabled **Docker Layer Caching** to **reuse existing image layers**.
-- Speeds up the build process and reduces resource usage.
-
+* Integrated `flake8` to **enforce Python coding standards**.
+* Runs **before testing**, preventing formatting errors early.
+* Uses `--max-line-length=100` for readable code.
