@@ -2,7 +2,7 @@
 
 ## Display the State of a Specific Resource 
 
-Docker container
+**Docker container**
 ```bash
 terraform state show docker_container.nginx                   
 
@@ -78,7 +78,7 @@ resource "docker_container" "nginx" {
 }
 ```
 
-Docker image
+**Docker image**
 ```bash
 terraform state show docker_image.nginx                       
 
@@ -121,7 +121,7 @@ image_name = "nginx:latest"
 - Registered on Yandex Cloud and created a cloud (copy cloud id).
 - Created a folder within the cloud to manage resources (copy folder id).
 - Created a service account with the necessary permissions for Terraform (copy service account id).
-  Necessary permissions:
+  **Necessary permissions:**
   - admin     
   - storage.editor
   - compute.admin
@@ -155,12 +155,12 @@ terraform apply
 ## 3. Issues and Solutions
 
 ### Issue: yc resource-manager cloud list returned an empty result.
-- Problem: When checking available clouds, the command yc resource-manager cloud list returned empty table.
-- Solution: Ran yc init and created a new profile. Re-entered cloud_id, folder_id, token. After this, yc resource-manager cloud list started displaying the correct data.
+- **Problem**: When checking available clouds, the command yc resource-manager cloud list returned empty table.
+- **Solution**: Ran yc init and created a new profile. Re-entered cloud_id, folder_id, token. After this, yc resource-manager cloud list started displaying the correct data.
 
 ### Issue: yc resource-manager folder list returned an empty result.
-- Problem: When checking available clouds, the command yc resource-manager folder list returned empty table.
-- Solution: Ran yc init and created a new profile. Re-entered cloud_id, folder_id, token. After this, yc resource-manager folder list started displaying the correct data.
+- **Problem**: When checking available clouds, the command yc resource-manager folder list returned empty table.
+- **Solution**: Ran yc init and created a new profile. Re-entered cloud_id, folder_id, token. After this, yc resource-manager folder list started displaying the correct data.
 
 ## List All Managed Resources
 
@@ -172,7 +172,7 @@ yandex_compute_instance.vm
 
 ## Display the State of a Specific Resource
 
-Virtual Machine (VM) resource in Yandex Cloud
+**Virtual Machine (VM) resource in Yandex Cloud**
 ```bash
 terraform state show yandex_compute_instance.vm              
 # yandex_compute_instance.vm:
@@ -258,4 +258,33 @@ resource "yandex_compute_instance" "vm" {
         preemptible = false
     }
 }
+```
+
+## Best Practices in Terraform for GitHub
+
+1. **Use variables** - Store tokens in environment variables or `terraform.tfvars`, not in code.
+2. **Importing existing resources** - Use `terraform import` to avoid creating duplicates.
+3. **Branch Protection Rules** - Protect the main branch, preventing accidental changes.
+4. **Restricted Access Rights** - When issuing a GitHub token, give the minimum necessary permissions.
+   **Necessary permissions:**
+   - repo
+   - read:org
+   - admin:repo-hook
+   - read:discussion 
+5. **State Management** - Use `terraform state` to manage the infrastructure to avoid unsynchronization.
+
+### Import Existing Repository:
+
+```bash 
+terraform import github_repository.existing_repo S25-core-course-labs
+
+github_repository.existing_repo: Importing from ID "S25-core-course-labs"...
+github_repository.existing_repo: Import prepared!
+  Prepared github_repository for import
+github_repository.existing_repo: Refreshing state... [id=S25-core-course-labs]
+
+Import successful!
+
+The resources that were imported are shown above. These resources are now in
+your Terraform state and will henceforth be managed by Terraform.
 ```
