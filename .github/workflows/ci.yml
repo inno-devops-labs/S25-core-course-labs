@@ -34,7 +34,7 @@ jobs:
           flake8 app_python/ --count --exit-zero --max-complexity=10 --max-line-length=100 --statistics
 
       - name: Run Tests
-        run: python -m unittest discover -s app_python/tests
+        run: python -m unittest app_python/tests.py
 
   docker-build-and-push:
     runs-on: ubuntu-latest
