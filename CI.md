@@ -14,8 +14,9 @@ This repository implements a robust CI/CD pipeline using GitHub Actions. The wor
 - Cache keys are based on OS and commit SHA for proper invalidation
 
 ### 2. Security Measures
+- Comprehensive vulnerability scanning with Snyk for both Python dependencies and Docker images
 - Limited permissions using the principle of least privilege
-- Security scanning with Bandit
+- Security scanning with Bandit for Python code analysis
 - Secure handling of Docker Hub credentials using secrets
 - Full history fetch for better security analysis
 
@@ -35,6 +36,7 @@ This repository implements a robust CI/CD pipeline using GitHub Actions. The wor
 - Layer caching for faster builds
 - Proper tagging strategy
 - Secure credential handling
+- Container vulnerability scanning with Snyk
 
 ## Workflow Details
 
@@ -46,10 +48,24 @@ The workflow is triggered on:
 1. Code checkout
 2. Python setup with caching
 3. Dependencies installation
-4. Security scanning
-5. Linting
-6. Testing with coverage
-7. Docker image building and pushing
+4. Snyk Python dependency scanning
+5. Security scanning with Bandit
+6. Linting
+7. Testing with coverage
+8. Docker image building and pushing
+9. Snyk Docker image scanning
+
+## Security Scanning
+
+### Snyk Integration
+The workflow includes two Snyk scanning steps:
+1. **Python Dependencies Scan**: Checks for vulnerabilities in Python packages
+2. **Docker Image Scan**: Analyzes the built Docker image for security issues
+
+To set up Snyk:
+1. Create a Snyk account at https://snyk.io
+2. Generate a Snyk API token
+3. Add the token as a GitHub secret named `SNYK_TOKEN`
 
 ## Maintenance
 
@@ -57,8 +73,9 @@ To maintain the CI pipeline:
 1. Regularly update GitHub Action versions
 2. Monitor workflow execution times
 3. Review and update dependency versions
-4. Check security scanning reports
+4. Check security scanning reports from both Bandit and Snyk
 5. Maintain Docker Hub credentials
+6. Monitor and address Snyk security alerts
 
 ## Status Badge
 

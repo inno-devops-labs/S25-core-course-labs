@@ -16,6 +16,7 @@ defaults:
 permissions:
   contents: read
   security-events: write # Required for security scanning
+  packages: read
 
 jobs:
   build:
@@ -47,6 +48,15 @@ jobs:
         pip install flake8 pytest pytest-cov
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+    - name: Run Snyk to check for Python vulnerabilities
+      uses: snyk/actions/python@master
+      continue-on-error: true  # Don't fail the build for vulnerabilities
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        command: monitor
+        args: --project-name=python-app
+        
     - name: Security scan with bandit
       run: |
         pip install bandit
@@ -74,10 +84,18 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         context: ./app_python
-        push: ${{ github.ref == 'refs/heads/main' }}
         tags: favelanky/app_python:latest
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+
+    - name: Run Snyk to check Docker image for vulnerabilities
+      uses: snyk/actions/docker@master
+      continue-on-error: true  # Don't fail the build for vulnerabilities
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        image: favelanky/app_python:latest
+        args: --file=app_python/Dockerfile
 
     - name: Move cache
       run: |
