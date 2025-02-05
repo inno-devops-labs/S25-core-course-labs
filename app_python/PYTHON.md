@@ -37,3 +37,32 @@ Selected Jinja2 because:
 ## Project Standards
 - Clean .gitignore file
 - Comprehensive requirements.txt
+
+## Testing Implementation Details
+
+The project implements comprehensi testing using pytest and FastAPI TestClient. Main test categories include:
+
+1. Interface Testing (test_root_endpoint)
+   - Validation of correct HTML page rendering
+   - Verification of key interface elements presence
+   - Checking required CSS classes for styling
+
+2. API Testing (test_time_endpoint)
+   - JSON response structure validation
+   - Time format verification
+   - HTTP status code validation
+
+3. Time Accuracy Testing (test_time_accuracy)
+   - Comparison of returned time with reference Moscow time
+   - Acceptable margin of error within 2 seconds
+   - Proper handling of Moscow timezone
+
+4. HTML Structure Validation (test_html_structure)
+   - Verification of all required HTML elements
+   - JavaScript time auto-update code validation
+   - Meta tags and page title checking
+
+Each test is developed following best practices:
+- Test isolation
+- Clear test naming reflecting their purpose
+- Informative error messages

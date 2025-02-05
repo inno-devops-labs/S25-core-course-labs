@@ -74,3 +74,18 @@ The distroless version provides:
 - Enhanced security
 
 - Faster deployment
+
+
+## Unit Testing
+
+The project is covered by automated tests using pytest and FastAPI TestClient
+
+### Running Tests
+
+```bash
+# Run all tests
+pytest
+
+# Run with verbose output
+pytest -v
+```
