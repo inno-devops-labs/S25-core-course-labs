@@ -45,3 +45,7 @@ docker run -p 8080:8080 azeeeez/go_moscow_time
 ### Distroless
 
 You can find distroless image in this [link](https://hub.docker.com/repository/docker/azeeeez/go_moscow_time_dist/general)
+
+## Unit Tests
+
+Unit tests are implemented using the built-in frameworks like `testing` and `net/http/httptest`.
