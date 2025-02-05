@@ -40,9 +40,6 @@ jobs:
     needs: ci
     environment: ci
     runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: ./app_python
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -68,6 +65,8 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+        with:
+          context: app_python
 
       - name: Build & Push
         uses: docker/build-push-action@v6
