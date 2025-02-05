@@ -1,0 +1,11 @@
+.terraform*
+terraform.tfstate*
+docker/.terraform*
+docker/terraform.tfstate*
+yandex/.terraform*
+yandex/terraform.tfstate*
+yandex/key.json
+github/.terraform*
+github/terraform.tfstate*
+git-teams/.terraform*
+git-teams/terraform.tfstate*
