@@ -1,0 +1,8 @@
+.venv
+
+*.git
+.git*
+
+*.md
+
+node_modules/
