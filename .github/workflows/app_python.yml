@@ -44,6 +44,17 @@ jobs:
       - name: Tests
         run: pytest src/tests
 
+  snyk:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Snyk
+        uses: snyk/actions/python-3.10@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
   docker:
     needs: ci
     environment: ci
