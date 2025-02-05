@@ -75,3 +75,39 @@ The repository [fastapi-best-practices](https://github.com/zhanymkanov/fastapi-b
   - Docstrings are added to functions for better code documentation.
 
 ---
+
+## Tests
+
+- `test_get_moscow_time`:
+  - This test checks that the `/get_moscow_time` endpoint returns a valid response with a status code of 200 and that the response contains the key `moscow_time`.
+
+- `test_moscow_time_format`:
+  - This test verifies that the `moscow_time` value returned by the endpoint is correctly formatted according to the "%Y-%m-%d %H:%M:%S" format.
+
+- `test_moscow_time_updates`:
+  - This test ensures that the Moscow time returned by the endpoint updates between consecutive requests.
+
+- `test_moscow_time_timezone`:
+  - This test ensures that the time returned by the `/get_moscow_time` endpoint is in the Europe/Moscow timezone.
+
+## Tests best Practices
+
+### **Asserting Status Code:**
+
+- The test asserts that the response status code is 200, which is a standard practice to ensure the endpoint is working correctly.
+
+### **Isolation of Tests:**
+
+- Each test is isolated and focuses on a single aspect of the functionality (e.g., response structure, format, time update, time zone). This makes the tests easier to understand and maintain.
+
+### **Use of TestClient:**
+
+- The TestClient from FastAPI is used to simulate HTTP requests to the application. This is a standard practice for testing FastAPI applications, allowing you to test endpoints without running a live server.
+
+### **Assertions with Clear Messages:**
+
+- The assertions include clear error messages (e.g., "Time did not update between requests"), which help quickly identify the cause of a test failure.
+
+### **Testing Edge Cases:**
+
+- Testing the behavior of the endpoint under different time zones or handling potential errors.
