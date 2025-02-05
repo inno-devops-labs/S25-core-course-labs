@@ -37,8 +37,7 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
         command: test
-        args: --severity-threshold=high
-        working-directory: app_python
+        args: --severity-threshold=high ./app_python
 
     - name: Run linter
       run: |
