@@ -1,4 +1,5 @@
 # Python Web Application: Moscow Time <br>
+[![Python application CI](https://github.com/TheAnushervon/S25-core-course-labs/actions/workflows/app_python.yml/badge.svg?branch=lab3)](https://github.com/TheAnushervon/S25-core-course-labs/actions/workflows/app_python.yml) <br> 
 Web-application for displaying current time in Moscow. Developed by Django framework and follows best practices for coding standards and quality. <br>
 
 ## Features
