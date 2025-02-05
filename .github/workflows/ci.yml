@@ -79,13 +79,12 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build and Push
-      uses: docker/build-push-action@5
+      uses: docker/build-push-action@6
       with:
-        context: .
-        push: ${{ github.event_name != 'pull_request' }}  # Only push on main branch
-        tags: ${{ secrets.DOCKER_USERNAME }}/moscow-time:latest
-        cache-from: type=local,src=/tmp/.buildx-cache
-        cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
+        context: ./app_python
+        push: true
+        tags: ${{ secrets.DOCKER_USERNAME }}/lab2:latest
+
 
   security-scan:
     runs-on: ubuntu-latest
