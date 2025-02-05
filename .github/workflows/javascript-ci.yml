@@ -11,8 +11,12 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
-    steps:
+    defaults:
+      run:
+        working-directory: app_javascript
+
+
+    steps:  
     - uses: actions/checkout@v3
 
     - name: Set up Node.js
@@ -48,6 +52,7 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
         args: --severity-threshold=high
+        
 
   docker:
     needs: test
