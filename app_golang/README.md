@@ -2,6 +2,7 @@
 
 ![Go Version](https://img.shields.io/badge/Go-1.20%2B-blue.svg)
 ![CI/CD Pipeline](https://github.com/Azaki-san/S25-core-course-labs/actions/workflows/app_golang_ci.yml/badge.svg)
+
 🌟 **A fun and inspirational app!**
 
 ---

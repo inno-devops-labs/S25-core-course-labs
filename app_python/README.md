@@ -137,4 +137,3 @@ This web application is created for educational purposes. Feel free to enhance i
 - Showing other time zones.
 - Adding API integration for real-time data.
 - Enhancing the design with more modern styling.
-
