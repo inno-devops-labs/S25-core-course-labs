@@ -9,6 +9,10 @@ on:
 jobs:
   build-test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app_python
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -45,5 +49,5 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -f python.Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/app-python:latest .
+          docker build -f app_python/python.Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/app-python:latest ./app_python
           docker push ${{ secrets.DOCKER_USERNAME }}/app-python:latest
