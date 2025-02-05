@@ -96,7 +96,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          command: test
+          command: code test app_python -sarif-file-output=snyk.sarif
 
       - name: 📤 Upload Snyk SARIF
         uses: github/codeql-action/upload-sarif@v2
