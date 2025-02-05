@@ -27,7 +27,9 @@ uvicorn app:app --port 8000 --reload
 
 ## Unit tests
 
-Tests are located in the `test.py`. You can run the test suite by executing `pytest test.py -v`.
+Tests are located in the `test.py`.
+To run them, you first need to install the dev dependencies of the project by running `pip install -r requirements.dev.txt`.
+Then you can run the test suite by executing `pytest test.py -v`.
 
 ## Use the app
 
