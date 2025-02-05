@@ -2,15 +2,10 @@ name: Python App CI
 
 on:
   push:
-    branches: [ "master" ]
     paths:
       - "app_python/**"
       - ".github/workflows/python-app-ci.yml"
-  pull_request:
-    branches: [ "master" ]
-    paths:
-      - "app_python/**"
-      - ".github/workflows/python-app-ci.yml"
+
 env:
   DOCKER_IMAGE: haidarjbeily/distroless-moscow-time-app
   DOCKER_TAG: latest

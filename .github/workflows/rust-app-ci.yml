@@ -2,12 +2,6 @@ name: Rust App CI
 
 on:
   push:
-    branches: [ "master" ]
-    paths:
-      - "app_rust/**"
-      - ".github/workflows/rust-app-ci.yml"
-  pull_request:
-    branches: [ "master" ]
     paths:
       - "app_rust/**"
       - ".github/workflows/rust-app-ci.yml"
