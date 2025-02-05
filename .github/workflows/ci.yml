@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - lab3
   pull_request:
     branches:
       - main
