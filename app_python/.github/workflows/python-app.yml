@@ -13,12 +13,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Cache Gradle packages
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          
     - uses: actions/checkout@v3
 
     - name: Set up python
       uses: actions/setup-python@v3
       with:
-        python-version: '3.13'
+        python-version: '3.10'
 
     - name: Install dependencies and linter
       run: |
@@ -46,3 +52,8 @@ jobs:
         context: app_python
         push: true
         tags: ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
+
+    - name: Run snyk
+      uses: snyk/actions/python-3.10@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}    
