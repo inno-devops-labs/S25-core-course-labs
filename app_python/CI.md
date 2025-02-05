@@ -15,3 +15,5 @@
 - If a key job fails, the workflow is marked as failed as soon as possible
 
 - The workflow may be cancelled in progress if a new push occurs to save the build minutes of GitHub Actions
+
+- Added vulnerability check using [Snyk](https://snyk.io/)
