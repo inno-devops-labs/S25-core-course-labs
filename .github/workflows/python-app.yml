@@ -51,15 +51,12 @@ jobs:
         run: |
           pytest test_app.py -v
       
-      - name: Change to app directory
-        run: cd app_python
-        
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --file=requirements.txt
+          args: --file=${{ github.workspace }}/app_python/requirements.txt
           command: monitor
 
   docker:
