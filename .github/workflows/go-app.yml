@@ -3,10 +3,10 @@ name: Go Web Application (Moscow Time)
 on:
   push:
     branches: [ "lab3", "master" ]
-    # paths: [ "app_go/" ]
+    paths: [ "app_go/" ]
   pull_request:
     branches: [ "master" ]
-    # paths: [ "app_go/" ]
+    paths: [ "app_go/" ]
 
 permissions:
   contents: read
