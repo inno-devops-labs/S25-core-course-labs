@@ -39,7 +39,7 @@ jobs:
 
       - name: Docker Build & Push
         run: |
-          docker build -t em1999jay/python-app:latest .
+          docker build -t em1999jay/python-app:latest ./app_python
           docker push em1999jay/python-app:latest
       
 
