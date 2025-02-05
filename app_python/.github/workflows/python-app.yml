@@ -6,7 +6,6 @@ on:
 env:
   USERNAME: voronm1522
   DOCKER_REPO: voronm1522/devops
-  DOCKER_TAG: python-app
 
 jobs:
   build-and-test:
@@ -45,4 +44,4 @@ jobs:
       with:
         context: app_python
         push: true
-        tags: ${{ env.DOCKER_REPO }}:${{ env.DOCKER_TAG }}
+        tags: ${{ env.DOCKER_REPO }}
