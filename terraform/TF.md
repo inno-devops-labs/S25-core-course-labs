@@ -102,6 +102,45 @@ resource "docker_image" "nginx" {
     repo_digest  = "nginx@sha256:bc2f6a7c8ddbccf55bdb19659ce3b0a92ca6559e86d42677a5a02ef6bda2fcef"
 }
 ```
+### Logs after making a change
+```sh
+      ~ stop_signal                                 = "SIGQUIT" -> (known after apply)
+      ~ stop_timeout                                = 0 -> (known after apply)
+      - storage_opts                                = {} -> null
+      - sysctls                                     = {} -> null
+      - tmpfs                                       = {} -> null
+        # (20 unchanged attributes hidden)
+
+      ~ healthcheck (known after apply)
+
+      ~ labels (known after apply)
+
+      ~ ports {
+          ~ external = 8000 -> 8080 # forces replacement
+            # (3 unchanged attributes hidden)
+        }
+    }
+
+Plan: 1 to add, 0 to change, 1 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+docker_container.nginx: Destroying... [id=3b2418011d84a6ea9317fa2510dc14ae403d349f2ab6079f7e17cb17c1aee0b1]
+docker_container.nginx: Destruction complete after 0s
+docker_container.nginx: Creating...
+docker_container.nginx: Creation complete after 0s [id=e9d9af71c801c4b78b73753a54dff57cc244d2fc1f1b39a6760be0e6734133cb]
+
+Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
+
+Outputs:
+
+container_id = "nginx_container"
+image_id = "nginx"
+```
 
 ### Updated Terraform configeration
 We used variables to change the name of the docker container
