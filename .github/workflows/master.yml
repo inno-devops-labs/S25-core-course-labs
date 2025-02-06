@@ -79,7 +79,7 @@ jobs:
 
       # Step 3: Build and push Docker image
       - name: Build and Push Docker Image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v6
         with:
           context: ./app_python
           file: ./app_python/Dockerfile
