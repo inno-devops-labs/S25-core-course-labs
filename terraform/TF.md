@@ -346,3 +346,51 @@ terraform state list
 - **Environment Variables**: Used `GITHUB_TOKEN` securely by setting it as an environment variable.
 - **Input Variables**: Utilized input variables in `variables.tf` for flexibility in repository settings.
 - **Version Control**: Managed Terraform state in a remote backend for better state management.
+
+## Bonus Task: Adding Teams
+
+### 1. Creating a New GitHub Organization
+
+- Created a new GitHub organization "devops-kira354" through the GitHub web interface.
+
+### 2. Adding Teams to the Organization
+
+- Added the following teams using Terraform:
+  - **read-team**: Read-only access to the repository.
+  - **write-team**: Write access to the repository.
+  - **admin-team**: Admin access to the repository.
+
+### 3. Applied Changes
+
+- Ran `terraform apply` to apply the configuration and created the teams in the organization.
+
+```bash
+github_team_repository.read_team_repo: Creating...
+github_team_repository.read_team_repo: Creation complete after 1s [id=12127361:S25-core-course-labs]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+```
+
+### 5. Terraform State
+
+#### **terraform show**
+
+```sh
+terraform show
+```
+
+#### **Output:**
+
+![State show](github3.png)
+![State show](github4.png)
+![State show](github5.png)
+
+#### **terraform state list**
+
+```sh
+terraform state list
+```
+
+#### **Output:**
+
+![state list output](github6.png)
