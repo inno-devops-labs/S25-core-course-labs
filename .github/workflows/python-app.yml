@@ -86,7 +86,7 @@ jobs:
 
       - name: Check backend container logs
         run: |
-          docker logs dev-lab3-back
+          docker ps -a
 
   snyk:
     runs-on: ubuntu-latest
