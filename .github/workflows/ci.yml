@@ -31,7 +31,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r app_python/requirements.txt
-          pip install flake8
 
   build:
     runs-on: ubuntu-latest
@@ -44,11 +43,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Lint (flake8)
         run: |
+          pip install flake8
           flake8 app.py test_app.py
 
       - name: Run unit tests
         run: |
-          python -m unittest test_app.py"
+          python -m unittest test_app.py
 
   docker:
     needs: [ setup, build, snyk-scan ]
