@@ -1,5 +1,5 @@
 # Use a minimal and precise base image
-FROM python:3.9-alpine
+FROM python:3.10-bullseye
 
 # Set a non-root user for security
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
