@@ -8,7 +8,7 @@ WORKDIR /usr/local/app
 COPY requirements.txt ./
 
 # Copy the tests directory from the parent directory
-COPY ../tests ./tests
+COPY app_python/tests ./tests
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
