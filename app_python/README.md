@@ -1,5 +1,3 @@
-Here’s the updated `README.md` file with the Python Flask application instructions added, following the same structure and style as the Node.js application:
-
 ---
 
 # Python Web Application
