@@ -1,3 +1,4 @@
+[![CI Pipeline](https://github.com/emiliogain/S25-core-course-labs/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/emiliogain/S25-core-course-labs/actions/workflows/ci.yaml)
 # Python Web Application
 
 ## Overview
@@ -76,5 +77,3 @@ The Docker image is tagged with the repository’s Docker Hub username and `late
 For Docker integration, make sure the following secrets are set in the repository:
 - `DOCKER_USERNAME`
 - `DOCKER_PASSWORD`
-
-[![CI Pipeline](https://github.com/emiliogain/S25-core-course-labs/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/emiliogain/S25-core-course-labs/actions/workflows/ci.yaml)
