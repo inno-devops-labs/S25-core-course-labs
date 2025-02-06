@@ -26,7 +26,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --no-compile -r requirements.txt
 
 # Final stage
-FROM python:3.11-slim-bullseye
+FROM python:3.11-slim
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
