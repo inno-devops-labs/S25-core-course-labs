@@ -79,7 +79,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run Snyk
-        uses: snyk/actions/gradle-jdk21@master
+        uses: snyk/actions/gradle-jdk17@master
         with:
           args: test ./app_kotlin --severity-threshold=high
         env:
