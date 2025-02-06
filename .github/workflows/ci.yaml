@@ -72,6 +72,7 @@ jobs:
     - name: Build Docker Image
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/msk-time-app:latest .
+    
     #S9: push the docker image to my dockerhub repo
     - name: Push Docker Image
         run: |
