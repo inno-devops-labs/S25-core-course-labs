@@ -2,7 +2,7 @@
 FROM python:3.10-bullseye
 
 # Set a non-root user for security
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+RUN addgroup --system appgroup && adduser --system appuser --ingroup appgroup
 
 # Set the working directory
 WORKDIR /app
