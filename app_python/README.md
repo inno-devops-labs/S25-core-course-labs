@@ -1,5 +1,7 @@
 ## Moscow Time Web Application
 
+[![CI Pipeline](https://github.com/whatislav/S25-core-course-labs/actions/workflows/master.yml/badge.svg)]
+
 ### Overview
 This Flask-based web application displays the current time in Moscow.
 
