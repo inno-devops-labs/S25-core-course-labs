@@ -72,9 +72,13 @@ jobs:
         working-directory: ./app_kotlin
         run: chmod +x ./gradlew
 
+      - name: Force refresh Gradle dependencies
+        working-directory: ./app_kotlin
+        run: ./gradlew build --refresh-dependencies
+
       - name: Run Snyk
         uses: snyk/actions/gradle-jdk17@master
         with:
-          args: test ./app_kotlin --severity-threshold=high
+          args: test --severity-threshold=high
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
