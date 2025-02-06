@@ -18,9 +18,9 @@ jobs:
       - name: Build Docker image
         working-directory: app_python
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/devopslab:latest .
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/iu-devops-lab2:latest .
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/devopslab:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/iu-devops-lab:latest
 
