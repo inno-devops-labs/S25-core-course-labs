@@ -47,7 +47,7 @@ jobs:
         working-directory: ./app_java
         run: mvn test
 
-  security-scan:
+  security:
     name: security
     needs: [ build-lint-test ]
     runs-on: ubuntu-latest
