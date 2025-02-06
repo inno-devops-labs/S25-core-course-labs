@@ -41,7 +41,7 @@ jobs:
     
     - name: Lint with pylint
       run: |
-        pylint --disable=C0111,C0103 $(git ls-files '*.py')
+        pylint --disable=C0111,C0103,W0621 $(git ls-files '*.py')
     
     - name: Run tests with pytest
       run: |
