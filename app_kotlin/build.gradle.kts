@@ -32,8 +32,6 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:5.5.5")
     testImplementation("io.kotest:kotest-assertions-core:5.5.5")
     testImplementation("io.kotest:kotest-runner-junit5:$version")
-
-    // https://mavenlibs.com/maven/dependency/io.kotest.extensions/kotest-assertions-ktor
     implementation("io.kotest.extensions:kotest-assertions-ktor:2.0.0")
 }
 
