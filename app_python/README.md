@@ -8,7 +8,7 @@ This app shows the current time in Moscow. It is built on Python using Flask fra
 - Displays real-time updates upon page refresh.
 - Handles Moscow time zone using `pytz`.
 - Containerized solution for consistent execution across environments.
-- Automated CI/CD Pipeline with unit testing
+- Automated CI/CD Pipeline with unit testing.
 
 ## Local Installation
 1. Clone the repository:
