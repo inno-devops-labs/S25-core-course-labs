@@ -11,7 +11,6 @@
 
 3. **Security Integration**
    - Snyk vulnerability scanning
-   - Fail build on high severity vulnerabilities
    - Regular dependency scanning
 
 4. **Efficient Workflow**
@@ -22,13 +21,7 @@
 5. **Quality Gates**
    - Code coverage reporting
    - Linting with Flake8
-   - Container security scanning
 
 6. **Docker Best Practices**
-   - Buildx for multi-platform support
    - Cache optimization for Docker layers
    - Secure credential handling
-
-## Usage
-```bash
-act -j lint-test
