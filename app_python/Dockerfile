@@ -16,7 +16,7 @@ COPY main.py .
 ########################################
 # Stage 2: Final Image
 ########################################
-FROM python:3.10.13-alpine3.18
+FROM python:3.10.13-alpine
 LABEL stage="final"
 
 # Create a non-root user and group
