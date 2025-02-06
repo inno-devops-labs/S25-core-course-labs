@@ -58,7 +58,7 @@ jobs:
           args: --skip-unresolved ./app_java
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
+    working-directory: ./app_java
   docker-worker:
     needs: [build-lint-test, security]
     runs-on: ubuntu-latest
