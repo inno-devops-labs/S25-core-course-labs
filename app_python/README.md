@@ -73,6 +73,36 @@ uvicorn app_python.src.main:app --reload
 
 ---
 
+## Running the Unit Tests
+
+First of all, install required dependencies to your virtual environment (venv):
+
+```bash
+pip install pytest requests
+```
+
+To start the tests, run the following command in `app_python` directory:
+
+```bash
+pytest tests/test_main.py -v 
+```
+
+If everything is correct, the test should pass:
+
+```bash
+============================= test session starts =============================
+collected 4 items
+
+tests/test_main.py::test_get_moscow_time PASSED                          [ 25%]
+tests/test_main.py::test_moscow_time_format PASSED                       [ 50%]
+tests/test_main.py::test_moscow_time_updates PASSED                      [ 75%]
+tests/test_main.py::test_moscow_time_timezone PASSED                     [100%]
+
+============================== 4 passed in 2.05s ==============================
+```
+
+---
+
 ## Docker
 
 Or you can simply use docker to run and build the application:

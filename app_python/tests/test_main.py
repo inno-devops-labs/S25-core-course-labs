@@ -3,15 +3,24 @@ import time
 from fastapi.testclient import TestClient
 from datetime import datetime
 
-sys.path.append("src")
+import pytz
 
-from main import app
 
-client = TestClient(app)
+def get_app():
+    sys.path.append("app_python")
+    from src.main import app
+    return app
+
+
+client = TestClient(get_app())
 
 
 def test_get_moscow_time():
-    """Test that the endpoint returns a valid response with 'moscow_time' key."""
+    """
+    Test that the endpoint returns
+    a valid response (200 status code)
+    with 'moscow_time' key.
+    """
     response = client.get("/get_moscow_time")
     assert response.status_code == 200
     assert "moscow_time" in response.json()
@@ -37,4 +46,28 @@ def test_moscow_time_updates():
     response2 = client.get("/get_moscow_time")
     time2 = response2.json()["moscow_time"]
 
-    assert time1 != time2, "Time did not update between requests"
+    assert (
+        time1 != time2
+    ), "Time did not update between requests"
+
+
+def test_moscow_time_timezone():
+    """
+    Test that the returned
+    time is in the correct timezone (Europe/Moscow).
+    """
+    response = client.get("/get_moscow_time")
+    moscow_time_str = response.json()["moscow_time"]
+
+    moscow_time = datetime.strptime(moscow_time_str, "%Y-%m-%d %H:%M:%S")
+
+    moscow_tz = pytz.timezone("Europe/Moscow")
+    moscow_time = moscow_tz.localize(moscow_time)
+
+    utc_now = datetime.now(pytz.utc)
+    expected_moscow_time = utc_now.astimezone(moscow_tz)
+
+    time_difference = abs((expected_moscow_time - moscow_time).total_seconds())
+    assert (
+        time_difference <= 1
+    ), f"Returned time is not in the correct timezone: {moscow_time_str}"
