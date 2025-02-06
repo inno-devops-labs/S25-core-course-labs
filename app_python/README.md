@@ -1,5 +1,8 @@
 # Moscow Time Display
 
+## CI/CD Status
+[![Python CI/CD](https://github.com/SergePolin/S25-core-course-labs/actions/workflows/python-ci.yml/badge.svg)](https://github.com/SergePolin/S25-core-course-labs/actions/workflows/python-ci.yml)
+
 A modern web application that displays the current time in Moscow, Russia, built with FastAPI and Python.
 
 ## 🌟 Features
@@ -206,8 +209,3 @@ This project uses GitHub Actions for continuous integration and delivery. The pi
 - Build and push Docker image with tags:
   - latest
   - commit SHA
-
-The complete workflow configuration can be found in `.github/workflows/python-ci.yml`.
-
-### CI/CD Status
-[![Python CI/CD](https://github.com/{owner}/{repo}/actions/workflows/python-ci.yml/badge.svg)](https://github.com/{owner}/{repo}/actions/workflows/python-ci.yml)
