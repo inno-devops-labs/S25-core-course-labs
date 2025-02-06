@@ -2,7 +2,7 @@
 # Python Web Application
 
 ## Overview
-This app shows the current time in Moscow. It is built on Python using Flask framework.
+This app shows the current Moscow time. It is built on Python using Flask framework.
 
 ## Features
 - Displays real-time updates upon page refresh.
