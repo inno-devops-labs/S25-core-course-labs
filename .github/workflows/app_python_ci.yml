@@ -1,6 +1,5 @@
 name: CI Workflow Python App
 
-
 on:
   push:
     branches:
@@ -37,7 +36,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest ./app_python/test/test_python.py
+          pytest ./S25-core-course-labs/app_python/test/test_python.py
 
   docker:
     runs-on: ubuntu-latest
