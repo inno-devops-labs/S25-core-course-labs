@@ -63,3 +63,20 @@ The project uses Git for version control. It follows the standard best practices
 - Regular commits with clear, concise messages.
 - A .gitignore file is included to prevent unnecessary files (such as virtual environments and IDE-specific files) from
   being tracked by Git.
+
+## Unit tests
+
+### Best practices applied
+- **Arrange, Act, Assert (AAA) pattern** for clarity and maintainability.
+- **Fixture-based testing** using `pytest.fixture` to manage test client instances.
+- **Mocking with `unittest.mock.patch`** to isolate dependencies and avoid real-time dependency issues.
+- **Assertions on HTTP response codes** and content validation.
+
+### Implemented tests
+1. **Dynamic Time Test:**  
+   - Checks if the displayed time on the homepage matches the current Moscow time (formatted as `YYYY-MM-DD HH:MM`).
+   - Uses `pytest` and `pytz` to compare timestamps.
+  
+2. **Static Time Test (Mocking):**  
+   - Mocks `datetime.now()` to return a fixed value for predictable test results.
+   - Ensures the webpage correctly formats and displays the predefined timestamp.

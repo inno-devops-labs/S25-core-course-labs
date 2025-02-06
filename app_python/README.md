@@ -59,13 +59,19 @@ To set up and run the application locally, follow these steps:
 
 6. Open your web browser and visit http://127.0.0.1:5000/ to see the current time in Moscow.
 
-### Testing:
+### Unit tests:
 
-To run tests follow this command:
+To execute unit tests, run:
 
-   ```bash
-   pytest
-   ```
+```sh
+pytest app_python/test/test_python.py
+```
+
+Ensure dependencies are installed:
+
+```sh
+pip install -r app_python/requirements.txt
+```
 
 ## Docker
 
