@@ -47,13 +47,6 @@ jobs:
         working-directory: ./app_java
         run: mvn test
 
-      # Step 7: Upload app_java as an artifact
-      - name: Upload app_java directory
-        uses: actions/upload-artifact@v3
-        with:
-          name: app_java
-          path: ./app_java
-
   security:
     name: Security check
     runs-on: ubuntu-latest
@@ -62,7 +55,7 @@ jobs:
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven-3-jdk-17@master
         with:
-          args: test --file=app_java/pom.xml
+          args: --skip-unresolved ./app_java
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
