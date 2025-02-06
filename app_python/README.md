@@ -1,6 +1,6 @@
 # Python Web Application
 
-![workflow name](https://github.com/ortieom/S25-DevOps-labs/workflows/main/badge.svg)
+[![Test and build python app](https://github.com/ortieom/S25-DevOps-labs/actions/workflows/main.yml/badge.svg)](https://github.com/ortieom/S25-DevOps-labs/actions/workflows/main.yml)
 
 This web application is built using the Flask to display current time in Moscow.
 

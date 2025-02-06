@@ -17,7 +17,6 @@ jobs:
       with:
           python-version: '3.x'
 
-
     - name: Cache
       uses: actions/cache@v2
       with:
@@ -28,7 +27,7 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        pip install -r app_python/requirements.txt
+          pip install -r app_python/requirements.txt
 
     - name: flake8 Lint
       uses: py-actions/flake8@v2
@@ -38,16 +37,25 @@ jobs:
 
     - name: Tests
       run: |
-        python -m pytest app_python
+          python -m pytest app_python
 
     - name: Login to DockerHub
       uses: docker/login-action@v1
       with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
     - name: Docker build and push
       run: |
-        docker build -f app_python/Dockerfile -t ${{ secrets.DOCKER_HUB_USERNAME }}/python_app:latest app_python
-        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/python_app:latest
+          docker build -f app_python/Dockerfile -t ${{ secrets.DOCKER_HUB_USERNAME }}/python_app:latest app_python
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/python_app:latest
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/python-3.8@master
+      env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }} 
 
