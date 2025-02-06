@@ -1,5 +1,5 @@
 # Use Python 3.11 slim as base image for smaller footprint
-FROM python:3.11-slim-bullseye as builder
+FROM python:3.11-slim as builder
 
 # Set working directory for builder
 WORKDIR /app
