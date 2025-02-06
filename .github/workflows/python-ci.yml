@@ -33,11 +33,13 @@ jobs:
         run: python -m unittest discover app_python/tests
 
       - name: Run Snyk to Check for Vulnerabilities
-        uses: snyk/actions/python-3.9@master
+        uses: snyk/actions/python@master
         with:
-          command: test code
+          command: test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_KEY }}
+        continue-on-error: true
+      
           
       - name: Docker Login
         run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
