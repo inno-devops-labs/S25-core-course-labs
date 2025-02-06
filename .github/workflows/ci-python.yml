@@ -57,7 +57,9 @@ jobs:
 
       # Step 8: Run Snyk Vulnerability Check
       - name: Run Snyk Vulnerability Check
-        run: snyk test --file=./app_python/requirements.txt --skip-unresolved
+        uses: snyk/actions/python-3.9@master
+        with:
+          args: test --file=app_python/requirements.txt --security-threshold=high
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
