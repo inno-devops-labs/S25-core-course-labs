@@ -4,3 +4,4 @@ pytz
 jinja2
 pytest
 flake8
+httpx
