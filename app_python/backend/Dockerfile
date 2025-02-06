@@ -2,25 +2,28 @@
 FROM python:3.9-slim
 
 # Set the working directory
-WORKDIR /usr/local/app/backend
+WORKDIR /usr/local/app
 
 # Copy requirements.txt
-COPY requirements.txt ./
+COPY app_python/backend/requirements.txt ./
 
-COPY ../app_python/tests ./tests
+# Copy the tests directory
+COPY app_python/tests ./tests
+
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Install pytest
 RUN pip install pytest
 
 # Copy the rest of the application code
-COPY . .
+COPY app_python/backend/ ./backend
 
 # Create a non-root user
 RUN adduser --disabled-password --disabled-login myuser
 
 # Change ownership of the application files
-RUN chown -R myuser:myuser /usr/local/app/backend
+RUN chown -R myuser:myuser /usr/local/app
 
 # Switch to the non-root user
 USER myuser
