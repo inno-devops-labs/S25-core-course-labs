@@ -5,7 +5,7 @@ on:
     branches: lab3
   pull_request:
     branches:
-      - master
+      - lab3
       
 jobs:
   setup:
@@ -38,7 +38,7 @@ jobs:
     needs: setup
     defaults:
       run:
-        working-directory: ./app_python
+        working-directory: app_python
     steps:
       - name: Lint (flake8)
         run: |
@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./app_python
+        working-directory: app_python
     steps:
       - name: Checkout
         uses: actions/checkout@v3
