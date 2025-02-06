@@ -31,6 +31,7 @@ The application is available as a Docker container on Docker Hub:
 [eleanorpi/moscow-time-app](https://hub.docker.com/repository/docker/eleanorpi/moscow-time-app/general)
 
 ### Docker Features
+
 - Multi-stage build for optimized image size
 - Non-root user execution for security
 - Health checks for monitoring
@@ -38,6 +39,7 @@ The application is available as a Docker container on Docker Hub:
 - Proper security practices
 
 ### Building Locally
+
 ```bash
 # Clone the repository
 git clone https://github.com/elpicode/S25-core-course-labs.git
@@ -48,6 +50,7 @@ docker build -t eleanorpi/moscow-time-app .
 ```
 
 ### Running from Docker Hub
+
 ```bash
 # Pull the image
 docker pull eleanorpi/moscow-time-app
@@ -63,8 +66,10 @@ docker logs moscow-time
 ```
 
 ### Accessing the Application
+
 The application will be available at:
-```
+
+```text
 http://localhost:5000
 ```
 
@@ -73,12 +78,14 @@ For detailed information about Docker configuration, best practices, and securit
 ## Manual Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/elpicode/S25-core-course-labs.git
    cd app_python
    ```
 
 2. Create and activate a virtual environment:
+
    ```bash
    python -m venv venv
    # On macOS/Linux:
@@ -88,17 +95,20 @@ For detailed information about Docker configuration, best practices, and securit
    ```
 
 3. Install required dependencies:
+
    ```bash
    pip install -r requirements.txt
    ```
 
 4. Run the application:
+
    ```bash
    flask run --host=0.0.0.0 --port=5000
    ```
 
 5. Open your web browser and navigate to:
-   ```
+
+   ```text
    http://127.0.0.1:5000
    ```
 
@@ -107,12 +117,14 @@ For detailed information about Docker configuration, best practices, and securit
 The application includes comprehensive unit tests to ensure reliability and correctness. Tests are written using pytest and include time-freezing capabilities for deterministic time-based testing.
 
 ### Running Tests
+
 ```bash
 # Activate virtual environment first if not already activated
 python -m pytest -v
 ```
 
 ### Test Coverage
+
 The test suite covers:
 
 1. **Route Testing**
@@ -134,55 +146,10 @@ The test suite covers:
    - Content verification
 
 ### Test Dependencies
+
 Additional testing dependencies are included in requirements.txt:
+
 - pytest==8.1.1 (Testing framework)
 - freezegun==1.4.0 (Time freezing for deterministic tests)
 
 For detailed information about testing implementation and best practices, see [PYTHON.md](PYTHON.md).
-
-## Docker
-
-The application is available as a Docker container on Docker Hub:
-[eleanorpi/moscow-time-app](https://hub.docker.com/repository/docker/eleanorpi/moscow-time-app/general)
-
-### Docker Features
-- Multi-stage build for optimized image size
-- Non-root user execution for security
-- Health checks for monitoring
-- Alpine-based for minimal footprint
-- Proper security practices
-
-### Building Locally
-```bash
-# Clone the repository
-git clone https://github.com/elpicode/S25-core-course-labs.git
-cd app_python
-
-# Build the image
-docker build -t eleanorpi/moscow-time-app .
-```
-
-### Running from Docker Hub
-```bash
-# Pull the image
-docker pull eleanorpi/moscow-time-app
-
-# Run the container
-docker run -d -p 5000:5000 --name moscow-time eleanorpi/moscow-time-app
-
-# Check container health
-docker inspect --format='{{json .State.Health}}' moscow-time
-
-# View logs
-docker logs moscow-time
-```
-
-### Accessing the Application
-The application will be available at:
-```
-http://localhost:5000
-```
-
-For detailed information about Docker configuration, best practices, and security measures, see [DOCKER.md](DOCKER.md).
-
-[![Python CI](https://github.com/elpicode/S25-core-course-labs/actions/workflows/python-ci.yml/badge.svg)](https://github.com/elpicode/S25-core-course-labs/actions/workflows/python-ci.yml)

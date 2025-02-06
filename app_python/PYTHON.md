@@ -13,30 +13,35 @@ I chose Flask as the web framework for this application for the following reason
 ## Best Practices Applied
 
 ### Code Organization
+
 - Followed modular project structure
 - Used proper package organization
 - Implemented D.R.Y. (Don't Repeat Yourself) principles
 - Used relative imports appropriately
 
 ### Code Standards
+
 - Followed PEP 8 style guide for Python code
 - Used type hints for better code readability
 - Added meaningful comments while avoiding redundancy
 - Kept functions small and focused
 
 ### Documentation
+
 - Added docstrings following PEP 257 conventions
 - Maintained clear code documentation
 - Created comprehensive README.md
 - Documented all dependencies in requirements.txt
 
 ### Testing
+
 - Implemented comprehensive unit tests using pytest framework
 - Created test fixtures for Flask test client setup
 - Applied test isolation principles using pytest fixtures
 - Implemented time-freezing for deterministic time-based tests
 
 #### Unit Test Coverage
+
 1. **Route Testing**
    - Verified index route returns correct HTTP 200 status
    - Confirmed proper HTML content type headers
@@ -57,6 +62,7 @@ I chose Flask as the web framework for this application for the following reason
    - Checked time display format
 
 #### Testing Best Practices Applied
+
 - **Test Isolation**: Each test runs independently using fixtures
 - **Deterministic Testing**: Used freezegun for consistent time-based tests
 - **Comprehensive Coverage**: Tested both happy paths and edge cases
@@ -68,6 +74,7 @@ I chose Flask as the web framework for this application for the following reason
 - **Assertion Best Practices**: Used specific assertions for clear failure messages
 
 #### Test Structure
+
 ```python
 # Example test structure
 def test_specific_functionality(client):
@@ -81,6 +88,7 @@ def test_specific_functionality(client):
 ```
 
 ### Moscow Time Implementation
+
 - Used pytz library for proper timezone handling
 - Set up 'Europe/Moscow' timezone
 - Implemented accurate time conversion
@@ -88,6 +96,7 @@ def test_specific_functionality(client):
 - Displayed time in user-friendly format
 
 ### Code Quality
+
 - Used pylint for code quality checks
 - Added try/except blocks for timezone conversion errors
 - Specified exact dependency versions in requirements.txt
