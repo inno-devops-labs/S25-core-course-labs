@@ -43,3 +43,9 @@ git clone https://github.com/Petrel321/S25-core-course-labs.git
 cd S25-core-course-labs/app_python
 docker build -t any_docker_image_name .
 ```
+
+## Unit Test
+There is a unit test that can check the availability and success of the application launch.
+
+### test_index_page
+Check status code. If it's 200 - excelent
