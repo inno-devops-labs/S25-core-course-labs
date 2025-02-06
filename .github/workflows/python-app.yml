@@ -1,121 +1,111 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
-
 name: Python application
 
 on:
   push:
-    branches: [ "lab3" ]
+    branches: ["lab3"]
   pull_request:
-    branches: [ "lab3" ]
+    branches: ["lab3"]
 
 permissions:
   contents: read
 
 jobs:
   build:
-  
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: List repository structure
-      run: |
-        cat ./app_python/backend/requirements.txt
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.9"
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install flake8 pytest
-        if [ -f ./app_python/backend/requirements.txt ]; then
-          pip install -r ./app_python/backend/requirements.txt
-        fi
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - uses: actions/checkout@v4
+      - name: List repository structure
+        run: |
+          cat ./app_python/backend/requirements.txt
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.9"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest
+          if [ -f ./app_python/backend/requirements.txt ]; then
+            pip install -r ./app_python/backend/requirements.txt
+          fi
+      - name: Lint with flake8
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
   docker:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-    
-    - name: Login to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-    - name: Build and push database Docker image
-      uses: docker/build-push-action@v3
-      with:
-        context: ./app_python/backend/database
-        push: true
-        tags: jmartynova123/dev-lab3-db:latest
-        build-args: |
-          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build and push frontend Docker image
-      uses: docker/build-push-action@v3
-      with:
-        context: ./app_python/frontend
-        push: true
-        tags: jmartynova123/dev-lab3-front:latest
-    - name: Build and push backend Docker image
-      uses: docker/build-push-action@v3
-      with:
-        context: ./app_python
-        push: true
-        tags: jmartynova123/dev-lab3-back:latest
-    - name: Run database container
-      run: |
-        docker run -d --name dev-lab3-db -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} jmartynova123/dev-lab3-db:latest
-        sleep 10 
-        docker logs dev-lab3-db
-        
-    - name: Run backend container
-      run: |
-        docker logs dev-lab3-db
-        docker run -d --name dev-lab3-back --link dev-lab3-db:db -e SQLALCHEMY_DATABASE_URI=postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@db:5432/postgres jmartynova123/dev-lab3-back:latest
-    - name: Check pytest installation
-      run: |
-        docker exec dev-lab3-back /bin/bash -c "pytest --version"
+      - name: Build and push database Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./app_python/backend/database
+          push: true
+          tags: jmartynova123/dev-lab3-db:latest
+          build-args: |
+            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
 
-    - name: Check backend container logs
-      run: |
-        docker logs dev-lab3-back
+      - name: Build and push frontend Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./app_python/frontend
+          push: true
+          tags: jmartynova123/dev-lab3-front:latest
 
-    - name: Run tests in backend container
-      run: |
-        docker exec dev-lab3-back /bin/bash -c "pytest -v"
+      - name: Build and push backend Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./app_python/backend
+          push: true
+          tags: jmartynova123/dev-lab3-back:latest
+
+      - name: Run database container
+        run: |
+          docker run -d --name dev-lab3-db -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} jmartynova123/dev-lab3-db:latest
+          sleep 10
+          docker logs dev-lab3-db
+
+      - name: Run backend container
+        run: |
+          docker logs dev-lab3-db
+          docker run -d --name dev-lab3-back --link dev-lab3-db:db -e SQLALCHEMY_DATABASE_URI=postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@db:5432/postgres jmartynova123/dev-lab3-back:latest
+
+      - name: Check pytest installation
+        run: |
+          docker exec dev-lab3-back pytest --version
+
   snyk:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.9"
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.9"
 
-    - name: Install Snyk
-      run: |
-        npm install -g snyk
+      - name: Install Snyk
+        run: |
+          npm install -g snyk
 
-    - name: Run Snyk to check for vulnerabilities
-      run: |
-        snyk test
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Run Snyk to check for vulnerabilities
+        run: |
+          snyk test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
