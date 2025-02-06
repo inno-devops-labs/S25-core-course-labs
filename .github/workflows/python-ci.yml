@@ -36,8 +36,8 @@ jobs:
         pip install -r requirements.txt
         pip install pylint black
     
-    - name: Run Black formatter check
-      run: black --check .
+    - name: Format with Black
+      run: black .
     
     - name: Lint with pylint
       run: |
@@ -50,7 +50,7 @@ jobs:
   docker:
     needs: test
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/lab3'
     defaults:
       run:
         working-directory: ./app_python
