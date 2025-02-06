@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+    <h1>Your Today's Taylor Swift Quote</h1>
+    <div class="quote-container">
+        <blockquote th:text="${quote}"></blockquote>
+        <p class="album" th:text="'Album: ' + ${album}"></p>
+    </div>
+    <div class="image-container">
+        <img th:src="${image}" alt="Album image">
+    </div>
+</body>
+
+</html>
+
