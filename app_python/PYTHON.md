@@ -31,11 +31,54 @@ I chose Flask as the web framework for this application for the following reason
 - Documented all dependencies in requirements.txt
 
 ### Testing
-- Implemented unit tests for time conversion logic
-- Added integration tests for web endpoints
-- Used pytest as testing framework
-- Verified Moscow time display functionality
-- Ensured time updates on page refresh
+- Implemented comprehensive unit tests using pytest framework
+- Created test fixtures for Flask test client setup
+- Applied test isolation principles using pytest fixtures
+- Implemented time-freezing for deterministic time-based tests
+
+#### Unit Test Coverage
+1. **Route Testing**
+   - Verified index route returns correct HTTP 200 status
+   - Confirmed proper HTML content type headers
+   - Tested 404 handling for non-existent routes
+
+2. **Time Functionality Testing**
+   - Validated Moscow timezone conversion accuracy
+   - Tested time display formatting
+   - Implemented parametrized tests for various scenarios:
+     - Midnight edge case (00:00:00)
+     - End of day edge case (23:59:59)
+     - Summer time handling
+     - Winter time handling
+
+3. **Template Testing**
+   - Verified correct template rendering
+   - Validated presence of expected content
+   - Checked time display format
+
+#### Testing Best Practices Applied
+- **Test Isolation**: Each test runs independently using fixtures
+- **Deterministic Testing**: Used freezegun for consistent time-based tests
+- **Comprehensive Coverage**: Tested both happy paths and edge cases
+- **Clear Test Names**: Used descriptive test function names
+- **Test Documentation**: Added docstrings explaining test purposes
+- **Maintainable Tests**: Kept tests small and focused
+- **DRY Principle**: Used fixtures to avoid code duplication
+- **Parameterized Testing**: Used pytest.mark.parametrize for multiple test cases
+- **Assertion Best Practices**: Used specific assertions for clear failure messages
+
+#### Test Structure
+```python
+# Example test structure
+def test_specific_functionality(client):
+    """Clear docstring explaining test purpose."""
+    # Arrange
+    input_data = setup_test_data()
+    # Act
+    response = perform_action(input_data)
+    # Assert
+    verify_expected_outcome(response)
+```
 
 ### Moscow Time Implementation
 - Used pytz library for proper timezone handling
