@@ -90,6 +90,45 @@ It is a lightweight service intended to demonstrate a simple time-based web appl
    docker run --rm -p 5000:5000 anyarylova/app_python
    ```
 
+## Unit Tests
+
+Python’s built-in `unittest` framework is used for the project. Unit tests cover status codes, content, time format and HTML structure of the web application. To run the tests:
+
+1. **Install Dependencies**
+
+   ```bash
+   pip install -r requirements.txt
+
+   ```
+
+2. **Run the Application**
+
+   ```bash
+   python app.py
+
+   ```
+
+3. **Run Tests Locally**
+
+   ```bash
+   python -m unittest test_app.py
+
+   ```
+
+## CI Workflow
+
+CI workflow created using GitHub Actions to build and test the project. The file `ci.yml` includes the following actions:
+
+1. **Dependencies**: Install project dependencies.
+
+2. **Linter**: Check code quality using `flake8`.
+
+3. **Tests**: Automatically run unit tests.
+
+4. **Docker**: Build and push a Docker image to DockerHub.
+
+5. **Snyk Check**: Identify and address vulnerabilities.
+
 ## Contributors
 
 - **Anna Rylova** - Developer.
