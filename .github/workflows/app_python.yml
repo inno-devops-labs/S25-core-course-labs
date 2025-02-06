@@ -20,8 +20,10 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd app_python
           python -m pip install --upgrade pip
           pip install -r app_python/requirements.txt
+          cd ..
 
       - name: Run Linter
         run: flake8 .
