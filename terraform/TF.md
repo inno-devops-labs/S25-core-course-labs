@@ -316,6 +316,155 @@ github_repository.S25-core-course-labs: Import prepared!
   Prepared github_repository for import
 github_repository.S25-core-course-labs: Refreshing state... [id=S25-core-course-labs]
 
-$ 
+$ terraform apply
+github_repository.S25-core-course-labs: Refreshing state... [id=S25-core-course-labs]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the
+following symbols:
+  + create
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # github_branch_protection.main will be created
+  + resource "github_branch_protection" "main" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + blocks_creations                = false
+      + enforce_admins                  = false
+      + id                              = (known after apply)
+      + lock_branch                     = false
+      + pattern                         = "main"
+      + repository_id                   = "R_kgDONywcqw"
+      + require_conversation_resolution = false
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + dismiss_stale_reviews           = true
+          + require_last_push_approval      = false
+          + required_approving_review_count = 1
+        }
+
+      + required_status_checks {
+          + contexts = [
+              + "build",
+            ]
+          + strict   = true
+        }
+    }
+
+  # github_repository.S25-core-course-labs will be updated in-place
+  ~ resource "github_repository" "S25-core-course-labs" {
+      ~ auto_init                   = false -> true
+      + description                 = "A GitHub repository managed with Terraform"
+      ~ has_issues                  = false -> true
+        id                          = "S25-core-course-labs"
+        name                        = "S25-core-course-labs"
+        # (33 unchanged attributes hidden)
+
+        # (1 unchanged block hidden)
+    }
+
+Plan: 1 to add, 1 to change, 0 to destroy.
+github_repository.S25-core-course-labs: Modifying... [id=S25-core-course-labs]
+github_repository.S25-core-course-labs: Modifications complete after 3s [id=S25-core-course-labs]
+github_branch_protection.main: Creating...
+github_branch_protection.main: Creation complete after 3s [id=BPR_kwDONywcq84Dijjm]
+
+Apply complete! Resources: 1 added, 1 changed, 0 destroyed.
+
+Outputs:
+
+repository_id = "R_kgDONywcqw"
+repository_url = "https://github.com/Poxidq/S25-core-course-labs"
+
+$ terraform state list
+github_branch_protection.main
+github_repository.S25-core-course-labs
+
+$  terraform state show github_repository.S25-core-course-labs
+# github_repository.S25-core-course-labs:
+resource "github_repository" "S25-core-course-labs" {
+    allow_auto_merge            = false
+    allow_merge_commit          = true
+    allow_rebase_merge          = true
+    allow_squash_merge          = true
+    allow_update_branch         = false
+    archived                    = false
+    auto_init                   = true
+    default_branch              = "master"
+    delete_branch_on_merge      = false
+    description                 = "A GitHub repository managed with Terraform"
+    etag                        = "W/\"744850763ba13d6a5cb548a134e4ba94743eff41cadd32e67647ff2cfe5e726e\""
+    full_name                   = "Poxidq/S25-core-course-labs"
+    git_clone_url               = "git://github.com/Poxidq/S25-core-course-labs.git"
+    has_discussions             = false
+    has_downloads               = true
+    has_issues                  = true
+    has_projects                = true
+    has_wiki                    = true
+    homepage_url                = null
+    html_url                    = "https://github.com/Poxidq/S25-core-course-labs"
+    http_clone_url              = "https://github.com/Poxidq/S25-core-course-labs.git"
+    id                          = "S25-core-course-labs"
+    is_template                 = false
+    merge_commit_message        = "PR_TITLE"
+    merge_commit_title          = "MERGE_MESSAGE"
+    name                        = "S25-core-course-labs"
+    node_id                     = "R_kgDONywcqw"
+    primary_language            = null
+    private                     = false
+    repo_id                     = 925637803
+    squash_merge_commit_message = "COMMIT_MESSAGES"
+    squash_merge_commit_title   = "COMMIT_OR_PR_TITLE"
+    ssh_clone_url               = "git@github.com:Poxidq/S25-core-course-labs.git"
+    svn_url                     = "https://github.com/Poxidq/S25-core-course-labs"
+    topics                      = []
+    visibility                  = "public"
+    vulnerability_alerts        = false
+    web_commit_signoff_required = false
+
+    security_and_analysis {
+        secret_scanning {
+            status = "enabled"
+        }
+        secret_scanning_push_protection {
+            status = "enabled"
+        }
+    }
+}
 
 ```
+
+## Terraform Best Practices Applied
+### 1. Securely Managing Secrets Using Environment Variables
+Stored GitHub Token in .env file instead of directly defining it in main.tf.
+Used TF_VAR_github_token to load variables securely.
+
+Example (.env file):
+
+```bash
+TF_VAR_github_token="ghp_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+```
+
+load the .env file securely?
+```bash
+export $(grep -v '^#' .env | tr -d '\r' | xargs)
+```
+
+### 2. Importing Existing GitHub Repositories Instead of Recreating
+Used terraform import to sync Terraform with an existing GitHub repository.
+Command to Import an Existing Repository:
+
+```bash
+terraform import github_repository.my_repo my-existing-repo
+```
+
+### 3. Preventing Accidental Repository Deletion
+Terraform can destroy resources, so we protect critical repositories.
+
+Used `lifecycle.prevent_destroy = true` to avoid accidental deletion of repositories.
+
+### 4. Separating variables and config data into separate file
+Used `variables.tf` to store variables used in `main.tf`
