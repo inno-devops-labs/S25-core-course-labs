@@ -11,7 +11,7 @@
    - Defining useful outputs for resource properties
    - Structured output format for better readability
 
-3. 1. **Security Best Practices**
+3. **Security Best Practices**
    - Using environment variables for sensitive information (TF_VAR_github_token)
    - Not committing sensitive tokens directly in code
 
