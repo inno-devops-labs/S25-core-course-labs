@@ -5,6 +5,7 @@ name: Python application
 
 on:
   push:
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -65,7 +66,7 @@ jobs:
             username: fridorovich04
             password: ${{ secrets.DOCKER_PASSWORD }}
 
-  docker-build-push:
+  docker-build:
       needs: docker-login
       runs-on: ubuntu-latest
 
@@ -76,4 +77,3 @@ jobs:
         - name: Build and Push Docker Image
           run: |
             docker build -t fridorovich04/app_python:latest -f app_python/Dockerfile app_python/
-            docker push fridorovich04/app_python:latest
