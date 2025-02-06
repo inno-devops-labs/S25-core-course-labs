@@ -236,7 +236,7 @@ container_port = tolist([
 
 ```
 
-## Yandex Task
+## AWS Task
 
 **Set up steps:**
 
@@ -248,165 +248,211 @@ container_port = tolist([
 
 **Outputs**:
 
+- `terraform apply`:
+
+```bash
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+
+- create
+
+Terraform will perform the following actions:
+
+# aws_instance.app_server will be created
+
+- resource "aws_instance" "app_server" {
+
+  - ami = "ami-830c94e3"
+  - arn = (known after apply)
+  - associate_public_ip_address = (known after apply)
+  - availability_zone = (known after apply)
+  - cpu_core_count = (known after apply)
+  - cpu_threads_per_core = (known after apply)
+  - disable_api_stop = (known after apply)
+  - disable_api_termination = (known after apply)
+  - ebs_optimized = (known after apply)
+  - get_password_data = false
+  - host_id = (known after apply)
+  - host_resource_group_arn = (known after apply)
+  - iam_instance_profile = (known after apply)
+  - id = (known after apply)
+  - instance_initiated_shutdown_behavior = (known after apply)
+  - instance_state = (known after apply)
+  - instance_type = "t2.micro"
+  - ipv6_address_count = (known after apply)
+  - ipv6_addresses = (known after apply)
+  - key_name = (known after apply)
+  - monitoring = (known after apply)
+  - outpost_arn = (known after apply)
+  - password_data = (known after apply)
+  - placement_group = (known after apply)
+  - placement_partition_number = (known after apply)
+  - primary_network_interface_id = (known after apply)
+  - private_dns = (known after apply)
+  - private_ip = (known after apply)
+  - public_dns = (known after apply)
+  - public_ip = (known after apply)
+  - secondary_private_ips = (known after apply)
+  - security_groups = (known after apply)
+  - source_dest_check = true
+  - subnet_id = (known after apply)
+  - tags = {
+    - "Name" = "ExampleAppServerInstance"
+      }
+  - tags_all = {
+    - "Name" = "ExampleAppServerInstance"
+      }
+  - tenancy = (known after apply)
+  - user_data = (known after apply)
+  - user_data_base64 = (known after apply)
+  - user_data_replace_on_change = false
+  - vpc_security_group_ids = (known after apply)
+
+  - capacity_reservation_specification (known after apply)
+
+  - cpu_options (known after apply)
+
+  - ebs_block_device (known after apply)
+
+  - enclave_options (known after apply)
+
+  - ephemeral_block_device (known after apply)
+
+  - maintenance_options (known after apply)
+
+  - metadata_options (known after apply)
+
+  - network_interface (known after apply)
+
+  - private_dns_name_options (known after apply)
+
+  - root_block_device (known after apply)
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+Terraform will perform the actions described above.
+Only 'yes' will be accepted to approve.
+
+Enter a value: yes
+
+aws_instance.app_server: Creating...
+aws_instance.app_server: Still creating... [10s elapsed]
+aws_instance.app_server: Still creating... [20s elapsed]
+aws_instance.app_server: Creation complete after 26s [id=i-0ae3c813911b89ca3]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+
+```
+
 - `terraform state list`:
 
 ```bash
-data.yandex_compute_image.ubuntu
-yandex_compute_instance.vm-1
-yandex_vpc_network.network-1
-yandex_vpc_subnet.subnet-1
+aws_instance.app_server
 ```
 
 - `terraform show`:
 
 ```bash
-# data.yandex_compute_image.ubuntu:
-data "yandex_compute_image" "ubuntu" {
-    created_at          = "2025-02-03T11:06:30Z"
-    description         = "ubuntu 22.04 lts"
-    family              = "ubuntu-2204-lts"
-    folder_id           = "standard-images"
-    hardware_generation = [
-        {
-            generation2_features = []
-            legacy_features      = [
-                {
-                    pci_topology = "PCI_TOPOLOGY_V1"
-                },
-            ]
-        },
-    ]
-    id                  = "fd8j3fo8lqh4730j2ftd"
-    image_id            = "fd8j3fo8lqh4730j2ftd"
-    labels              = {}
-    min_disk_size       = 8
-    name                = "ubuntu-22-04-lts-v20250203"
-    os_type             = "linux"
-    pooled              = true
-    product_ids         = [
-        "f2ebj2oj0d2aeadn1j0m",
-    ]
-    size                = 7
-    status              = "ready"
+# aws_instance.app_server:
+
+resource "aws_instance" "app_server" {
+ami = "ami-830c94e3"
+arn = "arn:aws:ec2:us-west-2:820242942180:instance/i-0ae3c813911b89ca3"
+associate_public_ip_address = true
+availability_zone = "us-west-2b"
+cpu_core_count = 1
+cpu_threads_per_core = 1
+disable_api_stop = false
+disable_api_termination = false
+ebs_optimized = false
+get_password_data = false
+hibernation = false
+host_id = null
+iam_instance_profile = null
+id = "i-0ae3c813911b89ca3"
+instance_initiated_shutdown_behavior = "stop"
+instance_state = "running"
+instance_type = "t2.micro"
+ipv6_address_count = 0
+ipv6_addresses = []
+key_name = null
+monitoring = false
+outpost_arn = null
+password_data = null
+placement_group = null
+placement_partition_number = 0
+primary_network_interface_id = "eni-038bc5ea37a91ac16"
+private_dns = "ip-172-31-22-32.us-west-2.compute.internal"
+private_ip = "172.31.22.32"
+public_dns = "ec2-34-223-218-149.us-west-2.compute.amazonaws.com"
+public_ip = "34.223.218.149"
+secondary_private_ips = []
+security_groups = [
+"default",
+]
+source_dest_check = true
+subnet_id = "subnet-05f802481936ed38e"
+tags = {
+"Name" = "ExampleAppServerInstance"
 }
+tags_all = {
+"Name" = "ExampleAppServerInstance"
+}
+tenancy = "default"
+user_data_replace_on_change = false
+vpc_security_group_ids = [
+"sg-0ef1dfb2245c67718",
+]
 
-# yandex_compute_instance.vm-1:
-resource "yandex_compute_instance" "vm-1" {
-    created_at                = "2025-02-05T20:37:58Z"
-    description               = null
-    folder_id                 = "b1gumar694vnatu3hepu"
-    fqdn                      = "fb1gumar694vnatu3hepu.auto.internal"
-    gpu_cluster_id            = null
-    hardware_generation       = [
-        {
-            generation2_features = []
-            legacy_features      = [
-                {
-                    pci_topology = "PCI_TOPOLOGY_V1"
-                },
-            ]
-        },
-    ]
-    hostname                  = null
-    id                        = "fhmj7plmp00npe9hgmm3"
-    labels                    = {}
-    maintenance_grace_period  = null
-    metadata                  = {
-        "ssh-keys" = (sensitive value)
+    capacity_reservation_specification {
+        capacity_reservation_preference = "open"
     }
-    name                      = "terraform1"
-    network_acceleration_type = "standard"
-    platform_id               = "standard-v1"
-    service_account_id        = null
-    status                    = "running"
-    zone                      = "ru-central1-a"
 
-    boot_disk {
-        auto_delete = true
-        device_name = "fhmspt4b17etjqsovdp2"
-        disk_id     = "fhmspt4b17etjqsovdp2"
-        mode        = "READ_WRITE"
+    cpu_options {
+        amd_sev_snp      = null
+        core_count       = 1
+        threads_per_core = 1
+    }
 
-        initialize_params {
-            block_size  = 4096
-            description = null
-            image_id    = "fd8j3fo8lqh4730j2ftd"
-            kms_key_id  = null
-            name        = null
-            size        = 8
-            snapshot_id = null
-            type        = "network-hdd"
-        }
+    credit_specification {
+        cpu_credits = "standard"
+    }
+
+    enclave_options {
+        enabled = false
+    }
+
+    maintenance_options {
+        auto_recovery = "default"
     }
 
     metadata_options {
-        aws_v1_http_endpoint = 1
-        aws_v1_http_token    = 2
-        gce_http_endpoint    = 1
-        gce_http_token       = 1
+        http_endpoint               = "enabled"
+        http_put_response_hop_limit = 1
+        http_tokens                 = "optional"
+        instance_metadata_tags      = "disabled"
     }
 
-    network_interface {
-        index              = 0
-        ip_address         = "192.168.20.31"
-        ipv4               = true
-        ipv6               = false
-        ipv6_address       = null
-        mac_address        = "d0:0d:13:3e:6b:6c"
-        nat                = true
-        nat_ip_address     = "89.169.131.82"
-        nat_ip_version     = "IPV4"
-        security_group_ids = []
-        subnet_id          = "e9b503fimd5moima07hb"
+    private_dns_name_options {
+        enable_resource_name_dns_a_record    = false
+        enable_resource_name_dns_aaaa_record = false
+        hostname_type                        = "ip-name"
     }
 
-    placement_policy {
-        host_affinity_rules       = []
-        placement_group_id        = null
-        placement_group_partition = 0
+    root_block_device {
+        delete_on_termination = true
+        device_name           = "/dev/sda1"
+        encrypted             = false
+        iops                  = 0
+        kms_key_id            = null
+        tags                  = {}
+        throughput            = 0
+        volume_id             = "vol-02c72cbe195cc4f0a"
+        volume_size           = 8
+        volume_type           = "standard"
     }
 
-    resources {
-        core_fraction = 100
-        cores         = 2
-        gpus          = 0
-        memory        = 2
-    }
-
-    scheduling_policy {
-        preemptible = false
-    }
-}
-
-# yandex_vpc_network.network-1:
-resource "yandex_vpc_network" "network-1" {
-    created_at                = "2025-02-05T20:35:15Z"
-    default_security_group_id = "enpiv2r1fafj7fmp3249"
-    description               = null
-    folder_id                 = "b1gfbs7j036gik9qg28a"
-    id                        = "enpgg0ui8ednp4ulk3od"
-    labels                    = {}
-    name                      = "Network-1"
-    subnet_ids                = [
-        "e9b503fimd5moima07hb",
-    ]
-}
-
-# yandex_vpc_subnet.subnet-1:
-resource "yandex_vpc_subnet" "subnet-1" {
-    created_at     = "2025-02-05T20:37:57Z"
-    description    = null
-    folder_id      = "b1gumar694vnatu3hepu"
-    id             = "e9b503fimd5moima07hb"
-    labels         = {}
-    name           = "Subnet-1"
-    network_id     = "enpgg0ui8ednp4ulk3od"
-    route_table_id = null
-    v4_cidr_blocks = [
-        "192.168.20.0/24",
-    ]
-    v6_cidr_blocks = []
-    zone           = "ru-central1-a"
 }
 ```
 
