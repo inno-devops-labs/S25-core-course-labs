@@ -64,3 +64,21 @@ Get the latest image from Docker Hub:
 docker pull bakinasa/moscow-time-app:latest
 docker run -p 5000:5000 -d bakinasa/moscow-time-app:latest
 ```
+
+Here's the corrected version of the section with the issues fixed:
+
+## Continuous Integration (CI)
+
+### Unit Tests
+
+- Tests are written using `unittest`.
+- Ensure correct response format and expected behavior.
+- Executed automatically in the CI workflow.
+
+### CI Workflow
+
+1. **Dependency Installation**
+2. **Code Linting** using `flake8`
+3. **Run Unit Tests**
+4. **Security Checks** using Snyk
+5. **Docker Build & Push**
