@@ -14,8 +14,8 @@ This application provides an endpoint that displays the current Moscow time. It'
 1. **Clone the repository:**
 
     ```bash
-        git clone https://github.com/yourusername/my-fastapi-app.git
-        cd devops/S25-core-course-labs/app_python
+        git clone https://github.com/Egor-Salnikov/S25-core-course-labs.git
+        cd S25-core-course-labs/app_python
     ```
 
 2. **Create a virtual environment:**
