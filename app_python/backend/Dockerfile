@@ -8,6 +8,7 @@ WORKDIR /usr/local/app
 COPY requirements.txt ./
 
 # Copy the tests directory from the parent directory
-RUN cd ../tests
+RUN cd ..
+RUN ls
 
 
