@@ -36,7 +36,7 @@ This application serves an HTML page displaying the current time in **Moscow (MS
 1. **Clone the Repository**
    ```bash
    git clone https://github.com/Nikoali01/S25-core-course-labs
-   git checkout lab1
+   git checkout lab_3
    cd app_python
    ```
 
