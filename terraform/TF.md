@@ -189,6 +189,21 @@ docker_container.nginx: Creating...
 docker_container.nginx: Creation complete after 2s [id=257d251cccf5c9d14ed22ce58f2134c82c91d130630ceeb90a69f1b44077f59b]
 ```
 
+### Terraform output
+
+Command:
+
+```bash
+terraform output
+```
+
+Output:
+
+```bash
+container_id = "<container_id>"
+image_id = "<image_id>"
+```
+
 ## **Yandex Cloud Infrastructure Using Terraform**
 
 ### **1. Install Yandex Cloud CLI**
