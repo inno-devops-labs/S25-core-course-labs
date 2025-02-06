@@ -70,3 +70,22 @@ docker build -t magel0n/moscowtimeimagepython:latest -f distroless.Dockerfile .
 ```
 The ```-f distroless.Dockerfile``` will signal `Docker` to use the other image creation.
 Then, proceed as with the other example.
+
+# Unit Tests
+To run the **unit tests** for this project you need to go to \app_python, install the testing libraries using this command:
+```bash
+pip install pytest coverage
+```
+and then you can use the following command to run all the tests (use -v to see more):
+```bash
+pytest
+```
+Also you can run the following command to see the coverage:
+```bash
+coverage run -m pytest
+```
+Then you can use the following command to see the result:
+```bash
+coverage report
+```
+The coverage of 90% of [app.py](app.py) is due to the ``if name == __main__: ...`` part.

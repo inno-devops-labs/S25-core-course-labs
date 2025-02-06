@@ -32,3 +32,48 @@ provided that I commented on all the non-obvious lines and provided a README fil
 I also used Peer-review and my peer commented that "this is good code". None more comments were given.
 
 I used pipreqs to generate requirements.txt (and checked it manually again for good measure).
+
+# Unit testing
+
+For unit testing I have had to check [this article about general unit tests](https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices)
+as well as well as [this article about python unit tests](https://codefresh.io/learn/unit-testing/unit-testing-in-python-quick-tutorial-and-4-best-practices/)
+(Although it was not very useful) and also [this article about flask specifically](https://flask.palletsprojects.com/en/stable/tutorial/tests)
+, as it had very clear examples of what to do.
+
+### Avoid infrastructure dependencies
+
+I have no dependencies on the infrastructure and that (along with other factors) makes the tests surprisingly fast.
+
+### Naming your tests
+
+I have named my tests clearly.
+
+### Arranging your tests
+
+In [here](https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices#arranging-your-tests)
+there is a structure of the tests:
+1. Arranging the objects
+2. Acting on the objects
+3. Asserting expectations
+
+I have followed this structure when creating my tests, to the best of my abilities (some parts may not have all the steps, see the comments)
+
+### Avoid multiple acts
+
+I have just one action in each test.
+
+### Also acknowledged best practices for unit tests:
+
+1. Stub static references:
+    - No need to stub any static reference in my tests.
+3. Validate private methods by unit testing public methods:
+    - No extra methods to use this on.
+3. Prefer helper methods to setup and teardown:
+   - [This structure](https://flask.palletsprojects.com/en/stable/tutorial/tests/) 
+   seems to be the best practice specifically for flask, but these points are taken from 
+   [here](https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices#arranging-your-tests),
+   so I kept it the way it is.
+4. Avoid magic strings:
+   - There are no magic strings except for time format, which I believe to be best left there.
+5. Write minimally passing tests:
+   - There is no way to write my tests any other way.
