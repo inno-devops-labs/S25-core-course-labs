@@ -25,6 +25,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest coverage
         if [ -f app_python/requirements.txt ]; then pip install -r app_python/requirements.txt; fi
+    - name: Cache Python packages
+      uses: actions/cache@v4
+      with:
+        key: caching
+        path: |
+          app_python/python_cache
+
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names

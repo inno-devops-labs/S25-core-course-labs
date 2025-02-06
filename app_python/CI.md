@@ -39,7 +39,7 @@ excellent Community Support, wonderfully Integrate and should be Scalable, if I 
 
 ### Secure your pipeline
 
-- I have taken extra care to make sure that all of the keys are secure.
+- I have taken extra care to make sure that all the keys are secure.
 
 And more practices were acknowledged, from [this article](https://www.jetbrains.com/teamcity/ci-cd-guide/ci-cd-best-practices/) 
 and others.
