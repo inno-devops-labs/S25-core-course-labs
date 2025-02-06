@@ -18,6 +18,12 @@ COPY --chown=appuser:appgroup requirements.txt .
 # Install dependencies with pip
 RUN pip install --no-cache-dir --user -r requirements.txt
 
+# Create .local directory if it doesn't exist in builder stage
+RUN mkdir -p /home/appuser/.local
+
+# Copy installed packages from builder only if they exist
+RUN [ -d /home/appuser/.local ] && cp -r /home/appuser/.local /home/appuser/ || echo "No .local directory to copy"
+
 # Final stage
 FROM python:3.11-alpine
 
@@ -26,9 +32,6 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # Set working directory
 WORKDIR /app
-
-# Copy installed packages from builder
-COPY --from=builder --chown=appuser:appgroup /home/appuser/.local /home/appuser/.local
 
 # Copy application files
 COPY --chown=appuser:appgroup app.py .
