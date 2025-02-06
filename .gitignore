@@ -1,0 +1,8 @@
+.idea/
+.vscode/
+
+# Log files
+*.log
+
+# Environment variable files (e.g., .env for environment variables)
+.env
