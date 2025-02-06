@@ -31,11 +31,9 @@ jobs:
           pip install flake8
           flake8 .
 
-      - name: Set PYTHONPATH
-        run: echo "PYTHONPATH=$(pwd)/app_python" >> $GITHUB_ENV
-
-      - name: Run tests
+      - name: Set PYTHONPATH for the current shell
         run: |
+          export PYTHONPATH=$(pwd)/app_python
           pytest app_python/test/test_python.py
 
   docker:
