@@ -17,7 +17,7 @@
 
 ## Docker Task
 
-### terraform show
+- `terraform show`
 
 ```bash
 # docker_container.app_container:
@@ -101,14 +101,14 @@ repo_digest = "redis@sha256:eadf354977d428e347d93046bb1a5569d701e8deb68f09021553
 }
 ```
 
-### terraform state list
+- `terraform state list`
 
 ```bash
 docker_container.app_container
 docker_image.app_image
 ```
 
-### terraform state show docker_container.app_container
+- `terraform state show docker_container.app_container`
 
 ```bash
 # docker_container.app_container:
@@ -183,7 +183,7 @@ working_dir = "/data"
 }
 ```
 
-### terraform state show docker_image.app_image
+- `terraform state show docker_image.app_image`
 
 ```bash
 resource "docker_image" "app_image" {
@@ -243,8 +243,7 @@ container_port = tolist([
 1. Install cloud cli
 2. Create service account
 3. Generate tokens and ids
-4. Set up the provider and resources
-5. Run `terraform apply`
+4. Run `terraform apply`
 
 **Outputs**:
 
