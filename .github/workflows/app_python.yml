@@ -25,12 +25,6 @@ jobs:
           pip install -r requirements.txt
           cd ..
 
-      - name: Run Linter
-        run: flake8 .
-
-      - name: Run Unit Tests
-        run: python -m unittest discover
-
   linter:
     runs-on: ubuntu-latest
     needs: [build]
@@ -43,7 +37,10 @@ jobs:
     needs: [build, linter]
     steps:
       - name: Run Unit Tests
-        run: python -m pytest .
+        run: |
+          cd app_python
+          python -m pytest .
+          cd ..
 
   docker:
     runs-on: ubuntu-latest
