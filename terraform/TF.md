@@ -1148,3 +1148,327 @@ Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
 
 ![Github repository changed](github_changed.png)
+
+## Bonus Task: Adding Teams
+
+I have created an organization in GitHub [check out](https://github.com/terrain-corp).
+Let's create another configuration and add new teams to this organization. Therefore, I initialize the Terraform again (`terraform init`).
+
+I will add two teams:
+
+- _terrainers_ - a team of people who can push to the repository
+- _watchers_ - a team of people who can only pull the repository
+
+Let's plan and apply the Terraform configuration.
+
+Planning:
+
+```powershell
+> terraform plan -var-file=".tfvars"
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_branch.master will be created
+  + resource "github_branch" "master" {
+      + branch        = "master"
+      + etag          = (known after apply)
+      + id            = (known after apply)
+      + ref           = (known after apply)
+      + repository    = "terrain"
+      + sha           = (known after apply)
+      + source_branch = "main"
+      + source_sha    = (known after apply)
+    }
+
+  # github_branch_default.default will be created
+  + resource "github_branch_default" "default" {
+      + branch     = "master"
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + rename     = false
+      + repository = "terrain"
+    }
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + lock_branch                     = false
+      + pattern                         = "master"
+      + repository_id                   = (known after apply)
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + require_last_push_approval      = false
+          + required_approving_review_count = 1
+        }
+    }
+
+  # github_repository.repo will be created
+  + resource "github_repository" "repo" {
+      + allow_auto_merge            = false
+      + allow_merge_commit          = true
+      + allow_rebase_merge          = true
+      + allow_squash_merge          = true
+      + archived                    = false
+      + auto_init                   = true
+      + default_branch              = (known after apply)
+      + delete_branch_on_merge      = false
+      + description                 = "This is the terrain. Old one."
+      + etag                        = (known after apply)
+      + full_name                   = (known after apply)
+      + git_clone_url               = (known after apply)
+      + has_issues                  = true
+      + has_wiki                    = true
+      + html_url                    = (known after apply)
+      + http_clone_url              = (known after apply)
+      + id                          = (known after apply)
+      + license_template            = "mit"
+      + merge_commit_message        = "PR_TITLE"
+      + merge_commit_title          = "MERGE_MESSAGE"
+      + name                        = "terrain"
+      + node_id                     = (known after apply)
+      + primary_language            = (known after apply)
+      + private                     = (known after apply)
+      + repo_id                     = (known after apply)
+      + squash_merge_commit_message = "COMMIT_MESSAGES"
+      + squash_merge_commit_title   = "COMMIT_OR_PR_TITLE"
+      + ssh_clone_url               = (known after apply)
+      + svn_url                     = (known after apply)
+      + topics                      = (known after apply)
+      + visibility                  = "public"
+      + web_commit_signoff_required = false
+
+      + security_and_analysis (known after apply)
+    }
+
+  # github_team.terrainers will be created
+  + resource "github_team" "terrainers" {
+      + create_default_maintainer = false
+      + description               = "Some cool team of terrainers who create terrains from the beginning of computer era."
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "terrainers"
+      + node_id                   = (known after apply)
+      + parent_team_read_id       = (known after apply)
+      + parent_team_read_slug     = (known after apply)
+      + privacy                   = "closed"
+      + slug                      = (known after apply)
+    }
+
+  # github_team.watchers will be created
+  + resource "github_team" "watchers" {
+      + create_default_maintainer = false
+      + description               = "Team of watchers who do nothing but watch"
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "watchers"
+      + node_id                   = (known after apply)
+      + parent_team_read_id       = (known after apply)
+      + parent_team_read_slug     = (known after apply)
+      + privacy                   = "closed"
+      + slug                      = (known after apply)
+    }
+
+  # github_team_repository.terrainers will be created
+  + resource "github_team_repository" "terrainers" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "push"
+      + repository = "terrain"
+      + team_id    = (known after apply)
+    }
+
+  # github_team_repository.watchers will be created
+  + resource "github_team_repository" "watchers" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "pull"
+      + repository = "terrain"
+      + team_id    = (known after apply)
+    }
+
+Plan: 8 to add, 0 to change, 0 to destroy.
+```
+
+Applying:
+
+```powershell
+> terraform apply -var-file=".tfvars"
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_branch.master will be created
+  + resource "github_branch" "master" {
+      + branch        = "master"
+      + etag          = (known after apply)
+      + id            = (known after apply)
+      + ref           = (known after apply)
+      + repository    = "terrain"
+      + sha           = (known after apply)
+      + source_branch = "main"
+      + source_sha    = (known after apply)
+    }
+
+  # github_branch_default.default will be created
+  + resource "github_branch_default" "default" {
+      + branch     = "master"
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + rename     = false
+      + repository = "terrain"
+    }
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + lock_branch                     = false
+      + pattern                         = "master"
+      + repository_id                   = (known after apply)
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + require_last_push_approval      = false
+          + required_approving_review_count = 1
+        }
+    }
+
+  # github_repository.repo will be created
+  + resource "github_repository" "repo" {
+      + allow_auto_merge            = false
+      + allow_merge_commit          = true
+      + allow_rebase_merge          = true
+      + allow_squash_merge          = true
+      + archived                    = false
+      + auto_init                   = true
+      + default_branch              = (known after apply)
+      + delete_branch_on_merge      = false
+      + description                 = "This is the terrain. Old one."
+      + etag                        = (known after apply)
+      + full_name                   = (known after apply)
+      + git_clone_url               = (known after apply)
+      + has_issues                  = true
+      + has_wiki                    = true
+      + html_url                    = (known after apply)
+      + http_clone_url              = (known after apply)
+      + id                          = (known after apply)
+      + license_template            = "mit"
+      + merge_commit_message        = "PR_TITLE"
+      + merge_commit_title          = "MERGE_MESSAGE"
+      + name                        = "terrain"
+      + node_id                     = (known after apply)
+      + primary_language            = (known after apply)
+      + private                     = (known after apply)
+      + repo_id                     = (known after apply)
+      + squash_merge_commit_message = "COMMIT_MESSAGES"
+      + squash_merge_commit_title   = "COMMIT_OR_PR_TITLE"
+      + ssh_clone_url               = (known after apply)
+      + svn_url                     = (known after apply)
+      + topics                      = (known after apply)
+      + visibility                  = "public"
+      + web_commit_signoff_required = false
+
+      + security_and_analysis (known after apply)
+    }
+
+  # github_team.terrainers will be created
+  + resource "github_team" "terrainers" {
+      + create_default_maintainer = false
+      + description               = "Some cool team of terrainers who create terrains from the beginning of computer era."
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "terrainers"
+      + node_id                   = (known after apply)
+      + parent_team_read_id       = (known after apply)
+      + parent_team_read_slug     = (known after apply)
+      + privacy                   = "closed"
+      + slug                      = (known after apply)
+    }
+
+  # github_team.watchers will be created
+  + resource "github_team" "watchers" {
+      + create_default_maintainer = false
+      + description               = "Team of watchers who do nothing but watch"
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "watchers"
+      + node_id                   = (known after apply)
+      + parent_team_read_id       = (known after apply)
+      + parent_team_read_slug     = (known after apply)
+      + privacy                   = "closed"
+      + slug                      = (known after apply)
+    }
+
+  # github_team_repository.terrainers will be created
+  + resource "github_team_repository" "terrainers" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "push"
+      + repository = "terrain"
+      + team_id    = (known after apply)
+    }
+
+  # github_team_repository.watchers will be created
+  + resource "github_team_repository" "watchers" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "pull"
+      + repository = "terrain"
+      + team_id    = (known after apply)
+    }
+
+Plan: 8 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_team.terrainers: Creating...
+github_team.watchers: Creating...
+github_repository.repo: Creating...
+github_team.terrainers: Still creating... [10s elapsed]
+github_team.watchers: Still creating... [10s elapsed]
+github_repository.repo: Still creating... [10s elapsed]
+github_team.terrainers: Creation complete after 13s [id=12128636]
+github_team.watchers: Creation complete after 14s [id=12128637]
+github_repository.repo: Creation complete after 14s [id=terrain]
+github_team_repository.watchers: Creating...
+github_team_repository.terrainers: Creating...
+github_branch.master: Creating...
+github_team_repository.watchers: Creation complete after 4s [id=12128637:terrain]
+github_team_repository.terrainers: Creation complete after 4s [id=12128636:terrain]
+github_branch.master: Creation complete after 6s [id=terrain:master]
+github_branch_default.default: Creating...
+github_branch_default.default: Creation complete after 1s [id=terrain]
+github_branch_protection.default: Creating...
+github_branch_protection.default: Creation complete after 5s [id=BPR_kwDON1VWZs4DilhA]
+
+Apply complete! Resources: 8 added, 0 changed, 0 destroyed.
+```
+
+Then, we can see, that teams are added and have their own permissions:
+
+![Github teams list](github_org.png)
+
+Therefore, we successfully added new teams within organization via Terraform configuration.
