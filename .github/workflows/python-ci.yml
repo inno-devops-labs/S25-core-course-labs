@@ -56,3 +56,4 @@ jobs:
           command: code test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_KEY }}
+ 
