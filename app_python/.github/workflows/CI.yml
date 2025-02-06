@@ -1,8 +1,10 @@
 name: CI Pipeline
 
 on:
-  push
-
+  push:
+    branches:
+      - master
+      - lab3
 jobs:
   build:
     runs-on: ubuntu-latest
