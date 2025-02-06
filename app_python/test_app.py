@@ -2,6 +2,7 @@ import re
 import unittest
 from app import app
 
+
 class TestMoscowTime(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
@@ -26,6 +27,7 @@ class TestMoscowTime(unittest.TestCase):
         self.assertIn('</h2>', html_text)
         self.assertIn('<h1>', html_text)
         self.assertIn('</h1>', html_text)
+
 
 if __name__ == '__main__':
     unittest.main()
