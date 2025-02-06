@@ -8,8 +8,6 @@ on:
 
 env:
   DOCKER_IMAGE: moscow-time
-  DOCKER_REGISTRY: ghcr.io
-  DOCKER_USERNAME: sergeipolin
 
 jobs:
   test:
@@ -66,11 +64,10 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Login to GitHub Container Registry
+    - name: Login to Docker Hub
       uses: docker/login-action@v3
       with:
-        registry: ${{ env.DOCKER_REGISTRY }}
-        username: ${{ env.DOCKER_USERNAME }}
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         
     - name: Build and push Docker image
@@ -79,5 +76,5 @@ jobs:
         context: ./app_python
         push: true
         tags: |
-          ${{ env.DOCKER_REGISTRY }}/${{ github.repository_owner }}/${{ env.DOCKER_IMAGE }}:latest
-          ${{ env.DOCKER_REGISTRY }}/${{ github.repository_owner }}/${{ env.DOCKER_IMAGE }}:${{ github.sha }} 
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE }}:${{ github.sha }}
