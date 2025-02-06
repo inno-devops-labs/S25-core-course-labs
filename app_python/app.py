@@ -14,6 +14,7 @@ def check_time():
     current_time = datetime.now(msc_tz).strftime("%Y-%m-%d %H:%M:%S")
     return f"<h1>Current time in Moscow: {current_time}</h1>"
 
+
 # Starting the app
 if __name__ == "__main__":
     app.run(debug=True)
