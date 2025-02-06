@@ -5,10 +5,10 @@ FROM python:3.9-slim
 WORKDIR /usr/local/app
 
 # Copy requirements.txt
-COPY app_python/backend/requirements.txt ./
+COPY requirements.txt ./
 
-# Copy the tests directory
-COPY app_python/tests ./tests
+# Copy the tests directory from the parent directory
+COPY ../tests ./tests
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
@@ -16,8 +16,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Install pytest
 RUN pip install pytest
 
-# Copy the rest of the application code
-COPY app_python/backend/ ./backend
+# Copy the rest of the application code from the current directory
+COPY . ./backend
 
 # Create a non-root user
 RUN adduser --disabled-password --disabled-login myuser
@@ -32,4 +32,4 @@ USER myuser
 EXPOSE 8080
 
 # Command to run the application
-CMD ["python", "main.py"]
+CMD ["python", "backend/main.py"]
