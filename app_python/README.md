@@ -34,3 +34,10 @@ Application does have unit tests. They are automatically running on pull request
 
 To run them manually type `python -m unittest discover tests`
 
+## CI
+
+Application does have unit tests ci pipelines. 
+
+test.yml - runs unit tests on application 
+linter.yml - validates code style quality
+docker.yml - update docker build of the application
