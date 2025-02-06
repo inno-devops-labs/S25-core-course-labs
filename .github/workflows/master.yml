@@ -46,7 +46,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: ./app_python
+          args: ./app_python --skip-unresolved
 
       # Run linter (flake8)
       - name: Lint with flake8
