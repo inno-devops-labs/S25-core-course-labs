@@ -57,7 +57,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Navigate to app_java Directory
-        run: cd app_java || true  # Ensure the directory exists
+        run: cd app_java || true
+      - name: Grant Execute Permission to mvnw
+        working-directory: ./app_java
+        run: chmod +x mvnw# Ensure the directory exists
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven-3-jdk-17@master
         with:
