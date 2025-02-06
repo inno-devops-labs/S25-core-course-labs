@@ -2,7 +2,10 @@
 
 ## Best Practices
 
-- __Code structure__ - used `main.tf`, `variables.tf`, `outputs.tf` files for separating
+- __Code structure__ - used `main.tf`, `variables.tf`, `outputs.tf` files for each configuration
+- __Provider versions__ - specified versions of providers
+- __Code formatting__ - used code formatting with `terraform fmt` command
+- __Secrets storing__ - secrets are stored locally and such variables are marked as sensitive
 
 ## Docker Configuration
 
