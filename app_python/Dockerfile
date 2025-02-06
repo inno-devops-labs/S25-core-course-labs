@@ -13,10 +13,10 @@ RUN addgroup --system appgroup && \
     adduser --system --ingroup appgroup appuser && \
     pip install --no-cache-dir -r requirements.txt
 
-USER appuser
-
 COPY . .
 
 RUN chown -R appuser:appgroup /app
+
+USER appuser
 
 CMD ["python", "app.py"]
