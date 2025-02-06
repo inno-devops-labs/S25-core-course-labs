@@ -49,6 +49,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
     #S5: lint the code using flake8
     - name: Lint with flake8
       run: |
@@ -56,6 +57,7 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
     #S6: Run unit tests with pytest
     - name: Test with pytest
       run: |
@@ -70,14 +72,15 @@ jobs:
 
     #S8: build docker image using dockerfile in repo
     - name: Build Docker Image
-        run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/msk-time-app:latest .
-    
+      run: |
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/msk-time-app:latest .
+
     # S9: Push the Docker image to my DockerHub repo
       - name: Push Docker Image
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/msk-time-app:latest
- 
+
+
     #S10: run Snyk to scan for vulnerabilities in my project
     - name: Run Snyk Vulnerability Test
         uses: snyk/actions@master
