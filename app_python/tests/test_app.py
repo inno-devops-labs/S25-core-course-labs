@@ -8,7 +8,7 @@ client = TestClient(app)
 
 def test_show_time_response_structure():
     """
-    Test that the '/' endpoint returns a JSON response with a 'message' key 
+    Test that the '/' endpoint returns a JSON response with a 'message' key
     and that the message begins with the expected prefix.
     """
     response = client.get("/")
@@ -25,7 +25,7 @@ def test_show_time_response_structure():
 
 def test_show_time_format():
     """
-    Test that the message returned from the '/' endpoint 
+    Test that the message returned from the '/' endpoint
     contains a datetime
     in the format 'YYYY-MM-DD HH:MM:SS' after the expected text.
     """
