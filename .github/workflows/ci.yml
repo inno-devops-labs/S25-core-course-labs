@@ -46,7 +46,7 @@ jobs:
         with:
           command: test
           json: false
-          args: "app_python/requirements.txt"
+          args: "--file=app_python/requirements.txt"
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
   docker:
