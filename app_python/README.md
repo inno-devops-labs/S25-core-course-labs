@@ -66,3 +66,40 @@ To run tests follow this command:
    ```bash
    pytest
    ```
+
+## Docker
+
+### Steps to Build, Push, and Run
+
+1. **Build the Docker Image**:
+   ```bash
+   docker build -t moscow-time-app:1.0 .
+   ```
+2. Run Locally:
+   ```bash
+   docker run -p 5000:5000 moscow-time-app:1.0
+   ```
+
+3. Push to Docker Hub (Put your dockerhub username instead of \<username>:
+
+    - Tag the image:
+   ```bash
+   docker tag moscow-time-app:1.0 <username>/moscow-time-app:1.0
+   ```
+    - Push the image:
+   ```bash
+    docker push <username>/moscow-time-app:1.0
+   ```
+
+4. Pull and Run:
+
+   ```bash
+   docker pull <username>/moscow-time-app:1.0
+
+   ```
+   ```bash
+   docker run -p 5000:5000 <username>/moscow-time-app:1.0
+   ```
+
+
+

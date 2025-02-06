@@ -1,7 +1,7 @@
 # Magnitogorsk Time Application
 
 This is a Spring Boot web application that displays the current time in Magnitogorsk, Russia. The application uses
-Thymeleaf for server-side rendering and includes a dynamically updating clock.
+Thymeleaf for server-side rendering and includes a dynamically updating clock. 
 
 ## I faced some problems with starting my app using terminal so if you will find a problem please give feedback
 
@@ -26,7 +26,6 @@ Before running the application, ensure you have the following installed:
 - **Gradle**: [Install Gradle](https://gradle.org/install/)
 - **Git**: [Install Git](https://git-scm.com/)
 - **Docker**
-
 ```bash
   sudo apt install docker
 ```
@@ -82,7 +81,6 @@ To clone the repository, run the following command:
 ```bash
   gradle wrapper
 ```
-
 ```bash
   docker build -t magnitogorsk-app .
 ```
