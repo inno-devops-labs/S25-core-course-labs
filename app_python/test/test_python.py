@@ -12,7 +12,7 @@ def client():
         yield client
 
 
-def test_dynamuc_time(client):
+def test_dynamic_time(client):
     moscow = timezone('Europe/Moscow')
     expected_time = datetime.now(moscow).strftime('%Y-%m-%d %H:%M:%S')
 
@@ -26,11 +26,13 @@ def test_static_time(monkeypatch, client):
     moscow = timezone('Europe/Moscow')
     fixed_time = datetime(2024, 2, 4, 12, 0, 0, tzinfo=moscow)
 
-    with patch("app_python.run.datetime") as mock_datetime:
+    with (patch("app_python.run.datetime") as mock_datetime):
         mock_datetime.now.return_value = fixed_time
         mock_datetime.strftime = datetime.strftime
 
         response = client.get('/')
 
         assert response.status_code == 200
-        assert fixed_time.strftime('%Y-%m-%d %H:%M:%S') in response.data.decode('utf-8')
+        time_str = fixed_time.strftime('%Y-%m-%d %H:%M:%S')
+        response_data = response.data.decode('utf-8')
+        assert time_str in response_data
