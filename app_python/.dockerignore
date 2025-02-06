@@ -1,0 +1,16 @@
+venv/
+assets/
+Dockerfile
+tests/
+
+**/*.pyc
+**/*.pyo
+**/*.mo
+**/__pycache__/
+**/*.md
+
+.vscode/
+.git/
+.idea/
+.gitignore
+.venv/
