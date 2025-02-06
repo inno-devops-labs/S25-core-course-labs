@@ -1,0 +1,11 @@
+__pycache__
+*.py[cod]
+*~
+.DS_Store
+.git
+.gitignore
+.dockerignore
+README.md
+DOCKER.md
+requirements-dev.txt
+tests/
