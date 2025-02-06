@@ -47,26 +47,7 @@ jobs:
         working-directory: ./app_java
         run: mvn test
 
-      # Step 7: Upload app_java as an artifact
-      - name: Upload app_java directory
-        uses: actions/upload-artifact@v3
-        with:
-          name: app_java
-          path: ./app_java
-
-  security:
-    name: Security check
-    needs: [build-lint-test]
-    runs-on: ubuntu-latest
-    steps:
-      # Step 1: Download the app_java directory
-      - name: Download app_java directory
-        uses: actions/download-artifact@v3
-        with:
-          name: app_java
-          path: ./app_java
-
-      # Step 2: Run Snyk to check for vulnerabilities
+      # Step 7: Run Snyk to check for vulnerabilities
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven@master
         env:
@@ -75,7 +56,7 @@ jobs:
           args: --file=./app_java/pom.xml --skip-unresolved --severity-threshold=high
 
   docker-worker:
-    needs: [build-lint-test, security]
+    needs: [build-lint-test]
     runs-on: ubuntu-latest
     steps:
       # Step 1: Check out the repository
