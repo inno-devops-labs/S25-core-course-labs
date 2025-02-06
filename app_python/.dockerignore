@@ -1,0 +1,36 @@
+# Python caches
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Flask caches
+instance/
+.webassets-cache
+
+# Virtual Environment folders
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Git
+.git
+.gitignore
+
+# IDE specific files
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Logs or temporary files
+*.log
