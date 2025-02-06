@@ -1,0 +1,29 @@
+# Ignore Python related files and directories (for app_python)
+/app_python/__pycache__/
+/app_python/*.pyc
+/app_python/*.pyo
+/app_python/*.pyd
+/app_python/venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+**/__pycache__/
+
+# Ignore Node.js related files and directories (for app_react)
+/app_react/node_modules/
+/app_react/dist/
+/app_react/dist-ssr/
+/app_react/*.local
+/app_react/.env.local
+/app_react/.env.development.local
+/app_react/.env.test.local
+/app_react/.env.production.local
+/app_react/npm-debug.log*
+/app_react/yarn-debug.log*
+/app_react/yarn-error.log*
+/app_react/pnpm-debug.log*
+
+# General ignore rules that might apply to any project
+*.log
+*.DS_Store
