@@ -1,3 +1,5 @@
+![CI/CD Pipeline](https://github.com/Dema-koder/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)
+
 # Moscow Time Web Application
 
 ## Overview
