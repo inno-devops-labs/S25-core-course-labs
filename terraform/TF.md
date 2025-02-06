@@ -969,4 +969,108 @@ Destroy complete! Resources: 4 destroyed.
 
 ## GitHub Configuration
 
+__Input__:
+
+```
+azamat@azamat-pc:~/S25-core-course-labs/terraform/github$ terraform import "github_repository.repository" "S25-core-course-labs"
+```
+
+__Output__:
+
+```
+var.token
+  GitHub token
+
+  Enter a value: 
+
+github_repository.repository: Importing from ID "S25-core-course-labs"...
+github_repository.repository: Import prepared!
+  Prepared github_repository for import
+github_repository.repository: Refreshing state... [id=S25-core-course-labs]
+
+Import successful!
+
+The resources that were imported are shown above. These resources are now in
+your Terraform state and will henceforth be managed by Terraform.
+```
+
+__Input__:
+
+```
+azamat@azamat-pc:~/S25-core-course-labs/terraform/github$ terraform apply
+```
+
+__Output__:
+
+```
+var.token
+  GitHub token
+
+  Enter a value: 
+
+github_repository.repository: Refreshing state... [id=S25-core-course-labs]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # github_branch_default.master will be created
+  + resource "github_branch_default" "master" {
+      + branch     = "master"
+      + id         = (known after apply)
+      + repository = "S25-core-course-labs"
+    }
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + blocks_creations                = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + pattern                         = "master"
+      + repository_id                   = "S25-core-course-labs"
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + required_approving_review_count = 1
+        }
+    }
+
+  # github_repository.repository will be updated in-place
+  ~ resource "github_repository" "repository" {
+      ~ auto_init                   = false -> true
+      + description                 = "S25 DevOps course labs"
+      + gitignore_template          = "VisualStudio"
+      - has_downloads               = true -> null
+      - has_projects                = true -> null
+      ~ has_wiki                    = true -> false
+        id                          = "S25-core-course-labs"
+      + license_template            = "mit"
+        name                        = "S25-core-course-labs"
+        # (28 unchanged attributes hidden)
+    }
+
+Plan: 2 to add, 1 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_repository.repository: Modifying... [id=S25-core-course-labs]
+github_repository.repository: Modifications complete after 3s [id=S25-core-course-labs]
+github_branch_default.master: Creating...
+github_branch_protection.default: Creating...
+github_branch_default.master: Creation complete after 2s [id=S25-core-course-labs]
+github_branch_protection.default: Creation complete after 5s [id=BPR_kwDONueDiM4DioVX]
+
+Apply complete! Resources: 2 added, 1 changed, 0 destroyed.
+```
+
 ## GitHub Teams Configuration
