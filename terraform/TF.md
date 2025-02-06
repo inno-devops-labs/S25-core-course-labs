@@ -25,9 +25,9 @@ terraform state list
 ### **GitHub Repository Details**
 
 - **Default Branch**: master
-- **Repository ID**: S25-core-course-labs
-- **Repository Name**: S25-core-course-labs
-- **Repository URL**: <https://github.com/MoeJaafar/S25-core-course-labs>
+- **Repository ID**: S25-core-course-labss
+- **Repository Name**: S25-core-course-labss
+- **Repository URL**: <https://github.com/MoeJaafar/S25-core-course-labss>
 
 ---
 
@@ -53,31 +53,117 @@ terraform state list
 
 ---
 
-## 🔹 **Terraform Best Practices Applied**
+## AWS Infrastructure with Terraform
 
-### **1️⃣ State Management**
+## 💼 AWS EC2 Instance Deployment
 
-✅ Used `terraform state list` and `terraform state show` to track resources.  
-✅ Ensured proper **state file management** to avoid conflicts.  
+### **AWS Infrastructure Details**
 
-### **2️⃣ Provider & Authentication**
+- **Cloud Provider**: AWS
+- **Terraform Provider**: `hashicorp/aws`
+- **Region**: `us-east-1`
+- **Instance Type**: `t2.micro`
+- **AMI ID**: `ami-04b4f1a9cf54c11d0` (Ubuntu Server)
+- **Instance Name**: `ExampleAppServerInstance`
 
-✅ Used **GitHub provider** securely with an **environment variable for authentication**.  
-✅ Avoided hardcoding secrets in `.tf` files by using **Terraform variables**.  
+### **Terraform Files Used**
 
-### **3️⃣ Code Structure & Reusability**
+- **`main.tf`** → Defines AWS EC2 Instance
 
-✅ Organized Terraform files (`main.tf`, `provider.tf`, `variables.tf`, `outputs.tf`).  
-✅ Used `variables.tf` to allow **flexibility** and avoid hardcoded values.  
+```hcl
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.16"
+    }
+  }
 
-### **4️⃣ Security & Access Control**
+  required_version = ">= 1.2.0"
+}
 
-✅ Set repository visibility based on **Terraform variables** instead of hardcoding.  
-✅ Disabled **GitHub Advanced Security settings** that were not supported.  
-✅ Managed **GitHub Teams** and **permissions** using Terraform for role-based access control.  
+provider "aws" {
+  region = "us-east-1"
+}
 
-### **5️⃣ Modularity & Reproducibility**
+resource "aws_instance" "app_server" {
+  ami           = "ami-04b4f1a9cf54c11d0"
+  instance_type = "t2.micro"
 
-✅ Used `terraform apply -auto-approve` to automate deployments.  
-✅ Ensured **idempotency** so running `terraform apply` doesn’t create duplicates.  
-✅ Created **GitHub Teams dynamically**, making infrastructure easily adjustable.  
+  tags = {
+    Name = "ExampleAppServerInstance"
+  }
+}
+```
+
+---
+
+## 📊 Terraform State for AWS
+
+### **Terraform State Commands Used**
+
+```bash
+terraform init
+terraform plan
+terraform apply -auto-approve
+terraform state list
+```
+
+### **Terraform State Output**
+
+```bash
+aws_instance.app_server
+```
+
+---
+
+## 📈 AWS Terraform Deployment Process
+
+### **1️⃣ Terraform Initialization**
+
+- Initializes Terraform and downloads the required AWS provider.
+
+**Screenshot:** `init.png`
+
+**Screenshot:** `awsrunning.png`
+
+### **2️⃣ Terraform Apply Execution**
+
+- Deploys the EC2 instance on AWS.
+
+**Screenshot:** `applied.png`
+
+### **3️⃣ AWS EC2 Instance Running**
+
+- Confirms that the instance is successfully running.
+
+**Screenshot:** `instanceRunning.png`
+
+---
+
+## 🔒 **Terraform Best Practices Applied**
+
+### **1️⃣ Infrastructure as Code (IaC)**
+
+✅ Used Terraform to automate EC2 deployment .
+✅ Managed infrastructure declaratively.
+
+### **2️⃣ State Management**
+
+✅ Used `terraform state list` to track AWS resources.
+✅ Ensured proper **state file management**.
+
+### **3️⃣ Provider & Authentication**
+
+✅ Configured **AWS provider** securely.
+✅ Used AWS CLI for authentication (`aws configure`).
+
+### **4️⃣ Code Modularity & Reusability**
+
+✅ Organized Terraform files (`main.tf`).
+✅ Used variables instead of hardcoded values (**to be implemented**).
+
+### **5️⃣ Security Best Practices**
+
+✅ Avoided hardcoding AWS credentials (**used CLI auth instead**).
+✅ Used instance tags to improve resource identification.
