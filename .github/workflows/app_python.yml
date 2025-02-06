@@ -1,0 +1,64 @@
+name: Python Application CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'app_python/**'
+      - '.github/workflows/app_python.yml'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'app_python/**'
+      - '.github/workflows/app_python.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: |
+          source .venv/bin/activate
+          pytest tests.py
+
+      - name: Format code
+        run: |
+          source .venv/bin/activate
+          pip install black
+          black --check .
+
+  build:
+    runs-on: ubuntu-22.04
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get install docker.io
+
+      - name: Build Docker image
+        run: |
+          docker build -t darrpyy/devops .
+
+      - name: Run Docker container
+        run: |
+          docker run -d -p 5000:5000 darrpyy/devops
