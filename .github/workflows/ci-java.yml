@@ -1,4 +1,4 @@
-name: CI for Java
+name: ci for java
 
 on:
   push:
@@ -22,13 +22,10 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-
-      # Step 3: Grant Execute Permission to mvnw
       - name: Grant Execute Permission to mvnw
         working-directory: ./app_java
         run: chmod +x mvnw
-
-      # Step 4: Cache Maven Dependencies
+      # Step 3: Cache Dependencies
       - name: Cache Maven Dependencies
         uses: actions/cache@v3
         with:
@@ -37,40 +34,33 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Step 5: Build the Project (without running tests)
+      # Step 4: Build the Project
       - name: Build with Maven
         working-directory: ./app_java
-        run: ./mvnw clean install -DskipTests
+        run: mvn clean install -DskipTests
 
-      # Step 6: Lint Code (Optional: Use Checkstyle or Spotless)
+      # Step 5: Lint Code (Optional: Use Checkstyle or Spotless)
       - name: Lint Code
         working-directory: ./app_java
-        run: ./mvnw checkstyle:check
+        run: mvn checkstyle:check
 
-      # Step 7: Run Tests
+      # Step 6: Run Tests
       - name: Run Tests
         working-directory: ./app_java
-        run: ./mvnw test
+        run: mvn test
 
   security:
     needs: [build-lint-test]
-    name: Security Check
+    name: Security check
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Check out the repository
       - name: Checkout Repository
         uses: actions/checkout@v3
-
-      # Step 2: Navigate to app_java Directory
       - name: Navigate to app_java Directory
         run: cd app_java || true
-
-      # Step 3: Grant Execute Permission to mvnw
       - name: Grant Execute Permission to mvnw
         working-directory: ./app_java
         run: chmod +x mvnw
-
-      # Step 4: Run Snyk to check for vulnerabilities
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven-3-jdk-17@master
         with:
