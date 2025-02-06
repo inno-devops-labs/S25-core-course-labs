@@ -45,6 +45,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Cache Python packages
+        uses: actions/cache@v4
+        with:
+          key: snyk-cache
+          path: |
+            app_python/.cache
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python-3.8@master
         env:
