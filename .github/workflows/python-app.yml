@@ -50,7 +50,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --workdir=app_python
+          args: --workdir app_python
   docker:
     runs-on: ubuntu-latest
     steps:
