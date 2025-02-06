@@ -15,6 +15,17 @@ For this application, **FastAPI** was chosen due to its:
 - **Code Readability:** Good function names and code structure.
 - **Modular Design:** Using FastAPI and template rendering makes the project scalable.
 
-## Testing & Code Quality
+## Python Unit Tests
 
-- The application was tested by refreshing the browser to confirm that the time updates correctly.
+### Best Practices
+
+- Naming of the tests describe the intent of the test clearly
+- Testing only one concern with each testing fucntion
+- Using the AAA pattern (Arange, Act, Assert)
+
+### Unit Test Overview
+
+The function `get_moscow_time()` is tested to verify:
+
+- Correct dictionary structure.
+- Valid time values.

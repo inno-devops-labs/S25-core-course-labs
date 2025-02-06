@@ -74,3 +74,9 @@ docker pull karamkhaddourpro/my-fastapi-app
 ```bash
 docker run -d -p 8000:8000 karamkhaddourpro/my-fastapi-app
 ```
+
+### Running tests
+
+```bash
+pytest 
+```
