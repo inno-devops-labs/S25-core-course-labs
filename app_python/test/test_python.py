@@ -21,7 +21,6 @@ def test_dynamic_time(client):
     assert response.status_code == 200
     assert expected_time[:16] in response.data.decode('utf-8')
 
-
 def test_static_time(monkeypatch, client):
     moscow = timezone('Europe/Moscow')
     fixed_time = datetime(2024, 2, 4, 12, 0, 0, tzinfo=moscow)
@@ -36,3 +35,4 @@ def test_static_time(monkeypatch, client):
         time_str = fixed_time.strftime('%Y-%m-%d %H:%M:%S')
         response_data = response.data.decode('utf-8')
         assert time_str in response_data
+
