@@ -5,10 +5,14 @@ WORKDIR /app
 # Install Gradle system-wide
 RUN apt-get update && apt-get install -y gradle
 
+RUN gradle -v
+
+# Copy Gradle build files and project source code
 COPY build.gradle settings.gradle ./
 COPY src ./src
 
-RUN gradle build --no-daemon
+# Clean and build the application
+RUN gradle clean build --no-daemon
 
 # Use a smaller runtime image for the final stage
 FROM eclipse-temurin:21-jre-jammy
