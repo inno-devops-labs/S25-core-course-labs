@@ -1,3 +1,6 @@
+![Tests](https://github.com/dpttk/S25-core-course-labs/actions/workflows/run-tests.yml/badge.svg)
+![Lint](https://github.com/dpttk/S25-core-course-labs/actions/workflows/lint.yml/badge.svg)
+![Docker](https://github.com/dpttk/S25-core-course-labs/actions/workflows/docker.yml/badge.svg)
 # Moscow time
 simple web application shows current moscow time
 
