@@ -1,21 +1,19 @@
-# import sys
-# import os
+import sys
+import os
 
-# sys.path.insert(
-#     0,
-#     os.path.abspath(
-#         os.path.join(
-#             os.path.dirname(__file__),
-#             "..",
-#             "..")))
+sys.path.insert(
+    0,
+    os.path.abspath(
+        os.path.join(
+            os.path.dirname(__file__),
+            "..",
+            "..")))
 
 import re
 import pytz
 from datetime import datetime
 from app_python.app import app  # Import the Flask application
 import pytest
-
-
 
 @pytest.fixture
 def client():
