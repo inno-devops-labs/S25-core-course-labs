@@ -70,7 +70,6 @@ jobs:
         with:
           args: --severity-threshold=high
           command: test
-          directory: app_python
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
