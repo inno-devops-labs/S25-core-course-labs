@@ -2116,6 +2116,7 @@ github_team_repository.devss: Creation complete after 5s [id=12124951:My-incredi
 github_team_repository.qass: Creation complete after 5s [id=12124953:My-incredible-repo]
 
 Apply complete! Resources: 6 added, 1 changed, 2 destroyed.
+![Screenshot](https://yapx.ru/v/Ya4H2-1.png)
 ```
 
 Finally, all the teams were added and each of them has their own priorities.
