@@ -33,3 +33,14 @@ Then go to http://localhost:8080/
    docker run -d -p 8000:8000 netpo4ki/go-web:latest
    ```
 Then go to http://localhost:8080/
+
+
+### Unit Tests
+   ```bash
+   cd app_go
+   ```
+   ```bash
+   go test -v ./...
+   ```
+
+![CI Status](https://github.com/NetPo4ki/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)

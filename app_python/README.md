@@ -42,3 +42,14 @@ Then go to http://localhost:8000/docs#/
    docker run -d -p 8000:8000 netpo4ki/python-web:latest
    ```
 Then go to http://localhost:8000/docs#/
+
+## Unit Tests
+
+   ```bash
+   cd app_python
+   ```
+   ```bash
+   pytest test_main.py
+   ```
+
+![CI Status](https://github.com/NetPo4ki/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)
