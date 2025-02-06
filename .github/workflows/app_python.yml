@@ -62,7 +62,7 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v6
         with:
-          context: {{defaultContext}}:app_python
-          file: ./distroless.Dockerfile
+          context: ./app_python
+          file: ./app_python/distroless.Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/s25-devops-py-dl:latest
