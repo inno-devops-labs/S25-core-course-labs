@@ -2,11 +2,16 @@ name: Flutter CI/CD Pipeline
 
 on:
   push:
+    branches:
+      - lab3
     paths:
       - "app_dart/**"
   pull_request:
+    branches:
+      - lab3
     paths:
       - "app_dart/**"
+
 
 jobs:
   build-and-test:
