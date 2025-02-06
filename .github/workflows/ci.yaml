@@ -109,7 +109,8 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          command: code test app_python -sarif-file-output=snyk.sarif
+          args: "-sarif-file-output=snyk.sarif"
+          command: code test app_python
 
       - name: 🛠 Debug - List Files
         run: ls -R
