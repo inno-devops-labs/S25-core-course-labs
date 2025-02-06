@@ -1,6 +1,6 @@
-![Workflow status](https://github.com/Tedor49/S25-core-course-labs/actions/workflows/python-app.yml/badge.svg)
-
 # Web application to display current time in Moscow
+
+![Workflow status](https://github.com/Tedor49/S25-core-course-labs/actions/workflows/python-app.yml/badge.svg)
 
 ## Overview
 
@@ -112,7 +112,6 @@ docker build -f distroless.Dockerfile -t python_msk_time_distroless:latest .
 
 Running the image is the same as with regular Docker, just replace the image name
 
-
 ## Unit Tests
 
 There are some unit tests provided inside of the [test.py](test.py) file
@@ -141,7 +140,7 @@ code coverage of the app
 There is a GitHub actions workflow configured which allows for testing the app and
 building and pushing it to DockerHub. The workflow configuration file is located
 at [.github/workflows/python-app.yml](../.github/workflows/python-app.yml).
-The workflow installs all dependencies and tests the app using the provided 
+The workflow installs all dependencies and tests the app using the provided
 test.py file. Furthermore, it also lints the code using flake8. Meanwhile, another job
 gets the DockerHub login details from secrets hosted on GitHub itself, and builds
 and pushes the image automatically. You can view the workflow status by going

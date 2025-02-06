@@ -11,7 +11,7 @@ I have implemented these best practices:
   and testing job gets done in just 10 seconds, while the other
   two still take less than 25 seconds.
 - Build code artifacts once
-  As Python is an interpreted language, it is infeasible to 
+  As Python is an interpreted language, it is infeasible to
   build some executable before using it in several places. Moreover,
   two of the jobs require access to the source code so only building
   the Docker image is doing any compilation work, and it is doing it
@@ -23,6 +23,6 @@ I have implemented these best practices:
   As I said above, the builds are very fast, not even taking half a minute
   to finish
 - Take a security-first approach
-  One of the jobs in the workflow uses Snyk to test the app for 
+  One of the jobs in the workflow uses Snyk to test the app for
   vulnerabilities. I have found no vulnerabilities this way, but it must
   be worth something.

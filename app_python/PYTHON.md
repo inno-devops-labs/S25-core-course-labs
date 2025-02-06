@@ -11,7 +11,7 @@ For hosting the WSGI server, I used [Waitress](https://github.com/Pylons/waitres
 cross-platform, decently fast, and easy to deploy. Also, it is written in pure Python, so it does
 not require any more dependencies, which contributes to the cleanliness of the project.
 
-## Best practices
+## Best practices in application
 
 ### Code quality
 
@@ -54,7 +54,7 @@ I have implemented multiple various unit tests to test different parts of applic
 
 I have implemented these best practices in my unit testing:
 
-- Avoid infrastructure dependencies 
+- Avoid infrastructure dependencies
   There are no dependencies in the test except on the standart library and the testing library
 - Naming your tests
   All tests' names describe what should happen in them
