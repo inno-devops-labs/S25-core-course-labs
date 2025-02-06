@@ -306,5 +306,16 @@ VM setup:
 - SSH key authentication
 
 
+## Task 2: Terraform for Github
+Provider setup with environment variables:
+```
+$ terraform init
+$ terraform import github_repository.S25-core-course-labs S25-core-course-labs
+github_repository.S25-core-course-labs: Importing from ID "S25-core-course-labs"...
+github_repository.S25-core-course-labs: Import prepared!
+  Prepared github_repository for import
+github_repository.S25-core-course-labs: Refreshing state... [id=S25-core-course-labs]
 
+$ 
 
+```
