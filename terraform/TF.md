@@ -1077,3 +1077,156 @@ Apply complete! Resources: 2 added, 1 changed, 0 destroyed.
 ```
 
 ## GitHub Teams Configuration
+
+__Input__:
+
+```
+azamat@azamat-pc:~/S25-core-course-labs/terraform/github_teams$ terraform apply
+```
+
+__Output__:
+
+```
+var.token
+  GitHub token
+
+  Enter a value: 
+
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_branch_default.master will be created
+  + resource "github_branch_default" "master" {
+      + branch     = "main"
+      + id         = (known after apply)
+      + repository = "S25-DevOps-Test-Org-Repo-1"
+    }
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + blocks_creations                = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + pattern                         = "main"
+      + repository_id                   = (known after apply)
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + required_approving_review_count = 1
+        }
+    }
+
+  # github_repository.repository will be created
+  + resource "github_repository" "repository" {
+      + allow_auto_merge            = false
+      + allow_merge_commit          = true
+      + allow_rebase_merge          = true
+      + allow_squash_merge          = true
+      + archived                    = false
+      + auto_init                   = true
+      + branches                    = (known after apply)
+      + default_branch              = (known after apply)
+      + delete_branch_on_merge      = false
+      + description                 = "S25 DevOps course labs test repository"
+      + etag                        = (known after apply)
+      + full_name                   = (known after apply)
+      + git_clone_url               = (known after apply)
+      + gitignore_template          = "VisualStudio"
+      + has_issues                  = false
+      + has_wiki                    = false
+      + html_url                    = (known after apply)
+      + http_clone_url              = (known after apply)
+      + id                          = (known after apply)
+      + license_template            = "mit"
+      + merge_commit_message        = "PR_TITLE"
+      + merge_commit_title          = "MERGE_MESSAGE"
+      + name                        = "S25-DevOps-Test-Org-Repo-1"
+      + node_id                     = (known after apply)
+      + private                     = (known after apply)
+      + repo_id                     = (known after apply)
+      + squash_merge_commit_message = "COMMIT_MESSAGES"
+      + squash_merge_commit_title   = "COMMIT_OR_PR_TITLE"
+      + ssh_clone_url               = (known after apply)
+      + svn_url                     = (known after apply)
+      + visibility                  = "public"
+    }
+
+  # github_team.team_backend will be created
+  + resource "github_team" "team_backend" {
+      + create_default_maintainer = false
+      + description               = "Backend team"
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "backend"
+      + node_id                   = (known after apply)
+      + privacy                   = "closed"
+      + slug                      = (known after apply)
+    }
+
+  # github_team.team_frontend will be created
+  + resource "github_team" "team_frontend" {
+      + create_default_maintainer = false
+      + description               = "Frontend team"
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "frontend"
+      + node_id                   = (known after apply)
+      + privacy                   = "closed"
+      + slug                      = (known after apply)
+    }
+
+  # github_team_repository.team_backend_in_repo will be created
+  + resource "github_team_repository" "team_backend_in_repo" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "push"
+      + repository = "S25-DevOps-Test-Org-Repo-1"
+      + team_id    = (known after apply)
+    }
+
+  # github_team_repository.team_frontend_in_repo will be created
+  + resource "github_team_repository" "team_frontend_in_repo" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "triage"
+      + repository = "S25-DevOps-Test-Org-Repo-1"
+      + team_id    = (known after apply)
+    }
+
+Plan: 7 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_team.team_backend: Creating...
+github_team.team_frontend: Creating...
+github_repository.repository: Creating...
+github_team.team_frontend: Still creating... [10s elapsed]
+github_team.team_backend: Still creating... [10s elapsed]
+github_repository.repository: Still creating... [10s elapsed]
+github_team.team_backend: Creation complete after 13s [id=12132502]
+github_team.team_frontend: Creation complete after 14s [id=12132501]
+github_repository.repository: Creation complete after 15s [id=S25-DevOps-Test-Org-Repo-1]
+github_branch_default.master: Creating...
+github_team_repository.team_backend_in_repo: Creating...
+github_team_repository.team_frontend_in_repo: Creating...
+github_branch_protection.default: Creating...
+github_branch_default.master: Creation complete after 2s [id=S25-DevOps-Test-Org-Repo-1]
+github_team_repository.team_frontend_in_repo: Creation complete after 7s [id=12132501:S25-DevOps-Test-Org-Repo-1]
+github_team_repository.team_backend_in_repo: Creation complete after 7s [id=12132502:S25-DevOps-Test-Org-Repo-1]
+github_branch_protection.default: Creation complete after 9s [id=BPR_kwDON1jnWs4DiojG]
+
+Apply complete! Resources: 7 added, 0 changed, 0 destroyed.
+```
