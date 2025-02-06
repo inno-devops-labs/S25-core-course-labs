@@ -30,8 +30,8 @@ jobs:
           restore-keys: gradle-${{ runner.os }}-
 
       - name: Wrap gradle
-        run: cd app_java
-             gradle app_java/wrapper
+        run: cd app_java |
+             gradle wrapper
 
       - name: Build with Gradle
         run: .app_java/gradlew build --no-daemon
