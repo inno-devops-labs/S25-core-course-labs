@@ -26,7 +26,18 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r app_python/requirements.txt
+      - name: Install Snyk
+        run: npm install -g snyk
 
+      - name: Authenticate with Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      - name: Run Snyk Test
+        run: snyk test
+
+      - name: Monitor with Snyk
+        run: snyk monitor
+      
       - name: Run Linter
         run: |
           pip install flake8
