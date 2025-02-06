@@ -16,5 +16,7 @@ Code follows standard python guidelines (PEP 8).
 ## Testing
 Flask's built in server was used to ensure correct functionality during development. The timestamps were verified manually against Moscow's current time. Page was refreshed few times in order to verify that the displayed time is in fact updated.
 
+I use pytest for unittesting. Currenlty there is 1 main test for application that verifies correctness of shown time.
+
 ## Code Quality
 The use of comments was minimal as the code was developed to be self-explanatory. README file was used to provide necessary documentation. The `requirements.txt` file was used to list all the dependencies for the project. 

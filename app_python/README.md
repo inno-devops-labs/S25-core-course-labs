@@ -1,5 +1,7 @@
 # Python Web Application
 
+![workflow name](https://github.com/ortieom/S25-DevOps-labs/workflows/main/badge.svg)
+
 This web application is built using the Flask to display current time in Moscow.
 
 
@@ -43,3 +45,20 @@ docker pull jodak628286/python_app:rootless
 
 Use `docker run -p 80:8080 -t <image_tag>`, where image tag is on of `python_app` (for local image), `jodak628286/python_app:python_app` (for version from task 1), or `jodak628286/python_app:rootless` (for version with best practices).
 Your app will be available at port `80`.
+
+
+## Unit Tests
+
+I use pytest to run unit tests for this application.
+
+To run tests execute `python -m pytest app_python` in the root of the repository.
+
+More details in [PYTHON.MD](./PYTHON.MD).
+
+## CI
+
+Main workflow aims at providing 3 functions:
+
+- testing code
+- applying linter checks
+- pushing image to DockerHub if everything is fine
