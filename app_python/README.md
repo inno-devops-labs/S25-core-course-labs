@@ -1,4 +1,5 @@
 # Python Web Application: Current Moscow Timezone
+![CI](https://github.com/louayfarah/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)
 
 ## Overview
 
@@ -36,11 +37,12 @@ This is a simple web application that displays the current time in Moscow. It is
 * GET /current-time/{zone}: Displays the current time in the specified zone.
 
 
-## Testing
+## Unit Tests
+To run the unit tests, use the following command:
 
-* Manually test the application by refreshing the page to ensure the time updates.
-* Verify the error handling by entering an invalid time zone.
-
+```bash
+pytest
+```
 
 ## Docker
 
@@ -63,3 +65,11 @@ This is a simple web application that displays the current time in Moscow. It is
     ```sh
     docker run -p 8000:8000 -h localhost louayfarah/current_timezone_app:latest
     ```
+
+
+## CI Workflow
+This project uses GitHub Actions for Continuous Integration. The workflow includes the following steps:
+- **Dependencies:** Install project dependencies.
+- **Linter:** Lint the code using flake8.
+- **Tests:** Run unit tests using pytest.
+- **Docker:** Build and push Docker image to DockerHub.

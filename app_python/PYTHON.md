@@ -18,7 +18,18 @@ I chose FastAPI for this web application because it is a modern, fast (high-perf
 - Used meaningful variable and function names.
 - Added docstrings for functions.
 
-## Testing
+## Testing: Unit tests
 
-- Tested the application manually to ensure it displays the correct time.
-- Verified the error handling for invalid time zones.
+### Best Practices Applied
+- **Isolation:** Each test is independent and does not rely on the state of other tests.
+- **Fixtures:** Used for setup and teardown processes.
+- **Mocking:** External dependencies are mocked to ensure tests are focused on the unit being tested.
+
+### Unit Tests Created
+- **Utility Functions:**
+  - `test_get_current_time_valid_zone`: Tests the `get_current_time` function with a valid zone.
+  - `test_get_current_time_invalid_zone`: Tests the `get_current_time` function with an invalid zone.
+- **Endpoints:**
+  - `test_root`: Tests the root endpoint.
+  - `test_display_time_valid_zone`: Tests the `/current-time/{zone}` endpoint with a valid zone.
+  - `test_display_time_invalid_zone`: Tests the `/current-time/{zone}` endpoint with an invalid zone.
