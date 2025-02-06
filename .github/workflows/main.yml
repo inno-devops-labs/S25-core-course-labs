@@ -17,10 +17,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Set working directory to app_python
-      - name: Set Working Directory
-        run: cd app_python
-
       # Set up Python environment
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -29,6 +25,7 @@ jobs:
 
       # Install dependencies
       - name: Install Dependencies
+        working-directory: ./app_python
         run: |
           python -m pip install --upgrade pip
           pip install -r ./requirements.txt
@@ -41,6 +38,7 @@ jobs:
 
       # Run tests
       - name: Run Tests
+        working-directory: ./app_python
         run: |
           python -m unittest discover tests
 
