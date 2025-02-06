@@ -54,6 +54,27 @@ jobs:
       run: |
         python -m unittest discover app_python
 
+  snyk:
+    runs-on: ubuntu-latest
+    needs: test 
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Snyk
+      uses: snyk/actions/setup@v2
+      with:
+        snyk-token: ${{ secrets.SNYK_TOKEN }} 
+
+    - name: Run Snyk test for vulnerabilities
+      run: |
+        snyk test --all-projects
+
+    - name: Run Snyk monitor to monitor project for new vulnerabilities
+      run: |
+        snyk monitor --all-projects  
+
   docker:
     runs-on: ubuntu-latest
     needs: test 
