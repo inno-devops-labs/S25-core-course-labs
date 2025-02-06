@@ -2,7 +2,7 @@
 
 Commands outputs:
     - `terraform show`
-        ```
+```
         $ terraform show
         # docker_container.nginx:
         resource "docker_container" "nginx" {
@@ -83,7 +83,7 @@ Commands outputs:
             name         = "nginx:latest"
             repo_digest  = "nginx@sha256:91734281c0ebfc6f1aea979cffeed5079cfe786228a71cc6f1f46a228cde6e34"
         }
-        ```
+```        
     - `terraform state list`
         ```
         $ terraform state list
