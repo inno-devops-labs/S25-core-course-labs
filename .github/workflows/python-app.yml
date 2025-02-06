@@ -84,9 +84,9 @@ jobs:
           docker logs dev-lab3-db
           docker run -d --name dev-lab3-back --link dev-lab3-db:db -e SQLALCHEMY_DATABASE_URI=postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@db:5432/postgres jmartynova123/dev-lab3-back:latest
 
-      - name: Check pytest installation
+      - name: Check backend container logs
         run: |
-          docker exec dev-lab3-back pytest --version
+          docker logs dev-lab3-back
 
   snyk:
     runs-on: ubuntu-latest
