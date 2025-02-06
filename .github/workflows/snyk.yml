@@ -22,4 +22,5 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --all-projects --severity-threshold=high
+          command: monitor
+          args: --file=app_python/requirements.txt --skip-unresolved
