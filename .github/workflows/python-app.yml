@@ -29,8 +29,9 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        cd app_python
-        pytest 
+        pytest
+      with:
+        context: app_python
 
   docker:
     runs-on: ubuntu-latest
