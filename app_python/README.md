@@ -1,86 +1,97 @@
 # Python Web Application
 
 ## Overview
-This web application displays the current time in Moscow. It is built using Flask, a lightweight Python framework.
+This is a simple web application that displays the current time in Moscow. It is built using Flask, a lightweight Python web framework.
 
-Features
-
-•	Displays current Moscow time.
-
-•	Refresh the page to see updated time.
+### Features
+- Displays the current Moscow time.
+- Refresh the page to see the updated time.
+- Lightweight and fast.
 
 ## Requirements
 - Python 3.8+
 - Flask
 - pytz
 
-## Local Installation and Running
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/ramilevna/S25-core-course-labs.git
-   ```
-   
-2.	Navigate to the app_javascript directory:
+## Installation and Running Locally
 
-   ```bash
-   cd app_python
-   ```
+### 1. Clone the repository:
+```bash
+git clone https://github.com/ramilevna/S25-core-course-labs.git
+```
 
-3.	Install dependencies:
+### 2. Navigate to the application directory:
+```bash
+cd app_python
+```
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+### 3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-4.	Run the application:
+### 4. Run the application:
+```bash
+python app.py
+```
 
-   ```bash
-   python app.py
-   ```
+### 5. Open the application in your browser:
+```
+http://127.0.0.1:8080/
+```
 
-5.	Open the application in your browser:
+## Running with Docker
 
-    URL: http://127.0.0.1:8080/
+### 1. Build the Docker image:
+```bash
+docker build -t ramilevna/app_python:latest .
+```
 
+### 2. Run the container:
+```bash
+docker run --rm -p 8080:8080 ramilevna/app_python:latest
+```
 
-## Docker Running
+### 3. Pull and run from Docker Hub:
+```bash
+docker pull ramilevna/app_python:v1.0
+docker run --rm -p 8080:8080 ramilevna/app_python:v1.0
+```
 
-1. Build the Image
+## Running with Distroless Image
 
-   ```bash
-   docker build -t ramilevna/app_python:latest .
-   ```
-2. Run the Container
+To enhance security and efficiency, this application supports Distroless images.
 
-   ```bash
-   docker run --rm -p 8080:8080 ramilevna/app_python:latest
-   ```
+### **Distroless Base Images Used:**
+- **Python App**: `gcr.io/distroless/python3-debian12:nonroot`
+- **JavaScript App**: `gcr.io/distroless/nodejs18-debian12:nonroot`
 
-3. Pull and Run from Docker Hub
+### **Key Benefits of Distroless:**
+- Smaller image size
+- No shell access (reduces attack surface)
+- Optimized performance
 
-   ```bash
-   docker pull ramilevna/app_python:v1.0
-   docker run --rm -p 8080:8080 ramilevna/app_python:v1.0
-   ```
-   
-## Distroless Image Version
-I implemented Distroless images for better security and efficiency.
+### **Running the Distroless Version:**
 
-- **Python App**: Uses `gcr.io/distroless/python3-debian12:nonroot`
-- **JavaScript App**: Uses `gcr.io/distroless/nodejs18-debian12:nonroot`
-- **Benefits**:
-  - Smaller size
-  - No shell (reduced attack surface)
-  - Optimized performance
-##  Docker (Distroless Dockerfiles) Running:
+### 1. Build the Distroless Image:
+```bash
+docker build -t app_python:distroless -f distroless.Dockerfile .
+```
 
-1. Build the Distroless Images
+### 2. Run the Distroless Container:
+```bash
+docker run --rm -p 8080:8080 app_python:distroless
+```
 
-   ```bash
-   docker build -t app_python:distroless -f distroless.Dockerfile .
-   ```
-2. Run the Distroless Containers
+## Running Unit Tests
 
-   ```bash
-   docker run --rm -p 8080:8080 app_python:distroless
-   ```
+This project includes unit tests to ensure application reliability. The tests use `pytest` and are located in the `tests/` directory.
+
+### Run the tests:
+```sh
+PYTHONPATH=. pytest tests/
+```
+
+# Python Application CI/CD Pipeline
+
+![CI Status](https://github.com/ramilevna/S25-core-course-labs/actions/workflows/python-ci.yml/badge.svg)

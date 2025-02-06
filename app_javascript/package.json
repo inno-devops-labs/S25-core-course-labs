@@ -13,6 +13,8 @@
     "express": "^4.21.2",
     "moment-timezone": "^0.5.46"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "supertest": "^7.0.0"
+  },
   "description": ""
 }
