@@ -62,7 +62,8 @@ pytest
 ## CI Pipeline
 
 This project uses GitHub Actions for continuous integration (CI).
-The CI pipeline is triggered on `push` and `pull_request` events to the `master` and `lab3` branches.
+The CI pipeline is triggered on `push` and `pull_request` events to the `master` and `lab3` branches and 
+the changes are in the `app_python/` directory or the `.github/workflows/ci.yaml` file.
 
 ### Steps in the CI Pipeline:
 1. **Install Dependencies**: Installs the required dependencies from `app_python/requirements.txt`.
