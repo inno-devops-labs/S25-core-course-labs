@@ -37,7 +37,7 @@ jobs:
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        target-path: ./app_python
+        args: --file=app_python/requirements.txt
 
     - name: Run linter
       run: |
