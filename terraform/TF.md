@@ -31,7 +31,7 @@ terraform apply
 
 ```cmd
 alihamdan@Alis-MacBook-Air-2 learn-terraform-docker-container % terraform apply
-docker_image.app_python: Refreshing state... [id=sha256:d8a0b68df6bb582874c17b2e62fdbb907d8a46d8b4bc86122c831ce5cfc2d73bsaleemasekrea/app_python:latest]
+docker_image.app_python: Refreshing state... [id=sha256:d8a0b68df6bb582874c17b2e62fdbb907d8a46d8b4bc86122c831ce5cfc2d73balihamdan/app_python:latest]
 docker_container.app_python: Refreshing state... [id=56f585e2bf4a9df7ee88a2cc4fd6870dd260c08417a7d56fe124e048f195dbf7]
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
