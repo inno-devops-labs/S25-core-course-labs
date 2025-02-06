@@ -1,3 +1,5 @@
+[![CI Workflow](https://github.com/mngcndl/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)](https://github.com/mngcndl/S25-core-course-labs/actions/workflows/ci.yml)
+
 # Instructrions to run the project
 
 ## Requirements:
@@ -91,5 +93,3 @@ You can pull the image using the following command:
 ```bash
 docker pull mangocandle/app_python:latest
 ```
-
-[![CI Workflow](https://github.com/mngcndl/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)](https://github.com/mngcndl/S25-core-course-labs/actions/workflows/ci.yml)
