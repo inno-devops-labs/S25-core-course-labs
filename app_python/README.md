@@ -184,3 +184,5 @@ http://localhost:5000
 ```
 
 For detailed information about Docker configuration, best practices, and security measures, see [DOCKER.md](DOCKER.md).
+
+[![Python CI](https://github.com/elpicode/S25-core-course-labs/actions/workflows/python-ci.yml/badge.svg)](https://github.com/elpicode/S25-core-course-labs/actions/workflows/python-ci.yml)
