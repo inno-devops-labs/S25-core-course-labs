@@ -25,4 +25,4 @@ CI workflow created using GitHub Actions to build and test the project. The file
 
 3. **Security**: Login to DockerHub and Snyk managed with GitHub secrets and access tokens.
 
-4. **Snyk**: Check the project for vulnerabilities and upload results to GitHub Code Scanning.
+4. **Snyk**: Check the project for vulnerabilities.

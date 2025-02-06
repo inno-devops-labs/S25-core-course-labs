@@ -28,6 +28,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r app_python/requirements.txt
+          pip install flake8
 
   build:
     runs-on: ubuntu-latest
@@ -35,12 +36,13 @@ jobs:
     steps:
       - name: Lint (flake8)
         run: |
-          pip install flake8
-          flake8 app_python/
+          cd app_python
+          flake8 .
 
       - name: Run unit tests
         run: |
-          python -m unittest discover app_python/test_app.py
+          cd app_python
+          python -m unittest discover . "*test_*.py"
 
   docker:
     needs: [ setup, build, snyk-scan ]
@@ -83,10 +85,3 @@ jobs:
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --sarif-file-output=snyk.sarif
-
-      - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: snyk.sarif
