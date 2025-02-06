@@ -36,7 +36,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest ./S25-core-course-labs/app_python/test/test_python.py
+          pytest ./app_python/test/test_python.py
 
   docker:
     runs-on: ubuntu-latest
