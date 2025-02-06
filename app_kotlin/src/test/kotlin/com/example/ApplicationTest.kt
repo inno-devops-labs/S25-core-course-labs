@@ -6,9 +6,10 @@ import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldMatch
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
-import io.ktor.server.testing.*
+import io.ktor.server.testing.handleRequest
+import io.ktor.server.testing.withTestApplication
 
-class MainTest : DescribeSpec({
+class ApplicationTest : DescribeSpec({
     describe("Ktor Application Tests") {
         it("should return 'Current Time in Moscow:' with a valid date") {
             withTestApplication({ module() }) {
