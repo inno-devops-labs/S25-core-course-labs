@@ -56,13 +56,9 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Navigate to app_java Directory
-        run: cd app_java || true
       - name: Grant Execute Permission to mvnw
         working-directory: ./app_java
         run: chmod +x mvnw
-      - name: Move inside
-        run: cd ./app_java
 
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven@master
