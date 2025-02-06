@@ -157,6 +157,6 @@ The `pytest.ini` file configures:
 ## Continuous Integration
 
 Tests are automatically run in GitHub Actions:
-1. On every push to main
+1. On every push to branch
 2. On pull requests
 3. Before Docker image builds
