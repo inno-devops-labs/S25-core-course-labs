@@ -63,8 +63,7 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
         with:
-          working-directory: ./app_python
-          context: .
+          context: ./app_python
           file: ./Dockerfile
           push: true
           tags: whatislav/moscow-time-app:latest
