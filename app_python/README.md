@@ -157,3 +157,44 @@ pytest
 All dependencies you can find in `requirements.txt`.
 
 ---
+
+## Continuous Integration (CI) with GitHub Actions
+
+This project uses GitHub Actions for Continuous Integration (CI) to automate building, testing, and linting.
+
+### CI Workflow Overview
+
+The CI pipeline performs the following steps:
+
+- **Install Dependencies:**
+   Installs Python dependencies from `requirements.txt`.
+- **Run Linter:**
+   Checks code style and formatting using `flake8`.
+- **Run Tests:**
+   Executes unit tests using pytest.
+- **Build and Push Docker Image:**
+   Builds a Docker image and pushes it to Docker Hub.
+
+### Setting Up the CI Pipeline
+
+**Docker Hub Credentials:**
+
+To push Docker images, add your Docker Hub credentials as GitHub Secrets:
+
+- `DOCKER_HUB_USERNAME`: Your Docker Hub username.
+
+- `DOCKER_HUB_TOKEN`: Your Docker Hub access token.
+
+These secrets are used in the `docker-build-and-push` job.
+
+### Workflow File
+
+The CI workflow is defined in `.github/workflows/ci.yml`.
+
+### Running the Pipeline
+
+The pipeline runs automatically on every push and pull_request to the master branch.
+
+You can also manually trigger the workflow from the Actions tab in your GitHub repository.
+
+---
