@@ -52,6 +52,6 @@ jobs:
       - name: Build and push Docker image
         run: |
           cd app_python
-          docker build -t app_python:latest .
+          docker build --cache-from=app_python:latest -t app_python:latest .
           docker tag app_python:latest MattWay224/app_python:latest
           docker push MattWay224/app_python:latest
