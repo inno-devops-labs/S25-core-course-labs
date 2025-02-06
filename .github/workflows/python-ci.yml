@@ -18,6 +18,14 @@ jobs:
       with:
         python-version: '3.10'
 
+    - name: Cache Python dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
     - name: Install dependencies
       run: |
         cd app_python
@@ -34,7 +42,7 @@ jobs:
       run: |
         cd app_python
         pip install pytest
-        pytest lab3_tests.py
+        pytest lab3_tests.py -n 3
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v2

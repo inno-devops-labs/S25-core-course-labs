@@ -73,4 +73,5 @@ For the Docker Hub login step, you need to set up the following GitHub secrets:
 - `DOCKER_USERNAME`
 - `DOCKER_PASSWORD`
 
-
+# Badge
+[![Python CI](https://github.com/Akvadevka/S25-core-course-labs/actions/workflows/python-ci.yml/badge.svg)](https://github.com/Akvadevka/S25-core-course-labs/actions/workflows/python-ci.yml)
