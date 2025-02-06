@@ -38,7 +38,7 @@ jobs:
       # Step 5: Run tests
       - name: Run Tests
         run: |
-          python -m unittest discover tests
+          python -m unittest discover app_python/tests
 
   docker-build-push:
     needs: build-and-test  # Ensure this step runs after the build-and-test job
