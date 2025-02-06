@@ -63,6 +63,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./distroless.Dockerfile
+          file: ./app_python/distroless.Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/s25-devops-py-dl:latest
