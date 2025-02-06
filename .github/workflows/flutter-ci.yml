@@ -5,12 +5,12 @@ on:
     branches:
       - lab3
     paths:
-      - "app_dart/**"
+      - "app_dart/nothern_lights_app/**"
   pull_request:
     branches:
       - lab3
     paths:
-      - "app_dart/**"
+      - "app_dart/nothern_lights_app/**"
 
 
 jobs:
