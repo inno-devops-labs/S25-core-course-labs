@@ -1,0 +1,75 @@
+name: Python CI/CD
+
+on:
+  push:
+    paths:
+      - "app_python/**"
+  pull_request:
+    paths:
+      - "app_python/**"
+
+jobs:
+  test:
+    name: Test Python App
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11"
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('app_python/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          cd app_python
+          pip install -r requirements.txt
+          pip install flake8
+
+      - name: Run Linter (flake8)
+        run: |
+          cd app_python
+          flake8 --max-line-length=88
+
+      - name: Run Unit Tests
+        run: |
+          python -m unittest discover app_python/tests
+
+  docker:
+    name: Build & Push Python Docker Image
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Python App
+        run: |
+          docker build -t kaaxd/python-app:latest ./app_python
+          docker push kaaxd/python-app:latest
+
+      - name: Run Snyk Security Scan
+        uses: snyk/actions/python-3.8@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
