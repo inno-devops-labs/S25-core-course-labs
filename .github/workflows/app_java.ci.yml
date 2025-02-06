@@ -22,6 +22,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Install Gradle
+        uses: gradle/actions/setup-gradle@v3
+
       - name: Cache Gradle dependencies
         uses: actions/cache@v3
         with:
@@ -29,15 +32,15 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: gradle-${{ runner.os }}-
 
-      - name: Wrap gradle
-        run: cd app_java |
-             gradle wrapper
-
       - name: Build with Gradle
-        run: .app_java/gradlew build --no-daemon
+        run: |
+          cd app_java
+          gradle build --no-daemon
 
       - name: Run tests
-        run: .app_java/gradlew test --no-daemon
+        run: |
+          cd app_java
+          gradle test --no-daemon
 
   docker:
     runs-on: ubuntu-latest
@@ -48,4 +51,5 @@ jobs:
 
       - name: Build and push Docker image
         run: |
+          cd app_java
           docker build -t java-spring-app:latest .
