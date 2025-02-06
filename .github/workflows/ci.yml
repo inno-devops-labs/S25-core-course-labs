@@ -76,5 +76,3 @@ jobs:
             context: ./app_python
             push: true
             tags: fridorovich04/app_python:latest
-            cache-from: type=registry,ref=fridorovich04/app_python:buildcache
-            cache-to: type=registry,ref=fridorovich04/app_python:buildcache,mode=max
