@@ -1,6 +1,9 @@
 name: Python Moscow time application
 
-on: push
+on:
+  push:
+    paths:
+      - app_python/**
 
 permissions:
   contents: read
@@ -45,5 +48,5 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: app_python
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/python_msk_time:latest
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/moscowtimeimagepython:latest
           push: true

@@ -4,16 +4,20 @@ import sys
 import pytest
 
 import app as app_python_app
+
 """
 Primarily taken from https://flask.palletsprojects.com/en/stable/tutorial/tests/ and
 then changed to be applicable to this project, as it is simpler than their example.
 This is basically the arranging part.
 """
+
+
 @pytest.fixture
 def app():
     print(sys.path)
     this_app = app_python_app.app
     yield this_app
+
 
 @pytest.fixture
 def client(app):
@@ -29,12 +33,14 @@ def test_status(client, app):
     # Assert
     assert response.status_code == 200
 
+
 def test_current_time_text(client, app):
     # Act
     response = client.get('/')
 
     # Assert
     assert b'Current Time in Moscow:' in response.data
+
 
 def test_the_time_in_moscow(client, app):
     # Arrange
