@@ -94,3 +94,12 @@ resource "docker_container" "msk_time" {
     }
 }
 ```
+
+## Github repo management
+
+To apply changes I needed to import the repo resourse, so terraform would not create it again.
+
+### Best practices
+
+- Use tfvars and `TF_VAR_*` pattern to safely pass PAT.
+- Use `terraform plan` to validate the changes to be applied.
