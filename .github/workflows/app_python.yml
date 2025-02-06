@@ -71,7 +71,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./app_python
-          file: ./app_python/distroless.Dockerfile
+          file: ./app_python/Dockerfile
           push: true
           tags: gendiro/moscow-time-distroless:latest
           cache-from: type=registry,ref=gendiro/moscow-time-distroless:buildcache

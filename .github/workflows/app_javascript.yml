@@ -75,9 +75,9 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./app_javascript
-          file: ./app_javascript/distroless.Dockerfile
+          file: ./app_javascript/Dockerfile
           push: true
           tags: gendiro/js-app-distroless:latest
-          cache-from: type=registry,ref=gendiro/js-app-distroless:buildcache
+          cache-from: type=registry,ref=gendiro/js-app:buildcache
           cache-to: type=inline
 
