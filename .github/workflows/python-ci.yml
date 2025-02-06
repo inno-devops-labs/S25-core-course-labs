@@ -51,6 +51,6 @@ jobs:
       - name: Run Snyk to Check for Vulnerabilities
         uses: snyk/actions/python-3.9@master
         with:
-          command: test code
+          command: code test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_KEY }}
