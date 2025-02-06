@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: ci for java
 
 on:
   push:
@@ -48,8 +48,28 @@ jobs:
         working-directory: ./app_java
         run: mvn test
 
-  docker-worker:
+  security:
     needs: [build-lint-test]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 7: Install Snyk
+      - name: Install Snyk
+        run: npm install -g snyk
+
+      # Step 8: Run Snyk Vulnerability Check
+      - name: Run Snyk Vulnerability Check
+        uses: snyk/snyk-action@master
+        with:
+          args: test --file=./app_java/pom.xml --skip-unresolved
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  docker-worker:
+    needs: [build-lint-test, security]
     runs-on: ubuntu-latest
 
     steps:
