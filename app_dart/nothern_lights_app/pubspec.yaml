@@ -19,7 +19,6 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  environment:
   sdk: ">=3.1.0 <3.5.0"
 
 # Dependencies specify other packages that your package needs in order to work.
