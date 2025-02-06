@@ -1,7 +1,8 @@
 # tests/test_app.py
 import re
 from fastapi.testclient import TestClient
-from app import app  # Adjust the import if your app file has a different name
+# Adjust the import if your app file has a different name
+from app_python.app import app
 
 client = TestClient(app)
 
@@ -26,17 +27,15 @@ def test_show_time_response_structure():
 def test_show_time_format():
     """
     Test that the message returned from the '/' endpoint
-    contains a datetime
-    in the format 'YYYY-MM-DD HH:MM:SS' after the expected text.
+    contains a datetime in the format 'YYYY-MM-DD HH:MM:SS'
+    after the expected text.
     """
     response = client.get("/")
     data = response.json()
 
-    # Define a regex pattern that matches:
-    # "The current time in Moscow is: " followed
-    # by a datetime string formatted as YYYY-MM-DD HH:MM:SS
-    pattern = r"The current time in Moscow is \
-    : \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}"
+    # Define a regex pattern on a single line:
+    # "The current time in Moscow is: " followed by a datetime string formatted as YYYY-MM-DD HH:MM:SS
+    pattern = r"The current time in Moscow is: \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}"
     assert re.fullmatch(pattern, data["message"]), (
         "The message does not match the expected format: "
         "'The current time in Moscow is: YYYY-MM-DD HH:MM:SS'"
