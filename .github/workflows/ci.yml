@@ -73,6 +73,6 @@ jobs:
         - name: Build and push
           uses: docker/build-push-action@v4
           with:
-            context: ./app_python
+            context: /app_python
             push: true
             tags: fridorovich04/app_python:latest
