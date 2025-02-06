@@ -1,0 +1,84 @@
+{
+  "version": 4,
+  "terraform_version": "1.10.5",
+  "serial": 3,
+  "lineage": "18ea2d62-0605-36f4-86e5-d19d273c1f84",
+  "outputs": {},
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "github_repository",
+      "name": "core-course-labs",
+      "provider": "provider[\"registry.terraform.io/hashicorp/github\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "allow_auto_merge": false,
+            "allow_merge_commit": true,
+            "allow_rebase_merge": true,
+            "allow_squash_merge": true,
+            "allow_update_branch": false,
+            "archive_on_destroy": null,
+            "archived": false,
+            "auto_init": true,
+            "default_branch": "main",
+            "delete_branch_on_merge": false,
+            "description": "Terraform-managed repository",
+            "etag": "W/\"cc3f89d14aee34cbe3fd4fd999bbe4e89d7314aaf8abd924dd5038cbf01143a6\"",
+            "full_name": "AlexeyKureykin/DevOps-labs",
+            "git_clone_url": "git://github.com/AlexeyKureykin/DevOps-labs.git",
+            "gitignore_template": null,
+            "has_discussions": false,
+            "has_downloads": false,
+            "has_issues": false,
+            "has_projects": false,
+            "has_wiki": false,
+            "homepage_url": "",
+            "html_url": "https://github.com/AlexeyKureykin/DevOps-labs",
+            "http_clone_url": "https://github.com/AlexeyKureykin/DevOps-labs.git",
+            "id": "DevOps-labs",
+            "ignore_vulnerability_alerts_during_read": null,
+            "is_template": false,
+            "license_template": null,
+            "merge_commit_message": "PR_TITLE",
+            "merge_commit_title": "MERGE_MESSAGE",
+            "name": "DevOps-labs",
+            "node_id": "R_kgDON1M3Ng",
+            "pages": [],
+            "primary_language": "",
+            "private": false,
+            "repo_id": 928200502,
+            "security_and_analysis": [
+              {
+                "advanced_security": [],
+                "secret_scanning": [
+                  {
+                    "status": "enabled"
+                  }
+                ],
+                "secret_scanning_push_protection": [
+                  {
+                    "status": "enabled"
+                  }
+                ]
+              }
+            ],
+            "squash_merge_commit_message": "COMMIT_MESSAGES",
+            "squash_merge_commit_title": "COMMIT_OR_PR_TITLE",
+            "ssh_clone_url": "git@github.com:AlexeyKureykin/DevOps-labs.git",
+            "svn_url": "https://github.com/AlexeyKureykin/DevOps-labs",
+            "template": [],
+            "topics": [],
+            "visibility": "public",
+            "vulnerability_alerts": false,
+            "web_commit_signoff_required": false
+          },
+          "sensitive_attributes": [],
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ=="
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}
