@@ -3,16 +3,9 @@ name: 🏗️ CI Workflow
 on:
   push:
     branches:
-      - master
       - lab3
     paths:
       - 'app_python/**'  # 🎯 Run only if changes occur in app_python/
-  pull_request:
-    branches:
-      - master
-      - lab3
-    paths:
-      - 'app_python/**'  # 🎯 Run only if PR modifies app_python/
 
 jobs:
   build:
