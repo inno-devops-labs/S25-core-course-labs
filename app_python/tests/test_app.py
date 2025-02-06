@@ -34,9 +34,12 @@ def test_show_time_format():
     data = response.json()
 
     # Define a regex pattern on a single line:
-    # "The current time in Moscow is: " followed by a datetime string formatted as YYYY-MM-DD HH:MM:SS
-    pattern = r"The current time in Moscow is: \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}"
-    assert re.fullmatch(pattern, data["message"]), (
+    # "The current time in Moscow is: " followed by
+    # a datetime string formatted as YYYY-MM-DD HH:MM:SS
+    pattern = r"The current time in Moscow is: \d{4}-\d{2}-\d{2} " \
+              r"\d{2}:\d{2}:\d{2}"
+    error_msg = (
         "The message does not match the expected format: "
         "'The current time in Moscow is: YYYY-MM-DD HH:MM:SS'"
     )
+    assert re.fullmatch(pattern, data["message"]), error_msg
