@@ -42,3 +42,8 @@ docker pull darrpyy/devops
 ```bash
 docker run -p 5000:5000 darrpyy/devops
 ```
+
+### Unit tests
+
+### CI workflow
+
