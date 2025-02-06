@@ -19,7 +19,8 @@ jobs:
          # cache-dependency-path: app_go/go.sum i dont have any Dependencies ))
 
       - name: Install Dependencies
-        run: go mod download
+        working-directory: app_go
+        run: go mod tidy
 
       - name: Run Linter
         run:
@@ -47,7 +48,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --severity-threshold=high ./app --skip-unresolved 
+          args: --skip-unresolved ./app_go
         
 
   docker:
