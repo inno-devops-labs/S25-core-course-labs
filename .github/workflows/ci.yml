@@ -6,10 +6,7 @@ on:
   pull_request:
     branches:
       - master
-    paths:
-      - ".github/workflows/app_python.yml"
-      - "app_python/**"
-
+      
 jobs:
   setup:
     runs-on: ubuntu-latest
@@ -41,7 +38,7 @@ jobs:
     needs: setup
     defaults:
       run:
-        working-directory: app_python
+        working-directory: ./app_python
     steps:
       - name: Lint (flake8)
         run: |
