@@ -46,6 +46,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v6
       with:
-        context: .
+        context: app_python 
+        file: app_python/Dockerfile
         push: true
         tags: user/app:latest
