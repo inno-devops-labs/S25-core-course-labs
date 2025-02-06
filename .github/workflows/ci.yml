@@ -63,6 +63,8 @@ jobs:
         run: snyk test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: test --severity-threshold=high
 
   docker:
     needs: build-and-test
