@@ -51,14 +51,17 @@ jobs:
     name: Security check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Navigate to app_java Directory
+        run: cd app_java || true  # Ensure the directory exists
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven-3-jdk-17@master
+        uses: snyk/actions/maven-3-jdk-17@latest
         with:
-          args: --skip-unresolved ./app_java
+          args: --skip-unresolved
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-    working-directory: ./app_java
+
   docker-worker:
     needs: [build-lint-test, security]
     runs-on: ubuntu-latest
