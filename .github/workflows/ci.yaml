@@ -2,8 +2,6 @@ name: 🏗️ CI Workflow
 
 on:
   push:
-    branches:
-      - main
     paths:
       - 'app_python/**'  # 🎯 Run only if changes occur in app_python/
   pull_request:
