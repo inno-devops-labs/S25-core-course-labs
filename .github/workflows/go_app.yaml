@@ -23,6 +23,7 @@ jobs:
         run: go mod tidy
 
       - name: Run Linter
+        working-directory: app_go
         run: |
           go fmt
           go vet
