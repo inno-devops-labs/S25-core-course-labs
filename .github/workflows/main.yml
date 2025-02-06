@@ -63,6 +63,7 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
         with:
+          working-directory: ./app_python
           context: .
           file: ./Dockerfile
           push: true
