@@ -43,4 +43,34 @@ docker run -p 5000:5000 ksenon9/lab2:latest
 ```
 
 # Unit Tests
+This project includes unit tests to ensure the correctness of the application. The tests are located in the `lab3_tests.py` file and are run automatically as part of the CI workflow.
+To run the tests locally, use the following command:
+
+```bash
+pytest lab3_tests.py
+```
+
+# CI Workflow
+
+This project uses GitHub Actions for Continuous Integration (CI). The CI workflow is defined in the `.github/workflows/python-ci.yml` file and automates the process of building, testing, and deploying the application.
+
+## Workflow Steps
+
+1. **Dependencies**: Installs the necessary Python dependencies
+   
+2. **Linter**: The linter (Flake8) checks the project for style issues and potential errors.
+
+3. **Tests**: Runs the unit tests to ensure that the application behaves as expected.
+
+4. **Docker Integration**:
+   - Logs into Docker Hub using credentials stored in GitHub Secrets.
+   - Builds the Docker image for the project.
+   - Pushes the Docker image to Docker Hub.
+
+## Secrets Configuration
+
+For the Docker Hub login step, you need to set up the following GitHub secrets:
+- `DOCKER_USERNAME`
+- `DOCKER_PASSWORD`
+
 
