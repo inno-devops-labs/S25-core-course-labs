@@ -28,3 +28,5 @@ The tests ensure that the `moscow_time` view:
 2. **Automated Assertions:** Using `assertEqual`, `assertIsNotNone`, and `assertLessEqual` ensures correctness.
 3. **Regular Expressions for Validation:** The response is checked for correct date-time format using regex.
 4. **Time Accuracy with Allowance:** A 5-second tolerance ensures tests don't fail due to execution delays.
+
+
