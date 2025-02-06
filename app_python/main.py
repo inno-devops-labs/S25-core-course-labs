@@ -12,7 +12,8 @@ def get_time():
         moscow_time = datetime.now(
             pytz.timezone('Europe/Moscow')).strftime('%H:%M:%S')
         return render_template("index.html", time=moscow_time)
-    except:
+    except Exception as e:
+        app.logger.error(f"An error occurred: {e}")
         return "Internal server error", 500
 
 
