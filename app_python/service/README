@@ -1,0 +1,23 @@
+
+# Service deployment
+
+### Local installation and testing
+
+Optional: you may wanna set up venv
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Beforehand, install the dependencies:
+
+```bash
+pip install -r reqiurements.txt
+```
+
+And starting the service is as easy as running one command (make sure project root is `service` folder)!
+
+```bash
+python3 -m uvicorn main:app
+```
