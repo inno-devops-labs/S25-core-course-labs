@@ -55,7 +55,6 @@ function drawGame() {
     score += 10;
     scoreElement.textContent = `Score: ${score}`;
     generateFood();
-    gameSpeed = Math.max(50, gameSpeed - 2);
   } else {
     snake.pop();
   }
@@ -64,41 +63,35 @@ function drawGame() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   ctx.fillStyle = '#2ecc71';
-  snake.forEach((segment, index) => {
+  snake.forEach(segment => {
     ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize - 2, gridSize - 2);
   });
 
   ctx.fillStyle = '#e74c3c';
   ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize - 2, gridSize - 2);
-
-  if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
-    gameOver();
-  }
-
-  for (let i = 1; i < snake.length; i++) {
-    if (head.x === snake[i].x && head.y === snake[i].y) {
-      gameOver();
-    }
-  }
 }
 
 function generateFood() {
-  food = {
-    x: Math.floor(Math.random() * tileCount),
-    y: Math.floor(Math.random() * tileCount)
-  };
+  let newFood;
+  do {
+    newFood = {
+      x: Math.floor(Math.random() * tileCount),
+      y: Math.floor(Math.random() * tileCount),
+    };
+  } while (newFood.x === food.x && newFood.y === food.y);
 
-  snake.forEach(segment => {
-    if (segment.x === food.x && segment.y === food.y) {
-      generateFood();
-    }
-  });
+  food.x = newFood.x;
+  food.y = newFood.y;
 }
 
 function gameOver() {
   clearInterval(gameLoop);
   alert(`Game Over! Score: ${score}`);
   resetGame();
+}
+
+function stopGame() {
+  clearInterval(gameLoop);
 }
 
 function resetGame() {
@@ -114,3 +107,7 @@ function resetGame() {
 
 generateFood();
 gameLoop = setInterval(drawGame, gameSpeed);
+
+if (typeof module !== 'undefined') {
+  module.exports = { generateFood, drawGame, resetGame, snake, food, score, stopGame };
+}
