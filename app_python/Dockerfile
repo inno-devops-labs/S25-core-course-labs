@@ -14,7 +14,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application source code (excluding unnecessary files via .dockerignore)
-COPY app.py .
+COPY src/ src/
 
 # Set ownership and permissions
 RUN chown -R appuser:appgroup /app
@@ -26,4 +26,4 @@ USER appuser
 EXPOSE 5000
 
 # Run the application
-CMD ["python", "main.py"]
+CMD ["python", "src/main.py"]
