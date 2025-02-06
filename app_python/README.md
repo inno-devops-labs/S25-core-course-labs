@@ -33,7 +33,7 @@ or if builded localy
 
 ## Unit Tests
 
-Application does have unit tests. They are automatically running on pull requests by CI
+Application does have unit tests. They are automatically running on pull requests by CI.
 
 To run them manually type `python -m unittest discover tests`
 
