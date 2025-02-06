@@ -19,5 +19,23 @@ and ideal for small applications like displaying the current time.
 - Verified time updates by refreshing the page.
 - Checked that the time displayed on the web page matches the current time in Moscow.
 
+## Unit Testing:
+
+I implemented unit tests to validate the HTTP response status, template rendering, and the accuracy of the displayed time.
+
+### **Unit Tests Implemented:**
+- **Response Code Test**: Ensures that the homepage (`/`) returns a **200 OK** response.
+- **Template Rendering Test**: Confirms that the `index.html` template is properly rendered.
+- **Time Presence Test**: Verifies that the `current_time` variable is included in the rendered template context.
+- **Time Format Validation**: Ensures that the displayed time follows the correct `HH:MM:SS` format (without the date).
+- **Correct Moscow Time Test**: Checks that the displayed time matches the **current Moscow time**.
+
+### Best Practices in Unit Testing:
+- **Structured Test Organization**: `pytest` fixtures and `conftest.py` are used to separate concerns.
+- **Reusable Fixtures**: `app()`, `server()`, and `captured_templates()` to prevent code duplication.
+- **Testing Mode Enabled**: Configured `app.config["TESTING"] = True` to isolate tests from external dependencies.
+- **Strict Assertions**: Explicit assertions like `assert response.status_code == 200` to guarantee correctness.
+- **Format Validation with Regex**: Enforced strict time formatting rules using regex (`\d{2}:\d{2}:\d{2}`).
+- **Timezone-Aware Validation**: Verified that the application correctly displays **Moscow time (Europe/Moscow)**.
 
 

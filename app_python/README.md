@@ -38,3 +38,21 @@ How to Run?
 ```sh
 docker run -p 8080:5000 emiliogain/my-python-app
 ```
+
+## Unit Tests
+
+This project includes unit tests to verify the correctness and reliability of the application.
+
+### **Running Unit Tests**
+Run the following command to execute the tests:
+```sh
+pytest
+```
+
+### **What is Tested?**  
+
+- **Status Code**: Homepage (`/`) returns **200 OK**.  
+- **Template Rendering**: `index.html` loads correctly.  
+- **Time Presence**: `current_time` exists in the template.  
+- **Time Format**: Time follows **HH:MM:SS** format.  
+- **Moscow Time**: Displays the correct time for **Europe/Moscow**.  
