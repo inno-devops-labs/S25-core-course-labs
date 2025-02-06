@@ -40,3 +40,12 @@ To run the unit tests, with dependencies installed locally, use the `pytest` com
 pip install -r requirements.txt
 pytest
 ```
+
+## Continuous Integration (CI)
+
+This project uses GitHub Actions for CI. The workflow includes:
+
+- Installing dependencies.
+- Running a linter (Black).
+- Running unit tests.
+- Building and pushing a Docker image.
