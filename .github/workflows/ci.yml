@@ -34,7 +34,7 @@ jobs:
           cd app_python
           ls
           
-          flake8 . --count --show-source --statistics || true
+          flake8 . --count --show-source --statistics 
       - name: Start Flask App
         run: |
           cd app_python
@@ -43,7 +43,6 @@ jobs:
 
 
       - name: Run tests
-        # working-directory: lab3/app_python
         run: |
           cd app_python
           pytest -v tests/
