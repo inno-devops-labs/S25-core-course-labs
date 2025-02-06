@@ -1,97 +1,224 @@
-# Docker Implementation Details
+# TF Documentation
 
 ## Best Practices Implemented
 
-1. **Base Image Selection**
+## Terraform Output
 
-   - Using official Python slim image for minimal size
-   - Specified exact version (3.11.4) with SHA256 hash for reproducibility
+### terraform show
 
-2. **Security**
+```bash
+# docker_container.app_container:
 
-   - Running as non-root user 'appuser'
-   - Minimal permissions set
-   - No sensitive data in image
+resource "docker_container" "app_container" {
+attach = false
+bridge = [90mnull[0m[0m
+command = [
+"redis-server",
+]
+container_read_refresh_timeout_milliseconds = 15000
+cpu_set = [90mnull[0m[0m
+cpu_shares = 0
+domainname = [90mnull[0m[0m
+entrypoint = [
+"docker-entrypoint.sh",
+]
+env = []
+hostname = "a8348491799f"
+id = "a8348491799fadce35441b972870398cb42da6ca52ac168aa07f5942642624cb"
+image = "sha256:9fba7e5fadd5fc42b7aaf71b85f2b1de951fc870f97d0d64e5eb06243be7c79a"
+init = false
+ipc_mode = "private"
+log_driver = "json-file"
+logs = false
+max_retry_count = 0
+memory = 0
+memory_swap = 0
+must_run = true
+name = "app_python"
+network_data = [
+{
+gateway = "172.17.0.1"
+global_ipv6_address = [90mnull[0m[0m
+global_ipv6_prefix_length = 0
+ip_address = "172.17.0.2"
+ip_prefix_length = 16
+ipv6_gateway = [90mnull[0m[0m
+mac_address = "02:42:ac:11:00:02"
+network_name = "bridge"
+},
+]
+network_mode = "bridge"
+pid_mode = [90mnull[0m[0m
+privileged = false
+publish_all_ports = false
+read_only = false
+remove_volumes = true
+restart = "no"
+rm = false
+runtime = "runc"
+security_opts = []
+shm_size = 64
+start = true
+stdin_open = false
+stop_signal = [90mnull[0m[0m
+stop_timeout = 0
+tty = false
+user = [90mnull[0m[0m
+userns_mode = [90mnull[0m[0m
+wait = false
+wait_timeout = 60
+working_dir = "/data"
 
-3. **Layer Optimization**
+    ports {
+        external = 4000
+        internal = 4000
+        ip       = "0.0.0.0"
+        protocol = "tcp"
+    }
 
-   - Copying requirements.txt separately to leverage cache
-   - No unnecessary files included (.dockerignore)
+}
 
-4. **Build Efficiency**
+# docker_image.app_image:
 
-   - Single-stage build process
-   - No unnecessary dependencies
+resource "docker_image" "app_image" {
+id = "sha256:9fba7e5fadd5fc42b7aaf71b85f2b1de951fc870f97d0d64e5eb06243be7c79aredis:latest"
+image_id = "sha256:9fba7e5fadd5fc42b7aaf71b85f2b1de951fc870f97d0d64e5eb06243be7c79a"
+name = "redis:latest"
+repo_digest = "redis@sha256:eadf354977d428e347d93046bb1a5569d701e8deb68f090215534a99dbcb23b9"
+}
+```
 
-5. **Image Size Optimization**
+### terraform state list
 
-   - Slim-based image for smaller footprint
-   - No cache in pip install
-   - Minimal files copied
+```bash
+docker_container.app_container
+docker_image.app_image
+```
 
-6. **Configuration**
+### terraform state show docker_container.app_container
 
-   - Environment variables set for Python optimization (PYTHONDONTWRITEBYTECODE, PYTHONUNBUFFERED)
-   - Port 8000 exposed
-   - Clear CMD instruction using uvicorn
+```bash
+# docker_container.app_container:
 
-7. **File Management**
+resource "docker_container" "app_container" {
+attach = false
+bridge = null
+command = [
+"redis-server",
+]
+container_read_refresh_timeout_milliseconds = 15000
+cpu_set = null
+cpu_shares = 0
+domainname = null
+entrypoint = [
+"docker-entrypoint.sh",
+]
+env = []
+hostname = "a8348491799f"
+id = "a8348491799fadce35441b972870398cb42da6ca52ac168aa07f5942642624cb"
+image = "sha256:9fba7e5fadd5fc42b7aaf71b85f2b1de951fc870f97d0d64e5eb06243be7c79a"
+init = false
+ipc_mode = "private"
+log_driver = "json-file"
+logs = false
+max_retry_count = 0
+memory = 0
+memory_swap = 0
+must_run = true
+name = "app_python"
+network_data = [
+{
+gateway = "172.17.0.1"
+global_ipv6_address = null
+global_ipv6_prefix_length = 0
+ip_address = "172.17.0.2"
+ip_prefix_length = 16
+ipv6_gateway = null
+mac_address = "02:42:ac:11:00:02"
+network_name = "bridge"
+},
+]
+network_mode = "bridge"
+pid_mode = null
+privileged = false
+publish_all_ports = false
+read_only = false
+remove_volumes = true
+restart = "no"
+rm = false
+runtime = "runc"
+security_opts = []
+shm_size = 64
+start = true
+stdin_open = false
+stop_signal = null
+stop_timeout = 0
+tty = false
+user = null
+userns_mode = null
+wait = false
+wait_timeout = 60
+working_dir = "/data"
 
-   - Using .dockerignore to exclude unnecessary files
-   - Proper WORKDIR usage (/app)
-   - Minimal file copying (main.py and templates)
+    ports {
+        external = 4000
+        internal = 4000
+        ip       = "0.0.0.0"
+        protocol = "tcp"
+    }
 
-8. **Documentation**
-   - Well-commented Dockerfile
-   - Version information maintained with ARG
+}
+```
 
-## Security Measures
+### terraform state show docker_image.app_image
 
-- Non-root user 'appuser' with minimal permissions
-- Slim-based minimal image
-- No unnecessary packages
-- Pinned base image with SHA256 hash for reproducibility
+```bash
+resource "docker_image" "app_image" {
+   id = "sha256:9fba7e5fadd5fc42b7aaf71b85f2b1de951fc870f97d0d64e5eb06243be7c79aredis:latest"
+   image_id = "sha256:9fba7e5fadd5fc42b7aaf71b85f2b1de951fc870f97d0d64e5eb06243be7c79a"
+   name = "redis:latest"
+   repo_digest = "redis@sha256:eadf354977d428e347d93046bb1a5569d701e8deb68f090215534a99dbcb23b9"
+}
+```
 
-## Distroless Image Comparison
+### Change container name
 
-### Image Size Comparison
+```bash
+terraform apply
+```
 
-#### Regular Docker Image
+```bash
+latest" # forces replacement
+~ init = false -> (known after apply)
+~ ipc_mode = "private" -> (known after apply)
+~ log_driver = "json-file" -> (known after apply) - log_opts = {} -> null - max_retry_count = 0 -> null - memory = 0 -> null - memory_swap = 0 -> null
+~ name = "app_python" -> "app_python_changed" # forces replacement
+~ network_data = [
+- {
+- gateway = "172.17.0.1"
+- global_ipv6_prefix_length = 0
+- ip_address = "172.17.0.2"
+- ip_prefix_length = 16
+- mac_address = "02:42:ac:11:00:02"
+- network_name = "bridge"
+# (2 unchanged attributes hidden)
+},
+] -> (known after apply)
 
-- Base: python:3.11-slim
-- Size: ~141MB
-- Contains: Python runtime, pip, shell, package manager
+```
 
-#### Distroless Image
+### terraform output
 
-- Base: gcr.io/distroless/python3-debian11
-- Size: ~92MB
-- Contains: Only Python runtime and necessary libraries
+```bash
+container_image = "redis:latest"
+container_name = "app_python_changed"
+container_port = tolist([
+{
+"external" = 4000
+"internal" = 4000
+"ip" = "0.0.0.0"
+"protocol" = "tcp"
+},
+])
 
-## Key Differences
-
-1. **Reduced Attack Surface**
-
-   - No shell access
-   - No package manager
-   - No unnecessary system tools
-   - Minimal system libraries
-
-2. **Security Benefits**
-
-   - Smaller attack surface
-   - No ability to install additional packages
-   - Reduced vulnerability footprint
-
-3. **Size Optimization**
-
-   - Only includes required runtime components
-   - No development tools or debugging utilities
-   - Efficient multi-stage build process
-
-4. **Production Ready**
-   - Optimized for production deployments
-   - Better security posture
-   - Faster container startup
-
-![Image Size Comparison](docker-sizes.png)
+```

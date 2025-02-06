@@ -7,18 +7,19 @@ terraform {
   }
 }
 
-provider "docker" {}
-
-resource "docker_image" "nginx" {
-  name         = "nginx:latest"
-  keep_locally = false
+provider "docker" {
 }
 
-resource "docker_container" "nginx" {
-  image = docker_image.nginx.image_id
+resource "docker_image" "app_image" {
+  name = var.image_name
+}
+
+resource "docker_container" "app_container" {
+  image = var.image_name
   name  = var.container_name
+  
   ports {
-    internal = 80
-    external = 8000
+    internal = var.internal_port
+    external = var.external_port
   }
-} 
+}
