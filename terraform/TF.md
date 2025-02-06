@@ -1,6 +1,6 @@
 # Infrastructure as Code Lab
 
-## Docker Infrastructure Using Terraform
+## Docker infrastructure using Terraform
 
 ### Terraform state show
 
@@ -222,7 +222,7 @@ I authenticate my Yandex Cloud account using:
 yc init
 ```
 
-### **3. Create a Service Account**
+### **3. Create a service account**
 
 I create a service account to manage Terraform resources:
 
@@ -230,7 +230,7 @@ I create a service account to manage Terraform resources:
 yc iam service-account create --name terraform-sa
 ```
 
-### **4. Assign Required Roles**
+### **4. Assign required roles**
 
 I assign the necessary roles to my service account:
 
@@ -239,7 +239,7 @@ yc resource-manager folder add-access-binding <my-folder-id> \
   --role <role> --subject serviceAccount:<my-service-account-id>
 ```
 
-### **5. Generate a Service Account Key**
+### **5. Generate a service account key**
 
 I generate a service account key and save it to a file:
 
@@ -247,7 +247,7 @@ I generate a service account key and save it to a file:
 yc iam key create --service-account-id <my-service-account-id> --output sa-key.json
 ```
 
-### **6. Create a Terraform Project**
+### **6. Create a Terraform project**
 
 I create a new Terraform project and define the infrastructure inside `main.tf`.  
 
@@ -265,7 +265,7 @@ terraform init
 terraform validate
 ```
 
-### **8. Apply the Terraform Configuration**
+### **8. Apply the Terraform configuration**
 
 Finally, I apply my Terraform configuration to create resources:
 
@@ -273,9 +273,9 @@ Finally, I apply my Terraform configuration to create resources:
 terraform apply -auto-approve
 ```
 
-## Challenges Encountered & Solutions
+## Challenges encountered & solutions
 
-### **Determining Which Roles to Assign**
+### **Determining which roles to assign**
 
 - Initially, I was unsure which roles were required for Terraform to work correctly with Yandex Cloud.
 - **Solution:** I researched Yandex Cloud IAM roles and assigned the following:
@@ -283,7 +283,7 @@ terraform apply -auto-approve
   - `vpc.privateAdmin` for network operations
   - `compute.admin` for managing VM instances
 
-### **Incorrect Image ID for VM**
+### **Incorrect image ID for VM**
 
 - **Problem:** My VM creation failed because the image ID was incorrect.
 - **Solution:** I ran the following command to get the correct **image ID** for Ubuntu:
@@ -292,7 +292,7 @@ terraform apply -auto-approve
   yc compute image list --folder-id standard-images
   ```
 
-### **Finding the Correct Subnet ID**
+### **Finding the correct subnet ID**
 
 - **Problem:** The Terraform configuration required a subnet ID, which I didn’t have.
 - **Solution:** I listed available subnets using:
@@ -301,27 +301,27 @@ terraform apply -auto-approve
   yc vpc subnet list
   ```
   
-## Best Practices for Terraform in GitHub Infrastructure
+## Best practices for Terraform in GitHub infrastructure
 
-### Use Environment Variables for Secrets
+### Use environment variables for secrets
 
 - Store sensitive tokens like `GITHUB_TOKEN` as environment variables, **not** in `.tf` files.
 - Example: `export GITHUB_TOKEN="your_token_here"`
 
-### Use the `terraform import` Command for Existing Repositories
+### Use the `terraform import` command for existing repositories
 
 - Avoid creating a duplicate repository if one already exists.
 - Use `terraform import github_repository.<resource_name> <repo_name>`.
 
-### Keep Terraform Code in a Separate Repository or Directory
+### Keep terraform code in a separate repository or directory
 
 - Use a dedicated **Terraform repository** or a `github-terraform/` directory to **separate code infrastructure from project code**.
 
-### Use `.gitignore` to Exclude Sensitive Files
+### Use `.gitignore` to exclude sensitive files
 
 - Add `.terraform/` and `.terraform.tfstate` to `.gitignore` to avoid committing Terraform state files.
 
-### **Always Run `terraform plan` Before `apply`**
+### **Always run `terraform plan` before `apply`**
 
 - Helps preview infrastructure changes before execution.
 - Example:
