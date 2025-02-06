@@ -2,7 +2,7 @@
 
 ## Best Practices Implemented
 
-## Terraform Output
+## Docker Task
 
 ### terraform show
 
@@ -221,4 +221,178 @@ container_port = tolist([
 },
 ])
 
+```
+
+## Yandex Task
+
+**Set up steps:**
+
+1. Install cloud cli
+2. Create service account
+3. Generate tokens and ids
+4. Set up the provider and resources
+5. Run `terraform apply`
+
+**Outputs**:
+
+- `terraform state list`:
+
+```bash
+data.yandex_compute_image.ubuntu
+yandex_compute_instance.vm-1
+yandex_vpc_network.network-1
+yandex_vpc_subnet.subnet-1
+```
+
+- `terraform show`:
+
+```bash
+# data.yandex_compute_image.ubuntu:
+data "yandex_compute_image" "ubuntu" {
+    created_at          = "2025-02-03T11:06:30Z"
+    description         = "ubuntu 22.04 lts"
+    family              = "ubuntu-2204-lts"
+    folder_id           = "standard-images"
+    hardware_generation = [
+        {
+            generation2_features = []
+            legacy_features      = [
+                {
+                    pci_topology = "PCI_TOPOLOGY_V1"
+                },
+            ]
+        },
+    ]
+    id                  = "fd8j3fo8lqh4730j2ftd"
+    image_id            = "fd8j3fo8lqh4730j2ftd"
+    labels              = {}
+    min_disk_size       = 8
+    name                = "ubuntu-22-04-lts-v20250203"
+    os_type             = "linux"
+    pooled              = true
+    product_ids         = [
+        "f2ebj2oj0d2aeadn1j0m",
+    ]
+    size                = 7
+    status              = "ready"
+}
+
+# yandex_compute_instance.vm-1:
+resource "yandex_compute_instance" "vm-1" {
+    created_at                = "2025-02-05T20:37:58Z"
+    description               = null
+    folder_id                 = "b1gumar694vnatu3hepu"
+    fqdn                      = "fb1gumar694vnatu3hepu.auto.internal"
+    gpu_cluster_id            = null
+    hardware_generation       = [
+        {
+            generation2_features = []
+            legacy_features      = [
+                {
+                    pci_topology = "PCI_TOPOLOGY_V1"
+                },
+            ]
+        },
+    ]
+    hostname                  = null
+    id                        = "fhmj7plmp00npe9hgmm3"
+    labels                    = {}
+    maintenance_grace_period  = null
+    metadata                  = {
+        "ssh-keys" = (sensitive value)
+    }
+    name                      = "terraform1"
+    network_acceleration_type = "standard"
+    platform_id               = "standard-v1"
+    service_account_id        = null
+    status                    = "running"
+    zone                      = "ru-central1-a"
+
+    boot_disk {
+        auto_delete = true
+        device_name = "fhmspt4b17etjqsovdp2"
+        disk_id     = "fhmspt4b17etjqsovdp2"
+        mode        = "READ_WRITE"
+
+        initialize_params {
+            block_size  = 4096
+            description = null
+            image_id    = "fd8j3fo8lqh4730j2ftd"
+            kms_key_id  = null
+            name        = null
+            size        = 8
+            snapshot_id = null
+            type        = "network-hdd"
+        }
+    }
+
+    metadata_options {
+        aws_v1_http_endpoint = 1
+        aws_v1_http_token    = 2
+        gce_http_endpoint    = 1
+        gce_http_token       = 1
+    }
+
+    network_interface {
+        index              = 0
+        ip_address         = "192.168.20.31"
+        ipv4               = true
+        ipv6               = false
+        ipv6_address       = null
+        mac_address        = "d0:0d:13:3e:6b:6c"
+        nat                = true
+        nat_ip_address     = "89.169.131.82"
+        nat_ip_version     = "IPV4"
+        security_group_ids = []
+        subnet_id          = "e9b503fimd5moima07hb"
+    }
+
+    placement_policy {
+        host_affinity_rules       = []
+        placement_group_id        = null
+        placement_group_partition = 0
+    }
+
+    resources {
+        core_fraction = 100
+        cores         = 2
+        gpus          = 0
+        memory        = 2
+    }
+
+    scheduling_policy {
+        preemptible = false
+    }
+}
+
+# yandex_vpc_network.network-1:
+resource "yandex_vpc_network" "network-1" {
+    created_at                = "2025-02-05T20:35:15Z"
+    default_security_group_id = "enpiv2r1fafj7fmp3249"
+    description               = null
+    folder_id                 = "b1gfbs7j036gik9qg28a"
+    id                        = "enpgg0ui8ednp4ulk3od"
+    labels                    = {}
+    name                      = "Network-1"
+    subnet_ids                = [
+        "e9b503fimd5moima07hb",
+    ]
+}
+
+# yandex_vpc_subnet.subnet-1:
+resource "yandex_vpc_subnet" "subnet-1" {
+    created_at     = "2025-02-05T20:37:57Z"
+    description    = null
+    folder_id      = "b1gumar694vnatu3hepu"
+    id             = "e9b503fimd5moima07hb"
+    labels         = {}
+    name           = "Subnet-1"
+    network_id     = "enpgg0ui8ednp4ulk3od"
+    route_table_id = null
+    v4_cidr_blocks = [
+        "192.168.20.0/24",
+    ]
+    v6_cidr_blocks = []
+    zone           = "ru-central1-a"
+}
 ```
