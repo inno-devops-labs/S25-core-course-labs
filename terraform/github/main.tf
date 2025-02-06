@@ -2,15 +2,17 @@ terraform {
   required_providers {
     github = {
       source  = "integrations/github"
-      version = "~> 5.0"
+      version = "~> 6.0"
     }
   }
 }
 
-provider "github" {}
+provider "github" {
+  token = var.github_token
+}
 
 resource "github_repository" "core-course-labs" {
-  name        = "core-course-labs"
+  name       = "S25-core-course-labs"
   description = "DevOps Engineering Course Labs"
   visibility  = "public"
 
@@ -18,7 +20,6 @@ resource "github_repository" "core-course-labs" {
   has_issues        = true
   has_wiki          = true
 
-  delete_branch_on_merge = true
 }
 
 resource "github_branch_protection" "main" {

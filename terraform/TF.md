@@ -1,6 +1,19 @@
-# TF Documentation
+# TF
 
 ## Best Practices Implemented
+
+1. **Configuration Management**
+   - Using variables for configurable values
+   - Consistent resource naming patterns
+   - Proper resource attribute organization
+
+2. **Output Management**
+   - Defining useful outputs for resource properties
+   - Structured output format for better readability
+
+3. 1. **Security Best Practices**
+   - Using environment variables for sensitive information (TF_VAR_github_token)
+   - Not committing sensitive tokens directly in code
 
 ## Docker Task
 
@@ -395,4 +408,117 @@ resource "yandex_vpc_subnet" "subnet-1" {
     v6_cidr_blocks = []
     zone           = "ru-central1-a"
 }
+```
+
+## Github Task
+
+### Export Variables
+
+```bash
+export TF_VAR_github_token="your-token-here"
+```
+
+### Import Configuration
+
+```bash
+terraform import "github_repository.core-course-labs" "S25-core-course-labs"
+```
+
+### Output
+
+- `terraform state list`:
+
+```bash
+github_repository.core-course-labs:
+  Import ID: github_repository.core-course-labs
+```
+
+- `terraform state show github_branch_protection.main`:
+
+```bash
+# github_branch_protection.main:
+
+resource "github_branch_protection" "main" {
+allows_deletions = false
+allows_force_pushes = false
+enforce_admins = false
+id = "BPR_kwDONx0tmc4DikOO"
+lock_branch = false
+pattern = "main"
+repository_id = "R_kgDONx0tmQ"
+require_conversation_resolution = false
+require_signed_commits = false
+required_linear_history = false
+
+    required_pull_request_reviews {
+        dismiss_stale_reviews           = true
+        require_code_owner_reviews      = false
+        require_last_push_approval      = false
+        required_approving_review_count = 1
+        restrict_dismissals             = false
+    }
+
+    required_status_checks {
+        strict = true
+    }
+
+}
+```
+
+- `terraform state show github_repository.core-course-labs`:
+
+```bash
+# github_repository.core-course-labs:
+
+resource "github_repository" "core-course-labs" {
+allow_auto_merge = false
+allow_merge_commit = true
+allow_rebase_merge = true
+allow_squash_merge = true
+allow_update_branch = false
+archived = false
+auto_init = false
+default_branch = "master"
+delete_branch_on_merge = false
+description = "DevOps Engineering Course Labs"
+etag = "W/\"5e5d83275ec8daef2caf5078a7c5bede076eebe218d2e96cfcbae381b05c808d\""
+full_name = "HaidarJbeily7/S25-core-course-labs"
+git_clone_url = "git://github.com/HaidarJbeily7/S25-core-course-labs.git"
+has_discussions = false
+has_downloads = false
+has_issues = true
+has_projects = false
+has_wiki = true
+homepage_url = null
+html_url = "https://github.com/HaidarJbeily7/S25-core-course-labs"
+http_clone_url = "https://github.com/HaidarJbeily7/S25-core-course-labs.git"
+id = "S25-core-course-labs"
+is_template = false
+merge_commit_message = "PR_TITLE"
+merge_commit_title = "MERGE_MESSAGE"
+name = "S25-core-course-labs"
+node_id = "R_kgDONx0tmQ"
+primary_language = null
+private = false
+repo_id = 924659097
+squash_merge_commit_message = "COMMIT_MESSAGES"
+squash_merge_commit_title = "COMMIT_OR_PR_TITLE"
+ssh_clone_url = "git@github.com:HaidarJbeily7/S25-core-course-labs.git"
+svn_url = "https://github.com/HaidarJbeily7/S25-core-course-labs"
+topics = []
+visibility = "public"
+vulnerability_alerts = false
+web_commit_signoff_required = false
+
+    security_and_analysis {
+        secret_scanning {
+            status = "enabled"
+        }
+        secret_scanning_push_protection {
+            status = "enabled"
+        }
+    }
+
+}
+
 ```
