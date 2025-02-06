@@ -22,3 +22,5 @@ terraform/crash.log
 terraform/terraform.rc
 
 .dockerignore
+
+key.json
