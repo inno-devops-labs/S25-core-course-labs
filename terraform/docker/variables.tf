@@ -1,12 +1,12 @@
 variable "docker_image_name" {
   description = "Name for the Docker image"
-  default     = "emapfff/python-app:latest"
+  default     = "emapfff/app_python:latest"
   type        = string
 }
 
 variable "docker_container_name" {
   description = "Name for the Docker container"
-  default     = "app_kotlin"
+  default     = "app_python"
   type        = string
 }
 

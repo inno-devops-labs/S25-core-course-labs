@@ -1,0 +1,8 @@
+#cloud-config
+  users:
+    - name: emapfff
+    groups: sudo
+    shell: /bin/bash
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDAptjY+nqXxe+YucSCz+Y9LXEa4Zhv3HXaD5GvzOVtUeEJeBNvmgrM0NBuhTk5zScKjyLrGOW4Bj35vTyNaNkCxtGYa5SSpW3vJYmcYdVAkU1Fz3YU1Fz2xdDLMuFXenkynmHOaPhqLCtJ5dj3EVEujfceWG6XG0DE69ESY2g25nkEHOIFi0PTke7Z8qi7FGSkBB8X6IeiEZx3jvIKfUvhDzVbEqKEauwd0u1BYimYVW/wYIrSXjlJkIohVnN3c9nH3THspfznjoaJZa2idkI//IObedoE/LYjbKq/KT8/hcSkw7uixJJAYHKOO92omdGNez5Eb88eehJ21wcZib92NQqyb3wIBA+T23xjUy1gYx99uZXSLapViW2DkGqfuZyR+fzhmwJ7tFyBIHq9KS3khFiD1ssgXNPG47l4/cbTTWPMsfTnJNrkLrmnTiE0h8asmj4Cyi4zL55DBE0RTmhd48D23QXN9H2mKi2U9L/pkSLs30E38MOj+IAMsRKd7lM= emildavlityarov@MacBook-Pro-Emil.local
