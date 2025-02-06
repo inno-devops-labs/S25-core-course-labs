@@ -1,7 +1,6 @@
-name: Python Moscow time application
+name: Build, test, and push to DockerHub
 
-on:
-  push:
+on: push
 
 permissions:
   contents: read
@@ -22,6 +21,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest coverage pytest-cov 
         pip install -r app_python/requirements.txt
+    - name: Cache Python packages
+      uses: actions/cache@v4
+      with:
+        key: test-cache
+        path: |
+          app_python/.cache
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -31,7 +36,18 @@ jobs:
     - name: Test with pytest
       run: |
         pytest app_python/test.py --cov=app
-        
+  
+ # security:
+ #   runs-on: ubuntu-latest
+ #   steps:
+ #     - uses: actions/checkout@v4
+ #     - name: Run Snyk to check for vulnerabilities
+ #       uses: snyk/actions/python-3.8@master
+ #       env:
+ #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+#        with:
+ #         args: --severity-threshold=high
+  
   docker:
     runs-on: ubuntu-latest
     steps:
