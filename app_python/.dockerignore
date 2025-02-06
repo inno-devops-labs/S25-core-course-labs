@@ -1,0 +1,6 @@
+**/*
+
+!app/
+!static/
+!templates/
+!requirements.txt
