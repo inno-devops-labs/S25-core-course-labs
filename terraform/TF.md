@@ -1849,6 +1849,8 @@ github_branch_protection.default: Creation complete after 4s [id=BPR_kwDON1B9M84
 Apply complete! Resources: 1 added, 1 changed, 0 destroyed.
 ```
 
+![repo](static/repository.png "Image not found")
+
 # Terraform Best Practices for GitHub Infrastructure 🚀
 
 ## 1. Use Environment Variables for Sensitive Information
@@ -2278,4 +2280,5 @@ You can either:
    - GitHub → Your Repository → Settings → Manage Access
    
     **✅ You should see that Developers, QA, and Admin teams now have correct access levels.**
+   ![repo](static/organization.png "Image not found")
 
