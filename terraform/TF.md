@@ -119,10 +119,10 @@ image_name = "nginx:latest"
 3. Install YC and configure user
 
     ```sh
-    yc config profile create <profile_name>
-    yc config set service-account-key key.json
-    yc config set cloud-id b1g8cn8pmllg1geegdf1
-    yc config set folder-id b1gp6rac2jh7ojome2qn
+   yc config profile create <profile_name>
+   yc config set service-account-key key.json
+   yc config set cloud-id <cloud_ID>
+   yc config set folder-id <folder_ID>
     ```
 
 4. Export variables
@@ -133,18 +133,9 @@ image_name = "nginx:latest"
     $Env:YC_FOLDER_ID=$(yc config get folder-id)
     ```
 
-5. Configure ssh key for user: I did this on the site using GUI.
+5. Configure SSH key for user: I did this on the site using GUI.
 6. Prepare workspace for Terraform for YandexCloud (main.tf, variables.tf)
-
-    ```powershell
-    $Env:YC_TOKEN=$(yc iam create-token)
-    $Env:YC_CLOUD_ID=$(yc config get cloud-id)
-    $Env:YC_FOLDER_ID=$(yc config get folder-id)
-    ```
-
-7. Configure SSH key for user: I did this on the site using GUI.
-8. Prepare workspace for Terraform for YandexCloud (main.tf, variables.tf)
-9. Select image for VM
+7. Select image for VM
 
     ```bash
     yc compute image list --folder-id standard-images
