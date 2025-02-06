@@ -18,7 +18,7 @@ def test_get_current_time():
 
     assert response.status_code == 200, "The response status code is not 200"
     assert (
-            response.headers["content-type"] == "application/json"
+        response.headers["content-type"] == "application/json"
     ), "The response content type is not JSON"
 
     data = response.json()
