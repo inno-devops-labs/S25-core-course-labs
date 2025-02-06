@@ -17,7 +17,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src src
 COPY static static
 COPY templates templates
+
 COPY entrypoint.sh ./
+RUN chmod +x entrypoint.sh
 
 # Run the application
 ENTRYPOINT ["./entrypoint.sh"]
