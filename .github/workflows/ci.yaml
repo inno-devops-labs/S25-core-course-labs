@@ -73,11 +73,25 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: 🛠️ Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 📤 Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ secrets.DOCKER_USERNAME }}/moscow-time-webapp
+
       - name: 🛠️ Build & Push Docker image
-        run: |
-          docker build -t moscow-time-webapp .
-          docker tag moscow-time-webapp ${{ secrets.DOCKER_USERNAME }}/moscow-time-webapp
-          docker push ${{ secrets.DOCKER_USERNAME }}/moscow-time-webapp
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   security:
     runs-on: ubuntu-latest
@@ -97,6 +111,6 @@ jobs:
           command: code test app_python -sarif-file-output=snyk.sarif
 
       - name: 📤 Upload Snyk SARIF
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: snyk.sarif
