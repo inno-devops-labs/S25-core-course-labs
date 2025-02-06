@@ -1,0 +1,72 @@
+name: Python CI/CD with Docker
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Cache Dependencies
+        id: cache-venv
+        uses: actions/cache@v2
+        with:
+          path: ./.venv/
+          key: ${{ runner.os }}-venv-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-venv-
+
+      - name: Install Dependencies
+        if: steps.cache-venv.outputs.cache-hit != 'true'
+        run: |
+          python -m venv .venv
+          . .venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Linter (Flake8)
+        run: |
+          . .venv/bin/activate
+          flake8 .
+
+      - name: Run Tests (pytest)
+        run: |
+          . .venv/bin/activate
+          pytest
+
+  docker:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker Image
+        run: |
+          docker build -t app-python:latest .
+
+      - name: Push Docker Image
+        run: |
+          docker tag my-python-app:latest ${{ secrets.DOCKER_USERNAME }}/app-python:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/app-python:latest
