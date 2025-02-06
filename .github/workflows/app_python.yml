@@ -56,10 +56,14 @@ jobs:
           username: "${{ secrets.DOCKER_USERNAME }}"
           password: "${{ secrets.DOCKER_PASSWORD }}"
 
-      - name: Build Docker image
-        run: docker build -t gendiro/moscow-time-app:latest .
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Push Docker image
-        run: docker push gendiro/moscow-time-app:latest
-
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./app_python
+          file: ./app_python/distroless.Dockerfile
+          push: true
+          tags: gendiro/moscow-time-distroless:latest
 
