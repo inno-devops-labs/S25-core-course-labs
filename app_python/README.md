@@ -1,5 +1,7 @@
 # MSK Time Web App
 
+![CI Status](https://github.com/absorian/S25-DevOps-labs/actions/workflows/app_python_ci.yml/badge.svg)
+
 ## Overview
 
 **FastApi** based web app that shows current time in Moscow upon reload.
