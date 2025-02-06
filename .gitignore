@@ -63,3 +63,9 @@ out/
 *.log
 *.jar
 *.war
+
+# Terraform
+.terraform
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
