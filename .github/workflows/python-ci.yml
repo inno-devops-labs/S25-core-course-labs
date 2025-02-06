@@ -41,7 +41,7 @@ jobs:
     
     - name: Lint with pylint
       run: |
-        find . -type f -name "*.py" | xargs pylint --disable=C0111,C0103,W0621
+        pylint --rcfile=.pylintrc *.py
     
     - name: Run tests with pytest
       run: |
