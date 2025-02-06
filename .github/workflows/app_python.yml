@@ -37,7 +37,7 @@ jobs:
           python -m venv .venv
           . .venv/bin/activate
           pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r app_python/requirements.txt
 
       - name: Run Linter (Flake8)
         run: |
