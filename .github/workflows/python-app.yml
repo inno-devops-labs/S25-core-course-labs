@@ -2,6 +2,8 @@ name: Python Moscow time application
 
 on:
   push:
+    paths:
+      - app_python/**
 
 permissions:
   contents: read
@@ -56,4 +58,5 @@ jobs:
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python-3.8@master
         env:
+          context: app_python
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
