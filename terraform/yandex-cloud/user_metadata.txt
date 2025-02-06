@@ -1,0 +1,8 @@
+#cloud-config
+users:
+  - name: yc_user
+    groups: sudo
+    shell: /bin/bash
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICR8jQL9Pv6VF+HBwcSo79zvIB+24iRTNjTmGbGz1TOI
