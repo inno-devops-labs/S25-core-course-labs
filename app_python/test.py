@@ -7,8 +7,8 @@ import app as tested_app
 
 @pytest.fixture
 def app():
-    app = tested_app.app
-    yield app
+    flask_app = tested_app.app
+    yield flask_app
 
 @pytest.fixture
 def client(app):
