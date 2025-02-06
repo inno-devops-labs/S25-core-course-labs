@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI Pipeline for Python App
 
 on:
   push:
@@ -25,6 +25,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
+          cache: "pip"
 
       - name: Install dependencies
         run: |
@@ -37,6 +38,13 @@ jobs:
 
       - name: Run tests
         run: python -m unittest ./tests/test_*.py
+
+      - name: Snyk Security Scan
+        uses: snyk/actions/python-3.11@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --skip-unresolved --file=app_python/requirements.txt --package-manager=pip
 
   docker:
     needs: build
@@ -66,3 +74,5 @@ jobs:
           file: ./app_python/distroless.Dockerfile
           push: true
           tags: gendiro/moscow-time-distroless:latest
+          cache-from: type=registry,ref=gendiro/moscow-time-distroless:buildcache
+          cache-to: type=inline

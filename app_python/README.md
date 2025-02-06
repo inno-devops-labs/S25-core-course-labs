@@ -1,5 +1,7 @@
 # Current Moscow Time Application
 
+[![CI](https://github.com/Gendiro/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)](https://github.com/my-username/my-project/actions)
+
 ## Running the application
 
 1. Setup the virtual environment:
@@ -86,3 +88,8 @@ Also, you can also build the distroless version using the `distroless.Dockerfile
 ```bash
 docker build -t moscow-time-distroless -f distroless.Dockerfile .
 ```
+
+# CI
+
+The repository has a CI implemented via GitHub Actions, so each push and pull_request to the master branch is 
+being checked on compliance with tests and linting, and sends the new-built image to docker hub.
