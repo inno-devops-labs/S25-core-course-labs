@@ -1,22 +1,14 @@
 ## Description
----
 
 This is a simple Python web application built with `Flask` that displays the current local time in Moscow. It uses the `pytz` library for timezone management and provides a visually appealing, responsive frontend.
 
----
-
 ## Prerequisites
-
 Before running the application, ensure you have the following installed:
 
 - Python 3.8 or higher
 - Pip for managing Python packages
 
----
-
-
 ## Installation & Usage
----
 1. Clone the repository:
     ```bash
     git clone <repository-url>
@@ -38,11 +30,7 @@ Before running the application, ensure you have the following installed:
     http://127.0.0.1:9200
     ```
 
----
-
-
 ## Docker usage
----
 1. Build image
     ```bash
     docker build -t devopsapp .
@@ -63,4 +51,42 @@ Before running the application, ensure you have the following installed:
     http://127.0.0.1:9200
     ```
 
----
+## Unit Tests
+This project includes unit tests to verify the functionality of the Flask application.
+
+### Running Unit Tests
+To run all tests, use the command:
+```bash
+python -m unittest discover ut
+```
+
+### Tests include:
+- Checking if the web page renders correctly (status code 200)
+- Handling server errors (status code 500)
+- Passing parameters to the Flask template
+- Validating the time format as "HH:MM:SS" in the HTML output
+
+### Dependencies used in tests:
+
+- unittest
+- mock
+- beautifulsoup4 (for HTML parsing)
+
+## CI Workflow
+This project uses GitHub Actions for automatic deployment and testing.
+
+### The CI process includes:
+
+- Installing dependencies (requirements.txt)
+- Running a linter (flake8)
+- Executing unit tests (unittest)
+- Building and publishing a Docker image to Docker Hub
+
+### Docker integration includes:
+
+- Logging in to Docker Hub
+- Building the image
+- Pushing the image to Docker Hub
+
+## CI Status
+![CI Pipeline](https://github.com/daniilzimin4/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)
