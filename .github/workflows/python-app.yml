@@ -51,6 +51,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --workdir app_python --skip-unresolved
+
   docker:
     runs-on: ubuntu-latest
     steps:
