@@ -39,6 +39,13 @@ jobs:
         run: |
           pytest test_main.py
 
+      - name: Scan for vulnerabilities
+        uses: snyk/actions/python-3.10@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --file=app_python/requirements.txt --package-manager=pip --skip-unresolved
+
   build_and_push:
     runs-on: ubuntu-22.04
 
