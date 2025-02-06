@@ -1,18 +1,19 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(NorthernLightsApp());
+  runApp(const NorthernLightsApp());
 }
 
 class NorthernLightsApp extends StatelessWidget {
+  const NorthernLightsApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Northern Lights',
       home: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 0, 140, 255),
+        backgroundColor: Color.fromARGB(255, 0, 140, 255),
         body: Center(
           child: NorthernLightsWidget(),
         ),
@@ -22,6 +23,8 @@ class NorthernLightsApp extends StatelessWidget {
 }
 
 class NorthernLightsWidget extends StatefulWidget {
+  const NorthernLightsWidget({super.key});
+
   @override
   _NorthernLightsWidgetState createState() => _NorthernLightsWidgetState();
 }
@@ -35,7 +38,7 @@ class _NorthernLightsWidgetState extends State<NorthernLightsWidget>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 10),
+      duration: const Duration(seconds: 10),
     )..repeat(); // Continuous flowing animation
   }
 
@@ -51,7 +54,7 @@ class _NorthernLightsWidgetState extends State<NorthernLightsWidget>
       animation: _controller,
       builder: (context, child) {
         return CustomPaint(
-          size: Size(double.infinity, double.infinity), // Full screen
+          size: const Size(double.infinity, double.infinity), // Full screen
           painter: NorthernLightsPainter(_controller.value),
         );
       },
@@ -77,7 +80,7 @@ class NorthernLightsPainter extends CustomPainter {
         ],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        stops: [
+        stops: const [
           0.0,
           0.2,
           0.3,
@@ -90,13 +93,13 @@ class NorthernLightsPainter extends CustomPainter {
     double shift = animationValue * size.width;
 
     final Paint paintBackground = Paint()
-      ..shader = LinearGradient(
+      ..shader = const LinearGradient(
         colors: [
-          Colors.greenAccent.withOpacity(0.5),
-          Colors.cyanAccent.withOpacity(0.4),
-          Colors.pinkAccent.withOpacity(0.4),
-          Colors.yellowAccent.withOpacity(0.3),
-          Colors.purpleAccent.withOpacity(0.4),
+          Colors.greenAccent,
+          Colors.cyanAccent,
+          Colors.pinkAccent,
+          Colors.yellowAccent,
+          Colors.purpleAccent,
         ],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
