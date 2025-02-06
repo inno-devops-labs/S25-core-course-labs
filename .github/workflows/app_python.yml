@@ -1,0 +1,68 @@
+name: Python Application CI
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "app_python/**"
+      - ".github/workflows/app_python.yml"
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-22.04
+
+    defaults:
+      run:
+        working-directory: ./app_python
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -r requirements-test.txt
+          pip install -r requirements-lint.txt
+
+      - name: Lint code
+        run: |
+          flake8 .
+          black --check .
+
+      - name: Run tests
+        run: |
+          pytest test_main.py
+
+  build_and_push:
+    runs-on: ubuntu-22.04
+
+    needs:
+      - build_and_test
+
+    defaults:
+      run:
+        working-directory: ./app_python
+
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./distroless.Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/s25-devops-py-dl:latest
