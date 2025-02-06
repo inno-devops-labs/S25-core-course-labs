@@ -1,12 +1,6 @@
 name: Python CI
 
-on:
-    push:
-      paths:
-        - 'app_python/**'
-    pull_request:
-      paths:
-        - 'app_python/**'
+on: [push, pull_request]
 
 jobs:
   build-and-test:

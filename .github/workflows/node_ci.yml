@@ -1,12 +1,6 @@
 name: Node CI
 
-on:
-    push:
-      paths:
-        - 'app_nodejs/**'
-    pull_request:
-      paths:
-        - 'app_nodejs/**'
+on: [push, pull_request]
   
 
 jobs:
