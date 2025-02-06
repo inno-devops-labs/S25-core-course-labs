@@ -132,3 +132,5 @@ CI workflow created using GitHub Actions to build and test the project. The file
 ## Contributors
 
 - **Anna Rylova** - Developer.
+
+[![ci](https://github.com/anyarylova/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)](https://github.com/anyarylova/S25-core-course-labs/actions/workflows/ci.yml)

@@ -41,7 +41,6 @@ jobs:
 
       - name: Run unit tests
         run: |
-          cd app_python
           python -m unittest test_app.py
 
   docker:
