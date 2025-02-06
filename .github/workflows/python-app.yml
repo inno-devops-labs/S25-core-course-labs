@@ -56,6 +56,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Move over to the Python project
+        run: |
+          cd ./app_python
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python-3.8@master
         env:
