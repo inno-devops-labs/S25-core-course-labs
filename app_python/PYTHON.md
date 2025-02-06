@@ -12,6 +12,14 @@
 2. Clear code and assets folders structure.
 3. Gitignore and requirements files for a cleaner shared development.
 
+## Testing
+
+The tests were developed with the help of FastApi's **TestClient** and ran by **pytest**. This is the most straightforward way of testing a python application.
+
+Tests implemented:
+
+- `test_get_msk_time`: check webapp availability and correctness of displayed time.
+
 ## Notes
 
->The **uvicorn** was chosen instead of **gunicorn** (however it is a more advanced process manager) because the latter works only in UNIX, this is the limitation that soon will be complied to.
+>We could mock functionality of getting the current time in the `main.py`, however it is not necessary as it is the builtin function.
