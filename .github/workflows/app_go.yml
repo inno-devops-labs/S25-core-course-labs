@@ -37,7 +37,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --file=app_go --package-manager=pip --skip-unresolved
+          args: --skip-unresolved ./app_go
 
   build_and_push:
     runs-on: ubuntu-22.04
