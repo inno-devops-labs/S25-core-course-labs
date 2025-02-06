@@ -495,3 +495,217 @@ yandex_compute_instance.vm: Still creating... [1m0s elapsed]
 yandex_compute_instance.vm: Creation complete after 1m3s [id=epdkmaichijt7capejrp]
 Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 ```
+
+## Github Team
+
+Github organization: <https://github.com/devops-lab-4-owner>
+
+Repository: <https://github.com/devops-lab-4-owner/android-test-team-repo>
+
+Teams:
+
+- <https://github.com/orgs/devops-lab-4-owner/teams/android-team>
+- <https://github.com/orgs/devops-lab-4-owner/teams/backend-team>
+
+### terraform apply
+
+```bash
+
+var.github_pat
+  Specifies the GitHub PAT token or `GITHUB_TOKEN`
+
+  Enter a value:
+
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are
+indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_branch_default.repo_main will be created
+  + resource "github_branch_default" "repo_main" {
+      + branch     = "main"
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + rename     = false
+      + repository = "android-test-team-repo"
+    }
+
+  # github_branch_protection.repo_protection will be created
+  + resource "github_branch_protection" "repo_protection" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + blocks_creations                = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + lock_branch                     = false
+      + pattern                         = "main"
+      + repository_id                   = (known after apply)
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + require_last_push_approval      = false
+          + required_approving_review_count = 1
+        }
+    }
+
+  # github_repository.repo will be created
+  + resource "github_repository" "repo" {
+      + allow_auto_merge            = false
+      + allow_merge_commit          = true
+      + allow_rebase_merge          = true
+      + allow_squash_merge          = true
+      + archived                    = false
+      + auto_init                   = true
+      + default_branch              = (known after apply)
+      + delete_branch_on_merge      = false
+      + description                 = "android test team"
+      + etag                        = (known after apply)
+      + full_name                   = (known after apply)
+      + git_clone_url               = (known after apply)
+      + has_issues                  = true
+      + has_wiki                    = true
+      + html_url                    = (known after apply)
+      + http_clone_url              = (known after apply)
+      + id                          = (known after apply)
+      + license_template            = "mit"
+      + merge_commit_message        = "PR_TITLE"
+      + merge_commit_title          = "MERGE_MESSAGE"
+      + name                        = "android-test-team-repo"
+      + node_id                     = (known after apply)
+      + primary_language            = (known after apply)
+      + private                     = (known after apply)
+      + repo_id                     = (known after apply)
+      + squash_merge_commit_message = "COMMIT_MESSAGES"
+      + squash_merge_commit_title   = "COMMIT_OR_PR_TITLE"
+      + ssh_clone_url               = (known after apply)
+      + svn_url                     = (known after apply)
+      + topics                      = (known after apply)
+      + visibility                  = "public"
+      + web_commit_signoff_required = false
+
+      + security_and_analysis (known after apply)
+    }
+
+  # github_team.android will be created
+  + resource "github_team" "android" {
+      + create_default_maintainer = false
+      + description               = "DevOps guys please we don't follow best practices"
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "Android Team"
+      + node_id                   = (known after apply)
+      + parent_team_read_id       = (known after apply)
+      + parent_team_read_slug     = (known after apply)
+      + privacy                   = "closed"
+      + slug                      = (known after apply)
+    }
+
+  # github_team.backend will be created
+  + resource "github_team" "backend" {
+      + create_default_maintainer = false
+      + description               = "We propose best practices"
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "Backend Team"
+      + node_id                   = (known after apply)
+      + parent_team_read_id       = (known after apply)
+      + parent_team_read_slug     = (known after apply)
+      + privacy                   = "closed"
+      + slug                      = (known after apply)
+    }
+
+  # github_team.devops-lab4-team will be created
+  + resource "github_team" "devops-lab4-team" {
+      + create_default_maintainer = false
+      + description               = "devops lab4 team"
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "devops-lab4-team"
+      + node_id                   = (known after apply)
+      + parent_team_read_id       = (known after apply)
+      + parent_team_read_slug     = (known after apply)
+      + privacy                   = "closed"
+      + slug                      = (known after apply)
+    }
+
+  # github_team_repository.android_repository will be created
+  + resource "github_team_repository" "android_repository" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "maintain"
+      + repository = "android-test-team-repo"
+      + team_id    = (known after apply)
+    }
+
+  # github_team_repository.backend_repository will be created
+  + resource "github_team_repository" "backend_repository" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "push"
+      + repository = "android-test-team-repo"
+      + team_id    = (known after apply)
+    }
+
+Plan: 8 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + repositories = [
+      + {
+          + branch_protection_rule = (known after apply)
+          + default_branch         = "main"
+          + description            = "android test team"
+          + name                   = "android-test-team-repo"
+          + visibility             = "public"
+        },
+    ]
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_team.devops-lab4-team: Creating...
+github_team.backend: Creating...
+github_team.android: Creating...
+github_repository.repo: Creating...
+github_team.devops-lab4-team: Still creating... [10s elapsed]
+github_team.android: Still creating... [10s elapsed]
+github_team.backend: Still creating... [10s elapsed]
+github_repository.repo: Still creating... [10s elapsed]
+github_team.android: Creation complete after 15s [id=12126006]
+github_team.backend: Creation complete after 19s [id=12126005]
+github_team.devops-lab4-team: Creation complete after 19s [id=12126007]
+github_repository.repo: Creation complete after 19s [id=android-test-team-repo]
+github_team_repository.backend_repository: Creating...
+github_branch_default.repo_main: Creating...
+github_team_repository.android_repository: Creating...
+github_team_repository.android_repository: Creation complete after 4s [id=12126006:android-test-team-repo]
+github_branch_default.repo_main: Creation complete after 6s [id=android-test-team-repo]
+github_branch_protection.repo_protection: Creating...
+github_team_repository.backend_repository: Creation complete after 6s [id=12126005:android-test-team-repo]
+github_branch_protection.repo_protection: Creation complete after 4s [id=BPR_kwDON1KOGM4Dii5N]
+
+Apply complete! Resources: 8 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+repositories = [
+  {
+    "branch_protection_rule" = "BPR_kwDON1KOGM4Dii5N"
+    "default_branch" = "main"
+    "description" = "android test team"
+    "name" = "android-test-team-repo"
+    "visibility" = "public"
+  },
+]
+
+
+```
