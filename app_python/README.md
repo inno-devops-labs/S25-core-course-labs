@@ -1,3 +1,4 @@
+# Python App [![CI](https://github.com/MohamadSafi/S25-core-course-labs/actions/workflows/ci.yaml/badge.svg)](https://github.com/MohamadSafi/S25-core-course-labs/actions/workflows/ci.yaml)
 ## Overview
 
 A simple Python web application built with Flask that displays the current time in Moscow (MSK). The time updates upon every page refresh.
@@ -91,5 +92,3 @@ We use **GitHub Actions** to automate linting, testing, and Docker image publish
 3. **Tests**: Executes unit tests with `pytest`.
 4. **Docker Login**: Logs into Docker Hub (using GitHub Secrets).
 5. **Docker Build & Push**: Builds the container image and pushes it to Docker Hub if all tests pass.
-
-You can view the GitHub Actions status badges in the repository's main page or pull requests.
