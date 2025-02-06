@@ -31,7 +31,6 @@ Snyk is integrated into the CI workflow to identify and address vulnerabilities 
 
 - **Features**:
   - Scans the `requirements.txt` file for known vulnerabilities in the listed dependencies.
-  - Configurable severity threshold (`--severity-threshold=high`) to block the pipeline only for high-severity issues.
   - Secure token management using GitHub secrets (`SNYK_TOKEN`).
 
 ## 5. Modularized Workflow
