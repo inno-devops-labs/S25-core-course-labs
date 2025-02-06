@@ -154,6 +154,74 @@ default_branch = "master"
 repository_url = "https://github.com/RwKaLs/S25-core-course-labs"
 ```
 
+## GitHub Teams
+
+Screenshot with created teams: [link](github_teams_tf/teams_screenshot.png)
+
+### Required output
+
+```text
+PS C:\Users\egora\PycharmProjects\S25-core-course-labs\terraform\github_teams_tf> terraform apply
+var.github_token
+  GitHub personal access token (or GITHUB_TOKEN environment variable)
+
+  Enter a value:
+
+github_team.repo_contributors: Refreshing state... [id=12126161]
+github_team.repo_maintainers: Refreshing state... [id=12126162]
+github_repository.devops_labs: Refreshing state... [id=S25-core-course-labs]
+github_team_repository.team_contributors: Refreshing state... [id=12126161:S25-core-course-labs]
+github_team_repository.team_maintainers: Refreshing state... [id=12126162:S25-core-course-labs]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_branch_default.default_branch will be created
+  + resource "github_branch_default" "default_branch" {
+      + branch     = "lab3"
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + rename     = false
+      + repository = "S25-core-course-labs"
+    }
+
+  # github_branch_protection.branch_protection will be created
+  + resource "github_branch_protection" "branch_protection" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + lock_branch                     = false
+      + pattern                         = "lab3"
+      + repository_id                   = "S25-core-course-labs"
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + require_last_push_approval      = false
+          + required_approving_review_count = 1
+        }
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_branch_default.default_branch: Creating...
+github_branch_default.default_branch: Creation complete after 2s [id=S25-core-course-labs]
+github_branch_protection.branch_protection: Creating...
+github_branch_protection.branch_protection: Creation complete after 4s [id=BPR_kwDON1KwiM4DijEO]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+```
+
 ## Docker task
 
 Task was done fully using the following tutorial:
