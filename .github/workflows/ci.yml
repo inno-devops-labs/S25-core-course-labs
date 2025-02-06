@@ -40,13 +40,11 @@ jobs:
     - name: Lint
       run: |
         cd app_python
-        pip install flake8
         flake8 .
 
     - name: Test
       run: |
         cd app_python
-        pip install pytest
         pytest
 
     - name: Login to DockerHub
