@@ -12,7 +12,7 @@ provider "github" {
 }
 
 resource "github_repository" "repo" {
-  name        = "S25-core-course-labs"
+  name        = "terraform-repo-git"
   description = "description"
   visibility  = "public"
   has_issues  = true
@@ -21,7 +21,7 @@ resource "github_repository" "repo" {
 
 resource "github_branch_default" "default" {
   repository = github_repository.repo.name
-  branch     = "master"
+  branch     = "main"
 }
 
 resource "github_branch_protection" "default" {
@@ -33,4 +33,10 @@ resource "github_branch_protection" "default" {
   required_pull_request_reviews {
     required_approving_review_count = 1
   }
+}
+
+resource "github_repository" "S25-core-course-labs" {
+    name = "S25-core-course-labs"
+    description        = "A repo"
+
 }
