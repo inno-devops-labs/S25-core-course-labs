@@ -36,7 +36,7 @@ jobs:
       - name: Run linter (flake8)
         run: |
           pip install flake8
-          flake8 . --count --show-source --statistics || true
+          flake8 . --count --show-source --statistics
           
       - name: Start My App
         run: |
