@@ -7,5 +7,5 @@ __pycache__/
 # Ignore bytecode files
 *.py[cod]
 
-# Ignore virtueal environment
+# Ignore virtual environment
 venv/
