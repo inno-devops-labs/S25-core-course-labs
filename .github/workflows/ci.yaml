@@ -98,6 +98,7 @@ jobs:
     needs: build
     permissions:
       security-events: write
+      contents: write
     steps:
       - name: 📥 Checkout repository
         uses: actions/checkout@v3
