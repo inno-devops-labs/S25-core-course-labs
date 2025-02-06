@@ -72,3 +72,35 @@ To execute the unit tests, follow these steps:
    ```sh
    python -m unittest discover tests
    ```
+
+### Continuous Integration (CI) Workflow
+
+This project uses GitHub Actions for continuous integration (CI) and deployment. The CI workflow automates the process of building, testing, and deploying the application to Docker Hub.
+
+#### CI Workflow Details
+
+1. **Trigger**: 
+   - The workflow is triggered on pushes to the `master` branch or when pull requests are opened against the `master` branch.
+
+2. **Workflow File**:
+   - The CI configuration is defined in `.github/workflows/master.yml`.
+
+3. **Working Directory**:
+   - Steps are executed in the `app_python` directory.
+
+4. **Steps in the Workflow**:
+   - **Dependencies**: Installs the project dependencies using `pip` in the `app_python` directory.
+   - **Linter**: Runs a linter (`flake8`) to ensure code quality in the `app_python` directory.
+   - **Tests**: Executes unit tests to validate functionality in the `app_python/tests` directory.
+   - **Docker Build & Push**: Builds the Docker image from the `app_python/Dockerfile` and pushes it to Docker Hub.
+
+5. **Environment-Specific Secrets**:
+   - The Docker login step uses secrets stored in the "prod" environment of the GitHub repository.
+   - These secrets include:
+     - **`DOCKER_USERNAME`**: Docker Hub username.
+     - **`DOCKER_PASSWORD`**: Docker Hub personal access token.
+
+6. **Docker Integration**:
+   - Logs in to Docker Hub using credentials stored in the "prod" environment.
+   - Builds the Docker image using the `app_python/Dockerfile`.
+   - Pushes the image to Docker Hub with the tag `latest`.
