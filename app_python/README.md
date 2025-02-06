@@ -52,8 +52,8 @@ pytest tests.py
 ## CI workflow
 
 CI workflow includes 2 jobs: test and build.
-1. Test job will do checkout code, set up python, install dependencies to venv,
-run tests, and format code using black.
+1. Test job will do checkout code, set up python, install dependencies to venv, and
+run tests.
 2. Build job will do checkout code, set up python, build docker image,
 and run docker container.
 
