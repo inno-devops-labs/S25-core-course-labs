@@ -45,11 +45,13 @@ jobs:
     needs:
       - build_and_test
 
-    defaults:
-      run:
-        working-directory: ./app_python
-
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
