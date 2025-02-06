@@ -1,4 +1,4 @@
-Flask
+flask
 pytest
-Flask-Testing
+flask-Testing
 pytz
