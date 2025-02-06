@@ -44,3 +44,4 @@ Application does have unit tests ci pipelines.
 test.yml - runs unit tests on application 
 linter.yml - validates code style quality
 docker.yml - update docker build of the application
+synk.yml - vulnurabilities check
