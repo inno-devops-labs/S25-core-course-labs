@@ -12,6 +12,5 @@ templates = Jinja2Templates(directory="templates")
 @app.get("/", response_class=HTMLResponse)
 async def homepage(request: Request):
     current_date = datetime.datetime.now(pytz.timezone('Europe/Moscow'))
-    return templates.TemplateResponse("index.html", 
-                                      {"request": request, 
-                                       "time": current_date.strftime("%H:%M")})
+    return templates.TemplateResponse(request, "index.html", 
+                                      {"time": current_date.strftime("%H:%M")})
