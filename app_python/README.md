@@ -3,6 +3,7 @@
 ## CI/CD Status
 [![Python CI/CD](https://github.com/SergePolin/S25-core-course-labs/actions/workflows/python-ci.yml/badge.svg)](https://github.com/SergePolin/S25-core-course-labs/actions/workflows/python-ci.yml)
 
+
 A modern web application that displays the current time in Moscow, Russia, built with FastAPI and Python.
 
 ## 🌟 Features
