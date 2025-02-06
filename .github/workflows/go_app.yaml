@@ -28,7 +28,9 @@ jobs:
           go vet
 
       - name: Run Tests
+        working-directory: app_go
         run: go test -v
+
 
   security:
     runs-on: ubuntu-latest
