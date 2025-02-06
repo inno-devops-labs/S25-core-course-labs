@@ -74,7 +74,7 @@ jobs:
     - name: Build and push backend Docker image
       uses: docker/build-push-action@v3
       with:
-        context: ./app_python/backend
+        context: ./app_python
         push: true
         tags: jmartynova123/dev-lab3-back:latest
     - name: Run database container
