@@ -102,7 +102,7 @@ container_id = "e87f8a5d2fbc7a2bf9c98c7c06a9d3872baa6dee5ee0a5afd689db660dade728
 image_id = "sha256:97662d24417b316f60607afbca9f226a2ba58f09d642f27b8e197a89859ddc8enginx:latest"
 ```
 
-# Steps of setup process I conducted for task 4 from the lab:
+# Steps of setup process I conducted for task 1 from the lab:
 
 1. Created the authorization key
 
