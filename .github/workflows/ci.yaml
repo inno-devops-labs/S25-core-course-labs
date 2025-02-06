@@ -111,9 +111,6 @@ jobs:
         with:
           command: code test --sarif-file-output=snyk.sarif ./app_python
 
-      - name: 🛠 Debug - List Files
-        run: ls -R
-
       - name: 📤 Upload Snyk SARIF
         uses: github/codeql-action/upload-sarif@v3
         with:
