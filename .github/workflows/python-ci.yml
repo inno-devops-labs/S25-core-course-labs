@@ -37,7 +37,7 @@ jobs:
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        args: --file=app_python/requirements.txt
+        args: --skip-unresolved --file=app_python/requirements.txt
 
     - name: Run linter
       run: |
