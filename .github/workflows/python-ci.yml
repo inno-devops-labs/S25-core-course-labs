@@ -33,7 +33,7 @@ jobs:
         run: python -m unittest discover app_python/tests
 
       - name: Run Snyk to Check for Vulnerabilities
-        uses: snyk/actions/python@master
+        uses: snyk/actions/python-3.9@master
         with:
           command: test code
         env:
