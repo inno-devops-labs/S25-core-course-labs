@@ -3,9 +3,13 @@ import logging
 from flask import Flask, jsonify
 from flask_cors import CORS
 import pytz
-from .database.db import db, Zones
 from dotenv import load_dotenv
 import os
+import sys
+
+project_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(project_dir)
+from backend.database.db import db, Zones
 
 # Load environment variables from .env file
 load_dotenv()
@@ -71,7 +75,7 @@ def get_current_time(name):
 # Create tables and run the application
 if __name__ == '__main__':
     try:
-        app.run(host='127.0.0.1', port=8080, debug=True)
+        app.run(host='0.0.0.0', port=8080, debug=True)
         logger.Info("App is running successfully")
     except Exception as e:
         logger.error(f"Error starting the application: {e}")
