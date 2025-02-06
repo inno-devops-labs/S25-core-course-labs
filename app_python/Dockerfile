@@ -1,4 +1,4 @@
-FROM python:3.11-alpine3.17
+FROM ghcr.io/library/python:3.11-alpine3.18
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONFAULTHANDLER=1 \
