@@ -51,7 +51,3 @@ jobs:
           context: app_python  
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/my-fastapi-app:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/my-fastapi-app:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/my-fastapi-app:buildcache,mode=max
-          buildx-version: latest
-          cache-backend: containerd
