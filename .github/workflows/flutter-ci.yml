@@ -52,8 +52,8 @@ jobs:
           flutter-version: "3.3.0"
 
       - name: Install dependencies
-        run: |
-          flutter pub get
+        run: flutter pub get
+        working-directory: app_dart/nothern_lights_app
 
       - name: Install Snyk CLI
         run: |
@@ -68,8 +68,8 @@ jobs:
 
   docker:
     defaults:
-          run:
-            working-directory: app_dart/nothern_lights_app
+        run:
+          working-directory: app_dart/nothern_lights_app
     needs: build-and-test
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
