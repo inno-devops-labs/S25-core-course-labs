@@ -83,3 +83,17 @@ To contribute:
    docker run -p 5000:5000 your-dockerhub-username/app_python
    ```
 
+## Continuous Integration (CI)
+
+We use GitHub Actions for automated testing and code validation.
+
+### **CI Workflow Steps**
+1. **Install Dependencies** – All required packages from `requirements.txt` are installed.
+2. **Linting (Flake8)** – The code is checked for PEP8 compliance.
+3. **Run Tests (Pytest)** – Unit tests are executed to validate functionality.
+4. **Build and Push Docker Image** – The container is built and pushed to Docker Hub.
+5. **Vulnerability Scanning (Snyk)** – Dependencies are scanned for known security vulnerabilities.
+
+### **How to Check CI Status?**
+The latest CI run status can be seen in the repository:  
+![CI Status](https://github.com/Dema-koder/S25-core-course-labs/workflows/CI/badge.svg)
