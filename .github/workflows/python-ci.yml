@@ -32,13 +32,6 @@ jobs:
       - name: Run Tests
         run: python -m unittest discover app_python/tests
 
-      - name: Run Snyk to Check for Vulnerabilities
-        uses: snyk/actions/python@master
-        with:
-          command: test
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_KEY }}
-        continue-on-error: true
       
           
       - name: Docker Login
@@ -50,6 +43,14 @@ jobs:
         run: |
           docker build -t em1999jay/python-app:latest ./app_python
           docker push em1999jay/python-app:latest
-      
 
-      
+
+  Snyk_to_Check_for_Vulnerabilities:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Snyk to Check for Vulnerabilities
+        uses: snyk/actions/python-3.9@master
+        with:
+          command: test code
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_KEY }}
