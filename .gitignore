@@ -4,9 +4,6 @@
 target/
 build/
 
-# Maven specific files and directories
-.mvn/
-
 # Generated source directories
 generated-sources/
 generated-test-sources/
