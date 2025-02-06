@@ -13,6 +13,7 @@ key.json
 # Local .terraform directories
 **/.terraform/*
 .terraform.lock.hcl
+.terraform/*
 # .tfstate files
 *.tfstate
 *.tfstate.*
