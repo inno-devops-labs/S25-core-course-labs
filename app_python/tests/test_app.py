@@ -6,9 +6,8 @@ from datetime import datetime
 import re
 import pytz
 
-sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "app_python"))
-)
+sys.path.insert(0, os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..")))
 
 
 @pytest.fixture
