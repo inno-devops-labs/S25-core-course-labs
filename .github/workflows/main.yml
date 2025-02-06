@@ -45,6 +45,7 @@ jobs:
   docker-build-push:
     needs: build-and-test  # Ensure this step runs after the build-and-test job
     runs-on: ubuntu-latest
+    environment: Prod
 
     steps:
       # Step 1: Check out the code
@@ -53,7 +54,6 @@ jobs:
 
       # Step 2: Log in to Docker Hub
       - name: Log in to Docker Hub
-        environment: Prod
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
