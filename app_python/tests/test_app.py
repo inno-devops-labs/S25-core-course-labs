@@ -1,7 +1,7 @@
 from freezegun import freeze_time
 import pytest
 
-import app
+from app_python import app
 
 
 @pytest.fixture()
