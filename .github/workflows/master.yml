@@ -42,6 +42,7 @@ jobs:
 
       # Snyk Vulnerability Check
       - name: Snyk Vulnerability Scan
+        working-directory: ./app_python
         uses: snyk/actions/python-3.10@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
