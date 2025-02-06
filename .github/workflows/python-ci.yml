@@ -42,7 +42,7 @@ jobs:
       run: |
         cd app_python
         pip install pytest
-        pytest lab3_tests.py -n 3
+        pytest -n 3 lab3_tests.py
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
