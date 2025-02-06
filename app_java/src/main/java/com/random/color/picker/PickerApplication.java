@@ -1,3 +1,6 @@
+/**
+ * This package contains the main application class and configuration.
+ */
 package com.random.color.picker;
 
 import org.springframework.boot.SpringApplication;

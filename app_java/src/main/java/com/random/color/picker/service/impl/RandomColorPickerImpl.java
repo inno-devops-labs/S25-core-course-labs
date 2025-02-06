@@ -1,3 +1,6 @@
+/**
+ * This package contains the implementation of service classes.
+ */
 package com.random.color.picker.service.impl;
 
 import com.random.color.picker.service.RandomColorPicker;
