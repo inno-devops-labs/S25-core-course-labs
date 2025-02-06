@@ -7,6 +7,7 @@ WORKDIR /usr/local/app/backend
 # Copy requirements.txt
 COPY requirements.txt ./
 
+COPY ../app_python/tests ./tests
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
