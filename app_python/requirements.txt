@@ -1,3 +1,4 @@
 fastapi==0.68.0
 uvicorn==0.15.0
 pytz==2021.1
+pytest==8.3.4
