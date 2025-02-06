@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: [\"main\", \"master\"]
+  pull_request:
+    branches: [\"main\", \"master\"]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      # --------------------------------
+      # 1. Check out the code
+      # --------------------------------
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      # --------------------------------
+      # 2. Set up Python
+      # --------------------------------
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: \"3.10\"
+
+      # --------------------------------
+      # 3. Install Dependencies
+      # --------------------------------
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r app_python/requirements.txt
+          # If your tests are in a tests folder inside app_python, ensure you install pytest, etc.
+          pip install pytest
+
+      # --------------------------------
+      # 4. Run Linter
+      # --------------------------------
+      - name: Lint with flake8
+        run: |
+          pip install flake8
+          cd app_python
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      # --------------------------------
+      # 5. Run Tests
+      # --------------------------------
+      - name: Run tests
+        run: |
+          cd app_python
+          pytest --maxfail=1 --disable-warnings
+
+  # Optionally, define a separate job or continue in same job for Docker build/push
+  docker-build-push:
+    needs: build-and-test # runs only after tests pass
+    runs-on: ubuntu-latest
+    steps:
+      # --------------------------------
+      # 1. Check out the code
+      # --------------------------------
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      # --------------------------------
+      # 2. Login to Docker Hub
+      # --------------------------------
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          # Ensure you store your Docker Hub username/token in GitHub secrets
+
+      # --------------------------------
+      # 3. Build Docker Image
+      # --------------------------------
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/python-moscow-time:latest -f app_python/Dockerfile app_python
+
+      # --------------------------------
+      # 4. Push Docker Image
+      # --------------------------------
+      - name: Push Docker Image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/python-moscow-time:latest

@@ -79,3 +79,17 @@ docker pull billyboone/python-moscow-time:latest
 
 docker run --rm -p 5050:5050 billyboone/python-moscow-time:latest
 ```
+
+## CI Workflow
+
+We use **GitHub Actions** to automate linting, testing, and Docker image publishing.
+
+**Workflow Steps**:
+
+1. **Dependencies**: Installs required Python packages.
+2. **Linter**: Runs `flake8` to enforce coding style.
+3. **Tests**: Executes unit tests with `pytest`.
+4. **Docker Login**: Logs into Docker Hub (using GitHub Secrets).
+5. **Docker Build & Push**: Builds the container image and pushes it to Docker Hub if all tests pass.
+
+You can view the GitHub Actions status badges in the repository's main page or pull requests.
