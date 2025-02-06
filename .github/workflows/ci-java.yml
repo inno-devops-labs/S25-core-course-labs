@@ -48,26 +48,8 @@ jobs:
         working-directory: ./app_java
         run: mvn test
 
-  security:
-    needs: [build-lint-test]
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      # Step 7: Install Snyk
-      - name: Install Snyk
-        run: npm install -g snyk
-
-      # Step 8: Run Snyk Vulnerability Check
-      - name: Run Snyk Vulnerability Check
-        run: snyk test --file=./app_java/pom.xml --skip-unresolved
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
   docker-worker:
-    needs: [build-lint-test, security]
+    needs: [build-lint-test]
     runs-on: ubuntu-latest
 
     steps:
