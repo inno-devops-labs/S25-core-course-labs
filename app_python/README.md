@@ -1,3 +1,5 @@
+![example workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
+
 # Moscow Time Display Application (FastAPI)
 
 ## Overview
