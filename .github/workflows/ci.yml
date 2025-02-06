@@ -45,5 +45,5 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t gleb2005/flask-moscow-time:1.0 .
+          docker build -t gleb2005/flask-moscow-time:1.0 -f app_python/Dockerfile .
           docker push gleb2005/flask-moscow-time:1.0
