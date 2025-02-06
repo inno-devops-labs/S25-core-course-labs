@@ -65,14 +65,14 @@ jobs:
             username: fridorovich04
             password: ${{ secrets.DOCKER_PASSWORD }}
 
-  docker-build-push:
+  docker-build:
       needs: docker-login
       runs-on: ubuntu-latest
 
       steps:
-        - name: Build and push
-          uses: docker/build-push-action@v4
-          with:
-            context: /app_python
-            push: true
-            tags: fridorovich04/app_python:latest
+        - name: Checkout code
+          uses: actions/checkout@v3
+
+        - name: Build and Push Docker Image
+          run: |
+            docker build -t fridorovich04/app_python:latest -f app_python/Dockerfile app_python/
