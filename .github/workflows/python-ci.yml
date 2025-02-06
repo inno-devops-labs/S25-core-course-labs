@@ -42,6 +42,7 @@ jobs:
       run: |
         cd app_python
         pip install pytest
+        pip install pytest-xdist
         pytest -n 3 lab3_tests.py
 
     - name: Log in to Docker Hub
