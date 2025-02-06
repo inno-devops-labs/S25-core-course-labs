@@ -73,6 +73,6 @@ jobs:
           context: ./app_python
           file: ./app_python/Dockerfile
           push: true
-          tags: gendiro/moscow-time-distroless:latest
-          cache-from: type=registry,ref=gendiro/moscow-time-distroless:buildcache
+          tags: gendiro/moscow-time-app:latest
+          cache-from: type=registry,ref=gendiro/moscow-time-app:buildcache
           cache-to: type=inline

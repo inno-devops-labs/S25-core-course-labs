@@ -40,6 +40,9 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Run Linter
+      run: npm run lint
+
     - name: Run tests
       run: npm test
 
@@ -75,9 +78,9 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./app_javascript
-          file: ./app_javascript/Dockerfile
+          file: ./app_javascript/distroless.Dockerfile
           push: true
           tags: gendiro/js-app-distroless:latest
-          cache-from: type=registry,ref=gendiro/js-app:buildcache
+          cache-from: type=registry,ref=gendiro/js-app-distroless:buildcache
           cache-to: type=inline
 
