@@ -28,15 +28,15 @@ class TimeResponse(BaseModel):
     """
     Response model with a time field
     """
+
     time: time
 
     model_config = {
         # Custom JSON encoder for time objects to serialize
         # them as strings in the specified format
         "json_encoders": {time: lambda v: v.strftime(TIME_FORMAT)},
-
         # Custom JSON schema with an example
-        "json_schema_extra": {"example": {"time": TIME_FORMAT_EXAMPLE}}
+        "json_schema_extra": {"example": {"time": TIME_FORMAT_EXAMPLE}},
     }
 
 
