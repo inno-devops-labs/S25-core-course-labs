@@ -50,20 +50,15 @@ jobs:
   security:
     needs: [build-lint-test]
     runs-on: ubuntu-latest
+    container:
+      image: snyk/snyk-cli:latest
     steps:
-      # Step 7: Check out the repository
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Step 8: Install Snyk via npm
-      - name: Install Snyk
-        run: npm install -g snyk
-
-      # Step 9: Authenticate Snyk
       - name: Authenticate Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
-      # Step 10: Run Snyk Vulnerability Check
       - name: Run Snyk Vulnerability Check
         run: snyk test --file=./app_java/pom.xml --skip-unresolved
 
