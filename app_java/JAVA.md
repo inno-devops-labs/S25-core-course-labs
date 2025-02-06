@@ -51,5 +51,4 @@ src/
 - **Thymeleaf**: For server-side rendering of HTML.
 - **Gradle**: For dependency management and building the project.
 - **JUnit**: For unit testing.
-
 ---

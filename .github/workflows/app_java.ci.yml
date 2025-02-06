@@ -41,15 +41,3 @@ jobs:
         run: |
           cd app_java
           gradle test --no-daemon
-
-  docker:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Build and push Docker image
-        run: |
-          cd app_java
-          docker build -t java-spring-app:latest .
