@@ -26,7 +26,7 @@ def test_static_time(monkeypatch, client):
     moscow = timezone('Europe/Moscow')
     fixed_time = datetime(2024, 2, 4, 12, 0, 0, tzinfo=moscow)
 
-    with (patch("app_python.run.datetime") as mock_datetime):
+    with (patch("run.datetime") as mock_datetime):
         mock_datetime.now.return_value = fixed_time
         mock_datetime.strftime = datetime.strftime
 
