@@ -82,3 +82,30 @@ docker pull saleemasekrea/distroless_go_app:latest
 ```bash
 docker run -p 8002:8002 saleemasekrea/distroless_go_app 
 ```
+
+
+### Unit Tests
+
+Unit tests are maintained in the `app_service_test.go` file. To run the tests, use the following command:
+
+```bash
+go test -v 
+```
+
+To check the code coverage, use the following command:
+
+```bash
+
+go test -cover
+
+```
+
+### CI Workflow
+
+A CI workflow is maintained in the `.github/workflows/go_app.yaml` file. This workflow lints and tests the application,checks code vulnerability using SNYK ,and builds and pushes docker image. Workflow is triggered only if the there is a change in the app_python directory or the workflow file itself.
+
+The CI workflow contains 3 jobs. Each job has a specific set of tasks to perform:
+
+- Build: This job lints and tests the application
+- Security: This job checks code vulnerability using SNYK
+- Docker: This job builds and pushes the docker image to the Docker Hub. The job is carried out only if the previous jobs are successful.

@@ -12,7 +12,6 @@ This is a simple web application that displays the current time in Moscow. The a
     - [Manual](#manual)
     - [Docker](#docker)
     - [Distroless Image Version](#distroless-image-version)
-  - [Development](#development)
     - [Unit Tests](#unit-tests)
     - [CI Workflow](#ci-workflow)
 
@@ -108,9 +107,6 @@ docker run -p 8001:8001 saleemasekrea/distroless_python_app
 
 The application will be available at [localhost:8001](http://localhost:8001/)
 
-## Development
-
-Contributions are not accepted at the moment as this is just a lab assignment. You can fork the repository for your own use.
 
 ### Unit Tests
 
