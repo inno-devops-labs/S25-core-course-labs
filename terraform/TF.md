@@ -489,4 +489,76 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
 ```
 
+## GitHub Organizations
 
+Organization name: `DevopsNikolaiLab4`
+Repository of this organization: `Devops-Lab4-TF` (https://github.com/DevopsNikolaiLab4/Devops-Lab4-TF)
+
+
+### `terraform apply`
+```
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_team.admins will be created
+  + resource "github_team" "admins" {
+      + create_default_maintainer = false
+      + description               = "Administrators with full access"
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "Admins"
+      + node_id                   = (known after apply)
+      + privacy                   = "closed"
+      + slug                      = (known after apply)
+    }
+
+  # github_team.developers will be created
+  + resource "github_team" "developers" {
+      + create_default_maintainer = false
+      + description               = "Team for developers (users)"
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "Developers"
+      + node_id                   = (known after apply)
+      + privacy                   = "closed"
+      + slug                      = (known after apply)
+    }
+
+  # github_team_repository.admin_team_access will be created
+  + resource "github_team_repository" "admin_team_access" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "admin"
+      + repository = "Devops-Lab4-TF"
+      + team_id    = (known after apply)
+    }
+
+  # github_team_repository.dev_team_access will be created
+  + resource "github_team_repository" "dev_team_access" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "push"
+      + repository = "Devops-Lab4-TF"
+      + team_id    = (known after apply)
+    }
+
+Plan: 4 to add, 0 to change, 0 to destroy.
+github_team.developers: Creating...
+github_team.admins: Creating...
+github_team.admins: Creation complete after 7s [id=12124781]
+github_team_repository.admin_team_access: Creating...
+github_team.developers: Still creating... [10s elapsed]
+github_team.developers: Creation complete after 10s [id=12124777]
+github_team_repository.dev_team_access: Creating...
+github_team_repository.admin_team_access: Creation complete after 3s [id=12124781:Devops-Lab4-TF]
+github_team_repository.dev_team_access: Creation complete after 2s [id=12124777:Devops-Lab4-TF]
+
+Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
+```
+
+
+### In the settings, two teams appeared: *Admins* and *Developers*
