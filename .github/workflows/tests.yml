@@ -33,4 +33,5 @@ jobs:
       # Run tests
       - name: Run tests
         run: |
-          python -m unittest discover .app_python/tests
+          cd app_python
+          python -m unittest discover tests
