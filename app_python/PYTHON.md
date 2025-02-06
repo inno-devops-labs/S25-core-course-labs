@@ -89,4 +89,81 @@ if __name__ == "__main__":
 </body>
 </html>
 ```
+# Unit Tests 
 
+### 1. **Test: `test_time_format`**
+   - **Purpose**:  
+     Verify that the HTML response from the Flask endpoint `/` contains a time string in the format `HH:MM:SS`.
+   - **Method**:  
+     - Uses a regular expression (`\d{2}:\d{2}:\d{2}`) to match the time format.  
+     - Fails if the pattern is not found in the response body.
+
+---
+
+### 2. **Test: `test_time_in_response`**
+   - **Purpose**:  
+     Ensure the HTML response includes the **current Moscow time** in the correct format.  
+   - **Method**:  
+     - Fetches the current time in the `Europe/Moscow` timezone.  
+     - Checks if this time appears in the response body.  
+     - Validates the response MIME type is `text/html`.
+
+---
+
+## Best Practices Applied
+
+### 1. **Test Isolation with Fixtures**  
+   - **`client` Fixture**:  
+     - Creates a dedicated test client for the Flask app.  
+     - Enables `TESTING` mode to propagate exceptions and disable error catching.  
+     - Uses `yield` to clean up resources after tests complete.  
+     ```python
+     @pytest.fixture
+     def client():
+         app.config["TESTING"] = True
+         with app.test_client() as client:
+             yield client
+     ```
+
+---
+
+### 2. **Explicit Path Configuration**  
+   - **Dynamic Imports**:  
+     Adjusts `sys.path` to ensure the app module is importable, even if tests are in a nested directory.  
+     ```python
+     sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+     ```
+
+---
+
+### 3. **Time Validation**  
+   - **Time Zone Awareness**:  
+     Uses `pytz.timezone("Europe/Moscow")` to fetch the current Moscow time, ensuring timezone correctness.  
+   - **String Format Matching**:  
+     Validates the time format with regex to avoid false positives from arbitrary numbers.  
+
+---
+
+### 4. **Response Validation**  
+   - **MIME Type Check**:  
+     Confirms the response is HTML (`assert response.mimetype == "text/html"`).  
+   - **Content Assertions**:  
+     Checks for the presence of the expected time string in the response body.  
+
+---
+
+### 5. **Error Messaging**  
+   - **Descriptive Assertions**:  
+     Uses custom failure messages (e.g., `"Time format is incorrect"`) for clearer debugging.  
+     ```python
+     assert time_match is not None, "Time format is incorrect"
+     ```
+
+---
+
+### 6. **Flask Testing Mode**  
+   - **Enabled via `app.config["TESTING"] = True`**:  
+     - Disables Flask’s error handlers during testing.  
+     - Propagates exceptions to the test runner for accurate failure reporting.  
+
+---
