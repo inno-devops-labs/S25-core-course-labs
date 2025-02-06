@@ -2,10 +2,10 @@ name: Python CI/CD with Docker
 
 on:
   push:
-    branches:
+    paths:
       - "app_python/**"
   pull_request:
-    branches:
+    paths:
       - "app_python/**"
   workflow_dispatch:
 
