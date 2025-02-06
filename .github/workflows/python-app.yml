@@ -2,8 +2,6 @@ name: Python Moscow time application
 
 on:
   push:
-    paths:
-      - app_python/**
 
 permissions:
   contents: read
