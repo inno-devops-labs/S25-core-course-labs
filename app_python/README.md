@@ -48,3 +48,13 @@ There are several unit tests for testing the application. It is located in the `
 ```bash
 python -m unittest discover tests "*_test.py"
 ```
+
+## CI
+
+The CI workflow includes the following steps:
+1. **Dependencies**: Install Python dependencies
+2. **Linter**: Using flake8
+3. **Tests**: Run unit tests using unittest python framework
+4. **Docker**: Build and push a Docker image to Docker Hub
+
+To see the entire workflow navofate to `.github/workflows/python-app.yml`
