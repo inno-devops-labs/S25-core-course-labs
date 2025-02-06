@@ -4,6 +4,11 @@
 /app_python/*.pyo
 /app_python/*.pyd
 /app_python/venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+**/__pycache__/
 
 # Ignore Node.js related files and directories (for app_react)
 /app_react/node_modules/
