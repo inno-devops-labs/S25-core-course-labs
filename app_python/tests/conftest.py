@@ -10,6 +10,7 @@ then changed to be applicable to this project, as it is simpler than their examp
 """
 @pytest.fixture
 def app():
+    print(sys.path)
     sys.path.append('..\\app_python')
     import app as app_python_app
     this_app = app_python_app.app
