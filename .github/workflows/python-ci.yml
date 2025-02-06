@@ -33,9 +33,9 @@ jobs:
         run: python -m unittest discover app_python/tests
 
       - name: Run Snyk to Check for Vulnerabilities
-        run: |
-            pip install snyk  # Ensure Snyk CLI is installed
-            snyk test --file=app_python/requirements.txt  # Run Snyk with explicit file path
+        uses: snyk/actions/python@master
+        with:
+          command: test code
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_KEY }}
           
