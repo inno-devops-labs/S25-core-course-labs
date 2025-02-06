@@ -10,13 +10,13 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - name: change directory
-        run : cd app_python
       - name: Install Dependencies
+        working-directory: app_python  
         run: |
-              python -m pip install --upgrade pip
-              pip install -r requirements.txt
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
       - name: Lint Code
+        working-directory: app_python  
         run: flake8 .
 
   test:
@@ -26,14 +26,13 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      
-      - name: change directory
-        run : cd app_python
       - name: Install Dependencies
+        working-directory: app_python  
         run: |
-              python -m pip install --upgrade pip
-              pip install -r requirements.txt
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
       - name: Run Tests
+        working-directory: app_python  
         run: pytest
 
   docker:
@@ -49,7 +48,7 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: app_python  
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/my-fastapi-app:latest
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/fastapi-app:buildcache
