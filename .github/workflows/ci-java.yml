@@ -50,6 +50,7 @@ jobs:
         run: mvn test
 
   security:
+    needs: [build-lint-test]
     name: Security check
     runs-on: ubuntu-latest
     steps:
