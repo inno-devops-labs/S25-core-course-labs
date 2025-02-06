@@ -2,11 +2,9 @@ name: Python CI
 
 on:
     push:
-      branches: [ "main" ]
       paths:
         - 'app_python/**'
     pull_request:
-      branches: [ "main" ]
       paths:
         - 'app_python/**'
 
