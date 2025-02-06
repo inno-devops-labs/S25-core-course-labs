@@ -1,4 +1,4 @@
 Flask>=2.0.0
 pytz==2024.2
 pytest==8.3.0
-werkzeug==1.0.1
+werkzeug>=2.0
