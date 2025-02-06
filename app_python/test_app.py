@@ -39,7 +39,7 @@ def test_moscow_time_display(test_client):
 def test_template_rendering(test_client):
     """Test if the template is properly rendered with time data."""
     response = test_client.get("/")
-    assert b"Current time in Moscow" in response.data
+    assert b"Current Local Time in Moscow, Russia" in response.data
 
 
 def test_timezone_conversion():
