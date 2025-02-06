@@ -206,6 +206,12 @@ image_id = "<image_id>"
 
 ## **Yandex Cloud Infrastructure Using Terraform**
 
+### **1. Prepare Yandex Cloud Environment**
+
+- **Sign up** for Yandex Cloud: [console.cloud.yandex](https://console.cloud.yandex.com/)
+- **Create a Cloud and Folder** using the Yandex Cloud Console.
+- **Ensure a billing account is active.**
+
 ### **1. Install Yandex Cloud CLI**
 
 To begin, I install the Yandex Cloud CLI by running:
@@ -214,63 +220,49 @@ To begin, I install the Yandex Cloud CLI by running:
 curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
 ```
 
-### **2. Log in to Yandex Cloud**
+### **3. Configure Yandex Cloud Authentication**
 
-I authenticate my Yandex Cloud account using:
+#### **Install Yandex CLI**
 
 ```bash
+curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
 yc init
 ```
 
-### **3. Create a service account**
-
-I create a service account to manage Terraform resources:
+#### **Create a Service Account**
 
 ```bash
 yc iam service-account create --name terraform-sa
 ```
 
-### **4. Assign required roles**
-
-I assign the necessary roles to my service account:
+#### **Assign Required Roles**
 
 ```bash
-yc resource-manager folder add-access-binding <my-folder-id> \
-  --role <role> --subject serviceAccount:<my-service-account-id>
+yc resource-manager folder add-access-binding <folder_id> \
+  --role <role> \
+  --subject serviceAccount:<service_account_id>
 ```
 
-### **5. Generate a service account key**
-
-I generate a service account key and save it to a file:
+### **Set Environment Variables**
 
 ```bash
-yc iam key create --service-account-id <my-service-account-id> --output sa-key.json
+export YC_TOKEN=$(yc iam create-token)
+export YC_CLOUD_ID=$(yc config get cloud-id)
+export YC_FOLDER_ID=$(yc config get folder-id)
+export YC_SERVICE_ACCOUNT_ID=$(yc iam service-account list --format json | jq -r '.[0].id')
 ```
 
-### **6. Create a Terraform project**
+## **4. Configure Terraform**
 
-I create a new Terraform project and define the infrastructure inside `main.tf`.  
+I write main.tf file according to guide.
 
-```bash
-mkdir yacloud && cd yacloud
-touch main.tf
-```
-
-## **7. Initialize Terraform**
-
-Before applying my configuration, I initialize and validate Terraform:
+## **5. Run Terraform**
 
 ```bash
 terraform init
 terraform validate
-```
-
-### **8. Apply the Terraform configuration**
-
-Finally, I apply my Terraform configuration to create resources:
-
-```bash
-terraform apply -auto-approve
+terraform plan
+terraform apply
 ```
 
 ## Challenges encountered & solutions
