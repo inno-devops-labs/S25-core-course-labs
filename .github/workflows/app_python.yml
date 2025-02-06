@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -29,6 +29,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Run Linter
         run: flake8 .
 
@@ -36,6 +39,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build, linter]
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Run Unit Tests
         run: |
           cd app_python
@@ -47,7 +53,7 @@ jobs:
     needs: [build, linter, test]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Docker Login
         uses: docker/login-action@v3
