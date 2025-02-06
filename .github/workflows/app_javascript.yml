@@ -18,11 +18,6 @@ jobs:
       run:
         working-directory: ./app_javascript
 
-    cache:
-      paths:
-        - ~/.npm
-        - node_modules/
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
