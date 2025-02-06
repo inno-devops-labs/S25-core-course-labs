@@ -3,6 +3,7 @@ from app import app
 from unittest.mock import patch
 from datetime import datetime
 import pytz
+import re
 
 
 @pytest.fixture
@@ -26,3 +27,17 @@ def test_home_time_update(mock_datetime, client):
 
     response = client.get('/')
     assert b'2023-01-01 12:00:00' in response.data
+
+
+def test_home_content(client):
+    response = client.get('/')
+    html = response.data.decode('utf-8')
+    assert "Current Time in Moscow" in html
+    assert "<p>" in html
+
+
+def test_time_format(client):
+    response = client.get('/')
+    html = response.data.decode('utf-8')
+    match = re.search(r'(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})', html)
+    assert match, "Time string with expected format not found in response."

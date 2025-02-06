@@ -56,7 +56,7 @@ jobs:
           python -m pytest .
 
   snyk:
-    needs: [linter, test]
+    needs: [build, linter, test]
     name: SNYK
     runs-on: ubuntu-latest
     steps:

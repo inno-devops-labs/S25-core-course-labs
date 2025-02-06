@@ -47,3 +47,29 @@ Refresh the page to see the displayed time update.
 ```docker pull g3nd4/python-web:latest```
 
 ```docker run -d --name python-web -p 5000:5000 g3nd4/python-web:latest```
+
+## CI
+
+- Triggered on push events affecting the app_python folder or its CI file.
+- Defines several jobs that run sequentially:
+  
+  - Build  
+    - Checks out the repository  
+    - Sets up Python  
+    - Installs dependencies in the app_python folder
+
+  - Linter  
+    - Runs after build  
+    - Installs and executes flake8 to check code style
+
+  - Test  
+    - Runs after build and linter  
+    - Installs dependencies and runs unit tests using pytest
+
+  - SNYK  
+    - Runs after linter and test  
+    - Scans the app for vulnerabilities using SNYK
+
+  - Docker  
+    - Runs after build, linter, test, and SNYK  
+    - Logs into Docker, builds the image, and pushes it to the registry

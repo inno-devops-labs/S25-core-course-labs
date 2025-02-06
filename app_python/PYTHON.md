@@ -26,3 +26,33 @@ I chose [Flask](https://flask.palletsprojects.com/en/stable/) because:
    - If needed, additional modules for configuration, utilities, or routes could be added.
 
 ---
+
+## Testing
+
+- Run tests:
+
+```pytest```
+
+These tests check that the home page ("/") responds correctly, displays the proper content, and formats the time as expected.
+
+### Home Status Code Test
+
+- Accesses the home page.
+- Verifies the response status code is 200.
+
+### Home Time Update Test
+
+- Mocks the current datetime to a fixed Moscow time (2023-01-01 12:00:00).
+- Checks that this fixed time appears in the response.
+
+### Home Content Test
+
+- Retrieves the home page and decodes its HTML.
+- Confirms it contains the text "Current Time in Moscow" and a ```<p>``` tag.
+
+### Time Format Test
+
+- Searches the HTML for a datetime string matching the "YYYY-MM-DD HH:MM:SS" pattern.
+- Ensures the time string is correctly formatted.
+
+---
