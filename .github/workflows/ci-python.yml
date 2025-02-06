@@ -1,12 +1,12 @@
-name: CI/CD Pipeline
+name: CI pipeline for python
 
 on:
   push:
-    branches:
-      - lab_3
+    paths:
+      - 'app_python/**'
   pull_request:
-    branches:
-      - lab_3
+    paths:
+      - 'app_python/**'
 
 jobs:
   build-lint-test:
