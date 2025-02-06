@@ -47,13 +47,13 @@ jobs:
       run: |
         pytest --cov=. --cov-report=xml
         
-    - name: Snyk security scan
+    - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/python-3.8@master
+      continue-on-error: true
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        command: monitor
-        args: --all-projects --severity-threshold=medium
+        args: --sarif-file-output=snyk.sarif
 
   docker:
     needs: test
