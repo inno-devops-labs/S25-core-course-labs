@@ -1,7 +1,8 @@
 import unittest
 from unittest.mock import patch
-from datetime import datetime, timedelta
+from datetime import datetime
 from app import app
+
 
 class TestCurrentTimeRoute(unittest.TestCase):
 
@@ -23,6 +24,7 @@ class TestCurrentTimeRoute(unittest.TestCase):
             mock_datetime.now.return_value = mock_time
             response = self.app.get('/')
             self.assertIn(expected_time.encode(), response.data)
+
 
 if __name__ == '__main__':
     unittest.main()

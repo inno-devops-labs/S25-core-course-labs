@@ -1,35 +1,31 @@
-name: linter
-on: push
+name: Lint Code
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
-    steps:    
-    - name: Checkout code
-      uses: actions/checkout@v3
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9' 
 
-    - name: Install dependencies
-      run: |
-        cd app_python
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt  # Install dependencies from requirements.txt
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Python Linter for app
-      uses: sunnysid3up/python-linter@master
-      with:
-        source: "app_python/app"
-        mypy-options: "--ignore-missing-imports --show-error-codes"
-        pylint-options: "--rcfile=setup.cfg"
-        isort-options: "-w 100"
-        django: true
-    - name: Python Linter for tests
-      uses: sunnysid3up/python-linter@master
-      with:
-        source: "app_python/test"
-        mypy-options: "--ignore-missing-imports --show-error-codes"
-        pylint-options: "--rcfile=setup.cfg"
-        isort-options: "-w 100"
-        django: true
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run flake8
+        run: |
+          flake8 app tests --ignore F401 --exclude __init__.py
