@@ -60,3 +60,5 @@ jspm_packages/
 
 # Vite
 .vite/
+
+app_python/terraform/yandex/authorized_key.json
