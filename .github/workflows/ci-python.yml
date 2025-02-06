@@ -57,11 +57,11 @@ jobs:
 
       # Step 8: Run Snyk Vulnerability Check
       - name: Run Snyk Vulnerability Check
-        uses: snyk/actions/python-3.9@master
-        with:
-          args: test --file=app_python/requirements.txt --security-threshold=high
+        uses: snyk/actions/python@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --skip-unresolved --severity-threshold=high app_python/
 
   docker-worker:
    needs: [build-lint-test, security]
