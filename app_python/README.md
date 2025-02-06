@@ -49,3 +49,17 @@ docker pull your-dockerhub-username/moscow-time-app
 ``
 docker run -d -p 5000:5000 your-dockerhub-username/moscow-time-app
 ``
+
+
+
+### 4. Running the test
+
+
+``
+pytest test_app.py
+``
+
+
+
+
+[![CI](https://github.com/friji350/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)](https://github.com/friji350/S25-core-course-labs/actions/workflows/ci.yml)
