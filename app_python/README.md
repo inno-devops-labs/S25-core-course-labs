@@ -91,3 +91,18 @@ Then you can use the following command to see the result:
 coverage report
 ```
 The coverage of 90% of [app.py](app.py) is due to the ``if name == __main__: ...`` part.
+
+# CI/CD
+
+This project contains a **Github actions workflow** that allows for automatic testing, building and pushing to Dockerhub.
+The workflow configuration file can be accessed at [.github/workflows/python-app.yml](../.github/workflows/python-app.yml).
+
+In the workflow, all the necessary dependencies are downloaded and tests are conducted. Additionally, the code is linted
+using **flake8**.
+
+In another job there is the automatic aquizition of **DockerHub** credentials from **Github** secrets and subsequent build and push of the image.
+
+There is also a security job using **SNYK** to test the application against vulnerabilities.
+
+The status of the workflow can be viewed at the top of this file in a badge, 
+or at [Github actions](https://github.com/Magel0n/S25-core-course-labs/actions).
