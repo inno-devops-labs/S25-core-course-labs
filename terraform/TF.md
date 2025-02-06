@@ -229,7 +229,7 @@ resource "github_repository" "S25-core-course-labs" {
 }
 ```
 
-### changes on the repo using terraform:
+### Changes on the repo using terraform:
 ```bash
 terraform apply
 github_repository.repo: Refreshing state... [id=testtest]
@@ -331,7 +331,7 @@ Terraform will perform the following actions:
       + outpost_arn                          = (known after apply)
       + password_data                        = (known after apply)
       + placement_group                      = (known after apply)
-      + placement_partition_number           = (known after apply)
+      + placement_partition_number           = (knS25-core-course-labs/terraformown after apply)
       + primary_network_interface_id         = (known after apply)
       + private_dns                          = (known after apply)
       + private_ip                           = (known after apply)
