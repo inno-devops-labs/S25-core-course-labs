@@ -1,3 +1,4 @@
-Flask==2.2.3
-pytz==2023.3
-Werkzeug==2.3.7
+Flask
+pytz
+Werkzeug
+pytest

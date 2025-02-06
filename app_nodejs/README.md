@@ -1,5 +1,7 @@
 # Node.js Web Application
 
+![Node CI](https://github.com/Sedoxxx/S25-core-course-labs/actions/workflows/node_ci.yml/badge.svg)
+
 ## Overview
 This is a simple Node.js + Express application that displays the current time in Moscow (MSK). When you access the homepage, it will show you the current date and time in a well-formatted string .
 
@@ -68,5 +70,25 @@ This will start the server on port `4000`.
 ## Testing
 
 To test the application, simply visit the homepage (`http://localhost:3000`) and verify that the current time in Moscow is displayed correctly.
+
+## Unit Tests
+
+The application includes automated unit tests written with Mocha, Chai, and Supertest. These tests verify that the web application functions as expected and include:
+
+- **Response Status and Content Type Check:**  
+  Ensures that the homepage returns a 200 status code and the correct content type (HTML).
+
+- **Response Content Validation:**  
+  Verifies that the homepage contains the expected welcome message and that the time is formatted in the `YYYY-MM-DD HH:MM:SS MSK` format.
+
+- **Time Accuracy Check:**  
+  Compares the displayed time with the system time (using the Moscow timezone) to ensure that any discrepancy is within a two-second threshold.
+
+### Running the Unit Tests
+
+To run the unit tests, execute the following command in your terminal:
+```bash
+npm test
+
 
 ---

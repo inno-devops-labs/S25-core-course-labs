@@ -32,6 +32,10 @@ app.get('/', (req, res) => {
 
 // Start server on port 3000 (or process.env.PORT if defined)
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Node.js app is running at http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Node.js app is running at http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;

@@ -1,8 +1,10 @@
-Here’s the updated `README.md` file with the Python Flask application instructions added, following the same structure and style as the Node.js application:
 
 ---
 
 # Python Web Application
+
+![Python CI](https://github.com/Sedoxxx/S25-core-course-labs/actions/workflows/python_ci.yml/badge.svg)
+
 
 ## Overview
 This Flask-based Python web application displays the current time in Moscow (MSK). When you access the homepage, it will show you the current date and time in a well-formatted string.
@@ -83,8 +85,28 @@ This will start the server on port `4000`.
 
 ## Testing
 
-To test the application, simply visit the homepage (`http://localhost:5000`) and verify that the current time in Moscow is displayed correctly.
+To test the application manually, visit the homepage (`http://localhost:5000`) and verify that the current time in Moscow is displayed correctly.
 
 ---
 
+## Unit Tests
+
+The application includes automated unit tests written with `pytest`. These tests ensure that the web application functions as expected and include:
+
+- **Response Status and Content Type Check:**  
+  Ensures the homepage returns a 200 status code and the correct `text/html; charset=utf-8` content type.
+  
+- **Response Content Validation:**  
+  Verifies that the homepage contains the expected welcome message and that the time is formatted correctly with the 'MSK' timezone abbreviation.
+  
+- **Time Accuracy Check:**  
+  Compares the displayed time with the system time (both using the Moscow timezone) to ensure that any discrepancy is within a two-second threshold.
+
+### Running the Unit Tests
+
+To run all the unit tests, execute the following command in your terminal:
+```bash
+python -m pytest
+```
+This command will run the entire test suite and display a summary of the test results. Ensure that all tests pass to confirm that the application is functioning correctly.
 

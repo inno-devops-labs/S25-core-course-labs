@@ -36,3 +36,22 @@ To maintain high code quality, the following practices were implemented:
 - **Gitignore:** The `.gitignore` file was used to exclude unnecessary files like `node_modules` and logs, keeping the repository clean and focused.  
 
 --- 
+
+## 6. Unit Tests
+
+The Node.js application includes automated unit tests implemented with Mocha, Chai, and Supertest. These tests ensure that key functionalities of the application are working as expected. The tests include:
+
+- **Response Status and Content Type Check:**  
+  Verifies that the homepage returns a 200 status code and that the content type is correctly set to HTML.
+
+- **Response Content Validation:**  
+  Confirms that the homepage contains the expected welcome message and a correctly formatted time string with the 'MSK' timezone abbreviation.
+
+- **Time Accuracy Check:**  
+  Validates that the displayed time is accurate by comparing it with the current time in the Moscow timezone, ensuring the difference is within a two-second threshold.
+
+### Running the Unit Tests
+
+To run all unit tests, execute:
+```bash
+npm test
