@@ -66,3 +66,30 @@ For running tests, run the command:
 ```bash
 pytest tests/
 ```
+
+## CI Workflow
+
+This project uses GitHub Actions for Continuous Integration (CI). The CI workflow includes the following steps:
+
+1. **Dependencies**: The workflow installs all the required dependencies from `requirements.txt`.
+2. **Linter**: It runs `flake8` to ensure the code follows the PEP8 style guidelines.
+3. **Tests**: The workflow runs unit tests using `pytest`.
+4. **Docker**: The workflow builds a Docker image and pushes it to Docker Hub for deployment.
+
+### How to Trigger the CI Workflow
+
+The CI workflow is triggered automatically when changes are pushed to the `lab3`.
+
+To check the status of the CI workflow, visit the "Actions" tab in the GitHub repository.
+
+### Docker Image
+
+Once the workflow completes, the Docker image is built and pushed to Docker Hub under the repository name `mangocandle/app_python:latest`.
+
+You can pull the image using the following command:
+
+```bash
+docker pull mangocandle/app_python:latest
+```
+
+[![CI Workflow](https://github.com/mngcndl/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)](https://github.com/mngcndl/S25-core-course-labs/actions/workflows/ci.yml)
