@@ -9,8 +9,10 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
+
 @app.get("/", response_class=HTMLResponse)
 async def homepage(request: Request):
-    current_date = datetime.datetime.now(pytz.timezone('Europe/Moscow'))
-    return templates.TemplateResponse(request, "index.html", 
-                                      {"time": current_date.strftime("%H:%M")})
+    current_date = datetime.datetime.now(pytz.timezone("Europe/Moscow"))
+    return templates.TemplateResponse(
+        request, "index.html", {"time": current_date.strftime("%H:%M")}
+    )
