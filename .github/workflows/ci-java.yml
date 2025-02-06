@@ -32,22 +32,31 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Step 4: Build the Project
+      # Step 4: Make mvnw Executable
+      - name: Make mvnw Executable
+        run: chmod +x ./app_java/mvnw
+
+      # Step 5: Test mvnw Script
+      - name: Test mvnw Script
+        working-directory: ./app_java
+        run: ./mvnw --version
+
+      # Step 6: Build the Project
       - name: Build with Maven
         working-directory: ./app_java
-        run: mvn clean install -DskipTests
+        run: ./mvnw clean install -DskipTests
 
-      # Step 5: Lint Code (Optional: Use Checkstyle or Spotless)
+      # Step 7: Lint Code (Optional: Use Checkstyle or Spotless)
       - name: Lint Code
         working-directory: ./app_java
-        run: mvn checkstyle:check
+        run: ./mvnw checkstyle:check
 
-      # Step 6: Run Tests
+      # Step 8: Run Tests
       - name: Run Tests
         working-directory: ./app_java
-        run: mvn test
+        run: ./mvnw test
 
-      # Step 7: Run Snyk to check for vulnerabilities
+      # Step 9: Run Snyk to check for vulnerabilities
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven@master
         env:
