@@ -222,6 +222,7 @@ resource "github_repository" "S25-core-course-labs" {
     }
 }
 ```
+Repository created: [terraform-github](https://github.com/HayderSarhan/terraform-github)
 
 ### Applying changes to the repo
 We can do that by simply editing the `main.tf file`.
