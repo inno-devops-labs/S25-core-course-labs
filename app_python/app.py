@@ -4,19 +4,19 @@ import pytz
 
 app = Flask(__name__)
 
-@app.route("/")
 
+@app.route("/")
 def get_time():
-   
-    # Указываем часовой пояс Москвы
+    # Specify the Moscow time zone
     moscow_tz = pytz.timezone('Europe/Moscow')
 
-    # Получаем текущее время в Москве
+    # Get the current time in Moscow
     moscow_time = datetime.now(moscow_tz)
 
-    # Форматируем время
+    # Format the time
     time = moscow_time.strftime("%H:%M:%S")
-    return render_template('index.html', current_time = time)
+    return render_template('index.html', current_time=time)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
