@@ -1,10 +1,11 @@
 name: Node.js CI
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
+    paths:
+    - app_typescript/**
+  workflow_dispatch: {}
 
 defaults:
  run:

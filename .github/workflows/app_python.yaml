@@ -1,14 +1,10 @@
 name: Python tests
 on:
-    pull_request:
-      branches: [ master ]
-      paths:
-      - 'app_python/**'
-    push:
-      branches: [ master ]
-      paths:
-      - 'app_python/**'
-    workflow_dispatch: {}
+  pull_request:
+    branches: [ master ]
+    paths:
+    - 'app_python/**'
+  workflow_dispatch: {}
 
 defaults:
  run:
