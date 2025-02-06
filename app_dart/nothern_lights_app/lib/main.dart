@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -26,6 +28,7 @@ class NorthernLightsWidget extends StatefulWidget {
   const NorthernLightsWidget({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _NorthernLightsWidgetState createState() => _NorthernLightsWidgetState();
 }
 
