@@ -1,0 +1,6 @@
+Flask==3.0.2
+pytz==2024.1
+pytest==8.1.1
+python-dotenv==1.0.1
+Werkzeug==3.0.1
+freezegun==1.4.0 
