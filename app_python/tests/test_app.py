@@ -44,4 +44,3 @@ def test_time_formatting():
     with freeze_time("2024-01-01 12:00:00"):
         msk_time = get_msk_time().strftime('%H:%M:%S')
         assert len(msk_time) == 8  # Validate HH:MM:SS format
-
