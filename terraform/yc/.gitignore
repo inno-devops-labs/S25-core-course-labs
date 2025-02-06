@@ -1,0 +1,15 @@
+# Terraform state files
+*.tfstate
+*.tfstate.backup
+
+# auto-generated lock files
+*.tflock
+
+# temporary provider plugins
+.terraform/
+.terraform.lock.hcl
+
+# files containing secrets
+*.auto.tfvars
+*.tfvars
+key.json
