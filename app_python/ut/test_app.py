@@ -3,6 +3,7 @@ from unittest import mock
 from main import app
 from bs4 import BeautifulSoup
 
+
 class FlaskTestCase(unittest.TestCase):
 
     def setUp(self):
@@ -26,12 +27,20 @@ class FlaskTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
         soup = BeautifulSoup(response.data, 'html.parser')
-        time_element = soup.find(id='current-time')  # <p id="current-time">{{ time }}</p>
-        self.assertIsNotNone(time_element, "Element with id='current-time' does not exist")
+        # <p id="current-time">{{ time }}</p>
+        time_element = soup.find(id='current-time')
+        self.assertIsNotNone(
+            time_element,
+            "Element with id='current-time' does not exist")
 
         import re
         time_pattern = re.compile(r'^\d{2}:\d{2}:\d{2}$')
-        self.assertTrue(time_pattern.match(time_element.text.strip()), f"Incorrect time format: {time_element.text}")
+        self.assertTrue(
+            time_pattern.match(
+                time_element.text.strip()),
+            f"Incorrect time format: {
+                time_element.text}")
+
 
 if __name__ == '__main__':
     unittest.main()
