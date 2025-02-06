@@ -43,6 +43,15 @@ jobs:
     needs: build-and-test
 
     steps:
+     - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.5.1"
+
+      - name: Install dependencies
+        run: |
+          flutter pub get
+          
       - name: Checkout Code
         uses: actions/checkout@v3
 
