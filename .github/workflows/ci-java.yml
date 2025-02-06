@@ -22,7 +22,9 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-
+      - name: Grant Execute Permission to mvnw
+        working-directory: ./app_java
+        run: chmod +x mvnw
       # Step 3: Cache Dependencies
       - name: Cache Maven Dependencies
         uses: actions/cache@v3
