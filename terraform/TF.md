@@ -109,3 +109,31 @@ container_ports = tolist([
 ])
 image_id = "sha256:97662d24417b316f60607afbca9f226a2ba58f09d642f27b8e197a89859ddc8e"
 ```
+
+## Yandex Cloud Infrastructure
+
+### Setup Process
+1. Created Yandex Cloud account
+2. Enabled Cloud Compute service
+3. Generated IAM service account key
+4. Configured Terraform provider
+
+### Challenges Faced
+1. Finding compatible free-tier image ID
+2. Network configuration for public access
+3. Resource availability in specific zones
+4. Very uncomfortable and ugly guide
+
+### Running terraform state list :
+```terraform
+yandex_compute_disk.boot-disk-1
+yandex_compute_instance.vm-1
+yandex_vpc_network.network-1
+yandex_vpc_subnet.subnet-1
+```
+
+### Running terraform output:
+```terrafrom
+external_ip_address_vm_1 = "130.193.48.225"
+internal_ip_address_vm_1 = "192.168.10.3"
+```
