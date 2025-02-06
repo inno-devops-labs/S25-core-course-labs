@@ -1,4 +1,4 @@
-name: Push to Docker Hub
+name: Push Python app to Docker Hub
 on:
   workflow_dispatch: {}
   push:

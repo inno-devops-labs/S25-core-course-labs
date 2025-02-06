@@ -1,6 +1,6 @@
 # Python datetime app
 
-![test workflow](https://github.com/FallenChromium/s25-core-course-labs/actions/workflows/main.yml/badge.svg)
+![test workflow](https://github.com/FallenChromium/s25-core-course-labs/actions/workflows/app_python.yaml/badge.svg)
 
 This project is a simple Python web application that displays a static page with the current time in Moscow (at the moment of the response generation). If pinged by curl or other non-browser user agent, it will return a JSON response with the current time in Moscow timezone.
 
