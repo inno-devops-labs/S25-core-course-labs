@@ -246,31 +246,13 @@ terraform destroy
 ```bash
 # Set GitHub token as environment variable
 export GITHUB_TOKEN=my_access_token
-
+```
 ### 3. Infrastructure Configuration
 
 Our GitHub infrastructure consists of:
 - Repository configuration
 - Branch protection rules
 - Security settings
-
-#### Key Components:
-```hcl
-# Repository Settings
-- Name: core-course-labs
-- Visibility: public
-- Features: issues enabled, wiki disabled
-- Merge options: all types allowed
-- Branch cleanup: enabled
-- Vulnerability alerts: enabled
-
-# Branch Protection
-- Protected branch: main
-- Required status checks
-- Pull request reviews required
-- Stale review dismissal
-- Code owner reviews required
-```
 
 ### 4. Usage Instructions
 
