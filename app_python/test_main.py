@@ -17,7 +17,8 @@ def test_get_current_time():
     response = client.get("/api/time")
 
     assert response.status_code == 200, "The response status code is not 200"
-    assert response.headers["content-type"] == "application/json", "The response content type is not JSON"
+    assert response.headers["content-type"] == "application/json", \
+        "The response content type is not JSON"
 
     data = response.json()
 
@@ -35,7 +36,11 @@ def test_get_current_time():
     current_time = datetime.now(pytz.timezone(TIMEZONE)).time()
 
     def get_seconds(t: time) -> int:
-        return t.hour * SECONDS_IN_HOUR + t.minute * SECONDS_IN_MINUTE + t.second
+        return (
+                t.hour * SECONDS_IN_HOUR +
+                t.minute * SECONDS_IN_MINUTE +
+                t.second
+        )
 
     diff = abs(get_seconds(current_time) - get_seconds(parsed_time))
 
@@ -46,4 +51,5 @@ def test_get_current_time_html():
     response = client.get("/")
 
     assert response.status_code == 200, "The response status code is not 200"
-    assert response.headers["content-type"].startswith("text/html"), "The response content type is not HTML"
+    assert response.headers["content-type"].startswith("text/html"), \
+        "The response content type is not HTML"
