@@ -1,0 +1,7 @@
+# Ignore everything by default
+*
+
+# Allow specific files and directories
+!requirements.txt
+!app
+!run.py
