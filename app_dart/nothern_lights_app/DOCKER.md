@@ -12,4 +12,3 @@ Instead of copying all files at once, we copy only the necessary files at the be
 ## 4. Multi-stage build
 A multi-stage build applied to separate the build process from the runtime environment. This ensures that the final image is smaller and does not contain unnecessary development dependencies. The Flutter build stage is discarded in favor of a minimal `nginx` server that serves the built web assets.
  
- 
