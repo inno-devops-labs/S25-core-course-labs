@@ -1,5 +1,4 @@
-[![CI Pipeline](https://github.com/Vitalo-bit/S25-core-course-labs/actions/workflows/ci.yml/badge.svg?branch=lab3)](https://github.com/Vitalo-bit/S25-core-course-labs/actions/workflows/ci.yml)
-
+[![Python CI Pipeline](https://github.com/Vitalo-bit/S25-core-course-labs/actions/workflows/ci.yml/badge.svg?branch=lab3)](https://github.com/Vitalo-bit/S25-core-course-labs/actions/workflows/ci.yml)
 # Python Web Application
 
 ## Overview
