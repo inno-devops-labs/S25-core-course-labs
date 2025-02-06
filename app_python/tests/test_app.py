@@ -2,6 +2,7 @@ import unittest
 from app import app
 import re
 
+
 class TestApp(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
@@ -18,6 +19,7 @@ class TestApp(unittest.TestCase):
 
         match = re.search(pattern, response_text)
         self.assertIsNotNone(match, "Invalid output format")
+
 
 if __name__ == "__main__":
     unittest.main()
