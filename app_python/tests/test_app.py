@@ -26,7 +26,8 @@ def test_homepage_contains_valid_time(server, captured_templates):
     moscow_tz = pytz.timezone("Europe/Moscow")
     expected_time = datetime.now(moscow_tz).strftime("%H:%M:%S")
 
-    assert context['current_time'] == expected_time, "Displayed time does not match Moscow time"
+    assert context['current_time'] == expected_time, \
+        "Displayed time does not match Moscow time"
 
 
 def test_template_rendering(server, captured_templates):
@@ -37,5 +38,3 @@ def test_template_rendering(server, captured_templates):
     template, context = captured_templates[0]
     assert template.name == "index.html", "Wrong template used"
     assert "current_time" in context, "current_time is missing in context"
-
-
