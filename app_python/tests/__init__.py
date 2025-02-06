@@ -2,6 +2,7 @@
 
 import pytest
 
+
 # Example fixture: Dummy fixture to demonstrate valid fixture usage
 @pytest.fixture
 def sample_fixture():
