@@ -45,6 +45,8 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
+      - name: Clear Docker cache
+        run: docker builder prune -af
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Login to Docker Hub
