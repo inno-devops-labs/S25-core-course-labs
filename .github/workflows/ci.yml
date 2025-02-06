@@ -70,10 +70,11 @@ jobs:
       runs-on: ubuntu-latest
 
       steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
-
-        - name: Build and Push Docker Image
-          run: |
-            docker build -t fridorovich04/app_python:latest -f app_python/Dockerfile app_python/
-            docker push fridorovich04/app_python:latest
+        - name: Build and push
+          uses: docker/build-push-action@v4
+          with:
+            context: ./app_python
+            push: true
+            tags: fridorovich04/app_python:latest
+            cache-from: type=registry,ref=fridorovich04/app_python:buildcache
+            cache-to: type=registry,ref=fridorovich04/app_python:buildcache,mode=max
