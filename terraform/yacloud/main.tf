@@ -14,12 +14,13 @@ provider "yandex" {
   zone      = "ru-central1-a"
 }
 
-resource "yandex_compute_instance" "vm" {
-  name        = "my-yandex-vm"
+resource "yandex_compute_instance" "vm_instance" {
+  name        = "terraform-vm"
   platform_id = "standard-v1"
+
   resources {
-    cores  = 2
-    memory = 2
+    cores         = 2
+    memory        = 2
     core_fraction = 20
   }
   
@@ -36,31 +37,32 @@ resource "yandex_compute_instance" "vm" {
 }
 
 variable "yc_token" {
-  description = "Yandex Cloud API Token"
+  description = "API Token for Yandex Cloud"
   type        = string
 }
 
 variable "cloud_id" {
-  description = "Yandex Cloud ID"
+  description = "ID of the Yandex Cloud"
   type        = string
 }
 
 variable "folder_id" {
-  description = "Yandex Cloud Folder ID"
+  description = "ID of the Folder in Yandex Cloud"
   type        = string
 }
 
 variable "image_id" {
-  description = "Yandex Cloud Image ID"
+  description = "ID of the Yandex Cloud Image"
   type        = string
   default     = "fd80bm0rh4rkepi5ksdi" 
 }
 
 variable "subnet_id" {
-  description = "Yandex Cloud Subnet ID"
+  description = "Subnet ID for Yandex Cloud"
   type        = string
 }
 
-output "vm_ip" {
-  value = yandex_compute_instance.vm.network_interface[0].nat_ip_address
+output "vm_public_ip" {
+  description = "Public IP of the created virtual machine"
+  value       = yandex_compute_instance.vm_instance.network_interface[0].nat_ip_address
 }
