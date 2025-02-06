@@ -4,7 +4,6 @@ import (
 	"regexp"
 	"testing"
 	"time"
-
 )
 
 const timeFormat = "15:04 (03:04 PM)"
