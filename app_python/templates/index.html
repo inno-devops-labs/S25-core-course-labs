@@ -1,0 +1,150 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Time in Moscow</title>
+    <style>
+        /* Styles for the body to center content and set background color */
+        body {
+            background-color: #8bd4ff; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+            margin: 0; 
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        h1 {
+            margin-bottom: 20px; 
+            z-index: 2;  /* Ensure title is above other elements */
+        }
+        .time {
+            font-size: 40px;
+            font-weight: bold; 
+            z-index: 2;  /* Ensure time is above other elements */
+        }
+        .note {
+            color: white;
+        }
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8); 
+            filter: blur(15px); 
+            animation: moveClouds 20s linear infinite; /* Animation for clouds */
+            z-index: 1;
+        }
+        /* Keyframes for cloud movement */
+        @keyframes moveClouds {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(800%); }
+        }
+        /* Cloud shapes with preserved sizes */
+        .cloud1 {
+            width: 300px;
+            height: 200px;
+            top: 0%;
+            left: -200px;
+            border-radius: 100px; 
+        }
+        .cloud2 {
+            width: 380px;
+            height: 250px;
+            top: 10%;
+            left: -250px;
+            animation-duration: 8s;
+            border-radius: 100px; 
+        }
+        .cloud3 {
+            width: 280px;
+            height: 190px;
+            top: 40%;
+            left: -180px;
+            animation-duration: 5s;
+            border-radius: 100px;
+        }
+        .cloud4 {
+            width: 320px;
+            height: 110px;
+            bottom: 0%;
+            left: -220px;
+            animation-duration: 13s;
+            border-radius: 100px; 
+        }
+        /* Additional fluff for clouds */
+        .cloud1::before, .cloud1::after,
+        .cloud2::before, .cloud2::after,
+        .cloud3::before, .cloud3::after,
+        .cloud4::before, .cloud4::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            filter: blur(15px); 
+            border-radius: 50%;
+        }
+        /* Specific fluff for each cloud */
+        .cloud1::before {
+            width: 100px;
+            height: 100px;
+            top: -30px;
+            left: 20px;
+        }
+        .cloud1::after {
+            width: 80px;
+            height: 80px;
+            top: -20px;
+            right: 20px;
+        }
+        .cloud2::before {
+            width: 120px;
+            height: 120px;
+            top: -40px;
+            left: 30px;
+        }
+        .cloud2::after {
+            width: 90px;
+            height: 90px;
+            top: -30px;
+            right: 30px;
+        }
+        .cloud3::before {
+            width: 70px;
+            height: 70px;
+            top: -20px;
+            left: 10px;
+        }
+        .cloud3::after {
+            width: 60px;
+            height: 60px;
+            top: -10px;
+            right: 10px;
+        }
+        .cloud4::before {
+            width: 100px;
+            height: 100px;
+            top: -30px;
+            left: 20px;
+        }
+        .cloud4::after {
+            width: 90px;
+            height: 90px;
+            top: -20px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Current Time in Moscow</h1>
+    <p class="time">The current time is: {{ time }}</p>
+    <p class="note">Refresh the page to update the time.</p>
+
+    <!-- Cloud elements -->
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+    <div class="cloud cloud4"></div>
+</body>
+</html>
