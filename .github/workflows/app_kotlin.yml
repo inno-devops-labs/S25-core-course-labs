@@ -80,6 +80,6 @@ jobs:
         run: npm install -g snyk
 
       - name: Run Snyk Test
-        run: snyk test --file=app_kotlin/build.gradle.kts --severity-threshold=high
+        run: snyk test --all-sub-projects --severity-threshold=high
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
