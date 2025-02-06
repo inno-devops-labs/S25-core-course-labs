@@ -292,7 +292,11 @@ resource "yandex_compute_instance" "vm" {
         preemptible = false
     }
 }
+
+# vm destory to not loose money
+$ terraform destroy
 ```
+![alt text](image.png)
 
 VM setup: 
 - 2 cores
