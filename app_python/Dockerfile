@@ -1,13 +1,12 @@
 FROM python:3.11-slim
 
-WORKDIR /app
+WORKDIR /app_python
 
 COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app.py /app/
-COPY templates/index.html /app/templates/index.html
+COPY app_python/ . 
 
 EXPOSE 5000
 
