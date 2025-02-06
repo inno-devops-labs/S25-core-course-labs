@@ -72,6 +72,21 @@ docker run -p 8002:8002 azamatbayramov/s25-devops-go-dl
 go test ./...
 ```
 
+## CI Workflow
+
+The CI workflow for this application is defined in the `.github/workflows/app_go.yml` file.
+
+It consists of the following steps:
+- **Build and Test**:
+    - Sets up the Go environment.
+    - Lints the code using `go fmt`.
+    - Runs the unit tests using `go test`.
+    - Scans for vulnerabilities using Snyk.
+- **Build and Push**:
+    - Sets up Docker Buildx.
+    - Logs in to Docker Hub.
+    - Builds and pushes the Docker image using the distroless Dockerfile.
+
 ## Endpoints
 
 - `/` - Displays the current date in Moscow as an HTML response using `/api/date` endpoint.

@@ -90,6 +90,23 @@ pip install -r requirements-test.txt
 pytest test_main.py
 ```
 
+## CI Workflow
+
+The CI workflow for this application is defined in the `.github/workflows/app_python.yml` file.
+
+It consists of the following steps:
+
+- **Build and Test**:
+    - Sets up the Python environment.
+    - Installs dependencies.
+    - Lints the code using `flake8` and `black`.
+    - Runs the unit tests using `pytest`.
+    - Scans for vulnerabilities using Snyk.
+- **Build and Push**:
+    - Sets up Docker Buildx.
+    - Logs in to Docker Hub.
+    - Builds and pushes the Docker image using the `distroless.Dockerfile`.
+
 ## Endpoints
 
 - `/` - Displays the current time in Moscow as an HTML response using `/api/time` endpoint.
