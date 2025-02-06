@@ -1,4 +1,24 @@
 from datetime import datetime, timezone, timedelta
+import sys
+
+import pytest
+
+import app as app_python_app
+"""
+Primarily taken from https://flask.palletsprojects.com/en/stable/tutorial/tests/ and
+then changed to be applicable to this project, as it is simpler than their example.
+This is basically the arranging part.
+"""
+@pytest.fixture
+def app():
+    print(sys.path)
+    this_app = app_python_app.app
+    yield this_app
+
+@pytest.fixture
+def client(app):
+    return app.test_client()
+
 
 def test_status(client, app):
     # Arranging is done mostly in conftest.py, so do not expect to see it much in here
