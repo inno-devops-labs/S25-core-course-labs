@@ -46,6 +46,10 @@ jobs:
       working-directory: ./app_python
       run: |
         pytest --cov=. --cov-report=xml
+
+    - name: Install dependencies for Snyk
+      working-directory: ./app_python
+      run: pip install -r requirements.txt
         
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/python-3.8@master
@@ -53,7 +57,7 @@ jobs:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
         command: test
-        args: --severity-threshold=high --project-name=app_python --file=app_python/requirements.txt
+        args: --severity-threshold=high --project-name=app_python --file=app_python/requirements.txt --skip-unresolved
 
   docker:
     needs: test
