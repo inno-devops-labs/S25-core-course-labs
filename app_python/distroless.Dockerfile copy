@@ -1,0 +1,13 @@
+FROM python:3-alpine3.15
+
+WORKDIR /app
+
+COPY . /app
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+FROM gcr.io/distroless/python3-debian10:nonroot
+
+EXPOSE 5000
+
+CMD ["python", "app.py"]
