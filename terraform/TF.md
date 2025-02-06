@@ -229,6 +229,38 @@ resource "github_repository" "S25-core-course-labs" {
 }
 ```
 
+### Changes on the repo using terraform:
+```bash
+terraform apply
+github_repository.repo: Refreshing state... [id=testtest]
+github_repository.S25-core-course-labs: Refreshing state... [id=S25-core-course-labs]
+github_branch_default.main: Refreshing state... [id=testtest]
+github_branch_protection.default: Refreshing state... [id=BPR_kwDON1HUWs4DiiMx]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  ~ update in-place
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+  # github_branch_default.main must be replaced
+-/+ resource "github_branch_default" "main" {
+      ~ id         = "testtest" -> (known after apply)
+
+
+  # github_repository.S25-core-course-labs will be updated in-place
+  ~ resource "github_repository" "S25-core-course-labs" {
+      + description                 = "DevOps 2025"
+      - has_downloads               = true -> null
+      - has_projects                = true -> null
+      - has_wiki                    = true -> null
+        id                          = "S25-core-course-labs"
+        name                        = "S25-core-course-labs"
+        # (29 unchanged attributes hidden)
+    }
+```
+you can see the changes on [github](https://github.com/anasalatasiuni/S25-core-course-labs)
+
 ## Terraform Best Practices
 ### 1. Use of Version Control
 - **Version Locking**: The `required_providers` block specifies the version of the GitHub provider to ensure consistent behavior across different environments. This prevents unexpected changes when the provider is updated.
