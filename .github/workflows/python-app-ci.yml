@@ -55,6 +55,9 @@ jobs:
 
   security:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app_python
     needs: test
     steps:
       - uses: actions/checkout@master
