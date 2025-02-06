@@ -22,5 +22,5 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/iu-devops-lab:latest
+          docker push ${{ vars.DOCKERHUB_USERNAME }}/iu-devops-lab:latest
 
