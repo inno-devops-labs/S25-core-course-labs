@@ -1,0 +1,4 @@
+# Add these lines
+.terraform/
+*.tfstate
+*.tfstate.backup 
