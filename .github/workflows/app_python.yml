@@ -36,15 +36,19 @@ jobs:
         run: flake8 .
 
       - name: Run tests
-        run: python -m unittest tests
+        run: python -m unittest ./tests
 
   docker:
     needs: build
     runs-on: ubuntu-20.04
 
+    defaults:
+      run:
+        working-directory: ./app_python
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
