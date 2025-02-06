@@ -23,3 +23,10 @@ nosetests.xml
 *.coverage
 venv/
 .env/
+**/.terraform/
+**/.terraform.lock.hcl
+**/terraform.tfstate
+**/terraform.tfstate.backup
+yandex/key.json
+**/terraform.tfstate.*.backup
+
