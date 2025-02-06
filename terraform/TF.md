@@ -123,21 +123,21 @@ aws_instance.app_server
 
 - Initializes Terraform and downloads the required AWS provider.
 
-**Screenshot:** `init.png`
+**Screenshot:** ![](init.png)
 
-**Screenshot:** `awsrunning.png`
+**Screenshot:** ![](awsrunning.png)
 
 ### **2️⃣ Terraform Apply Execution**
 
 - Deploys the EC2 instance on AWS.
 
-**Screenshot:** `applied.png`
+**Screenshot:** ![](applied.png)
 
 ### **3️⃣ AWS EC2 Instance Running**
 
 - Confirms that the instance is successfully running.
 
-**Screenshot:** `instanceRunning.png`
+**Screenshot:** ![](instanceRunning.png)
 
 ---
 
