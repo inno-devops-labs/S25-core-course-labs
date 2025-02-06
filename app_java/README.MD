@@ -2,6 +2,13 @@
 A simple Java web application built with **Spring Boot** that generates and displays a random hex color code.
 
 ---
+
+# Workflow Status
+
+[![CI/CD Pipeline](https://github.com/Nikoali01/S25-core-course-labs/actions/workflows/ci-java.yml/badge.svg?branch=lab_3&event=push)](https://github.com/Nikoali01/S25-core-course-labs/actions/workflows/ci-java.yml)
+
+---
+
 ## Overview
 This application serves an HTML page displaying a randomly generated color along with its corresponding hex code. It uses Spring Boot for backend processing and Thymeleaf for rendering the dynamic HTML content.
 
