@@ -52,7 +52,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t konstantinqwertin/moscow-time-app:latest .
+          docker build -t konstantinqwertin/moscow-time-app:latest app_python/
 
       - name: Push Docker image
         run: |
