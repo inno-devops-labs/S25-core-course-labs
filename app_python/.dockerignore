@@ -1,0 +1,6 @@
+.git
+venv/
+*.log
+*.pyc
+__pycache__
+*.md
