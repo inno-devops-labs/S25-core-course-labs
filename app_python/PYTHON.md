@@ -33,8 +33,33 @@
 
 ## Testing & Code Quality
 
+- **Unit Tests**:
+  Our unit tests follow best practices, covering:
+
+  1.  **Basic Functionality** – Ensuring the homepage (`/`) is accessible.
+  2.  **Content Validation** – Checking that the response contains a correctly formatted **date-time string**.
+  3.  **Error Handling** – Verifying how the app handles **nonexistent routes**.
+  4.  **Response Headers** – Ensuring the application **returns the correct content type**.
+  5.  **Performance** – Making sure the response **executes within an acceptable time**.
+
+  To run the tests, ensure that **pytest** is installed:
+
+  ```bash
+  pip install pytest
+  ```
+
+  Then, from the `app_python` directory, run:
+
+  ```bash
+  python -m pytest
+  ```
+
+  This will automatically discover and execute all tests inside the `tests/` directory.
+
 - **Manual Testing**:
+
   - Run `python main.py` and open `http://127.0.0.1:5000/` in a browser, verifying the displayed time.
   - Refresh the page to confirm the time updates.
+
 - **Linting**:
   - Tools like `flake8` or `pylint` ensure code style and potential error checks.

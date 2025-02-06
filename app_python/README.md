@@ -20,8 +20,8 @@ A simple Python web application built with Flask that displays the current time 
 2. **Create and activate a virtual environment** (recommended):
 
    ```
-   python -m venv venv
-   source venv/bin/activate  # Linux/Mac
+   python -m venv env
+   source env/bin/activate  # Linux/Mac
    # or
    venv\Scripts\activate  # Windows
    ```

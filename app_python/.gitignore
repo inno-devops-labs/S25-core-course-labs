@@ -12,3 +12,4 @@ env/
 # IDE settings (PyCharm, VSCode, etc.)
 .idea/
 .vscode/
+.pytest_cache
