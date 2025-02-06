@@ -43,6 +43,9 @@ jobs:
     needs: build-and-test
 
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -52,13 +55,14 @@ jobs:
         run: |
           flutter pub get
 
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - name: Install Snyk CLI
+        run: |
+          curl -sL https://github.com/snyk/snyk/releases/download/v1.999.0/snyk-linux-$(uname -m) -o /usr/local/bin/snyk
+          chmod +x /usr/local/bin/snyk
 
       - name: Run Snyk Security Scan
-        uses: snyk/actions/flutter@master
-        with:
-          args: --skip-unresolved app_dart/nothern_lights_app
+        run: |
+          snyk test --all-projects
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
@@ -88,3 +92,4 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/northern-lights-app:latest
+
