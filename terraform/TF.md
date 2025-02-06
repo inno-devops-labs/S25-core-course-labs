@@ -1,6 +1,7 @@
 # Terraform
 
 ## Table of Contents
+
 - [Terraform](#terraform)
   - [Table of Contents](#table-of-contents)
   - [Docker](#docker)
@@ -8,6 +9,7 @@
     - [List of states](#list-of-states)
     - [Outputs](#outputs)
   - [Github](#github)
+  - [Github Team](#github-team)
   - [Best Practices](#best-practices)
 
 ## Docker
@@ -131,6 +133,7 @@ python-container_ports = tolist([
 ])
 
 ```
+
 </details>
 
 ### List of states
@@ -145,6 +148,7 @@ devopssaleem@saleem-MCLF-XX:~/Documents/DevOps/S25-core-course-labs/terraform/do
 docker_container.app_python
 docker_image.app_python
 ```
+
 </details>
 
 `terraform state show`
@@ -228,6 +232,7 @@ resource "docker_container" "app_python" {
     }
 }
 ```
+
 </details>
 
 ### Outputs
@@ -248,6 +253,7 @@ python-container_ports = tolist([
   },
 ])
 ```
+
 </details>
 
 ### Github
@@ -269,6 +275,7 @@ Import successful!
 The resources that were imported are shown above. These resources are now in
 your Terraform state and will henceforth be managed by Terraform.
 ```
+
 </details>
 
 `terraform apply`
@@ -342,8 +349,8 @@ Outputs:
 
 repo_url = "https://github.com/saleemasekrea000/25-core-course-labs"
 ```
-</details>
 
+</details>
 
 `terraform output`
 <details>
@@ -353,7 +360,131 @@ repo_url = "https://github.com/saleemasekrea000/25-core-course-labs"
 devopssaleem@saleem-MCLF-XX:~/Documents/DevOps/S25-core-course-labs/terraform/github$ terraform output
 repo_url = "https://github.com/saleemasekrea000/25-core-course-labs"
 ```
+
 </details>
+
+## Github Team
+
+`terraform apply`
+
+<details>
+<summary>output</summary>
+
+```cmd
+devopssaleem@saleem-MCLF-XX:~/Documents/DevOps/S25-core-course-labs/terraform/github_teams$ terraform apply
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_repository.mock will be created
+  + resource "github_repository" "mock" {
+      + allow_auto_merge            = false
+      + allow_merge_commit          = true
+      + allow_rebase_merge          = true
+      + allow_squash_merge          = true
+      + archived                    = false
+      + branches                    = (known after apply)
+      + default_branch              = (known after apply)
+      + delete_branch_on_merge      = false
+      + description                 = "This is a mock repository for testing purposes."
+      + etag                        = (known after apply)
+      + full_name                   = (known after apply)
+      + git_clone_url               = (known after apply)
+      + html_url                    = (known after apply)
+      + http_clone_url              = (known after apply)
+      + id                          = (known after apply)
+      + merge_commit_message        = "PR_TITLE"
+      + merge_commit_title          = "MERGE_MESSAGE"
+      + name                        = "tf-mock"
+      + node_id                     = (known after apply)
+      + private                     = (known after apply)
+      + repo_id                     = (known after apply)
+      + squash_merge_commit_message = "COMMIT_MESSAGES"
+      + squash_merge_commit_title   = "COMMIT_OR_PR_TITLE"
+      + ssh_clone_url               = (known after apply)
+      + svn_url                     = (known after apply)
+      + visibility                  = "public"
+    }
+
+  # github_team.reader will be created
+  + resource "github_team" "reader" {
+      + create_default_maintainer = false
+      + description               = "This team has read-only access to the repositories."
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "reader"
+      + node_id                   = (known after apply)
+      + privacy                   = "closed"
+      + slug                      = (known after apply)
+    }
+
+  # github_team.writer will be created
+  + resource "github_team" "writer" {
+      + create_default_maintainer = false
+      + description               = "This team has write access to the repositories."
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "writer"
+      + node_id                   = (known after apply)
+      + privacy                   = "secret"
+      + slug                      = (known after apply)
+    }
+
+  # github_team_members.reader will be created
+  + resource "github_team_members" "reader" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + team_id = (known after apply)
+
+      + members {
+          + role     = "member"
+          + username = "saleemasekrea000"
+        }
+    }
+
+  # github_team_members.writer will be created
+  + resource "github_team_members" "writer" {
+      + etag    = (known after apply)
+      + id      = (known after apply)
+      + team_id = (known after apply)
+
+      + members {
+          + role     = "member"
+          + username = "saleemasekrea000"
+        }
+    }
+
+Plan: 5 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_team.writer: Creating...
+github_team.reader: Creating...
+github_repository.mock: Creating...
+github_team.writer: Still creating... [10s elapsed]
+github_team.reader: Still creating... [10s elapsed]
+github_repository.mock: Still creating... [10s elapsed]
+github_team.writer: Creation complete after 11s [id=12124477]
+github_team_members.writer: Creating...
+github_team.reader: Creation complete after 16s [id=12124478]
+github_team_members.reader: Creating...
+github_team_members.writer: Creation complete after 7s [id=12124477]
+github_repository.mock: Creation complete after 19s [id=tf-mock]
+github_team_members.reader: Creation complete after 3s [id=12124478]
+
+Apply complete! Resources: 5 added, 0 changed, 0 destroyed.
+```
+
+</details>
+
 
 ## Best Practices
 
@@ -364,4 +495,3 @@ repo_url = "https://github.com/saleemasekrea000/25-core-course-labs"
 - `terraform plan` was always used to verify the changes before applying them. Also, `terraform state list` and `terraform state show` were used before destroying any resource.
 - For existing resources, `terraform import` was used to import the resources to the state file.
 - Specifying Terraform and provider versions to avoid unexpected updates.
-
