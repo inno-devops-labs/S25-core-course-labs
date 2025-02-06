@@ -8,18 +8,32 @@ terraform {
 }
 
 provider "github" {
-  # Token will be provided via GITHUB_TOKEN environment variable
+  token = var.github_token # Token will be provided via GITHUB_TOKEN environment variable
+  owner = var.github_owner
 }
 
 resource "github_repository" "core-course-labs" {
-  name        = "core-course-labs"
-  description = "Core Course Labs Repository"
+  name        = var.repository_name
+  description = var.repository_description
   visibility  = "public"
 
-  allow_merge_commit = true
-  allow_squash_merge = true
-  allow_rebase_merge = true
-  auto_init         = true
+  allow_merge_commit     = true
+  allow_squash_merge    = true
+  allow_rebase_merge    = true
+  delete_branch_on_merge = true
+  has_issues           = true
+  has_projects         = true
+  has_wiki             = true
+  vulnerability_alerts = true
+
+  security_and_analysis {
+    secret_scanning {
+      status = "enabled"
+    }
+    secret_scanning_push_protection {
+      status = "enabled"
+    }
+  }
 }
 
 resource "github_branch_protection" "main" {
@@ -31,7 +45,7 @@ resource "github_branch_protection" "main" {
   }
 
   required_pull_request_reviews {
-    dismiss_stale_reviews = true
+    dismiss_stale_reviews           = true
     required_approving_review_count = 1
   }
 

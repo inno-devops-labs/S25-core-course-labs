@@ -209,5 +209,5 @@ This project uses GitHub Actions for continuous integration and delivery. The pi
 
 The complete workflow configuration can be found in `.github/workflows/python-ci.yml`.
 
-### CI/CD Status
-[![Python CI/CD](https://github.com/{owner}/{repo}/actions/workflows/python-ci.yml/badge.svg)](https://github.com/{owner}/{repo}/actions/workflows/python-ci.yml)
+  ### CI/CD Status
+  [![Python CI/CD](https://github.com/{owner}/{repo}/actions/workflows/python-ci.yml/badge.svg)](https://github.com/{owner}/{repo}/actions/workflows/python-ci.yml)
