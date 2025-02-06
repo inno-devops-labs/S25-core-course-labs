@@ -50,3 +50,12 @@ jobs:
           context: app_python
           tags: ${{ vars.DOCKERHUB_USERNAME }}/moscowtimeimagepython:latest
           push: true
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python-3.8@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

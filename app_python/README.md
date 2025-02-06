@@ -1,5 +1,7 @@
 # Python Web Application: Display Current Time in Moscow
 
+![example workflow](https://github.com/Magel0n/S25-core-course-labs/actions/workflows/python-app.yml/badge.svg)
+
 ## Framework Chosen: 
 - **Flask**: The web framework used to build the application.
 
