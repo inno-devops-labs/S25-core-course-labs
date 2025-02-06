@@ -19,10 +19,10 @@ jobs:
         python-version: '3.10'
 
     - name: Cache Python dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('app_python/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
 
