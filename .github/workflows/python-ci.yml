@@ -48,12 +48,11 @@ jobs:
         pytest --cov=. --cov-report=xml
         
     - name: Run Snyk to check for vulnerabilities
-      working-directory: ./app_python
-      run: |
-        snyk monitor --all-projects --severity-threshold=medium
-      continue-on-error: true
+      uses: snyk/actions/python-3.8@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: --severity-threshold=high
 
   docker:
     needs: test
