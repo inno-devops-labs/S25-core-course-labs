@@ -1,10 +1,12 @@
-name: Python Package CI
+name: Python CI
 
 on:
   push:
     paths:
-    - '*/**'
-    - '.github/workflows/ci.yml'
+    - 'app_python/**'
+  pull_request:
+    paths:
+    - 'app_python/**'
 
 jobs:
   test:

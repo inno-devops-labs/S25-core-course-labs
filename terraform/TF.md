@@ -1,11 +1,33 @@
-## terraform state list
-```txt
+# Terraform Infrastructure
+
+## Preparation & Installing Terraform
+### Install on Arch
+```sh
+sudo pacman -S terraform
+```
+### Add to path
+```sh
+export PATH=$PATH:/path/to/terraform
+```
+### Check
+```sh
+terraform --version
+```
+### Start docker-service
+```sh
+sudo systemctl start docker
+```
+
+## Test usage with python web-app
+### terraform state list
+```
 docker_container.python_container
 docker_image.python_app
 ```
 
-## terraform state show
-### docker_container.python_container:
+### terraform state show
+#### docker_container.python_container:
+```
 resource "docker_container" "python_container" {
     attach                                      = false
     bridge                                      = null
@@ -72,103 +94,90 @@ resource "docker_container" "python_container" {
         protocol = "tcp"
     }
 }
+```
 
-### docker_image.python_app:
+#### docker_image.python_app:
+```
 resource "docker_image" "python_app" {
     id          = "sha256:78a74fb73bfb12a8641cc50cbc82f57c610aaafa73b628896cb71a475497922cpython:3.11"
     image_id    = "sha256:78a74fb73bfb12a8641cc50cbc82f57c610aaafa73b628896cb71a475497922c"
     name        = "python:3.11"
     repo_digest = "python@sha256:14b4620f59a90f163dfa6bd252b68743f9a41d494a9fde935f9d7669d98094bb"
 }
+```
 
-## terraform output
+### terraform output
+```
 python_container_id = "589f151df5190a33436fc6e84753f6f0be1d2a83ef4295c9cd37b616256f8699"
 python_container_image = "petrel312/flask_app:latest"
 python_container_name = "app_python"
-
-## Integration with Yandex Cloud
-I followed the guide `https://yandex.cloud/en-ru/docs/tutorials/infrastructure-management/terraform-quickstart#linux_1` and also created payment accoung to receive grant. During this task I came up with several difficulties. I messed up with a lot of ids and after several attempts to run `terraform apply` free attempts for creating networks, subnets and vms were out. So I had to deal with it and clean everything I had on my account.
-
-1. Execution of `terraform plan`
-```
-docker_image.python_app: Refreshing state... [id=sha256:78a74fb73bfb12a8641cc50cbc82f57c610aaafa73b628896cb71a475497922cpython:3.11]
-docker_container.python_container: Refreshing state... [id=589f151df5190a33436fc6e84753f6f0be1d2a83ef4295c9cd37b616256f8699]
-
-Terraform used the selected providers to generate the following execution plan. Resource actions are
-indicated with the following symbols:
--/+ destroy and then create replacement
-
-Terraform will perform the following actions:
-
-  # docker_container.python_container must be replaced
--/+ resource "docker_container" "python_container" {
-      + bridge                                      = (known after apply)
-      ~ command                                     = [
-          - "python",
-          - "web.py",
-        ] -> (known after apply)
-      + container_logs                              = (known after apply)
-      - cpu_shares                                  = 0 -> null
-      - dns                                         = [] -> null
-      - dns_opts                                    = [] -> null
-      - dns_search                                  = [] -> null
-      ~ entrypoint                                  = [] -> (known after apply)
-      ~ env                                         = [] -> (known after apply)
-      + exit_code                                   = (known after apply)
-      - group_add                                   = [] -> null
-      ~ hostname                                    = "589f151df519" -> (known after apply)
-      ~ id                                          = "589f151df5190a33436fc6e84753f6f0be1d2a83ef4295c9cd37b616256f8699" -> (known after apply)
-      ~ image                                       = "sha256:a5c2a8018de16fc6f2546861f9e710a4a169ef14d8304a68fb223fc208c37c6f" -> "petrel312/flask_app:latest" # forces replacement
-      ~ init                                        = false -> (known after apply)
-      ~ ipc_mode                                    = "private" -> (known after apply)
-      ~ log_driver                                  = "json-file" -> (known after apply)
-      - log_opts                                    = {} -> null
-      - max_retry_count                             = 0 -> null
-      - memory                                      = 0 -> null
-      - memory_swap                                 = 0 -> null
-        name                                        = "app_python"
-      ~ network_data                                = [
-          - {
-              - gateway                   = "172.17.0.1"
-              - global_ipv6_prefix_length = 0
-              - ip_address                = "172.17.0.2"
-              - ip_prefix_length          = 16
-              - mac_address               = "02:42:ac:11:00:02"
-              - network_name              = "bridge"
-                # (2 unchanged attributes hidden)
-            },
-        ] -> (known after apply)
-      - network_mode                                = "bridge" -> null # forces replacement
-      - privileged                                  = false -> null
-      - publish_all_ports                           = false -> null
-      ~ runtime                                     = "runc" -> (known after apply)
-      ~ security_opts                               = [] -> (known after apply)
-      ~ shm_size                                    = 64 -> (known after apply)
-      + stop_signal                                 = (known after apply)
-      ~ stop_timeout                                = 0 -> (known after apply)
-      - storage_opts                                = {} -> null
-      - sysctls                                     = {} -> null
-      - tmpfs                                       = {} -> null
-      - user                                        = "flask_app_user" -> null
-      - working_dir                                 = "/app_python" -> null
-        # (17 unchanged attributes hidden)
-
-      ~ healthcheck (known after apply)
-
-      ~ labels (known after apply)
-
-        # (1 unchanged block hidden)
-    }
-
-Plan: 1 to add, 0 to change, 1 to destroy.
-
-Changes to Outputs:
-  ~ python_container_id    = "589f151df5190a33436fc6e84753f6f0be1d2a83ef4295c9cd37b616256f8699" -> (known after apply)
 ```
 
-# Yandex
+## Integration with YandexCloud
 
-## terraform init
+I used this guide [https://yandex.cloud/en-ru/docs/tutorials/infrastructure-management/terraform-quickstart#linux_1](https://yandex.cloud/en-ru/docs/tutorials/infrastructure-management/terraform-quickstart#linux_1)
+
+### Prepare YandexCloud
+1. Go to [https://console.yandex.cloud/](https://console.yandex.cloud/)
+2. Create account
+3. Create billing account. It should have status either `ACTIVE` or `TRIAL_ACTIVE`
+4. Create Authorized Key and download `.json` with private and public key
+5. Configure user
+```sh
+yc config profile create <profile_name>
+yc config set service-account-key key.json
+yc config set cloud-id <cloud_ID>
+yc config set folder-id <folder_ID>
+```
+6. Export env variables
+```sh
+export YC_TOKEN=$(yc iam create-token)
+export YC_CLOUD_ID=$(yc config get cloud-id)
+export YC_FOLDER_ID=$(yc config get folder-id)
+```
+
+### Install YC on Arch
+```sh
+curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+```
+### Check
+```sh
+yc --version
+```
+
+### Configure ssh key for user:
+```sh
+ssh-keygen
+yc organization-manager organization list
+yc organization-manager user list --organization-id <organization-id>
+yc organization-manager oslogin user-ssh-key create \
+--organization-id <organization-id> \
+--name "terraform-key" \
+--subject-id <user-id> \
+--data "<public ssh key>"
+--expires-at 2026-01-02T15:04:05Z
+```
+
+### Prepare workspace for terraform for YandexCloud
+```sh
+mkdir -p terraform/yandex
+cd terraform/yandex
+touch main.tf
+touch variables.tf
+```
+
+### Select image for VM
+```sh
+yc compute image list --folder-id standard-images
+```
+
+### Fill `main.tf` and `variables.tf` (if needed) with your data
+```sh
+vim main.tf
+vim variables.tf
+```
+
+### terraform init
 ```
 Initializing the backend...
 Initializing provider plugins...
@@ -189,18 +198,18 @@ rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 ```
 
-## terraform validate
+### terraform validate
 ```
 Success! The configuration is valid.
 ```
 
-## terraform fmt
+### terraform fmt
 ```
 main.tf
 variables.tf
 ```
 
-## terraform plan
+### terraform plan
 ```
 Terraform used the selected providers to generate the following execution plan. Resource actions are
 indicated with the following symbols:
@@ -304,7 +313,7 @@ Terraform will perform the following actions:
 Plan: 3 to add, 0 to change, 0 to destroy.
 ```
 
-## terraform apply
+### terraform apply
 ```
 Terraform used the selected providers to generate the following execution plan. Resource actions are
 indicated with the following symbols:
@@ -427,15 +436,16 @@ yandex_compute_instance.vm-1: Creation complete after 41s [id=fhmrjisl997h4frvgg
 Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 ```
 
-## terraform state list
+### terraform state list
 ```
 yandex_compute_instance.vm-1
 yandex_vpc_network.network-1
 yandex_vpc_subnet.subnet-1
 ```
 
-## terraform state show
-### yandex_compute_instance.vm-1:
+### terraform state show
+#### yandex_compute_instance.vm-1:
+```
 resource "yandex_compute_instance" "vm-1" {
     created_at                = "2025-02-06T00:40:32Z"
     description               = null
@@ -523,8 +533,10 @@ resource "yandex_compute_instance" "vm-1" {
         preemptible = false
     }
 }
+```
 
-### yandex_vpc_network.network-1:
+#### yandex_vpc_network.network-1:
+```
 resource "yandex_vpc_network" "network-1" {
     created_at                = "2025-02-06T00:40:30Z"
     default_security_group_id = "enpe0e80or2msilrnhiv"
@@ -535,8 +547,10 @@ resource "yandex_vpc_network" "network-1" {
     name                      = "default-1"
     subnet_ids                = []
 }
+```
 
-### yandex_vpc_subnet.subnet-1:
+#### yandex_vpc_subnet.subnet-1:
+```
 resource "yandex_vpc_subnet" "subnet-1" {
     created_at     = "2025-02-06T00:40:31Z"
     description    = null
@@ -552,6 +566,83 @@ resource "yandex_vpc_subnet" "subnet-1" {
     v6_cidr_blocks = []
     zone           = "ru-central1-a"
 }
+```
 
-# Github
+## Github
 
+### Prepare workspace
+```sh
+mkdir -p terraform/github
+cd terraform/github
+touch main.tf # fill it
+touch variables.tf #fill it, if needed
+```
+
+### Create Access Token on GitHub
+1. Settings -> Developer settings -> personal access tokens -> Tokens (classic)
+2. Create new Token (classic)
+3. Save it
+
+### terraform import "github_repository.repo" "S25-core-course-labs"
+```
+github_repository.repo: Importing from ID "S25-core-course-labs"...
+github_repository.repo: Import prepared!
+  Prepared github_repository for import
+github_repository.repo: Refreshing state... [id=S25-core-course-labs]
+
+Import successful!
+
+The resources that were imported are shown above. These resources are now in
+your Terraform state and will henceforth be managed by Terraform.
+```
+
+### terraform apply
+```
+github_repository.repo: Refreshing state... [id=S25-core-course-labs]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are
+indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_branch_default.default will be created
+  + resource "github_branch_default" "default" {
+      + branch     = "lab4-solution"
+      + id         = (known after apply)
+      + repository = "S25-core-course-labs"
+    }
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + blocks_creations                = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + pattern                         = "lab4-solution"
+      + repository_id                   = "S25-core-course-labs"
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + required_approving_review_count = 1
+        }
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_branch_default.default: Creating...
+github_branch_default.default: Creation complete after 2s [id=S25-core-course-labs]
+github_branch_protection.default: Creating...
+github_branch_protection.default: Creation complete after 4s [id=BPR_kwDONxdSs84DigsZ]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+```
