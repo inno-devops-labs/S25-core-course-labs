@@ -24,3 +24,13 @@
 1. run command **pip install -r requirements.txt**
 2. run command **python app.py**
 3. follow **<http://127.0.0.1:5000>** on your web browser
+
+# Unit Tests Description
+
+## I built 3 tests for my app.py program
+
+1. test_home_page : ensures that the home page loads successfully with 200 response.
+2. test_get_time_endpoint: calls /time API and check JSON response to contain **time** field.
+3. test_get_moscow_time: ensures the returned string in correctly formatted and compares with expected Moscow time.
+
+## For my test I followed several practices, including tests separation by functions, using main block, etc

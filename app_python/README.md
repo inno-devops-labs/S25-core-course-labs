@@ -29,3 +29,28 @@
 - **Pushing** and **Pulling** from DockerHub:
 
 ![Alt text](images/pushingAndPulling.png)
+
+# Unit Test Section
+
+to run unit tests, simply run command **python -m unittest tests.py** in current directory.
+
+# CI Workflow Section
+
+## My workflow file contains 2 jobs:  build-and-test and docker-build-and-push
+
+### build-and-test has next steps
+
+1. Install dependencies for python
+2. Snyk install using npm
+3. Snyk auth with token
+4. Run snyk test for app_python dir
+5. Run snyk monitor
+6. Run Linter flake8 for app_python dir
+7. Run tests.py file for testing app.py
+
+### docker-build-and-push has next steps
+
+1. Login into Docker Hub
+2. Building docker image
+3. Pushing image to Docker Hub account
+4. Snyk Security Scan of ima
