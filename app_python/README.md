@@ -163,7 +163,6 @@ This workflow automatically runs tests and builds a Docker image on every `push`
 - **Checkout repository** (`actions/checkout@v4`)
 - **Set up Python 3.11** (`actions/setup-python@v5`)
 - **Install dependencies** (`pip install -r requirements.txt`)
-- **Run linter (`flake8`)** to check code quality
 - **Run tests (`pytest`)** to verify application functionality
 
 #### 2️ **Docker Build and Push (docker)**
@@ -172,7 +171,7 @@ This workflow automatically runs tests and builds a Docker image on every `push`
 - **Build and push Docker image** to `gleb2005/flask-moscow-time:1.0`
 
 ###  How It Works?
-1. **On every commit or pull request to `master`**, the CI workflow is triggered.
+1. **On every push or pull request to `lab3`**, the CI workflow is triggered.
 2. If linting and tests pass, the **Docker image is built**.
 3. The final Docker image is **pushed to Docker Hub** 🚀.
 
@@ -184,4 +183,7 @@ To enable Docker Hub authentication, add the following GitHub Secrets:
 ###  `.github/workflows/ci.yml` File
 This workflow is stored in `.github/workflows/ci.yml`.  
 Commit and push this file to your repository to enable automatic CI/CD.
+
+### Badge 
+[![CI Pipeline](https://github.com/Glebias/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)](https://github.com/Glebias/S25-core-course-labs/actions/workflows/ci.yml)
 
