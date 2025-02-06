@@ -24,7 +24,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install flake8 pytest coverage pytest-cov 
-        pip install -r requirements.txt
+        pip install -r app_python/requirements.txt
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -33,7 +33,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest test.py --cov=app
+        pytest app_python/test.py --cov=app
         
   docker:
     runs-on: ubuntu-latest
@@ -46,5 +46,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/build-push-action@v6
         with:
+          context: app_python
           push: true
           tags: ${{ vars.DOCKERHUB_USERNAME }}/python_msk_time:latest
