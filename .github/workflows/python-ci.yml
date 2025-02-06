@@ -48,6 +48,8 @@ jobs:
   Snyk_to_Check_for_Vulnerabilities:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
+
       - name: Run Snyk to Check for Vulnerabilities
         uses: snyk/actions/python-3.9@master
         with:
