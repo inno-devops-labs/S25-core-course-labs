@@ -24,7 +24,7 @@ The following unit tests were created:
 - **Test Time Zone**: Verifies that the application correctly retrieves Moscow time.
 - **Flask Route Test**: Checks if the root route `/` returns a successful HTTP response.
 
-To run the tests locally:
+To run the tests locally, run:
 ```bash
 pytest test_app.py
 ```
