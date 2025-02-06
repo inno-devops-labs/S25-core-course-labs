@@ -1,6 +1,3 @@
-# syntax=docker/dockerfile:1
-
-########################################
 # Stage 1: Builder
 ########################################
 FROM python:3.10-alpine3.15 AS builder
