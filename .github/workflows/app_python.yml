@@ -2,8 +2,11 @@ name: Python Application CI
 
 on:
   pull_request:
+    branches:
+      - master
     paths:
       - "app_python/**"
+      - '.github/workflows/app_python.yml'
 
 jobs:
   build_and_test:
