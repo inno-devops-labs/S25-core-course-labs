@@ -5,15 +5,22 @@ from datetime import datetime
 
 import pytz
 
-sys.path.append("src")
 
-from main import app
+def get_app():
+    sys.path.append("app_python")
+    from src.main import app
+    return app
 
-client = TestClient(app)
+
+client = TestClient(get_app())
 
 
 def test_get_moscow_time():
-    """Test that the endpoint returns a valid response (200 status code) with 'moscow_time' key."""
+    """
+    Test that the endpoint returns
+    a valid response (200 status code)
+    with 'moscow_time' key.
+    """
     response = client.get("/get_moscow_time")
     assert response.status_code == 200
     assert "moscow_time" in response.json()
@@ -39,11 +46,16 @@ def test_moscow_time_updates():
     response2 = client.get("/get_moscow_time")
     time2 = response2.json()["moscow_time"]
 
-    assert time1 != time2, "Time did not update between requests"
+    assert (
+        time1 != time2
+    ), "Time did not update between requests"
 
 
 def test_moscow_time_timezone():
-    """Test that the returned time is in the correct timezone (Europe/Moscow)."""
+    """
+    Test that the returned
+    time is in the correct timezone (Europe/Moscow).
+    """
     response = client.get("/get_moscow_time")
     moscow_time_str = response.json()["moscow_time"]
 

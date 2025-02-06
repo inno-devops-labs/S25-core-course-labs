@@ -16,7 +16,10 @@ app = FastAPI()
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
     logger.info(
-        f"Incoming request: {request.method} {request.url.path} from {request.client.host}"
+        msg=(
+            f"Incoming request: {request.method} {request.url.path} "
+            f"from {request.client.host}"
+        )
     )
 
     response = await call_next(request)
