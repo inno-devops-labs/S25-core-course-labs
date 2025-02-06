@@ -25,3 +25,18 @@ resource "docker_container" "nginx" {
     external = 8080
   }
 }
+
+output "container_name" {
+  value = docker_container.nginx.name
+  description = "Container's name"
+}
+
+output "container_ip" {
+  value = docker_container.nginx.network_data[0].ip_address
+  description = "Container's IP"
+}
+
+output "container_image" {
+  value = docker_container.nginx.image
+  description = "Container's image"
+}
