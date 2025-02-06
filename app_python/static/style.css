@@ -1,0 +1,31 @@
+html {
+    background: linear-gradient(to right, #3b3a30, #6f6c59);
+    font-family: "Arial", sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: #f4f4eb;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ffe45e;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+p {
+    font-size: 1.75rem;
+    letter-spacing: 1px;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+}
