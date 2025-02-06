@@ -69,7 +69,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/app_python .
+          docker build -t ${{ vars.DOCKERHUB_USERNAME }}/app_python .
       
       - name: Push Docker Image
         run: |
