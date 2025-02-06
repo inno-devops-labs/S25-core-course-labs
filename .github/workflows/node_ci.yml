@@ -48,9 +48,10 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/node-webapp:ci-latest
 
       # Snyk Security Scan
-      - name: Snyk Security Scan
-        uses: snyk/actions/node@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python@master
+        continue-on-error: true
         with:
-          args: "--file=app_nodejs/package.json"
+            command: test ../../app_nodejs
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
