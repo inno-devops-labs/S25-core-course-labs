@@ -2119,4 +2119,4 @@ Apply complete! Resources: 6 added, 1 changed, 2 destroyed.
 ```
 
 Finally, all the teams were added and each of them has their own priorities.
-![Screenshot](terraform/static/teams.png)
+![Screenshot](./static/teams.png)
