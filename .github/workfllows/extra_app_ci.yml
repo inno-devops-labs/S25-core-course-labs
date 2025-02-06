@@ -1,0 +1,4 @@
+on:
+  push:
+    paths:
+      - 'app_<language>/**'
