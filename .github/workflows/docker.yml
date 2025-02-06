@@ -13,7 +13,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker image
-        working-directory: ./app_python
+        working-directory: app_python
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/devopslab:latest .
 
