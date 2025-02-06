@@ -2,10 +2,10 @@ from flask import Flask, render_template
 from datetime import datetime
 import pytz
 
-app = Flask(__name__) # initialize the Flask application
+app = Flask(__name__)  # initialize the Flask application
 
 
-@app.route("/") # define the main page route
+@app.route("/")  # define the main page route
 def index():
     # Set the time zone to Moscow
     moscow_tz = pytz.timezone("Europe/Moscow")
