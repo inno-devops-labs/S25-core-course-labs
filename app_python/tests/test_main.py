@@ -20,7 +20,7 @@ def test_index_status_and_content_type(client):
 
 
 def test_response_contents(client):
-    """Test that the response contains all required elements with valid formatting"""
+    """Test that the response contains all elements with formatting"""
     response = client.get('/')
     response_text = response.data.decode('utf-8')
 
