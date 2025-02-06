@@ -58,14 +58,14 @@ jobs:
       - name: Run Snyk Security Scan
         uses: snyk/actions/flutter@master
         with:
-          args: --skip-unresolved app_dart/
+          args: --skip-unresolved app_dart/nothern_lights_app
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   docker:
     defaults:
           run:
-            working-directory: app_dart
+            working-directory: app_dart/nothern_lights_app
     needs: build-and-test
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
