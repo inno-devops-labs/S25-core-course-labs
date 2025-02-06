@@ -136,19 +136,16 @@ This project uses **GitHub Actions** for continuous integration and deployment. 
 6. **Run Tests**:
    - Executes unit tests located in `app_python/tests/` using `pytest` to validate application functionality.
 
-7. **Install Snyk**:
-   - Installs the **Snyk CLI** globally using `npm`.
-
-8. **Run Snyk Vulnerability Check**:
+7. **Run Snyk Vulnerability Check**:
    - Scans `app_python/requirements.txt` for vulnerabilities using **Snyk**, ensuring secure dependencies. The Snyk API token is securely stored as a GitHub secret (`SNYK_TOKEN`).
 
-9. **Log in to Docker Hub**:
+8. **Log in to Docker Hub**:
    - Authenticates with Docker Hub using credentials stored as GitHub secrets (`DOCKER_USERNAME` and `DOCKER_PASSWORD`).
 
-10. **Build Docker Image**:
+9. **Build Docker Image**:
     - Builds a Docker image using the `Dockerfile` located in the `app_python` folder. The image is tagged with the commit SHA for traceability.
 
-11. **Push Docker Image**:
+10. **Push Docker Image**:
     - Pushes the built Docker image to Docker Hub for deployment.
 
 ---
