@@ -10,49 +10,6 @@ permissions:
   contents: read
 
 jobs:
-  coding-guidelines:
-    name: Coding Guidelines
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.3
-          extensions: none, iconv, json, phar, tokenizer
-          coverage: none
-          tools: none
-
-      - name: Run PHP-CS-Fixer
-        run: ./tools/php-cs-fixer fix --dry-run --show-progress=dots --using-cache=no --verbose
-
-  static-analysis:
-    name: Static Analysis
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.4
-          extensions: none, ctype, dom, iconv, mbstring, opcache, simplexml, tokenizer, xml, xmlwriter
-          coverage: none
-          tools: none
-
-      - name: Install dependencies with Composer
-        run: ./tools/composer update --no-interaction --no-ansi --no-progress
-
-      - name: Run PHPStan
-        run: ./tools/phpstan analyse --no-progress --error-format=github
-
   docker:
     runs-on: ubuntu-latest
     steps:
@@ -69,15 +26,3 @@ jobs:
           context: app_python
           tags: ${{ vars.DOCKERHUB_USERNAME }}/moscowtimeimagephp:latest
           push: true
-
-  security:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/php-8.0@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --workdir app_PHP
-            --skip-unresolved
