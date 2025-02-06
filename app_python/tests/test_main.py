@@ -12,6 +12,7 @@ BASE_DIR = os.path.abspath(
 )
 sys.path.insert(0, BASE_DIR)
 
+
 @pytest.fixture
 def client():
     app.config['TESTING'] = True
