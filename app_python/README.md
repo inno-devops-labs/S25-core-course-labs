@@ -1,4 +1,4 @@
-![Workflow status](https://github.com/Tedor49/S25-core-course-labs/.github/workflows/python-app.yml/badge.svg)
+![Workflow status](https://github.com/Tedor49/S25-core-course-labs/actions/workflows/python-app.yml/badge.svg)
 
 # Web application to display current time in Moscow
 
