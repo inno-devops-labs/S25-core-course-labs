@@ -1,4 +1,5 @@
-Flask==2.3.2
+Flask>=2.2.0,<3.0
+Werkzeug>=2.2.0,<3.0
 pytz==2023.3
 flake8
 pytest
