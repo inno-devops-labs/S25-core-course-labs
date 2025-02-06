@@ -142,3 +142,18 @@ After that I also do changes, make outputs.tf and other stuff, here the terrafor
 Once more, you can find the logs in txt files
 
 After all, I destroyed terraform
+
+
+## Task 2
+
+I got an error
+
+╷
+│ Error: GET https://api.github.com/user: 401 Bad credentials []
+│
+│   with provider["registry.terraform.io/integrations/github"],
+│   on /home/m/IdeaProjects/S25-core-course-labs/terraform/gitHubTerraform/main.tf line 10, in provider "github":
+│   10: provider "github" {
+│
+╵
+
