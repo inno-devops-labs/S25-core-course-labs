@@ -2,8 +2,10 @@ from flask import Flask
 from datetime import datetime
 import pytz
 
+
 # Flask initialization
 app = Flask(__name__)
+
 
 # Endpoint for time checking
 @app.route("/")
