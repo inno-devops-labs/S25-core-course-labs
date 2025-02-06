@@ -3,10 +3,11 @@ name: Python CI/CD with Docker
 on:
   push:
     branches:
-      - main
+      - "app_python/**"
   pull_request:
     branches:
-      - main
+      - "app_python/**"
+  workflow_dispatch:
 
 jobs:
   build:
