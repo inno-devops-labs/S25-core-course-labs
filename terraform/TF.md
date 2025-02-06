@@ -273,3 +273,11 @@ Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
 
 And now the changes must be made on github repo
+
+## Best practices followed
+- **Modular and Scalable Design:** Separation of concerns with variables.tf, outputs.tf, and main.tf
+- **Security Best Practices:** No hardcoded credentials, use of environment variables for sensitive values
+- **State Visibility:** Using output blocks to expose relevant infrastructure details
+- **Version Pinning:** Prevents unexpected provider updates
+- **Branch Protection Rules:** Enforces security and code quality
+- **Docker Image Cleanup (`keep_locally = false`):** Saves disk space
