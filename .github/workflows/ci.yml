@@ -34,10 +34,12 @@ jobs:
 
       - name: Run Snyk Test
         run: snyk test
-
+        working-directory: app_python
+        
       - name: Monitor with Snyk
         run: snyk monitor
-      
+        working-directory: app_python
+        
       - name: Run Linter
         run: |
           pip install flake8
