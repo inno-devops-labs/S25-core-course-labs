@@ -23,7 +23,7 @@ jobs:
         run: go mod tidy
 
       - name: Run Linter
-        run:
+        run: |
           go fmt
           go vet
 
