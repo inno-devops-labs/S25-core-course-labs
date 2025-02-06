@@ -1,0 +1,27 @@
+body {
+	background-image: url('image.png');
+	background-size: 80% 100%; /* Stretch the image to fit the screen */
+	background-position: center;
+	background-repeat: no-repeat; /* Prevent the image from repeating */
+	height: 100vh;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	color: white;
+	font-family: 'Roboto', sans-serif;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+h1 {
+	font-size: 3rem;
+	margin-bottom: 20px;
+}
+#clock {
+	font-size: 4rem;
+	font-weight: bold;
+	background: rgba(0, 0, 0, 0.6);
+	padding: 20px 40px;
+	border-radius: 15px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
