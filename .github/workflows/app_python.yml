@@ -31,11 +31,13 @@ jobs:
 
   linter:
     runs-on: ubuntu-latest
+    steps:
       - name: Run Linter
         run: flake8 .
 
   test:
     runs-on: ubuntu-latest
+    steps:
       - name: Run Unit Tests
         run: python -m pytest .
 
