@@ -1,7 +1,7 @@
 name: Build, test, and push to DockerHub
 
-#on:
-#  push:
+on:
+  push:
 #    paths:
 #      - app_python/**
 
