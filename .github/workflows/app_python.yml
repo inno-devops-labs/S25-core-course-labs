@@ -17,20 +17,14 @@ jobs:
         working-directory: ./app_python
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Set up Python 3.12
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.12
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+          python-version: "3.12"
+          cache: "pip"
 
       - name: Install dependencies
         run: pip install -r requirements.txt -r requirements-test.txt -r requirements-lint.txt
@@ -41,8 +35,7 @@ jobs:
           black --check .
 
       - name: Run tests
-        run: |
-          pytest test_main.py
+        run: pytest
 
       - name: Scan for vulnerabilities
         uses: snyk/actions/python-3.10@master
@@ -53,16 +46,11 @@ jobs:
 
   build_and_push:
     runs-on: ubuntu-22.04
-
-    needs:
-      - build_and_test
+    needs: build_and_test
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
