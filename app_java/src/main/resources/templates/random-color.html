@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Color Picker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #color-box {
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+            border: 2px solid black;
+            transition: background-color 0.5s ease;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h1>Random Color Picker</h1>
+<div id="color-box" th:style="'background-color: ' + ${color}"></div>
+<p id="hex-code" th:text="${color}">Loading...</p>
+<button onclick="location.reload()">Generate New Color</button>
+</body>
+</html>
