@@ -1,0 +1,23 @@
+# Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# FastAPI server logs
+*.log
+
+# IDE-specific files
+.vscode/
+.idea/
+*.swp
+
+# Environment files and folders
+.env
+.venv/
+
+# MD image folder
+img/
+
+# MD files
+*.md
