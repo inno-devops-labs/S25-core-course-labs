@@ -6,7 +6,7 @@ A simple Python web application built with **FastAPI** that displays the current
 
 # Workflow Status
 
-[![CI/CD Pipeline](https://github.com/Nikoali01/S25-core-course-labs/actions/workflows/ci.yml/badge.svg?branch=lab_3&event=push)](https://github.com/Nikoali01/S25-core-course-labs/actions/workflows/ci.yml)
+[![CI/CD Pipeline](https://github.com/Nikoali01/S25-core-course-labs/actions/workflows/ci-python.yml/badge.svg?branch=lab_3&event=push)](https://github.com/Nikoali01/S25-core-course-labs/actions/workflows/ci.yml)
 
 ---
 
