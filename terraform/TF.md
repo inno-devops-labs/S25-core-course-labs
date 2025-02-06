@@ -455,6 +455,112 @@ vpc_security_group_ids = [
 }
 ```
 
+- `terraform state show aws_instance.app_server`:
+
+```bash
+# aws_instance.app_server:
+
+resource "aws_instance" "app_server" {
+ami = "ami-830c94e3"
+arn = "arn:aws:ec2:us-west-2:820242942180:instance/i-0ae3c813911b89ca3"
+associate_public_ip_address = true
+availability_zone = "us-west-2b"
+cpu_core_count = 1
+cpu_threads_per_core = 1
+disable_api_stop = false
+disable_api_termination = false
+ebs_optimized = false
+get_password_data = false
+hibernation = false
+host_id = null
+iam_instance_profile = null
+id = "i-0ae3c813911b89ca3"
+instance_initiated_shutdown_behavior = "stop"
+instance_state = "running"
+instance_type = "t2.micro"
+ipv6_address_count = 0
+ipv6_addresses = []
+key_name = null
+monitoring = false
+outpost_arn = null
+password_data = null
+placement_group = null
+placement_partition_number = 0
+primary_network_interface_id = "eni-038bc5ea37a91ac16"
+private_dns = "ip-172-31-22-32.us-west-2.compute.internal"
+private_ip = "172.31.22.32"
+public_dns = "ec2-34-223-218-149.us-west-2.compute.amazonaws.com"
+public_ip = "34.223.218.149"
+secondary_private_ips = []
+security_groups = [
+"default",
+]
+source_dest_check = true
+subnet_id = "subnet-05f802481936ed38e"
+tags = {
+"Name" = "ExampleAppServerInstance"
+}
+tags_all = {
+"Name" = "ExampleAppServerInstance"
+}
+tenancy = "default"
+user_data_replace_on_change = false
+vpc_security_group_ids = [
+"sg-0ef1dfb2245c67718",
+]
+
+    capacity_reservation_specification {
+        capacity_reservation_preference = "open"
+    }
+
+    cpu_options {
+        amd_sev_snp      = null
+        core_count       = 1
+        threads_per_core = 1
+    }
+
+    credit_specification {
+        cpu_credits = "standard"
+    }
+
+    enclave_options {
+        enabled = false
+    }
+
+    maintenance_options {
+        auto_recovery = "default"
+    }
+
+    metadata_options {
+        http_endpoint               = "enabled"
+        http_put_response_hop_limit = 1
+        http_tokens                 = "optional"
+        instance_metadata_tags      = "disabled"
+    }
+
+    private_dns_name_options {
+        enable_resource_name_dns_a_record    = false
+        enable_resource_name_dns_aaaa_record = false
+        hostname_type                        = "ip-name"
+    }
+
+    root_block_device {
+        delete_on_termination = true
+        device_name           = "/dev/sda1"
+        encrypted             = false
+        iops                  = 0
+        kms_key_id            = null
+        tags                  = {}
+        throughput            = 0
+        volume_id             = "vol-02c72cbe195cc4f0a"
+        volume_size           = 8
+        volume_type           = "standard"
+    }
+
+}
+
+```
+
 ## Github Task
 
 ### Export Variables
