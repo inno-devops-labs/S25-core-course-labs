@@ -30,3 +30,7 @@ debug.log
 *.swp
 *.swo
 *.swn
+
+# Ignore terraform files
+.terraform*
+*.tfstate*
