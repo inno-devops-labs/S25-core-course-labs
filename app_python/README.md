@@ -96,6 +96,8 @@ Ensure your tests pass successfully to confirm the app is functioning as expecte
 
 ## 🏗 CI Workflow
 
+[![CI for Moscow time app](https://github.com/anasalatasiuni/S25-core-course-labs/actions/workflows/python-app-ci.yml/badge.svg?branch=lab3)](https://github.com/anasalatasiuni/S25-core-course-labs/actions/workflows/python-app-ci.yml)
+
 ### How CI Works for Moscow Time Web Application
 
 This project uses **GitHub Actions** for Continuous Integration (CI). The CI pipeline consists of the following stages:
