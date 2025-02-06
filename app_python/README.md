@@ -20,7 +20,7 @@ To set up and run the application locally, follow these steps:
 
 ### Prerequisites:
 
-- Python 3.x
+- Python 3.8 and upper
 - A virtual environment (optional)
 
 ### Setup instructions:
