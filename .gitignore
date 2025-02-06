@@ -1,0 +1,10 @@
+.terraform/
+.terraform.lock.hcl
+key.json
+terraform.tfstate
+terraform.tfstate.backup
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars.*
+data.txt
