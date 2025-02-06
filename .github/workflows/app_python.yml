@@ -45,6 +45,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install pytest
+        run: pip install pytest
+
       - name: Run Unit Tests
         run: |
           cd app_python
