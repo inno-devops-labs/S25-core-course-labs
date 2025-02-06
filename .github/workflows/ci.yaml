@@ -78,7 +78,6 @@ jobs:
       - name: Push Docker Image
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/msk-time-app:latest
-
       # S10: Run Snyk to scan for vulnerabilities in my project
       - name: Run Snyk Vulnerability Test
         uses: snyk/actions@master
