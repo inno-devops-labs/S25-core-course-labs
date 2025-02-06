@@ -40,7 +40,7 @@ jobs:
         run: python -m unittest ./tests/test_*.py
 
       - name: Snyk Security Scan
-        uses: snyk/actions/python-3.11@master
+        uses: snyk/actions/python-3.10@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
