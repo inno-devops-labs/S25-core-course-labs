@@ -35,10 +35,10 @@ resource "github_repository" "devops_labs" {
   auto_init   = true
 }
 
-# default branch is 'lab4'
+# default branch is 'lab3'
 resource "github_branch_default" "default_branch" {
   repository = github_repository.devops_labs.name
-  branch     = "lab4"
+  branch     = "lab3"
 }
 
 # Protect the default branch
