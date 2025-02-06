@@ -66,13 +66,13 @@ jobs:
           pip install -r app_python/requirements.txt
 
       - name: Run Snyk Security Scan
-          uses: snyk/actions/python@master
-          with:
-            args: --severity-threshold=high
-            command: test
-            directory: app_python
-          env:
-            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        uses: snyk/actions/python@master
+        with:
+          args: --severity-threshold=high
+          command: test
+          directory: app_python
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
 
   docker:
