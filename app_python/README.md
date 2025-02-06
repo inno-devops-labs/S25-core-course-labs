@@ -30,3 +30,4 @@ This repository uses GitHub Actions to automate the following:
 2. Runs Django's test suite.
 3. If tests pass, the app is containerized and pushed to Docker Hub.
 
+
