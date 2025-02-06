@@ -145,3 +145,15 @@ Outputs:
 external_ip_address_vm_1 = "<REDACTED>"
 internal_ip_address_vm_1 = "192.168.10.24"
 ```
+
+## GitHub
+
+I have created a fine-granted token for S25-core-course-labs repository and used it as a sensetive variable in .tf file.
+
+To apply and plan the terraform configuration, we need to import our current repository. For this, I used the following command:
+
+```bash
+terraform import github_repository.repo S25-core-course-labs
+```
+
+After this, I could successfuly run the terraform apply and create a branch protection rule.
