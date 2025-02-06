@@ -58,9 +58,12 @@ jobs:
     name: Security check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - name: Checkout Repository
+        uses: actions/checkout@v3
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven-3-jdk-17@master
+        uses: snyk/snyk-action@latest
+        with:
+          args: test --file=app_java/pom.xml
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
