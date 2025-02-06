@@ -11,6 +11,7 @@ docker_image.python_app
 
 # logs
 
+```bash
 docker_image.python_app: Refreshing state... [id=sha256:e3cd76718b978fb83fe841eba1012790b8f7b6baa99f41e2e85727f43f39a5a8ksenon9/lab2:latest]
 docker_image.nginx: Refreshing state... [id=sha256:e3cd76718b978fb83fe841eba1012790b8f7b6baa99f41e2e85727f43f39a5a8ksenon9/lab2:latest]
 
@@ -86,7 +87,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 Outputs:
 
 container_name = "lab4"
-
+```
 
 # Yandex-cloud
 
@@ -119,8 +120,9 @@ terraform apply
 ```
 
 
-logs (terraform plan)
+# logs 
 
+```bash
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   + create
 
@@ -281,4 +283,79 @@ Plan: 4 to add, 0 to change, 0 to destroy.
 Changes to Outputs:
   + terraform1_public_ip = (known after apply)
   + terraform2_public_ip = (known after apply)
+```
 
+
+# GitHub Infrastructure
+
+## Best Practices Applied
+- **Environment Variables for Sensitive Data:** I use the environment variable GITHUB_TOKEN for authentication instead of hardcoding it in the configuration.
+- **Modular Structure:** Terraform configuration is organized into separate files 
+
+# logs:
+
+```bash
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_branch_default.default will be created
+  + resource "github_branch_default" "default" {
+      + branch     = "main"
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + rename     = false
+      + repository = "lab4_terraform"
+    }
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + blocks_creations                = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + lock_branch                     = false
+      + pattern                         = "main"
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+
+PS C:\Users\Admin\PycharmProjects\devOps\S25-core-course-labs\terraform\gitHub> terraform apply                                          
+                                          
+  Enter a value:                          
+
+github_repository.repo: Refreshing state... [id=lab4_terraform]
+github_repository.S25-core-course-labs: Refreshing state... [id=S25-core-course-labs]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create                                   
+                                             
+Terraform will perform the following actions:
+
+  # github_branch_default.default will be created
+  + resource "github_branch_default" "default" {
+      + branch     = "main"
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + rename     = false
+      + repository = "lab4_terraform"
+    }
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + blocks_creations                = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + lock_branch                     = false
+      + pattern                         = "main"
+      + repository_id                   = "lab4_terraform"
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+```

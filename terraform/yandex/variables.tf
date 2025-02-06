@@ -11,13 +11,16 @@ variable "zone" {
 variable "cloud_id" {
   type      = string
   default   = "b1gnu9vfradetrgfse66"
+  sensitive = true
 }
 
 variable "folder_id" {
   default = "b1gvo4he6qfdthdc6fm3"
+  sensitive = true
 }
 
 variable "image_id" {
   default = "fd869umlvb3mfbj2lrks"
+  sensitive = true
 }
 
