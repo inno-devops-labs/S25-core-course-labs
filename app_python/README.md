@@ -77,3 +77,4 @@ For Docker integration, make sure the following secrets are set in the repositor
 - `DOCKER_USERNAME`
 - `DOCKER_PASSWORD`
 
+[![CI Pipeline](https://github.com/emiliogain/S25-core-course-labs/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/emiliogain/S25-core-course-labs/actions/workflows/ci.yaml)
