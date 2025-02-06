@@ -1,10 +1,10 @@
-## Unit-tests
-- **Tested componens**:
-  - Functoion `calculate_sum(a, b)`: Addition validation.
-  - Function `validate_input(data)`: Validating input check.
-- **Used tools**:
-  - `pytest` To run tests.
-  - `flake8` For linting.
-- **Cases coverage**:
-  - Check for positive and negative numbers.
-  - Processing of `None` and invalid data.
+# Python Unit Tests
+
+## Overview
+The application includes unit tests using `unittest` to ensure code quality.
+
+## Best Practices Applied:
+- **Test Coverage:** Ensured all functions are tested.
+- **Assertions:** Used `assertEqual` and `assertRaises` for thorough testing.
+- **Setup Method:** Used `setUp()` for reusability.
+- **Edge Cases:** Tested division by zero.
