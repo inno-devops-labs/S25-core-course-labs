@@ -1,6 +1,6 @@
 name: Docker Build and Push
 
-on: push
+on: deployment
 
 jobs:
   docker:
