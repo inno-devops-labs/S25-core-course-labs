@@ -45,14 +45,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install pytest
-        run: pip install pytest
+      - name: Install requirements
+        run: |
+          cd app_python
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Run Unit Tests
         run: |
-          cd app_python
           python -m pytest .
-          cd ..
 
   docker:
     runs-on: ubuntu-latest
