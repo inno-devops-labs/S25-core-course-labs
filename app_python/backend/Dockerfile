@@ -9,6 +9,6 @@ COPY requirements.txt ./
 
 # Copy the tests directory from the parent directory
 RUN cd ..
-RUN ls
+RUN ls -lah
 
 
