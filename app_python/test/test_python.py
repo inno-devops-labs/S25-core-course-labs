@@ -2,7 +2,7 @@ import pytest
 from pytz import timezone
 from datetime import datetime
 from unittest.mock import patch
-from app_python.run import app
+from run import app
 
 
 @pytest.fixture
