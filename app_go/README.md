@@ -102,7 +102,7 @@ go test -cover
 
 ### CI Workflow
 
-A CI workflow is maintained in the `.github/workflows/go_app.yaml` file. This workflow lints and tests the application,checks code vulnerability using SNYK ,and builds and pushes docker image. Workflow is triggered only if the there is a change in the app_python directory or the workflow file itself.
+A CI workflow is maintained in the `.github/workflows/go_app.yaml` file. This workflow lints and tests the application,checks code vulnerability using SNYK ,and builds and pushes docker image. Workflow is triggered only if the there is a change in the app_go directory or the workflow file itself.
 
 The CI workflow contains 3 jobs. Each job has a specific set of tasks to perform:
 
