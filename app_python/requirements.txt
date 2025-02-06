@@ -1,3 +1,4 @@
 Flask==2.3.2
 pytz==2023.3
 flake8
+pytest
