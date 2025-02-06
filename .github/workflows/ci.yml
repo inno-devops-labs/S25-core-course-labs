@@ -43,6 +43,10 @@ jobs:
           PYTHONPATH=app_python pytest --maxfail=1 --disable-warnings -q
       - name: Run Snyk to check vulnerabilities
         uses: snyk/actions/python@master
+        with:
+          command: test
+          json: false
+          args: "app_python/requirements.txt"
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
   docker:
