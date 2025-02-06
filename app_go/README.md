@@ -64,6 +64,14 @@ docker run -p 8002:8002 azamatbayramov/s25-devops-go-dl
 
 3. Open your web browser and navigate to `http://0.0.0.0:8002/` to view the current date in Moscow.
 
+## Unit Tests
+
+1. Run the unit tests using the following command:
+
+```bash
+go test ./...
+```
+
 ## Endpoints
 
 - `/` - Displays the current date in Moscow as an HTML response using `/api/date` endpoint.
