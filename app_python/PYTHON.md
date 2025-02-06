@@ -10,25 +10,30 @@ I use flask framework. Reasons why:
 
 * I created a file structure 
 ```
-README.md       app_python      lab1.md         lab2.md         lab3.md         lab4.md
-
-./app_python:
-PYTHON.md       doc             main.py         templates
-
-./app_python/doc:
-img
-
-./app_python/doc/img:
-console.png     webapp.png
-
-./app_python/templates:
-index.html
+app_python/
+│
+├── app/
+│   ├── __init__.py
+│   ├── routes.py
+│   └── templates/
+│       └── index.html
+│
+├── tests/
+│   └── test_time.py
+│
+├── run.py
+├── Dockerfile
+├── DOCKER.md
+├── README.mc
+├── PYTHON.md
+├── requirements.txt
+└── .dockerignore
 ```
 * I created a virtual env for python (it is ignored by git)
 * I created .gitignore file to keep code clean
 * requirements.txt are on place, it is easy for user to download all needed dependencies
 * For all others code standards code is too small yet to show it
-* Tests are in pictures below, I don't really know how to check the correctness of a time
+* Tests are in pictures below, and in unit tests in ./tests folder
 
 ![alt text](doc/img/webapp.png)
 
