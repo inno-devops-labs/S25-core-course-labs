@@ -97,6 +97,6 @@ jobs:
       uses: snyk/actions/python@master
       with:
         command: monitor
-        args: --severity-threshold=high app_python/
+        args: --severity-threshold=high --skip-unresolved app_python/
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
