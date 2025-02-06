@@ -60,7 +60,7 @@ jobs:
         run: cd app_java || true
       - name: Grant Execute Permission to mvnw
         working-directory: ./app_java
-        run: chmod +x mvnw# Ensure the directory exists
+        run: chmod +x mvnw
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven-3-jdk-17@master
         with:
