@@ -65,6 +65,8 @@ jobs:
         run: cd ./app_java
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven-3-jdk-17@master
+        with:
+          args: test ./app_java --severite-threshold=high
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
