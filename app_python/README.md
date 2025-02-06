@@ -154,7 +154,128 @@ This is the HTML file used to display the current time. Below is the explanation
 4. When the page is refreshed, the `show_time` function is called again, ensuring the displayed time updates.
 
 ---
+## Unit Tests
+```
+import sys
+import os
 
+sys.path.insert(
+    0,
+    os.path.abspath(
+        os.path.join(
+            os.path.dirname(__file__),
+            "..",
+            "..")))
+
+import re
+import pytz
+from datetime import datetime
+from app_python.app import app  # Import the Flask application
+import pytest
+
+@pytest.fixture
+def client():
+    """Create a test client for Flask."""
+    app.config["TESTING"] = True  # Enable testing mode
+    with app.test_client() as client:
+        yield client
+
+
+def test_time_format(client):
+    """Check if the HTML response contains time in the format HH:MM:SS."""
+    response = client.get("/")
+    time_match = re.search(
+        r"\d{2}:\d{2}:\d{2}",
+        response.get_data(
+            as_text=True))
+    assert time_match is not None, "Time format is incorrect"
+
+
+def test_time_in_response(client):
+    """Check if the HTML response contains the current time in the format HH:MM:SS."""
+    response = client.get("/")
+    assert response.mimetype == "text/html", "Response should be an HTML page"
+
+    # Get the current Moscow time
+    moscow_tz = pytz.timezone("Europe/Moscow")
+    expected_time = datetime.now(moscow_tz).strftime("%H:%M:%S")
+
+    # Check if the time is present in the HTML response
+    assert expected_time in response.get_data(
+        as_text=True), "Time in response does not match the current Moscow time"
+
+```
+# CI Workflow Description and Best Practices
+
+## Workflow Overview
+This GitHub Actions CI pipeline automates testing and Docker image deployment for a Flask application. It consists of 2 jobs:
+1. **`build-test`**: Runs unit tests and linting.
+2. **`docker`**: Builds and deploys a Docker image (only if `build-test` succeeds).
+
+---
+
+## Key Features & Best Practices
+
+### 1. **Trigger Control**
+   ```yaml
+   on:
+     push:
+       branches: [lab3]
+     pull_request:
+       branches: [lab3]
+```
+## CI workflow
+```
+name: CI Pipeline
+
+on:
+  push:
+    branches: [lab3]
+  pull_request:
+    branches: [lab3]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          cd app_python
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flake8
+
+      - name: Run tests (pytest)
+        run: pytest
+
+  docker:
+    needs: build-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t tikhonkhod/flask-moscow-time:1.0 -f app_python/Dockerfile .
+          docker push tikhonkhod/flask-moscow-time:1.0
+```
 ## Summary
 
 This application uses Flask for its simplicity and flexibility, making it ideal for small-scale projects. The application separates logic (Python code) from the presentation (HTML template) for better maintainability. The use of `pytz` ensures accurate timezone handling, and the HTML includes responsive design principles to ensure it works well on all devices.
