@@ -2,8 +2,6 @@ name: Go Application CI
 
 on:
   pull_request:
-    branches:
-      - master
     paths:
       - "app_go/**"
       - ".github/workflows/app_go.yml"
