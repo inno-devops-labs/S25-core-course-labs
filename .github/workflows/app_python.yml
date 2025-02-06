@@ -71,3 +71,17 @@ jobs:
         run: |
           docker tag my-python-app:latest ${{ secrets.DOCKER_USERNAME }}/app-python:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/app-python:latest
+
+  snyk:
+    needs: docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Snyk
+        uses: snyk/actions/python-3.10@master
+        with:
+          args: test --file=app_python/requirements.txt --severity-threshold=high
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
