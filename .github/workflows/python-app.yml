@@ -30,8 +30,6 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
-      with:
-        context: app_python
 
   docker:
     runs-on: ubuntu-latest
