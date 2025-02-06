@@ -1,3 +1,5 @@
+[![CI Pipeline](https://github.com/Vitalo-bit/S25-core-course-labs/actions/workflows/ci.yml/badge.svg?branch=lab3)](https://github.com/Vitalo-bit/S25-core-course-labs/actions/workflows/ci.yml)
+
 # Python Web Application
 
 ## Overview
@@ -6,6 +8,8 @@ This app shows the current time in Moscow. It is built on Python using Flask fra
 ## Features
 - Displays real-time updates upon page refresh.
 - Handles Moscow time zone using `pytz`.
+- Containerized solution for consistent execution across environments.
+- Automated CI/CD Pipeline with unit testing
 
 ## Local Installation
 1. Clone the repository:
@@ -41,3 +45,10 @@ docker run -p 5000:5000 flask-app
 docker pull synavtora/flask-app
 docker run -p 5000:5000 synavtora/flask-app
 ```
+
+## Unit Tests
+
+### Running Tests
+To run the unit tests, execute:
+```bash
+pytest
