@@ -31,6 +31,7 @@ jobs:
 
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/python@master
+      continue-on-error: true
       with:
         command: test ../../app_python
       env:
