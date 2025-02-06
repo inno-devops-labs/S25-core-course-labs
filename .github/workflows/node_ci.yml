@@ -2,11 +2,9 @@ name: Node CI
 
 on:
     push:
-      branches: [ "main" ]
       paths:
         - 'app_nodejs/**'
     pull_request:
-      branches: [ "main" ]
       paths:
         - 'app_nodejs/**'
   
