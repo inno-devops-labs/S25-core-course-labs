@@ -29,6 +29,9 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: gradle-${{ runner.os }}-
 
+      - name: Find java repo
+        run: cd app_java
+
       - name: Wrap gradle
         run: gradle wrapper
 
