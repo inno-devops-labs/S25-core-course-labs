@@ -29,6 +29,9 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: gradle-${{ runner.os }}-
 
+      - name: Wrap gradle
+        run: gradle wrapper
+
       - name: Build with Gradle
         run: ./gradlew build --no-daemon
 
