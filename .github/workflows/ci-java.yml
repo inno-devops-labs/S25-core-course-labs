@@ -63,10 +63,11 @@ jobs:
         run: chmod +x mvnw
       - name: Move inside
         run: cd ./app_java
+
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven-3-jdk-17@master
+        uses: snyk/actions/maven@master
         with:
-          args: test ./app_java --severite-threshold=high
+          args: --skip-unresolved --severity-threshold=high app_java/
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
