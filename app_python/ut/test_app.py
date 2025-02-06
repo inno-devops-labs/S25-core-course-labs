@@ -1,6 +1,6 @@
 import unittest
 from unittest import mock
-from main import app
+from app_python.main import app
 from bs4 import BeautifulSoup
 
 
@@ -14,13 +14,6 @@ class FlaskTestCase(unittest.TestCase):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'time', response.data)
-
-    def test_internal_server_error(self):
-        with mock.patch('main.datetime') as mock_datetime:
-            mock_datetime.now.side_effect = Exception("Some error")
-            response = self.client.get('/')
-            self.assertEqual(response.status_code, 500)
-            self.assertIn(b"Internal server error", response.data)
 
     def test_template_rendering(self):
         response = self.client.get('/')

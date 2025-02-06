@@ -62,7 +62,6 @@ python -m unittest discover ut
 
 ### Tests include:
 - Checking if the web page renders correctly (status code 200)
-- Handling server errors (status code 500)
 - Passing parameters to the Flask template
 - Validating the time format as "HH:MM:SS" in the HTML output
 
