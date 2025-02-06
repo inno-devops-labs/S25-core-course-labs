@@ -38,10 +38,8 @@ jobs:
           source .venv/bin/activate
           python -m unittest discover tests
 
-      - name: Run Snyk vulnerability scan
+      - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python-3.8@master
-        with:
-          command: test
-          args: --all-projects --severity-threshold=high
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
