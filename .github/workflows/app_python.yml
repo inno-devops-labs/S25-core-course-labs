@@ -31,19 +31,21 @@ jobs:
 
   linter:
     runs-on: ubuntu-latest
+    needs: [build]
     steps:
       - name: Run Linter
         run: flake8 .
 
   test:
     runs-on: ubuntu-latest
+    needs: [build, linter]
     steps:
       - name: Run Unit Tests
         run: python -m pytest .
 
   docker:
     runs-on: ubuntu-latest
-    needs: build-and-test
+    needs: [build, linter, test]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
