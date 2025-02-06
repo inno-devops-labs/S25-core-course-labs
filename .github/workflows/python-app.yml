@@ -29,6 +29,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
+        cd app_python
         pytest
 
   docker:
@@ -44,6 +45,5 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: app_python
-          tags: ${{ steps.meta.outputs.tags }}
-          annotations: ${{ steps.meta.outputs.annotations }}
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/python_msk_time:latest
           push: true
