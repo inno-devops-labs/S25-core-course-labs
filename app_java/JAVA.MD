@@ -43,3 +43,46 @@ This project is a simple Java web application that generates a random hex color 
   - A div element styled with the generated color.
   - A paragraph displaying the hex code.
   - A button to regenerate the color by reloading the page.
+
+---
+
+## Unit Tests
+
+Unit tests are crucial for ensuring the correctness and reliability of the application. Below is a description of the unit tests created for this project:
+
+1. **Test for Correct Format (`testPickRandomColor_Format`)**:
+   - **Purpose**: Ensures that the generated hex color string adheres to the correct format (`#RRGGBB`).
+   - **Assertions**:
+     - The returned color string is not null.
+     - The string starts with `#`.
+     - The string has exactly 7 characters.
+     - The string matches the regular expression `^#[0-9A-Fa-f]{6}$`.
+
+2. **Test for RGB Range Validation (`testPickRandomColor_RangeValidation`)**:
+   - **Purpose**: Verifies that each RGB component (red, green, blue) is within the valid range `[0, 255]`.
+   - **Assertions**:
+     - Each component (R, G, B) is parsed from the hex string and validated to ensure it falls within the range `[0, 255]`.
+
+3. **Test with Mocked Random Object (`testPickRandomColor_MockedRandom`)**:
+   - **Purpose**: Tests the behavior of the `pickRandomColor` method when a mocked `Random` object is used, ensuring predictable results.
+   - **Assertions**:
+     - The returned color string is not null.
+     - The string matches the expected value (`#808080`) based on the mocked `Random` object.
+
+These tests ensure that the core functionality of the `RandomColorPickerImpl` class is robust and behaves as expected under various scenarios.
+
+---
+
+## Best Practices Applied in Testing
+
+1. **Test Coverage**:
+   - The tests cover all critical aspects of the `RandomColorPickerImpl` class, including format validation, range checks, and behavior with mocked dependencies.
+
+2. **Mocking Dependencies**:
+   - A mocked `Random` object is used to test deterministic behavior, ensuring consistent results during testing.
+
+3. **Assertion Clarity**:
+   - Clear and specific assertions are used to validate the output, making it easy to identify issues if a test fails.
+
+4. **Integration with CI Workflow**:
+   - The tests are integrated into the CI workflow, ensuring they are executed automatically on every push or pull request.
