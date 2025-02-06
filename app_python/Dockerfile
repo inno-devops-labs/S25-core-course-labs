@@ -1,24 +1,22 @@
 # Stage 1: Builder
 ########################################
-FROM python:3.10-alpine3.15 AS builder
+FROM python:3.10.13-alpine3.18 AS builder
 LABEL stage="builder"
 
-# Update and install build dependencies if needed (optional)
-# RUN apk update && apk add --no-cache gcc musl-dev
-
+# Set work directory
 WORKDIR /app
 
-# Copy only requirements first to leverage Docker caching
+# Install required dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the app files
+# Copy application source code
 COPY main.py .
 
 ########################################
-# Stage 2: Final
+# Stage 2: Final Image
 ########################################
-FROM python:3.10-alpine3.15
+FROM python:3.10.13-alpine3.18
 LABEL stage="final"
 
 # Create a non-root user and group
@@ -26,16 +24,17 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 WORKDIR /app
 
-# Copy installed site-packages from builder stage to final image
+# Copy installed dependencies from builder stage
 COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
-# Copy your application code as needed
+
+# Copy application source code
 COPY main.py .
 
-# Switch to the non-root user
+# Ensure the app runs with the correct user
 USER appuser
 
-# Expose the port (Flask defaults to 5000)
+# Expose the correct port
 EXPOSE 5050
 
-# Set default command to run your Python app
+# Set the entry point command
 CMD ["python", "main.py"]
