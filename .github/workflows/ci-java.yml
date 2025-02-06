@@ -56,7 +56,7 @@ jobs:
       - name: Navigate to app_java Directory
         run: cd app_java || true  # Ensure the directory exists
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven-3-jdk-17@latest
+        uses: snyk/actions/maven-3-jdk-17@master
         with:
           args: --skip-unresolved
         env:
