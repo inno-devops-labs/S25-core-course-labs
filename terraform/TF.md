@@ -1,9 +1,10 @@
 # Terraform practice report
 
-## Initial setup:
+## Initial setup
 
 main.tf
-```terraform
+
+```tf
 terraform {
   required_providers {
     docker = {
@@ -41,7 +42,7 @@ terraform state
 
 **Output:**
 
-```
+```txt
 ❯ terraform state show
 Exactly one argument expected.
 Usage: terraform [global options] state show [options] ADDRESS
@@ -136,6 +137,7 @@ resource "docker_image" "nginx" {
 ## Changing the config
 
 main.tf
+
 ```diff
 -   external = 8000
 +   external = 8080
@@ -149,7 +151,7 @@ terraform apply
 
 **Output:**
 
-```
+```txt
 docker_image.nginx: Refreshing state... [id=sha256:9b1b7be1ffa607d40d545607d3fdf441f08553468adec5588fb58499ad77fe58nginx]
 docker_container.nginx: Refreshing state... [id=cff5d058f391fd00b8468c7d78fdd610eed67cc245a63d96a88700afa5f4ae46]
 
@@ -282,4 +284,120 @@ image_id = "sha256:9b1b7be1ffa607d40d545607d3fdf441f08553468adec5588fb58499ad77f
 1. I've configured a new service account, assigned an editor role and created an authorized key for it in the Cloud Console
 2. I've used the `yc` CLI to set up the cloud id, folder id and an api token in the environment variables
 3. I've initialized a new terraform workspace with yandex provider (and made changes to ~/.terraformrc according to the yandex cloud docs beforehand)
-4. Issue 1: the guide to define VM resource from Yandex is outdated: it does not mention that you should create a network and set up a network interface in a VM.
+4. Issue 1: the guide to define VM resource from Yandex is not very clear: it does mention that you should create a network and set up a network interface in a VM (among boot drive and other things), but it does not provide examples on the same page. Borrowed a full example from the provider docs.
+5. I've defined the network, subnet and VM resources based on the docs and the IDE hints (Terraform linter in VSCode)
+6. I've determined the image id for the latest Ubuntu release using the `yc` CLI tool and used it in the resource creation
+7. Ran `terraform fmt && terraform validate` to check the config
+8. Ran `terraform plan && terraform apply` to apply the changes using credentials from my environment set up in step 2
+9. **Output:**
+
+```txt
+❯ terraform show
+# yandex_compute_instance.vm-1:
+resource "yandex_compute_instance" "vm-1" {
+    created_at                = "2025-02-06T21:07:48Z"
+    folder_id                 = "<<redacted>>"
+    fqdn                      = "<<redacted>>.auto.internal"
+    hardware_generation       = [
+        {
+            generation2_features = []
+            legacy_features      = [
+                {
+                    pci_topology = "PCI_TOPOLOGY_V1"
+                },
+            ]
+        },
+    ]
+    id                        = "<<redacted>>"
+    metadata                  = {
+        "ssh-keys" = <<-EOT
+            <<redacted>>
+        EOT
+    }
+    name                      = "terraform1"
+    network_acceleration_type = "standard"
+    platform_id               = "standard-v1"
+    status                    = "running"
+    zone                      = "ru-central1-a"
+
+    boot_disk {
+        auto_delete = true
+        device_name = "fhm5p62alunk94vcr0no"
+        disk_id     = "fhm5p62alunk94vcr0no"
+        mode        = "READ_WRITE"
+
+        initialize_params {
+            block_size = 4096
+            image_id   = "fd82odtq5h79jo7ffss3"
+            size       = 10
+            type       = "network-hdd"
+        }
+    }
+
+    metadata_options {
+        aws_v1_http_endpoint = 1
+        aws_v1_http_token    = 2
+        gce_http_endpoint    = 1
+        gce_http_token       = 1
+    }
+
+    network_interface {
+        index              = 0
+        ip_address         = "10.0.100.33"
+        ipv4               = true
+        ipv6               = false
+        mac_address        = "d0:0d:62:28:84:48"
+        nat                = true
+        nat_ip_address     = "<<redacted>>"
+        nat_ip_version     = "IPV4"
+        security_group_ids = []
+        subnet_id          = "<<redacted>>"
+    }
+
+    placement_policy {
+        host_affinity_rules       = []
+        placement_group_partition = 0
+    }
+
+    resources {
+        core_fraction = 100
+        cores         = 2
+        gpus          = 0
+        memory        = 2
+    }
+
+    scheduling_policy {
+        preemptible = false
+    }
+}
+
+# yandex_vpc_network.network-tfproject:
+resource "yandex_vpc_network" "network-tfproject" {
+    created_at                = "2025-02-06T21:07:44Z"
+    default_security_group_id = "<<redacted>>"
+    folder_id                 = "<<redacted>>"
+    id                        = "<<redacted>>"
+    labels                    = {}
+    name                      = "network-1"
+    subnet_ids                = []
+}
+
+# yandex_vpc_subnet.subnet-tfproject:
+resource "yandex_vpc_subnet" "subnet-tfproject" {
+    created_at     = "2025-02-06T21:07:47Z"
+    folder_id      = "<<redacted>>"
+    id             = "<<redacted>>"
+    labels         = {}
+    name           = "subnet-1"
+    network_id     = "<<redacted>>"
+    v4_cidr_blocks = [
+        "10.0.100.0/24",
+    ]
+    v6_cidr_blocks = []
+    zone           = "ru-central1-a"
+}
+```
+
+> Note: run `terraform destroy` in the end to not burn through the free trial 🙂
+
+## GitHub

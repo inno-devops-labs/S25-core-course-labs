@@ -24,7 +24,7 @@ resource "yandex_vpc_subnet" "subnet-tfproject" {
 
 
 resource "yandex_compute_instance" "vm-1" {
-  name = "terraform1",
+  name = "terraform1"
   resources {
     cores  = 2
     memory = 2
@@ -32,12 +32,12 @@ resource "yandex_compute_instance" "vm-1" {
 
   boot_disk {
     initialize_params {
-      image_id = "fd86jl8gechvgkabt374"
+      image_id = "fd82odtq5h79jo7ffss3" # Ubuntu 24.04
     }
   }
 
   network_interface {
-    subnet_id = yandex_vpc_subnet.subnet-1.id
+    subnet_id = yandex_vpc_subnet.subnet-tfproject.id
     nat       = true # Assign a public IP
   }
 
