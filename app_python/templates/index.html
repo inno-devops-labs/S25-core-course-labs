@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Time in Moscow</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background: #1e1e1e;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            color: #bb86fc;
+        }
+        .time-display {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #03dac6;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Current Time in Moscow</h1>
+        <p class="time-display" id="time-display">{{ current_time }}</p>
+    </div>
+
+    <script>
+        let currentTime = new Date('{{ current_time }}'); // Initialize with server time
+
+        // Function to update the displayed time
+        function updateLocalTime() {
+            const timeString = currentTime.toLocaleTimeString('en-US', { hour12: false });
+            document.getElementById('time-display').textContent = timeString;
+        }
+
+        // Start a local clock that updates every second
+        setInterval(() => {
+            currentTime.setSeconds(currentTime.getSeconds() + 1); // Increment by 1 second
+            updateLocalTime();
+        }, 1000);
+
+        // Display the initial time immediately
+        updateLocalTime();
+    </script>
+</body>
+</html>
