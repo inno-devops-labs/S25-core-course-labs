@@ -32,7 +32,7 @@ jobs:
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/python@master
       with:
-        command: test
+        command: test ../../app_python
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
