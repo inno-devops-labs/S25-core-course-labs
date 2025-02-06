@@ -65,8 +65,6 @@ jobs:
         run: cd ./app_java
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven-3-jdk-17@master
-        with:
-          args: --skip-unresolved ./app_java
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
