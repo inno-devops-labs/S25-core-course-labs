@@ -38,7 +38,7 @@ jobs:
 
       - name: Check lint
         uses: vroy/gha-kotlin-linter@v1
-        with: {}
+        with: { }
 
   docker:
     needs: buildlint
@@ -76,9 +76,10 @@ jobs:
         working-directory: ./app_kotlin
         run: ./gradlew build --refresh-dependencies
 
-      - name: Run Snyk
-        uses: snyk/actions/gradle-jdk17@master
-        with:
-          args: test --severity-threshold=high
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      - name: Run Snyk Test
+        run: snyk test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
