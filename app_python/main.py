@@ -18,8 +18,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 # Include the routers
 app.include_router(time_operations_router)
+
 
 # Define the root source
 @app.get("/", tags=["Root"], status_code=200)
