@@ -1,0 +1,87 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Python application
+
+on:
+  push:
+    paths:
+      - "app_python/**"
+  pull_request:
+    paths:
+      - "app_python/**"
+      - ".github/workflows/ci-python.yaml"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    #set working dir to app_python
+    defaults:
+      run:
+        working-directory: ./app_python
+
+    steps:
+    #S1: checkout the repo code into the runner workspace
+    - uses: actions/checkout@v4
+    #S2: set Python3.10 for the enviroment
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    #S3: cache pip dependencies to reduce build time
+    - name: Cache pip
+      uses: actions/cache@v3
+      with:
+        #cache the pip folder
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    #S4: install dependencies and testing tools
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    #S5: lint the code using flake8
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    #S6: Run unit tests with pytest
+    - name: Test with pytest
+      run: |
+        pytest
+
+    #S7 log into dockerhub using secrets
+    -name: Docker login
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    #S8: build docker image using dockerfile in repo
+    - name: Build Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/msk-time-app:latest .
+    #S9: push the docker image to my dockerhub repo
+    - name: Push Docker Image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/msk-time-app:latest
+ 
+    #S10: run Snyk to scan for vulnerabilities in my project
+    - name: Run Snyk Vulnerability Test
+        uses: snyk/actions@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: test --all-projects
+
