@@ -31,3 +31,12 @@ You can run the container specifying ports and env file with at least host and p
 ```bash
 docker run --env-file .env -p 8000:8000 absorian/s25-devops-msk-time
 ```
+
+## Unit Tests
+
+To run the unit tests, with dependencies installed locally, use the `pytest` command:
+
+```bash
+pip install -r requirements.txt
+pytest
+```
