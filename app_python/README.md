@@ -93,3 +93,5 @@ You can pull the image using the following command:
 ```bash
 docker pull mangocandle/app_python:latest
 ```
+
+[CI Best Practices](./CI.md)

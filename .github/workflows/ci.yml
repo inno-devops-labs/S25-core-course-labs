@@ -26,6 +26,7 @@ jobs:
           flake8 .
   tests:
     runs-on: ubuntu-latest
+    needs: lint
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -52,6 +53,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
   docker:
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Clear Docker cache
         run: docker builder prune -af
