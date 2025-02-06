@@ -10,8 +10,8 @@ then changed to be applicable to this project, as it is simpler than their examp
 """
 @pytest.fixture
 def app():
-    app = app_python_app.app
-    yield app
+    this_app = app_python_app.app
+    yield this_app
 
 @pytest.fixture
 def client(app):
