@@ -1,8 +1,3 @@
-import re
-import pytz
-from datetime import datetime
-from app_python.app import app  # Import the Flask application
-import pytest
 import sys
 import os
 
@@ -13,6 +8,13 @@ sys.path.insert(
             os.path.dirname(__file__),
             "..",
             "..")))
+
+import re
+import pytz
+from datetime import datetime
+from app_python.app import app  # Import the Flask application
+import pytest
+
 
 
 @pytest.fixture
