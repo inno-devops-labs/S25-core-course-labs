@@ -11,7 +11,6 @@ on:
 jobs:
   build-lint-test:
     runs-on: ubuntu-latest
-
     steps:
       # Step 1: Check out the repository
       - name: Checkout Repository
@@ -51,45 +50,45 @@ jobs:
   security:
     needs: [build-lint-test]
     runs-on: ubuntu-latest
-
     steps:
+      # Step 7: Check out the repository
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Step 7: Install Snyk
+      # Step 8: Install Snyk via npm
       - name: Install Snyk
         run: npm install -g snyk
 
-      # Step 8: Run Snyk Vulnerability Check
+      # Step 9: Authenticate Snyk
+      - name: Authenticate Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      # Step 10: Run Snyk Vulnerability Check
       - name: Run Snyk Vulnerability Check
-        uses: snyk/snyk-protect@v3.6.0 # Use the latest stable version
-        with:
-          args: test --file=./app_java/pom.xml --skip-unresolved
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: snyk test --file=./app_java/pom.xml --skip-unresolved
 
   docker-worker:
     needs: [build-lint-test, security]
     runs-on: ubuntu-latest
-
     steps:
+      # Step 11: Check out the repository
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Step 9: Log in to Docker Hub
+      # Step 12: Log in to Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Step 10: Build Docker Image
+      # Step 13: Build Docker Image
       - name: Build Docker Image
         working-directory: ./app_java
         run: |
           docker build -t nickwidbestie/random-color-picker:$GITHUB_SHA -f Dockerfile .
 
-      # Step 11: Push Docker Image
+      # Step 14: Push Docker Image
       - name: Push Docker Image
         run: |
           docker push nickwidbestie/random-color-picker:$GITHUB_SHA
