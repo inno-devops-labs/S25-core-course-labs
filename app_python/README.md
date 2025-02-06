@@ -1,3 +1,5 @@
+[![CI Pipeline](https://github.com/KaramKhaddour/S25-core-course-labs/actions/workflows/CI.yml/badge.svg)](https://github.com/KaramKhaddour/S25-core-course-labs/actions/workflows/CI.yml)
+
 # Moscow Time Display Application (FastAPI)
 
 ## Overview
