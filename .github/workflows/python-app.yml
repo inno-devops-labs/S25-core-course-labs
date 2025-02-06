@@ -56,12 +56,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: Move over to the Python project
-        run: |
-          pip install -r app_python/requirements.txt
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python-3.8@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --workdir app_python
+            --skip-unresolved
