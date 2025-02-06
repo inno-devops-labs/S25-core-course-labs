@@ -7,7 +7,7 @@ on:
     paths:
       - "app_python/**"
   pull_request:
-  branches:
+    branches:
       - lab3
     paths:
       - "app_python/**"
