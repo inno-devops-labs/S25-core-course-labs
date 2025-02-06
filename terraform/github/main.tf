@@ -32,13 +32,13 @@ resource "github_team" "admins" {
 
 resource "github_team_membership" "dev_member" {
   team_id  = github_team.developers.id
-  username = "MoeJaafar"  # Assign yourself to Developers
+  username = "MoeJaafar"  
   role     = "member"
 }
 
 resource "github_team_membership" "admin_member" {
   team_id  = github_team.admins.id
-  username = "MoeJaafar"  # Assign yourself to Admins
+  username = "MoeJaafar" 
   role     = "maintainer"
 }
 
