@@ -1,9 +1,9 @@
 name: Build, test, and push to DockerHub
 
-on:
-  push:
-    paths:
-      - app_python/**
+#on:
+#  push:
+#    paths:
+#      - app_python/**
 
 permissions:
   contents: read
