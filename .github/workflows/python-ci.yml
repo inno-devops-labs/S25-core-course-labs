@@ -36,6 +36,8 @@ jobs:
       uses: snyk/actions/python@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        target-path: ./app_python
 
     - name: Run linter
       run: |
