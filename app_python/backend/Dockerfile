@@ -8,28 +8,6 @@ WORKDIR /usr/local/app
 COPY requirements.txt ./
 
 # Copy the tests directory from the parent directory
-COPY tests ./tests
+RUN cd ../tests
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
 
-# Install pytest
-RUN pip install pytest
-
-# Copy the rest of the application code from the current directory
-COPY . ./backend
-
-# Create a non-root user
-RUN adduser --disabled-password --disabled-login myuser
-
-# Change ownership of the application files
-RUN chown -R myuser:myuser /usr/local/app
-
-# Switch to the non-root user
-USER myuser
-
-# Expose the application port
-EXPOSE 8080
-
-# Command to run the application
-CMD ["python", "backend/main.py"]
