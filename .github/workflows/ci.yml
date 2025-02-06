@@ -20,7 +20,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
 
@@ -69,9 +69,6 @@ jobs:
   snyk-scan:
     needs: setup
     runs-on: ubuntu-latest
-    permissions:
-      security-events: write
-      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
