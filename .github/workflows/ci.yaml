@@ -6,6 +6,7 @@ on:
       - lab3
     paths:
       - 'app_python/**'  # 🎯 Run only if changes occur in app_python/
+  workflow_dispatch:
 
 jobs:
   build:
