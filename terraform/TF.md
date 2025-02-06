@@ -1,5 +1,12 @@
 # Infrastructure as Code (IAC) using Terraform
 
+## Best practices
+
+1. Sensitive information is securely stored as environment variables.
+2. The terraform directory follows a well-organized structure, with separate folders for docker, yandex, and github configurations.
+3. Terraform files are named logically and consistently: main.tf for primary configurations, variables.tf for variable definitions, and outputs.tf for output specifications.
+4. As a best practice, terraform fmt and terraform validate commands are always executed prior to terraform apply, ensuring the configuration's formatting and validity before implementation.
+
 ## Docker
 
 ### terraform show
@@ -433,4 +440,91 @@ Options:
                       up Terraform-managed resources. By default it will
                       use the state "terraform.tfstate" if it exists.
 
+```
+
+## Github
+
+### terraform import "github_repository.repo" "S25-devops-engineering-labs"
+
+```plaintext
+github_repository.repo: Importing from ID "S25-devops-engineering-labs"...
+github_repository.repo: Import prepared!
+  Prepared github_repository for import
+github_repository.repo: Refreshing state... [id=S25-devops-engineering-labs]
+
+Import successful!
+
+The resources that were imported are shown above. These resources are now in
+your Terraform state and will henceforth be managed by Terraform.
+```
+
+### `terraform apply` command line
+
+```plaintext
+github_repository.repo: Refreshing state... [id=S25-devops-engineering-labs]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # github_branch_default.default will be created
+  + resource "github_branch_default" "default" {
+      + branch     = "lab4"
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + rename     = false
+      + repository = "S25-devops-engineering-labs"
+    }
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + lock_branch                     = false
+      + pattern                         = "lab4"
+      + repository_id                   = "S25-devops-engineering-labs"
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + require_last_push_approval      = false
+          + required_approving_review_count = 1
+        }
+    }
+
+  # github_repository.repo will be updated in-place
+  ~ resource "github_repository" "repo" {
+      ~ auto_init                   = false -> true
+      + description                 = "Bakina Sofia"
+      + gitignore_template          = "Python"
+      - has_downloads               = true -> null
+      - has_projects                = true -> null
+      ~ has_wiki                    = true -> false
+        id                          = "S25-devops-engineering-labs"
+      + license_template            = "mit"
+        name                        = "S25-devops-engineering-labs"
+        # (31 unchanged attributes hidden)
+
+        # (1 unchanged block hidden)
+    }
+
+Plan: 2 to add, 1 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_branch_default.default: Creating...
+github_branch_default.default: Creation complete after 2s [id=S25-devops-engineering-labs]
+github_branch_protection.default: Creating...
+github_branch_protection.default: Creation complete after 4s [id=BPR_kwDOFodRr84Dig9l]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 ```

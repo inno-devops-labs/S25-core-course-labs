@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "yandex" {
-  zone      = var.yandex_zone
+  zone = var.yandex_zone
 }
 
 resource "yandex_vpc_network" "network_1" {
