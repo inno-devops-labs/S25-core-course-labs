@@ -26,18 +26,25 @@ This web application uses Flask, JavaScript, HTML and CSS (see requirements.txt 
 
 ## Docker section:
 
-1. To build the application run
+1. To build the application, run
 ```bash
 docker build -t app .
 ```
-2. To pull the application run
+2. To pull the application, run
 ```bash
 docker pull denisnesterov/app:latest
 ```
-3. To run the application run
+3. To run the application, run
 ```bash
 docker run -p 8000:8000 denisnesterov/app:latest
 ```
 4. Open the http://0.0.0.0:8000
 
 Now application is running and you can use the web application.
+
+## Unit Tests
+
+There are several unit tests for testing the application. It is located in the `/test` folder and has a structured name `"*_test.py "`. To run the unit tests, run:
+```bash
+python -m unittest discover tests "*_test.py"
+```

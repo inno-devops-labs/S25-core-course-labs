@@ -30,3 +30,20 @@ Flask’s simplicity, flexibility, and extensive support make it an excellent ch
 The Flask application was tested by running it locally (`debug=True`).
 
 Dynamic time updates have been tested both at boot time and during continuous intervals. (using `setInterval`).
+
+## Unit tests
+
+I wrote unit tests for my flask application usin `unittest` framework. 
+
+1. **setUp function**
+   It creates a test client for the application and enables testing mode
+
+2. **test_home function**
+   He sent a GET request to the homepage and compared the returned status code. If the status code is `200`, it means that everything is in order and the test is passed.
+
+I used several best practices when writing the unit tests:
+
+1. Test are easy and readable
+2. Using proper naming for tests
+3. Tests are fast
+4. Using a popular and reliable framework for unit tests
