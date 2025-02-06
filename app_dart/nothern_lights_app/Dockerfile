@@ -2,7 +2,7 @@ FROM cirrusci/flutter:3.10 AS build
 
 WORKDIR /app_dart/nothern_lights_app
 
-COPY pubspec.yaml pubspec.lock /app_dart/nothern_lights_app
+COPY pubspec.yaml pubspec.lock /app_dart/nothern_lights_app/
 RUN flutter pub get
 
 COPY . /app_dart/nothern_lights_app
