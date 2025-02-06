@@ -219,6 +219,7 @@ terraform destroy -auto-approve
 ## 3. Defined Variables for Configuration Flexibility
 - Marks the `token` variable as sensitive, preventing it from being displayed in logs.
 - Keeps repository details configurable, allowing reusability by modifying `terraform.tfvars` instead of `main.tf`.
+- Prevents accidental exposure in version control by ensuring `.gitignore` excludes `config.auto.tfvars`.
 
 ## 4. Automated Repository Initialization
 - Ensures the repository has issues and a wiki enabled.
@@ -229,23 +230,10 @@ terraform destroy -auto-approve
 - Ensures a predefined default branch (`main`).
 - Enforces branch protection:
   - Requires conversation resolution before merging.
-  - Protects the branch from forced pushes, even by admins.
   - Requires at least one approving review for pull requests.
 
-## 6. Stored Sensitive Variables Securely
-- Sensitive variables like `var.token` are never hardcoded but placed in `config.auto.tfvars`.
-- Prevents accidental exposure in version control by ensuring `.gitignore` excludes `config.auto.tfvars`.
-
-## 7. Applied Infrastructure as Code (IaC) Best Practices
+## 6. Applied Infrastructure as Code (IaC) Best Practices
 - Use `terraform plan` before `apply` to preview changes.
-- Keep Terraform state secure by using remote state storage.
-- Follow Git best practices:
-  - Use feature branches for Terraform changes.
-  - Require pull requests with reviews for Terraform updates.
-
-## 8. Applied Changes Safely
-- Run `terraform init`, `terraform plan`, and `terraform apply` to ensure a structured deployment process.
-- Helps maintain a secure, scalable, and maintainable Terraform setup for managing GitHub repositories.
 
 # Bonus Task: GitHub Teams Using Terraform
 - Created GitHub Organization: [DevOps-test-iu](https://github.com/DevOps-test-iu)
