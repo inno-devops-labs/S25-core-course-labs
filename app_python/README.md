@@ -1,5 +1,7 @@
 # Moscow Time Web-Application
 
+[![Python Application CI](https://github.com/azamatbayramov/S25-core-course-labs/actions/workflows/app_python.yml/badge.svg)](https://github.com/azamatbayramov/S25-core-course-labs/actions/workflows/app_python.yml)
+
 ## About
 
 This is a simple web application on Python that displays the current time in Moscow.
