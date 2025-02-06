@@ -1,0 +1,3 @@
+fastapi==0.115.8
+pytz==2025.1
+uvicorn==0.34.0
