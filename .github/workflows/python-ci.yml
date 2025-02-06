@@ -73,8 +73,6 @@ jobs:
         context: ./app_python
         push: true
         tags: eleanorpi/moscow-time-app:latest
-        cache-from: type=registry,ref=eleanorpi/moscow-time-app:latest
-        cache-to: type=inline
 
   security:
     needs: test
