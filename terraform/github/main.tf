@@ -13,18 +13,18 @@ provider "github" {
 }
 
 resource "github_repository" "repo" {
-  name             = "S25-core-course-lab4-TF"
-  description      = "Lab 4 repository, which is connected to the Terraform config."
-  visibility       = "public"
+  name             = var.git_repo_name
+  description      = var.git_repo_description
+  visibility       = var.git_repo_visibility
   has_issues       = true
   has_wiki         = true
   auto_init        = true
-  license_template = "mit"
+  license_template = var.git_license
 }
 
 resource "github_branch" "master" {
   repository = github_repository.repo.name
-  branch     = "master"
+  branch     = var.git_repo_default_branch
 }
 
 resource "github_branch_default" "default" {
@@ -43,6 +43,6 @@ resource "github_branch_protection" "default" {
 }
 
 resource "github_repository" "S25-core-course-labs" {
-  name        = "S25-core-course-labs"
-  description = "This description was changed by the Terraform config."
+  name        = var.git_existing_repo_name
+  description = var.git_existing_repo_description
 }
