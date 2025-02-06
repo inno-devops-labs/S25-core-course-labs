@@ -37,7 +37,7 @@ jobs:
       - name: Lint (flake8)
         run: |
           pip install flake8
-          flake8 app_python --ignore=E501
+          flake8 app --ignore=E501
 
       - name: Run unit tests
         run: |
@@ -85,6 +85,6 @@ jobs:
           command: code test app_python -sarif-file-output=snyk.sarif
 
       - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: snyk.sarif
