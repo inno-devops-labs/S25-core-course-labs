@@ -1,5 +1,4 @@
 import unittest
-from unittest import mock
 from app_python.main import app
 from bs4 import BeautifulSoup
 
