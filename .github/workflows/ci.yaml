@@ -11,6 +11,7 @@ on:
     paths:
       - "app_python/**"
       - ".github/workflows/ci-python.yaml"
+  workflow_dispatch:
 
 permissions:
   contents: read
