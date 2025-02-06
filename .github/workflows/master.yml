@@ -11,6 +11,7 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    environment: Prod
 
     steps:
       # Step 1: Check out the code
@@ -38,6 +39,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r ./requirements.txt
+
+      # Snyk Vulnerability Check
+      - name: Snyk Vulnerability Scan
+        uses: snyk/actions/python-3.10@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       # Run linter (flake8)
       - name: Lint with flake8
