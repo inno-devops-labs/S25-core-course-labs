@@ -435,3 +435,58 @@ external_ip_address_vm_1 = "51.250.13.152"
 internal_ip_address_vm_1 = "192.168.10.34"
 ```
 
+
+## GitHub
+
+### Best practices
+* Placed token as env variable
+* Used `terraform validate` and `terraform fmt` -> everything is ok
+
+
+I created a repo with name `Devops-Lab4-TF` (https://github.com/Nickolaus-899/Devops-Lab4-TF)
+
+### `terraform apply`
+```
+github_repository.repo: Refreshing state... [id=Devops-Lab4-TF]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_branch_default.master will be created
+  + resource "github_branch_default" "master" {
+      + branch     = "main"
+      + id         = (known after apply)
+      + repository = "Devops-Lab4-TF"
+    }
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + blocks_creations                = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + pattern                         = "main"
+      + repository_id                   = "Devops-Lab4-TF"
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + required_approving_review_count = 1
+        }
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+github_branch_default.master: Creating...
+github_branch_default.master: Creation complete after 2s [id=Devops-Lab4-TF]
+github_branch_protection.default: Creating...
+github_branch_protection.default: Creation complete after 4s [id=BPR_kwDON1Crfc4Digcf]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+
+```
+
+
