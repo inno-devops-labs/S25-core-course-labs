@@ -1,5 +1,17 @@
 # Terraform
 
+## Best practices
+
+- Tokens are hidden in environment variables, either in `.tfvars` or command line environment.
+- Tokens that are issued for the Terraform are containing only necessary permissions to prevent dangerous consequences if the token is leaked
+- The `terraform` folder is structured well: all terraform configs are separated from each other by folders: `docker`, `yandex-cloud` and `github`
+- Terraform files are named logically: `main.tf`, `variables.tf`, `outputs.tf`
+- Before running the `terraform apply`, I always ran `terraform fmt` and `terraform validate` to ensure that terraform config is valid before its application.
+- Resource type is not repeated in resource name (not partially, nor completely)
+- Values that can be passed via variables are not hardcoded
+- Resource modules are plain as much as possible
+- `tfstate` is not managed by `git`
+
 ## Docker Infrastructure
 
 ### `terraform state list`
@@ -833,4 +845,306 @@ external_ip_address_vm_1 = "51.250.8.70"
 internal_ip_address_vm_1 = "192.168.10.21"
 ```
 
+![Yandex Cloud VM image](vm.png)
+
 There were not any significant challenges, except for my forgetfullness to give the `editor` role to service account.
+
+## Terraform for GitHub
+
+I prepared `main.tf` file that contains:
+
+- Repository name - `S25-core-course-lab4-TF`
+- Repository description - `Lab 4 repository, which is connected to the Terraform config.`
+- Visibility settings - `public`
+- Default branch - `master`
+- Branch protection rules for the default branch
+  - At least 1 approving review is required for pull requests
+  - All conversations on code must be resolved before a pull request can be merged
+  - Status checks are enforced for repository administrators
+- I avoided placing my token as a variable in the code, and I utilized `.tfvars` for this purpose.
+  > **Note:** you need to use `-var-file` option to specify the path for `.tfvars` file.
+
+Let's plan the infrastracture change:
+
+```powershell
+> terraform plan -var-file=".tfvars"
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_branch_default.master will be created
+  + resource "github_branch_default" "master" {
+      + branch     = "master"
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + rename     = false
+      + repository = "S25-core-course-lab4-TF"
+    }
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + lock_branch                     = false
+      + pattern                         = "master"
+      + repository_id                   = (known after apply)
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + require_last_push_approval      = false
+          + required_approving_review_count = 1
+        }
+    }
+
+  # github_repository.repo will be created
+  + resource "github_repository" "repo" {
+      + allow_auto_merge            = false
+      + allow_merge_commit          = true
+      + allow_rebase_merge          = true
+      + allow_squash_merge          = true
+      + archived                    = false
+      + auto_init                   = true
+      + default_branch              = (known after apply)
+      + delete_branch_on_merge      = false
+      + description                 = "Lab 4 repository, which is connected to the Terraform config."
+      + etag                        = (known after apply)
+      + full_name                   = (known after apply)
+      + git_clone_url               = (known after apply)
+      + has_issues                  = true
+      + has_wiki                    = true
+      + html_url                    = (known after apply)
+      + http_clone_url              = (known after apply)
+      + id                          = (known after apply)
+      + license_template            = "mit"
+      + merge_commit_message        = "PR_TITLE"
+      + merge_commit_title          = "MERGE_MESSAGE"
+      + name                        = "S25-core-course-lab4-TF"
+      + node_id                     = (known after apply)
+      + primary_language            = (known after apply)
+      + private                     = (known after apply)
+      + repo_id                     = (known after apply)
+      + squash_merge_commit_message = "COMMIT_MESSAGES"
+      + squash_merge_commit_title   = "COMMIT_OR_PR_TITLE"
+      + ssh_clone_url               = (known after apply)
+      + svn_url                     = (known after apply)
+      + topics                      = (known after apply)
+      + visibility                  = "public"
+      + web_commit_signoff_required = false
+
+      + security_and_analysis (known after apply)
+    }
+
+Plan: 3 to add, 0 to change, 0 to destroy.
+```
+
+Finally, let's apply this changes!
+
+```powershell
+> terraform apply -var-file=".tfvars"
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_branch.master will be created
+  + resource "github_branch" "master" {
+      + branch        = "master"
+      + etag          = (known after apply)
+      + id            = (known after apply)
+      + ref           = (known after apply)
+      + repository    = "S25-core-course-lab4-TF"
+      + sha           = (known after apply)
+      + source_branch = "main"
+      + source_sha    = (known after apply)
+    }
+
+  # github_branch_default.default will be created
+  + resource "github_branch_default" "default" {
+      + branch     = "master"
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + rename     = false
+      + repository = "S25-core-course-lab4-TF"
+    }
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + lock_branch                     = false
+      + pattern                         = "master"
+      + repository_id                   = (known after apply)
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + require_last_push_approval      = false
+          + required_approving_review_count = 1
+        }
+    }
+
+  # github_repository.repo will be created
+  + resource "github_repository" "repo" {
+      + allow_auto_merge            = false
+      + allow_merge_commit          = true
+      + allow_rebase_merge          = true
+      + allow_squash_merge          = true
+      + archived                    = false
+      + auto_init                   = true
+      + default_branch              = (known after apply)
+      + delete_branch_on_merge      = false
+      + description                 = "Lab 4 repository, which is connected to the Terraform config."
+      + etag                        = (known after apply)
+      + full_name                   = (known after apply)
+      + git_clone_url               = (known after apply)
+      + has_issues                  = true
+      + has_wiki                    = true
+      + html_url                    = (known after apply)
+      + http_clone_url              = (known after apply)
+      + id                          = (known after apply)
+      + license_template            = "mit"
+      + merge_commit_message        = "PR_TITLE"
+      + merge_commit_title          = "MERGE_MESSAGE"
+      + name                        = "S25-core-course-lab4-TF"
+      + node_id                     = (known after apply)
+      + primary_language            = (known after apply)
+      + private                     = (known after apply)
+      + repo_id                     = (known after apply)
+      + squash_merge_commit_message = "COMMIT_MESSAGES"
+      + squash_merge_commit_title   = "COMMIT_OR_PR_TITLE"
+      + ssh_clone_url               = (known after apply)
+      + svn_url                     = (known after apply)
+      + topics                      = (known after apply)
+      + visibility                  = "public"
+      + web_commit_signoff_required = false
+
+      + security_and_analysis (known after apply)
+    }
+
+Plan: 4 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_repository.repo: Creating...
+github_repository.repo: Creation complete after 5s [id=S25-core-course-lab4-TF]
+github_branch.master: Creating...
+github_branch.master: Creation complete after 2s [id=S25-core-course-lab4-TF:master]
+github_branch_default.default: Creating...
+github_branch_default.default: Creation complete after 2s [id=S25-core-course-lab4-TF]
+github_branch_protection.default: Creating...
+github_branch_protection.default: Creation complete after 4s [id=BPR_kwDON1S51s4Dik7k]
+
+Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
+```
+
+The repository is created and may be accessed by thee [link](https://github.com/danmaninc/S25-core-course-lab4-TF).
+![Github repository image](github.png)
+
+Now, let's import the existing repository with lab submissions into Terraform.
+
+I created the resource with the same name as the respository inside the Terraform config.
+
+```tf
+resource "github_repository" "S25-core-course-labs" {
+  name = "S25-core-course-labs"
+}
+```
+
+Then let's import the GitHub repository.
+
+```powershell
+> terraform import -var-file=".tfvars" "github_repository.S25-core-course-labs" "S25-core-course-labs"
+
+github_repository.S25-core-course-labs: Importing from ID "S25-core-course-labs"...
+github_repository.S25-core-course-labs: Import prepared!
+  Prepared github_repository for import
+github_repository.S25-core-course-labs: Refreshing state... [id=S25-core-course-labs]
+
+Import successful!
+
+The resources that were imported are shown above. These resources are now in
+your Terraform state and will henceforth be managed by Terraform.
+```
+
+Finally, let's make some change. For example, I will change the description of the repository.
+
+`This description was changed by the Terraform config.`
+
+Let's plan the change:
+
+```powershell
+> terraform plan -var-file=".tfvars"
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # github_repository.S25-core-course-labs will be updated in-place
+  ~ resource "github_repository" "S25-core-course-labs" {
+      + description                 = "This description was changed by the Terraform config."
+      - has_downloads               = true -> null
+      - has_projects                = true -> null
+      - has_wiki                    = true -> null
+        id                          = "S25-core-course-labs"
+        name                        = "S25-core-course-labs"
+        # (32 unchanged attributes hidden)
+
+        # (1 unchanged block hidden)
+    }
+
+Plan: 0 to add, 1 to change, 0 to destroy.
+```
+
+Then, let's apply it.
+
+```powershell
+> terraform apply
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # github_repository.S25-core-course-labs will be updated in-place
+  ~ resource "github_repository" "S25-core-course-labs" {
+      + description                 = "This description was changed by the Terraform config."
+      - has_downloads               = true -> null
+      - has_projects                = true -> null
+      - has_wiki                    = true -> null
+        id                          = "S25-core-course-labs"
+        name                        = "S25-core-course-labs"
+        # (32 unchanged attributes hidden)
+
+        # (1 unchanged block hidden)
+    }
+
+Plan: 0 to add, 1 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_repository.S25-core-course-labs: Modifying... [id=S25-core-course-labs]
+github_repository.S25-core-course-labs: Modifications complete after 2s [id=S25-core-course-labs]
+
+Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+```
+
+![Github repository changed](github_changed.png)
