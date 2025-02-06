@@ -568,3 +568,249 @@ web_commit_signoff_required = false
 }
 
 ```
+
+## Bonus Task
+
+- `terraform apply`:
+
+```bash
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+
+- create
+
+Terraform will perform the following actions:
+
+# github_team.admins will be created
+
+- resource "github_team" "admins" {
+  - create_default_maintainer = false
+  - description = "Team with admin access"
+  - etag = (known after apply)
+  - id = (known after apply)
+  - members_count = (known after apply)
+  - name = "administrators-exploring-cc"
+  - node_id = (known after apply)
+  - parent_team_read_id = (known after apply)
+  - parent_team_read_slug = (known after apply)
+  - privacy = "closed"
+  - slug = (known after apply)
+    }
+
+# github_team.developers will be created
+
+- resource "github_team" "developers" {
+  - create_default_maintainer = false
+  - description = "Team with write access"
+  - etag = (known after apply)
+  - id = (known after apply)
+  - members_count = (known after apply)
+  - name = "developers-exploring-cc"
+  - node_id = (known after apply)
+  - parent_team_read_id = (known after apply)
+  - parent_team_read_slug = (known after apply)
+  - privacy = "closed"
+  - slug = (known after apply)
+    }
+
+# github_team.viewers will be created
+
+- resource "github_team" "viewers" {
+  - create_default_maintainer = false
+  - description = "Team with read access"
+  - etag = (known after apply)
+  - id = (known after apply)
+  - members_count = (known after apply)
+  - name = "viewers-exploring-cc"
+  - node_id = (known after apply)
+  - parent_team_read_id = (known after apply)
+  - parent_team_read_slug = (known after apply)
+  - privacy = "closed"
+  - slug = (known after apply)
+    }
+
+# github_team_repository.admin_repo will be created
+
+- resource "github_team_repository" "admin_repo" {
+  - etag = (known after apply)
+  - id = (known after apply)
+  - permission = "admin"
+  - repository = "cc-tool"
+  - team_id = (known after apply)
+    }
+
+# github_team_repository.dev_repo will be created
+
+- resource "github_team_repository" "dev_repo" {
+  - etag = (known after apply)
+  - id = (known after apply)
+  - permission = "push"
+  - repository = "cc-tool"
+  - team_id = (known after apply)
+    }
+
+# github_team_repository.viewer_repo will be created
+
+- resource "github_team_repository" "viewer_repo" {
+  - etag = (known after apply)
+  - id = (known after apply)
+  - permission = "pull"
+  - repository = "cc-tool"
+  - team_id = (known after apply)
+    }
+
+Plan: 6 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+
+- admin_team_id = (known after apply)
+  ~ admin_team_name = "administrators" -> "administrators-exploring-cc"
+- developers_team_id = (known after apply)
+  ~ developers_team_name = "developers" -> "developers-exploring-cc"
+- viewers_team_id = (known after apply)
+  ~ viewers_team_name = "viewers" -> "viewers-exploring-cc"
+
+Do you want to perform these actions?
+Terraform will perform the actions described above.
+Only 'yes' will be accepted to approve.
+
+Enter a value: yes
+
+github_team.admins: Creating...
+github_team.developers: Creating...
+github_team.viewers: Creating...
+github_team.viewers: Still creating... [10s elapsed]
+github_team.admins: Still creating... [10s elapsed]
+github_team.developers: Still creating... [10s elapsed]
+github_team.viewers: Creation complete after 15s [id=12132225]
+github_team_repository.viewer_repo: Creating...
+github_team.admins: Creation complete after 15s [id=12132226]
+github_team_repository.admin_repo: Creating...
+github_team.developers: Creation complete after 15s [id=12132227]
+github_team_repository.dev_repo: Creating...
+github_team_repository.viewer_repo: Creation complete after 5s [id=12132225:cc-tool]
+github_team_repository.admin_repo: Creation complete after 5s [id=12132226:cc-tool]
+github_team_repository.dev_repo: Creation complete after 6s [id=12132227:cc-tool]
+
+Apply complete! Resources: 6 added, 0 changed, 0 destroyed.
+
+```
+
+- `terraform output`:
+
+```bash
+admin_team_id = "12132226"
+admin_team_name = "administrators-exploring-cc"
+developers_team_id = "12132227"
+developers_team_name = "developers-exploring-cc"
+viewers_team_id = "12132225"
+viewers_team_name = "viewers-exploring-cc"
+```
+
+- `terraform show`:
+
+```bash
+# github_team.admins:
+
+resource "github_team" "admins" {
+create_default_maintainer = false
+description = "Team with admin access"
+etag = "W/\"a594d267ef91f5245c6ae2c1e396442683420208f8227ad311b4f6bbb39192ab\""
+id = "12132226"
+ldap_dn = null
+members_count = 0
+name = "administrators-exploring-cc"
+node_id = "T_kwDOC88mj84AuR-C"
+parent_team_id = null
+parent_team_read_id = null
+parent_team_read_slug = null
+privacy = "closed"
+slug = "administrators-exploring-cc"
+}
+
+# github_team.developers:
+
+resource "github_team" "developers" {
+create_default_maintainer = false
+description = "Team with write access"
+etag = "W/\"05c718c772daea583ba14532feb33cee9a4d4f1bbbc1ab210a280c7273bf6b3d\""
+id = "12132227"
+ldap_dn = null
+members_count = 0
+name = "developers-exploring-cc"
+node_id = "T_kwDOC88mj84AuR-D"
+parent_team_id = null
+parent_team_read_id = null
+parent_team_read_slug = null
+privacy = "closed"
+slug = "developers-exploring-cc"
+}
+
+# github_team.viewers:
+
+resource "github_team" "viewers" {
+create_default_maintainer = false
+description = "Team with read access"
+etag = "W/\"de09a9aa901f35d365c91f0cc5b1490d1446b81b79ff1ce05971ff9174309e46\""
+id = "12132225"
+ldap_dn = null
+members_count = 0
+name = "viewers-exploring-cc"
+node_id = "T_kwDOC88mj84AuR-B"
+parent_team_id = null
+parent_team_read_id = null
+parent_team_read_slug = null
+privacy = "closed"
+slug = "viewers-exploring-cc"
+}
+
+# github_team_repository.admin_repo:
+
+resource "github_team_repository" "admin_repo" {
+etag = "W/\"22cf7e7da5083ebf35ce9a76799baf33c316fcee727327278d1a5fed75efe930\""
+id = "12132226:cc-tool"
+permission = "admin"
+repository = "cc-tool"
+team_id = "12132226"
+}
+
+# github_team_repository.dev_repo:
+
+resource "github_team_repository" "dev_repo" {
+etag = "W/\"db65ba937dcef8156c20534968381523e6b3f3d4c59911541fd515a1e2c0932d\""
+id = "12132227:cc-tool"
+permission = "push"
+repository = "cc-tool"
+team_id = "12132227"
+}
+
+# github_team_repository.viewer_repo:
+
+resource "github_team_repository" "viewer_repo" {
+etag = "W/\"1360db2f859ef651e0455b5c2727c42e1ae68db9171046dcac3785330dd8bf8b\""
+id = "12132225:cc-tool"
+permission = "pull"
+repository = "cc-tool"
+team_id = "12132225"
+}
+
+Outputs:
+
+admin_team_id = "12132226"
+admin_team_name = "administrators-exploring-cc"
+developers_team_id = "12132227"
+developers_team_name = "developers-exploring-cc"
+viewers_team_id = "12132225"
+viewers_team_name = "viewers-exploring-cc"
+
+```
+
+- `terraform state list`:
+
+```bash
+github_team.admins
+github_team.developers
+github_team.viewers
+github_team_repository.admin_repo
+github_team_repository.dev_repo
+github_team_repository.viewer_repo
+```
