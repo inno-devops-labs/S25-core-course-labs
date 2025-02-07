@@ -22,6 +22,24 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: "3.9"
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+      - name: Кэширование pip
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Кэширование npm
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -29,6 +47,10 @@ jobs:
           if [ -f ./app_python/backend/requirements.txt ]; then
             pip install -r ./app_python/backend/requirements.txt
           fi
+      - name: Установка зависимостей для фронтенда
+        if: hashFiles('package.json') != ''
+        run: npm install
+        working-directory: ./app_python/frontend
       - name: Lint with flake8
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
@@ -69,7 +91,7 @@ jobs:
       - name: Build and push backend Docker image
         uses: docker/build-push-action@v3
         with:
-          context: ./app_python
+          context: ./app_python/backend
           push: true
           tags: jmartynova123/dev-lab3-back:latest
 
@@ -86,6 +108,11 @@ jobs:
       - name: Run tests
         run: |
           docker exec dev-lab3-back pytest
+
+      - name: Stopping and removing containers
+        run: |
+          docker stop dev-lab3-db dev-lab3-back
+          docker rm dev-lab3-db dev-lab3-back
 
   snyk:
     runs-on: ubuntu-latest
