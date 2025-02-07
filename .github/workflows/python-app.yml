@@ -69,7 +69,7 @@ jobs:
       - name: Build and push backend Docker image
         uses: docker/build-push-action@v3
         with:
-          context: ./app_python/backend
+          context: ./app_python
           push: true
           tags: jmartynova123/dev-lab3-back:latest
 
@@ -81,7 +81,6 @@ jobs:
 
       - name: Run backend container
         run: |
-          docker logs dev-lab3-db
           docker run -d --name dev-lab3-back --link dev-lab3-db:db -e DATABASE_URI=postgresql://myuser:${{ secrets.POSTGRES_PASSWORD }}@db:5432/times jmartynova123/dev-lab3-back:latest
 
       - name: Run tests
