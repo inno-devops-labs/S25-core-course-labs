@@ -401,3 +401,62 @@ resource "yandex_vpc_subnet" "subnet-tfproject" {
 > Note: run `terraform destroy` in the end to not burn through the free trial 🙂
 
 ## GitHub
+
+- Issue 2: default branch setting is deprecated
+- Issue 3: branch protection with status checks does not play well with path-filter conditions on workflows
+- Issue 4: Difference between rulesets and branch protections was unclear. The wording for option on requiring PRs to push to protected branch in Terraform was unclear as well.
+
+1. `export GITHUB_TOKEN=$(gh auth token)` to authenticate terraform
+2. `terraform init` to initialize after copying the initial provider template from the provided docs
+3. `terraform import github_repository.lab-repo S25-core-course-labs` to import the repository (had to check the docs to understand the second argument)
+4. `terraform plan && terraform apply` to apply the changes (some issues with the default branch and weird settings naming)
+5. **Output:**
+
+```txt
+❯ terraform apply
+github_repository.lab_repo: Refreshing state... [id=S25-core-course-labs]
+github_branch_default.default: Refreshing state... [id=S25-core-course-labs]
+github_branch_protection.push-protection: Refreshing state... [id=BPR_kwDONxz2aM4DipGL]
+
+Terraform used the selected providers to generate the following execution plan.
+Resource actions are indicated with the following symbols:
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # github_branch_protection.push-protection will be updated in-place
+  ~ resource "github_branch_protection" "push-protection" {
+        id                              = "BPR_kwDONxz2aM4DipGL"
+        # (10 unchanged attributes hidden)
+
+      + required_pull_request_reviews {
+          + require_last_push_approval      = false
+          + required_approving_review_count = 0
+        }
+
+        # (1 unchanged block hidden)
+    }
+
+Plan: 0 to add, 1 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_branch_protection.push-protection: Modifying... [id=BPR_kwDONxz2aM4DipGL]
+github_branch_protection.push-protection: Modifications complete after 5s [id=BPR_kwDONxz2aM4DipGL]
+
+Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+```
+
+## Best Practices
+
+A good read [here](https://www.terraform-best-practices.com/code-structure)
+
+- No secrets hardcoded or stored in the repo
+- Meaningful names for files, resources and variables, since like any code tf files should remain readable
+- Variables are used where applicable but are not forced into situations where they make no sense (e.g. variable for amount of cores or a name of the network that is not reused elsewhere, since this is supposed to be a static information)
+- Use of modules to make the changes in different infrastructure providers coherent by calling a single main.tf
+  - Also helps with provider caches and state
