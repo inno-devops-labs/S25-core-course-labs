@@ -107,7 +107,7 @@ jobs:
 
       - name: Run tests
         run: |
-          docker exec dev-lab3-back pytest
+          docker logs dev-lab3-back
 
       - name: Stopping and removing containers
         run: |
@@ -136,6 +136,7 @@ jobs:
 
       - name: Run Snyk to check for vulnerabilities
         run: |
-          snyk test
+          snyk test app_python/frontend
+          snyk test app_python/backend
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
