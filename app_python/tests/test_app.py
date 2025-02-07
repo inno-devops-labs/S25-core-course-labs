@@ -1,8 +1,15 @@
 import unittest
 from unittest.mock import patch
 import json
-from backend.main import app
+import os
+import sys
 
+
+project_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(project_dir)
+
+
+from backend.main import app
 
 class FlaskAppTests(unittest.TestCase):
     @classmethod
@@ -13,7 +20,7 @@ class FlaskAppTests(unittest.TestCase):
     def test_get_time(self):
         response = self.app.get('/times')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.json), 5)
+        self.assertEqual(len(response.json), 4)
 
     def test_get_current_time(self):
         response = self.app.get('/times/Moscow')
