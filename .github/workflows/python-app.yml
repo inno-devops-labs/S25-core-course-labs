@@ -82,11 +82,11 @@ jobs:
       - name: Run backend container
         run: |
           docker logs dev-lab3-db
-          docker run -d --name dev-lab3-back --link dev-lab3-db:db -e SQLALCHEMY_DATABASE_URI=postgresql://postgres:${{ secrets.POSTGRES_PASSWORD }}@db:5432/postgres jmartynova123/dev-lab3-back:latest
+          docker run -d --name dev-lab3-back --link dev-lab3-db:db -e DATABASE_URI=postgresql://myuser:${{ secrets.POSTGRES_PASSWORD }}@db:5432/times jmartynova123/dev-lab3-back:latest
 
-      - name: Check backend container logs
+      - name: Run tests
         run: |
-          docker ps -a
+          docker exec dev-lab3-back pytest
 
   snyk:
     runs-on: ubuntu-latest
