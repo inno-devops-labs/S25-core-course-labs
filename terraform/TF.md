@@ -456,7 +456,179 @@ Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 A good read [here](https://www.terraform-best-practices.com/code-structure)
 
 - No secrets hardcoded or stored in the repo
+- Clean .gitignore (with lock files commited as suggested by Terraform docs)
 - Meaningful names for files, resources and variables, since like any code tf files should remain readable
 - Variables are used where applicable but are not forced into situations where they make no sense (e.g. variable for amount of cores or a name of the network that is not reused elsewhere, since this is supposed to be a static information)
 - Use of modules to make the changes in different infrastructure providers coherent by calling a single main.tf
   - Also helps with provider caches and state
+
+## GitHub Teams
+
+- for f**ks sake, Microsoft has ruined it for me once again
+  - Issue 5: `this resource can only be used in the context of an organization, "FallenChromium" is a user` actually meant that this token didn't have enough permissions
+  - Issue 6: TF state was confused by me using a PAT with a non-organization scope, so I had to wipe .tfstate files before it started working again
+  - Issue 7: The worst for the last. The linter and the docs said I should use "owner" rather than "organization" setting in the provider, but doing so raised `this resource can only be used in the context of an organization, "inno-devops-fallenchromium" is a user` (even though IT IS an organization and not a user) and 401s on wiping the tfstate again. Bloody cursed.
+  - **Output:**
+
+```txt
+❯ terraform apply
+
+Terraform used the selected providers to generate the following execution plan.
+Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_repository.example_repo will be created
+  + resource "github_repository" "example_repo" {
+      + allow_auto_merge            = false
+      + allow_merge_commit          = true
+      + allow_rebase_merge          = true
+      + allow_squash_merge          = true
+      + archived                    = false
+      + default_branch              = (known after apply)
+      + delete_branch_on_merge      = false
+      + description                 = "An example repository managed by Terraform"
+      + etag                        = (known after apply)
+      + full_name                   = (known after apply)
+      + git_clone_url               = (known after apply)
+      + html_url                    = (known after apply)
+      + http_clone_url              = (known after apply)
+      + id                          = (known after apply)
+      + merge_commit_message        = "PR_TITLE"
+      + merge_commit_title          = "MERGE_MESSAGE"
+      + name                        = "test-repo"
+      + node_id                     = (known after apply)
+      + primary_language            = (known after apply)
+      + private                     = (known after apply)
+      + repo_id                     = (known after apply)
+      + squash_merge_commit_message = "COMMIT_MESSAGES"
+      + squash_merge_commit_title   = "COMMIT_OR_PR_TITLE"
+      + ssh_clone_url               = (known after apply)
+      + svn_url                     = (known after apply)
+      + topics                      = (known after apply)
+      + visibility                  = "public"
+      + web_commit_signoff_required = false
+    }
+
+  # github_team.admins will be created
+  + resource "github_team" "admins" {
+      + create_default_maintainer = false
+      + description               = "Team with full access"
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "Admins"
+      + node_id                   = (known after apply)
+      + parent_team_read_id       = (known after apply)
+      + parent_team_read_slug     = (known after apply)
+      + privacy                   = "secret"
+      + slug                      = (known after apply)
+    }
+
+  # github_team.developers will be created
+  + resource "github_team" "developers" {
+      + create_default_maintainer = false
+      + description               = "Team of developers"
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "Developers"
+      + node_id                   = (known after apply)
+      + parent_team_read_id       = (known after apply)
+      + parent_team_read_slug     = (known after apply)
+      + privacy                   = "closed"
+      + slug                      = (known after apply)
+    }
+
+  # github_team.qa will be created
+  + resource "github_team" "qa" {
+      + create_default_maintainer = false
+      + description               = "Quality Assurance team"
+      + etag                      = (known after apply)
+      + id                        = (known after apply)
+      + members_count             = (known after apply)
+      + name                      = "QA"
+      + node_id                   = (known after apply)
+      + parent_team_read_id       = (known after apply)
+      + parent_team_read_slug     = (known after apply)
+      + privacy                   = "closed"
+      + slug                      = (known after apply)
+    }
+
+  # github_team_repository.admins_access will be created
+  + resource "github_team_repository" "admins_access" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "admin"
+      + repository = "test-repo"
+      + team_id    = (known after apply)
+    }
+
+  # github_team_repository.developers_access will be created
+  + resource "github_team_repository" "developers_access" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "push"
+      + repository = "test-repo"
+      + team_id    = (known after apply)
+    }
+
+  # github_team_repository.qa_access will be created
+  + resource "github_team_repository" "qa_access" {
+      + etag       = (known after apply)
+      + id         = (known after apply)
+      + permission = "pull"
+      + repository = "test-repo"
+      + team_id    = (known after apply)
+    }
+
+Plan: 7 to add, 0 to change, 0 to destroy.
+╷
+│ Warning: Argument is deprecated
+│ 
+│   with provider["registry.terraform.io/hashicorp/github"],
+│   on main.tf line 2, in provider "github":
+│    2:   organization = "inno-devops-fallenchromium"
+│ 
+│ Use owner (or GITHUB_OWNER) instead of organization (or GITHUB_ORGANIZATION)
+│ 
+│ (and one more similar warning elsewhere)
+╵
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_team.developers: Creating...
+github_team.qa: Creating...
+github_team.admins: Creating...
+github_repository.example_repo: Creating...
+github_team.admins: Still creating... [10s elapsed]
+github_team.developers: Still creating... [10s elapsed]
+github_team.qa: Still creating... [10s elapsed]
+github_repository.example_repo: Still creating... [10s elapsed]
+github_team.developers: Creation complete after 18s [id=12133679]
+github_team.qa: Creation complete after 18s [id=12133680]
+github_team.admins: Creation complete after 19s [id=12133681]
+github_repository.example_repo: Creation complete after 19s [id=test-repo]
+github_team_repository.admins_access: Creating...
+github_team_repository.qa_access: Creating...
+github_team_repository.developers_access: Creating...
+github_team_repository.admins_access: Creation complete after 5s [id=12133681:test-repo]
+github_team_repository.developers_access: Creation complete after 5s [id=12133679:test-repo]
+github_team_repository.qa_access: Creation complete after 6s [id=12133680:test-repo]
+╷
+│ Warning: Argument is deprecated
+│ 
+│   with provider["registry.terraform.io/hashicorp/github"],
+│   on main.tf line 2, in provider "github":
+│    2:   organization = "inno-devops-fallenchromium"
+│ 
+│ Use owner (or GITHUB_OWNER) instead of organization (or GITHUB_ORGANIZATION)
+╵
+
+Apply complete! Resources: 7 added, 0 changed, 0 destroyed.
+```
