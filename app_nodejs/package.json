@@ -1,0 +1,24 @@
+{
+  "name": "moscow-time-webapp",
+  "version": "0.1.0",
+  "description": "A simple web application that displays the current time in Moscow.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Ruslan Bel'kov <r.belkov@innopolis.university>",
+  "license": "MIT",
+  "keywords": ["node", "web", "http", "moscow", "time"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dantetemplar/fork-S25-core-course-labs.git"
+  },
+  "homepage": "https://github.com/dantetemplar/fork-S25-core-course-labs/blob/lab1/app_nodejs",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^8.0.0"
+  }
+}
