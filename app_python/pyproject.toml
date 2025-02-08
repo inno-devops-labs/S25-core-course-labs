@@ -1,0 +1,6 @@
+[tool.ruff]
+src = ["app_python"]
+output-format = "full"
+
+[tool.ruff.format]
+quote-style = "single"
