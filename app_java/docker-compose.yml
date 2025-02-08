@@ -1,0 +1,19 @@
+services:
+  # Spring Boot Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-network
+
+# Networks
+networks:
+  spring-network:
+    driver: bridge
+
+# Volumes
+volumes:
+  db-data:
