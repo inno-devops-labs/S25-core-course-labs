@@ -1,0 +1,9 @@
+.git/
+*.git
+
+*.md
+
+go.work
+go.work.sum
+
+app_golang
