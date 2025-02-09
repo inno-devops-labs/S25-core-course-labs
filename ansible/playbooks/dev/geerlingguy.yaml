@@ -1,8 +1,9 @@
 ---
-- hosts: all
+- name: Install predefined docker role
+  hosts: all
   become: true
   roles:
-    - docker
+    - geerlingguy.docker
 
 - name: Verify Docker Installation
   hosts: all
