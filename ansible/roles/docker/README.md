@@ -17,10 +17,9 @@ This role installs and configures Docker and Docker Compose.
 The playbook for role
 
 ```yaml
-- name: Install Docker
-  hosts: all
-  become: true
-  roles:
-    - docker
+  - name: Install Docker
+    hosts: all
+    become: true
+    roles:
+      - docker
 ```
-
