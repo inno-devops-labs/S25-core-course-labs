@@ -1,0 +1,5 @@
+- name: Deploy Docker on Yandex Cloud VM with Custom Docker Role
+  hosts: all
+  become: true
+  roles:
+    - docker
