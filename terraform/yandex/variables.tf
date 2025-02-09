@@ -1,6 +1,6 @@
 variable "yc_token" {
   type        = string
-  default     = "Print your token here"
+  default     = "t1.9euelZrPnJ2JjMyRyJyNkcaZiZPLz-3rnpWajsadkI-ci4yUzYvNlsjGkZHl9PcdeGJC-e8rKxWy3fT3XSZgQvnvKysVss3n9euelZqTz87Lm5bPnZnNkcjGzMvGje_8zef1656VmoqQj4rIkpuKl5aTi8zNio6Z7_3F656VmpPPzsubls-dmc2RyMbMy8aN.kmnwYN3UQ5Yv4KHoGn6FGaMpZ9to6ED7cdZuRb6DvkaqBbBbdnkApVDQTRPYTaGwHeyOB8HeDDtY3nitdiJuCw"
 }
 
 variable "folder_id" {
