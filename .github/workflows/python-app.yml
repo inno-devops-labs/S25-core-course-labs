@@ -134,8 +134,18 @@ jobs:
         run: |
           npm install -g snyk
 
+      - name: Install Python dependencies
+        run: |
+          pip install -r app_python/backend/requirements.txt
+
       - name: Run Snyk to check for vulnerabilities
         run: |
           snyk test app_python/backend
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Apply Snyk fixes
+        run: |
+          snyk fix --all-projects
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
