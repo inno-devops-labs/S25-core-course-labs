@@ -144,8 +144,12 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      - name: Apply Snyk fixes
+      - name: Install dependencies
         run: |
-          snyk fix --all-projects
+          yarn install
+
+      - name: Run Snyk to check for vulnerabilities
+        run: |
+          snyk test app_python/frontend
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
