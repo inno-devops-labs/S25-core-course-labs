@@ -1,0 +1,7 @@
+.git
+.gitignore
+**.md
+node_modules/
+**.png
+tests/
+eslint.config.mjs
