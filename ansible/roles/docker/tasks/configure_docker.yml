@@ -1,0 +1,12 @@
+- name: Add user to Docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
+  notify: Docker Restart
+
+- name: Enable Docker service
+  systemd:
+    name: docker
+    enabled: yes
+    state: started

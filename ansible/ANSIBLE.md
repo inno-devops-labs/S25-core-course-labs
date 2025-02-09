@@ -109,3 +109,195 @@ Then I tested it by logging into my cloud using SSH (`ssh ubuntu@158.160.34.19`)
 $ docker --version
 Docker version 27.5.1, build 9f9e405
 ```
+
+## Custom Docker Role
+
+Showing Ansible where my `ansible.cfg` file is located:
+
+```shell
+export ANSIBLE_CONFIG=/mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/ansible.cfg
+```
+
+Checking the playbook file:
+
+```shell
+$ ansible-playbook playbooks/dev/main.yaml --check
+
+PLAY [Install and Configure Docker] ****************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for my_vm
+
+TASK [docker : Install prerequisites] **************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Add Docker GPG key] *****************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Add Docker repo] ********************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Install Docker] *********************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for my_vm
+
+TASK [docker : Download Docker Compose] ************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/configure_docker.yml for my_vm
+
+TASK [docker : Add user to Docker group] ***********************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Enable Docker service] **************************************************************************************************
+ok: [my_vm]
+
+PLAY RECAP *****************************************************************************************************************************
+my_vm                      : ok=11   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+Output of executing the playbook:
+
+```shell
+$ ansible-playbook -i inventory/default_aws_ec2.yml playbooks/dev/main.yaml --diff
+
+PLAY [Install and Configure Docker] ****************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for my_vm
+
+TASK [docker : Install prerequisites] **************************************************************************************************
+The following NEW packages will be installed:
+  apt-transport-https
+0 upgraded, 1 newly installed, 0 to remove and 11 not upgraded.
+changed: [my_vm]
+
+TASK [docker : Add Docker GPG key] *****************************************************************************************************
+changed: [my_vm]
+
+TASK [docker : Add Docker repo] ********************************************************************************************************
+--- before: /dev/null
++++ after: /etc/apt/sources.list.d/download_docker_com_linux_ubuntu.list
+@@ -0,0 +1 @@
++deb https://download.docker.com/linux/ubuntu noble stable
+
+changed: [my_vm]
+
+TASK [docker : Install Docker] *********************************************************************************************************
+The following additional packages will be installed:
+  docker-buildx-plugin docker-ce-rootless-extras docker-compose-plugin
+  libltdl7 libslirp0 pigz slirp4netns
+Suggested packages:
+  aufs-tools cgroupfs-mount | cgroup-lite
+The following NEW packages will be installed:
+  containerd.io docker-buildx-plugin docker-ce docker-ce-cli
+  docker-ce-rootless-extras docker-compose-plugin libltdl7 libslirp0 pigz
+  slirp4netns
+0 upgraded, 10 newly installed, 0 to remove and 11 not upgraded.
+changed: [my_vm]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for my_vm
+
+TASK [docker : Download Docker Compose] ************************************************************************************************
+changed: [my_vm]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/configure_docker.yml for my_vm
+
+TASK [docker : Add user to Docker group] ***********************************************************************************************
+changed: [my_vm]
+
+TASK [docker : Enable Docker service] **************************************************************************************************
+ok: [my_vm]
+
+RUNNING HANDLER [docker : Docker Restart] **********************************************************************************************
+changed: [my_vm]
+
+PLAY RECAP *****************************************************************************************************************************
+my_vm                      : ok=12   changed=7    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+Then I tested the custom Docker role by logging into cloud with SSH and running commands:
+
+1. Docker version:
+
+    ```shell
+    $ docker --version
+    Docker version 27.5.1, build 9f9e405
+    ```
+
+2. Docker Compose version:
+
+    ```shell
+    $ docker compose version
+    Docker Compose version v2.32.4
+    ```
+
+3. Systemd status:
+
+    ```shell
+    $ systemctl status docker
+    ● docker.service - Docker Application Container Engine
+        Loaded: loaded (/usr/lib/systemd/system/docker.service; enabled; preset: enabled)
+        Active: active (running) since Sun 2025-02-09 19:00:31 UTC; 3min 1s ago
+    TriggeredBy: ● docker.socket
+        Docs: https://docs.docker.com
+    Main PID: 10131 (dockerd)
+        Tasks: 9
+        Memory: 20.3M (peak: 22.6M)
+            CPU: 559ms
+        CGroup: /system.slice/docker.service
+                └─10131 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+    ```
+
+4. Groups for current user:
+
+    ```shell
+    $ groups
+    ubuntu adm cdrom sudo dip lxd docker
+    ```
+
+## Inventory Details
+
+```shell
+$ ansible-inventory -i inventory/default_aws_ec2.yml --list
+{
+    "_meta": {
+        "hostvars": {
+            "my_vm": {
+                "ansible_host": "84.201.173.27",
+                "ansible_python_interpreter": "/usr/bin/python3",
+                "ansible_ssh_private_key_file": "~/.ssh/id_rsa",
+                "ansible_user": "ubuntu"
+            }
+        }
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    },
+    "ungrouped": {
+        "hosts": [
+            "my_vm"
+        ]
+    }
+}
+```
+
+```shell
+$ ansible-inventory -i inventory/default_aws_ec2.yml --graph
+@all:
+  |--@ungrouped:
+  |  |--my_vm
+```
