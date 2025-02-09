@@ -13,6 +13,9 @@ mode using `--check` flag.
 
 ### Checks
 
+The output of commands may be not full because I have already been running Dev playbook before
+writing this `.md` file.
+
 ## `ansible-playbook playbooks/dev/main.yml -i inventory/yacloud_compute.yml --diff`
 
 ```
