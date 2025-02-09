@@ -28,3 +28,9 @@ To access the application use docker-compose
 ```bash
 docker-compose up --build
 ```
+## Unit tessts
+To run the tests use :
+```bash
+python -m unittest discover -s tests
+```
+
