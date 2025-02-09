@@ -156,5 +156,359 @@ Last login: Sun Feb  9 17:34:50 2025 from 188.130.155.177
 
 > ubuntu@fhm8l97e5pdu2rs2pmlu:~$ docker --version
 Docker version 27.5.1, build 9f9e405
+```
 
+## Create Your Custom Docker Role
+
+```bash
+> ansible-playbook -i inventory/default_aws_ec2.yml playbooks/dev/main.yaml
+
+PLAY [Install Docker] **********************************************************************************************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Install Docker] *************************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for cloud_vm
+
+TASK [docker : Install prerequisites] ******************************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Add Docker GPG key] *********************************************************************************************************************************************
+changed: [cloud_vm]
+
+TASK [docker : Add Docker repository] ******************************************************************************************************************************************
+changed: [cloud_vm]
+
+TASK [docker : Install Docker] *************************************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Install Docker Compose] *****************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for cloud_vm
+
+TASK [docker : Install Docker Compose] *****************************************************************************************************************************************
+changed: [cloud_vm]
+
+TASK [docker : Verify Docker Compose installation] *****************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Configure Docker Compose] ***************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/add_user_to_docker.yml for cloud_vm
+
+TASK [docker : Add user to Docker group] ***************************************************************************************************************************************
+changed: [cloud_vm]
+
+TASK [docker : Enable Docker service] ******************************************************************************************************************************************
+ok: [cloud_vm]
+
+RUNNING HANDLER [docker : Docker Restart] **************************************************************************************************************************************
+changed: [cloud_vm]
+
+PLAY RECAP *********************************************************************************************************************************************************************
+cloud_vm                   : ok=13   changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+```
+
+Then I tested:
+
+```bash
+> ssh ubuntu@84.201.158.253
+
+> ubuntu@fhm8l97e5pdu2rs2pmlu:~$ docker --version 
+Docker version 27.5.1, build 9f9e405
+> ubuntu@fhm8l97e5pdu2rs2pmlu:~$ docker compose version
+Docker Compose version v2.32.4
+> ubuntu@fhm8l97e5pdu2rs2pmlu:~$ systemctl status docker
+● docker.service - Docker Application Container Engine
+     Loaded: loaded (/usr/lib/systemd/system/docker.service; enabled; preset: enabled)
+     Active: active (running) since Sun 2025-02-09 18:58:04 UTC; 8min ago
+TriggeredBy: ● docker.socket
+       Docs: https://docs.docker.com
+   Main PID: 64613 (dockerd)
+      Tasks: 10
+     Memory: 19.8M (peak: 21.3M)
+        CPU: 545ms
+     CGroup: /system.slice/docker.service
+             └─64613 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Feb 09 18:58:03 fhm8l97e5pdu2rs2pmlu dockerd[64613]: time="2025-02-09T18:58:03.802437450Z" level=info msg="OTEL tracing is not configured, using no-op tracer provider"
+Feb 09 18:58:03 fhm8l97e5pdu2rs2pmlu dockerd[64613]: time="2025-02-09T18:58:03.802629626Z" level=info msg="detected 127.0.0.53 nameserver, assuming systemd-resolved, so using >
+Feb 09 18:58:04 fhm8l97e5pdu2rs2pmlu dockerd[64613]: time="2025-02-09T18:58:04.286380669Z" level=info msg="[graphdriver] using prior storage driver: overlay2"
+Feb 09 18:58:04 fhm8l97e5pdu2rs2pmlu dockerd[64613]: time="2025-02-09T18:58:04.286702772Z" level=info msg="Loading containers: start."
+Feb 09 18:58:04 fhm8l97e5pdu2rs2pmlu dockerd[64613]: time="2025-02-09T18:58:04.693295475Z" level=info msg="Default bridge (docker0) is assigned with an IP address 172.17.0.0/1>
+Feb 09 18:58:04 fhm8l97e5pdu2rs2pmlu dockerd[64613]: time="2025-02-09T18:58:04.846355261Z" level=info msg="Loading containers: done."
+```
+
+```bash
+ubuntu@fhm8l97e5pdu2rs2pmlu:~$ groups
+ubuntu adm cdrom sudo dip lxd docker
+```
+
+## Deployment Output
+
+```bash
+> ansible-playbook playbooks/dev/main.yaml --check 
+
+PLAY [Install Docker] **********************************************************************************************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Install Docker] *************************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for cloud_vm
+
+TASK [docker : Install prerequisites] ******************************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Add Docker GPG key] *********************************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Add Docker repository] ******************************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Install Docker] *************************************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Install Docker Compose] *****************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for cloud_vm
+
+TASK [docker : Install Docker Compose] *****************************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Verify Docker Compose installation] *****************************************************************************************************************************
+skipping: [cloud_vm]
+
+TASK [docker : Configure Docker Compose] ***************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/add_user_to_docker.yml for cloud_vm
+
+TASK [docker : Add user to Docker group] ***************************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Enable Docker service] ******************************************************************************************************************************************
+ok: [cloud_vm]
+
+PLAY RECAP *********************************************************************************************************************************************************************
+cloud_vm                   : ok=11   changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+```
+
+```bash
+> ansible-playbook playbooks/dev/main.yaml --diff 
+
+PLAY [Install Docker] **********************************************************************************************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Install Docker] *************************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for cloud_vm
+
+TASK [docker : Install prerequisites] ******************************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Add Docker GPG key] *********************************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Add Docker repository] ******************************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Install Docker] *************************************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Install Docker Compose] *****************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for cloud_vm
+
+TASK [docker : Install Docker Compose] *****************************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Verify Docker Compose installation] *****************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Configure Docker Compose] ***************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/add_user_to_docker.yml for cloud_vm
+
+TASK [docker : Add user to Docker group] ***************************************************************************************************************************************
+ok: [cloud_vm]
+
+TASK [docker : Enable Docker service] ******************************************************************************************************************************************
+ok: [cloud_vm]
+
+PLAY RECAP *********************************************************************************************************************************************************************
+cloud_vm                   : ok=12   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+```
+
+## Inventory Details
+
+```bash
+> ansible-inventory -i inventory/default_aws_ec2.yml --list
+
+{
+    "_meta": {
+        "hostvars": {
+            "cloud_vm": {
+                "ansible_host": "84.201.158.253",
+                "ansible_python_interpreter": "/usr/bin/python3",
+                "ansible_ssh_private_key_file": "~/.ssh/id_rsa",
+                "ansible_user": "ubuntu"
+            }
+        }
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    },
+    "ungrouped": {
+        "hosts": [
+            "cloud_vm"
+        ]
+    }
+}
+```
+
+```bash
+ ansible-inventory -i inventory/default_aws_ec2.yml --graph
+@all:
+  |--@ungrouped:
+  |  |--cloud_vm
+```
+
+## Dynamic Inventory
+
+```bash
+> ansible-playbook -i inventory/default_yacloud_compute.yml playbooks/dev/main.yaml --diff
+
+PLAY [Install Docker] **********************************************************************************************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************************************************************************
+[WARNING]: Platform linux on host terraform is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could
+change the meaning of that path. See https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [terraform]
+
+TASK [docker : Install Docker] *************************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for terraform
+
+TASK [docker : Install prerequisites] ******************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Add Docker GPG key] *********************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Add Docker repository] ******************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Install Docker] *************************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Install Docker Compose] *****************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for terraform
+
+TASK [docker : Install Docker Compose] *****************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Verify Docker Compose installation] *****************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Configure Docker Compose] ***************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/add_user_to_docker.yml for terraform
+
+TASK [docker : Add user to Docker group] ***************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Enable Docker service] ******************************************************************************************************************************************
+ok: [terraform]
+
+PLAY RECAP *********************************************************************************************************************************************************************
+terraform                  : ok=12   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+```
+
+```bash
+> ansible-inventory -i inventory/default_yacloud_compute.yml --list                       
+{
+    "_meta": {
+        "hostvars": {
+            "terraform": {
+                "ansible_host": "84.201.158.253"
+            }
+        }
+    },
+    "all": {
+        "children": [
+            "ungrouped",
+            "yacloud"
+        ]
+    },
+    "yacloud": {
+        "hosts": [
+            "terraform"
+        ]
+    }
+}
+```
+
+```bash
+> ansible-inventory -i inventory/default_yacloud_compute.yml --graph
+@all:
+  |--@ungrouped:
+  |--@yacloud:
+  |  |--terraform
+```
+
+```bash
+> ansible-playbook -i inventory/default_yacloud_compute.yml playbooks/dev/main.yaml --diff
+
+
+PLAY [Install Docker] **********************************************************************************************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************************************************************************
+[WARNING]: Platform linux on host terraform is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could
+change the meaning of that path. See https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [terraform]
+
+TASK [docker : Install Docker] *************************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for terraform
+
+TASK [docker : Install prerequisites] ******************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Add Docker GPG key] *********************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Add Docker repository] ******************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Install Docker] *************************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Install Docker Compose] *****************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for terraform
+
+TASK [docker : Install Docker Compose] *****************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Verify Docker Compose installation] *****************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Configure Docker Compose] ***************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/add_user_to_docker.yml for terraform
+
+TASK [docker : Add user to Docker group] ***************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Disable root access] ********************************************************************************************************************************************
+--- before
++++ after: /etc/docker/daemon.json
+@@ -0,0 +1,3 @@
++{
++  "userns-remap": "default"
++}
+
+changed: [terraform]
+
+TASK [docker : Enable Docker service] ******************************************************************************************************************************************
+ok: [terraform]
+
+RUNNING HANDLER [docker : Docker Restart] **************************************************************************************************************************************
+changed: [terraform]
+
+PLAY RECAP *********************************************************************************************************************************************************************
+terraform                  : ok=14   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
 ```
