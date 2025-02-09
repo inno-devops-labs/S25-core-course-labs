@@ -301,3 +301,89 @@ $ ansible-inventory -i inventory/default_aws_ec2.yml --graph
   |--@ungrouped:
   |  |--my_vm
 ```
+
+## Dynamic Inventory
+
+```shell
+$ ansible-playbook -i inventory/default_yacloud_compute.yml playbooks/dev/main.yaml --diff
+
+PLAY [Install and Configure Docker] ****************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************
+[WARNING]: Platform linux on host terraform1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation
+of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+ok: [terraform1]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for terraform1
+
+TASK [docker : Install prerequisites] **************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Add Docker GPG key] *****************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Add Docker repo] ********************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Install Docker] *********************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for terraform1
+
+TASK [docker : Download Docker Compose] ************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/configure_docker.yml for terraform1
+
+TASK [docker : Add user to Docker group] ***********************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Enable Docker service] **************************************************************************************************
+ok: [terraform1]
+
+PLAY RECAP *****************************************************************************************************************************
+terraform1                 : ok=11   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739132182.744746   86091 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+```
+
+```shell
+$ ansible-inventory -i inventory/default_yacloud_compute.yml --list
+{
+    "_meta": {
+        "hostvars": {
+            "terraform1": {
+                "ansible_host": "84.201.173.27"
+            }
+        }
+    },
+    "all": {
+        "children": [
+            "ungrouped",
+            "yacloud"
+        ]
+    },
+    "yacloud": {
+        "hosts": [
+            "terraform1"
+        ]
+    }
+}
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739133891.897496   93121 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+```
+
+```shell
+$ ansible-inventory -i inventory/default_yacloud_compute.yml --graph
+@all:
+  |--@ungrouped:
+  |--@yacloud:
+  |  |--terraform1
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739133914.894979   93235 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+```
