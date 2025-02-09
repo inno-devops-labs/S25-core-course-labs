@@ -6,12 +6,16 @@ this lab fully, I used
 ## Best practices
 
 1. Before playbook execution I've been running it in dry-run
-mode using `--check` flag.
+mode using `--check` flag. I also was checking the syntax with `--syntax-check`.
 
 1. Use of `handlers` to be sure that, e.g., Docker is running.
 
+1. The tasks are named.
 
 ### Checks
+
+I checked docker installation with `ansible-galaxy`, it worked, so I did the same with
+hand-written tasks.
 
 The output of commands may be not full because I have already been running Dev playbook before
 writing this `.md` file.
