@@ -387,3 +387,66 @@ $ ansible-inventory -i inventory/default_yacloud_compute.yml --graph
 WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
 E0000 00:00:1739133914.894979   93235 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
 ```
+
+## Secure Docker Configuration
+
+```shell
+$ ansible-playbook -i inventory/default_yacloud_compute.yml playbooks/dev/main.yaml --diff
+
+PLAY [Install and Configure Docker] ****************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************
+[WARNING]: Platform linux on host terraform1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation
+of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+ok: [terraform1]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for terraform1
+
+TASK [docker : Install prerequisites] **************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Add Docker GPG key] *****************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Add Docker repo] ********************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Install Docker] *********************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for terraform1
+
+TASK [docker : Download Docker Compose] ************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/configure_docker.yml for terraform1
+
+TASK [docker : Add user to Docker group] ***********************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Disable root access] ****************************************************************************************************
+--- before
++++ after: /etc/docker/daemon.json
+@@ -0,0 +1,3 @@
++{
++  "userns-remap": "default"
++}
+
+changed: [terraform1]
+
+TASK [docker : Enable Docker service] **************************************************************************************************
+ok: [terraform1]
+
+RUNNING HANDLER [docker : Docker Restart] **********************************************************************************************
+changed: [terraform1]
+
+PLAY RECAP *****************************************************************************************************************************
+terraform1                 : ok=13   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739134397.145184   95036 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+```
