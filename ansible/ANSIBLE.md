@@ -301,5 +301,3 @@ $ ansible-inventory -i inventory/default_aws_ec2.yml --graph
   |--@ungrouped:
   |  |--my_vm
 ```
-
-The graph shows the hierarchy of inventories in my Ansible and as we can see there is only one VM.
