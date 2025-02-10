@@ -1,0 +1,12 @@
+---
+- name: Deploy Python app
+  hosts: all
+  become: true
+  roles:
+    - role: web_app
+      vars:
+        web_app_docker_image: "efimpuzhalov/moscow-time-py-app"
+        web_app_docker_image_tag: "distroless"
+        web_app_container_name: python_webapp
+        web_app_container_port: 5000
+        web_app_port: 8081

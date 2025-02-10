@@ -1,0 +1,12 @@
+---
+- name: Deploy C# app
+  hosts: all
+  become: true
+  roles:
+    - role: web_app
+      vars:
+        web_app_docker_image: "efimpuzhalov/moscow-time-cs-app"
+        web_app_docker_image_tag: "distroless"
+        web_app_container_name: cs_webapp
+        web_app_container_port: 80
+        web_app_port: 8080
