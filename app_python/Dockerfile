@@ -1,6 +1,6 @@
 FROM python:alpine3.12
 
-COPY ../requirements.txt .
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 RUN adduser --disabled-password docker-user
