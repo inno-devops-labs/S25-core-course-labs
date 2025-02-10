@@ -1,0 +1,12 @@
+---
+- name: Remove container
+  community.docker.docker_container:
+    name: "{{ web_app_container_name }}"
+    state: absent
+  tags: [wipe]
+
+- name: Remove docker-compose file
+  ansible.builtin.file:
+    path: /webapp/docker-compose.yml
+    state: absent
+  tags: [wipe]

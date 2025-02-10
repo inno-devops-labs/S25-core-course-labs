@@ -1,0 +1,12 @@
+---
+- name: Deploy Python app
+  hosts: all
+  become: true
+  roles:
+    - role: web_app
+      vars:
+        web_app_docker_image: "m0t9docker/pyapp"
+        web_app_docker_image_tag: "latest"
+        web_app_container_name: python_webapp
+        web_app_container_port: 8000
+        web_app_port: 8081
