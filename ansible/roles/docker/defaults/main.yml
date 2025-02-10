@@ -1,0 +1,7 @@
+docker_version: "5:27.5.1-1~ubuntu.24.04~noble"
+docker_compose_version: "v2.32.4"
+
+gpg_key_url: "https://download.docker.com/linux/ubuntu/gpg"
+apt_repo: "deb https://download.docker.com/linux/ubuntu focal stable"
+docker_compose_url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-linux-x86_64"
+docker_repo_url: "deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
