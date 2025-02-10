@@ -512,3 +512,196 @@ changed: [terraform]
 PLAY RECAP *********************************************************************************************************************************************************************
 terraform                  : ok=14   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
 ```
+
+## Yandex Python Web Application Deployment Output
+
+```bash
+ansible-playbook -i inventory/default_yacloud_compute.yml playbooks/dev/app_python/main.yaml            
+
+PLAY [Deploy python web app] ***************************************************************************************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************************************************************************
+[WARNING]: Platform linux on host terraform is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could
+change the meaning of that path. See https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [terraform]
+
+TASK [docker : Install Docker] *************************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for terraform
+
+TASK [docker : Install prerequisites] ******************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Add Docker GPG key] *********************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Add Docker repository] ******************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Install Docker] *************************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Install Docker Compose] *****************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for terraform
+
+TASK [docker : Install Docker Compose] *****************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Verify Docker Compose installation] *****************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Configure Docker Compose] ***************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/add_user_to_docker.yml for terraform
+
+TASK [docker : Add user to Docker group] ***************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Disable root access] ********************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Enable Docker service] ******************************************************************************************************************************************
+ok: [terraform]
+
+TASK [web_app : App dir existence] *********************************************************************************************************************************************
+skipping: [terraform]
+
+TASK [web_app : Docker compose existence] **************************************************************************************************************************************
+skipping: [terraform]
+
+TASK [web_app : Remove docker compose] *****************************************************************************************************************************************
+skipping: [terraform]
+
+TASK [web_app : Remove directory] **********************************************************************************************************************************************
+skipping: [terraform]
+
+TASK [web_app : Create Web App directory] **************************************************************************************************************************************
+ok: [terraform]
+
+TASK [web_app : Copy docker compose] *******************************************************************************************************************************************
+changed: [terraform]
+
+RUNNING HANDLER [web_app : Restart Docker Compose] *****************************************************************************************************************************
+changed: [terraform]
+
+PLAY RECAP *********************************************************************************************************************************************************************
+terraform                  : ok=16   changed=2    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0   
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739216524.474848 46263670 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+```
+
+Check if it started:
+
+```bash
+> ssh ubuntu@84.201.158.253
+> ubuntu@fhm8l97e5pdu2rs2pmlu:~$ docker ps
+CONTAINER ID   IMAGE                                           COMMAND                  CREATED         STATUS         PORTS                                                 NAMES
+2662d1f86920   milanamilana/python-distroless-web-app:latest   "/usr/bin/python3.11…"   4 minutes ago   Up 4 minutes   5000/tcp, 0.0.0.0:8000->8000/tcp, :::8000->8000/tcp   python_web_app
+```
+
+![img.png](img.png)
+
+Remove deployed docker image:
+
+```bash
+ansible-playbook -i inventory/default_yacloud_compute.yml playbooks/dev/app_python/main.yaml --tags wipe
+
+PLAY [Deploy python web app] ***************************************************************************************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************************************************************************
+[WARNING]: Platform linux on host terraform is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could
+change the meaning of that path. See https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [terraform]
+
+PLAY RECAP *********************************************************************************************************************************************************************
+terraform                  : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739215938.788752 46208907 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+```
+
+## Yandex Go Web Application Deployment Output
+
+```bash
+ansible % ansible-playbook -i inventory/default_yacloud_compute.yml playbooks/dev/app_go/main.yaml            
+
+PLAY [Deploy go web app] *******************************************************************************************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************************************************************************
+[WARNING]: Platform linux on host terraform is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could
+change the meaning of that path. See https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [terraform]
+
+TASK [docker : Install Docker] *************************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for terraform
+
+TASK [docker : Install prerequisites] ******************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Add Docker GPG key] *********************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Add Docker repository] ******************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Install Docker] *************************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Install Docker Compose] *****************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for terraform
+
+TASK [docker : Install Docker Compose] *****************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Verify Docker Compose installation] *****************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Configure Docker Compose] ***************************************************************************************************************************************
+included: /Users/m.sirozhova/S25-core-course-labs/ansible/roles/docker/tasks/add_user_to_docker.yml for terraform
+
+TASK [docker : Add user to Docker group] ***************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Disable root access] ********************************************************************************************************************************************
+ok: [terraform]
+
+TASK [docker : Enable Docker service] ******************************************************************************************************************************************
+ok: [terraform]
+
+TASK [web_app : App dir existence] *********************************************************************************************************************************************
+ok: [terraform]
+
+TASK [web_app : Docker compose existence] **************************************************************************************************************************************
+ok: [terraform]
+
+TASK [web_app : Remove docker compose] *****************************************************************************************************************************************
+changed: [terraform]
+
+TASK [web_app : Remove directory] **********************************************************************************************************************************************
+changed: [terraform]
+
+TASK [web_app : Create Web App directory] **************************************************************************************************************************************
+changed: [terraform]
+
+TASK [web_app : Copy docker compose] *******************************************************************************************************************************************
+changed: [terraform]
+
+RUNNING HANDLER [web_app : Restart Docker Compose] *****************************************************************************************************************************
+changed: [terraform]
+
+PLAY RECAP *********************************************************************************************************************************************************************
+terraform                  : ok=20   changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739217080.840758 46310465 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+```
+
+Check if it started:
+
+```bash
+> ssh ubuntu@84.201.158.253
+> ubuntu@fhm8l97e5pdu2rs2pmlu:~$ docker ps
+CONTAINER ID   IMAGE                                       COMMAND        CREATED         STATUS         PORTS                                     NAMES
+d6f5889e2964   milanamilana/go-distroless-web-app:latest   "./main.out"   4 minutes ago   Up 4 minutes   0.0.0.0:80->8080/tcp, [::]:80->8080/tcp   go_web_app
+```
+
+![img_1.png](img_1.png)
