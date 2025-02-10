@@ -1,0 +1,7 @@
+.venv
+images
+__pycache__
+DOCKER.md
+PYTHON.md
+README.md
+.gitignore
