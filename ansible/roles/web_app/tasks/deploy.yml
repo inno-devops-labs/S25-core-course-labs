@@ -1,0 +1,15 @@
+- name: Deploy Web Application
+  tags: deploy
+  block:
+    - name: Create Web Application Directory
+      file:
+        path: "{{ web_app_dir }}"
+        state: directory
+        mode: 0755
+
+    - name: Copy Docker Compose
+      template:
+        src: "{{ docker_compose_filename }}.j2"
+        dest: "{{ web_app_dir }}/{{ docker_compose_filename }}"
+        mode: 0755
+      notify: docker_restart_handler

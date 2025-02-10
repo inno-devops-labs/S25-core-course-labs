@@ -450,3 +450,223 @@ terraform1                 : ok=13   changed=2    unreachable=0    failed=0    s
 WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
 E0000 00:00:1739134397.145184   95036 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
 ```
+
+## Python Web Application
+
+```shell
+$ ansible-playbook -i inventory/default_yacloud_compute.yml playbooks/dev/app_python/main.yaml
+
+PLAY [Deploy Python Web Application] ***************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************
+[WARNING]: Platform linux on host terraform1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation
+of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+ok: [terraform1]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for terraform1
+
+TASK [docker : Install prerequisites] **************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Add Docker GPG key] *****************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Add Docker repo] ********************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Install Docker] *********************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for terraform1
+
+TASK [docker : Download Docker Compose] ************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/configure_docker.yml for terraform1
+
+TASK [docker : Add user to Docker group] ***********************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Disable root access] ****************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Enable Docker service] **************************************************************************************************
+ok: [terraform1]
+
+TASK [web_app : Whether Web Application directory exists] ******************************************************************************
+ok: [terraform1]
+
+TASK [web_app : Whether Docker Compose exists] *****************************************************************************************
+ok: [terraform1]
+
+TASK [web_app : Remove Docker Compose] *************************************************************************************************
+skipping: [terraform1]
+
+TASK [web_app : Remove Web Application directory] **************************************************************************************
+changed: [terraform1]
+
+TASK [web_app : Create Web Application Directory] **************************************************************************************
+changed: [terraform1]
+
+TASK [web_app : Copy Docker Compose] ***************************************************************************************************
+changed: [terraform1]
+
+RUNNING HANDLER [web_app : Restart Docker Compose] *************************************************************************************
+changed: [terraform1]
+
+PLAY RECAP *****************************************************************************************************************************
+terraform1                 : ok=18   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739214293.578689   29107 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+```
+
+Testing that it started:
+
+![Started Python Web App](app_python.png)
+
+Removing the deployed application:
+
+```shell
+$ ansible-playbook -i inventory/default_yacloud_compute.yml playbooks/dev/app_python/main.yaml --tags wipe
+
+PLAY [Deploy Python Web Application] ***************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************
+[WARNING]: Platform linux on host terraform1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation
+of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+ok: [terraform1]
+
+TASK [web_app : Whether Web Application directory exists] ******************************************************************************
+ok: [terraform1]
+
+TASK [web_app : Whether Docker Compose exists] *****************************************************************************************
+ok: [terraform1]
+
+TASK [web_app : Remove Docker Compose] *************************************************************************************************
+changed: [terraform1]
+
+TASK [web_app : Remove Web Application directory] **************************************************************************************
+changed: [terraform1]
+
+PLAY RECAP *****************************************************************************************************************************
+terraform1                 : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739215907.414798   36045 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+```
+
+## Go Web Application
+
+```shell
+$ ansible-playbook -i inventory/default_yacloud_compute.yml playbooks/dev/app_go/main.yaml
+
+PLAY [Deploy Go Web Application] *******************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************
+[WARNING]: Platform linux on host terraform1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation
+of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+ok: [terraform1]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for terraform1
+
+TASK [docker : Install prerequisites] **************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Add Docker GPG key] *****************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Add Docker repo] ********************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Install Docker] *********************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for terraform1
+
+TASK [docker : Download Docker Compose] ************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : include_tasks] **********************************************************************************************************
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/configure_docker.yml for terraform1
+
+TASK [docker : Add user to Docker group] ***********************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Disable root access] ****************************************************************************************************
+ok: [terraform1]
+
+TASK [docker : Enable Docker service] **************************************************************************************************
+ok: [terraform1]
+
+TASK [web_app : Whether Web Application directory exists] ******************************************************************************
+ok: [terraform1]
+
+TASK [web_app : Whether Docker Compose exists] *****************************************************************************************
+ok: [terraform1]
+
+TASK [web_app : Remove Docker Compose] *************************************************************************************************
+changed: [terraform1]
+
+TASK [web_app : Remove Web Application directory] **************************************************************************************
+changed: [terraform1]
+
+TASK [web_app : Create Web Application Directory] **************************************************************************************
+changed: [terraform1]
+
+TASK [web_app : Copy Docker Compose] ***************************************************************************************************
+changed: [terraform1]
+
+RUNNING HANDLER [web_app : Restart Docker Compose] *************************************************************************************
+changed: [terraform1]
+
+PLAY RECAP *****************************************************************************************************************************
+terraform1                 : ok=19   changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739217260.113193   46062 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+```
+
+Testing that it started:
+
+![Started Go Web App](app_go.png)
+
+Removing the deployed application:
+
+```shell
+$ ansible-playbook -i inventory/default_yacloud_compute.yml playbooks/dev/app_go/main.yaml --tags wipe
+
+PLAY [Deploy Go Web Application] *******************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************
+[WARNING]: Platform linux on host terraform1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation
+of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+ok: [terraform1]
+
+TASK [web_app : Whether Web Application directory exists] ******************************************************************************
+ok: [terraform1]
+
+TASK [web_app : Whether Docker Compose exists] *****************************************************************************************
+ok: [terraform1]
+
+TASK [web_app : Remove Docker Compose] *************************************************************************************************
+changed: [terraform1]
+
+TASK [web_app : Remove Web Application directory] **************************************************************************************
+changed: [terraform1]
+
+PLAY RECAP *****************************************************************************************************************************
+terraform1                 : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739217342.176005   46980 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+```
