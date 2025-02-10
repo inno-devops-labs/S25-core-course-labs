@@ -1,0 +1,8 @@
+- name: Deploy Docker
+  hosts: docker_hosts
+  become: yes
+  roles:
+    - role: docker
+#      vars:
+#        docker_users:
+#          - catorleader
