@@ -1,0 +1,28 @@
+- name: Web App Wipe
+  tags: [wipe]
+  when: web_app_wipe
+  block:
+    - name: Check if docker-compose.yml file exists
+      ansible.builtin.stat:
+        path: "{{ web_app_path }}/docker-compose.yml"
+      register: web_app_docker_compose
+
+    - name: Check if Web App directory exists
+      ansible.builtin.stat:
+        path: "{{ web_app_path }}"
+      register: web_app_docker_compose_dir
+
+    - name: Docker Compose remove
+      when: web_app_docker_compose.stat.exists
+      community.docker.docker_compose:
+        project_src: "{{ web_app_path }}"
+        state: absent
+        remove_orphans: true
+        remove_images: all
+        remove_volumes: true
+
+    - name: Remove directory {{ web_app_path }}
+      when: web_app_docker_compose_dir.stat.exists
+      ansible.builtin.file:
+        path: "{{ web_app_path }}"
+        state: absent
