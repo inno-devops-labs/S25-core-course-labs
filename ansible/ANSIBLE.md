@@ -1,4 +1,14 @@
-```yml
+# Ansible Deployment Documentation
+
+## Playbook Execution Output (with template)
+
+```bash
+ansible-playbook -i ./inventory/default_aws_ec2.yml ./playbooks/dev/main.yml
+```
+
+Output:
+
+```bash
 PLAY [Setup Docker] *********************************************************************************************************************
 
 TASK [Gathering Facts] ******************************************************************************************************************
@@ -87,10 +97,11 @@ yandex_cloud               : ok=14   changed=2    unreachable=0    failed=0    s
 
 ```bash
 ansible all -m ping
+```
 
-[WARNING]: Platform linux on host yandex_cloud is using the discovered Python interpreter at /usr/bin/python3.12, but future
-installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
-core/2.18/reference_appendices/interpreter_discovery.html for more information.
+Output:
+
+```bash
 yandex_cloud | SUCCESS => {
     "ansible_facts": {
         "discovered_interpreter_python": "/usr/bin/python3.12"
@@ -98,4 +109,95 @@ yandex_cloud | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
+```
+
+## Playbook Execution Output (without template)
+
+```bash
+ansible-playbook -i ./inventory/default_aws_ec2.yml ./playbooks/dev/main.yml --check --diff
+```
+
+```bash
+PLAY [Setup Docker] *********************************************************************************************************************
+
+TASK [Gathering Facts] ******************************************************************************************************************
+[WARNING]: Platform linux on host yandex_cloud is using the discovered Python interpreter at /usr/bin/python3.12, but future
+installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [yandex_cloud]
+
+TASK [docker : Install dependencies] ****************************************************************************************************
+ok: [yandex_cloud]
+
+TASK [docker : Add Docker GPG key] ******************************************************************************************************
+ok: [yandex_cloud]
+
+TASK [docker : Add Docker repository] ***************************************************************************************************
+ok: [yandex_cloud]
+
+TASK [docker : Install Docker] **********************************************************************************************************
+The following additional packages will be installed:
+  docker-buildx-plugin docker-ce-cli docker-ce-rootless-extras
+Suggested packages:
+  aufs-tools cgroupfs-mount | cgroup-lite
+The following packages will be upgraded:
+  docker-buildx-plugin docker-ce docker-ce-cli docker-ce-rootless-extras
+4 upgraded, 0 newly installed, 0 to remove and 7 not upgraded.
+changed: [yandex_cloud]
+
+TASK [docker : Install Docker Compose] **************************************************************************************************
+ok: [yandex_cloud]
+
+TASK [docker : Enable Docker service on boot] *******************************************************************************************
+ok: [yandex_cloud]
+
+TASK [docker : Add user to Docker group] ************************************************************************************************
+changed: [yandex_cloud]
+
+PLAY RECAP ******************************************************************************************************************************
+yandex_cloud               : ok=8    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+```
+
+## Inventory Details
+
+```bash
+ansible-inventory -i ./inventory/default_aws_ec2.yml --list 
+```
+
+Output:
+
+```bash
+{
+    "_meta": {
+        "hostvars": {
+            "yandex_cloud": {
+                "ansible_host": "89.169.144.64",
+                "ansible_ssh_private_key_file": "~/.ssh/id_ed25519",
+                "ansible_user": "polilia"
+            }
+        }
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    },
+    "ungrouped": {
+        "hosts": [
+            "yandex_cloud"
+        ]
+    }
+}
+```
+
+```bash
+ansible-inventory -i ./inventory/default_aws_ec2.yml --graph
+```
+
+Output:
+
+```bash
+@all:
+  |--@ungrouped:
+  |  |--yandex_cloud
 ```
