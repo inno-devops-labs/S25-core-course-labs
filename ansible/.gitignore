@@ -1,0 +1,4 @@
+fact_cache/
+__pycache__/
+.ansible/
+yacloud_token
