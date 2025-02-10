@@ -31,7 +31,7 @@ In this lab assignment, you will develop a simple web application using Python a
 
 3. Ensure:
    - Maintain a clean `.gitignore` file.
-   - Use a concise `requirements.txt` file for required dependencies.
+   - Use a con_cise `requirements.txt` file for required dependencies.
 
 ### List of Requirements
 
