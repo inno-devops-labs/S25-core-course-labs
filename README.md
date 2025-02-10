@@ -60,3 +60,4 @@ Each week, two new labs will be available. You'll have one week to submit your s
 ## Submission Policy
 
 Submitting your lab results on time is crucial for your grading. Late submissions receive a maximum score of 6 points for the corresponding lab. Remember, completing all labs is necessary to successfully pass the course.
+
