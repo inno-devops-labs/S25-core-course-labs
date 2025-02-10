@@ -20,3 +20,11 @@ Of course, Docker need to be installed on your machine. Here is step-by-step gui
 3. Finally, run the application:
    - Locally ```docker run -p 5000:5000 python-msk```
    - Using pulled image ```docker run -p 5000:5000 mirgasimovk/python-msk``` <br> and follow to the http://localhost:5000/.
+---
+## CI workflow
+#### The pipeline starts after each push using GitHub actions:
+1. **Code quality check using flake8**
+2. **Unit testing with `pytest`**
+3. **Vulnerabilities detection by `snyk`**
+4. **`Docker` build & push**
+- Additionally, badge with pipeline's status was added for better readability.
