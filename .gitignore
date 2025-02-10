@@ -1,0 +1,14 @@
+/env
+ .DS_Store
+/app_python/__pycache__/*
+/app_python/.pytest_cache/*
+
+**/.terraform/** 
+**/terraform.tfvars
+**/.terraform.lock.hcl
+**/terraform.tfstate
+**/terraform.tfstate.backup
+
+/app_go/go.mod
+/app_go/go.sum
+
