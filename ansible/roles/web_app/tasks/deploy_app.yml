@@ -1,0 +1,34 @@
+---
+- name: Deploy Web App
+  block:
+    - name: Pull Docker image
+      community.docker.docker_image:
+        name: "{{ web_app_docker_image }}"
+        tag: "{{ web_app_docker_image_tag }}"
+        source: pull
+      tags: [docker]
+
+    - name: Start container
+      community.docker.docker_container:
+        name: "{{ web_app_container_name }}"
+        image: "{{ web_app_docker_image }}"
+        state: started
+        restart_policy: always
+        published_ports:
+          - "{{ web_app_port }}:{{ web_app_container_port }}"
+      tags: [docker]
+
+    - name: Create directory for docker-compose file
+      ansible.builtin.file:
+        path: /webapp
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+      tags: [docker-compose]
+
+    - name: Deploy docker-compose file
+      ansible.builtin.template:
+        src: docker-compose.yml.j2
+        dest: /webapp/docker-compose.yml
+      tags: [docker-compose]
