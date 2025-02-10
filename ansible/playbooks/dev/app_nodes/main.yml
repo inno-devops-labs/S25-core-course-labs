@@ -1,0 +1,10 @@
+- name: Deploy Nodes App
+  hosts: all
+  become: true
+  roles:
+    - role: roles/web_app
+      vars:
+        container_name: "app_nodes"
+        docker_image: "twentythree3/myapp"
+        app_port: 3001
+        container_port: 3001
