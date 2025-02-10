@@ -1,5 +1,8 @@
 # DevOps Engineering Labs
 
+[![Java Application Build](https://github.com/CatOrLeader/S25-core-course-labs/actions/workflows/app_java.yml/badge.svg?branch=lab3)](https://github.com/CatOrLeader/S25-core-course-labs/actions/workflows/app_java.yml)
+[![Python Application Lint & Test & Push](https://github.com/CatOrLeader/S25-core-course-labs/actions/workflows/app_python.yml/badge.svg?branch=lab3)](https://github.com/CatOrLeader/S25-core-course-labs/actions/workflows/app_python.yml)
+
 ## Introduction
 
 Welcome to the DevOps Engineering course labs! These hands-on labs are designed to guide you through various aspects of DevOps practices and principles. As you progress through the labs, you'll gain practical experience in application development, containerization, testing, infrastructure setup, CI/CD processes, and more.

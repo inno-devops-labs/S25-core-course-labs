@@ -1,0 +1,143 @@
+name: Java Application Lint & Test & Push
+
+defaults:
+  run:
+    working-directory: ./app_java
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+on:
+  pull_request:
+    paths:
+      - app_java/**
+      - .github/workflows/app_java.yml
+    branches:
+      - main
+      - master
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    name: Lint and Test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: "${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}"
+          restore-keys: "${{ runner.os }}-maven-"
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Lint with Checkstyle
+        run: mvn checkstyle:check
+
+      - name: Build Package
+        run: mvn clean package
+
+      - name: Run Tests
+        run: mvn -Dskip.unit.tests=false test
+
+      - name: Generate Code Coverage Report
+        run: mvn jacoco:report
+
+      - name: Comment Code Coverage on PR
+        uses: madrapps/jacoco-report@v1.6.1
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        with:
+          paths: ${{ github.workspace }}/app_java/target/site/jacoco/jacoco.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 30
+          min-coverage-changed-files: 30
+          title: Code Coverage
+          update-comment: true
+
+  security-check:
+    runs-on: ubuntu-latest
+    name: Security Check
+    needs: lint-test
+    permissions:
+      security-events: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Set up Snyk CLI
+        uses: snyk/actions/setup@master
+        with:
+          version: 'latest'
+          token: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Authenticate Snyk CLI
+        run: snyk auth "${{ secrets.SNYK_TOKEN }}"
+
+      - name: Snyk Security Test
+        continue-on-error: true
+        run: snyk test --file=pom.xml --sarif-file-output=snyk.sarif --severity-threshold=high
+
+      - name: Upload Snyk results to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ${{ github.workspace }}/app_java/snyk.sarif
+
+  build-push:
+    runs-on: ubuntu-latest
+    name: Build and Push
+    needs: [ lint-test, security-check ]
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        with:
+          driver: docker-container
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Convert IMAGE_NAME to lowercase
+        shell: bash
+        run: echo "LOWER_IMAGE_NAME=$(echo '${{ env.IMAGE_NAME }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Extract Docker metadata (tags, labels)
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.LOWER_IMAGE_NAME }}/app_java
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: app_java
+          file: ./app_java/distroless.Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.LOWER_IMAGE_NAME }}/app_java_buildcache:latest
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.LOWER_IMAGE_NAME }}/app_java_buildcache:latest,mode=max
