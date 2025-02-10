@@ -17,7 +17,7 @@ def hello_world():
 
 @app.errorhandler(404)
 def not_found(error):
-    return render_template('404.html')
+    return render_template('404.html'), 404
 
 
 def get_moscow_time():
