@@ -43,6 +43,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install Snyk CLI
+        run: npm install -g snyk
       - name: Run Snyk Security Scan
         run: |
           cd app_python
