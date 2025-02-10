@@ -47,15 +47,17 @@ jobs:
           if [ -f ./app_python/backend/requirements.txt ]; then
             pip install -r ./app_python/backend/requirements.txt
           fi
-      - name: Установка зависимостей для фронтенда
+      - name: Install dependencies for frontend
         if: hashFiles('package.json') != ''
         run: npm install
         working-directory: ./app_python/frontend
-      - name: Lint with flake8
+      - name: Lint with flake8 of backend
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-
+      - name: Run linter for frontend
+        run: npm run lint
+        
   docker:
     runs-on: ubuntu-latest
 
