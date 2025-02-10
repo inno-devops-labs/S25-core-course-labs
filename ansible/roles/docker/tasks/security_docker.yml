@@ -1,0 +1,32 @@
+---
+- name: Ensure daemon.json directory exists
+  file:
+    path: /etc/docker
+    state: directory
+    mode: '0755'
+
+- name: Configure Docker security settings - Disable root access
+  copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "userns-remap": "default",
+        "no-new-privileges": true,
+        "live-restore": true
+      }
+    mode: '0644'
+    owner: root
+    group: root
+  notify:
+    - Restart Docker
+
+- name: Validate daemon.json syntax
+  command: jq empty /etc/docker/daemon.json
+  register: json_check
+  changed_when: false
+  ignore_errors: yes
+
+- name: Fail if daemon.json is invalid
+  fail:
+    msg: "Invalid JSON detected in /etc/docker/daemon.json"
+  when: json_check.rc != 0
