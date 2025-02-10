@@ -43,8 +43,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install Python Dependencies
+        run: |
+          cd app_python
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
       - name: Install Snyk CLI
         run: npm install -g snyk
+
       - name: Run Snyk Security Scan
         run: |
           cd app_python
