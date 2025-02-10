@@ -1,0 +1,11 @@
+---
+web_app_image: "milanamilana/python-distroless-web-app:latest"
+container_name: "python_web_app"
+docker_compose_file: "docker-compose.yml"
+
+web_app_directory: "/webapp"
+
+internal_app_port: 8000
+external_app_port: 8000
+
+web_app_full_wipe: true
