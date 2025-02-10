@@ -1,0 +1,5 @@
+- name: Dev
+  hosts: all
+  become: true
+  roles:
+    - role: docker
