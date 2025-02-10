@@ -1,0 +1,14 @@
+---
+- name: Full wipe
+  when: web_app_full_wipe is defined and web_app_full_wipe
+  tags: wipe
+  ansible.builtin.include_tasks:
+    file: "0-wipe.yml"
+    apply:
+      tags: wipe
+- name: Deploy dockerized app
+  tags: deploy
+  ansible.builtin.include_tasks:
+    file: "1-deploy.yml"
+    apply:
+      tags: deploy
