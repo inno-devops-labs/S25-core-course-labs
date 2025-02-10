@@ -1,3 +1,4 @@
+---
 - name: Install Docker Compose
   ansible.builtin.package:
     name: docker-compose

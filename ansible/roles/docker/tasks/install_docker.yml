@@ -1,3 +1,4 @@
+---
 - name: Update apt package index
   ansible.builtin.apt:
     update_cache: true
@@ -24,10 +25,16 @@
     state: present
 
 - name: Install Docker with dependencies
-  apt:
+  ansible.builtin.apt:
     name:
       - docker-ce
       - docker-ce-cli
       - containerd.io
     state: present
-    update_cache: yes
+    update_cache: true
+
+- name: Start Docker service
+  ansible.builtin.systemd:
+    name: docker
+    enabled: true
+    state: started

@@ -10,7 +10,7 @@ mode using `--check` flag. I also was checking the syntax with `--syntax-check`.
 
 1. Use of `handlers` to be sure that, e.g., Docker is running.
 
-1. The tasks are named.
+1. Locally I used `ansible-lint` to fix issues in playbooks. 
 
 ### Checks
 
@@ -20,10 +20,10 @@ hand-written tasks.
 The output of commands may be not full because I have already been running Dev playbook before
 writing this `.md` file.
 
-## `ansible-playbook playbooks/dev/main.yml -i inventory/yacloud_compute.yml --diff`
+## `ansible-playbook playbooks/dev/main.yml --diff`
 
 ```
-╰─➤  ansible-playbook playbooks/dev/main.yml -i inventory/yacloud_compute.yml --diff                                                                      4 ↵
+╰─➤  ansible-playbook playbooks/dev/main.yml --diff                                 
 
 PLAY [Dev] ***************************************************************************************************************************************************
 
@@ -55,6 +55,18 @@ ok: [devops-vm]
 TASK [docker : Install Docker with dependencies] *************************************************************************************************************
 ok: [devops-vm]
 
+TASK [docker : Start Docker service] *************************************************************************************************************************
+ok: [devops-vm]
+
+TASK [docker : Secure Docker configuration] ******************************************************************************************************************
+included: /Users/matveykorinenko/Documents/Inno/BS3/Spring/DevOps/S25-core-course-labs/ansible/roles/docker/tasks/secure_configure_docker.yml for devops-vm
+
+TASK [docker : Add user to Docker group] *********************************************************************************************************************
+ok: [devops-vm]
+
+TASK [docker : Disable root access] **************************************************************************************************************************
+ok: [devops-vm]
+
 TASK [docker : Install Docker Compose] ***********************************************************************************************************************
 included: /Users/matveykorinenko/Documents/Inno/BS3/Spring/DevOps/S25-core-course-labs/ansible/roles/docker/tasks/install_docker_compose.yml for devops-vm
 
@@ -62,10 +74,10 @@ TASK [docker : Install Docker Compose] *****************************************
 ok: [devops-vm]
 
 PLAY RECAP ***************************************************************************************************************************************************
-devops-vm                  : ok=9    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+devops-vm                  : ok=13   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
 WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
-E0000 00:00:1739120697.860719 71909575 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+E0000 00:00:1739207132.405013 74388315 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
 ```
 
 ## `ansible-inventory -i inventory/yacloud_compute.yml --list`
