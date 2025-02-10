@@ -1,0 +1,4 @@
+---
+# defaults file for docker
+docker_version: 'latest'
+docker_compose_version: 'latest'
