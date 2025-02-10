@@ -1,3 +1,4 @@
+[![Python application](https://github.com/Kamil116/S25-core-course-labs/actions/workflows/python-app.yml/badge.svg?branch=lab3)](https://github.com/Kamil116/S25-core-course-labs/actions/workflows/python-app.yml)
 # Python web application - the current time in Moscow
 ## Overview
 This is a simple web application built on python with best practices.
