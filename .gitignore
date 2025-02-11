@@ -11,3 +11,8 @@ __pycache__
 # Typescript stuff
 dist
 node_modules
+
+# Terraform stuff
+.terraform
+terraform.tfstate
+*.backup
