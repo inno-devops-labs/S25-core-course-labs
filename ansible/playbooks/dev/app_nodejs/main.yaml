@@ -1,0 +1,11 @@
+- name: Deploy Web App
+  hosts: all
+  become: true
+  roles:
+    - role: docker
+    - role: web_app
+      vars:
+        web_app_name: "app_nodejs"
+        web_app_external_port: 3000
+        web_app_internal_port: 3000
+        web_app_dir: "~/app_nodejs"
