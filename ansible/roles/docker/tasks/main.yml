@@ -1,8 +1,34 @@
 - import_tasks: install_docker.yml
-- import_tasks: install_compose.yml
+- import_tasks: install_docker_compose.yml
 
 - name: Add the current user to the Docker group
   user:
     name: "{{ ansible_user }}"
     groups: docker
     append: yes
+    
+- name: Ensure Docker Configuration Directory Exists
+  file:
+    path: /etc/docker
+    state: directory
+    mode: 0755
+
+- name: Apply Secure Docker Configuration
+  copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "no-new-privileges": true,
+        "userns-remap": "default",
+        "log-driver": "json-file",
+        "log-opts": {
+            "max-size": "10m",
+            "max-file": "3"
+        }
+      }
+    mode: 0644
+
+- name: Restart Docker for Security Settings to Take Effect
+  systemd:
+    name: docker
+    state: restarted
