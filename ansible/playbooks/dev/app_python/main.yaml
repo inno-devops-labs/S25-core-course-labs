@@ -1,0 +1,13 @@
+---
+- name: Deploy Python app
+  hosts: docker_hosts
+  become: true
+  roles:
+    - role: web_app
+      vars:
+        app_image_name: "catorleader/python-watch"
+        app_image_tag: "distroless"
+        app_container_name: "python-watch"
+        container_port: "5000"
+        host_port: "5000"
+        app_full_wipe: true

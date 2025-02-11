@@ -1,0 +1,33 @@
+- name: Deploy Web Application
+  block:
+    - name: Pull the application Docker image
+      community.docker.docker_image:
+        name: "{{ app_image_name }}"
+        tag: "{{ app_image_tag }}"
+        source: pull
+      tags: [ docker ]
+
+    - name: Ensure the application container is running
+      community.docker.docker_container:
+        name: "{{ app_container_name }}"
+        image: "{{ app_image_name }}:{{ app_image_tag }}"
+        state: started
+        restart_policy: always
+        ports:
+          - "{{ host_port }}:{{ container_port }}"
+      tags: [ docker ]
+
+    - name: Create directory for docker-compose configuration
+      ansible.builtin.file:
+        path: "{{ compose_config_dir }}"
+        state: directory
+        owner: "{{ compose_owner }}"
+        group: "{{ compose_group }}"
+        mode: "{{ compose_permissions }}"
+      tags: [ docker-compose ]
+
+    - name: Deploy docker-compose configuration file
+      ansible.builtin.template:
+        src: "{{ compose_template_src }}"
+        dest: "{{ compose_config_dir }}/docker-compose.yml"
+      tags: [ docker-compose ]
