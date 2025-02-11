@@ -1,0 +1,13 @@
+- name: Stop and remove the application container
+  community.docker.docker_container:
+    name: "{{ app_container_name }}"
+    state: absent
+  tags:
+    - wipe
+
+- name: Remove the docker-compose configuration file
+  ansible.builtin.file:
+    path: "{{ compose_config_dir }}/docker-compose.yml"
+    state: absent
+  tags:
+    - wipe

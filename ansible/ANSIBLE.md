@@ -344,3 +344,98 @@ WARNING: All log messages before absl::InitializeLog() is called are written to 
 E0000 00:00:1739217959.891383   11842 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
 catorleader@CatOrLeader:/mnt/d/Studying/S25-core-course-labs/ansible$
 ```
+
+---
+
+## Deploying application using Ansible
+
+- `ansible-playbook -i inventory/docker-inventory.ini playbooks/dev/app_java/main.yaml`
+
+```bash
+PLAY [Deploy Java app] *************************************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************
+[WARNING]: Platform linux on host 130.193.45.191 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another
+Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-core/2.17/reference_appendices/interpreter_discovery.html
+for more information.
+ok: [130.193.45.191]
+
+TASK [docker : Set facts of the OS packages] ***************************************************************************************************************
+ok: [130.193.45.191]
+
+TASK [docker : Is Docker installed?] ***********************************************************************************************************************
+ok: [130.193.45.191]
+
+TASK [docker : Is Docker Compose installed?] ***************************************************************************************************************
+ok: [130.193.45.191]
+
+TASK [docker : Install necessary packages] *****************************************************************************************************************
+skipping: [130.193.45.191]
+
+TASK [docker : Add Docker's official GPG key] **************************************************************************************************************
+skipping: [130.193.45.191]
+
+TASK [docker : Check if Docker apt repository is already added] ********************************************************************************************
+ok: [130.193.45.191]
+
+TASK [docker : Add Docker apt repository] ******************************************************************************************************************
+skipping: [130.193.45.191]
+
+TASK [docker : Update apt package] *************************************************************************************************************************
+skipping: [130.193.45.191]
+
+TASK [docker : Install Docker Engine] **********************************************************************************************************************
+skipping: [130.193.45.191]
+
+TASK [docker : Install Docker Compose plugin] **************************************************************************************************************
+skipping: [130.193.45.191]
+
+TASK [docker : Enable & Start Docker service] **************************************************************************************************************
+ok: [130.193.45.191]
+
+TASK [docker : Create docker group] ************************************************************************************************************************
+ok: [130.193.45.191]
+
+TASK [docker : Add current ansible user to docker group] ***************************************************************************************************
+ok: [130.193.45.191]
+
+TASK [docker : Secure Docker configuration by enabling user namespace remapping] ***************************************************************************
+ok: [130.193.45.191]
+
+TASK [docker : Restart Docker service if configuration changed] ********************************************************************************************
+changed: [130.193.45.191]
+
+TASK [web_app : APP CD] ************************************************************************************************************************************
+included: /mnt/d/Studying/S25-core-course-labs/ansible/roles/web_app/tasks/app_cd.yml for 130.193.45.191
+
+TASK [web_app : Pull the application Docker image] *********************************************************************************************************
+changed: [130.193.45.191]
+
+TASK [web_app : Ensure the application container is running] ***********************************************************************************************
+changed: [130.193.45.191]
+
+TASK [web_app : Create directory for docker-compose configuration] *****************************************************************************************
+ok: [130.193.45.191]
+
+TASK [web_app : Deploy docker-compose configuration file] **************************************************************************************************
+changed: [130.193.45.191]
+
+TASK [web_app : Stop and remove the application container] *************************************************************************************************
+changed: [130.193.45.191]
+
+TASK [web_app : Remove the docker-compose configuration file] **********************************************************************************************
+changed: [130.193.45.191]
+
+PLAY RECAP *************************************************************************************************************************************************
+130.193.45.191             : ok=17   changed=6    unreachable=0    failed=0    skipped=6    rescued=0    ignored=0
+```
+
+## Output
+
+- Docker on the VM
+
+```bash
+catorleader@devops-labs-machine:~$ docker ps
+CONTAINER ID   IMAGE                                        COMMAND                  CREATED         STATUS         PORTS                    NAMES
+478a00474cb1   catorleader/vacation_calculator:distroless   "java -jar app_java-…"   4 seconds ago   Up 3 seconds   0.0.0.0:8000->8000/tcp   vacation_calculator
+```
