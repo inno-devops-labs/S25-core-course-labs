@@ -1,0 +1,8 @@
+- import_tasks: install_docker.yml
+- import_tasks: install_docker_compose.yml
+
+- name: Add the current user to the Docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
