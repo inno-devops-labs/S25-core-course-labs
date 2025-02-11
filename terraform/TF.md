@@ -2,6 +2,8 @@
 
 ## Docker
 
+I followed all the instructions by terraform to launch my app, and I've done it. Web-app is launching with no errors via this method.
+
 ### `terraform state list`
 
 <details>
@@ -583,3 +585,4 @@ yandex_compute_disk.disk-1: Creating...
 </details>
 
 ### `terraform output`
+I got no output because terraform apply caused errors.
