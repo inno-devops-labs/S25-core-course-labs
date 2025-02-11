@@ -1,0 +1,16 @@
+- name: Include Docker installation tasks
+  ansible.builtin.include_tasks: install_docker.yml
+
+- name: Include Docker Compose installation tasks
+  ansible.builtin.include_tasks: install_compose.yml
+
+- name: Ensure Docker starts on boot
+  ansible.builtin.systemd:
+    name: docker
+    enabled: yes
+
+- name: Add user to the Docker group
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes

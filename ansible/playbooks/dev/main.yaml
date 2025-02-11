@@ -1,6 +1,0 @@
----
-- name: Install Docker and Docker Compose
-  hosts: localhost
-  become: yes
-  roles:
-    - geerlingguy.docker  # The installed Docker role

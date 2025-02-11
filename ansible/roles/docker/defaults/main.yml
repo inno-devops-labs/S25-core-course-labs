@@ -1,0 +1,4 @@
+docker_version: latest
+docker_compose_version: "1.29.2"
+ansible_distribution_release: "{{ ansible_facts['distribution_release'] | default('jammy') }}"
+ansible_user: "{{ ansible_facts['user_id'] | default('kira') }}"
