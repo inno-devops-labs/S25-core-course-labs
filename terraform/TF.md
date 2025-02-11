@@ -586,3 +586,93 @@ yandex_compute_disk.disk-1: Creating...
 
 ### `terraform output`
 I got no output because terraform apply caused errors.
+
+## Github
+
+### `terraform import`
+
+<details>
+<summary>Importing repo</summary>
+
+```cmd
+terraform import github_repository.s25_repo S25-core-course-labs
+github_repository.s25_repo: Importing from ID "S25-core-course-labs"...
+github_repository.s25_repo: Import prepared!
+  Prepared github_repository for import
+github_repository.s25_repo: Refreshing state... [id=S25-core-course-labs]
+
+Import successful!
+
+The resources that were imported are shown above. These resources are now in
+your Terraform state and will henceforth be managed by Terraform.
+```
+
+</details>
+
+### `terraform plan`
+
+<details>
+<summary>Planned terraform resources</summary>
+
+```cmd
+D:\terraform\terraform\github>terraform plan -out deploy.tfplan
+github_repository.s25_repo: Refreshing state... [id=S25-core-course-labs]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # github_branch_default.main will be created
+  + resource "github_branch_default" "main" {
+      + branch     = "master"
+      + id         = (known after apply)
+      + repository = "S25-core-course-labs"
+    }
+
+  # github_branch_protection.default will be created
+  + resource "github_branch_protection" "default" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + blocks_creations                = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + pattern                         = "master"
+      + repository_id                   = "S25-core-course-labs"
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + required_approving_review_count = 1
+        }
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: deploy.tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "deploy.tfplan"
+```
+
+</details>
+
+### `terraform apply`
+
+<details>
+<summary>Applied terraform</summary>
+
+```cmd
+terraform apply deploy.tfplan
+github_branch_default.main: Creating...
+github_branch_default.main: Creation complete after 2s [id=S25-core-course-labs]
+github_branch_protection.default: Creating...
+github_branch_protection.default: Creation complete after 4s [id=BPR_kwDONwHA_84DjLsf]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+```
+
+</details>
