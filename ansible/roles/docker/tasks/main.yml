@@ -1,5 +1,5 @@
 - import_tasks: install_docker.yml
-- import_tasks: install_docker_compose.yml
+- import_tasks: install_compose.yml
 
 - name: Add the current user to the Docker group
   user:
