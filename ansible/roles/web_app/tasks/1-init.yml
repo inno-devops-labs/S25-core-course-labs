@@ -11,7 +11,7 @@
     - name: Generate docker-compose.yml from template
       template:
         src: docker-compose.yml.j2
-        dest: "{{ web_app_dir }}/docker-compose.yml"
+        dest: "{{ app_dir }}/docker-compose.yml"
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
         mode: '0644'
