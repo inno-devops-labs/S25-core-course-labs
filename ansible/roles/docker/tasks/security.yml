@@ -1,0 +1,17 @@
+- name: Secure Docker Daemon
+  become: yes
+  copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "userns-remap": "default",
+        "no-new-privileges": true
+      }
+    mode: '0644'
+
+- name: Restart Docker
+  become: yes
+  systemd:
+    name: docker
+    state: restarted
+    enabled: yes

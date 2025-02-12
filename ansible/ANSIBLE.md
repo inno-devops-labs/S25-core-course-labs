@@ -263,3 +263,10 @@ Output:
   |--@ungrouped:
   |  |--localhost
 ```
+
+## Bonus Task
+
+The task is completed using yandex cloud
+![yc](image1.jpg)
+![yc](image2.jpg)
+![yc](image3.jpg)
