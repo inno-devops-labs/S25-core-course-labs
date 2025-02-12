@@ -1,5 +1,6 @@
-kamil@kamil-VirtualBox:~/PycharmProjects/S25-core-course-labs/app_python/terraform/docker$ terraform show
-# docker_container.app:
+# terraform show
+## Docker
+```<docker_container.app:
 resource "docker_container" "app" {
     attach                                      = false
     bridge                                      = null
@@ -76,18 +77,24 @@ resource "docker_image" "app" {
     name         = "mirgasimovk/python-msk:latest"
     repo_digest  = "mirgasimovk/python-msk@sha256:3fd3c198220632bbc356db05af23252fe5bdc6652c7a61b036d7ed7701313e5e"
 }
+```
 
+---
 
-
-
-
-----------------------
-kamil@kamil-VirtualBox:~/PycharmProjects/S25-core-course-labs/app_python/terraform/docker$ terraform state list
+```
+terraform state list
 docker_container.app
 docker_image.app
+```
 
 -------------------------
-kamil@kamil-VirtualBox:~/PycharmProjects/S25-core-course-labs/app_python/terraform/docker$ terraform output
+
+```
+terraform output
 container_id = "060a638a8e11aea7ef1de4a407acac32b6508a84d3f4a6d914425d63e9670941"
 image_id = "sha256:e851ea3a6b34e7d73ac264a89c9af05f4137eee22ae7521b2641804d9e22c627mirgasimovk/python-msk:latest"
-
+```
+# Best practices applied
+- Using enviroment variables for sensitive data and just for convenience
+- Using `terraform fmt`, `terraform validate` to see if .tf file has problems and fix issues if any
+- Enable branch protection (related to GitHub process)
