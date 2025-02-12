@@ -1,0 +1,5 @@
+- name: Deploy Docker on reg ru cloud
+  hosts: all
+  become: true
+  roles:
+    - docker
