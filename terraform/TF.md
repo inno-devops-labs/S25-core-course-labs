@@ -223,26 +223,27 @@ The instruction provided by YC was terrible. The interface of console is complet
 
 ```cmd
 terraform plan
-data.template_file.default: Reading...
-data.template_file.default: Read complete after 0s [id=15dfa216f2841afebc169c5ec07cee08743a0edde1461fc2f37d35c864f59e8e]
+var.name
+  Enter a value: niyaz-devops
+
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   + create
 
 Terraform will perform the following actions:
 
-  # yandex_compute_disk.disk-1 will be created
-  + resource "yandex_compute_disk" "disk-1" {
+  # yandex_compute_disk.boot-disk will be created
+  + resource "yandex_compute_disk" "boot-disk" {
       + block_size  = 4096
       + created_at  = (known after apply)
       + folder_id   = (known after apply)
       + id          = (known after apply)
-      + image_id    = "fv4keno1d1omjp0bgq5q"
-      + name        = "disk-1"
+      + image_id    = "fd85hkli5dp6as39ali4"
+      + name        = "bootvmdisk"
       + product_ids = (known after apply)
-      + size        = 50
+      + size        = 10
       + status      = (known after apply)
-      + type        = "network-nvme"
+      + type        = "network-hdd"
       + zone        = "ru-central1-d"
 
       + disk_placement_policy (known after apply)
@@ -250,54 +251,32 @@ Terraform will perform the following actions:
       + hardware_generation (known after apply)
     }
 
-  # yandex_compute_instance.default will be created
-  + resource "yandex_compute_instance" "default" {
+  # yandex_compute_instance.docker-vm will be created
+  + resource "yandex_compute_instance" "docker-vm" {
       + created_at                = (known after apply)
       + folder_id                 = (known after apply)
       + fqdn                      = (known after apply)
       + gpu_cluster_id            = (known after apply)
       + hardware_generation       = (known after apply)
-      + hostname                  = "<my_server_name>"
+      + hostname                  = (known after apply)
       + id                        = (known after apply)
       + maintenance_grace_period  = (known after apply)
       + maintenance_policy        = (known after apply)
       + metadata                  = {
           + "user-data" = <<-EOT
-                #ps1
-                # ^^^ 'ps1' is only for cloudbase-init, some sort of sha-bang in linux
-
-                # logging
-                Start-Transcript -Path "$ENV:SystemDrive\provision.txt" -IncludeInvocationHeader -Force
-                "Bootstrap script started" | Write-Host
-
-                # inserting value's from terraform
-                $MyUserName = "<my_user>"
-                $MyPlainTextPassword = "<my_password>"
-                if (-not [string]::IsNullOrEmpty($MyUserName) -and -not [string]::IsNullOrEmpty($MyPlainTextPassword)) {
-                    "Create user" | Write-Host
-                    $MyPassword = $MyPlainTextPassword | ConvertTo-SecureString -AsPlainText -Force
-                    $MyUser = New-LocalUser -Name $MyUserName -Password $MyPassword -PasswordNeverExpires -AccountNeverExpires
-                    $MyUser | Add-LocalGroupMember -Group 'Administrators'
-                    $MyUser | Add-LocalGroupMember -Group 'Remote Management Users'
-                }
-
-                # inserting value's from terraform
-                $MyAdministratorPlainTextPassword = "<my_password>"
-                if (-not [string]::IsNullOrEmpty($MyAdministratorPlainTextPassword)) {
-                    "Set local administrator password" | Write-Host
-                    $MyAdministratorPassword = $MyAdministratorPlainTextPassword | ConvertTo-SecureString -AsPlainText -Force
-                    # S-1-5-21domain-500 is a well-known SID for Administrator
-                    # https://docs.microsoft.com/en-us/troubleshoot/windows-server/identity/security-identifiers-in-windows
-                    $MyAdministrator = Get-LocalUser | Where-Object -Property "SID" -like "S-1-5-21-*-500"
-                    $MyAdministrator | Set-LocalUser -Password $MyAdministratorPassword
-                }
-
-                "Bootstrap script ended" | Write-Host
+                #cloud-config
+                users:
+                  - name: niyaz-devops
+                    groups: sudo
+                    shell: /bin/bash
+                    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+                    ssh-authorized-keys:
+                      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDoCKaY2WtWq//7+Ls+2dhvYQkv1LmagteLcKWJx2acN irisx@GOTTERKILLER
             EOT
         }
-      + name                      = "<my_server_name>"
+      + name                      = "m-lab4"
       + network_acceleration_type = "standard"
-      + platform_id               = "standard-v1"
+      + platform_id               = "standard-v3"
       + service_account_id        = (known after apply)
       + status                    = (known after apply)
       + zone                      = "ru-central1-d"
@@ -308,15 +287,7 @@ Terraform will perform the following actions:
           + disk_id     = (known after apply)
           + mode        = (known after apply)
 
-          + initialize_params {
-              + block_size  = (known after apply)
-              + description = (known after apply)
-              + image_id    = (known after apply)
-              + name        = (known after apply)
-              + size        = 50
-              + snapshot_id = (known after apply)
-              + type        = "network-nvme"
-            }
+          + initialize_params (known after apply)
         }
 
       + metadata_options (known after apply)
@@ -340,50 +311,66 @@ Terraform will perform the following actions:
       + resources {
           + core_fraction = 100
           + cores         = 2
-          + memory        = 4
+          + memory        = 2
         }
 
       + scheduling_policy (known after apply)
-
-      + timeouts {
-          + create = "10m"
-          + delete = "10m"
-        }
     }
 
-  # yandex_vpc_network.default will be created
-  + resource "yandex_vpc_network" "default" {
+  # yandex_container_registry.my-registry will be created
+  + resource "yandex_container_registry" "my-registry" {
+      + created_at = (known after apply)
+      + folder_id  = "b1gqgljq062f9ieapodn"
+      + id         = (known after apply)
+      + name       = "flask-app"
+      + status     = (known after apply)
+    }
+
+  # yandex_iam_service_account.registry-sa will be created
+  + resource "yandex_iam_service_account" "registry-sa" {
+      + created_at = (known after apply)
+      + folder_id  = "b1gqgljq062f9ieapodn"
+      + id         = (known after apply)
+      + name       = "niyaz-devops-lab4"
+    }
+
+  # yandex_resourcemanager_folder_iam_member.registry-sa-role-images-puller will be created
+  + resource "yandex_resourcemanager_folder_iam_member" "registry-sa-role-images-puller" {
+      + folder_id = "b1gqgljq062f9ieapodn"
+      + id        = (known after apply)
+      + member    = (known after apply)
+      + role      = "container-registry.images.puller"
+    }
+
+  # yandex_vpc_network.docker-vm-network will be created
+  + resource "yandex_vpc_network" "docker-vm-network" {
       + created_at                = (known after apply)
       + default_security_group_id = (known after apply)
       + folder_id                 = (known after apply)
       + id                        = (known after apply)
       + labels                    = (known after apply)
-      + name                      = "ya-network"
+      + name                      = "default-lab4"
       + subnet_ids                = (known after apply)
     }
 
-  # yandex_vpc_subnet.default will be created
-  + resource "yandex_vpc_subnet" "default" {
+  # yandex_vpc_subnet.docker-vm-network-subnet-a will be created
+  + resource "yandex_vpc_subnet" "docker-vm-network-subnet-a" {
       + created_at     = (known after apply)
       + folder_id      = (known after apply)
       + id             = (known after apply)
       + labels         = (known after apply)
-      + name           = "ya-network"
+      + name           = "default-ru-central1-d-lab4"
       + network_id     = (known after apply)
       + v4_cidr_blocks = [
-          + "192.168.10.0/16",
+          + "192.168.1.0/24",
         ]
       + v6_cidr_blocks = (known after apply)
       + zone           = "ru-central1-d"
     }
 
-Plan: 4 to add, 0 to change, 0 to destroy.
+Plan: 7 to add, 0 to change, 0 to destroy.
 
-Changes to Outputs:
-  + address = (known after apply)
-  + name    = "<my_server_name>"
-
-─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
 ```
@@ -397,26 +384,27 @@ Note: You didn't use the -out option to save this plan, so Terraform can't guara
 
 ```cmd
 terraform apply
-data.template_file.default: Reading...
-data.template_file.default: Read complete after 0s [id=15dfa216f2841afebc169c5ec07cee08743a0edde1461fc2f37d35c864f59e8e]
+var.name
+  Enter a value: niyaz-devops
+
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   + create
 
 Terraform will perform the following actions:
 
-  # yandex_compute_disk.disk-1 will be created
-  + resource "yandex_compute_disk" "disk-1" {
+  # yandex_compute_disk.boot-disk will be created
+  + resource "yandex_compute_disk" "boot-disk" {
       + block_size  = 4096
       + created_at  = (known after apply)
       + folder_id   = (known after apply)
       + id          = (known after apply)
-      + image_id    = "fv4keno1d1omjp0bgq5q"
-      + name        = "disk-ubuntu-24-04-lts-1739271629844"
+      + image_id    = "fd85hkli5dp6as39ali4"
+      + name        = "bootvmdisk"
       + product_ids = (known after apply)
-      + size        = 50
+      + size        = 10
       + status      = (known after apply)
-      + type        = "network-nvme"
+      + type        = "network-hdd"
       + zone        = "ru-central1-d"
 
       + disk_placement_policy (known after apply)
@@ -424,54 +412,32 @@ Terraform will perform the following actions:
       + hardware_generation (known after apply)
     }
 
-  # yandex_compute_instance.default will be created
-  + resource "yandex_compute_instance" "default" {
+  # yandex_compute_instance.docker-vm will be created
+  + resource "yandex_compute_instance" "docker-vm" {
       + created_at                = (known after apply)
       + folder_id                 = (known after apply)
       + fqdn                      = (known after apply)
       + gpu_cluster_id            = (known after apply)
       + hardware_generation       = (known after apply)
-      + hostname                  = "<my_server_name>"
+      + hostname                  = (known after apply)
       + id                        = (known after apply)
       + maintenance_grace_period  = (known after apply)
       + maintenance_policy        = (known after apply)
       + metadata                  = {
           + "user-data" = <<-EOT
-                #ps1
-                # ^^^ 'ps1' is only for cloudbase-init, some sort of sha-bang in linux
-
-                # logging
-                Start-Transcript -Path "$ENV:SystemDrive\provision.txt" -IncludeInvocationHeader -Force
-                "Bootstrap script started" | Write-Host
-
-                # inserting value's from terraform
-                $MyUserName = "<my_user>"
-                $MyPlainTextPassword = "<my_password>"
-                if (-not [string]::IsNullOrEmpty($MyUserName) -and -not [string]::IsNullOrEmpty($MyPlainTextPassword)) {
-                    "Create user" | Write-Host
-                    $MyPassword = $MyPlainTextPassword | ConvertTo-SecureString -AsPlainText -Force
-                    $MyUser = New-LocalUser -Name $MyUserName -Password $MyPassword -PasswordNeverExpires -AccountNeverExpires
-                    $MyUser | Add-LocalGroupMember -Group 'Administrators'
-                    $MyUser | Add-LocalGroupMember -Group 'Remote Management Users'
-                }
-
-                # inserting value's from terraform
-                $MyAdministratorPlainTextPassword = "<my_password>"
-                if (-not [string]::IsNullOrEmpty($MyAdministratorPlainTextPassword)) {
-                    "Set local administrator password" | Write-Host
-                    $MyAdministratorPassword = $MyAdministratorPlainTextPassword | ConvertTo-SecureString -AsPlainText -Force
-                    # S-1-5-21domain-500 is a well-known SID for Administrator
-                    # https://docs.microsoft.com/en-us/troubleshoot/windows-server/identity/security-identifiers-in-windows
-                    $MyAdministrator = Get-LocalUser | Where-Object -Property "SID" -like "S-1-5-21-*-500"
-                    $MyAdministrator | Set-LocalUser -Password $MyAdministratorPassword
-                }
-
-                "Bootstrap script ended" | Write-Host
+                #cloud-config
+                users:
+                  - name: niyaz-devops
+                    groups: sudo
+                    shell: /bin/bash
+                    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+                    ssh-authorized-keys:
+                      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDoCKaY2WtWq//7+Ls+2dhvYQkv1LmagteLcKWJx2acN irisx@GOTTERKILLER
             EOT
         }
-      + name                      = "<my_server_name>"
+      + name                      = "m-lab4"
       + network_acceleration_type = "standard"
-      + platform_id               = "standard-v1"
+      + platform_id               = "standard-v3"
       + service_account_id        = (known after apply)
       + status                    = (known after apply)
       + zone                      = "ru-central1-d"
@@ -482,15 +448,7 @@ Terraform will perform the following actions:
           + disk_id     = (known after apply)
           + mode        = (known after apply)
 
-          + initialize_params {
-              + block_size  = (known after apply)
-              + description = (known after apply)
-              + image_id    = (known after apply)
-              + name        = (known after apply)
-              + size        = 50
-              + snapshot_id = (known after apply)
-              + type        = "network-nvme"
-            }
+          + initialize_params (known after apply)
         }
 
       + metadata_options (known after apply)
@@ -514,47 +472,64 @@ Terraform will perform the following actions:
       + resources {
           + core_fraction = 100
           + cores         = 2
-          + memory        = 4
+          + memory        = 2
         }
 
       + scheduling_policy (known after apply)
-
-      + timeouts {
-          + create = "10m"
-          + delete = "10m"
-        }
     }
 
-  # yandex_vpc_network.default will be created
-  + resource "yandex_vpc_network" "default" {
+  # yandex_container_registry.my-registry will be created
+  + resource "yandex_container_registry" "my-registry" {
+      + created_at = (known after apply)
+      + folder_id  = "b1gqgljq062f9ieapodn"
+      + id         = (known after apply)
+      + name       = "flask-app"
+      + status     = (known after apply)
+    }
+
+  # yandex_iam_service_account.registry-sa will be created
+  + resource "yandex_iam_service_account" "registry-sa" {
+      + created_at = (known after apply)
+      + folder_id  = "b1gqgljq062f9ieapodn"
+      + id         = (known after apply)
+      + name       = "niyaz-devops-lab4"
+    }
+
+  # yandex_resourcemanager_folder_iam_member.registry-sa-role-images-puller will be created
+  + resource "yandex_resourcemanager_folder_iam_member" "registry-sa-role-images-puller" {
+      + folder_id = "b1gqgljq062f9ieapodn"
+      + id        = (known after apply)
+      + member    = (known after apply)
+      + role      = "container-registry.images.puller"
+    }
+
+  # yandex_vpc_network.docker-vm-network will be created
+  + resource "yandex_vpc_network" "docker-vm-network" {
       + created_at                = (known after apply)
       + default_security_group_id = (known after apply)
       + folder_id                 = (known after apply)
       + id                        = (known after apply)
       + labels                    = (known after apply)
-      + name                      = "default"
+      + name                      = "default-lab4"
       + subnet_ids                = (known after apply)
     }
 
-  # yandex_vpc_subnet.default will be created
-  + resource "yandex_vpc_subnet" "default" {
+  # yandex_vpc_subnet.docker-vm-network-subnet-a will be created
+  + resource "yandex_vpc_subnet" "docker-vm-network-subnet-a" {
       + created_at     = (known after apply)
       + folder_id      = (known after apply)
       + id             = (known after apply)
       + labels         = (known after apply)
-      + name           = "default-ru-central1-d"
+      + name           = "default-ru-central1-d-lab4"
       + network_id     = (known after apply)
       + v4_cidr_blocks = [
-          + "192.168.10.0/16",
+          + "192.168.1.0/24",
         ]
       + v6_cidr_blocks = (known after apply)
       + zone           = "ru-central1-d"
     }
 
-Plan: 4 to add, 0 to change, 0 to destroy.
-
-Changes to Outputs:
-  + address = (known after apply)
+Plan: 7 to add, 0 to change, 0 to destroy.
 
 Do you want to perform these actions?
   Terraform will perform the actions described above.
@@ -562,30 +537,49 @@ Do you want to perform these actions?
 
   Enter a value: yes
 
-yandex_vpc_network.default: Creating...
-yandex_compute_disk.disk-1: Creating...
-╷
-│ Error: Error while requesting API to create network: server-request-id = baebfc0d-3a30-4d38-afed-25fde2df3aab server-trace-id = 95b689ad25185c09:107120895efd8a8f:95b689ad25185c09:1 client-request-id = 36e0e8b5-1375-4438-b05b-ff63eacf2756 client-trace-id = cc875058-0476-42ba-8c7c-49000cdc3ea4 rpc error: code = PermissionDenied desc = Operation is not permitted in the folder
-│
-│   with yandex_vpc_network.default,
-│   on main.tf line 13, in resource "yandex_vpc_network" "default":
-│   13: resource "yandex_vpc_network" "default" {
-│
-╵
-╷
-│ Error: Error while requesting API to create disk: server-request-id = 027d54f5-3c55-4542-ab73-8ea2f8a9517c server-trace-id = 24788949cb4ebc98:75581d0233d042c6:24788949cb4ebc98:1 client-request-id = e80f2a79-0374-426a-a57a-da5193bfb478 client-trace-id = cc875058-0476-42ba-8c7c-49000cdc3ea4 rpc error: code = FailedPrecondition desc = Image "fv4keno1d1omjp0bgq5q" not found
-│
-│   with yandex_compute_disk.disk-1,
-│   on main.tf line 24, in resource "yandex_compute_disk" "disk-1":
-│   24: resource "yandex_compute_disk" "disk-1" {
-│
-╵
+yandex_iam_service_account.registry-sa: Creating...
+yandex_container_registry.my-registry: Creating...
+yandex_vpc_network.docker-vm-network: Creating...
+yandex_compute_disk.boot-disk: Creating...
+yandex_vpc_network.docker-vm-network: Creation complete after 2s [id=enph94288m0kbamn7aip]
+yandex_vpc_subnet.docker-vm-network-subnet-a: Creating...
+yandex_container_registry.my-registry: Creation complete after 2s [id=crp36ajs6ocfoq0o53oe]
+yandex_iam_service_account.registry-sa: Creation complete after 2s [id=ajeku58qsehsl8u2erg7]
+yandex_resourcemanager_folder_iam_member.registry-sa-role-images-puller: Creating...
+yandex_vpc_subnet.docker-vm-network-subnet-a: Creation complete after 0s [id=fl88906cl9kfnkb443a6]
+yandex_resourcemanager_folder_iam_member.registry-sa-role-images-puller: Creation complete after 3s [id=b1gqgljq062f9ieapodn/container-registry.images.puller/serviceAccount:ajeku58qsehsl8u2erg7]
+yandex_compute_disk.boot-disk: Still creating... [10s elapsed]
+yandex_compute_disk.boot-disk: Creation complete after 11s [id=fv4r72o15i49f33595vl]
+yandex_compute_instance.docker-vm: Creating...
+yandex_compute_instance.docker-vm: Still creating... [10s elapsed]
+yandex_compute_instance.docker-vm: Still creating... [20s elapsed]
+yandex_compute_instance.docker-vm: Still creating... [30s elapsed]
+yandex_compute_instance.docker-vm: Still creating... [40s elapsed]
+yandex_compute_instance.docker-vm: Still creating... [50s elapsed]
+yandex_compute_instance.docker-vm: Creation complete after 53s [id=fv404fj69us5e0fjcamf]
+
+Apply complete! Resources: 7 added, 0 changed, 0 destroyed.
 ```
 
 </details>
 
-### `terraform output`
-I got no output because terraform apply caused errors.
+### `terraform state list`
+
+<details>
+<summary>Created states</summary>
+
+```cmd
+terraform state list
+yandex_compute_disk.boot-disk
+yandex_compute_instance.docker-vm
+yandex_container_registry.my-registry
+yandex_iam_service_account.registry-sa
+yandex_resourcemanager_folder_iam_member.registry-sa-role-images-puller
+yandex_vpc_network.docker-vm-network
+yandex_vpc_subnet.docker-vm-network-subnet-a
+```
+
+</details>
 
 ## Github
 
