@@ -1,0 +1,7 @@
+- name: Deploy application via docker
+  block:
+    - name: Start docker application
+      community.docker.docker_compose_v2:
+        project_src: "{{ app_dir }}"
+        remove_orphans: true
+        state: present

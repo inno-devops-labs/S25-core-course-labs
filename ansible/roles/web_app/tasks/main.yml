@@ -1,0 +1,15 @@
+- name: Wipe app
+  when: app_full_wipe | bool
+  import_tasks: 0-wipe.yml
+  tags:
+    - wipe
+
+- name: Init app
+  import_tasks: 1-init.yml
+  tags:
+    - init
+
+- name: Deploy app
+  import_tasks: 2-deploy.yml
+  tags:
+    - deploy

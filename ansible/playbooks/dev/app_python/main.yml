@@ -1,0 +1,11 @@
+- name: Deploy Web App
+  hosts: all
+  become: true
+  roles:
+    - role: docker
+    - role: web_app
+      vars:
+        app_name: "app_piton"
+        app_external_port: 8787
+        app_internal_port: 8080
+        app_dir: "~/app_python"
