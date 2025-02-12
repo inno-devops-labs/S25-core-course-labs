@@ -1,0 +1,10 @@
+- name: Install Docker packages
+  apt:
+    name:
+      - docker-compose-plugin={{ docker_compose_version }}
+
+- name: Check if Docker service is enabled
+  service:
+    name: docker
+    state: started
+    enabled: yes
