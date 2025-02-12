@@ -1,0 +1,12 @@
+- name: Wipe app image with content
+  community.docker.docker_compose_v2:
+    project_src: "{{ app_dir }}"
+    remove_images: all
+    remove_orphans: true
+    remove_volumes: true
+    state: absent
+
+- name: Delete app directory
+  file:
+    path: "{{ app_dir }}"
+    state: absent
