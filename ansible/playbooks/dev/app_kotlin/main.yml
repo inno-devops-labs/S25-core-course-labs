@@ -1,0 +1,12 @@
+---
+- name: Deploy Python app
+  hosts: all
+  become: true
+  roles:
+    - role: web_app
+      vars:
+        web_app_docker_image: "rwkals/app_kotlin_distroless"
+        web_app_docker_image_tag: "latest"
+        web_app_container_name: kotlin_webapp
+        web_app_container_port: 8080
+        web_app_port: 8083

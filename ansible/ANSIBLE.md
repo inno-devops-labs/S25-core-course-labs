@@ -154,3 +154,148 @@ root@DESKTOP-D43KHFL:/mnt/c/Users/egora/PycharmProjects/S25-core-course-labs# an
   |--@ungrouped:
   |  |--yandex_instance_1
 ```
+
+## Web App deployment
+
+### Python
+
+```shell
+
+root@DESKTOP-D43KHFL:/mnt/c/Users/egora/PycharmProjects/S25-core-course-labs# ansible-playbook -i ansible/inventory/default_yacloud.yml ansible/playbooks/dev/app_python/main.yml
+
+PLAY [Deploy Python app] ***********************************************************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************************************
+[WARNING]: Platform linux on host yandex_instance_1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could
+change the meaning of that path. See https://docs.ansible.com/ansible-core/2.17/reference_appendices/interpreter_discovery.html for more information.
+ok: [yandex_instance_1]
+
+TASK [docker : Update apt package index] *******************************************************************************************************************************************
+changed: [yandex_instance_1]
+
+TASK [docker : Install required packages] ******************************************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Add Docker GPG key] *************************************************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Add Docker repository] **********************************************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Install Docker] *****************************************************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Enable and start Docker service] ************************************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Download Docker Compose] ********************************************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Verify Docker Compose installation] *********************************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Display installed Docker Compose version] ***************************************************************************************************************************
+ok: [yandex_instance_1] => {
+    "msg": "Docker Compose version v2.33.0"
+}
+
+TASK [docker : Add current user to the docker group] *******************************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Secure Docker Configuration - Disable Root Access] ******************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [web_app : Deploy App] ********************************************************************************************************************************************************
+included: /root/.ansible/roles/web_app/tasks/deploy_app.yml for yandex_instance_1
+
+TASK [web_app : Pull Docker image] *************************************************************************************************************************************************
+changed: [yandex_instance_1]
+
+TASK [web_app : Start container] ***************************************************************************************************************************************************
+[DEPRECATION WARNING]: The default value "ignore" for image_name_mismatch has been deprecated and will change to "recreate" in community.docker 4.0.0. In the current situation, 
+this would cause the container to be recreated since the current container's image name "efimpuzhalov/moscow-time-py-app" does not match the desired image name
+"rwkals/app_python_distroless". This feature will be removed from community.docker in version 4.0.0. Deprecation warnings can be disabled by setting deprecation_warnings=False in  
+ansible.cfg.
+changed: [yandex_instance_1]
+
+TASK [web_app : Create directory for docker-compose file] **************************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [web_app : Deploy docker-compose file] ****************************************************************************************************************************************
+changed: [yandex_instance_1]
+
+TASK [web_app : Remove container] **************************************************************************************************************************************************
+skipping: [yandex_instance_1]
+
+TASK [web_app : Remove docker-compose file] ****************************************************************************************************************************************
+skipping: [yandex_instance_1]
+
+PLAY RECAP *************************************************************************************************************************************************************************
+yandex_instance_1          : ok=17   changed=4    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
+```
+
+### Kotlin
+
+```shell
+root@DESKTOP-D43KHFL:/mnt/c/Users/egora/PycharmProjects/S25-core-course-labs# ansible-playbook -i ansible/inventory/default_yacloud.yml ansible/playbooks/dev/app_kotlin/main.yml
+
+PLAY [Deploy Python app] ***********************************************************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************************************
+[WARNING]: Platform linux on host yandex_instance_1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could
+change the meaning of that path. See https://docs.ansible.com/ansible-core/2.17/reference_appendices/interpreter_discovery.html for more information.
+ok: [yandex_instance_1]
+
+TASK [docker : Update apt package index] *******************************************************************************************************************************************
+changed: [yandex_instance_1]
+
+TASK [docker : Install required packages] ******************************************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Add Docker GPG key] *************************************************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Add Docker repository] **********************************************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Install Docker] *****************************************************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Enable and start Docker service] ************************************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Download Docker Compose] ********************************************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Verify Docker Compose installation] *********************************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Display installed Docker Compose version] ***************************************************************************************************************************
+ok: [yandex_instance_1] => {
+    "msg": "Docker Compose version v2.33.0"
+}
+
+TASK [docker : Add current user to the docker group] *******************************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Secure Docker Configuration - Disable Root Access] ******************************************************************************************************************
+ok: [yandex_instance_1]
+
+TASK [web_app : Deploy App] ********************************************************************************************************************************************************
+included: /root/.ansible/roles/web_app/tasks/deploy_app.yml for yandex_instance_1
+
+
+TASK [web_app : Pull Docker image] *************************************************************************************************************************************************changed: [yandex_instance_1]
+
+TASK [web_app : Start container] ***************************************************************************************************************************************************changed: [yandex_instance_1]
+
+TASK [web_app : Create directory for docker-compose file] **************************************************************************************************************************ok: [yandex_instance_1]
+
+TASK [web_app : Deploy docker-compose file] ****************************************************************************************************************************************changed: [yandex_instance_1]
+
+TASK [web_app : Remove container] **************************************************************************************************************************************************skipping: [yandex_instance_1]
+
+TASK [web_app : Remove docker-compose file] ****************************************************************************************************************************************skipping: [yandex_instance_1]
+
+PLAY RECAP *************************************************************************************************************************************************************************yandex_instance_1          : ok=17   changed=4    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
+```

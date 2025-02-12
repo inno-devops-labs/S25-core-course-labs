@@ -1,1 +1,6 @@
-print("Program started")
+version: '3'
+services:
+  app:
+    image: "{{ web_app_docker_image }}"
+    ports:
+      - "{{ web_app_port }}:{{ web_app_container_port }}"
