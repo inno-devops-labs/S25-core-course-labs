@@ -10,7 +10,7 @@ This role installs Docker, pulls the specified Docker image, and deploys it usin
 ## Role Variables
 - `docker_image`: Docker image to be used (default: `vika123vika/app_python:latest`)
 - `app_port`: Port for the application (default: `8080`)
-- `web_app_full_wipe`: Boolean to enable/disable the wipe task
+- `web_app_full_wipe`: Boolean to enable/disable the wipe task (default: `false`)
 
 ## Example Usage
 ```yaml
