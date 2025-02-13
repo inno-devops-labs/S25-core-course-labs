@@ -1,4 +1,14 @@
-## Test run
+# Ansible automation
+
+## Best practices used
+
+- Kept simple.
+- Used lists rather than loops where possible (apt packages, users) to have better performance and reporting
+- Used a handler for a potentially repeating task
+- Ansible-lint was used to check the playbook for errors and improve it
+- Dynamic inventory!
+
+## Test run of the Docker installation playbook
 
 ```sh
 devops-labs ❯ ansible-playbook playbooks/dev/main.yaml -i inventory/yacloud_compute.yml --diff --check
