@@ -5,3 +5,4 @@ all:
       ansible_user: root
       ansible_ssh_private_key_file: /home/anushervon/.ssh/devops_regru
       ansible_python_interpreter: /usr/bin/python3.12
+      web_app_full_wipe: true

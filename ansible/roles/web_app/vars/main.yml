@@ -1,0 +1,5 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for ansible/roles/web_app
+app_port: 8080
+container_port: 8080

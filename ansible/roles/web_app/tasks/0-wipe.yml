@@ -1,0 +1,15 @@
+- name: Remove existing web_app(moscow_time) container
+  docker_container:
+    name: "{{ container_name }}"
+    state: absent
+  when: web_app_full_wipe | bool
+  tags:
+    - wipe
+
+- name: Remove leftover Docker files
+  file:
+    path: /var/lib/docker/overlay2/{{ container_name }}
+    state: absent
+  when: web_app_full_wipe | bool
+  tags:
+    - wipe

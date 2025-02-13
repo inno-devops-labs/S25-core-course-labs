@@ -111,7 +111,7 @@ reg_instance_1             : ok=14   changed=0    unreachable=0    failed=0    s
 
 ### Checking Docker Version via SSH
 
-Command ``` ssh -i ~/.ssh/devops_regru root@193.227.240.176 "docker --version"```
+Command: ``` ssh -i ~/.ssh/devops_regru root@193.227.240.176 "docker --version"```
 
 #### Output
 
@@ -121,7 +121,7 @@ Docker version 27.5.1, build 9f9e405
 
 ### Running Ansible Playbook (Second Execution)
 
-Command : ```ansible-playbook -i ansible/inventory/default_regcloud.yml ansible/playbooks/dev/main.yaml```
+Command: ```ansible-playbook -i ansible/inventory/default_regcloud.yml ansible/playbooks/dev/main.yaml```
 
 #### Output 
 
