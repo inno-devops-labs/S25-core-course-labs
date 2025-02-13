@@ -23,7 +23,7 @@ TASK [docker : Install required packages] **************************************
 ok: [vm]
 
 TASK [docker : Add Docker GPG key] *********************************************
-fatal: [vm]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ", "unreachable": true}
+ok: [vm]
 
 PLAY RECAP *********************************************************************
 vm                         : ok=3    changed=1    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
