@@ -15,3 +15,7 @@
 
 - name: Configure Docker security settings
   ansible.builtin.include_tasks: secure_docker.yml
+
+- name: Install Docker Python module
+  ansible.builtin.include_tasks: ansible_docker.yml
+  when: install_docker_pip | bool
