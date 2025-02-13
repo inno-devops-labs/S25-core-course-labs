@@ -12,3 +12,6 @@
 
 - name: Start docker on startup
   ansible.builtin.include_tasks: enable_on_boot.yml
+
+- name: Configure Docker security settings
+  ansible.builtin.include_tasks: secure_docker.yml
