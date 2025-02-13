@@ -172,3 +172,111 @@ Also, executed with ```--diff``` flag - was the same output
   |--@virtual_machines:
   |  |--yandex_machine
 ```
+
+
+
+# Bonus Tasks
+
+### 1. Yandex Cloud plugin for the dynamic inventory
+
+
+#### ```ansible-inventory -i inventory/yc_compute.yml --list```
+
+```
+{
+    "_meta": {
+        "hostvars": {
+            "terraform1": {
+                "ansible_host": "89.169.134.171"
+            }
+        }
+    },
+    "all": {
+        "children": [
+            "ungrouped",
+            "yacloud"
+        ]
+    },
+    "yacloud": {
+        "hosts": [
+            "terraform1"
+        ]
+    }
+}
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739454282.219996   93470 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+
+```
+
+
+### 2. Secure Docker
+
+```
+...
+
+
+TASK [docker : Secure Docker Daemon] **************************************************************************************************************************
+ok: [yandex_machine]
+
+...
+```
+
+#### Full code with the command ```ansible-playbook -i inventory/default_yandex.yml playbooks/dev/main.yaml```
+
+
+```
+PLAY [Docker Deploying] ***************************************************************************************************************************************
+
+TASK [Gathering Facts] ****************************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Update apt package index] **********************************************************************************************************************
+changed: [yandex_machine]
+
+TASK [docker : Install packages] ******************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Add Docker GPG key] ****************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Add Docker repository] *************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Install Docker] ********************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Ensure /usr/local/bin exists] ******************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Docker compose Install] ************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Ensure Docker service is running] **************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Add cur user to docker group] ******************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Secure Docker Daemon] **************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Verify Docker installation] ********************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Print Docker version] **************************************************************************************************************************
+ok: [yandex_machine] => {
+    "msg": "Docker version 27.5.1, build 9f9e405"
+}
+
+TASK [docker : Verify Docker Compose installation] ************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Print Docker Compose version] ******************************************************************************************************************
+ok: [yandex_machine] => {
+    "msg": "docker-compose version 1.29.2, build 5becea4c"
+}
+
+PLAY RECAP ****************************************************************************************************************************************************
+yandex_machine             : ok=15   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+```
