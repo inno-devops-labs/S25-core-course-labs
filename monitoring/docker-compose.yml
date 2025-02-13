@@ -1,0 +1,59 @@
+services:
+  loki:
+    image: grafana/loki:2.7.1
+    command: -config.file=/etc/loki/local-config.yaml
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+    networks:
+      - monitoring_stack
+
+  promtail:
+    image: grafana/promtail:2.7.1
+    volumes:
+      - ./promtail-config.yaml:/etc/promtail/config.yaml
+      - app_logs:/app:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    command: -config.file=/etc/promtail/config.yaml
+    depends_on:
+      - loki
+    networks:
+      - monitoring_stack
+
+  grafana:
+    image: grafana/grafana:9.5.2
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - loki
+    networks:
+      - monitoring_stack
+
+  python_app:
+    build: ../app_python
+    ports:
+      - "5000:5000"
+    volumes:
+      - app_logs:/app
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    networks:
+      - monitoring_stack
+
+  java_app:
+    build: ../app_java
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    networks:
+      - monitoring_stack
+
+volumes:
+  app_logs:
+
+networks:
+  monitoring_stack:
+    driver: bridge
