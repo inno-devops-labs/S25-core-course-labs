@@ -10,7 +10,7 @@ app_bind_port: "127.0.0.1:8000"  # Default application bind port
 app_clean_install: false  # Set to true to enable wipe functionality
 
 # Docker compose configuration
-docker_compose_dir: "/opt/web_app"
+# docker_compose_dir: "/opt/web_app"
 app_name: "{{ docker_image.split('/')[-1].split(':')[0] }}"  # Extract name from image
 docker_compose_file: "docker-compose.yml"
 

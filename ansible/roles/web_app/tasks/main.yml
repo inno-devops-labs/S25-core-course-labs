@@ -45,6 +45,7 @@
     - name: Deploy with Docker Compose
       community.docker.docker_compose_v2:
         project_src: "{{ docker_compose_dir }}"
+        files: "{{ docker_compose_file }}"
         state: present
       tags:
         - deploy
