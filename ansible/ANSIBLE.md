@@ -10,6 +10,8 @@ printings and tasks to ensure that docker is
 running, for instance
 * **Added user to Docker group**
 * **Usage of roles**
+* **Dynamic inventory**: using Yandex Cloud compute
+* **Non-root user**
 
 ## Commands output
 
