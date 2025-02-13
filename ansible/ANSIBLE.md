@@ -182,7 +182,7 @@ Also, executed with ```--diff``` flag - was the same output
 ### 1. Yandex Cloud plugin for the dynamic inventory
 
 
-#### ```ansible-inventory -i inventory/yc_compute.yml --list```
+#### ```ansible-inventory -i inventory/yacloud_compute.yml --list```
 
 ```
 {
