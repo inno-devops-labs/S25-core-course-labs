@@ -1,0 +1,21 @@
+---
+- name: Wipe application deployment
+  block:
+    - name: Stop and remove Docker containers using docker-compose
+      become: true
+      when: docker_compose_dir is directory
+      community.docker.docker_compose_v2:
+        project_src: "{{ docker_compose_dir }}"
+        state: absent
+
+    - name: Remove Docker compose directory
+      become: true
+      file:
+        path: "{{ docker_compose_dir }}"
+        state: absent
+
+    - name: Remove Docker image
+      become: true
+      docker_image:
+        name: "{{ docker_image }}"
+        state: absent

@@ -2,5 +2,7 @@
 - name: Install and configure Docker
   hosts: all
   roles:
-    - role: docker
-      become: true
+    - role: web_app
+      docker_image: "fallenchromium/moscow-timezone-app:latest"
+      app_port: 8000
+      app_bind_port: "127.0.0.1:80"

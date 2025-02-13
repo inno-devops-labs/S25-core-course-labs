@@ -1,5 +1,3 @@
 ---
-roles:
-  # Install a role from Ansible Galaxy.
-  - name: geerlingguy.docker
-    version: "7.4.5"
+collections:
+  - community.docker
