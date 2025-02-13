@@ -17,6 +17,9 @@
     groups: docker
     append: yes
 
+- name: Make Docker secure
+  import_tasks: secure_docker.yml
+
 - name: Verify Docker installation
   command: docker --version
   register: docker_version_output
