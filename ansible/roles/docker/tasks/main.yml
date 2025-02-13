@@ -1,7 +1,13 @@
 ---
-- name: Install Docker prerequisites
-  import_tasks: install_docker.yml
+- name: Setup Docker Environment
+  block:
 
-- name: Install Docker Compose
-  import_tasks: install_compose.yml
+    - name: Install Docker prerequisites
+      import_tasks: install_docker.yml
+
+    - name: Install Docker Compose
+      import_tasks: install_compose.yml
+
+  tags:
+    - setup
 
