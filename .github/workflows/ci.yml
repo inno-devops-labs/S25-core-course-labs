@@ -1,0 +1,55 @@
+name: Python CI with Docker
+
+on: [push, pull_request]  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r app_python/requirements.txt
+
+      - name: Run Linter (flake8)
+        run: flake8 app_python/ --max-line-length=88
+
+      - name: Run Unit Tests
+        run: |
+          PYTHONPATH=$(pwd) python3 -m unittest discover app_python/tests -v
+
+      - name: Security Scan with Snyk
+        uses: snyk/actions/python@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        continue-on-error: true
+
+  docker:
+    needs: build  
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/app-python:latest ./app_python
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/app-python:latest
+

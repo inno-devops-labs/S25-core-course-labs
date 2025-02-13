@@ -1,0 +1,15 @@
+- name: Download Docker Compose
+  get_url:
+    url: "{{ docker_compose_url }}"
+    dest: "{{ docker_compose_dest }}"
+    mode: '0755'
+
+- name: Verify Docker Compose installation
+  command: docker-compose --version
+  register: compose_version
+  changed_when: false
+
+- name: Display installed Docker Compose version
+  debug:
+    msg: "{{ compose_version.stdout }}"
+
