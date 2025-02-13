@@ -4,30 +4,23 @@
 
 - name: Install required packages
   apt:
-    name:
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - software-properties-common
+    name: "{{ required_packages }}"
     state: present
     update_cache: yes
 
 - name: Add Docker GPG key
   apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
+    url: "{{ docker_gpg_key }}"
     state: present
 
 - name: Add Docker repository
   apt_repository:
-    repo: "deb https://download.docker.com/linux/ubuntu jammy stable"
+    repo: "{{ docker_repo }}"
     state: present
 
 - name: Install Docker
   apt:
-    name:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
+    name: "{{ docker_packages }}"
     state: present
     update_cache: yes
 
@@ -36,3 +29,4 @@
     name: docker
     enabled: yes
     state: started
+
