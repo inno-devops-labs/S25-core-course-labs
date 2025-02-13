@@ -3,4 +3,6 @@
   roles:
     - role: docker
       become: true
+    - role: web_app
+      become: true
 
