@@ -46,6 +46,6 @@ resource "yandex_compute_instance" "vm-1" {
   }
 
   metadata = {
-    ssh-keys = "${var.user}:${local.ssh_key}"
+    user-data = templatefile("./metadata.tftpl", { ssh_key_string = local.ssh_key })
   }
 }

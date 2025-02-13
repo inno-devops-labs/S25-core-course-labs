@@ -26,9 +26,3 @@ variable "ssh_key_content" {
   default     = ""
   sensitive = true
 }
-
-variable "user" {
-  type    = string
-  default = "debian"
-  sensitive = true
-}
