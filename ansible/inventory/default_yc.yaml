@@ -1,0 +1,5 @@
+all:
+  hosts:
+    vm-lab4:
+      ansible_host: 158.160.157.133
+      ansible_user: niyaz-devops

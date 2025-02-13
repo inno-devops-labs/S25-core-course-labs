@@ -1,0 +1,2 @@
+- include_tasks: install_docker.yaml
+- include_tasks: install_compose.yaml
