@@ -134,3 +134,119 @@ ebob@laptop ansible % ansible-inventory -i inventory/yacloud_compute.yml --graph
   |--@yacloud:
   |  |--vm-1
 ```
+
+## Application Deployment
+
+### Deploy `app_python`
+
+`ansible-playbook playbooks/dev/app_python/main.yml -i inventory/yacloud_compute.yml`
+
+```shell
+ebob@laptop ansible % ansible-playbook playbooks/dev/app_python/main.yml -i inventory/yacloud_compute.yml
+
+PLAY [Deploy app_python] **********************************************************************************************************************************************
+
+TASK [Gathering Facts] ************************************************************************************************************************************************
+ok: [vm-1]
+
+TASK [docker : Install Docker] ****************************************************************************************************************************************
+included: /Users/ebob/Code/devops-labs/ansible/roles/docker/tasks/install_docker.yml for vm-1
+
+TASK [docker : Update apt package index] ******************************************************************************************************************************
+changed: [vm-1]
+
+TASK [docker : Install required system packages] **********************************************************************************************************************
+ok: [vm-1] => (item=apt-transport-https)
+ok: [vm-1] => (item=ca-certificates)
+ok: [vm-1] => (item=curl)
+ok: [vm-1] => (item=gnupg-agent)
+ok: [vm-1] => (item=software-properties-common)
+
+TASK [docker : Add Docker's official GPG key] *************************************************************************************************************************
+ok: [vm-1]
+
+TASK [docker : Add Docker's official apt repository] ******************************************************************************************************************
+ok: [vm-1]
+
+TASK [docker : Install Docker and dependencies] ***********************************************************************************************************************
+ok: [vm-1]
+
+TASK [docker : Add user to docker group] ******************************************************************************************************************************
+ok: [vm-1]
+
+TASK [docker : Configure Docker security settings] ********************************************************************************************************************
+ok: [vm-1]
+
+TASK [docker : Enable Docker service to start on boot] ****************************************************************************************************************
+ok: [vm-1]
+
+TASK [docker : Install Docker Compose] ********************************************************************************************************************************
+included: /Users/ebob/Code/devops-labs/ansible/roles/docker/tasks/install_docker_compose.yml for vm-1
+
+TASK [docker : Install Docker Compose] ********************************************************************************************************************************
+ok: [vm-1]
+
+TASK [web_app : Full wipe] ********************************************************************************************************************************************
+included: /Users/ebob/Code/devops-labs/ansible/roles/web_app/tasks/0-wipe.yml for vm-1
+
+TASK [web_app : Ensure web_app_dir exists] ****************************************************************************************************************************
+changed: [vm-1]
+
+TASK [web_app : Check if docker-compose.yml exists] *******************************************************************************************************************
+ok: [vm-1]
+
+TASK [web_app : Wipe images] ******************************************************************************************************************************************
+skipping: [vm-1]
+
+TASK [web_app : Remove app directory] *********************************************************************************************************************************
+changed: [vm-1]
+
+TASK [web_app : Deploy dockerized app] ********************************************************************************************************************************
+included: /Users/ebob/Code/devops-labs/ansible/roles/web_app/tasks/1-deploy.yml for vm-1
+
+TASK [web_app : Create app directory] *********************************************************************************************************************************
+changed: [vm-1]
+
+TASK [web_app : Copy Docker Compose template] *************************************************************************************************************************
+changed: [vm-1]
+
+TASK [web_app : Ensure docker service is OK] **************************************************************************************************************************
+ok: [vm-1]
+
+TASK [web_app : Create and start the services] ************************************************************************************************************************
+changed: [vm-1]
+
+PLAY RECAP ************************************************************************************************************************************************************
+vm-1                       : ok=21   changed=6    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+```
+
+### Wipe `app_python`
+
+`ansible-playbook playbooks/dev/app_python/main.yml -i inventory/yacloud_compute.yml --tags=wipe`
+
+```shell
+ebob@laptop ansible % ansible-playbook playbooks/dev/app_python/main.yml -i inventory/yacloud_compute.yml --tags=wipe
+
+PLAY [Deploy app_python] **********************************************************************************************************************************************
+
+TASK [Gathering Facts] ************************************************************************************************************************************************
+ok: [vm-1]
+
+TASK [web_app : Full wipe] ********************************************************************************************************************************************
+included: /Users/ebob/Code/devops-labs/ansible/roles/web_app/tasks/0-wipe.yml for vm-1
+
+TASK [web_app : Ensure web_app_dir exists] ****************************************************************************************************************************
+ok: [vm-1]
+
+TASK [web_app : Check if docker-compose.yml exists] *******************************************************************************************************************
+ok: [vm-1]
+
+TASK [web_app : Wipe images] ******************************************************************************************************************************************
+changed: [vm-1]
+
+TASK [web_app : Remove app directory] *********************************************************************************************************************************
+changed: [vm-1]
+
+PLAY RECAP ************************************************************************************************************************************************************
+vm-1                       : ok=6    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
