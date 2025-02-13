@@ -56,39 +56,3 @@ changed: [my_yandex_vm]
 PLAY RECAP *******************************************************************************
 my_yandex_vm               : ok=12   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
-
-## Inventory list output
-
-```bash
-{
-    "_meta": {
-        "hostvars": {
-            "my_yandex_vm": {
-                "ansible_host": "89.169.156.215",
-                "ansible_python_interpreter": "/usr/bin/python3",
-                "ansible_ssh_private_key_file": "~/.ssh/my-yandex-key.pub",
-                "ansible_user": "nika"
-            }
-        }
-    },
-    "all": {
-        "children": [
-            "ungrouped"
-        ]
-    },
-    "ungrouped": {
-        "hosts": [
-            "my_yandex_vm"
-        ]
-    }
-}
-```
-
-## Inventory graph output
-
-```bash
-@all:
-  |--@ungrouped:
-  |  |--my_yandex_vm
-```
-
