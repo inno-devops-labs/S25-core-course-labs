@@ -1,0 +1,5 @@
+- name: Docker Deploying
+  hosts: all
+  become: true
+  roles:
+    - docker
