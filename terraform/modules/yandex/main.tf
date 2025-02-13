@@ -7,6 +7,10 @@ terraform {
   required_version = ">= 0.13"
 }
 
+locals {
+  ssh_key = length(var.ssh_key_content) > 0 ? var.ssh_key_content : file(var.ssh_key_file)
+}
+
 provider "yandex" {
   zone = var.availability-zone
 }
@@ -42,6 +46,6 @@ resource "yandex_compute_instance" "vm-1" {
   }
 
   metadata = {
-    ssh-keys = var.ssh_keys
+    user-data = templatefile("./metadata.tftpl", { ssh_key_string = local.ssh_key })
   }
 }

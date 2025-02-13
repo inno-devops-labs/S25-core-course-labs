@@ -16,3 +16,5 @@ node_modules
 .terraform
 terraform.tfstate
 *.backup
+
+ansible/roles/geerlingguy.*

@@ -1,0 +1,4 @@
+docker_users:
+  "{{ lookup('env', 'USER') }}"
+
+docker_on_boot: true

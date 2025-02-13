@@ -10,10 +10,19 @@ variable "subnet_masks" {
 
 variable "image_id" {
   type    = string
-  default = "fd82odtq5h79jo7ffss3"  # Ubuntu 24.04
+  default = "fd801rku4j14mv7fs703" # Debian 12
 }
 
-variable "ssh_keys" {
-  type    = string
-  default = null
+variable "ssh_key_file" {
+  description = "Path to the SSH key file"
+  type        = string
+  default     = "~/.ssh/id_rsa.pub"
+  sensitive = true
+}
+
+variable "ssh_key_content" {
+  description = "Content of the SSH key"
+  type        = string
+  default     = ""
+  sensitive = true
 }
