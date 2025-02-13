@@ -2,7 +2,14 @@
 
 ## Best practices
 
-
+* **Modularity**: everything is splitted into modules and 
+inporting neccessary files in `main.yml`
+* **Handlers**: prevents from unnecessary restarts
+* **Extra checks and validations**: I have added extra
+printings and tasks to ensure that docker is 
+running, for instance
+* **Added user to Docker group**
+* **Usage of roles**
 
 ## Commands output
 
