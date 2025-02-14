@@ -13,4 +13,4 @@ For this task I chose `flask` because the project we are working on is small and
 
 - **PEP8 Compliance:** The code follows PEP8, making it easier to read and understand
 - **Clear and descriptive names:** The use of descriptive names for the function and variables in the code making it easier to understand code
-- **Documented code:** The code is documented making it easer to read and understand the code's workflow
+- **Documented code:** The code is documented making it easier to read and understand the code's workflow
