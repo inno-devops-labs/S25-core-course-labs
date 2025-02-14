@@ -16,7 +16,7 @@ In this lab, you will get acquainted with Ansible, a powerful configuration mana
      |-- README.md
      |-- ansible
      |   |-- inventory
-     |   |   `-- default_aws_ec2.yml
+     |   |   `-- default_yandex_cloud.yml
      |   |-- playbooks
      |   |   `-- dev
      |   |       `-- main.yaml

@@ -1,0 +1,14 @@
+- name: Ensure Docker is installed
+  include_role:
+    name: geerlingguy.docker
+
+- name: Deploy application with Docker Compose
+  template:
+    src: docker-compose.yml.j2
+    dest: /home/ubuntu/docker-compose.yml
+  notify: Restart container
+
+- name: Start application
+  command: docker compose up -d
+  args:
+    chdir: /home/ubuntu
