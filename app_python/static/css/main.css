@@ -1,0 +1,32 @@
+
+
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    height: 100vh; 
+    background-image: url('/static/image/Kreml.jpg');
+    background-size: cover;  
+    background-repeat: no-repeat; 
+    background-position: center center; 
+    position: relative;
+     
+}
+
+.time{
+    text-align: center;
+    padding: 30px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.527);
+}
+
+#main_text{
+    color: white;
+    font-size: 32px;
+}
