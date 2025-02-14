@@ -1,0 +1,6 @@
+---
+- name: Ansible and Docker Deployment
+  hosts: aws_ec2  # Target hosts from the AWS EC2 inventory
+  become: true  # Use elevated privileges for all tasks
+  roles:
+    - roles/docker  # Include the custom Docker role
