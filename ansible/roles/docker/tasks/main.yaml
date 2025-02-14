@@ -1,0 +1,21 @@
+---
+- name: Docker installation 
+  ansible.builtin.include_tasks: install_docker.yaml
+
+- name: Docker compose installation 
+  ansible.builtin.include_tasks: install_compose.yaml
+
+- name: Docker secure 
+  ansible.builtin.include_tasks: docker_secure.yaml
+
+- name: Docker boot
+  systemd:
+    name: docker
+    enabled: yes
+    state: started
+
+- name: User for docker
+  user:
+    name: "{{ ansible_user_id }}" 
+    groups: docker
+    append: yes

@@ -8,3 +8,6 @@ deploy.tfplan
 hashicorp.gpg
 key.json
 meta.txt
+[project_name]
+venv
+authorized_key.json

@@ -1,0 +1,21 @@
+- name: Download Docker Compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+    dest: /usr/local/bin/docker-compose
+    mode: '0755'
+
+- name: Symbolic link for docker-compose
+  file:
+    src: /usr/local/bin/docker-compose
+    dest: /usr/bin/docker-compose
+    state: link
+
+- name: Verify Docker Compose installation
+  command: docker-compose --version
+  register: docker_compose_version_check
+  ignore_errors: true
+
+- name: Display success message if Docker Compose is installed
+  debug:
+    msg: "docker-compose installed"
+  when: docker_compose_version_check.rc == 0
