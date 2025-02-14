@@ -1,0 +1,4 @@
+fastapi>=0.68.0
+uvicorn>=0.15.0
+jinja2>=2.11.0
+pytz>=2024.2
