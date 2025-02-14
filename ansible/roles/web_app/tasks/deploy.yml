@@ -1,0 +1,30 @@
+---
+- name: Deploy web app
+  tags: [docker]
+  block:
+    - name: Create Web App Directory
+      file:
+        path: "{{ web_app_dir }}"
+        state: directory
+        mode: 0755
+
+    - name: Pull the latest Docker image
+      docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+
+    - name: Run the Python web app container
+      docker_container:
+        name: "{{ docker_container }}"
+        image: "{{ docker_image }}"
+        state: started
+        restart_policy: always
+        ports:
+          - "{{ external_port }}:{{ internal_port }}"
+
+    - name: Copy Docker Compose
+      template:
+        src: "docker-compose.yml.j2"
+        dest: "{{ web_app_dir }}/docker-compose.yml"
+        mode: 0755
+      tags: [docker-compose]
