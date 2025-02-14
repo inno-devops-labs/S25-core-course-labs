@@ -1,4 +1,5 @@
 from flask import Flask
+from prometheus_flask_exporter import PrometheusMetrics
 
 from .config import Config
 
@@ -10,6 +11,8 @@ def initialize_app():
     """
     app = Flask(__name__)
     app.config.from_object(Config)
+
+    PrometheusMetrics(app)
 
     with app.app_context():
         from . import routes

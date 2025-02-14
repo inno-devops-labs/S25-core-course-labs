@@ -1,4 +1,4 @@
-FROM python:3.12.0-slim AS base
+FROM python:3.12.0 AS base
 
 RUN useradd -m appuser
 
