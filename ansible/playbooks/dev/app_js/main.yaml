@@ -1,0 +1,13 @@
+---
+- name: Deploy Node.js app
+  hosts: all
+  become: yes
+  roles:
+    - name: web_app
+      vars:
+        docker_image: "nickolaus899/js-cities-dist:latest"
+        docker_container: js-cities-dist
+
+        internal_port: 3000
+        external_port: 8081
+        web_app_full_wipe: true  
