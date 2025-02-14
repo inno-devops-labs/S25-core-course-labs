@@ -1,4 +1,4 @@
-- name: Docker Deploying
+- name: Install Docker
   hosts: all
   become: true
   roles:

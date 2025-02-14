@@ -182,7 +182,7 @@ Also, executed with ```--diff``` flag - was the same output
 ### 1. Yandex Cloud plugin for the dynamic inventory
 
 
-#### ```ansible-inventory -i inventory/yc_compute.yml --list```
+#### ```ansible-inventory -i inventory/yacloud_compute.yml --list```
 
 ```
 {
@@ -282,3 +282,90 @@ PLAY RECAP *********************************************************************
 yandex_machine             : ok=15   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
 ```
+
+
+
+# Deploying (web_app role)
+
+#### ```ansible-playbook -i inventory/default_yandex.yml playbooks/dev/app_python/main.yaml```
+
+
+```
+PLAY [Deploy Python app] *********************************************************************************************************************************************
+
+TASK [Gathering Facts] ***********************************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Update apt package index] *****************************************************************************************************************************
+changed: [yandex_machine]
+
+TASK [docker : Install packages] *************************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Add Docker GPG key] ***********************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Add Docker repository] ********************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Install Docker] ***************************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Ensure /usr/local/bin exists] *************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Docker compose Install] *******************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Ensure Docker service is running] *********************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Add cur user to docker group] *************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Secure Docker Daemon] *********************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Verify Docker installation] ***************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Print Docker version] *********************************************************************************************************************************
+ok: [yandex_machine] => {
+    "msg": "Docker version 27.5.1, build 9f9e405"
+}
+
+TASK [docker : Verify Docker Compose installation] *******************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [docker : Print Docker Compose version] *************************************************************************************************************************
+ok: [yandex_machine] => {
+    "msg": "docker-compose version 1.29.2, build 5becea4c"
+}
+
+TASK [web_app : Remove the existing container] ***********************************************************************************************************************
+changed: [yandex_machine]
+
+TASK [web_app : Remove docker-compose file] **************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [web_app : Remove Web app directory] ****************************************************************************************************************************
+changed: [yandex_machine]
+
+TASK [web_app : Create Web App Directory] ****************************************************************************************************************************
+changed: [yandex_machine]
+
+TASK [web_app : Pull the latest Docker image] ************************************************************************************************************************
+ok: [yandex_machine]
+
+TASK [web_app : Run the Python web app container] ********************************************************************************************************************
+changed: [yandex_machine]
+
+TASK [web_app : Copy Docker Compose] *********************************************************************************************************************************
+changed: [yandex_machine]
+
+PLAY RECAP ***********************************************************************************************************************************************************
+yandex_machine             : ok=22   changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+```
+
+![py app image](./readme_images/app_py.png)
