@@ -1,0 +1,5 @@
+---
+plugin: yacloud_compute
+yacloud_clouds: cloud-bugaevgleb
+yacloud_folders: default
+yacloud_token_file: "./inventory/token"
