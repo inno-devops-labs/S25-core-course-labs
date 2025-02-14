@@ -47,3 +47,7 @@ out/
 .terraform.lock.hcl
 terraform.tfstate
 terraform.tfstate.backup
+
+# Ansible
+
+ansible/yacloud_token

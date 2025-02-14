@@ -1,0 +1,70 @@
+## `ansible-playbook -i inventory/yacloud_compute.yaml playbooks/dev/main.yaml`
+
+```
+PLAY [all] *************************************************************************************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************************************************
+ok: [compute-vm-2-1-20-hdd-1739559443483]
+
+TASK [docker : Update apt packages] ************************************************************************************************************************************************************
+changed: [compute-vm-2-1-20-hdd-1739559443483]
+
+TASK [docker : Install apt packages] ***********************************************************************************************************************************************************
+changed: [compute-vm-2-1-20-hdd-1739559443483]
+
+TASK [docker : Add Docker's official GPG key] **************************************************************************************************************************************************
+changed: [compute-vm-2-1-20-hdd-1739559443483]
+
+TASK [docker : Add Docker repository] **********************************************************************************************************************************************************
+changed: [compute-vm-2-1-20-hdd-1739559443483]
+
+TASK [docker : Install Docker and Docker Compose] **********************************************************************************************************************************************
+changed: [compute-vm-2-1-20-hdd-1739559443483] => (item=docker-ce)
+ok: [compute-vm-2-1-20-hdd-1739559443483] => (item=docker-ce-cli)
+ok: [compute-vm-2-1-20-hdd-1739559443483] => (item=containerd.io)
+ok: [compute-vm-2-1-20-hdd-1739559443483] => (item=docker-buildx-plugin)
+ok: [compute-vm-2-1-20-hdd-1739559443483] => (item=docker-compose-plugin)
+
+TASK [docker : Add Docker group] ***************************************************************************************************************************************************************
+ok: [compute-vm-2-1-20-hdd-1739559443483]
+
+TASK [docker : Add user to Docker group] *******************************************************************************************************************************************************
+changed: [compute-vm-2-1-20-hdd-1739559443483]
+
+TASK [docker : Enable and start Docker services] ***********************************************************************************************************************************************
+ok: [compute-vm-2-1-20-hdd-1739559443483] => (item=docker.service)
+ok: [compute-vm-2-1-20-hdd-1739559443483] => (item=containerd.service)
+
+PLAY RECAP *************************************************************************************************************************************************************************************
+compute-vm-2-1-20-hdd-1739559443483 : ok=9    changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739559802.476463   24666 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+```
+
+## `ansible-inventory -i inventory/yacloud_compute.yaml --list`
+
+```
+{
+    "_meta": {
+        "hostvars": {
+            "compute-vm-2-1-20-hdd-1739559443483": {
+                "ansible_host": "158.160.130.149"
+            }
+        }
+    },
+    "all": {
+        "children": [
+            "ungrouped",
+            "yacloud"
+        ]
+    },
+    "yacloud": {
+        "hosts": [
+            "compute-vm-2-1-20-hdd-1739559443483"
+        ]
+    }
+}
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739559978.230150   25566 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+```
