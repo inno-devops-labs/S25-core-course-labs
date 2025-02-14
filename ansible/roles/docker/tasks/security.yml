@@ -1,0 +1,11 @@
+- name: Add user to Docker group
+  user:
+    name: "{{ docker_user }}"
+    groups: docker
+    append: true
+
+- name: Activate Docker services
+  systemd:
+    name: docker
+    enabled: true
+    state: started

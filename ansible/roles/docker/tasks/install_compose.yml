@@ -1,0 +1,9 @@
+---
+- name: Install Docker compose
+  become: true
+  apt:
+    name:
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+    update_cache: true

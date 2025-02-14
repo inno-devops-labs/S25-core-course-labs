@@ -1,0 +1,27 @@
+---
+- name: Install requirements
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+
+- name: Add GPG key for Docker
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker repo
+  apt_repository:
+    repo: "deb https://download.docker.com/linux/{{ docker_distro }}"
+    state: present
+
+- name: Install Docker
+  apt:
+    name:
+      - docker-ce={{ docker_version }}
+      - docker-ce-cli
+      - containerd.io
+    state: present
+    update_cache: yes

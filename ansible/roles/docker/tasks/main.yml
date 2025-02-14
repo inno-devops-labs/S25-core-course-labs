@@ -1,0 +1,8 @@
+- name: Install Docker
+  include_tasks: install_docker.yml
+
+- name: Install Docker compose
+  include_tasks: install_compose.yml
+
+- name: Security configurations
+  include_tasks: security.yml
