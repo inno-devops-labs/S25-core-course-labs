@@ -1,0 +1,13 @@
+- name: Deploy app_python
+  hosts: all
+  become: true
+  roles:
+    - web_app
+  vars:
+    web_app_docker_image_name: "dmhd6219/inno_devops_lab2_python_bonus"
+    web_app_docker_container_name: "inno_devops_lab2_python_bonus"
+    web_app_version: "latest"
+    web_app_internal_port: "8000"
+    web_app_external_port: "8000"
+    web_app_docker_compose_folder: "/python_web_app"
+    web_app_docker_compose_path: "/python_web_app/docker-compose.yml"
