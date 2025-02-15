@@ -1,0 +1,7 @@
+---
+aws:
+  hosts: 
+    ec2-3-92-134-8.compute-1.amazonaws.com
+  vars:
+    ansible_ssh_private_key_file: ~/.ssh/haidars_aws_academy.pem
+    ansible_user: ubuntu
