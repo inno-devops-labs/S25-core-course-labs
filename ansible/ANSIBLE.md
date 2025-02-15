@@ -2,6 +2,8 @@
 
 ## Best Practices
 
+* 
+
 ## Execute Playbook
 
 `ansible-playbook -i inventory/yacloud_compute.yaml playbooks/dev/main.yaml`
