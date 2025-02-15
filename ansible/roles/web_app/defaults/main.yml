@@ -1,0 +1,4 @@
+---
+    docker_compose_dest: "/home/web_app/docker-compose.yml"
+    docker_compose_dir: "/home/web_app"
+    app_wipe: false

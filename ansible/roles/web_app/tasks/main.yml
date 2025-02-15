@@ -1,0 +1,34 @@
+---
+- name: Pull Docker image
+  docker_image:
+    name: "{{ docker_image }}"
+    source: pull
+  tags:
+    - docker
+
+- name: Create directory for Docker Compose
+  file:
+    path: "{{ docker_compose_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  tags:
+    - docker
+
+- name: Docker Compose File
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ docker_compose_dest }}"
+  tags:
+    - docker
+
+- name: Start Docker Compose
+  command: docker-compose -f {{ docker_compose_dest }} up -d
+  args:
+    chdir: "{{ docker_compose_dir }}"
+  tags:
+    - docker
+
+- import_tasks: 0-wipe.yml
+  tags: wipe

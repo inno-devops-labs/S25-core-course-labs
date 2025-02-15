@@ -1,0 +1,15 @@
+---
+- name: Wipe Docker container
+  docker_container:
+    name: "{{ container_name }}"
+    state: absent
+    force_kill: yes
+  when: app_wipe | default(false) | bool or 'wipe' in ansible_run_tags
+  tags: wipe
+
+- name: Remove docker-compose file
+  file:
+    path: "{{ docker_compose_dest }}"
+    state: absent
+  when: app_wipe | default(false) | bool or 'wipe' in ansible_run_tags
+  tags: wipe

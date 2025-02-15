@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  app:
+    image: "{{ docker_image }}"
+    container_name: "{{ container_name }}"
+    ports:
+      - "{{ сontainer_port }}:{{ exposed_port }}"
+    restart: always

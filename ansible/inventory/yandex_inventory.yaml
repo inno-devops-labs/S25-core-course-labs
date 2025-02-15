@@ -2,6 +2,6 @@ all:
   hosts:
     compute-lab5-1:
       ansible_host: 84.201.151.82
-      ansible_user: ivangeliev 
+      ansible_user: ivangeliev
       yacloud_token_file: ./inventory/authorized_key.json
       plugin: yacloud_compute
