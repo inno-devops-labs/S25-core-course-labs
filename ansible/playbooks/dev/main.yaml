@@ -1,0 +1,5 @@
+- name: Install Docker on remote server
+  hosts: all
+  become: true
+  roles:
+   - role: docker
