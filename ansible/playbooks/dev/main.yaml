@@ -1,0 +1,6 @@
+---
+- name: Install Docker on dev
+  hosts: dev_vm
+  become: true
+  roles:
+    - docker
