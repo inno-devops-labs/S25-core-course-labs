@@ -1,50 +1,50 @@
-
-TASK [Gathering Facts] *********************************************************
-ok: [localhost]
-
-TASK [docker : include_tasks] **************************************************
-included: /home/utkanos/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for localhost
-
-TASK [docker : Install prerequisites] ******************************************
-ok: [localhost]
-
-TASK [docker : Add Docker GPG key] *********************************************
-ok: [localhost]
-
-TASK [docker : Add Docker repository] ******************************************
-changed: [localhost]
-
-TASK [docker : Install Docker] *************************************************
-ok: [localhost]
-
-TASK [docker : Ensure Docker service is enabled and running] *******************
-changed: [localhost]
-
-TASK [docker : Add users to the Docker group] **********************************
+TASK [geerlingguy.docker : Install docker-compose plugin.] *********************
 skipping: [localhost]
 
-TASK [docker : Verify Docker installation] *************************************
+TASK [geerlingguy.docker : Install docker-compose-plugin (with downgrade option).] ***
+ok: [localhost]
+
+TASK [geerlingguy.docker : Ensure /etc/docker/ directory exists.] **************
 skipping: [localhost]
 
-TASK [docker : Display Docker version] *****************************************
-ok: [localhost] => {
-    "msg": ""
-}
+TASK [geerlingguy.docker : Configure Docker daemon options.] *******************
+skipping: [localhost]
 
-TASK [docker : include_tasks] **************************************************
-included: /home/utkanos/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for localhost
+TASK [geerlingguy.docker : Ensure Docker is started and enabled at boot.] ******
+ok: [localhost]
 
-TASK [docker : Download Docker Compose] ****************************************
+TASK [geerlingguy.docker : Ensure handlers are notified now to avoid firewall conflicts.] ***
+
+RUNNING HANDLER [geerlingguy.docker : restart docker] **************************
 changed: [localhost]
 
-TASK [docker : Verify Docker Compose installation] *****************************
+TASK [geerlingguy.docker : include_tasks] **************************************
 skipping: [localhost]
 
-TASK [docker : Display Docker Compose version] *********************************
-ok: [localhost] => {
-    "msg": ""
-}
+TASK [geerlingguy.docker : Get docker group info using getent.] ****************
+skipping: [localhost]
+
+TASK [geerlingguy.docker : Check if there are any users to add to the docker group.] ***
+skipping: [localhost]
+
+TASK [geerlingguy.docker : include_tasks] **************************************
+skipping: [localhost]
+
+TASK [web_app : Install Docker] ************************************************
+ok: [localhost]
+
+TASK [web_app : Start Docker Service] ******************************************
+ok: [localhost]
+
+TASK [web_app : Pull Docker Image] *********************************************
+changed: [localhost]
+
+TASK [web_app : Deploy Docker Compose File] ************************************
+changed: [localhost]
+
+TASK [web_app : Start Container] ***********************************************
+skipping: [localhost]
 
 PLAY RECAP *********************************************************************
-localhost                  : ok=11   changed=3    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+localhost                  : ok=19   changed=5    unreachable=0    failed=0    skipped=12   rescued=0    ignored=0   
 
