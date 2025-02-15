@@ -1,6 +1,6 @@
 # Ansible Documentation
 
-## Структура проекта
+## Project Structure
 ```
 ansible/
 ├── inventory/
@@ -13,9 +13,9 @@ ansible/
 └── ansible.cfg
 ```
 
-## Инвентарь
+## Inventory
 
-### Структура инвентаря
+### Inventory Structure
 ```bash
 $ ansible-inventory -i ansible/inventory/default_aws_ec2.yml --graph
 @all:
@@ -23,7 +23,7 @@ $ ansible-inventory -i ansible/inventory/default_aws_ec2.yml --graph
   |  |--localhost
 ```
 
-### Детальный вывод инвентаря
+### Detailed Inventory Output
 ```bash
 $ ansible-inventory -i ansible/inventory/default_aws_ec2.yml --list
 {
@@ -47,7 +47,7 @@ $ ansible-inventory -i ansible/inventory/default_aws_ec2.yml --list
 }
 ```
 
-## Вывод развертывания
+## Deployment Output
 
 ```bash
 $ ansible-playbook ansible/playbooks/dev/main.yaml -i ansible/inventory/default_aws_ec2.yml -K
@@ -70,9 +70,9 @@ PLAY RECAP *********************************************************************
 localhost                  : ok=18   changed=0    unreachable=0    failed=0    skipped=11   rescued=0    ignored=0
 ```
 
-## Проверка установки
+## Installation Verification
 
-### Версии компонентов
+### Component Versions
 ```bash
 $ docker --version
 Docker version 27.5.1, build 9f9e405
@@ -81,7 +81,7 @@ $ docker-compose --version
 Docker Compose version v2.32.1
 ```
 
-### Статус службы
+### Service Status
 ```bash
 $ systemctl status docker
 ● docker.service - Docker Application Container Engine
@@ -89,28 +89,28 @@ $ systemctl status docker
      Active: active (running)
 ```
 
-### Проверка группы docker
+### Docker Group Check
 ```bash
 $ groups | grep docker
 m7 ... docker ...
 ```
 
-## Основные команды
+## Basic Commands
 
-### Запуск плейбука
+### Running Playbook
 ```bash
-# Обычный запуск
+# Standard execution
 ansible-playbook ansible/playbooks/dev/main.yaml -i ansible/inventory/default_aws_ec2.yml
 
-# Запуск с правами sudo
+# Execute with sudo privileges
 ansible-playbook ansible/playbooks/dev/main.yaml -i ansible/inventory/default_aws_ec2.yml -K
 
-# Проверка синтаксиса
+# Syntax check
 ansible-playbook ansible/playbooks/dev/main.yaml -i ansible/inventory/default_aws_ec2.yml --syntax-check
 
-# Пробный запуск
+# Dry run
 ansible-playbook ansible/playbooks/dev/main.yaml -i ansible/inventory/default_aws_ec2.yml --check -K
 
-# Запуск с показом различий
+# Run with diff output
 ansible-playbook ansible/playbooks/dev/main.yaml -i ansible/inventory/default_aws_ec2.yml --diff -K
 ```
