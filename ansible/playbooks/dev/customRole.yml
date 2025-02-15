@@ -2,4 +2,4 @@
   hosts: ya_cloud_vm
   become: true
   roles:
-    - docker
+    - "../../roles/docker"
