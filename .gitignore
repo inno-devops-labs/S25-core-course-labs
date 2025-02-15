@@ -2,3 +2,7 @@
 .terraform.lock.hcl
 terraform.tfstate
 terraform.tfstate.backup
+*.tfstate
+*.tfstate.*
+docker-compose.override.yml
+
