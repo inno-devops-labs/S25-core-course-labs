@@ -48,3 +48,7 @@
     append: yes
   with_items: "{{ docker_users }}"
   when: docker_users | length > 0
+
+- name: Include secure configuration
+  include_tasks: secure.yml
+

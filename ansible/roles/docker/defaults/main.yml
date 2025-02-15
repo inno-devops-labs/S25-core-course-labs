@@ -1,4 +1,13 @@
 ---
 docker_version: latest
-docker_compose_version: "1.29.2"
+docker_compose_version: "2.32.1"
 docker_users: []
+
+# Security settings
+docker_live_restore: true
+docker_userland_proxy: false
+docker_no_new_privileges: true
+docker_userns_remap: "default"
+docker_log_max_size: "10m"
+docker_log_max_files: "3"
+

@@ -85,3 +85,24 @@ ansible-playbook ansible/playbooks/dev/main.yaml --check -K
 # Применение изменений
 ansible-playbook ansible/playbooks/dev/main.yaml -K
 ```
+
+## Безопасность
+
+Роль включает следующие меры безопасности:
+
+- Отключение прямого доступа root
+- Включение user namespace remapping
+- Ограничение привилегий для контейнеров
+- Настройка ротации логов
+- Включение live-restore для минимизации простоя
+
+## Переменные безопасности
+
+```yaml
+docker_live_restore: true        # Позволяет контейнерам работать при перезапуске демона
+docker_userland_proxy: false     # Отключает userland-proxy для улучшения производительности
+docker_no_new_privileges: true   # Запрещает повышение привилегий в контейнерах
+docker_userns_remap: "default"   # Включает изоляцию пользователей
+docker_log_max_size: "10m"       # Максимальный размер файла лога
+docker_log_max_files: "3"        # Количество файлов ротации логов
+```
