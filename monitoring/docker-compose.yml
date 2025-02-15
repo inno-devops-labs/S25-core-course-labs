@@ -1,0 +1,77 @@
+networks:
+  monitoring:
+
+volumes:
+  loki-data: {}
+
+services:
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - loki-data:/loki
+    networks:
+      - monitoring
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/log:/var/log
+      - ./promtail-config.yml:/etc/promtail/config.yaml
+    command: -config.file=/etc/promtail/config.yaml
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_FEATURE_TOGGLES_ENABLE=alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode
+    restart: unless-stopped
+    networks:
+    - monitoring
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 0
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy 
+          orgId: 0
+          url: http://loki:3100
+          basicAuth: false
+          isDefault: true
+          version: 0
+          editable: false
+        EOF
+        /run.sh
+
+  app_flutter:
+    image: paranid5/app_flutter:latest 
+    ports:
+      - "8081:80"
+    networks:
+      - monitoring
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+
+  app_piton:
+    image: paranid5/app_piton:latest 
+    ports:
+      - "8082:8080"
+    networks:
+      - monitoring
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
