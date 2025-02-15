@@ -270,3 +270,30 @@ The task is completed using yandex cloud
 ![yc](image1.jpg)
 ![yc](image2.jpg)
 ![yc](image3.jpg)
+
+## Application deployment
+
+### Task 1
+
+To deploy the app, navigate to the `ansible` directory and run:
+
+```sh
+ansible-playbook -i inventory/yc_inventory.py site.yml --tags deploy -e ansible_python_interpreter=/usr/bin/python3
+```
+
+**Output:**
+
+```sh
+PLAY [Deploy app_python] ***********************************************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************************
+ok: [158.160.155.126]
+
+TASK [web_app : Run the application container] *************************************************************************************************************************
+changed: [158.160.155.126]
+
+PLAY RECAP *************************************************************************************************************************************************************
+158.160.155.126            : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+```
+
+![web_app task 1](web_app1.jpg)
