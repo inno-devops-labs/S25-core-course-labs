@@ -36,7 +36,7 @@ jobs:
         pip install -r app_C++/requirements.txt
         sudo apt update
         sudo apt install cppcheck wget
-        mkdir -p /usr/local/include && wget https://raw.githubusercontent.com/yhirose/cpp-httplib/master/httplib.h -O /usr/local/include/httplib.h
+        sudo mkdir -p /usr/local/include && sudo wget https://raw.githubusercontent.com/yhirose/cpp-httplib/master/httplib.h -O /usr/local/include/httplib.h
 
     - name: Lint with Cppcheck
       run: |
