@@ -1,0 +1,62 @@
+---
+- name: Create application directory
+  file:
+    path: "{{ deploy_directory }}"
+    state: directory
+    owner: "{{ deploy_user }}"
+    group: "{{ deploy_user }}"
+    mode: '0755'
+
+- name: Template docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ deploy_directory }}/docker-compose.yml"
+    owner: "{{ deploy_user }}"
+    group: "{{ deploy_user }}"
+    mode: '0644'
+  notify: restart application
+
+- name: Create Docker config directory
+  file:
+    path: "/root/.docker"
+    state: directory
+    mode: '0700'
+  become: true
+
+- name: Configure Docker credentials
+  copy:
+    content: |
+      {
+        "auths": {
+          "https://index.docker.io/v1/": {
+            "auth": "{{ (lookup('env', 'DOCKER_USERNAME') + ':' + lookup('env', 'DOCKER_PASSWORD')) | b64encode }}"
+          }
+        }
+      }
+    dest: "/root/.docker/config.json"
+    mode: '0600'
+  become: true
+  no_log: true
+
+- name: Wait for Docker daemon
+  wait_for:
+    path: /var/run/docker.sock
+    timeout: 30
+
+- name: Pull application image
+  community.docker.docker_image:
+    name: "{{ app_image }}"
+    source: pull
+    force_source: yes
+  retries: 3
+  delay: 10
+
+- name: Start application
+  community.docker.docker_compose_v2:
+    project_src: "{{ deploy_directory }}"
+    state: present
+    pull: "always"
+
+- name: Debug variables
+  debug:
+    msg: "Image name will be: {{ app_image }}"

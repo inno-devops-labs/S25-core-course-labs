@@ -1,8 +1,7 @@
 # Ansible Documentation
 
 ## Структура проекта
-```
-ansible/
+```ansible/
 ├── inventory/
 │   └── default_aws_ec2.yml
 ├── roles/
@@ -113,4 +112,60 @@ ansible-playbook ansible/playbooks/dev/main.yaml -i ansible/inventory/default_aw
 
 # Запуск с показом различий
 ansible-playbook ansible/playbooks/dev/main.yaml -i ansible/inventory/default_aws_ec2.yml --diff -K
+```
+
+## Роли
+
+### Web App Role
+
+Роль для развертывания приложения с использованием Docker Compose.
+
+#### Переменные
+
+- `app_name`: Имя приложения (default: python-app)
+- `app_image`: Docker образ приложения
+- `app_port`: Порт приложения (default: 8000)
+- `deploy_user`: Пользователь для деплоя
+- `deploy_directory`: Директория для деплоя
+
+#### Зависимости
+
+- Docker роль
+
+#### Пример использования
+
+```yaml
+- hosts: all
+  vars:
+    github_username: "your-username"
+    github_token: "your-token"
+  roles:
+    - web_app
+```
+
+## Вывод деплоя
+
+```bash
+PLAY [Deploy Application] ***********************************************************
+
+TASK [Gathering Facts] *************************************************************
+ok: [localhost]
+
+TASK [web_app : Create application directory] **************************************
+changed: [localhost]
+
+TASK [web_app : Template docker-compose.yml] **************************************
+changed: [localhost]
+
+TASK [web_app : Login to GitHub Container Registry] *******************************
+ok: [localhost]
+
+TASK [web_app : Pull application image] ******************************************
+changed: [localhost]
+
+TASK [web_app : Start application] ***********************************************
+changed: [localhost]
+
+PLAY RECAP **********************************************************************
+localhost : ok=6 changed=4 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ```

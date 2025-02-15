@@ -4,13 +4,20 @@
   become: true
   
   vars:
-    docker_apt_release_channel: stable
-    docker_apt_arch: amd64
-    docker_apt_gpg_key: https://download.docker.com/linux/ubuntu/gpg
-    docker_apt_repository: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
-    docker_install_compose: true
     docker_users:
       - "m7"
   
   roles:
     - geerlingguy.docker
+
+- name: Deploy Application
+  hosts: all
+  become: true
+  
+  vars:
+    app_name: "python-app"
+    app_port: 8000
+    deploy_user: "m7"
+  
+  roles:
+    - ../../roles/web_app
