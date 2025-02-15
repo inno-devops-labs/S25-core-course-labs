@@ -1,6 +1,5 @@
-- name: Install and Configure Docker
+- name: Run app
   hosts: all
   become: yes 
   roles:
-    # - geerlingguy.docker
-    - docker
+    - web_app

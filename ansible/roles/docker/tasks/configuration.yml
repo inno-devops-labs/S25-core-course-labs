@@ -1,29 +1,33 @@
-- name: Update apt cache and install prerequisites
-  ansible.builtin.apt:
-    name:
-      - ca-certificates
-      - curl
-    state: present
-    update_cache: yes
+- name: Setup docker
+  block:
+  - name: Update apt cache and install prerequisites
+    ansible.builtin.apt:
+      name:
+        - ca-certificates
+        - curl
+      state: present
+      update_cache: yes
 
-- name: Create /etc/apt/keyrings directory
-  ansible.builtin.file:
-    path: /etc/apt/keyrings
-    state: directory
-    mode: '0755'
+  - name: Create /etc/apt/keyrings directory
+    ansible.builtin.file:
+      path: /etc/apt/keyrings
+      state: directory
+      mode: '0755'
 
-- name: Download Docker's official GPG key
-  ansible.builtin.get_url:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    dest: /etc/apt/keyrings/docker.asc
-    mode: '0644'
+  - name: Download Docker's official GPG key
+    ansible.builtin.get_url:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      dest: /etc/apt/keyrings/docker.asc
+      mode: '0644'
 
-- name: Add Docker apt repository
-  ansible.builtin.apt_repository:
-    repo: "deb [arch={{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
-    state: present
-    filename: docker
+  - name: Add Docker apt repository
+    ansible.builtin.apt_repository:
+      repo: "deb [arch={{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+      state: present
+      filename: docker
 
-- name: Update apt cache after adding Docker repository
-  ansible.builtin.apt:
-    update_cache: yes
+  - name: Update apt cache after adding Docker repository
+    ansible.builtin.apt:
+      update_cache: yes
+  tags:
+  - setup

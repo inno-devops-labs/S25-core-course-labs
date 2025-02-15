@@ -193,3 +193,73 @@ PLAY RECAP *********************************************************************
 yc_vm_1                    : ok=12   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 yc_vm_2                    : ok=12   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
 ```
+
+## Web app
+- if VM is not stopped then it can be accessd via `http://158.160.164.193:8000/`
+
+The output of the run playbook command:
+```
+PLAY [Install and Configure Docker] **************************************************************************************************************************************
+
+TASK [Gathering Facts] ***************************************************************************************************************************************************
+[WARNING]: Platform linux on host yc_vm_1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could
+change the meaning of that path. See https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [yc_vm_1]
+[WARNING]: Platform linux on host yc_vm_2 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter could
+change the meaning of that path. See https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [yc_vm_2]
+
+TASK [docker : include_tasks] ********************************************************************************************************************************************
+included: /home/maco/Desktop/S25-core-course-labs/ansible/roles/docker/tasks/configuration.yml for yc_vm_1, yc_vm_2
+
+TASK [docker : Update apt cache and install prerequisites] ***************************************************************************************************************
+ok: [yc_vm_1]
+ok: [yc_vm_2]
+
+TASK [docker : Create /etc/apt/keyrings directory] ***********************************************************************************************************************
+ok: [yc_vm_1]
+ok: [yc_vm_2]
+
+TASK [docker : Download Docker's official GPG key] ***********************************************************************************************************************
+ok: [yc_vm_2]
+ok: [yc_vm_1]
+
+TASK [docker : Add Docker apt repository] ********************************************************************************************************************************
+ok: [yc_vm_1]
+ok: [yc_vm_2]
+
+TASK [docker : Update apt cache after adding Docker repository] **********************************************************************************************************
+changed: [yc_vm_1]
+changed: [yc_vm_2]
+
+TASK [docker : include_tasks] ********************************************************************************************************************************************
+included: /home/maco/Desktop/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for yc_vm_1, yc_vm_2
+
+TASK [docker : Install Docker] *******************************************************************************************************************************************
+ok: [yc_vm_2]
+ok: [yc_vm_1]
+
+TASK [docker : Start and enable service docker] **************************************************************************************************************************
+ok: [yc_vm_1]
+ok: [yc_vm_2]
+
+TASK [docker : Create docker group] **************************************************************************************************************************************
+ok: [yc_vm_1]
+ok: [yc_vm_2]
+
+TASK [docker : Add user to docker group] *********************************************************************************************************************************
+ok: [yc_vm_1]
+ok: [yc_vm_2]
+
+TASK [web_app : Pull the latest Docker image] ****************************************************************************************************************************
+ok: [yc_vm_1]
+ok: [yc_vm_2]
+
+TASK [web_app : Run Docker container] ************************************************************************************************************************************
+ok: [yc_vm_1]
+ok: [yc_vm_2]
+
+PLAY RECAP ***************************************************************************************************************************************************************
+yc_vm_1                    : ok=14   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+yc_vm_2                    : ok=14   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+```
