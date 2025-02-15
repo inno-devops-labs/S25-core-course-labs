@@ -82,3 +82,106 @@ ansible-inventory -i inventory/default_aws_ec2.yml --graph
   |--@ungrouped:
   |--@local:
   |  |--localhost
+
+
+lab6
+ansible-playbook playbooks/dev/main.yaml --check
+
+PLAY [Deploying docker] ************************************************************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************************************
+[WARNING]: Platform linux on host localhost is using the discovered Python interpreter at /usr/bin/python3.10, but future installation of another Python interpreter could change
+the meaning of that path. See https://docs.ansible.com/ansible-core/2.17/reference_appendices/interpreter_discovery.html for more information.
+ok: [localhost]
+
+TASK [geerlingguy.docker : Load OS-specific vars.] *********************************************************************************************************************************
+ok: [localhost]
+
+TASK [geerlingguy.docker : include_tasks] ******************************************************************************************************************************************
+skipping: [localhost]
+
+TASK [geerlingguy.docker : include_tasks] ******************************************************************************************************************************************
+included: /home/devops/S25-core-course-labs/ansible/roles/geerlingguy.docker/tasks/setup-Debian.yml for localhost
+
+TASK [geerlingguy.docker : Ensure apt key is not present in trusted.gpg.d] *********************************************************************************************************
+ok: [localhost]
+
+TASK [geerlingguy.docker : Ensure old apt source list is not present in /etc/apt/sources.list.d] ***********************************************************************************
+ok: [localhost]
+
+TASK [geerlingguy.docker : Ensure the repo referencing the previous trusted.gpg.d key is not present] ******************************************************************************
+ok: [localhost]
+
+TASK [geerlingguy.docker : Ensure old versions of Docker are not installed.] *******************************************************************************************************
+ok: [localhost]
+
+TASK [geerlingguy.docker : Ensure dependencies are installed.] *********************************************************************************************************************
+changed: [localhost]
+
+TASK [geerlingguy.docker : Ensure directory exists for /etc/apt/keyrings] **********************************************************************************************************
+ok: [localhost]
+
+TASK [geerlingguy.docker : Add Docker apt key.] ************************************************************************************************************************************
+ok: [localhost]
+
+TASK [geerlingguy.docker : Ensure curl is present (on older systems without SNI).] *************************************************************************************************
+skipping: [localhost]
+
+TASK [geerlingguy.docker : Add Docker apt key (alternative for older systems without SNI).] ****************************************************************************************
+skipping: [localhost]
+
+TASK [geerlingguy.docker : Add Docker repository.] *********************************************************************************************************************************
+ok: [localhost]
+
+TASK [geerlingguy.docker : Install Docker packages.] *******************************************************************************************************************************
+skipping: [localhost]
+
+TASK [geerlingguy.docker : Install Docker packages (with downgrade option).] *******************************************************************************************************
+ok: [localhost]
+
+TASK [geerlingguy.docker : Install docker-compose plugin.] *************************************************************************************************************************
+skipping: [localhost]
+
+TASK [geerlingguy.docker : Install docker-compose-plugin (with downgrade option).] *************************************************************************************************
+ok: [localhost]
+
+TASK [geerlingguy.docker : Ensure /etc/docker/ directory exists.] ******************************************************************************************************************
+skipping: [localhost]
+
+TASK [geerlingguy.docker : Configure Docker daemon options.] ***********************************************************************************************************************
+skipping: [localhost]
+
+TASK [geerlingguy.docker : Ensure Docker is started and enabled at boot.] **********************************************************************************************************
+ok: [localhost]
+
+TASK [geerlingguy.docker : Ensure handlers are notified now to avoid firewall conflicts.] ******************************************************************************************
+
+TASK [geerlingguy.docker : include_tasks] ******************************************************************************************************************************************
+skipping: [localhost]
+
+TASK [geerlingguy.docker : Get docker group info using getent.] ********************************************************************************************************************
+skipping: [localhost]
+
+TASK [geerlingguy.docker : Check if there are any users to add to the docker group.] ***********************************************************************************************
+skipping: [localhost]
+
+TASK [geerlingguy.docker : include_tasks] ******************************************************************************************************************************************
+skipping: [localhost]
+
+TASK [web_app : Install Docker] ****************************************************************************************************************************************************
+changed: [localhost]
+
+TASK [web_app : Start Docker Service] **********************************************************************************************************************************************
+ok: [localhost]
+
+TASK [web_app : Pull Docker Image] *************************************************************************************************************************************************
+ok: [localhost]
+
+TASK [web_app : Deploy Docker Compose File] ****************************************************************************************************************************************
+changed: [localhost]
+
+TASK [web_app : Start Container] ***************************************************************************************************************************************************
+skipping: [localhost]
+
+PLAY RECAP *************************************************************************************************************************************************************************
+localhost                  : ok=18   changed=3    unreachable=0    failed=0    skipped=12   rescued=0    ignored=0

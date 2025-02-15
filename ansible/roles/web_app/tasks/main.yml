@@ -1,0 +1,39 @@
+- name: Setup Docker Environment
+  block:
+    - name: Install Docker
+      apt:
+        name: docker
+        state: present
+      tags:
+        - setup
+
+    - name: Start Docker Service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+      tags:
+        - setup
+
+- name: Deploy Web App
+  block:
+    - name: Pull Docker Image
+      community.docker.docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+      tags:
+        - docker
+
+    - name: Deploy Docker Compose File
+      template:
+        src: docker-compose.yml.j2
+        dest: /home/fridorovich/docker-compose.yml
+      tags:
+        - docker
+
+    - name: Start Container
+      command: docker-compose up -d
+      args:
+        chdir: /home/fridorovich
+      tags:
+        - docker
