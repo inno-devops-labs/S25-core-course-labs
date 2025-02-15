@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: true
+  vars:
+    docker_users:
+      - "{{ ansible_user }}"
+  roles:
+    - geerlingguy.docker
