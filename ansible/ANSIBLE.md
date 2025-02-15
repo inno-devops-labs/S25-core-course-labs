@@ -14,46 +14,50 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-playbook -i invento
 PLAY [Install and Configure Docker] ******************************************************************************
 
 TASK [Gathering Facts] *******************************************************************************************
-[WARNING]: Platform linux on host compute-vm-2-1-10-hdd-1739622264989 is using the discovered Python interpreter
-at /usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of that
-path. See https://docs.ansible.com/ansible-core/2.17/reference_appendices/interpreter_discovery.html for more
-information.
-ok: [compute-vm-2-1-10-hdd-1739622264989]
+ok: [test]
+
+TASK [docker : Install Docker] ***********************************************************************************
+included: /root/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for test
 
 TASK [docker : Update apt packages] ******************************************************************************
-changed: [compute-vm-2-1-10-hdd-1739622264989]
+changed: [test]
 
 TASK [docker : Install apt packages] *****************************************************************************
-ok: [compute-vm-2-1-10-hdd-1739622264989]
+ok: [test]
 
 TASK [docker : Add Docker's official GPG key] ********************************************************************
-ok: [compute-vm-2-1-10-hdd-1739622264989]
+ok: [test]
 
 TASK [docker : Add Docker's official apt repository] *************************************************************
-ok: [compute-vm-2-1-10-hdd-1739622264989]
+ok: [test]
 
 TASK [docker : Install Docker and Docker Compose] ****************************************************************
-ok: [compute-vm-2-1-10-hdd-1739622264989] => (item=docker-ce)
-ok: [compute-vm-2-1-10-hdd-1739622264989] => (item=docker-ce-cli)
-ok: [compute-vm-2-1-10-hdd-1739622264989] => (item=containerd.io)
-ok: [compute-vm-2-1-10-hdd-1739622264989] => (item=docker-buildx-plugin)
-ok: [compute-vm-2-1-10-hdd-1739622264989] => (item=docker-compose-plugin)
+ok: [test] => (item=docker-ce)
+ok: [test] => (item=docker-ce-cli)
+ok: [test] => (item=containerd.io)
+ok: [test] => (item=docker-buildx-plugin)
 
 TASK [docker : Add Docker group] *********************************************************************************
-ok: [compute-vm-2-1-10-hdd-1739622264989]
+ok: [test]
 
 TASK [docker : Add user to Docker group] *************************************************************************
-ok: [compute-vm-2-1-10-hdd-1739622264989]
+ok: [test]
 
 TASK [docker : Enable and start Docker services] *****************************************************************
-ok: [compute-vm-2-1-10-hdd-1739622264989] => (item=docker.service)
-ok: [compute-vm-2-1-10-hdd-1739622264989] => (item=containerd.service)
+ok: [test] => (item=docker.service)
+ok: [test] => (item=containerd.service)
+
+TASK [docker : Install Docker Compose] ***************************************************************************
+included: /root/S25-core-course-labs/ansible/roles/docker/tasks/install_docker_compose.yml for test
+
+TASK [docker : Install Docker Compose] ***************************************************************************
+changed: [test]
 
 PLAY RECAP *******************************************************************************************************
-compute-vm-2-1-10-hdd-1739622264989 : ok=9    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+test                       : ok=12   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
 
 WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
-E0000 00:00:1739625458.621024   41796 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
 ```
 
 ## Inventory Details
@@ -65,18 +69,18 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
 {
     "_meta": {
         "hostvars": {
-            "compute-vm-2-1-10-hdd-1739622264989": {
+            "test": {
                 "ansible_all_ipv4_addresses": [
                     {
-                        "__ansible_unsafe": "172.17.0.1"
+                        "__ansible_unsafe": "10.130.0.21"
                     },
                     {
-                        "__ansible_unsafe": "10.130.0.9"
+                        "__ansible_unsafe": "172.17.0.1"
                     }
                 ],
                 "ansible_all_ipv6_addresses": [
                     {
-                        "__ansible_unsafe": "fe80::d20d:74ff:fe20:7657"
+                        "__ansible_unsafe": "fe80::d20d:13ff:fed9:abe2"
                     }
                 ],
                 "ansible_apparmor": {
@@ -103,7 +107,7 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                     "__ansible_unsafe": "xeon-gold-6338"
                 },
                 "ansible_board_serial": {
-                    "__ansible_unsafe": "YC-fv47883mas44i5vnf51h"
+                    "__ansible_unsafe": "YC-fv4jr6lu4gmsdf6ql72c"
                 },
                 "ansible_board_vendor": {
                     "__ansible_unsafe": "Yandex"
@@ -149,37 +153,37 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                         "__ansible_unsafe": "15"
                     },
                     "epoch": {
-                        "__ansible_unsafe": "1739625430"
+                        "__ansible_unsafe": "1739627630"
                     },
                     "epoch_int": {
-                        "__ansible_unsafe": "1739625430"
+                        "__ansible_unsafe": "1739627630"
                     },
                     "hour": {
                         "__ansible_unsafe": "13"
                     },
                     "iso8601": {
-                        "__ansible_unsafe": "2025-02-15T13:17:10Z"
+                        "__ansible_unsafe": "2025-02-15T13:53:50Z"
                     },
                     "iso8601_basic": {
-                        "__ansible_unsafe": "20250215T131710201885"
+                        "__ansible_unsafe": "20250215T135350013342"
                     },
                     "iso8601_basic_short": {
-                        "__ansible_unsafe": "20250215T131710"
+                        "__ansible_unsafe": "20250215T135350"
                     },
                     "iso8601_micro": {
-                        "__ansible_unsafe": "2025-02-15T13:17:10.201885Z"
+                        "__ansible_unsafe": "2025-02-15T13:53:50.013342Z"
                     },
                     "minute": {
-                        "__ansible_unsafe": "17"
+                        "__ansible_unsafe": "53"
                     },
                     "month": {
                         "__ansible_unsafe": "02"
                     },
                     "second": {
-                        "__ansible_unsafe": "10"
+                        "__ansible_unsafe": "50"
                     },
                     "time": {
-                        "__ansible_unsafe": "13:17:10"
+                        "__ansible_unsafe": "13:53:50"
                     },
                     "tz": {
                         "__ansible_unsafe": "UTC"
@@ -205,7 +209,7 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                 },
                 "ansible_default_ipv4": {
                     "address": {
-                        "__ansible_unsafe": "10.130.0.9"
+                        "__ansible_unsafe": "10.130.0.21"
                     },
                     "alias": {
                         "__ansible_unsafe": "eth0"
@@ -220,7 +224,7 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                         "__ansible_unsafe": "eth0"
                     },
                     "macaddress": {
-                        "__ansible_unsafe": "d0:0d:74:20:76:57"
+                        "__ansible_unsafe": "d0:0d:13:d9:ab:e2"
                     },
                     "mtu": 1500,
                     "netmask": {
@@ -241,17 +245,17 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                     "ids": {
                         "vda": [
                             {
-                                "__ansible_unsafe": "virtio-fv4kj9d7rdtvl61n0b8j"
+                                "__ansible_unsafe": "virtio-fv4frqea1sbmbomm1856"
                             }
                         ],
                         "vda1": [
                             {
-                                "__ansible_unsafe": "virtio-fv4kj9d7rdtvl61n0b8j-part1"
+                                "__ansible_unsafe": "virtio-fv4frqea1sbmbomm1856-part1"
                             }
                         ],
                         "vda2": [
                             {
-                                "__ansible_unsafe": "virtio-fv4kj9d7rdtvl61n0b8j-part2"
+                                "__ansible_unsafe": "virtio-fv4frqea1sbmbomm1856-part2"
                             }
                         ]
                     },
@@ -586,7 +590,7 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                         "links": {
                             "ids": [
                                 {
-                                    "__ansible_unsafe": "virtio-fv4kj9d7rdtvl61n0b8j"
+                                    "__ansible_unsafe": "virtio-fv4frqea1sbmbomm1856"
                                 }
                             ],
                             "labels": [],
@@ -600,7 +604,7 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                                 "links": {
                                     "ids": [
                                         {
-                                            "__ansible_unsafe": "virtio-fv4kj9d7rdtvl61n0b8j-part1"
+                                            "__ansible_unsafe": "virtio-fv4frqea1sbmbomm1856-part1"
                                         }
                                     ],
                                     "labels": [],
@@ -624,7 +628,7 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                                 "links": {
                                     "ids": [
                                         {
-                                            "__ansible_unsafe": "virtio-fv4kj9d7rdtvl61n0b8j-part2"
+                                            "__ansible_unsafe": "virtio-fv4frqea1sbmbomm1856-part2"
                                         }
                                     ],
                                     "labels": [],
@@ -921,7 +925,7 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                     },
                     "hw_timestamp_filters": [],
                     "id": {
-                        "__ansible_unsafe": "8000.0242c543a43e"
+                        "__ansible_unsafe": "8000.02428942134c"
                     },
                     "interfaces": [],
                     "ipv4": {
@@ -942,7 +946,7 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                         }
                     },
                     "macaddress": {
-                        "__ansible_unsafe": "02:42:c5:43:a4:3e"
+                        "__ansible_unsafe": "02:42:89:42:13:4c"
                     },
                     "mtu": 1500,
                     "promisc": false,
@@ -981,7 +985,7 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                         "__ansible_unsafe": "/bin/bash"
                     },
                     "SUDO_COMMAND": {
-                        "__ansible_unsafe": "/bin/sh -c echo BECOME-SUCCESS-veaaxrqcxwwsdyhqfuefnlzhlpcaasqa ; /usr/bin/python3.12 /home/ubuntu/.ansible/tmp/ansible-tmp-1739625427.5317507-41858-12173445878197/AnsiballZ_setup.py"
+                        "__ansible_unsafe": "/bin/sh -c echo BECOME-SUCCESS-krwovzynrqplslpwdhkephmdbdgotdoh ; /usr/bin/python3.12 /home/ubuntu/.ansible/tmp/ansible-tmp-1739627627.1492329-63838-205179218940176/AnsiballZ_setup.py"
                     },
                     "SUDO_GID": {
                         "__ansible_unsafe": "1001"
@@ -1204,7 +1208,7 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                     "hw_timestamp_filters": [],
                     "ipv4": {
                         "address": {
-                            "__ansible_unsafe": "10.130.0.9"
+                            "__ansible_unsafe": "10.130.0.21"
                         },
                         "broadcast": {
                             "__ansible_unsafe": ""
@@ -1222,7 +1226,7 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                     "ipv6": [
                         {
                             "address": {
-                                "__ansible_unsafe": "fe80::d20d:74ff:fe20:7657"
+                                "__ansible_unsafe": "fe80::d20d:13ff:fed9:abe2"
                             },
                             "prefix": {
                                 "__ansible_unsafe": "64"
@@ -1233,7 +1237,7 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                         }
                     ],
                     "macaddress": {
-                        "__ansible_unsafe": "d0:0d:74:20:76:57"
+                        "__ansible_unsafe": "d0:0d:13:d9:ab:e2"
                     },
                     "mtu": 1500,
                     "pciid": {
@@ -1252,24 +1256,24 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                     "__ansible_unsafe": "Other"
                 },
                 "ansible_fqdn": {
-                    "__ansible_unsafe": "compute-vm-2-1-10-hdd-1739622264989.ru-central1.internal"
+                    "__ansible_unsafe": "test.ru-central1.internal"
                 },
-                "ansible_host": "158.160.147.38",
+                "ansible_host": "158.160.158.180",
                 "ansible_hostname": {
-                    "__ansible_unsafe": "compute-vm-2-1-10-hdd-1739622264989"
+                    "__ansible_unsafe": "test"
                 },
                 "ansible_hostnqn": {
                     "__ansible_unsafe": ""
                 },
                 "ansible_interfaces": [
                     {
-                        "__ansible_unsafe": "docker0"
+                        "__ansible_unsafe": "eth0"
                     },
                     {
                         "__ansible_unsafe": "lo"
                     },
                     {
-                        "__ansible_unsafe": "eth0"
+                        "__ansible_unsafe": "docker0"
                     }
                 ],
                 "ansible_is_chroot": false,
@@ -1523,15 +1527,15 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                     }
                 },
                 "ansible_loadavg": {
-                    "15m": 0.0,
-                    "1m": 0.0,
-                    "5m": 0.0
+                    "15m": 0.08837890625,
+                    "1m": 0.05078125,
+                    "5m": 0.14208984375
                 },
                 "ansible_local": {},
                 "ansible_locally_reachable_ips": {
                     "ipv4": [
                         {
-                            "__ansible_unsafe": "10.130.0.9"
+                            "__ansible_unsafe": "10.130.0.21"
                         },
                         {
                             "__ansible_unsafe": "127.0.0.0/8"
@@ -1548,7 +1552,7 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                             "__ansible_unsafe": "::1"
                         },
                         {
-                            "__ansible_unsafe": "fe80::d20d:74ff:fe20:7657"
+                            "__ansible_unsafe": "fe80::d20d:13ff:fed9:abe2"
                         }
                     ]
                 },
@@ -1578,18 +1582,18 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                     "__ansible_unsafe": "x86_64"
                 },
                 "ansible_machine_id": {
-                    "__ansible_unsafe": "23000007fc874207657084917f779431"
+                    "__ansible_unsafe": "23000007fc93d9abe242dc6bcdaa9c4c"
                 },
-                "ansible_memfree_mb": 194,
+                "ansible_memfree_mb": 280,
                 "ansible_memory_mb": {
                     "nocache": {
-                        "free": 710,
-                        "used": 250
+                        "free": 699,
+                        "used": 261
                     },
                     "real": {
-                        "free": 194,
+                        "free": 280,
                         "total": 960,
-                        "used": 766
+                        "used": 680
                     },
                     "swap": {
                         "cached": 0,
@@ -1601,10 +1605,10 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                 "ansible_memtotal_mb": 960,
                 "ansible_mounts": [
                     {
-                        "block_available": 1523659,
+                        "block_available": 1523694,
                         "block_size": 4096,
                         "block_total": 2557650,
-                        "block_used": 1033991,
+                        "block_used": 1033956,
                         "device": {
                             "__ansible_unsafe": "/dev/vda2"
                         },
@@ -1612,9 +1616,9 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                         "fstype": {
                             "__ansible_unsafe": "ext4"
                         },
-                        "inode_available": 519384,
+                        "inode_available": 519388,
                         "inode_total": 655360,
-                        "inode_used": 135976,
+                        "inode_used": 135972,
                         "mount": {
                             "__ansible_unsafe": "/"
                         },
@@ -1622,7 +1626,7 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                             "__ansible_unsafe": "rw,relatime"
                         },
                         "passno": 0,
-                        "size_available": 6240907264,
+                        "size_available": 6241050624,
                         "size_total": 10476134400,
                         "uuid": {
                             "__ansible_unsafe": "9ca38502-006d-4f2a-89e1-4c5147e69837"
@@ -1630,7 +1634,7 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                     }
                 ],
                 "ansible_nodename": {
-                    "__ansible_unsafe": "compute-vm-2-1-10-hdd-1739622264989"
+                    "__ansible_unsafe": "test"
                 },
                 "ansible_os_family": {
                     "__ansible_unsafe": "Debian"
@@ -1685,10 +1689,10 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                     "__ansible_unsafe": "xeon-gold-6338"
                 },
                 "ansible_product_serial": {
-                    "__ansible_unsafe": "YC-fv47883mas44i5vnf51h"
+                    "__ansible_unsafe": "YC-fv4jr6lu4gmsdf6ql72c"
                 },
                 "ansible_product_uuid": {
-                    "__ansible_unsafe": "23000007-fc87-4207-6570-84917f779431"
+                    "__ansible_unsafe": "23000007-fc93-d9ab-e242-dc6bcdaa9c4c"
                 },
                 "ansible_product_version": {
                     "__ansible_unsafe": "pc-q35-yc-2.12"
@@ -1764,7 +1768,7 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
                 "ansible_system_vendor": {
                     "__ansible_unsafe": "Yandex"
                 },
-                "ansible_uptime_seconds": 3049,
+                "ansible_uptime_seconds": 589,
                 "ansible_user_dir": {
                     "__ansible_unsafe": "/root"
                 },
@@ -1813,10 +1817,10 @@ root@dmhd6219-laptop:~/S25-core-course-labs/ansible# ansible-inventory -i invent
     },
     "yacloud": {
         "hosts": [
-            "compute-vm-2-1-10-hdd-1739622264989"
+            "test"
         ]
     }
 }
 WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
-E0000 00:00:1739625526.827411   43153 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+E0000 00:00:1739627707.476908   65143 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
 ```
