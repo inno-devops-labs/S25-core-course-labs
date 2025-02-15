@@ -1,0 +1,34 @@
+---
+- name: Deploy App
+  block:
+    - name: Pull Docker image
+      community.docker.docker_image:
+        name: "{{ docker_image }}"
+        tag: "{{ docker_image_tag }}"
+        source: pull
+      tags: [docker]
+
+    - name: Deploy docker container
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        image: "{{ docker_image }}"
+        state: started
+        restart_policy: always
+        published_ports:
+          - "{{ port }}:{{ container_port }}"
+      tags: [docker]
+
+    - name: Create directory for docker-compose file
+      ansible.builtin.file:
+        path: /app
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+      tags: [docker-compose]
+
+    - name: Deploy docker-compose file
+      ansible.builtin.template:
+        src: docker-compose.yml.j2
+        dest: /app/docker-compose.yml
+      tags: [docker-compose]
