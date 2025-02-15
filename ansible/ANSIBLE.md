@@ -264,3 +264,49 @@ This output shows:
 3. Skipping of Ubuntu-specific tasks
 4. No changes needed (Docker already installed)
 5. All tasks executed without errors 
+
+## Latest Deployment Output
+
+```bash
+PLAY [Deploy Docker and Web Application] ***********************************************
+
+TASK [Gathering Facts] *****************************************************************
+ok: [localhost]
+
+TASK [web_app : Create application directory] ******************************************
+ok: [localhost]
+
+TASK [web_app : Deploy docker-compose file] ********************************************
+changed: [localhost]
+
+TASK [web_app : Pull and start application] ********************************************
+changed: [localhost]
+
+PLAY RECAP *****************************************************************************
+localhost                  : ok=4    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+The deployment was successful with:
+- 4 tasks completed successfully
+- 2 tasks resulted in changes
+- No failures or errors
+- Application successfully deployed and running on port 8080
+
+## Accessing the Application
+
+The web application is accessible at:
+- URL: http://localhost:8080
+- Image: droznik/moscow-time
+- Container name: web_app-app-1
+
+## Running Deployments
+
+To deploy the application:
+```bash
+ansible-playbook -i inventory/default_aws_ec2.yml playbooks/dev/main.yaml --tags deploy
+```
+
+To wipe and redeploy:
+```bash
+ansible-playbook -i inventory/default_aws_ec2.yml playbooks/dev/main.yaml --tags wipe,deploy -e "web_app_full_wipe=true"
+``` 
