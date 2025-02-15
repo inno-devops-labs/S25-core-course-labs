@@ -3,7 +3,7 @@
     name: "{{ ansible_user }}"
     groups: docker
     append: yes
-  notify: Docker Restart
+  notify: Docker restart
 
 - name: Disable root access
   copy:
@@ -15,7 +15,7 @@
     owner: root
     group: root
     mode: "0644"
-  notify: Docker Restart
+  notify: Docker restart
 
 - name: Enable Docker service
   systemd:

@@ -1,6 +1,8 @@
-# Ansible Lab
+# Ansible Labs
 
-## Task 1
+## Lab 5
+
+### Task 1
 
 After installing geerlingguy.docker role and running it, I get this output:
 
@@ -135,7 +137,7 @@ Docker version 27.5.1, build 9f9e405
 
 ---
 
-## Task 2 (+ security part of Bonus Task)
+### Task 2 (+ security part of Bonus Task)
 
 I recorded the output only afted endin up with security part of bonus task, so there are stages related to it. Therefore, this part will be shown here, while part regarding the yandex_compute will be shown in the next section of this file.
 
@@ -359,7 +361,7 @@ gleb@gleb-VMware-Virtual-Platform:~/Desktop/DevOps/Labs/S25-core-course-labs$ an
 
 ---
 
-## Bonus Task
+### Bonus Task
 
 The part regarding docker security settings was in the previous section, now let me describe a part related to yandex_compute.
 
@@ -452,10 +454,231 @@ gleb@gleb-VMware-Virtual-Platform:~/Desktop/DevOps/Labs/S25-core-course-labs$ an
 
 ---
 
+## Lab 6
+
+### Python web app deploying
+
+After configuring new playbook config and web_app role, I run it:
+
+```bash
+gleb@gleb-VMware-Virtual-Platform:~/Desktop/DevOps/Labs/S25-core-course-labs$ ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/app_python/main.yaml
+
+PLAY [Deploy python web app] ***********************************************************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : include_tasks] **********************************************************************************************************************************************************
+included: /home/gleb/Desktop/DevOps/Labs/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for my_vm
+
+TASK [docker : Remove existing Docker repositories] ************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Install prerequisites] **************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Create directory for Docker GPG key] ************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Add Docker GPG key] *****************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Add Docker repo] ********************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Install Docker] *********************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : include_tasks] **********************************************************************************************************************************************************
+included: /home/gleb/Desktop/DevOps/Labs/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for my_vm
+
+TASK [docker : Download Docker Compose] ************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : include_tasks] **********************************************************************************************************************************************************
+included: /home/gleb/Desktop/DevOps/Labs/S25-core-course-labs/ansible/roles/docker/tasks/configure_docker_security_settings.yml for my_vm
+
+TASK [docker : Add user to Docker group] ***********************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Disable root access] ****************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Enable Docker service] **************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [web_app : Whether web app directory exists] **************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [web_app : Whether docker compose exists] *****************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [web_app : Remove docker compose] *************************************************************************************************************************************************
+changed: [my_vm]
+
+TASK [web_app : Remove web app directory] **********************************************************************************************************************************************
+changed: [my_vm]
+
+TASK [web_app : Create web application directory] **************************************************************************************************************************************
+changed: [my_vm]
+
+TASK [web_app : Copy docker compose] ***************************************************************************************************************************************************
+changed: [my_vm]
+
+RUNNING HANDLER [web_app : Restart Docker Compose] *************************************************************************************************************************************
+changed: [my_vm]
+
+PLAY RECAP *****************************************************************************************************************************************************************************
+my_vm                      : ok=21   changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+And the application was deployed on the yandex cloud virtual machine successfully:
+
+![Web page](images/Python_app.png)
+
+And then I used wipe tag to remove application from virtual machine:
+
+```bash
+gleb@gleb-VMware-Virtual-Platform:~/Desktop/DevOps/Labs/S25-core-course-labs$ ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/app_python/main.yaml --tags wipe
+
+PLAY [Deploy python web app] ***********************************************************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [web_app : Whether web app directory exists] **************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [web_app : Whether docker compose exists] *****************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [web_app : Remove docker compose] *************************************************************************************************************************************************
+changed: [my_vm]
+
+TASK [web_app : Remove web app directory] **********************************************************************************************************************************************
+changed: [my_vm]
+
+PLAY RECAP *****************************************************************************************************************************************************************************
+my_vm                      : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+---
+
+### Scala web app deploying
+
+Then I created new playbook config for Scala application:
+
+```bash
+gleb@gleb-VMware-Virtual-Platform:~/Desktop/DevOps/Labs/S25-core-course-labs$ ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/app_scala/main.yaml
+
+PLAY [Deploy scala web app] ************************************************************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : include_tasks] **********************************************************************************************************************************************************
+included: /home/gleb/Desktop/DevOps/Labs/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for my_vm
+
+TASK [docker : Remove existing Docker repositories] ************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Install prerequisites] **************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Create directory for Docker GPG key] ************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Add Docker GPG key] *****************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Add Docker repo] ********************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Install Docker] *********************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : include_tasks] **********************************************************************************************************************************************************
+included: /home/gleb/Desktop/DevOps/Labs/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for my_vm
+
+TASK [docker : Download Docker Compose] ************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : include_tasks] **********************************************************************************************************************************************************
+included: /home/gleb/Desktop/DevOps/Labs/S25-core-course-labs/ansible/roles/docker/tasks/configure_docker_security_settings.yml for my_vm
+
+TASK [docker : Add user to Docker group] ***********************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Disable root access] ****************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [docker : Enable Docker service] **************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [web_app : Whether web app directory exists] **************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [web_app : Whether docker compose exists] *****************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [web_app : Remove docker compose] *************************************************************************************************************************************************
+skipping: [my_vm]
+
+TASK [web_app : Remove web app directory] **********************************************************************************************************************************************
+skipping: [my_vm]
+
+TASK [web_app : Create web application directory] **************************************************************************************************************************************
+changed: [my_vm]
+
+TASK [web_app : Copy docker compose] ***************************************************************************************************************************************************
+changed: [my_vm]
+
+RUNNING HANDLER [web_app : Restart Docker Compose] *************************************************************************************************************************************
+changed: [my_vm]
+
+PLAY RECAP *****************************************************************************************************************************************************************************
+my_vm                      : ok=19   changed=3    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
+```
+
+And the application was deployed on the yandex cloud virtual machine successfully:
+
+![Web page](images/Scala_app.png)
+
+And then I used wipe tag to remove application from virtual machine:
+
+```bash
+gleb@gleb-VMware-Virtual-Platform:~/Desktop/DevOps/Labs/S25-core-course-labs$ ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/app_scala/main.yaml --tags wipe
+
+PLAY [Deploy scala web app] ************************************************************************************************************************************************************
+
+TASK [Gathering Facts] *****************************************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [web_app : Whether web app directory exists] **************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [web_app : Whether docker compose exists] *****************************************************************************************************************************************
+ok: [my_vm]
+
+TASK [web_app : Remove docker compose] *************************************************************************************************************************************************
+changed: [my_vm]
+
+TASK [web_app : Remove web app directory] **********************************************************************************************************************************************
+changed: [my_vm]
+
+PLAY RECAP *****************************************************************************************************************************************************************************
+my_vm                      : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+---
+
 ## Best Practices
 
 - **Using variables**: for better configs organization;
 - **Non-root access**: to inrease a security;
-- **Handler using**: to be sure that docker is running after restarts.
+- **Handler using**: to be sure that docker is running after restarts;
+- **Grouping tasks**: to group tasks in logical blocks;
+- **Applying tags**: to enable automatic removing of app from virtual machine in this project;
+- **Separating roles**: to keep them logically consistent and not to mix roles of different purposes.
 
 ---
