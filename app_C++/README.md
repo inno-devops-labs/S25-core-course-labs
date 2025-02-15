@@ -48,3 +48,8 @@ docker pull voronm1522/devops:cpp-app
 To run image run:
 ```
 docker run <name>
+```
+
+## CI
+
+[![C++ Application CI](https://github.com/VoronM1522/S25-core-course-labs/actions/workflows/C++_app.yml/badge.svg?branch=lab3)](https://github.com/VoronM1522/S25-core-course-labs/actions/workflows/C++_app.yml)
