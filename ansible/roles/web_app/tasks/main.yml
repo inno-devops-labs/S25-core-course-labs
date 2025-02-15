@@ -1,0 +1,24 @@
+---
+- name: Ensure application directory exists
+  file:
+    path: /opt/web_app
+    state: directory
+    mode: "0755"
+
+- name: Copy docker-compose template
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/web_app/docker-compose.yml
+    mode: "0644"
+
+- name: Start application using Docker Compose
+  command: docker-compose -f /opt/web_app/docker-compose.yml up -d
+  args:
+    chdir: /opt/web_app
+
+- name: Ensure app is running
+  command: docker ps
+  register: docker_ps
+
+- debug:
+    msg: "{{ docker_ps.stdout_lines }}"

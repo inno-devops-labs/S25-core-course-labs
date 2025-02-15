@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  web:
+    image: "{{ web_app_image }}"
+    container_name: web_app
+    ports:
+      - "80:5000"
+    restart: always

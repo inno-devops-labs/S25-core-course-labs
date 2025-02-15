@@ -1,0 +1,5 @@
+---
+- name: Restart web application
+  command: docker-compose -f /opt/web_app/docker-compose.yml restart
+  args:
+    chdir: /opt/web_app
