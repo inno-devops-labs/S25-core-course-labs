@@ -227,3 +227,45 @@ ya_cloud_vm                : ok=10   changed=4    unreachable=0    failed=0    s
   |--@ungrouped:
   |  |--ya_cloud_vm
 ```
+
+## Dynamic Inventory (Yandex Cloud)
+Unfortunately, after around 4-5 hours of work, I didnt reach the goal of the task. I have tried to use given plugin (https://github.com/rodion-goritskov/yacloud_compute) but it seems to be outdated or I just havent found enough info to set this up properly. 
+
+### What Was Done:
+- 1. Downloaded yacloud_compute.py (plugin)
+- 2. Plugin moved to ~/ansible/inventory/ folder
+- 3. Previous inventory file renamed to yacloud_compute.yml and content changed to needed (according to .py doc: folder_names, cloud_names, oauth token) one.
+- 4. Modified ansible/ansible.cfg to point onto the script
+- 5. Tested playbook. Fixed yandexcloud missed package and some other errors
+- 6. Tested another plugin found on gitlab
+- 7. Some more actions
+- 8. Surrender
+
+## Securing Docker Configuration:
+
+- Security settings are being changed via modifying daemon.json
+```yaml
+- name: Configure Docker security settings
+  copy:
+    content: |
+      {
+        "no-new-privileges": true,
+        "userns-remap": "default",
+        "disable-legacy-registry": true,
+        "selinux-enabled": true
+      }
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - Restart Docker
+```
+
+- Docker restart being triggered after the configuration is copied
+```yaml
+- name: Restart Docker
+  systemd:
+    name: docker
+    state: restarted
+```

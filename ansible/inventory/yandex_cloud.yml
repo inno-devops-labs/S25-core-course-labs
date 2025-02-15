@@ -1,6 +1,0 @@
-plugin: yandexcloud
-yandex_cloud: b1g3kfmlknmgul9ah0pi
-yandex_folder: b1gnbu18sl20c3vdg6bt
-yandex_iam_service_account_key_file: key.json
-regions:
-  - ru-central1-d

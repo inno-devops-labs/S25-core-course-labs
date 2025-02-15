@@ -24,3 +24,19 @@
     groups:
       - docker
     append: yes
+
+- name: Configure Docker security settings
+  copy:
+    content: |
+      {
+        "no-new-privileges": true,
+        "userns-remap": "default",
+        "disable-legacy-registry": true,
+        "selinux-enabled": true
+      }
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - Restart Docker
