@@ -1,0 +1,6 @@
+---
+- name: Ansible and Docker Deployment
+  hosts: aws
+  become: true
+  roles:
+    - roles/docker
