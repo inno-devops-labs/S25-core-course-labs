@@ -1,0 +1,6 @@
+- name: Deploy docker on Cloud VM
+  hosts: all
+  become: true
+  roles:
+#    - geerlingguy.docker
+    - docker
