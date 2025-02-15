@@ -1,0 +1,39 @@
+---
+- name: Check if running on macOS
+  set_fact:
+    is_macos: "{{ ansible_os_family == 'Darwin' }}"
+
+- name: Install Docker Compose on Ubuntu
+  block:
+    - name: Install Docker Compose
+      get_url:
+        url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-x86_64"
+        dest: /usr/local/bin/docker-compose
+        mode: '0755'
+
+    - name: Create docker config directory
+      file:
+        path: /etc/docker
+        state: directory
+        mode: '0755'
+
+    - name: Configure Docker daemon
+      copy:
+        content: "{{ docker_daemon_options | to_nice_json }}"
+        dest: /etc/docker/daemon.json
+        mode: '0644'
+      notify: restart docker
+  when: not is_macos
+
+- name: Install Docker Compose on macOS
+  block:
+    - name: Check if Docker Compose is installed
+      command: which docker-compose
+      register: compose_check
+      ignore_errors: true
+      changed_when: false
+
+    - name: Install Docker Compose using Homebrew
+      command: brew install docker-compose
+      when: compose_check.rc != 0
+  when: is_macos

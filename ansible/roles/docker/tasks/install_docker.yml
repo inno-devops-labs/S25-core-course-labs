@@ -1,0 +1,64 @@
+---
+- name: Check if running on macOS
+  set_fact:
+    is_macos: "{{ ansible_os_family == 'Darwin' }}"
+
+- name: Install Docker on macOS
+  block:
+    - name: Check if Docker Desktop is installed
+      stat:
+        path: /Applications/Docker.app
+      register: docker_app
+
+    - name: Install Docker Desktop using Homebrew
+      command: brew install --cask docker
+      when: not docker_app.stat.exists
+  when: is_macos
+
+- name: Install Docker on Ubuntu
+  block:
+    - name: Install required system packages
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+        state: present
+        update_cache: true
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: "{{ docker_apt_gpg_key }}"
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: "{{ docker_apt_repository }}"
+        state: present
+
+    - name: Install Docker
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+        update_cache: true
+
+    - name: Ensure Docker service is enabled and started
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Add users to docker group
+      user:
+        name: "{{ item }}"
+        groups: docker
+        append: true
+      with_items: "{{ docker_users }}"
+  when: not is_macos 
