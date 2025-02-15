@@ -62,3 +62,6 @@ jspm_packages/
 .vite/
 
 app_python/terraform/yandex/authorized_key.json
+
+./create_ansible_inventory.sh
+./setup_ansible.sh
