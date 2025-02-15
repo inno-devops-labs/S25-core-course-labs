@@ -1,0 +1,6 @@
+---
+time_app_version: "latest"
+time_app_docker_container_name: "unileonid_time_app_py"
+time_app_external_port: "8080"
+time_app_wipe_container: "false"
+time_app_docker_compose_path: "/home/{{ docker_user }}/docker-compose.yml"
