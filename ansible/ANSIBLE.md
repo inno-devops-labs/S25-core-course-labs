@@ -1,97 +1,7 @@
-```
-lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/main.yaml --diff --ask-become-pass
-BECOME password: 
+# Lab 6: Ansible and Application Deployment | Mametov Eldar
+## Task 1 && Task 2
 
-PLAY [Deploy Docker using Ansible] *******************************************************************************************************************************************
-
-TASK [Gathering Facts] *******************************************************************************************************************************************************
-[WARNING]: Platform linux on host localhost is using the discovered Python interpreter at /usr/bin/python3.10, but future installation of another Python interpreter could
-change the meaning of that path. See https://docs.ansible.com/ansible-core/2.17/reference_appendices/interpreter_discovery.html for more information.
-ok: [localhost]
-
-TASK [docker : Docker installation] ******************************************************************************************************************************************
-included: /mnt/c/Users/Honor/Desktop/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yaml for localhost
-
-TASK [docker : Install packages] *********************************************************************************************************************************************
-ok: [localhost] => (item=apt-transport-https)
-ok: [localhost] => (item=ca-certificates)
-ok: [localhost] => (item=curl)
-ok: [localhost] => (item=gnupg)
-ok: [localhost] => (item=lsb-release)
-ok: [localhost] => (item=software-properties-common)
-
-TASK [docker : Create keyrings] **********************************************************************************************************************************************
-ok: [localhost]
-
-TASK [docker : Download Docker GPG key] **************************************************************************************************************************************
-ok: [localhost]
-
-TASK [docker : Add Docker repository] ****************************************************************************************************************************************
-ok: [localhost]
-
-TASK [docker : Install Docker] ***********************************************************************************************************************************************
-ok: [localhost]
-
-TASK [docker : Adding user to Docker group] **********************************************************************************************************************************
-ok: [localhost]
-
-TASK [docker : Docker compose installation] **********************************************************************************************************************************
-included: /mnt/c/Users/Honor/Desktop/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yaml for localhost
-
-TASK [docker : Download Docker Compose] **************************************************************************************************************************************
-ok: [localhost]
-
-TASK [docker : Symbolic link for docker-compose] *****************************************************************************************************************************
-ok: [localhost]
-
-TASK [docker : Verify Docker Compose installation] ***************************************************************************************************************************
-changed: [localhost]
-
-TASK [docker : Display success message if Docker Compose is installed] *******************************************************************************************************
-ok: [localhost] => {
-    "msg": "docker-compose installed"
-}
-
-TASK [docker : Docker boot] **************************************************************************************************************************************************
-ok: [localhost]
-
-TASK [docker : User for docker] **********************************************************************************************************************************************
-ok: [localhost]
-
-PLAY RECAP *******************************************************************************************************************************************************************
-localhost                  : ok=15   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-```
-
-```
-lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ ansible-inventory -i ansible/inventory/default_aws_ec2.yml --list
-{
-    "_meta": {
-        "hostvars": {
-            "localhost": {
-                "ansible_connection": "local",
-                "ansible_user": "eldar-cybersec"
-            }
-        }
-    },
-    "all": {
-        "children": [
-            "ungrouped"
-        ]
-    },
-    "ungrouped": {
-        "hosts": [
-            "localhost"
-        ]
-    }
-}
-```
-
-```
-lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ ansible-inventory -i ansible/inventory/default_aws_ec2.yml --graph
-@all:
-  |--@ungrouped:
-  |  |--localhost
-```
+I have configured the whole infastructure to start docker container, as well as disable and delete it on yandex cloud server. You can see the result in the screenshots and console output text below. 
 
 ```
 lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ ansible-playbook -i ansible/inventory/yandex_inventory.yaml ansible/playbooks/dev/main.yaml --diff --ask-become-pass
@@ -172,93 +82,45 @@ PLAY RECAP *********************************************************************
 compute-lab5-1             : ok=17   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 
-![alt text](image.png)
+![alt text](img/image-1-1.png)
+![alt text](img/image-1-4.png)
 
-```
-lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ ansible-inventory -i ansible/inventory/yandex_inventory.yaml --list
-{
-    "_meta": {
-        "hostvars": {
-            "compute-lab5-1": {
-                "ansible_host": "84.201.151.82",
-                "ansible_user": "ivangeliev",
-                "plugin": "yacloud_compute",
-                "yacloud_token_file": "./inventory/authorized_key.json"
-            }
-        }
-    },
-    "all": {
-        "children": [
-            "ungrouped"
-        ]
-    },
-    "ungrouped": {
-        "hosts": [
-            "compute-lab5-1"
-        ]
-    }
-}
-```
-
-```
-lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ ansible-inventory -i ansible/inventory/yandex_inventory.yaml --graph
-@all:
-  |--@ungrouped:
-  |  |--compute-lab5-1
-```
-
-
-bonus golang: 
-```
-lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/ansible$ ansible-playbook -i inventory/yandex_inventory.yaml playbooks/dev/python_main.yaml --tags docker -K
-[WARNING]: Ansible is being run in a world writable directory (/mnt/c/Users/Honor/Desktop/S25-core-course-labs/ansible), ignoring it as an ansible.cfg source. For more       
-information see https://docs.ansible.com/ansible/devel/reference_appendices/config.html#cfg-in-world-writable-dir
-BECOME password:
-
-PLAY [Deploy Docker using Ansible] *******************************************************************************************************************************************
-
-TASK [Gathering Facts] *******************************************************************************************************************************************************[WARNING]: Platform linux on host compute-lab5-1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter     
-could change the meaning of that path. See https://docs.ansible.com/ansible-core/2.17/reference_appendices/interpreter_discovery.html for more information.
-ok: [compute-lab5-1]
-[WARNING]: Platform linux on host compute-lab5-1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter     
-could change the meaning of that path. See https://docs.ansible.com/ansible-core/2.17/reference_appendices/interpreter_discovery.html for more information.
-ok: [compute-lab5-1]
-ok: [compute-lab5-1]
-
-TASK [web_app : Pull Docker image] *******************************************************************************************************************************************changed: [compute-lab5-1]
-
-TASK [web_app : Create directory for Docker Compose] *************************************************************************************************************************ok: [compute-lab5-1]
-
-TASK [web_app : Docker Compose File] *****************************************************************************************************************************************changed: [compute-lab5-1]
-
-TASK [web_app : Start Docker Compose] ****************************************************************************************************************************************changed: [compute-lab5-1]
-
-PLAY RECAP *******************************************************************************************************************************************************************compute-lab5-1             : ok=5    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-```
-
-![alt text](image-1.png)
+I then applied the wipe tag to verify that all the docker container would stop and delete. You can see the result in the screenshots below and in the console output text
 
 ```
 lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/ansible$ ansible-playbook -i inventory/yandex_inventory.yaml playbooks/dev/python_main.yaml --tags wipe -K
-[WARNING]: Ansible is being run in a world writable directory (/mnt/c/Users/Honor/Desktop/S25-core-course-labs/ansible), ignoring it as an ansible.cfg source. For more
-information see https://docs.ansible.com/ansible/devel/reference_appendices/config.html#cfg-in-world-writable-dir
+[WARNING]: Ansible is being run in a world writable directory (/mnt/c/Users/Honor/Desktop/S25-core-course-labs/ansible), ignoring it as an ansible.cfg
+source. For more information see https://docs.ansible.com/ansible/devel/reference_appendices/config.html#cfg-in-world-writable-dir
 BECOME password: 
 
-PLAY [Deploy Docker using Ansible] *******************************************************************************************************************************************
+PLAY [Deploy Docker using Ansible] ***********************************************************************************************************************
 
-TASK [Gathering Facts] *******************************************************************************************************************************************************
-[WARNING]: Platform linux on host compute-lab5-1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another Python interpreter
-could change the meaning of that path. See https://docs.ansible.com/ansible-core/2.17/reference_appendices/interpreter_discovery.html for more information.
+TASK [Gathering Facts] ***********************************************************************************************************************************
+[WARNING]: Platform linux on host compute-lab5-1 is using the discovered Python interpreter at /usr/bin/python3.12, but future installation of another
+Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-core/2.17/reference_appendices/interpreter_discovery.html  
+for more information.
 ok: [compute-lab5-1]
 
-TASK [web_app : Wipe Docker container] ***************************************************************************************************************************************
+TASK [web_app : Wipe Docker container] *******************************************************************************************************************
 changed: [compute-lab5-1]
 
-TASK [web_app : Remove docker-compose file] **********************************************************************************************************************************
+TASK [web_app : Remove docker-compose file] **************************************************************************************************************
 changed: [compute-lab5-1]
 
-PLAY RECAP *******************************************************************************************************************************************************************
+PLAY RECAP ***********************************************************************************************************************************************
 compute-lab5-1             : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 
-![alt text](image-2.png)
+![alt text](img/image-1-2.png)
+![alt text](img/image-1-3.png)
+
+
+## Bonus Task
+
+I set up the infastructure for the bonus task and another docker web-app application as shown in the task. I ran it using the standard method, only selecting playbooks/div/app_golang/main.yaml and got the following result:
+
+![alt text](img/image-1.png)
+
+And this is after disconnecting using the wipe tag: 
+
+![alt text](img/image-2.png)

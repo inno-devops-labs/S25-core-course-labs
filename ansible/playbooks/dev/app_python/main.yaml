@@ -6,5 +6,4 @@
   vars:
     docker_image: "lekski/python-web-app:latest"
     container_port: "80"
-    exposed_port: "8000"
     container_name: "python_web_app"
