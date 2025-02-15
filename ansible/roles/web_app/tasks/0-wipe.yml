@@ -1,0 +1,14 @@
+- name: Stop & Delete Container
+  block:
+  - name: Stop the running container
+    docker_container:
+      name: "{{ docker_container_name }}"
+      state: stopped
+
+  - name: Delete the running container
+    docker_container:
+      name: "{{ docker_container_name }}"
+      state: absent
+
+  tags:
+  - stop-delete-container

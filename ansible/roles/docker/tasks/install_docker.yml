@@ -1,64 +1,80 @@
 # Install Docker
-- name: Install Docker packages.
-  package:
-    name: "{{ docker_packages }}"
-    state: "present"
-  notify: restart docker
-  ignore_errors: "{{ ansible_check_mode }}"
-  when: "ansible_version.full is version_compare('2.12', '<') or ansible_os_family not in ['RedHat', 'Debian']"
+- name: Install Docker packages based on system compatibility
+  block:
+  - name: Install Docker packages.
+    package:
+      name: "{{ docker_packages }}"
+      state: "present"
+    notify: restart docker
+    ignore_errors: "{{ ansible_check_mode }}"
+    when: "ansible_version.full is version_compare('2.12', '<') or ansible_os_family not in ['Debian']"
 
-- name: Install Docker packages (with downgrade option).
-  package:
-    name: "{{ docker_packages }}"
-    state: "present"
-    allow_downgrade: true
-  notify: restart docker
-  ignore_errors: "{{ ansible_check_mode }}"
-  when: "ansible_version.full is version_compare('2.12', '>=') and ansible_os_family in ['RedHat', 'Debian']"
+  - name: Install Docker packages (with downgrade option).
+    package:
+      name: "{{ docker_packages }}"
+      state: "present"
+      allow_downgrade: true
+    notify: restart docker
+    ignore_errors: "{{ ansible_check_mode }}"
+    when: "ansible_version.full is version_compare('2.12', '>=') and ansible_os_family in ['Debian']"
+    tags:
+    - docker-install
 
-- name: Install docker-compose plugin.
-  package:
-    name: "docker-compose-plugin"
-    state: "present"
-  notify: restart docker
-  ignore_errors: "{{ ansible_check_mode }}"
-  when: "docker_install_compose_plugin | bool == true and (ansible_version.full is version_compare('2.12', '<') or ansible_os_family not in ['RedHat', 'Debian'])"
+- name: Install Docker Compose plugin based on system compatibility
+  block:
+  - name: Install docker-compose plugin.
+    package:
+      name: "docker-compose-plugin"
+      state: "present"
+    notify: restart docker
+    ignore_errors: "{{ ansible_check_mode }}"
+    when: "docker_install_compose_plugin | bool == true and (ansible_version.full is version_compare('2.12', '<') or ansible_os_family not in ['Debian'])"
 
-- name: Install docker-compose-plugin (with downgrade option).
-  package:
-    name: "docker-compose-plugin"
-    state: "present"
-    allow_downgrade: true
-  notify: restart docker
-  ignore_errors: "{{ ansible_check_mode }}"
-  when: "docker_install_compose_plugin | bool == true and ansible_version.full is version_compare('2.12', '>=') and ansible_os_family in ['RedHat', 'Debian']"
+  - name: Install docker-compose-plugin (with downgrade option).
+    package:
+      name: "docker-compose-plugin"
+      state: "present"
+      allow_downgrade: true
+    notify: restart docker
+    ignore_errors: "{{ ansible_check_mode }}"
+    when: "docker_install_compose_plugin | bool == true and ansible_version.full is version_compare('2.12', '>=') and ansible_os_family in ['Debian']"
+  tags:
+  - docker-compose-setup
 
-- name: Ensure /etc/docker/ directory exists.
-  file:
-    path: /etc/docker
-    state: directory
-    mode: 0755
-  when: docker_daemon_options.keys() | length > 0
+- name: Configure and start Docker service
+  block:
+  - name: Ensure /etc/docker/ directory exists.
+    file:
+      path: /etc/docker
+      state: directory
+      mode: 0755
+    when: docker_daemon_options.keys() | length > 0
 
-- name: Configure Docker daemon options.
-  copy:
-    content: "{{ docker_daemon_options | to_nice_json }}"
-    dest: /etc/docker/daemon.json
-    mode: 0644
-  when: docker_daemon_options.keys() | length > 0
-  notify: restart docker
+  - name: Configure Docker daemon options.
+    copy:
+      content: "{{ docker_daemon_options | to_nice_json }}"
+      dest: /etc/docker/daemon.json
+      mode: 0644
+    when: docker_daemon_options.keys() | length > 0
+    notify: restart docker
 
-- name: Ensure Docker is started and enabled at boot.
-  service:
-    name: docker
-    state: "started"
-    enabled: "{{ docker_service_enabled }}"
-  ignore_errors: "{{ ansible_check_mode }}"
-  when: docker_service_manage | bool
+  - name: Ensure Docker is started and enabled at boot.
+    service:
+      name: docker
+      state: "started"
+      enabled: "{{ docker_service_enabled }}"
+    ignore_errors: "{{ ansible_check_mode }}"
+    when: docker_service_manage | bool
 
-- name: Ensure handlers are notified now to avoid firewall conflicts.
-  meta: flush_handlers
+  - name: Ensure handlers are notified now to avoid firewall conflicts.
+    meta: flush_handlers
+  tags:
+  - docker-config
+
 
 - include_tasks: docker-compose.yml
   when: docker_install_compose | bool
+  tags:
+    - install-compose-call
+
 

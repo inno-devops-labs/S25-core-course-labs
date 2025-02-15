@@ -1,4 +1,4 @@
-# Ansible Docker Installation
+# Docker with Ansible
 
 ## Overview
 
@@ -54,7 +54,7 @@ The playbook applies the `docker` role to the AWS instance.
    ansible-playbook -i inventory/default_aws_ec2.yml playbooks/dev/main.yaml
    ```
 
-## Logs
+## Docker Installation Logs
 
 ```bash
 TASK [docker : Ensure curl is present (on older systems without SNI).] *********
@@ -174,3 +174,72 @@ aws:
     ansible_ssh_private_key_file: ${ANSIBLE_KEY} # Path to the SSH key (.pem file) stored in the machine as an environment variable
     ansible_user: ubuntu # The username used to access the instance
 ```
+
+## Application Deployment
+
+### Application Deployment Logs
+
+```bash
+TASK [docker : Add Docker repository.] *****************************************
+ok: [44.210.112.181]
+
+TASK [docker : include_tasks] **************************************************
+included: /home/moze/Documents/DevOps/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for 44.210.112.181
+
+TASK [docker : Install Docker packages.] ***************************************
+skipping: [44.210.112.181]
+
+TASK [docker : Install Docker packages (with downgrade option).] ***************
+ok: [44.210.112.181]
+
+TASK [docker : Install docker-compose plugin.] *********************************
+skipping: [44.210.112.181]
+
+TASK [docker : Install docker-compose-plugin (with downgrade option).] *********
+ok: [44.210.112.181]
+
+TASK [docker : Ensure /etc/docker/ directory exists.] **************************
+skipping: [44.210.112.181]
+
+TASK [docker : Configure Docker daemon options.] *******************************
+skipping: [44.210.112.181]
+
+TASK [docker : Ensure Docker is started and enabled at boot.] ******************
+ok: [44.210.112.181]
+
+TASK [docker : Ensure handlers are notified now to avoid firewall conflicts.] ***
+
+TASK [docker : include_tasks] **************************************************
+skipping: [44.210.112.181]
+
+TASK [docker : Get docker group info using getent.] ****************************
+skipping: [44.210.112.181]
+
+TASK [docker : Check if there are any users to add to the docker group.] *******
+skipping: [44.210.112.181]
+
+TASK [docker : Ensure docker users are added to the docker group.] *************
+skipping: [44.210.112.181]
+
+TASK [docker : Reset ssh connection to apply user changes.] ********************
+
+TASK [web_app : Pull the docker image for hayderuni/moscow-time-flask] *********
+ok: [44.210.112.181]
+
+TASK [web_app : Run the docker container] **************************************
+changed: [44.210.112.181]
+
+PLAY RECAP *********************************************************************
+44.210.112.181             : ok=15   changed=1    unreachable=0    failed=0    skipped=10   rescued=0    ignored=0
+```
+
+### Playbook Changes
+
+After adding a the new role we added a dependency in the `meta/main.yml`:
+
+```yaml
+dependencies:
+  - role: roles/docker
+```
+
+This will execute the role `docker` even if it wasn't mentioned in the playbook.
