@@ -18,6 +18,10 @@ This document outlines the configuration and deployment process for the custom D
      |   |   -- yacloud_compute.yaml
      |   |-- playbooks
      |   |   -- dev
+     |   |      |-- app_golang
+     |   |      |   -- main.yaml
+     |   |      |-- app_python
+     |   |      |   -- main.yaml
      |   |       -- main.yaml
      |   |-- roles
      |   |   |-- docker
@@ -39,13 +43,20 @@ This document outlines the configuration and deployment process for the custom D
      |   |       |   `-- main.yml
      |   |       |-- meta
      |   |       |   `-- main.yml
+     |   |       |-- static
+     |   |       |   `-- app_golang.png
+     |   |       |   `-- app_python.png
+     |   |       |   `-- docker_ps.png
+     |   |       |   `-- docker_ps2.png               
      |   |       |-- tasks
+     |   |       |   `-- 0-wipe.yml
      |   |       |   `-- main.yml
      |   |       `-- templates
      |   |           `-- docker-compose.yml.j2
+     |   |       `-- README.md
      |   `-- ansible.cfg
      |   `-- ANDIBLE.md
-     |-- app_go
+     |-- app_golang
      |-- app_python
      `-- terraform
 ```
@@ -369,3 +380,109 @@ These bonus tasks extend your Ansible deployment by integrating two key enhancem
   Enhances the security of your Docker installation by enabling user namespace remapping and validating the Docker daemon configuration inline, ensuring that only valid, secure settings are applied.
 
 Together, these improvements not only streamline your automation process but also strengthen the overall security and maintainability of your deployment. Customize these configurations further to suit your specific environment and operational requirements.
+
+## Additional Output
+In Lab 6 two applications were deployed using ansible.
+```
+andrew@Andrews-MacBook-Pro ansible % ansible-playbook playbooks/dev/main.yaml
+
+
+PLAY [Deploy Docker and Web App on Yandex Cloud (Ubuntu 22.04)] ****************************************************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************************************************************************
+fatal: [ansible]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: andrew@158.160.64.105: Permission denied (publickey,password).", "unreachable": true}
+
+PLAY RECAP *********************************************************************************************************************************************************************
+ansible                    : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739643415.053159  526540 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+andrew@Andrews-MacBook-Pro ansible % ansible-playbook playbooks/dev/main.yaml
+
+[WARNING]: Unable to parse /Users/andrew/PycharmProjects/S25-devops/ansible/inventory/default_yc_compute.yaml as an inventory source
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that the implicit localhost does not match 'all'
+
+PLAY [Deploy Docker and Web App on Yandex Cloud (Ubuntu 22.04)] ****************************************************************************************************************
+skipping: no hosts matched
+
+PLAY RECAP *********************************************************************************************************************************************************************
+
+andrew@Andrews-MacBook-Pro ansible % ansible-playbook playbooks/dev/main.yaml
+
+[WARNING]: Unable to parse /Users/andrew/PycharmProjects/S25-devops/ansible/inventory/plugins/__pycache__ as an inventory source
+[WARNING]:  * Failed to parse /Users/andrew/PycharmProjects/S25-devops/ansible/inventory/plugins/yacloud_compute.py with ini plugin:
+/Users/andrew/PycharmProjects/S25-devops/ansible/inventory/plugins/yacloud_compute.py:3: Expected key=value host variable assignment, got: __future__
+[WARNING]: Unable to parse /Users/andrew/PycharmProjects/S25-devops/ansible/inventory/plugins/yacloud_compute.py as an inventory source
+[WARNING]: Unable to parse /Users/andrew/PycharmProjects/S25-devops/ansible/inventory/plugins as an inventory source
+
+PLAY [Deploy Docker and Web App on Yandex Cloud (Ubuntu 22.04)] ****************************************************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************************************************************************
+fatal: [y0__xCf-amyAhjB3RMg9rKMmRL7MWB6CId-Om7euW90k4nBGlTK6A]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: Could not resolve hostname y0__xcf-amyahjb3rmg9rkmmrl7mwb6cid-om7euw90k4nbgltk6a: nodename nor servname provided, or not known", "unreachable": true}
+fatal: [ansible]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: andrew@158.160.64.105: Permission denied (publickey,password).", "unreachable": true}
+[WARNING]: Platform linux on host my-cloud-vm is using the discovered Python interpreter at /usr/bin/python3.10, but future installation of another Python interpreter could
+change the meaning of that path. See https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [my-cloud-vm]
+
+TASK [docker : include_tasks] **************************************************************************************************************************************************
+included: /Users/andrew/PycharmProjects/S25-devops/ansible/roles/docker/tasks/install_docker.yml for my-cloud-vm
+
+TASK [docker : Update apt cache] ***********************************************************************************************************************************************
+changed: [my-cloud-vm]
+
+TASK [docker : Install dependencies for Docker (Ubuntu)] ***********************************************************************************************************************
+ok: [my-cloud-vm]
+
+TASK [docker : Add Docker GPG key for Ubuntu] **********************************************************************************************************************************
+ok: [my-cloud-vm]
+
+TASK [docker : Add Docker repository for Ubuntu] *******************************************************************************************************************************
+ok: [my-cloud-vm]
+
+TASK [docker : Install Docker CE] **********************************************************************************************************************************************
+ok: [my-cloud-vm]
+
+TASK [docker : include_tasks] **************************************************************************************************************************************************
+included: /Users/andrew/PycharmProjects/S25-devops/ansible/roles/docker/tasks/install_compose.yml for my-cloud-vm
+
+TASK [docker : Download Docker Compose] ****************************************************************************************************************************************
+ok: [my-cloud-vm]
+
+TASK [docker : include_tasks] **************************************************************************************************************************************************
+included: /Users/andrew/PycharmProjects/S25-devops/ansible/roles/docker/tasks/configure.yml for my-cloud-vm
+
+TASK [docker : Ensure Docker service is enabled and started on boot] ***********************************************************************************************************
+ok: [my-cloud-vm]
+
+TASK [docker : Add current user to docker group] *******************************************************************************************************************************
+ok: [my-cloud-vm]
+
+TASK [docker : include_tasks] **************************************************************************************************************************************************
+included: /Users/andrew/PycharmProjects/S25-devops/ansible/roles/docker/tasks/secure.yml for my-cloud-vm
+
+TASK [docker : Copy secure Docker daemon configuration] ************************************************************************************************************************
+ok: [my-cloud-vm]
+
+TASK [docker : Validate Docker daemon configuration JSON syntax] ***************************************************************************************************************
+ok: [my-cloud-vm]
+
+TASK [web_app : Create deployment directory for web_app] ***********************************************************************************************************************
+changed: [my-cloud-vm]
+
+TASK [web_app : Render Docker Compose template for the application] ************************************************************************************************************
+changed: [my-cloud-vm]
+
+TASK [web_app : Start the application container using Docker Compose] **********************************************************************************************************
+changed: [my-cloud-vm]
+
+PLAY RECAP *********************************************************************************************************************************************************************
+ansible                    : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+my-cloud-vm                : ok=18   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+y0__xCf-amyAhjB3RMg9rKMmRL7MWB6CId-Om7euW90k4nBGlTK6A : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739643704.114583  528539 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+```
+
+There were some errors because of dynamic inventories (username mismatch). **Be careful!**
