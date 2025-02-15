@@ -107,7 +107,24 @@ skipping: [54.208.142.142]
 TASK [docker : Reset ssh connection to apply user changes.] ********************
 
 PLAY RECAP *********************************************************************
-54.208.142.142             : ok=13   changed=0    unreachable=0    failed=0    skipped=10   rescued=0    ignored=0 
+54.208.142.142             : ok=13   changed=0    unreachable=0    failed=0    skipped=10   rescued=0    ignored=0
+```
+
+If we go login to our instance we can see that the docker service is running:
+
+```bash
+$ systemctl status docker
+● docker.service - Docker Application Container Engine
+     Loaded: loaded (/usr/lib/systemd/system/docker.service; enabled; preset: enabled)
+     Active: active (running) since Sat 2025-02-15 13:39:32 UTC; 8min ago
+TriggeredBy: ● docker.socket
+       Docs: https://docs.docker.com
+   Main PID: 762 (dockerd)
+      Tasks: 8
+     Memory: 69.8M (peak: 103.4M)
+        CPU: 480ms
+     CGroup: /system.slice/docker.service
+             └─762 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
 ```
 
 ## Inventory Details
@@ -144,4 +161,16 @@ $ ansible-inventory -i inventory/default_aws_ec2.yml --graph
   |--@aws:
   |  |--54.208.142.142
 
+```
+
+Inventory code:
+
+```yaml
+# https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html
+aws:
+  hosts:
+    54.208.142.142 # IP address of our instance
+  vars:
+    ansible_ssh_private_key_file: ${ANSIBLE_KEY} # Path to the SSH key (.pem file) stored in the machine as an environment variable
+    ansible_user: ubuntu # The username used to access the instance
 ```
