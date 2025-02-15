@@ -1,3 +1,4 @@
+# Lab - 5
 ansible-playbook playbooks/dev/main.yaml --diff
 ```
 PLAY [Install Docker] **********************************************************
@@ -146,4 +147,116 @@ changed: [docker_vm]
 PLAY RECAP *********************************************************************
 docker_vm                  : ok=7    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 
+```
+
+# Lab - 6
+ansible-playbook -i inventory/default_aws_ec2.yml playbooks/dev/main.yaml --ask-pass --ask-become-pass
+```
+[WARNING]: log file at /var/log/ansible.log is not writeable and we cannot create it, aborting
+
+SSH password: 
+BECOME password[defaults to SSH password]: 
+
+PLAY [Install Docker] **********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [docker_vm]
+
+TASK [docker : Install required system packages] *******************************
+changed: [docker_vm]
+
+TASK [docker : Add Docker GPG apt Key] *****************************************
+changed: [docker_vm]
+
+TASK [docker : Add Docker repository] ******************************************
+changed: [docker_vm]
+
+TASK [docker : Install Docker] *************************************************
+ok: [docker_vm]
+
+TASK [docker : Download Docker Compose] ****************************************
+changed: [docker_vm]
+
+TASK [docker : Add the current user to the Docker group] ***********************
+changed: [docker_vm]
+
+TASK [docker : Ensure Docker Configuration Directory Exists] *******************
+ok: [docker_vm]
+
+TASK [docker : Apply Secure Docker Configuration] ******************************
+changed: [docker_vm]
+
+TASK [docker : Restart Docker for Security Settings to Take Effect] ************
+changed: [docker_vm]
+
+PLAY [Deploy Web Application] **************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [docker_vm]
+
+TASK [docker : Install required system packages] *******************************
+ok: [docker_vm]
+
+TASK [docker : Add Docker GPG apt Key] *****************************************
+changed: [docker_vm]
+
+TASK [docker : Add Docker repository] ******************************************
+ok: [docker_vm]
+
+TASK [docker : Install Docker] *************************************************
+ok: [docker_vm]
+
+TASK [docker : Download Docker Compose] ****************************************
+ok: [docker_vm]
+
+TASK [docker : Add the current user to the Docker group] ***********************
+ok: [docker_vm]
+
+TASK [docker : Ensure Docker Configuration Directory Exists] *******************
+ok: [docker_vm]
+
+TASK [docker : Apply Secure Docker Configuration] ******************************
+ok: [docker_vm]
+
+TASK [docker : Restart Docker for Security Settings to Take Effect] ************
+changed: [docker_vm]
+
+TASK [web_app : Create directory for the app_python] ***************************
+changed: [docker_vm]
+
+TASK [web_app : Deploy compose.yaml] *******************************************
+changed: [docker_vm]
+
+TASK [web_app : Start app_python] **********************************************
+changed: [docker_vm]
+
+TASK [web_app : Remove container] **********************************************
+changed: [docker_vm]
+
+TASK [web_app : Remove directory] **********************************************
+changed: [docker_vm]
+
+PLAY RECAP *********************************************************************
+docker_vm                  : ok=25   changed=14   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+```
+# Tags
+ansible-playbook -i inventory/default_aws_ec2.yml playbooks/dev/main.yaml --tags deploy --ask-pass --ask-become-pass
+```
+[WARNING]: log file at /var/log/ansible.log is not writeable and we cannot create it, aborting
+
+SSH password: 
+BECOME password[defaults to SSH password]: 
+
+PLAY [Install Docker] **********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [docker_vm]
+
+PLAY [Deploy Web Application] **************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [docker_vm]
+
+PLAY RECAP *********************************************************************
+docker_vm                  : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```

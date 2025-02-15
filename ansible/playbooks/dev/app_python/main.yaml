@@ -1,0 +1,11 @@
+- name: Install Docker
+  hosts: docker_vm
+  become: yes
+  roles:
+    - docker
+    
+- name: Deploy Python Application
+  hosts: all
+  become: yes
+  roles:
+    - app_python

@@ -1,0 +1,5 @@
+- name: Deploy Java Application
+  hosts: docker_vm
+  become: yes
+  roles:
+    - app_Java

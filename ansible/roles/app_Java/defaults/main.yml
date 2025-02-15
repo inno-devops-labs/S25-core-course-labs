@@ -1,0 +1,3 @@
+app_java_directory: "/opt/app_Java"
+app_java_image: "doryshibkova03/appjava:latest"
+app_java_port: "8080"

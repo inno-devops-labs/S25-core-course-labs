@@ -1,0 +1,9 @@
+- name: Stop and remove Docker Compose services
+  community.docker.docker_compose_v2:
+    project_src: "{{ app_directory }}"
+    state: absent
+
+- name: Remove application directory
+  ansible.builtin.file:
+    path: "{{ app_directory }}"
+    state: absent

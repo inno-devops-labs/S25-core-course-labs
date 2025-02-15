@@ -1,0 +1,11 @@
+- name: Stop and remove the Java application
+  community.docker.docker_compose_v2:
+    project_src: "{{ app_java_directory }}"
+    state: absent
+  tags: wipe
+
+- name: Remove Java application directory
+  ansible.builtin.file:
+    path: "{{ app_java_directory }}"
+    state: absent
+  tags: wipe

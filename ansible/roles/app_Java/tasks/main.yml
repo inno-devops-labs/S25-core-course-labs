@@ -1,0 +1,18 @@
+- name: Deploy Java Application
+  block:
+    - name: Ensure application directory exists
+      ansible.builtin.file:
+        path: "{{ app_java_directory }}"
+        state: directory
+        mode: '0755'
+
+    - name: Deploy Docker Compose file for Java App
+      ansible.builtin.template:
+        src: templates/docker-compose.yml.j2
+        dest: "{{ app_java_directory }}/docker-compose.yml"
+
+    - name: Start Java Application with Docker Compose
+      community.docker.docker_compose_v2:
+        project_src: "{{ app_java_directory }}"
+        state: present
+  tags: deploy

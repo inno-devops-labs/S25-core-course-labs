@@ -1,5 +1,5 @@
-myhosts:
+all:
   hosts:
     docker_vm:
-      ansible_host: 192.168.0.104
+      ansible_host: 192.168.0.105
       ansible_user: dariashib

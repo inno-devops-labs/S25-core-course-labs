@@ -1,0 +1,4 @@
+app_directory: "/opt/app_python"
+app_image: "doryshibkova03/myapp:latest"
+app_port: 5000
+wipe_web_app: true
