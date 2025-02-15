@@ -1,7 +1,12 @@
-```
-lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/main.yaml --diff --ask-become-pass
-BECOME password: 
+# Lab 5 Ansible and Docker Deployment | Mametov Eldar 
 
+## Task 1 && Task 2
+
+At the bottom you will see ansible run for lab5 task1, it is used to install docker and docker-compose. I've also added the output of the required data that was specified in the task itself. Currently the installation of docker and docker-compose goes locally on the computer, but this will be fixed in the bonus task. 
+
+I used the standard approach to install these components that were specified in the documentation. A separate user is also created for docker. 
+
+```
 PLAY [Deploy Docker using Ansible] *******************************************************************************************************************************************
 
 TASK [Gathering Facts] *******************************************************************************************************************************************************
@@ -93,6 +98,27 @@ lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ ansible-
   |  |--localhost
 ```
 
+## Bonus Task
+
+In order to connect to yandex cloud I needed to make changes to the inventory. To do this, I created a new server in yandex cloud that did not have docker and docker-compose yet. Yandex cli was already pre-installed on my local machine thanks to previous labs. A server account was created, given admin rights and a json file with keys to access the server terminal was created to manage it. 
+
+A plugin for yacloud management was installed on the link specified in the task. According to the documentation written in yacloud_compute.py a new yandex_inventory was created.
+```yaml
+all:
+  hosts:
+    compute-lab5-1:
+      ansible_host: 84.201.151.82
+      ansible_user: ivangeliev 
+      yacloud_token_file: ./inventory/authorized_key.json
+      plugin: yacloud_compute
+```
+yacloud_token_file is the json file to access the VM terminal. ansible_host is the VM ip, and ansible_user is the user who owns the yc_cloud account on which this VM is running. 
+compute-lab5-1 is the name of the VM machine created. 
+
+Security settings were also added to disable root access in the docker daemon. The final result was to run the written code and check that docker and docker-compose were installed on the server. 
+
+![alt text](img/image.png)
+
 ```
 lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ ansible-playbook -i ansible/inventory/yandex_inventory.yaml ansible/playbooks/dev/main.yaml --diff --ask-become-pass
 BECOME password: 
@@ -171,8 +197,6 @@ changed: [compute-lab5-1]
 PLAY RECAP *******************************************************************************************************************************************************************
 compute-lab5-1             : ok=17   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
-
-![alt text](image.png)
 
 ```
 lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ ansible-inventory -i ansible/inventory/yandex_inventory.yaml --list
