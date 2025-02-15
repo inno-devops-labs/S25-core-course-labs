@@ -1,8 +1,13 @@
 # Ansible
 
+I use Yandex Cloud Compute VM for this lab.
+
 ## Best Practices
 
-* 
+* Properly structured Ansible project
+* Usage of Dynamic Inventory for Cloud Environments
+* Usage of `fact_caching`
+* Usage of `ansible-playbook --check`
 
 ## Execute Playbook
 
