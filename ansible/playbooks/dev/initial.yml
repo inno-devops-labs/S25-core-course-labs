@@ -1,0 +1,5 @@
+- name: Setup Docker on VM
+  hosts: ya_cloud_vm
+  become: true
+  roles:
+    - geerlingguy.docker

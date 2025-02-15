@@ -1,6 +1,6 @@
 all:
   hosts:
     ya_cloud_vm:
-      ansible_host: 
-      ansible_user: 
-      ansible_ssh_private_key_file: 
+      ansible_host: 158.160.143.18
+      ansible_user: ren
+      ansible_ssh_private_key_file: /home/ren/.ssh/id_ed25519 

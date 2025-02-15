@@ -1,4 +1,4 @@
-- name: Setup Docker on VM
+- name: Setup Custom Docker Role
   hosts: ya_cloud_vm
   become: true
   roles:

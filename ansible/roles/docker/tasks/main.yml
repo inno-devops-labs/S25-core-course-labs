@@ -1,4 +1,4 @@
-- name: Install required packages
+- name: Install packages
   apt:
     name:
       - apt-transport-https
@@ -10,10 +10,16 @@
 
 - include_tasks: install_docker.yml
 
-- name: Ensure Docker is running
+- include_tasks: install_compose.yml
+
+- name: Enable Docker service to start on boot
   systemd:
     name: docker
     enabled: yes
     state: started
 
-- include_tasks: install_compose.yml
+- name: Add current user to docker group
+  user:
+    name: "{{ ansible_user }}"
+    group: docker
+    append: yes
