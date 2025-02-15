@@ -48,7 +48,7 @@ docker pull voronm1522/devops:cpp-app
 To run image run:
 ```
 docker run <name>
-
+```
 
 ## CI
 
