@@ -3,7 +3,7 @@ name: C++ Application CI
 on:
   push:
     paths:
-        "app_C[+][+]/**"
+        'app_C\+\+/**'
 
 env:
   USERNAME: voronm1522
