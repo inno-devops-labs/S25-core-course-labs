@@ -2,6 +2,8 @@ name: C++ Application CI
 
 on:
   push:
+    paths:
+        "app_C++/**"
 
 env:
   USERNAME: voronm1522
@@ -17,7 +19,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ~/.cache/pip
-        key: ubuntu-python-${{ hashFiles('app_python/requirements.txt') }}
+        key: ubuntu-python-${{ hashFiles('app_C++/requirements.txt') }}
         restore-keys: |
           ubuntu-python-
 
@@ -31,12 +33,13 @@ jobs:
     - name: Install dependencies and linter
       run: |
         python -m pip install --upgrade pip
-        pip install flake8
-        pip install -r app_python/requirements.txt
+        pip install -r app_C++/requirements.txt
+        sudo apt update
+        sudo apt install cppcheck
 
-    - name: Lint with flake8
+    - name: Lint with Cppcheck
       run: |
-        flake8 app_python/app.py
+        cppcheck app_C++/app.cpp
 
     - name: Run tests
       run: |
@@ -68,7 +71,7 @@ jobs:
 
     - name: Run snyk 
       run: |
-        cd app_python
+        cd app_C++
         snyk test
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

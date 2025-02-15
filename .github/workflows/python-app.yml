@@ -2,6 +2,8 @@ name: Python Application CI
 
 on:
   push:
+    paths:
+      - "app_python/**"
 
 env:
   USERNAME: voronm1522
