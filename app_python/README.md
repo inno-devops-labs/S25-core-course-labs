@@ -72,8 +72,7 @@ python unittests.py
 Output will contain `OK` in case of success or backtrace for function(s) with error.
 
 ## CI
-![Python Application CI](https://github.com/VoronM1522/S25-core-course-labs/actions/workflows/python-app.yml/badge.svg)
-
+[![Python Application CI](https://github.com/VoronM1522/S25-core-course-labs/actions/workflows/python-app.yml/badge.svg?branch=lab3)](https://github.com/VoronM1522/S25-core-course-labs/actions/workflows/python-app.yml)
 CI triggers on push. It runs on ubuntu-latest. It clones (copy) repository using `actions/checkout@v3` and execute the next steps:
     - Setting up python;
     - Dependencies and linter (`flake8`) installation;
