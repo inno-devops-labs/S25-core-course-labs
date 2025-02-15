@@ -1,6 +1,6 @@
 # Ansible Documentation
 
-## Структура проекта
+## Project Structure
 ```ansible/
 ├── inventory/
 │   └── default_aws_ec2.yml
@@ -12,9 +12,9 @@
 └── ansible.cfg
 ```
 
-## Инвентарь
+## Inventory
 
-### Структура инвентаря
+### Inventory Structure
 ```bash
 $ ansible-inventory -i ansible/inventory/default_aws_ec2.yml --graph
 @all:
@@ -22,7 +22,7 @@ $ ansible-inventory -i ansible/inventory/default_aws_ec2.yml --graph
   |  |--localhost
 ```
 
-### Детальный вывод инвентаря
+### Detailed Inventory Output
 ```bash
 $ ansible-inventory -i ansible/inventory/default_aws_ec2.yml --list
 {
@@ -46,32 +46,18 @@ $ ansible-inventory -i ansible/inventory/default_aws_ec2.yml --list
 }
 ```
 
-## Вывод развертывания
+## Deployment Output
 
 ```bash
 $ ansible-playbook ansible/playbooks/dev/main.yaml -i ansible/inventory/default_aws_ec2.yml -K
 
-PLAY [Install Docker] *******************************************************************
-
-TASK [Gathering Facts] ****************************************************************
-ok: [localhost]
-
-TASK [geerlingguy.docker : Install Docker packages] ***********************************
-ok: [localhost]
-
-TASK [geerlingguy.docker : Install docker-compose-plugin] *****************************
-ok: [localhost]
-
-TASK [geerlingguy.docker : Ensure Docker is started and enabled at boot] **************
-ok: [localhost]
-
-PLAY RECAP **************************************************************************
-localhost                  : ok=18   changed=0    unreachable=0    failed=0    skipped=11   rescued=0    ignored=0
+PLAY RECAP ******************************************************************************
+localhost : ok=37 changed=0 unreachable=0 failed=0 skipped=22 rescued=0 ignored=0
 ```
 
-## Проверка установки
+## Installation Verification
 
-### Версии компонентов
+### Component Versions
 ```bash
 $ docker --version
 Docker version 27.5.1, build 9f9e405
@@ -80,7 +66,7 @@ $ docker-compose --version
 Docker Compose version v2.32.1
 ```
 
-### Статус службы
+### Service Status
 ```bash
 $ systemctl status docker
 ● docker.service - Docker Application Container Engine
@@ -88,51 +74,51 @@ $ systemctl status docker
      Active: active (running)
 ```
 
-### Проверка группы docker
+### Docker Group Check
 ```bash
 $ groups | grep docker
 m7 ... docker ...
 ```
 
-## Основные команды
+## Common Commands
 
-### Запуск плейбука
+### Running Playbooks
 ```bash
-# Обычный запуск
+# Standard run
 ansible-playbook ansible/playbooks/dev/main.yaml -i ansible/inventory/default_aws_ec2.yml
 
-# Запуск с правами sudo
+# Run with sudo privileges
 ansible-playbook ansible/playbooks/dev/main.yaml -i ansible/inventory/default_aws_ec2.yml -K
 
-# Проверка синтаксиса
+# Syntax check
 ansible-playbook ansible/playbooks/dev/main.yaml -i ansible/inventory/default_aws_ec2.yml --syntax-check
 
-# Пробный запуск
+# Dry run
 ansible-playbook ansible/playbooks/dev/main.yaml -i ansible/inventory/default_aws_ec2.yml --check -K
 
-# Запуск с показом различий
+# Show differences
 ansible-playbook ansible/playbooks/dev/main.yaml -i ansible/inventory/default_aws_ec2.yml --diff -K
 ```
 
-## Роли
+## Roles
 
 ### Web App Role
 
-Роль для развертывания приложения с использованием Docker Compose.
+Role for deploying an application using Docker Compose.
 
-#### Переменные
+#### Variables
 
-- `app_name`: Имя приложения (default: python-app)
-- `app_image`: Docker образ приложения
-- `app_port`: Порт приложения (default: 8000)
-- `deploy_user`: Пользователь для деплоя
-- `deploy_directory`: Директория для деплоя
+- `app_name`: Application name (default: python-app)
+- `app_image`: Docker image for the application
+- `app_port`: Application port (default: 8000)
+- `deploy_user`: User for deployment
+- `deploy_directory`: Directory for deployment
 
-#### Зависимости
+#### Dependencies
 
-- Docker роль
+- Docker role
 
-#### Пример использования
+#### Example Usage
 
 ```yaml
 - hosts: all
@@ -143,7 +129,7 @@ ansible-playbook ansible/playbooks/dev/main.yaml -i ansible/inventory/default_aw
     - web_app
 ```
 
-## Вывод деплоя
+## Deployment Output
 
 ```bash
 PLAY [Deploy Application] ***********************************************************

@@ -9,3 +9,6 @@ app_env:
 # Настройки деплоя
 deploy_user: "m7"
 deploy_directory: "/opt/{{ app_name }}"
+
+# Настройки очистки
+web_app_full_wipe: false

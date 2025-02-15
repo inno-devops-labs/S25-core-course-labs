@@ -1,44 +1,57 @@
 # Docker Role
 
-## Описание
-Эта роль устанавливает и настраивает Docker и Docker Compose на Ubuntu системах.
+## Description
+This role installs and configures Docker and Docker Compose on the target system.
 
-## Требования
+## Requirements
+- Ubuntu/Debian-based system
 - Ansible 2.9+
-- Ubuntu 24.04 (Noble)
-- Права sudo на целевой машине
+- Python 3.x
 
-## Переменные роли
-
-### Обязательные переменные
-Нет обязательных переменных
-
-### Опциональные переменные
+## Role Variables
 ```yaml
-# Версия Docker для установки
-docker_version: "latest"  # Текущая установленная: 27.5.1
-
-# Версия Docker Compose для установки
+docker_version: latest
 docker_compose_version: "2.32.1"
+docker_users: []
 
-# Пользователи для добавления в группу docker
-docker_users:
-  - "m7"
+# Security settings
+docker_live_restore: true        # Allows containers to run during daemon restart
+docker_userland_proxy: false     # Disables userland-proxy for better performance
+docker_no_new_privileges: true   # Prevents privilege escalation in containers
+docker_userns_remap: "default"   # Enables user namespace isolation
+docker_log_max_size: "10m"       # Maximum log file size
+docker_log_max_files: "3"        # Number of log rotation files
 ```
 
-## Зависимости
-Нет внешних зависимостей
+## Security Features
 
-## Пример использования
+The role includes the following security measures:
+- Disabled root access
+- User namespace remapping
+- Container privilege limitations
+- Log rotation
+- Live-restore for minimal downtime
 
-### Простой пример
+## Usage
+
+### Apply changes
+```bash
+ansible-playbook ansible/playbooks/dev/main.yaml -K
+```
+
+## Dependencies
+There are no external dependencies
+
+## Example Usage
+
+### Simple Example
 ```yaml
 - hosts: all
   roles:
     - role: docker
 ```
 
-### Расширенный пример
+### Advanced Example
 ```yaml
 - hosts: all
   become: true
@@ -49,7 +62,7 @@ docker_users:
     - role: docker
 ```
 
-## Структура роли
+## Role Structure
 ```
 docker/
 ├── defaults/
@@ -65,44 +78,23 @@ docker/
 └── README.md
 ```
 
-## Выполняемые задачи
-1. Установка необходимых зависимостей
-2. Добавление Docker репозитория
-3. Установка Docker (версия 27.5.1)
-4. Установка Docker Compose (версия 2.32.1)
-5. Настройка автозапуска Docker (systemctl enable docker)
-6. Добавление пользователя в группу docker
-7. Проверка установки
+## Executable Tasks
+1. Install necessary dependencies
+2. Add Docker repository
+3. Install Docker (version 27.5.1)
+4. Install Docker Compose (version 2.32.1)
+5. Configure Docker auto-start (systemctl enable docker)
+6. Add user to docker group
+7. Verify installation
 
-## Тестирование роли
+## Role Testing
 ```bash
-# Проверка синтаксиса
+# Syntax Check
 ansible-playbook ansible/playbooks/dev/main.yaml --syntax-check
 
-# Пробный запуск
+# Dry Run
 ansible-playbook ansible/playbooks/dev/main.yaml --check -K
 
-# Применение изменений
+# Apply Changes
 ansible-playbook ansible/playbooks/dev/main.yaml -K
-```
-
-## Безопасность
-
-Роль включает следующие меры безопасности:
-
-- Отключение прямого доступа root
-- Включение user namespace remapping
-- Ограничение привилегий для контейнеров
-- Настройка ротации логов
-- Включение live-restore для минимизации простоя
-
-## Переменные безопасности
-
-```yaml
-docker_live_restore: true        # Позволяет контейнерам работать при перезапуске демона
-docker_userland_proxy: false     # Отключает userland-proxy для улучшения производительности
-docker_no_new_privileges: true   # Запрещает повышение привилегий в контейнерах
-docker_userns_remap: "default"   # Включает изоляцию пользователей
-docker_log_max_size: "10m"       # Максимальный размер файла лога
-docker_log_max_files: "3"        # Количество файлов ротации логов
 ```

@@ -1,61 +1,80 @@
 ---
-- name: Create application directory
-  file:
-    path: "{{ deploy_directory }}"
-    state: directory
-    owner: "{{ deploy_user }}"
-    group: "{{ deploy_user }}"
-    mode: '0755'
+- name: Include wipe tasks
+  include_tasks: 0-wipe.yml
+  when: web_app_full_wipe | default(false) | bool
+  tags:
+    - wipe
 
-- name: Template docker-compose.yml
-  template:
-    src: docker-compose.yml.j2
-    dest: "{{ deploy_directory }}/docker-compose.yml"
-    owner: "{{ deploy_user }}"
-    group: "{{ deploy_user }}"
-    mode: '0644'
-  notify: restart application
+- name: Setup application environment
+  block:
+    - name: Create application directory
+      file:
+        path: "{{ deploy_directory }}"
+        state: directory
+        owner: "{{ deploy_user }}"
+        group: "{{ deploy_user }}"
+        mode: '0755'
 
-- name: Create Docker config directory
-  file:
-    path: "/root/.docker"
-    state: directory
-    mode: '0700'
-  become: true
+    - name: Template docker-compose.yml
+      template:
+        src: docker-compose.yml.j2
+        dest: "{{ deploy_directory }}/docker-compose.yml"
+        owner: "{{ deploy_user }}"
+        group: "{{ deploy_user }}"
+        mode: '0644'
+      notify: restart application
+  tags:
+    - setup
 
-- name: Configure Docker credentials
-  copy:
-    content: |
-      {
-        "auths": {
-          "https://index.docker.io/v1/": {
-            "auth": "{{ (lookup('env', 'DOCKER_USERNAME') + ':' + lookup('env', 'DOCKER_PASSWORD')) | b64encode }}"
+- name: Configure Docker authentication
+  block:
+    - name: Create Docker config directory
+      file:
+        path: "/root/.docker"
+        state: directory
+        mode: '0700'
+      become: true
+
+    - name: Configure Docker credentials
+      copy:
+        content: |
+          {
+            "auths": {
+              "https://index.docker.io/v1/": {
+                "auth": "{{ (lookup('env', 'DOCKER_USERNAME') + ':' + lookup('env', 'DOCKER_PASSWORD')) | b64encode }}"
+              }
+            }
           }
-        }
-      }
-    dest: "/root/.docker/config.json"
-    mode: '0600'
-  become: true
-  no_log: true
+        dest: "/root/.docker/config.json"
+        mode: '0600'
+      become: true
+      no_log: true
+  tags:
+    - docker
+    - auth
 
-- name: Wait for Docker daemon
-  wait_for:
-    path: /var/run/docker.sock
-    timeout: 30
+- name: Deploy application
+  block:
+    - name: Wait for Docker daemon
+      wait_for:
+        path: /var/run/docker.sock
+        timeout: 30
 
-- name: Pull application image
-  community.docker.docker_image:
-    name: "{{ app_image }}"
-    source: pull
-    force_source: yes
-  retries: 3
-  delay: 10
+    - name: Pull application image
+      community.docker.docker_image:
+        name: "{{ app_image }}"
+        source: pull
+        force_source: yes
+      retries: 3
+      delay: 10
 
-- name: Start application
-  community.docker.docker_compose_v2:
-    project_src: "{{ deploy_directory }}"
-    state: present
-    pull: "always"
+    - name: Start application
+      community.docker.docker_compose_v2:
+        project_src: "{{ deploy_directory }}"
+        state: present
+        pull: "always"
+  tags:
+    - deploy
 
 - name: Debug variables
   debug:

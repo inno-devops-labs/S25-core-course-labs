@@ -3,4 +3,4 @@
   community.docker.docker_compose_v2:
     project_src: "{{ deploy_directory }}"
     state: present
-    restarted: true
+    recreate: true
