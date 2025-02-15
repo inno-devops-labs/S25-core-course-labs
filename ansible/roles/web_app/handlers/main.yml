@@ -1,0 +1,4 @@
+- name: Restart Docker container
+  ansible.builtin.docker_container:
+    name: "{{ python_web_app_docker_container_name }}"
+    state: restarted

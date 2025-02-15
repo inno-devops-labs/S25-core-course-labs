@@ -1,0 +1,8 @@
+python_web_app_version: "latest"
+python_web_app_docker_image_name: "dmhd6219/inno_devops_lab2_python_bonus"
+python_web_app_docker_container_name: "inno_devops_lab2_python_bonus"
+python_web_app_internal_port: "8000"
+python_web_app_external_port: "8000"
+python_web_app_wipe_container: "false"
+python_web_app_docker_compose_folder: "/python_web_app"
+python_web_app_docker_compose_path: "/python_web_app/docker-compose.yml"

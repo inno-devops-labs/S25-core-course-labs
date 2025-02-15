@@ -1,0 +1,38 @@
+- name: Wipe
+  ansible.builtin.import_tasks: 0-wipe.yml
+  when: python_web_app_wipe_container | bool
+  tags: [wipe]
+
+- name: Deploy Web App
+  block:
+    - name: Pull Docker image
+      community.docker.docker_image:
+        name: "{{ python_web_app_docker_image_name }}"
+        tag: "{{ python_web_app_version }}"
+        source: pull
+      tags: [docker]
+
+    - name: Start container
+      community.docker.docker_container:
+        name: "{{ python_web_app_docker_container_name }}"
+        image: "{{ python_web_app_docker_image_name }}"
+        state: started
+        restart_policy: always
+        ports:
+          - "{{ python_web_app_internal_port }}:{{ python_web_app_external_port }}"
+      tags: [docker]
+
+    - name: Create directory for docker-compose file
+      ansible.builtin.file:
+        path: /python_web_app
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+      tags: [docker-compose]
+
+    - name: Deploy docker-compose file
+      ansible.builtin.template:
+        src: docker-compose.yml.j2
+        dest: "{{ python_web_app_docker_compose_path }}"
+      tags: [docker-compose]
