@@ -42,6 +42,20 @@
     name: "{{ docker_user }}"
     groups: docker
     append: true
+  when: ansible_user != 'root'
+  notify: Restart Docker
+
+- name: Configure Docker security settings
+  ansible.builtin.copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "userns-remap": "default"
+      }
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Docker
 
 - name: Enable and start Docker services
   ansible.builtin.systemd:
