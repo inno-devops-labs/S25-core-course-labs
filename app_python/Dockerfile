@@ -4,4 +4,6 @@ RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 COPY app.py config.txt requirements.txt ./
 RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r requirements.txt
+RUN adduser app_user && chown -R app_user:app_user /app
+USER app_user
 CMD ["python", "app.py"]
