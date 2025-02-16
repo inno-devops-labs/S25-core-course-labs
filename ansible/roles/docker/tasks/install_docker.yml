@@ -72,7 +72,7 @@
   - docker-config
 
 
-- include_tasks: docker-compose.yml
+- include_tasks: install_compose.yml
   when: docker_install_compose | bool
   tags:
     - install-compose-call
