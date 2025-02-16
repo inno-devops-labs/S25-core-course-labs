@@ -2,30 +2,6 @@
 
 This document provides information about the Ansible configuration used in this project for deploying Docker to AWS EC2 instances.
 
-## Project Structure
-
-```
-ansible/
-├── ansible.cfg                    # Ansible configuration file
-├── inventory/
-│   └── default_aws_ec2.yml       # AWS EC2 dynamic inventory
-├── playbooks/
-│   └── dev/
-│       └── main.yaml             # Main playbook for Docker deployment
-└── roles/
-    ├── docker/                   # Docker installation role
-    │   ├── defaults/
-    │   │   └── main.yml         # Default variables
-    │   ├── handlers/
-    │   │   └── main.yml         # Service handlers
-    │   ├── tasks/
-    │   │   ├── install_compose.yml  # Docker Compose installation
-    │   │   ├── install_docker.yml   # Docker installation
-    │   │   └── main.yml            # Main tasks file
-    │   └── README.md            # Role documentation
-    └── web_app/                 # Web application role (to be implemented)
-```
-
 ## Prerequisites
 
 1. Install Ansible and required dependencies:
@@ -115,7 +91,7 @@ Key features:
 - Adds the specified user to the Docker group
 - Handles service restart when needed
 
-## Sample Deployment Output
+## Deployment Output
 ```bash
 $ ansible-playbook playbooks/dev/main.yaml --diff
 
