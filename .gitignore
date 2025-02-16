@@ -5,3 +5,11 @@
 # Environment files and folders
 .env
 .venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+*.pyz
