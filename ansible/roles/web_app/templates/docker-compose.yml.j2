@@ -1,0 +1,9 @@
+services:
+  web:
+    image: "{{ docker_image }}"
+    environment:
+      - APP_HOST=0.0.0.0
+      - APP_PORT={{ app_port }}
+    ports:
+      - "{{ app_port }}:{{ app_port }}"
+    restart: unless-stopped
