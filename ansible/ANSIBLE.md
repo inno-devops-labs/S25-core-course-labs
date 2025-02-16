@@ -179,7 +179,7 @@ The following NEW packages will be installed:
 changed: [compute-vm-2-2-20-ssd-1739694545649]
 
 TASK [docker : include_tasks] **********************************************************************************************************
-included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for compute-vm-2-2-20-ssd-1739694545649
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_docker_compose.yml for compute-vm-2-2-20-ssd-1739694545649
 
 TASK [docker : Download Docker Compose] ************************************************************************************************
 changed: [compute-vm-2-2-20-ssd-1739694545649]
@@ -263,7 +263,7 @@ TASK [docker : Install Docker] *************************************************
 ok: [terraform1]
 
 TASK [docker : include_tasks] **********************************************************************************************************
-included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for terraform1
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_docker_compose.yml for terraform1
 
 TASK [docker : Download Docker Compose] ************************************************************************************************
 ok: [terraform1]
@@ -341,7 +341,7 @@ TASK [docker : Install Docker] *************************************************
 ok: [terraform1]
 
 TASK [docker : include_tasks] **********************************************************************************************************
-included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for terraform1
+included: /mnt/f/magic/Documents/Projects/S25-core-course-labs/ansible/roles/docker/tasks/install_docker_compose.yml for terraform1
 
 TASK [docker : Download Docker Compose] ************************************************************************************************
 ok: [terraform1]
