@@ -2,4 +2,5 @@
   hosts: all
   become: true
   roles:
-    - docker
+    - roles/docker
+    - roles/web_app

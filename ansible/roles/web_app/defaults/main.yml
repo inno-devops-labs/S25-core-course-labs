@@ -1,0 +1,3 @@
+dockerhubuser: "{{ lookup('ansible.builtin.env', 'HUB_USER') }}"
+dockerhubpass: "{{ lookup('ansible.builtin.env', 'HUB_PASS') }}"
+web_app_full_wipe: false

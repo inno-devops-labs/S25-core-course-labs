@@ -1,5 +1,13 @@
 - name: Install Docker
-  ansible.builtin.include_tasks: install_docker.yml
+  block:
+  - name: Install Docker
+    ansible.builtin.include_tasks: install_docker.yml
+  tags:
+  - setup
 
 - name: Install Docker Compose
-  ansible.builtin.include_tasks: install_compose.yml
+  block:
+  - name: Install Docker Compose
+    ansible.builtin.include_tasks: install_compose.yml
+  tags:
+  - setup

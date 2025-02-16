@@ -1,67 +1,83 @@
-- name: Update apt packages
-  ansible.builtin.apt:
-    update_cache: true
+- name: Update and Install apt
+  block:
+  - name: Update apt packages
+    ansible.builtin.apt:
+      update_cache: true
 
-- name: Install apt packages
-  ansible.builtin.apt:
-    pkg:
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - gnupg
-      - software-properties-common
+  - name: Install apt packages
+    ansible.builtin.apt:
+      pkg:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg
+        - software-properties-common
+  tags:
+  - setup
 
-- name: Add Docker's official GPG key
-  ansible.builtin.apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    state: present
+- name: Install Docker
+  block:
+  - name: Add Docker's official GPG key
+    ansible.builtin.apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
 
-- name:  Add Docker's official apt repository
-  ansible.builtin.apt_repository:
-    repo: "deb https://download.docker.com/linux/{{ docker_distro }}"
-    state: present
+  - name:  Add Docker's official apt repository
+    ansible.builtin.apt_repository:
+      repo: "deb https://download.docker.com/linux/{{ docker_distro }}"
+      state: present
 
-- name: Install Docker and Docker Compose
-  ansible.builtin.apt:
-    name: "{{ item }}"
-    state: present
-    update_cache: true
-  loop:
-    - docker-ce
-    - docker-ce-cli
-    - containerd.io
-    - docker-buildx-plugin
+  - name: Install Docker and Docker Compose
+    ansible.builtin.apt:
+      name: "{{ item }}"
+      state: present
+      update_cache: true
+    loop:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+  tags:
+  - setup
 
-- name: Add Docker group
-  ansible.builtin.group:
-    name: docker
-    state: present
+- name: Initialize Docker
+  block:
+  - name: Add Docker group
+    ansible.builtin.group:
+      name: docker
+      state: present
 
-- name: Add user to Docker group
-  ansible.builtin.user:
-    name: "{{ docker_user }}"
-    groups: docker
-    append: true
-  when: ansible_user != 'root'
-  notify: Restart Docker
+  - name: Add user to Docker group
+    ansible.builtin.user:
+      name: "{{ docker_user }}"
+      groups: docker
+      append: true
+    when: ansible_user != 'root'
+    notify: Restart Docker
 
-- name: Configure Docker security settings
-  ansible.builtin.copy:
-    dest: /etc/docker/daemon.json
-    content: |
-      {
-        "userns-remap": "default"
-      }
-    owner: root
-    group: root
-    mode: '0644'
-  notify: Restart Docker
+  - name: Configure Docker security settings
+    ansible.builtin.copy:
+      dest: /etc/docker/daemon.json
+      content: |
+        {
+          "userns-remap": "default"
+        }
+      owner: root
+      group: root
+      mode: '0644'
+    notify: Restart Docker
+  tags:
+  - setup
 
-- name: Enable and start Docker services
-  ansible.builtin.systemd:
-    name: "{{ item }}"
-    enabled: true
-    state: started
-  loop:
-    - docker.service
-    - containerd.service
+- name: Enable and start Docker
+  block:
+  - name: Enable and start Docker services
+    ansible.builtin.systemd:
+      name: "{{ item }}"
+      enabled: true
+      state: started
+    loop:
+      - docker.service
+      - containerd.service
+  tags:
+  - setup
