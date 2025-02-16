@@ -14,7 +14,16 @@ services:
     volumes:
       - loki_data:/loki
     networks:
-      - monitoring 
+      - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
   promtail:
     image: grafana/promtail:latest
@@ -27,6 +36,16 @@ services:
       - monitoring
     depends_on:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+
 
   grafana:
     image: grafana/grafana:latest
@@ -57,6 +76,15 @@ services:
         /run.sh
     networks:
       - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
   prometheus:
     image: prom/prometheus:latest
@@ -72,13 +100,31 @@ services:
       - '--storage.tsdb.path=/prometheus'
     depends_on:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
   app_python:
     image: raleksan/app_python:v0.1
     ports:
       - "8001:8000"
     networks:
-      - monitoring 
+      - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 128M
 
   app_rust:
     image: raleksan/app_rust:v0.1
@@ -86,3 +132,12 @@ services:
       - "8002:8000"
     networks:
       - monitoring 
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 128M
