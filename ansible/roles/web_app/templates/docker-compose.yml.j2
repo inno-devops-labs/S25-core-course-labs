@@ -1,0 +1,7 @@
+services:
+  {{ app_container_name }}:
+    image: "{{ app_image }}"
+    container_name: "{{ app_container_name }}"
+    restart: unless-stopped
+    ports:
+      - "{{ host_app_port }}:{{ container_app_port }}"
