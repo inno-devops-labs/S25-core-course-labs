@@ -74,5 +74,5 @@ jobs:
           file: ./app_python/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/python-app:latest
-            ghcr.io/${{ github.repository_owner }}/python-app:${{ github.sha }}
+            ghcr.io/${{ lowercase(github.repository_owner) }}/python-app:latest
+            ghcr.io/${{ lowercase(github.repository_owner) }}/python-app:${{ github.sha }}
