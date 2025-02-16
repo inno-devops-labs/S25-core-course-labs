@@ -1,2 +1,7 @@
-dependencies:
-  - role: geerlingguy.docker
+galaxy_info:
+  author: Morozov Aleksei SD-02
+  description: DevOps Lab6
+  min_ansible_version: 2.1
+  galaxy_tags: []
+
+dependencies: []
