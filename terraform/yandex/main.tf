@@ -1,24 +1,57 @@
 terraform {
   required_providers {
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "~> 3.0.1"
+    yandex = {
+      source = "yandex-cloud/yandex"
     }
   }
+  required_version = ">= 0.13"
 }
 
-provider "docker" {}
-
-resource "docker_image" "nginx" {
-  name         = "nginx:latest"
-  keep_locally = false
+provider "yandex" {
+  token     = var.token
+  cloud_id  = var.cloud_id
+  folder_id = var.folder_id
+  zone      = var.zone
 }
 
-resource "docker_container" "nginx" {
-  image = docker_image.nginx.image_id
-  name  = var.container_name
-  ports {
-    internal = 80
-    external = 8080
+
+resource "yandex_compute_disk" "boot-disk-1" {
+  name     = var.disk_name
+  type     = var.disk_type
+  zone     = var.zone
+  size     = var.disk_size
+  image_id = var.disk_image_id
+}
+
+resource "yandex_compute_instance" "vm-1" {
+  name = var.vm_name
+
+  resources {
+    cores  = var.vm_cores
+    memory = var.vm_memory
   }
+
+  boot_disk {
+    disk_id = yandex_compute_disk.boot-disk-1.id
+  }
+
+  network_interface {
+    subnet_id = yandex_vpc_subnet.subnet-1.id
+    nat       = var.vm_nat
+  }
+
+  metadata = {
+    ssh-keys = "user:${file("~/.ssh/yandex_cloud_vm.pub")}"
+  }
+}
+
+resource "yandex_vpc_network" "network-1" {
+  name = var.network_name
+}
+
+resource "yandex_vpc_subnet" "subnet-1" {
+  name           = var.subnet_name
+  zone           = var.zone
+  network_id     = yandex_vpc_network.network-1.id
+  v4_cidr_blocks = var.subnet_v4_cidr_blocks
 }
