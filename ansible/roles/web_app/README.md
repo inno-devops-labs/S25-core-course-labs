@@ -6,8 +6,6 @@ This Ansible role manages the deployment of Docker containers for web applicatio
 
 - Docker Engine (installed via dependency on docker role)
 - Docker Compose
-- Python docker and docker-compose modules
-- Ansible 2.9 or higher
 
 ## Role Variables
 
