@@ -26,4 +26,4 @@ USER appuser
 EXPOSE 5000
 
 # Define the entry point for the container
-CMD ["python", "main.py"]
+CMD ["python", "src/main.py"]
