@@ -48,4 +48,4 @@
 
 # Security configuration
 - name: Include security configuration tasks
-  ansible.builtin.import_tasks: security.ymlы
+  ansible.builtin.import_tasks: security.yml
