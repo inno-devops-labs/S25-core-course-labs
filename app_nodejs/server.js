@@ -22,6 +22,6 @@ const requestHandler = (req, res) => {
 
 const server = http.createServer(requestHandler);
 
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
     console.log(`Serving on port ${PORT}`);
 });
