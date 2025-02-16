@@ -1,6 +1,17 @@
 # Docker Role
 
-This role installs and configures Docker and Docker Compose on a target system using Ansible.
+This Ansible role automates the **installation and configuration of Docker and Docker Compose** on a cloud VM.  
+It is designed for **Lab 5 of the Ansible course**, ensuring Docker is correctly set up for **containerized application deployment**.
+
+## Purpose
+
+This role:
+
+- Installs and configures Docker Engine and Docker Compose.
+- Ensures Docker starts on boot.
+- Adds the executing user to the `docker` group to allow non-root execution.
+- Copies a `daemon.json` configuration if defined.
+- Deploys the necessary components to support **a web application**.
 
 ## Requirements
 
@@ -30,13 +41,30 @@ This role performs the following actions:
 
 ## Example Playbook
 
-Below is an example playbook that includes the `docker` role:
+Below is a full example playbook that:
+
+- Installs Docker using this role.
+- Ensures Docker starts on boot.
+- Deploys a web application using `docker-compose.yml`.
 
 ```yaml
-- hosts: all
+- name: Deploy Docker and Web Application
+  hosts: all
   become: true
+  vars:
+    docker_version: latest
+    docker_compose_version: v2.12.2
   roles:
     - role: docker
+
+- name: Deploy Web Application
+  hosts: all
+  become: true
+  roles:
+    - role: web_app
+  vars:
+    docker_image: nginx:latest
+    app_port: 8080
 ```
 
 ## Usage Instructions
