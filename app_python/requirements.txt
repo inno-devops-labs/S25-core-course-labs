@@ -1,0 +1,7 @@
+fastapi>=0.68.0
+uvicorn>=0.15.0
+jinja2>=2.11.0
+pytz>=2024.2
+pytest>=8.3.4
+httpx>=0.28.1
+coverage>=7.6.10
