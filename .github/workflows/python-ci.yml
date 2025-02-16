@@ -1,0 +1,46 @@
+name: Python CI
+
+on:
+  push:
+    branches: [ main, lab3 ]
+  pull_request:
+    branches: [ main, lab3 ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install Dependencies
+        run: |
+          pip install --no-cache-dir -r app_python/requirements.txt
+
+
+      - name: Run Linter
+        run: |
+          pip install flake8
+          flake8 app_python/
+
+      - name: Run Tests
+        run: python -m unittest discover app_python/tests
+
+      - name: Docker Login
+        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+      
+      
+
+      - name: Docker Build & Push
+        run: |
+          docker build -t em1999jay/python-app:latest ./app_python
+          docker push em1999jay/python-app:latest
+      
+
+      
