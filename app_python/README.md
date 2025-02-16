@@ -57,7 +57,7 @@ This project includes unit tests to verify the functionality of the Flask applic
 ### Running Unit Tests
 To run all tests, use the command:
 ```bash
-python -m unittest discover ut
+python -m unittest discover app_python/ut
 ```
 
 ### Tests include:
@@ -68,7 +68,6 @@ python -m unittest discover ut
 ### Dependencies used in tests:
 
 - unittest
-- mock
 - beautifulsoup4 (for HTML parsing)
 
 ## CI Workflow
