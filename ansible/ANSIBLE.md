@@ -17,7 +17,7 @@ The inventory file `default_aws_ec2.yml` specifies the target host and required 
 ```yaml
 aws:
   hosts:
-    54.208.142.142
+    3.86.193.8
   vars:
     ansible_ssh_private_key_file: ${ANSIBLE_KEY}
     ansible_user: ubuntu
@@ -54,60 +54,60 @@ The playbook applies the `docker` role to the AWS instance.
    ansible-playbook -i inventory/default_aws_ec2.yml playbooks/dev/main.yaml
    ```
 
-## Logs
+## Docker Installation Logs
 
 ```bash
-TASK [docker : Ensure curl is present (on older systems without SNI).] *********
-skipping: [54.208.142.142]
-
-TASK [docker : Add Docker apt key (alternative for older systems without SNI).] ***
-skipping: [54.208.142.142]
-
-TASK [docker : Add Docker repository.] *****************************************
-ok: [54.208.142.142]
-
-TASK [docker : include_tasks] **************************************************
-included: /home/moze/Documents/DevOps/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for 54.208.142.142
-
 TASK [docker : Install Docker packages.] ***************************************
-skipping: [54.208.142.142]
+skipping: [3.86.193.8]
 
 TASK [docker : Install Docker packages (with downgrade option).] ***************
-ok: [54.208.142.142]
+ok: [3.86.193.8]
 
 TASK [docker : Install docker-compose plugin.] *********************************
-skipping: [54.208.142.142]
+skipping: [3.86.193.8]
 
 TASK [docker : Install docker-compose-plugin (with downgrade option).] *********
-ok: [54.208.142.142]
+ok: [3.86.193.8]
 
 TASK [docker : Ensure /etc/docker/ directory exists.] **************************
-skipping: [54.208.142.142]
+skipping: [3.86.193.8]
 
 TASK [docker : Configure Docker daemon options.] *******************************
-skipping: [54.208.142.142]
+skipping: [3.86.193.8]
 
 TASK [docker : Ensure Docker is started and enabled at boot.] ******************
-ok: [54.208.142.142]
+ok: [3.86.193.8]
 
 TASK [docker : Ensure handlers are notified now to avoid firewall conflicts.] ***
 
 TASK [docker : include_tasks] **************************************************
-skipping: [54.208.142.142]
+included: /home/moze/Documents/DevOps/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for 3.86.193.8
+
+TASK [docker : Check current docker-compose version.] **************************
+ok: [3.86.193.8]
+
+TASK [docker : set_fact] *******************************************************
+skipping: [3.86.193.8]
+
+TASK [docker : Delete existing docker-compose version if it different.] ******
+skipping: [3.86.193.8]
+
+TASK [docker : Install Docker Compose (if configured).] ************************
+changed: [3.86.193.8]
 
 TASK [docker : Get docker group info using getent.] ****************************
-skipping: [54.208.142.142]
+skipping: [3.86.193.8]
 
 TASK [docker : Check if there are any users to add to the docker group.] *******
-skipping: [54.208.142.142]
+skipping: [3.86.193.8]
 
 TASK [docker : Ensure docker users are added to the docker group.] *************
-skipping: [54.208.142.142]
+skipping: [3.86.193.8]
 
 TASK [docker : Reset ssh connection to apply user changes.] ********************
 
 PLAY RECAP *********************************************************************
-54.208.142.142             : ok=13   changed=0    unreachable=0    failed=0    skipped=10   rescued=0    ignored=0
+3.86.193.8                 : ok=16   changed=1    unreachable=0    failed=0    skipped=11   rescued=0    ignored=0
 ```
 
 If we go login to our instance we can see that the docker service is running:
@@ -127,14 +127,19 @@ TriggeredBy: ● docker.socket
              └─762 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
 ```
 
+```bash
+$ docker-compose version
+Docker Compose version v2.32.1
+```
+
 ## Inventory Details
 
 ```bash
-$ ansible-inventory -i inventory/default_aws_ec2.yml --list
+$ ansible-inventory --list
 {
     "_meta": {
         "hostvars": {
-            "54.208.142.142": {
+            "3.86.193.8": {
                 "ansible_ssh_private_key_file": "${ANSIBLE_KEY}",
                 "ansible_user": "ubuntu"
             }
@@ -148,19 +153,18 @@ $ ansible-inventory -i inventory/default_aws_ec2.yml --list
     },
     "aws": {
         "hosts": [
-            "54.208.142.142"
+            "3.86.193.8"
         ]
     }
 }
 ```
 
 ```bash
-$ ansible-inventory -i inventory/default_aws_ec2.yml --graph
+$ ansible-inventory --graph
 @all:
   |--@ungrouped:
   |--@aws:
-  |  |--54.208.142.142
-
+  |  |--3.86.193.8
 ```
 
 Inventory code:
@@ -169,7 +173,7 @@ Inventory code:
 # https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html
 aws:
   hosts:
-    54.208.142.142 # IP address of our instance
+    3.86.193.8 # IP address of our instance
   vars:
     ansible_ssh_private_key_file: ${ANSIBLE_KEY} # Path to the SSH key (.pem file) stored in the machine as an environment variable
     ansible_user: ubuntu # The username used to access the instance
