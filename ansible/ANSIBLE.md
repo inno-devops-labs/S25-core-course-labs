@@ -95,3 +95,52 @@ ansible-inventory -i ./inventory/my_inventory.yml --graph
   |--@ungrouped:
   |  |--192.168.50.10
 ```
+
+## Lab6: Application Deployment
+
+```bash
+ansible-playbook -i ./inventory/default_aws_ec2.yml ./playbooks/dev/main.yml 
+```
+
+```bash
+PLAY [Deploy application with Docker container] *************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************
+[WARNING]: Platform linux on host my_server is using the discovered Python interpreter at /usr/bin/python3, but future
+installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [my_server]
+
+TASK [docker : Install dependencies] ************************************************************************************************
+ok: [my_server]
+
+TASK [docker : Add Docker GPG key] **************************************************************************************************
+ok: [my_server]
+
+TASK [docker : Add Docker repository] ***********************************************************************************************
+ok: [my_server]
+
+TASK [docker : Install Docker] ******************************************************************************************************
+ok: [my_server]
+
+TASK [docker : Install Docker Compose] **********************************************************************************************
+ok: [my_server]
+
+TASK [docker : Enable Docker service on boot] ***************************************************************************************
+ok: [my_server]
+
+TASK [docker : Add user to Docker group] ********************************************************************************************
+ok: [my_server]
+
+TASK [web_app : Pull Docker image for web_app] **************************************************************************************
+ok: [my_server]
+
+TASK [web_app : Generate docker-compose.yml from template] ***************************************************************************
+changed: [my_server]
+
+TASK [web_app : Start web_app container with Docker Compose] ************************************************************************
+changed: [my_server]
+
+PLAY RECAP **************************************************************************************************************************
+my_server               : ok=10   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+```
