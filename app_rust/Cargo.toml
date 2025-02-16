@@ -1,0 +1,11 @@
+[package]
+name = "app_rust"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rocket = "0.5.1"
+chrono = "0.4"
+
+[dev-dependencies]
+regex = "1.11.1"
