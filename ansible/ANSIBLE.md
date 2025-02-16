@@ -251,5 +251,132 @@ the ansible-inventory -i inventory/yacloud_compute.yml --list command output is 
                     },
                     "broadcast": {
                         "__ansible_unsafe": ""
+```
 
+## App deployment
+
+```bash
+TASK [docker : Add Docker's official GPG key] ********************************************************************************************************
+ok: [terraform-vm]
+
+TASK [docker : Add Docker's official apt repository] *************************************************************************************************
+ok: [terraform-vm]
+
+TASK [docker : Install Docker and dependencies] ******************************************************************************************************
+ok: [terraform-vm] => (item=docker-ce)
+ok: [terraform-vm] => (item=docker-ce-cli)
+ok: [terraform-vm] => (item=containerd.io)
+
+TASK [docker : Install Docker Compose] ***************************************************************************************************************
+included: /home/max/vscdir/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for terraform-vm
+
+TASK [docker : Install Docker Compose] ***************************************************************************************************************
+ok: [terraform-vm]
+
+TASK [docker : Add user to docker group] *************************************************************************************************************
+ok: [terraform-vm]
+
+TASK [docker : Copy secure daemon.json to /etc/docker/] **********************************************************************************************
+ok: [terraform-vm]
+
+TASK [web_app : Full wipe] ***************************************************************************************************************************
+included: /home/max/vscdir/S25-core-course-labs/ansible/roles/web_app/tasks/wipe.yml for terraform-vm
+
+TASK [web_app : Check if app directory exists] *******************************************************************************************************
+ok: [terraform-vm]
+
+TASK [web_app : Wipe images] *************************************************************************************************************************
+[WARNING]: Docker compose: unknown None: /opt/app_python/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove
+it to avoid potential confusion
+changed: [terraform-vm]
+
+TASK [web_app : Remove app directory] ****************************************************************************************************************
+--- before
++++ after
+@@ -1,10 +1,4 @@
+ {
+     "path": "/opt/app_python/",
+-    "path_content": {
+-        "directories": [],
+-        "files": [
+-            "/opt/app_python/docker-compose.yml"
+-        ]
+-    },
+-    "state": "directory"
++    "state": "absent"
+ }
+
+changed: [terraform-vm]
+
+TASK [web_app : Deploy dockerized app] ***************************************************************************************************************
+included: /home/max/vscdir/S25-core-course-labs/ansible/roles/web_app/tasks/deploy.yml for terraform-vm
+
+TASK [web_app : Create app directory] ****************************************************************************************************************
+--- before
++++ after
+@@ -1,6 +1,6 @@
+ {
+-    "group": 0,
+-    "owner": 0,
++    "group": 1001,
++    "owner": 1000,
+     "path": "/opt/app_python/",
+-    "state": "absent"
++    "state": "directory"
+ }
+
+changed: [terraform-vm]
+
+TASK [web_app : Copy Docker Compose template] ********************************************************************************************************
+--- before
++++ after: /home/max/.ansible/tmp/ansible-local-1701359kbf5cbep/tmpo7o8c0yv/docker-compose.yml.j2
+@@ -0,0 +1,7 @@
++version: "3.9"
++services:
++  web:
++    image: "docker.io/elonmaxx/app_python:latest"
++    ports:
++      - target: "8080"
++        published: "8080"
+
+changed: [terraform-vm]
+
+TASK [web_app : Ensure docker service is OK] *********************************************************************************************************
+ok: [terraform-vm]
+
+TASK [web_app : Create and start the services] *******************************************************************************************************
+changed: [terraform-vm]
+
+PLAY RECAP *******************************************************************************************************************************************
+terraform-vm               : ok=20   changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+We may see it has really been deployed and site works:
+
+```bash
+$ curl xxx.xx.xx.xx:8080
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Time in Europe/Moscow</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
+                padding: 50px;
+                background-color: #f4f4f9;
+                color: #333;
+            }
+            .time {
+                font-size: 2em;
+                margin-top: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Current Time in Europe/Moscow</h1>
+        <div class="time">2025-02-16 13:25:26 UTC+03:00</div>
+    </body>
+    </html>
 ```
