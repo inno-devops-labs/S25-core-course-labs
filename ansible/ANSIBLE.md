@@ -1,5 +1,7 @@
-ansible-playbook playbooks/dev/main.yaml --check
+# Lab 5
 
+1. ```bash ansible-playbook playbooks/dev/main.yaml --check```
+```
 PLAY [Deploying docker] ************************************************************************************************************************************************************
 
 TASK [Gathering Facts] *************************************************************************************************************************************************************
@@ -52,9 +54,11 @@ ok: [localhost] => {
 
 PLAY RECAP *************************************************************************************************************************************************************************
 localhost                  : ok=11   changed=4    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0
+```
 
-
-ansible-inventory -i inventory/default_aws_ec2.yml --list
+2. ```bash 
+    ansible-inventory -i inventory/default_aws_ec2.yml --list
+    ```
 {
     "_meta": {
         "hostvars": {
@@ -77,8 +81,12 @@ ansible-inventory -i inventory/default_aws_ec2.yml --list
 }
 
 
-ansible-inventory -i inventory/default_aws_ec2.yml --graph
+2. ```bash 
+   ansible-inventory -i inventory/default_aws_ec2.yml --graph
+   ```
+```
 @all:
   |--@ungrouped:
   |--@local:
   |  |--localhost
+```
