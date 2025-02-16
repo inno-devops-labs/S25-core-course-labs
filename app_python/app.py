@@ -5,7 +5,12 @@ import logging
 from prometheus_flask_exporter import PrometheusMetrics
 
 app = Flask(__name__)
-metrics = PrometheusMetrics(app)
+
+metrics = PrometheusMetrics(app,
+                            export_defaults=True,
+                            group_by='endpoint',
+                            defaults_prefix='flask',
+                            path='/metrics')
 
 # Configure logging to output to stdout
 logging.basicConfig(
@@ -35,4 +40,4 @@ def moscow_time():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=False, use_reloader=False)
