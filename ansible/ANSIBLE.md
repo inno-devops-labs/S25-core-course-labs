@@ -1,6 +1,5 @@
 # Ansible
 ---
-## Task 1
 ``` ansible-playbook  <path_to_playbook> --diff --check```
 ```PLAY [install Docker] **********************************************************
 
