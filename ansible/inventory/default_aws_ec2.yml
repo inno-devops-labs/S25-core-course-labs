@@ -1,0 +1,9 @@
+plugin: aws_ec2
+regions:
+  - eu-north-1
+keyed_groups:
+  - key: tags.Name
+hostnames:
+  - ec2-13-60-234-13.eu-north-1.compute.amazonaws.com
+filters:
+  instance-state-name: running

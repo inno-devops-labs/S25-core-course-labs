@@ -1,0 +1,10 @@
+---
+- name: Deploy Python Application
+  hosts: all
+  become: yes
+  roles:
+    - web_app
+  vars:
+    docker_image: "justcgh/moscow-time-app-distroless"
+    app_port: 8080
+    web_app_full_wipe: true  
