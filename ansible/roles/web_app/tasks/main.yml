@@ -1,0 +1,9 @@
+- name: Deploy Web Application
+  template:
+    src: docker-compose.yml.j2
+    dest: /home/ubuntu/docker-compose.yml
+
+- name: Start Application
+  command:
+    cmd: docker compose up -d
+    chdir: /home/ubuntu/
