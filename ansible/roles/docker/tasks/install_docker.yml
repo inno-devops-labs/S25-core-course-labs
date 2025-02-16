@@ -1,14 +1,3 @@
-- name: Add Docker's GPG key
-  apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    state: present
-
-- name: Set up the repository
-  apt_repository:
-    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release | lower }} stable"
-    state: present
-    update_cache: yes
-
 - name: Install Docker
   apt:
     name: "docker-ce={{ docker_version }}"

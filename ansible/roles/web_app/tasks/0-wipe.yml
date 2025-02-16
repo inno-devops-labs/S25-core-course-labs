@@ -1,0 +1,11 @@
+- name: Container Removal
+  block:
+    - name: Stop and Remove container
+      docker_container:
+        name: "{{ container_name }}"
+        state: absent
+
+    - name: Remove Image
+      docker_image:
+        name: "{{ docker_image }}:{{ image:tag }}"
+        state: absent

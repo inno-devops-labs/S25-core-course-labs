@@ -1,42 +1,61 @@
-- name: Install packages
-  apt:
-    name:
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - software-properties-common
-    state: present
-    update_cache: yes
+- name: Setup Docker Env
+  block:
+    - name: Install packages
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+        update_cache: yes
+
+    - name: Add Docker's GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Set up the repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release | lower }} stable"
+        state: present
+        update_cache: yes
+  tags:
+    - setup
 
 - include_tasks: install_docker.yml
 
 - include_tasks: install_compose.yml
 
-- name: Enable Docker service to start on boot
-  systemd:
-    name: docker
-    enabled: yes
-    state: started
+- name: Post-Setup Docker Configuration
+  block:
+    - name: Enable Docker service to start on boot
+      systemd:
+        name: docker
+        enabled: yes
+        state: started
 
-- name: Add current user to docker group
-  user:
-    name: "{{ ansible_user }}"
-    groups:
-      - docker
-    append: yes
+    - name: Add current user to docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups:
+          - docker
+        append: yes
 
-- name: Configure Docker security settings
-  copy:
-    content: |
-      {
-        "no-new-privileges": true,
-        "userns-remap": "default",
-        "disable-legacy-registry": true,
-        "selinux-enabled": true
-      }
-    dest: /etc/docker/daemon.json
-    owner: root
-    group: root
-    mode: '0644'
-  notify:
-    - Restart Docker
+    - name: Configure Docker security settings
+      copy:
+        content: |
+          {
+            "no-new-privileges": true,
+            "userns-remap": "default",
+            "disable-legacy-registry": true,
+            "selinux-enabled": true
+          }
+        dest: /etc/docker/daemon.json
+        owner: root
+        group: root
+        mode: '0644'
+      notify:
+        - Restart Docker
+  tags:
+    - post-setup

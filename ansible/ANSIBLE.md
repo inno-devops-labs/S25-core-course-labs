@@ -269,3 +269,29 @@ Unfortunately, after around 4-5 hours of work, I didnt reach the goal of the tas
     name: docker
     state: restarted
 ```
+
+## Application Deployment Logs
+
+```text
+PLAY [Deploy Python Web App] ***************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [ya_cloud_vm]
+
+TASK [../../../roles/web_app : Pull Docker Image] ******************************
+changed: [ya_cloud_vm]
+
+TASK [../../../roles/web_app : Start Docker] ***********************************
+--- before
++++ after
+@@ -1,3 +1,3 @@
+ {
+-    "exists": false
++    "exists": true
+ }
+
+changed: [ya_cloud_vm]
+
+PLAY RECAP *********************************************************************
+ya_cloud_vm                : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
+```

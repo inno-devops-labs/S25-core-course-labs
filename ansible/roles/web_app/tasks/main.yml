@@ -1,0 +1,40 @@
+---
+# tasks file for roles/web_app
+- name: Pull Docker Image
+  docker_image:
+    name: "{{ docker_image }}"
+    tag: "{{ image_tag }}"
+    source: pull
+  tags:
+    - docker
+
+
+- name: Copy Compose Template
+  template:
+    src: "docker-compose.yml.j2"
+    dest: "/home/{{ ansible_user }}/docker-compose.yml"
+  tags:
+    - compose
+
+- name: Deploy Via Compose
+  command: docker-compose up -d
+  args:
+    chdir: "/home/{{ ansible_user }}"
+  tags:
+    - compose
+
+#- name: Start Docker
+#  docker_container:
+#    name: "{{ container_name }}"
+#    image: "{{ docker_image }}:{{ image_tag }}"
+#    state: started
+#    restart_policy: always
+#    published_ports:
+#      - "{{ app_port }}:{{ app_port }}"
+#  tags:
+#    - container
+
+- include_tasks: "{{ role_path }}/tasks/0-wipe.yml"
+  when: web_app_full_wipe | default(false)
+  tags:
+    - wipe
