@@ -1,0 +1,7 @@
+---
+app_image: "xrvst/time_app:latest"
+container_name: "web_app_container"
+docker_network: "web_network"
+port_mappings:
+  - "8000:8000"
+extra_volumes: []

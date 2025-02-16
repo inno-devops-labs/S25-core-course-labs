@@ -8,3 +8,4 @@
         docker_edition: "ce"
         docker_version: "latest"
         docker_package: "docker-ce"
+    - role: web_app
