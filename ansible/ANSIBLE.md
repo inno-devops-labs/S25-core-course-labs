@@ -1,6 +1,12 @@
 
 # Ansible related work
 
+## Best practices
+
+- Ansible-lint workflow
+
+## Logs
+
 Last lines of docker playbook:
 
 ```bash
