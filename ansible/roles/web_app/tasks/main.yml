@@ -1,0 +1,17 @@
+- name: deploy docker image
+  block:
+  - name: Pull an image
+    community.docker.docker_image_pull:
+      name: "{{docker.user}}/{{docker.image_name}}:{{docker.tag}}"
+
+  - name: Create a data container
+    community.docker.docker_container:
+      name: "{{container_name}}"
+      image: "{{docker.user}}/{{docker.image_name}}:{{docker.tag}}"
+      ports: "{{ports.int}}:{{ports.ext}}"
+  tags: ["deploy"]
+  
+- name: Wipe web_app
+  ansible.builtin.import_tasks: 0-wipe.yml
+  when: web_app_full_wipe | bool
+  tags: ["web_app_wipe"]

@@ -1,5 +1,7 @@
-- name: setup docker
+- name: Install web_app
   hosts: all
   become: true
   roles:
-    - roles/docker
+    - role: roles/web_app
+      vars:
+        web_app_full_wipe: true
