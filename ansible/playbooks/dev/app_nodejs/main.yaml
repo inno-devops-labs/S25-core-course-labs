@@ -1,0 +1,6 @@
+---
+- name: Deploy Node.js Application via Docker
+  hosts: all
+  become: true
+  roles:
+    - web_app

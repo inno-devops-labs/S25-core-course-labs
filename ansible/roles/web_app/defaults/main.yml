@@ -1,0 +1,7 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for ansible/roles/web_app
+docker_image: "sedoxxx/python-webapp:latest"
+app_port: 8080
+web_app_full_wipe: true 
+web_app_dir : "/"

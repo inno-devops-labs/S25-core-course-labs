@@ -1,0 +1,25 @@
+---
+- name: Deploy Web Application Container
+  block:
+    - name: Pull Docker image
+      docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+      tags: 
+        - docker
+
+    - name: Render Docker Compose file
+      template:
+        src: docker-compose.yml.j2
+        dest: /tmp/docker-compose.yml
+      tags:
+        - compose
+
+    - name: Start application container using Docker Compose
+      command: docker-compose -f /tmp/docker-compose.yml up -d
+      tags:
+        - deploy
+
+  rescue:
+    - debug:
+        msg: "An error occurred during deployment. Please check the logs."
