@@ -14,6 +14,11 @@ services:
       - loki-data:/loki
     networks:
       - loki
+    healthcheck:
+      test: ["CMD", "pgrep", "loki"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   promtail:
     image: grafana/promtail:latest
@@ -26,6 +31,11 @@ services:
       - loki
     networks:
       - loki
+    healthcheck:
+      test: ["CMD", "pgrep", "promtail"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   grafana:
     environment:
@@ -59,21 +69,65 @@ services:
       - loki
     networks:
       - loki
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   app_python:
-    image: bugay/python-msk-time-app-distroless:1.0
+    image: bugay/python-msk-time-app-distroless:latest
     ports:
-      - "5000:5000"
+      - "5000:5000" 
     networks:
       - loki
     volumes:
       - ./logs/python-app:/var/log/python-app
+    healthcheck:
+      test: ["CMD", "pgrep", "python"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
   app_scala:
-    image: bugay/scala-msk-time-app-distroless:1.0
+    image: bugay/scala-msk-time-app-distroless:latest
     ports:
       - "9090:9090"
     networks:
       - loki
     volumes:
       - ./logs/scala-app:/var/log/scala-app
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9095:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - loki
+    networks:
+      - loki
+    healthcheck:
+      test: ["CMD", "pgrep", "prometheus"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
