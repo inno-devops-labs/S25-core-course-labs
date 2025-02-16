@@ -1,0 +1,11 @@
+- name: Remove existing web app container
+  community.docker.docker_container:
+    name: "{{ container_name }}"
+    state: absent
+  tags: [wipe]
+
+- name: Remove docker-compose file
+  file:
+    path: /opt/docker/web_app/docker-compose.yml
+    state: absent
+  tags: [wipe]
