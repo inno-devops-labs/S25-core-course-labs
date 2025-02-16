@@ -36,7 +36,7 @@ variable "vm_username" {
 
 variable "ssh_key_path" {
   type      = string
-  default   = "/home/mikha/.ssh/id_ed25519.pub"
+  default   = "id_rsa.pub"
   sensitive = true
 }
 
