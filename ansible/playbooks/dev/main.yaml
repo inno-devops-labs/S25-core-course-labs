@@ -1,6 +1,9 @@
-- name: Install Docker
+- name: Install Docker and Deploy Web App
   hosts: all
   become: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   roles:
     - docker
+    - web_app
 
