@@ -89,7 +89,7 @@ To ensure the stack is functioning correctly:
 
 ### All of the docker logs
 
-![all-the-logs](./assets/all_logs.png)
+![all-the-logs](./img/all_logs.png)
 
 ### Python App Logs
 
