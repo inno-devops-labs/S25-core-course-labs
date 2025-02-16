@@ -1,0 +1,5 @@
+- name: Install Docker using Ansible Role
+  hosts: aws_ec2_instance
+  become: yes
+  roles:
+    - geerlingguy.docker

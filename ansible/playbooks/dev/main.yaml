@@ -1,0 +1,5 @@
+- name: Configure Development Environment
+  hosts: aws_ec2_instance
+  become: yes
+  roles:
+    - docker

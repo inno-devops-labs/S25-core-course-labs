@@ -1,0 +1,7 @@
+all:
+  hosts:
+    aws_ec2_instance:
+      ansible_host: 16.170.163.135
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: /workspaces/S25-core-course-labs/ansible-key.pem
+      ansible_python_interpreter: /usr/bin/python3
