@@ -3,6 +3,7 @@ networks:
 
 volumes:
   loki_data:
+  prometheus_data:
 
 services:
   loki:
@@ -13,7 +14,21 @@ services:
     volumes:
       - loki_data:/loki
     networks:
-      - monitoring 
+      - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    healthcheck:
+      test: [ "CMD", "pgrep", "loki" ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
 
   promtail:
     image: grafana/promtail:latest
@@ -26,6 +41,22 @@ services:
       - monitoring
     depends_on:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+    # No health check, because it is not possible to check status of
+    # promtail inside container https://github.com/grafana/loki/issues/11590
+    healthcheck: # Dumb check
+      test: [ "CMD-SHELL", "exit 0" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
   grafana:
     image: grafana/grafana:latest
@@ -56,13 +87,70 @@ services:
         /run.sh
     networks:
       - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3000/login" ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - monitoring
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    depends_on:
+      - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    healthcheck:
+      test: [ "CMD", "pgrep", "prometheus" ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
 
   app_python:
     image: raleksan/app_python:v0.1
     ports:
       - "8001:8000"
     networks:
-      - monitoring 
+      - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+    healthcheck:
+      test: "curl -f http://localhost:8000/health"
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   app_rust:
     image: raleksan/app_rust:v0.1
@@ -70,3 +158,17 @@ services:
       - "8002:8000"
     networks:
       - monitoring 
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+    healthcheck:
+      test: "curl -f http://localhost:8000/health"
+      interval: 30s
+      timeout: 10s
+      retries: 3
