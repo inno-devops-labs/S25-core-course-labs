@@ -51,6 +51,80 @@ The project requires you to have:
 
 ---
 
+## 🐳 Docker
+
+### Distro-based Image Version
+
+Containerized version of the web application:
+
+- uses Alpine version of Python 3.10;
+- installs the application in `/app` directory;
+- creates a nonroot user `user`;
+- runs the application on port `8000`.
+
+#### How to build?
+
+   ```bash
+   # clone the repository
+   git clone https://github.com/MagicWinnie/S25-core-course-labs
+   git checkout lab2
+   cd S25-core-course-labs/app_python
+   # build the image
+   docker build -t simple-python-web-app .
+   # run a container
+   docker run -p 8888:8000 simple-python-web-app
+   ```
+
+#### How to pull?
+
+   ```bash
+   docker pull magicwinnie/simple-python-web-app:latest
+   ```
+
+#### How to run?
+
+   ```bash
+   docker run -p 8888:8000 magicwinnie/simple-python-web-app:latest
+   ```
+
+---
+
+### Distroless Image Version
+
+Containerized version of the web application:
+
+- uses `python:3.11-slim-bookworm` and `gcr.io/distroless/python3-debian12:nonroot`;
+- installs the application in `/app` directory;
+- uses a nonroot tag;
+- runs the application on port `8000`.
+
+#### How to build?
+
+   ```bash
+   # clone the repository
+   git clone https://github.com/MagicWinnie/S25-core-course-labs
+   git checkout lab2
+   cd S25-core-course-labs/app_python
+   # build the image
+   docker build -t simple-python-web-app-distroless -f distroless.Dockerfile .
+   # run a container
+   docker run -p 8888:8000 simple-python-web-app-distroless
+   ```
+
+#### How to pull?
+
+   ```bash
+   docker pull magicwinnie/simple-python-web-app-distroless:latest
+   ```
+
+#### How to run?
+
+   ```bash
+   docker run -p 8888:8000 magicwinnie/simple-python-web-app-distroless:latest
+   ```
+
+---
+
 ## 🛠️ Development
 
 - Install the development requirements:

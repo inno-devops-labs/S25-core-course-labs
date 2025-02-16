@@ -5,27 +5,32 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background: #f3f4f6;
+    background: #393a3e;
 }
 
 .container {
     text-align: center;
-    background: white;
+    background: rgb(68, 67, 67);
     padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+#age-header {
+    color: #fdfdfd;
 }
 
 input[type="date"] {
+    background: rgb(68, 67, 67);
+    border-radius: 6px;
+    border: 1px solid #130f0f;
+    color: #fdfdfd;
     font-size: 20pt;
     margin: 10px 0;
     padding: 8px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
 }
 
 #age-display {
     margin-top: 10px;
     font-size: 1.2em;
-    color: #333;
+    color: #fdfdfd;
 }
