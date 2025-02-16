@@ -1,6 +1,14 @@
-- name: Deploy Docker
+- name: Deploy Web Application
   hosts: all
-  become: true
+  become: yes
   roles:
     - docker
-    
+    - web_app
+
+- name: Wipe Web Application
+  hosts: all
+  become: yes
+  tasks:
+    - import_tasks: ../../roles/web_app/tasks/0-wipe.yml
+  tags:
+    - wipe
