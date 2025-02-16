@@ -42,15 +42,6 @@
   delay: 5
   until: docker_install_result is success
 
-- name: Install Docker Module for Python
-  pip:
-    name: docker
-    state: present
-  register: pip_result
-  retries: 3
-  delay: 5
-  until: pip_result is success
-
 # System configuration
 - name: Create docker group if it doesn't exist
   group:
