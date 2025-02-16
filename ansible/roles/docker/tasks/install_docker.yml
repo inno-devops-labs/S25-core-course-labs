@@ -1,0 +1,39 @@
+- name: Install required system packages
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+    state: present
+    update_cache: yes
+
+- name: Add Docker official GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Set up the Docker stable repository
+  apt_repository:
+    repo: "deb https://download.docker.com/linux/ubuntu focal stable"
+    state: present
+
+- name: Install Docker CE, CLI, and containerd
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: latest
+
+- name: Start and enable Docker service
+  systemd:
+    name: docker
+    enabled: true
+    state: started
+
+- name: Add user to Docker group
+  user:
+    name: venom
+    groups: docker
+    append: yes

@@ -1,0 +1,14 @@
+version: '3'
+services:
+  {{ app_name }}:
+    image: "{{ docker_image }}"
+    container_name: "{{ container_name }}"
+    ports:
+      - "{{ host_port }}:{{ app_port }}"
+    restart: always
+    networks:
+      - "{{ network_name }}"
+
+networks:
+  {{ network_name }}:
+    driver: bridge
