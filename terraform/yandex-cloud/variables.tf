@@ -36,7 +36,7 @@ variable "ssh_path" {
   description = "Path to ssh public key"
   type        = string
   sensitive   = true
-  default     = "~/.ssh/id_ed25519.pub"
+  default     = "~/.ssh/id_rsa.pub"
 }
 
 variable "image_id" {
