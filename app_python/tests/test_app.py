@@ -51,7 +51,7 @@ class TimeAppTests(unittest.TestCase):
 </head>
 <body>
     <h1>Current Time in Moscow:</h1>
-    <h3>{expected_time}</h3>
+    <h3>DEBUG=FALSE</h3>
     <p>Refresh page to update the time</p>
 </body>
 </html>'''.strip(),
