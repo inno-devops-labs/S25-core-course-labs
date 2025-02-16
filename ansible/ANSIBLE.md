@@ -9,7 +9,6 @@
 * Provide the last 50 lines of the output from your deployment command in the ANSIBLE.md file. 
 
 ```
-bash
 ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/main.yaml
 
 PLAY [Deploy Docker on Cloud VM] ***********************************************
@@ -50,8 +49,7 @@ my_vm                      : ok=10   changed=7    unreachable=0    failed=0    s
 ```
 * Execute the following command ansible-inventory -i <name_of_your_inventory_file>.yaml --list and provide its output in the ANSIBLE.md file.
 
-```bash
-
+```
 ansible-inventory -i ansible/inventory/default_aws_ec2.yml --list
 {
     "_meta": {
@@ -80,12 +78,62 @@ ansible-inventory -i ansible/inventory/default_aws_ec2.yml --list
 * Validate the inventory file using ansible-inventory -i <name_of_your_inventory_file>.yaml --graph to visualize the inventory structure.
 
 ```
-bash
-
 meowal@meowal-1-2:~/S25-core-course-labs$ ansible-inventory -i ansible/inventory/default_aws_ec2.yml --graph
 @all:
   |--@ungrouped:
   |  |--my_vm
 ```
 
-* 
+* Execute your playbook to deploy the role.
+Provide the last 50 lines of the output from your deployment command in the ANSIBLE.md file.
+
+```
+ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/main.yaml --check --diff
+
+PLAY [Deploy Docker on Cloud VM] *********************************************************************
+
+TASK [Gathering Facts] *******************************************************************************
+ok: [my_vm]
+
+TASK [docker : Update apt cache] *********************************************************************
+changed: [my_vm]
+
+TASK [docker : Install prerequisites] ****************************************************************
+ok: [my_vm]
+
+TASK [docker : Add Docker GPG key] *******************************************************************
+ok: [my_vm]
+
+TASK [docker : Add Docker repository] ****************************************************************
+ok: [my_vm]
+
+TASK [docker : Install Docker CE] ********************************************************************
+ok: [my_vm]
+
+TASK [docker : Download Docker Compose binary] *******************************************************
+ok: [my_vm]
+
+TASK [docker : Verify Docker Compose installation] ***************************************************
+skipping: [my_vm]
+
+TASK [docker : Enable and start Docker service] ******************************************************
+ok: [my_vm]
+
+TASK [docker : Add current user to docker group] *****************************************************
+ok: [my_vm]
+
+TASK [web_app : Ensure application directory exists] *************************************************
+ok: [my_vm]
+
+TASK [web_app : Pull Docker image for the web application] *******************************************
+ok: [my_vm]
+
+TASK [web_app : Render Docker Compose file for the application] **************************************
+ok: [my_vm]
+
+TASK [web_app : Bring up application container with Docker Compose] **********************************
+skipping: [my_vm]
+
+PLAY RECAP *******************************************************************************************
+my_vm                      : ok=12   changed=1    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+```

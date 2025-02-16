@@ -1,1 +1,4 @@
-
+# Default variables for the web_app role
+docker_image: "meowal/msk-time-app:latest"
+app_port: "8080"
+web_app_full_wipe: false
