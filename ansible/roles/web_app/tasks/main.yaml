@@ -1,0 +1,9 @@
+---
+- name: Install application
+  include_tasks: "{{ role_path }}/tasks/run.yaml"
+  when: "wipe_app is not defined"
+
+- name: Wipe application
+  include_tasks:
+    file: "{{ role_path }}/tasks/wipe.yaml"
+  when: "wipe_app is defined"

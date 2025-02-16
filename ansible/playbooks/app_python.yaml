@@ -1,0 +1,9 @@
+---
+- name: Deploys app_python on Yandex Cloud
+  hosts: all
+  become: true
+  roles:
+    - role: web_app
+      image: alexstrnik/python-app:latest
+      ports:
+        - "8080:5000"

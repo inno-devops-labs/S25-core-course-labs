@@ -22,3 +22,12 @@ output "instance_status" {
   description = "Current status of the instance"
   value       = yandex_compute_instance.app.status
 }
+
+resource "local_file" "ansible_inventory" {
+  content = templatefile("inventory.tmpl",
+    {
+      vm-python-app-address = yandex_compute_instance.app.network_interface[0].nat_ip_address
+    }
+  )
+  filename = "../../ansible/inventory/yandex.yaml"
+}

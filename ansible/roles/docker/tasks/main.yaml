@@ -1,0 +1,3 @@
+---
+- ansible.builtin.include_tasks: install_docker_runtime.yaml
+- ansible.builtin.include_tasks: install_pip_package.yaml
