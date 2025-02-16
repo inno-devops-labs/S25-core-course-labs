@@ -1,5 +1,4 @@
 # Ansible
----
 ``` ansible-playbook  <path_to_playbook> --diff --check```
 ```PLAY [install Docker] **********************************************************
 
