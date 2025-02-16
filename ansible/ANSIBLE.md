@@ -231,12 +231,19 @@ After running the playbook, verify the following:
 To verify successful deployment, included the following screenshots:
 
 - **Docker Installed:**
+
  ![Docker Installed](Docker_installed.png)
+
 - **Docker Compose Installed:**
+
  ![Docker Compose Installed](docker_compose_installed.png)
+
 - **Running Containers:**
+
  ![Docker ps](docker_ps.png)
+
 - **Ansible Inventory:**
+
  ![Inventory](inventory.png)
 
 ## Conclusion
