@@ -1,0 +1,4 @@
+plugin: yacloud_compute
+yacloud_clouds: cloud-dan-works
+yacloud_folders: default
+yacloud_token_file: inventory/yacloud_compute_token
