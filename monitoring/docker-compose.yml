@@ -1,5 +1,6 @@
 networks:
   monitoring:
+    driver: bridge
 
 volumes:
   loki-data: {}
@@ -23,7 +24,12 @@ services:
     deploy:
       resources:
         limits:
-          memory: 256M
+          memory: 128M
+    depends_on:
+      loki:
+        condition: service_started
+      app_piton:
+        condition: service_started
     healthcheck:
       test: [ "CMD", "pgrep", "prometheus" ]
       interval: 30s
@@ -43,11 +49,11 @@ services:
       driver: "json-file"
       options:
         max-size: "10m"
-        max-file: "3"
+        max-file: "2"
     deploy:
       resources:
         limits:
-          memory: 512M
+          memory: 128M
     healthcheck:
       test: [ "CMD", "pgrep", "loki" ]
       interval: 30s
@@ -73,6 +79,8 @@ services:
       resources:
         limits:
           memory: 128M
+    healthcheck:
+      disable: true
 
   grafana:
     image: grafana/grafana:latest
@@ -105,6 +113,11 @@ services:
           editable: false
         EOF
         /run.sh
+    depends_on:
+      loki:
+        condition: service_started
+      promtail:
+        condition: service_started
     logging:
       driver: "json-file"
       options:
@@ -113,7 +126,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 512M
+          memory: 256M
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://0.0.0.0:3000/login" ]
       interval: 30s
@@ -137,6 +150,11 @@ services:
       resources:
         limits:
           memory: 256M
+    healthcheck:
+      test: "curl http://localhost/ || exit 1"
+      timeout: 30s
+      retries: 5
+      start_period: 10s
 
   app_piton:
     image: paranid5/app_piton:latest 
@@ -156,7 +174,7 @@ services:
         limits:
           memory: 256M
     healthcheck:
-      test: [ "CMD", "pgrep", "python" ]
-      interval: 30s
-      timeout: 5s
-      retries: 3
+      test: "curl http://localhost:8080/ || exit 1"
+      timeout: 30s
+      retries: 5
+      start_period: 10s
