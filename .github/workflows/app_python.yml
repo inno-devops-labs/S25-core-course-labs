@@ -23,16 +23,17 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          cd app_python
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install flake8 pytest
+          pip install flake8
 
       - name: Lint Code
         run: flake8 .
 
       - name: Run Unit Tests
-        run: python -m unittest discover -s tests_python -p "*.py"
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python -m unittest discover -s tests_python -p "test_*.py"
 
   docker-build-and-push:
     name: Build and Push Docker Image
@@ -71,6 +72,6 @@ jobs:
           sudo mv snyk /usr/local/bin/
 
       - name: Run Snyk Security Scan
-        run: snyk test --docker ${{ secrets.DOCKER_USERNAME }}/moscow-time-app:latest --severity-threshold=high
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: snyk test --docker ${{ secrets.DOCKER_USERNAME }}/moscow-time-app:latest --severity-threshold=high
