@@ -1,0 +1,6 @@
+- name: Restart Docker Compose
+  listen: restart_docker
+  command: "docker compose up -d"
+  become_user: "{{ ansible_user }}"
+  args:
+    chdir: "{{ app_dir }}"

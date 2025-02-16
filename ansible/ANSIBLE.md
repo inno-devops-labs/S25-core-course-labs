@@ -416,3 +416,201 @@ ansible-inventory -i inventory/default_yacloud_compute.yml --graph
   |--@yacloud:
   |  |--s25-devops-terraform-vm
 ```
+
+## Web App Role
+
+![Python](python.png)
+
+I used the following command to run the playbook with the python app.
+
+```bash
+ansible-playbook playbooks/dev/app_python/main.yaml
+
+PLAY [Deploy Python App] ************************************************************
+
+TASK [Gathering Facts] **************************************************************
+ok: [my_server]
+
+TASK [docker : include_tasks] *******************************************************
+included: /home/azamat/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for my_server
+
+TASK [docker : Install Docker prerequisites] ****************************************
+ok: [my_server]
+
+TASK [docker : Set up Docker GPG key] ***********************************************
+ok: [my_server]
+
+TASK [docker : Set up Docker repository] ********************************************
+ok: [my_server]
+
+TASK [docker : Install Docker] ******************************************************
+ok: [my_server]
+
+TASK [docker : include_tasks] *******************************************************
+included: /home/azamat/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for my_server
+
+TASK [docker : Download Docker Compose] *********************************************
+ok: [my_server]
+
+TASK [docker : include_tasks] *******************************************************
+included: /home/azamat/S25-core-course-labs/ansible/roles/docker/tasks/configure_docker.yml for my_server
+
+TASK [docker : Stop Docker service] *************************************************
+changed: [my_server]
+
+TASK [docker : Remove Docker socket if it exists] ***********************************
+ok: [my_server]
+
+TASK [docker : Install dependencies for Docker Rootless] ****************************
+ok: [my_server]
+
+TASK [docker : Add user to Docker group] ********************************************
+ok: [my_server]
+
+TASK [docker : Disable root access] *************************************************
+ok: [my_server]
+
+TASK [docker : Ensure Docker daemon runs in rootless mode] **************************
+ok: [my_server]
+
+TASK [docker : include_tasks] *******************************************************
+included: /home/azamat/S25-core-course-labs/ansible/roles/docker/tasks/launch_docker.yml for my_server
+
+TASK [docker : Enable Docker service] ***********************************************
+changed: [my_server]
+
+TASK [web_app : Check if Application Directory exists] ******************************
+ok: [my_server]
+
+TASK [web_app : Check if Docker Compose File exists] ********************************
+ok: [my_server]
+
+TASK [web_app : Stop and Remove Application] ****************************************
+changed: [my_server]
+
+TASK [web_app : Remove Application Directory] ***************************************
+changed: [my_server]
+
+TASK [web_app : Create Application Directory] ***************************************
+changed: [my_server]
+
+TASK [web_app : Create Docker Compose File] *****************************************
+changed: [my_server]
+
+RUNNING HANDLER [web_app : Restart Docker Compose] **********************************
+changed: [my_server]
+
+PLAY RECAP **************************************************************************
+my_server                  : ok=24   changed=7    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+![Go](go.png)
+
+I used the following command to run the playbook with the go app.
+
+```bash
+ansible-playbook playbooks/dev/app_go/main.yaml
+
+PLAY [Deploy Go App] ****************************************************************
+
+TASK [Gathering Facts] **************************************************************
+ok: [my_server]
+
+TASK [docker : include_tasks] *******************************************************
+included: /home/azamat/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for my_server
+
+TASK [docker : Install Docker prerequisites] ****************************************
+ok: [my_server]
+
+TASK [docker : Set up Docker GPG key] ***********************************************
+ok: [my_server]
+
+TASK [docker : Set up Docker repository] ********************************************
+ok: [my_server]
+
+TASK [docker : Install Docker] ******************************************************
+ok: [my_server]
+
+TASK [docker : include_tasks] *******************************************************
+included: /home/azamat/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for my_server
+
+TASK [docker : Download Docker Compose] *********************************************
+ok: [my_server]
+
+TASK [docker : include_tasks] *******************************************************
+included: /home/azamat/S25-core-course-labs/ansible/roles/docker/tasks/configure_docker.yml for my_server
+
+TASK [docker : Stop Docker service] *************************************************
+changed: [my_server]
+
+TASK [docker : Remove Docker socket if it exists] ***********************************
+ok: [my_server]
+
+TASK [docker : Install dependencies for Docker Rootless] ****************************
+ok: [my_server]
+
+TASK [docker : Add user to Docker group] ********************************************
+ok: [my_server]
+
+TASK [docker : Disable root access] *************************************************
+ok: [my_server]
+
+TASK [docker : Ensure Docker daemon runs in rootless mode] **************************
+ok: [my_server]
+
+TASK [docker : include_tasks] *******************************************************
+included: /home/azamat/S25-core-course-labs/ansible/roles/docker/tasks/launch_docker.yml for my_server
+
+TASK [docker : Enable Docker service] ***********************************************
+changed: [my_server]
+
+TASK [web_app : Check if Application Directory exists] ******************************
+ok: [my_server]
+
+TASK [web_app : Check if Docker Compose File exists] ********************************
+ok: [my_server]
+
+TASK [web_app : Stop and Remove Application] ****************************************
+changed: [my_server]
+
+TASK [web_app : Remove Application Directory] ***************************************
+changed: [my_server]
+
+TASK [web_app : Create Application Directory] ***************************************
+changed: [my_server]
+
+TASK [web_app : Create Docker Compose File] *****************************************
+changed: [my_server]
+
+RUNNING HANDLER [web_app : Restart Docker Compose] **********************************
+changed: [my_server]
+
+PLAY RECAP **************************************************************************
+my_server                  : ok=24   changed=7    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+I used the following command to stop the app.
+
+```bash
+ansible-playbook playbooks/dev/app_go/main.yaml --tags wipe
+
+PLAY [Deploy Go App] ****************************************************************
+
+TASK [Gathering Facts] **************************************************************
+ok: [my_server]
+
+TASK [web_app : Check if Application Directory exists] ******************************
+ok: [my_server]
+
+TASK [web_app : Check if Docker Compose File exists] ********************************
+ok: [my_server]
+
+TASK [web_app : Stop and Remove Application] ****************************************
+changed: [my_server]
+
+TASK [web_app : Remove Application Directory] ***************************************
+changed: [my_server]
+
+PLAY RECAP **************************************************************************
+my_server                  : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
