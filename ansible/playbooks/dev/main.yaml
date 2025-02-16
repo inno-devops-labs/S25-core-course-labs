@@ -1,6 +1,0 @@
-- name: Playbook
-  hosts: all
-  become: yes
-  roles:
-    - docker
-    # - geerlingguy.docker
