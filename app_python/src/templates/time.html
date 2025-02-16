@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Current time in Moscow</title>
+    <style>
+      body {
+        background-color: #111112;
+        color: white;
+        font-family: sans-serif;
+        margin: 0;
+      }
+
+      .clock {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .clock__content {
+        display: flex;
+        padding: 1rem;
+        border-radius: 1rem;
+        background: #222223;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .clock__content__time {
+        padding: 0.75rem 1.25rem;
+        background: #333334;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        font-size: 1.5rem;
+      }
+
+      .clock__content__description {
+        text-align: center;
+        color: white;
+        opacity: 0.75;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="clock">
+      <div class="clock__content">
+        <h1 class="clock__content__title">Current time in Moscow</h1>
+        <span class="clock__content__time" id="time">{{ time }}</span>
+        <p class="clock__content__description">
+          The time is actual for the moment of the page request. <br />
+          To update current time, please, refresh the page.
+        </p>
+      </div>
+    </main>
+  </body>
+</html>
