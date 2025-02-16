@@ -109,7 +109,7 @@ INFO:     172.19.0.1:35310 - "GET /favicon.ico HTTP/1.1" 404 Not Found
 
 **Grafana logs:**
 
-![grafana-py-logs](./assets/logs_py.png)
+![grafana-py-logs](./img/logs_py.png)
 
 ### C# App Logs (BONUS)
 
@@ -139,4 +139,4 @@ warn: Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware[3]
 
 **Grafana logs:**
 
-![grafana-cs-logs](./assets/logs_cs.png)
+![grafana-cs-logs](./img/logs_cs.png)
