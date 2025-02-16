@@ -1,0 +1,446 @@
+andrew@Andrews-MacBook-Pro yandexcloud % terraform apply
+yandex_vpc_network.network-1: Refreshing state... [id=enpd5cfk4tobl1p0svr3]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions
+are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # yandex_compute_disk.boot-disk-1 will be created
+  + resource "yandex_compute_disk" "boot-disk-1" {
+      + block_size  = 4096
+      + created_at  = (known after apply)
+      + folder_id   = "b1g1nm6f49k6ivpvnanr"
+      + id          = (known after apply)
+      + image_id    = "d865uon0af912uhk9cs"
+      + name        = "boot-disk-1"
+      + product_ids = (known after apply)
+      + size        = 20
+      + status      = (known after apply)
+      + type        = "network-hdd"
+      + zone        = "ru-central1-d"
+
+      + disk_placement_policy (known after apply)
+
+      + hardware_generation (known after apply)
+    }
+
+  # yandex_compute_disk.boot-disk-2 will be created
+  + resource "yandex_compute_disk" "boot-disk-2" {
+      + block_size  = 4096
+      + created_at  = (known after apply)
+      + folder_id   = "b1g1nm6f49k6ivpvnanr"
+      + id          = (known after apply)
+      + image_id    = "d865uon0af912uhk9cs"
+      + name        = "boot-disk-2"
+      + product_ids = (known after apply)
+      + size        = 20
+      + status      = (known after apply)
+      + type        = "network-hdd"
+      + zone        = "ru-central1-d"
+
+      + disk_placement_policy (known after apply)
+
+      + hardware_generation (known after apply)
+    }
+
+  # yandex_compute_instance.vm-1 will be created
+  + resource "yandex_compute_instance" "vm-1" {
+      + created_at                = (known after apply)
+      + folder_id                 = (known after apply)
+      + fqdn                      = (known after apply)
+      + gpu_cluster_id            = (known after apply)
+      + hardware_generation       = (known after apply)
+      + hostname                  = (known after apply)
+      + id                        = (known after apply)
+      + maintenance_grace_period  = (known after apply)
+      + maintenance_policy        = (known after apply)
+      + metadata                  = {
+          + "user-data" = <<-EOT
+                #cloud-config
+                users:
+                  - name: username
+                    groups: sudo
+                    shell: /bin/bash
+                    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+                    ssh_authorized_keys:
+                      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFDDS0TK8CoC2QWX2akkiDKuYymu37VHneHSV3UH5jzF andrew@Andrews-MacBook-Pro.local
+            EOT
+        }
+      + name                      = "terraform1"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v1"
+      + service_account_id        = (known after apply)
+      + status                    = (known after apply)
+      + zone                      = (known after apply)
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = (known after apply)
+
+          + initialize_params (known after apply)
+        }
+
+      + metadata_options (known after apply)
+
+      + network_interface {
+          + index              = (known after apply)
+          + ip_address         = (known after apply)
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = true
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = (known after apply)
+        }
+
+      + placement_policy (known after apply)
+
+      + resources {
+          + core_fraction = 100
+          + cores         = 2
+          + memory        = 2
+        }
+
+      + scheduling_policy (known after apply)
+    }
+
+  # yandex_compute_instance.vm-2 will be created
+  + resource "yandex_compute_instance" "vm-2" {
+      + created_at                = (known after apply)
+      + folder_id                 = (known after apply)
+      + fqdn                      = (known after apply)
+      + gpu_cluster_id            = (known after apply)
+      + hardware_generation       = (known after apply)
+      + hostname                  = (known after apply)
+      + id                        = (known after apply)
+      + maintenance_grace_period  = (known after apply)
+      + maintenance_policy        = (known after apply)
+      + metadata                  = {
+          + "user-data" = <<-EOT
+                #cloud-config
+                users:
+                  - name: username
+                    groups: sudo
+                    shell: /bin/bash
+                    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+                    ssh_authorized_keys:
+                      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFDDS0TK8CoC2QWX2akkiDKuYymu37VHneHSV3UH5jzF andrew@Andrews-MacBook-Pro.local
+            EOT
+        }
+      + name                      = "terraform2"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v1"
+      + service_account_id        = (known after apply)
+      + status                    = (known after apply)
+      + zone                      = (known after apply)
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = (known after apply)
+
+          + initialize_params (known after apply)
+        }
+
+      + metadata_options (known after apply)
+
+      + network_interface {
+          + index              = (known after apply)
+          + ip_address         = (known after apply)
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = true
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = (known after apply)
+        }
+
+      + placement_policy (known after apply)
+
+      + resources {
+          + core_fraction = 100
+          + cores         = 4
+          + memory        = 4
+        }
+
+      + scheduling_policy (known after apply)
+    }
+
+  # yandex_vpc_subnet.subnet-1 will be created
+  + resource "yandex_vpc_subnet" "subnet-1" {
+      + created_at     = (known after apply)
+      + folder_id      = "b1g1nm6f49k6ivpvnanr"
+      + id             = (known after apply)
+      + labels         = (known after apply)
+      + name           = "subnet1"
+      + network_id     = "enpd5cfk4tobl1p0svr3"
+      + v4_cidr_blocks = [
+          + "192.168.10.0/24",
+        ]
+      + v6_cidr_blocks = (known after apply)
+      + zone           = "ru-central1-d"
+    }
+
+Plan: 5 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + external_ip_address_vm_1 = (known after apply)
+  + external_ip_address_vm_2 = (known after apply)
+  + internal_ip_address_vm_1 = (known after apply)
+  + internal_ip_address_vm_2 = (known after apply)
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+yandex_vpc_subnet.subnet-1: Creating...
+yandex_compute_disk.boot-disk-2: Creating...
+yandex_compute_disk.boot-disk-1: Creating...
+yandex_vpc_subnet.subnet-1: Creation complete after 2s [id=fl8eiremv18h6orf8kg3]
+╷
+│ Error: Error while requesting API to create disk: server-request-id = e8260202-4510-4f4f-9941-eb999a5442df server-trace-id = c0686e54d6ca939f:134758ad9328e4b3:c0686e54d6ca939f:1 client-request-id = 8831bcfa-de22-44ad-aa4f-fc08a796c84e client-trace-id = 328af8da-3fc3-4a84-a733-732e6a3c1141 rpc error: code = FailedPrecondition desc = Image "d865uon0af912uhk9cs" not found
+│
+│   with yandex_compute_disk.boot-disk-1,
+│   on main.tf line 15, in resource "yandex_compute_disk" "boot-disk-1":
+│   15: resource "yandex_compute_disk" "boot-disk-1" {
+│
+╵
+╷
+│ Error: Error while requesting API to create disk: server-request-id = 1faef914-84a5-413a-853f-8469c6c2c35e server-trace-id = 15dc25581cca399a:94301f8c41c5d06:15dc25581cca399a:1 client-request-id = 378d9139-c28c-410f-bdd9-69d3fd97f5ff client-trace-id = 328af8da-3fc3-4a84-a733-732e6a3c1141 rpc error: code = FailedPrecondition desc = Image "d865uon0af912uhk9cs" not found
+│
+│   with yandex_compute_disk.boot-disk-2,
+│   on main.tf line 24, in resource "yandex_compute_disk" "boot-disk-2":
+│   24: resource "yandex_compute_disk" "boot-disk-2" {
+}
+
+
+----
+
+andrew@Andrews-MacBook-Pro yandexcloud % terraform apply
+yandex_vpc_network.network-1: Refreshing state... [id=enpd5cfk4tobl1p0svr3]
+yandex_vpc_subnet.subnet-1: Refreshing state... [id=fl8eiremv18h6orf8kg3]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions
+are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # yandex_compute_disk.boot-disk-1 will be created
+  + resource "yandex_compute_disk" "boot-disk-1" {
+      + block_size  = 4096
+      + created_at  = (known after apply)
+      + folder_id   = "b1g1nm6f49k6ivpvnanr"
+      + id          = (known after apply)
+      + image_id    = "fd865uon0af912uhk9cs"
+      + name        = "boot-disk-1"
+      + product_ids = (known after apply)
+      + size        = 20
+      + status      = (known after apply)
+      + type        = "network-hdd"
+      + zone        = "ru-central1-d"
+
+      + disk_placement_policy (known after apply)
+
+      + hardware_generation (known after apply)
+    }
+
+  # yandex_compute_disk.boot-disk-2 will be created
+  + resource "yandex_compute_disk" "boot-disk-2" {
+      + block_size  = 4096
+      + created_at  = (known after apply)
+      + folder_id   = "b1g1nm6f49k6ivpvnanr"
+      + id          = (known after apply)
+      + image_id    = "fd865uon0af912uhk9cs"
+      + name        = "boot-disk-2"
+      + product_ids = (known after apply)
+      + size        = 20
+      + status      = (known after apply)
+      + type        = "network-hdd"
+      + zone        = "ru-central1-d"
+
+      + disk_placement_policy (known after apply)
+
+      + hardware_generation (known after apply)
+    }
+
+  # yandex_compute_instance.vm-1 will be created
+  + resource "yandex_compute_instance" "vm-1" {
+      + created_at                = (known after apply)
+      + folder_id                 = (known after apply)
+      + fqdn                      = (known after apply)
+      + gpu_cluster_id            = (known after apply)
+      + hardware_generation       = (known after apply)
+      + hostname                  = (known after apply)
+      + id                        = (known after apply)
+      + maintenance_grace_period  = (known after apply)
+      + maintenance_policy        = (known after apply)
+      + metadata                  = {
+          + "user-data" = <<-EOT
+                #cloud-config
+                users:
+                  - name: username
+                    groups: sudo
+                    shell: /bin/bash
+                    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+                    ssh_authorized_keys:
+                      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFDDS0TK8CoC2QWX2akkiDKuYymu37VHneHSV3UH5jzF andrew@Andrews-MacBook-Pro.local
+            EOT
+        }
+      + name                      = "terraform1"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v1"
+      + service_account_id        = (known after apply)
+      + status                    = (known after apply)
+      + zone                      = (known after apply)
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = (known after apply)
+
+          + initialize_params (known after apply)
+        }
+
+      + metadata_options (known after apply)
+
+      + network_interface {
+          + index              = (known after apply)
+          + ip_address         = (known after apply)
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = true
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = "fl8eiremv18h6orf8kg3"
+        }
+
+      + placement_policy (known after apply)
+
+      + resources {
+          + core_fraction = 100
+          + cores         = 2
+          + memory        = 2
+        }
+
+      + scheduling_policy (known after apply)
+    }
+
+  # yandex_compute_instance.vm-2 will be created
+  + resource "yandex_compute_instance" "vm-2" {
+      + created_at                = (known after apply)
+      + folder_id                 = (known after apply)
+      + fqdn                      = (known after apply)
+      + gpu_cluster_id            = (known after apply)
+      + hardware_generation       = (known after apply)
+      + hostname                  = (known after apply)
+      + id                        = (known after apply)
+      + maintenance_grace_period  = (known after apply)
+      + maintenance_policy        = (known after apply)
+      + metadata                  = {
+          + "user-data" = <<-EOT
+                #cloud-config
+                users:
+                  - name: username
+                    groups: sudo
+                    shell: /bin/bash
+                    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+                    ssh_authorized_keys:
+                      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFDDS0TK8CoC2QWX2akkiDKuYymu37VHneHSV3UH5jzF andrew@Andrews-MacBook-Pro.local
+            EOT
+        }
+      + name                      = "terraform2"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v1"
+      + service_account_id        = (known after apply)
+      + status                    = (known after apply)
+      + zone                      = (known after apply)
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = (known after apply)
+
+          + initialize_params (known after apply)
+        }
+
+      + metadata_options (known after apply)
+
+      + network_interface {
+          + index              = (known after apply)
+          + ip_address         = (known after apply)
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = true
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = "fl8eiremv18h6orf8kg3"
+        }
+
+      + placement_policy (known after apply)
+
+      + resources {
+          + core_fraction = 100
+          + cores         = 4
+          + memory        = 4
+        }
+
+      + scheduling_policy (known after apply)
+    }
+
+Plan: 4 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + external_ip_address_vm_1 = (known after apply)
+  + external_ip_address_vm_2 = (known after apply)
+  + internal_ip_address_vm_1 = (known after apply)
+  + internal_ip_address_vm_2 = (known after apply)
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+yandex_compute_disk.boot-disk-2: Creating...
+yandex_compute_disk.boot-disk-1: Creating...
+yandex_compute_disk.boot-disk-2: Creation complete after 8s [id=fv4hfuth5i7lun6m3nur]
+yandex_compute_instance.vm-2: Creating...
+yandex_compute_disk.boot-disk-1: Still creating... [10s elapsed]
+yandex_compute_disk.boot-disk-1: Creation complete after 11s [id=fv4cud7ooqf3qemqhfob]
+yandex_compute_instance.vm-1: Creating...
+╷
+│ Error: Error getting folder ID while creating instance: cannot determine folder_id: please set 'folder_id' key in this resource or at provider level
+│
+│   with yandex_compute_instance.vm-1,
+│   on main.tf line 33, in resource "yandex_compute_instance" "vm-1":
+│   33: resource "yandex_compute_instance" "vm-1" {
+│
+╵
+╷
+│ Error: Error getting folder ID while creating instance: cannot determine folder_id: please set 'folder_id' key in this resource or at provider level
+│
+│   with yandex_compute_instance.vm-2,
+│   on main.tf line 55, in resource "yandex_compute_instance" "vm-2":
+│   55: resource "yandex_compute_instance" "vm-2" {

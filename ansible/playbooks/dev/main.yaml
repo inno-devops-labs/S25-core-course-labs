@@ -1,0 +1,6 @@
+---
+- name: Deploy Docker and Web App on Yandex Cloud (Ubuntu 22.04)
+  hosts: all
+  become: yes
+  roles:
+    - docker
