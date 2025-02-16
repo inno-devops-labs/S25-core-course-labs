@@ -1,0 +1,5 @@
+- name: example-playbook
+  hosts: all
+  become: yes
+  roles:
+    - docker
