@@ -1,0 +1,6 @@
+services:
+  app:
+    image: "{{ docker_image }}:{{ image_tag }}"
+    working_dir: /app
+    ports:
+      - "{{ app_port }}:{{ app_port }}"

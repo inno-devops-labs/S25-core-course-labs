@@ -1,0 +1,6 @@
+---
+- name: Deploy Go Web App
+  hosts: ya_cloud_vm
+  become: yes
+  roles:
+  - ../../../roles/go_web_app

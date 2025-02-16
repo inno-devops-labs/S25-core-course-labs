@@ -370,3 +370,10 @@ skipping: [ya_cloud_vm]
 PLAY RECAP *********************************************************************
 ya_cloud_vm                : ok=14   changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
 ```
+
+
+## Results
+
+- Deployed via ansible applications can be accessed via the links:
+  - [Go Web App](http://158.160.143.18:8080)
+  - [Python Web App](http://158.160.143.18:8000)
