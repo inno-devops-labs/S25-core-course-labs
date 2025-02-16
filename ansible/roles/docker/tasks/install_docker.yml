@@ -1,0 +1,78 @@
+---
+- name: Install required packages for different OS families
+  block:
+    - name: Install packages (Arch Linux)
+      pacman:
+        name: "{{ docker_required_packages_arch }}"
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Archlinux"
+
+- name: Add Docker GPG key
+  block:
+    - name: Add Docker GPG key (Debian/Ubuntu)
+      apt_key:
+        url: "{{ docker_apt_gpg_key }}"
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Add Docker GPG key (RedHat/CentOS)
+      rpm_key:
+        key: "{{ docker_apt_gpg_key }}"
+        state: present
+      when: ansible_os_family == "RedHat"
+
+- name: Add Docker repository
+  block:
+    - name: Add Docker repository (Debian/Ubuntu)
+      apt_repository:
+        repo: "{{ docker_apt_repository }}"
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Add Docker repository (RedHat/CentOS)
+      yum_repository:
+        name: docker-ce-stable
+        description: Docker CE Stable - $basearch
+        baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
+        enabled: yes
+        gpgcheck: yes
+      when: ansible_os_family == "RedHat"
+
+- name: Install Docker packages
+  package:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: present
+    update_cache: yes
+  when: ansible_os_family != "Archlinux"
+
+- name: Install Docker packages (Arch Linux)
+  pacman:
+    name:
+      - docker
+    state: present
+    update_cache: yes
+  when: ansible_os_family == "Archlinux"
+
+- name: Ensure Docker service is enabled and started
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Add users to docker group
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: yes
+  with_items: "{{ docker_users }}"
+  when: docker_users | length > 0
+
+- name: Add current user to docker group
+  user:
+    name: "{{ ansible_user_id }}"
+    groups: docker
+    append: yes 
