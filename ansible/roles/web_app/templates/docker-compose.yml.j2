@@ -1,6 +1,6 @@
 version: "3"
 services:
   web:
-    image: my-web-app:latest
+    image: "{{ docker_image }}"
     ports:
       - "{{ app_port }}:80"

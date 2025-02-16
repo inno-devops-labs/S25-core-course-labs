@@ -1,2 +1,3 @@
 ---
-dependencies: []
+dependencies:
+  - role: docker

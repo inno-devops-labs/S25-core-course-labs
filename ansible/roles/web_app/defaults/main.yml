@@ -1,2 +1,5 @@
 ---
-app_port: 8080
+docker_image: "friedox/app-python:latest"
+container_name: "app_python_container"
+app_port: 80
+web_app_full_wipe: false
