@@ -59,6 +59,7 @@ localhost                  : ok=11   changed=4    unreachable=0    failed=0    s
 2. ```bash 
     ansible-inventory -i inventory/default_aws_ec2.yml --list
     ```
+```
 {
     "_meta": {
         "hostvars": {
@@ -79,9 +80,9 @@ localhost                  : ok=11   changed=4    unreachable=0    failed=0    s
         ]
     }
 }
+```
 
-
-2. ```bash 
+3. ```bash 
    ansible-inventory -i inventory/default_aws_ec2.yml --graph
    ```
 ```
