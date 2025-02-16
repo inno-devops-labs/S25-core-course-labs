@@ -1,0 +1,37 @@
+- name: Install packages
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+    state: present
+    update_cache: yes
+
+- name: Add GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add repository
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    state: present
+
+- name: Install
+  apt:
+    name: docker-ce
+    state: present
+    update_cache: yes
+
+- name: Enable service
+  systemd:
+    name: docker
+    enabled: yes
+    state: started
+
+- name: Add user to group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes

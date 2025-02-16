@@ -1,0 +1,7 @@
+all:
+  children:
+    web_servers:
+      hosts:
+        server:
+          ansible_host: 158.160.36.151
+          ansible_user: dew1769

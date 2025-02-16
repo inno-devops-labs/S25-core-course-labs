@@ -31,17 +31,6 @@ resource "yandex_container_registry" "my-registry" {
   folder_id = local.target_folder_id
 }
 
-resource "yandex_iam_service_account" "registry-sa" {
-  name      = local.sa_name
-  folder_id = local.target_folder_id
-}
-
-resource "yandex_resourcemanager_folder_iam_member" "registry-sa-role-images-puller" {
-  folder_id = local.target_folder_id
-  role      = "container-registry.images.puller"
-  member    = "serviceAccount:${yandex_iam_service_account.registry-sa.id}"
-}
-
 resource "yandex_vpc_network" "docker-vm-network" {
   name = local.network_name
 }
@@ -65,7 +54,6 @@ resource "yandex_compute_instance" "docker-vm" {
   name               = local.vm_name
   platform_id        = "standard-v3"
   zone               = var.zone
-  service_account_id = yandex_iam_service_account.registry-sa.id
 
   resources {
     cores  = 2
