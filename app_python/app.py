@@ -2,8 +2,10 @@ from flask import Flask, request
 from datetime import datetime
 import pytz
 import logging
+from prometheus_flask_exporter import PrometheusMetrics
 
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
 
 # Configure logging to output to stdout
 logging.basicConfig(
