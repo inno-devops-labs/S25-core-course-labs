@@ -1,38 +1,51 @@
-Role Name
-=========
+# Web App Role
 
-A brief description of the role goes here.
+This Ansible role deploys a web application using Docker and Docker Compose. It pulls a specified Docker image, configures deployment via a Jinja2-based Docker Compose template, and ensures the application is running on the target system.
 
-Requirements
-------------
+## Requirements
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+- Ansible 2.9+
+- Ubuntu 22.04 (or compatible Linux distributions)
+- Docker and Docker Compose (are being installed via the `docker` role dependency)
 
-Role Variables
---------------
+## Role Variables
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `docker_image` | The Docker image to deploy. | `iucd/fastapi-mt` |
+| `image_tag` | The image tag to use. | `distroless` |
+| `container_name` | The name of the deployed container. | `web_app_container` |
+| `app_port` | The port on which the application runs. | `8080` |
+| `web_app_full_wipe` | Whether to remove the existing container and image before deployment. | `false` |
 
-Dependencies
-------------
+## Example Playbook
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+```yaml
+- name: Deploy Web Application
+  hosts: all
+  become: yes
+  roles:
+    - ../../../roles/web_app
+```
 
-Example Playbook
-----------------
+## Role Tasks
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+### The Web App role includes the following tasks:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+- **Pull Docker Image**: Ensures the specified Docker image is pulled.
+- **Copy Compose Template**: Generates and places the `docker-compose.yml` file in the target user’s home directory.
+- **Deploy Via Compose**: Uses Docker Compose to start the application in detached mode.
+- **Container Removal (Optional)**: If `web_app_full_wipe` is enabled, stops and removes the container and image before redeploying.
 
-License
--------
+## How To Use
 
-BSD
+1. Install Ansible.
+2. Ensure the `docker` role ([link](https://github.com/creepydanunity/S25-core-course-labs/tree/lab6/ansible/roles/docker)) is available in your project.
+3. Clone or download the `web_app` [role](https://github.com/creepydanunity/S25-core-course-labs/tree/lab6/ansible/roles/web_app) into your Ansible project.
+4. Update the inventory file with the correct target hosts.
+5. Run the playbook:
 
-Author Information
-------------------
+```bash
+ansible-playbook -i ansible/inventory/default_yacloud_compute.yml ansible/playbooks/dev/app_python/main.yml
+```
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).

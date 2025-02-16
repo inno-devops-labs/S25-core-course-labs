@@ -14,7 +14,7 @@ This role installs and configures Docker and Docker Compose on Ubuntu-based syst
 
 ## Example Playbook
 
-### Example 1: Using Custom Docker Role
+### Example: Using Custom Docker Role
 
 ```yaml
 - name: Setup Custom Docker Role
@@ -31,14 +31,15 @@ This role installs and configures Docker and Docker Compose on Ubuntu-based syst
 - Install packages: Installs required packages like apt-transport-https, ca-certificates, curl, and software-properties-common.
 - Install Docker: Adds Docker’s GPG key, sets up the repository, and installs the specified version of Docker.
 - Install Docker Compose: Downloads the specified version of Docker Compose and places it in /usr/local/bin/docker-compose.
+- Configure Docker security settings.
 - Enable Docker on boot: Configures the Docker service to start on boot.
 - Add user to Docker group: Adds the current user to the Docker group to avoid using sudo for Docker commands.
 
 ## How To Use
 
 - 1. Install Ansible
-- 2. Clone the repository or download the docker role to your Ansible project.
-- 3. Update inventory file (ansible/inventory/default_yacloud_compute.yml) with the correct hosts.
+- 2. Clone the [repository](https://github.com/creepydanunity/S25-core-course-labs/tree/lab6) or download the [docker role](https://github.com/creepydanunity/S25-core-course-labs/tree/lab6/ansible/roles/docker) to your Ansible project.
+- 3. Update inventory file (`ansible/inventory/default_yacloud_compute.yml`) with the correct hosts.
 - 4. Run the playbook:
 ```bash
 ansible-playbook -i ansible/inventory/default_yacloud_compute.yml ansible/playbooks/dev/customRole.yml

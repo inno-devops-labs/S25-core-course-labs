@@ -1,6 +1,6 @@
 ## File Breakdown
 
-### 1. **Inventory File: `ansible/inventory/default_aws_ec2.yml`**
+### 1. **Inventory File: `ansible/inventory/default_yacloud_compute.yml`**
 
 This file contains the inventory configuration for the target cloud instance (`ya_cloud_vm`). It includes the VM's IP address, SSH user, and private key location.
 
@@ -85,17 +85,6 @@ This task adds Docker’s GPG key, sets up the repository, and installs Docker u
 
 Content:
 ```yaml
-- name: Add Docker's GPG key
-  apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    state: present
-
-- name: Set up the repository
-  apt_repository:
-    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release | lower }} stable"
-    state: present
-    update_cache: yes
-
 - name: Install Docker
   apt:
     name: "docker-ce={{ docker_version }}"
@@ -108,38 +97,71 @@ Content:
 
 ### 7. **Main Docker Role Tasks: `ansible/roles/docker/tasks/main.yml`**
 
-This is the main task file for the Docker role. It installs necessary dependencies, includes the tasks to install Docker and Docker Compose, enables Docker to start on boot, and adds the current user to the Docker group.
+This is the main task file for the Docker role. It installs necessary dependencies, includes the tasks to install Docker and Docker Compose, enables Docker to start on boot, and adds the current user to the Docker group, configures security settings.
 
 Content:
 ```yaml
-- name: Install packages
-  apt:
-    name:
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - software-properties-common
-    state: present
-    update_cache: yes
+- name: Setup Docker Env
+  block:
+    - name: Install packages
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+        update_cache: yes
+
+    - name: Add Docker's GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Set up the repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release | lower }} stable"
+        state: present
+        update_cache: yes
+  tags:
+    - setup
 
 - include_tasks: install_docker.yml
+
 - include_tasks: install_compose.yml
 
-- name: Enable Docker service to start on boot
-  systemd:
-    name: docker
-    enabled: yes
-    state: started
+- name: Post-Setup Docker Configuration
+  block:
+    - name: Configure Docker security settings
+      copy:
+        content: |
+          {
+            "no-new-privileges": true,
+            "userns-remap": "default",
+            "selinux-enabled": true
+          }
+        dest: /etc/docker/daemon.json
+        owner: root
+        group: root
+        mode: '0644'
+      notify:
+        - Restart Docker
 
-- name: Add current user to docker group
-  user:
-    name: "{{ ansible_user }}"
-    groups:
-      - docker
-    append: yes
+    - name: Enable Docker service to start on boot
+      systemd:
+        name: docker
+        enabled: yes
+        state: started
+
+    - name: Add current user to docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups:
+          - docker
+        append: yes
 ```
 
-- **Explanation**: This task file manages package installations, Docker installation, Docker Compose installation, service management, and user group update. It ensures that Docker is set to start on boot and the user has the necessary permissions to run Docker without `sudo`.
+- **Explanation**: This task file manages package installations, Docker installation, Docker Compose installation, service management, security settings, and user group update. It ensures that Docker is set to start on boot and the user has the necessary permissions to run Docker without `sudo`.
 
 ---
 
@@ -148,7 +170,7 @@ Content:
 To run the playbook and verify the changes without applying them, used the following command:
 
 ```bash
-ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/customRole.yml --check --diff
+ansible-playbook ansible/playbooks/dev/customRole.yml --check --diff
 ```
 
 ### Diff output (tail -n 50)
@@ -229,21 +251,22 @@ ya_cloud_vm                : ok=10   changed=4    unreachable=0    failed=0    s
 ```
 
 ## Dynamic Inventory (Yandex Cloud)
-Unfortunately, after around 4-5 hours of work, I didnt reach the goal of the task. I have tried to use given plugin (https://github.com/rodion-goritskov/yacloud_compute) but it seems to be outdated or I just havent found enough info to set this up properly. 
+Unfortunately, after around 4-5 hours of work, I didnt reach the goal of the task. I have tried to use given [plugin](https://github.com/rodion-goritskov/yacloud_compute) but it seems to be outdated or I just havent found enough info to set this up properly. 
 
 ### What Was Done:
 - 1. Downloaded yacloud_compute.py (plugin)
 - 2. Plugin moved to ~/ansible/inventory/ folder
-- 3. Previous inventory file renamed to yacloud_compute.yml and content changed to needed (according to .py doc: folder_names, cloud_names, oauth token) one.
+- 3. Previous inventory file renamed to yacloud_compute.yml and content changed to be suitable for plugin (according to .py doc: folder_names, cloud_names, oauth token).
 - 4. Modified ansible/ansible.cfg to point onto the script
 - 5. Tested playbook. Fixed yandexcloud missed package and some other errors
-- 6. Tested another plugin found on gitlab
-- 7. Some more actions
+- 6. Tested another [plugin](https://gitlab.com/tyumentsev4/yandex-cloud-ansible-dynamic-inventory?ysclid=m77qqo7f4r965912550) found on gitlab
+- 7. Some more actions to satisfy requirements
 - 8. Surrender
+- 9. Rollback to the previously created inventory file
 
 ## Securing Docker Configuration:
 
-- Security settings are being changed via modifying daemon.json
+- Security settings are being changed via modifying `daemon.json`
 ```yaml
 - name: Configure Docker security settings
   copy:
@@ -261,7 +284,7 @@ Unfortunately, after around 4-5 hours of work, I didnt reach the goal of the tas
     - Restart Docker
 ```
 
-- Docker restart being triggered after the configuration is copied
+- Docker restart (`roles/docker/handlers/main.yml`) being triggered after the configuration is copied
 ```yaml
 - name: Restart Docker
   systemd:
@@ -269,7 +292,7 @@ Unfortunately, after around 4-5 hours of work, I didnt reach the goal of the tas
     state: restarted
 ```
 
-## Application Deployment Logs
+## Application Deployment Log (Lab 6 Task 1)
 
 ```text
 PLAY [Deploy Python Web App] ***************************************************
@@ -295,7 +318,7 @@ PLAY RECAP *********************************************************************
 ya_cloud_vm                : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
 ```
 
-## Applycation Deployment (Web App Role)
+## Applycation Deployment Log (Web App Role, Lab 6 Task 2)
 ```text
 PLAY [Deploy Python Web App] ***************************************************
 

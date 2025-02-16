@@ -1,5 +1,10 @@
 ---
 # tasks file for roles/web_app
+- include_tasks: "{{ role_path }}/tasks/0-wipe.yml"
+  when: web_app_full_wipe | default(false)
+  tags:
+    - wipe
+
 - name: Pull Docker Image
   docker_image:
     name: "{{ docker_image }}"
@@ -7,7 +12,6 @@
     source: pull
   tags:
     - docker
-
 
 - name: Copy Compose Template
   template:
@@ -33,8 +37,3 @@
 #      - "{{ app_port }}:{{ app_port }}"
 #  tags:
 #    - container
-
-- include_tasks: "{{ role_path }}/tasks/0-wipe.yml"
-  when: web_app_full_wipe | default(false)
-  tags:
-    - wipe
