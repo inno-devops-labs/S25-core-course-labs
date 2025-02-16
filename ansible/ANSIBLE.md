@@ -68,12 +68,6 @@ Verify that the application is running by checking active Docker containers:
 docker ps
 ```
 
-If successful, the application should be running and accessible via:
-
-```sh
-http://52.90.192.156:8080
-```
-
 ## Playbook Execution
 
 The playbook executes the following steps:
