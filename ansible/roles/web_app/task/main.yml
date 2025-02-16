@@ -1,0 +1,44 @@
+- name: Web App Management
+  block:
+    - name: Ensure Docker is installed
+      command: docker --version
+      register: docker_installed
+      changed_when: false
+      ignore_errors: true
+
+    - name: Fail if Docker is not installed
+      fail:
+        msg: "Docker is not installed. Please install Docker before running this playbook."
+      when: docker_installed.rc != 0
+
+    - name: Pull latest Docker image
+      docker_image:
+        name: "{{ docker_image }}"
+        tag: "{{ docker_image_tag }}"
+        source: pull
+        force_source: yes
+      register: image_pull_result
+
+    - name: Stop and remove existing container (if exists)
+      docker_container:
+        name: "{{ docker_container_name }}"
+        state: absent
+      when: image_pull_result.changed
+
+    - name: Run web application in Docker
+      docker_container:
+        name: "{{ docker_container_name }}"
+        image: "{{ docker_image }}:{{ docker_image_tag }}"
+        state: started
+        restart_policy: always
+        ports:
+          - "{{ docker_host_port }}:{{ docker_container_port }}"
+        recreate: false  
+        pull: missing   
+
+    - name: Perform full wipe if requested
+      import_tasks: tasks/wipe.yml
+      when: web_app_wipe | default(false)
+
+  tags:
+    - web_app

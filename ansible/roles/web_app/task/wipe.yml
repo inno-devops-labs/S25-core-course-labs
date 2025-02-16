@@ -1,0 +1,9 @@
+- name: wip
+  block:
+    - name: stop and remove 
+      docker_container:
+        name: "{{ docker_container_name }}"
+        state: absent
+  when: web_app_wipe | bool
+  tags:
+    - wipe
