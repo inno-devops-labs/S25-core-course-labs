@@ -352,7 +352,9 @@ cat /etc/docker/daemon.json
 
 ### **Screenshots**
 
-- **Secure Docker Configuration Applied:** ![Secure Docker Config](bonus.png)
+- **Secure Docker Configuration Applied:**
+
+![Secure Docker Config](bonus.png)
 
 ## Conclusion Of This Task
 
