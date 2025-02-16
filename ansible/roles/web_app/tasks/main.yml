@@ -1,9 +1,26 @@
-- name: Deploy Web Application
-  template:
-    src: docker-compose.yml.j2
-    dest: /home/ubuntu/docker-compose.yml
+- name: Ensure Docker is Installed
+  ansible.builtin.import_role:
+    name: docker
 
-- name: Start Application
-  command:
-    cmd: docker compose up -d
-    chdir: /home/ubuntu/
+- name: Setup Web Application
+  block:
+    - name: Pull Docker Image
+      community.docker.docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+      tags:
+        - docker
+
+    - name: Deploy Web Application with Docker Compose
+      ansible.builtin.template:
+        src: docker-compose.yml.j2
+        dest: /home/ubuntu/docker-compose.yml
+        owner: ubuntu
+        group: ubuntu
+        mode: "0644"
+
+    - name: Start Application
+      community.docker.docker_compose:
+        project_src: /home/ubuntu
+  tags:
+    - deploy

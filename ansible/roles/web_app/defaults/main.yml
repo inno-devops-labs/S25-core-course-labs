@@ -1,2 +1,3 @@
-docker_image: nginx:latest 
-app_port: 8080  
+docker_image: "nginx:latest"  # Replace with your actual application image
+app_port: 8080
+web_app_full_wipe: false  # Can be set to true for wipe logic
