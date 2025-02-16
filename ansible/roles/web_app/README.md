@@ -19,7 +19,7 @@ This role deploys a Docker-based web application.
      become: true
      roles:
        - webapp
-##
+## Usage
 
 ```bash
 ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/main.yaml -K
