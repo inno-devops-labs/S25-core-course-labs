@@ -1,6 +1,7 @@
 # 📜 Ansible Deployment Documentation
 
 ## 🚀 Overview
+
 This document describes the Ansible-based deployment of Docker and a web application using Docker Compose.  
 The playbook automates the installation of Docker and launches an Nginx container.
 
@@ -79,7 +80,8 @@ PLAY RECAP *********************************************************************
 myserver                   : ok=12   changed=0    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0   
 ```
 
-Output of `ansible-inventory`
+Output of `ansible-inventory --list`
+
 ```bash
 {
     "_meta": {
@@ -102,4 +104,12 @@ Output of `ansible-inventory`
         ]
     }
 }
+```
+
+Output of `ansible-inventory --graph`
+
+```bash
+@all:
+  |--@ungrouped:
+  |  |--myserver
 ```
