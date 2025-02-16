@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MoscowTimeApp.Models;
+using Prometheus;
 using System.Diagnostics;
 
 namespace MoscowTimeApp.Controllers
@@ -8,6 +9,9 @@ namespace MoscowTimeApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        private static readonly Counter MoscowTimeRequests = Metrics
+            .CreateCounter("moscow_time_requests_total", "Number of requests to the Moscow Time endpoint.");
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -15,6 +19,8 @@ namespace MoscowTimeApp.Controllers
 
         public IActionResult Index()
         {
+            MoscowTimeRequests.Inc();
+
             // Get Moscow time (UTC+3)
             DateTime utcTime = DateTime.UtcNow;
             DateTime moscowTime = utcTime.AddHours(3);

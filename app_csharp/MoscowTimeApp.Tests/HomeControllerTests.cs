@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using Moq;
 using MoscowTimeApp.Controllers;
-using MoscowTimeApp.Models;
 
 public class HomeControllerTests
 {
