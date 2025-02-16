@@ -1,0 +1,10 @@
+body, html {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

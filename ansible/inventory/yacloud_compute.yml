@@ -1,0 +1,4 @@
+plugin: yacloud_compute
+yacloud_token_file: "/home/nickolaus-sdr/yandex_id.txt"
+yacloud_clouds: cloud-npetukhovinnopolisuniversity
+yacloud_folders: devops-nick899
