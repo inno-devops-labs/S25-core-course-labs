@@ -35,6 +35,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Linter
+        run: |
+          pip install flake8
+          flake8 .
+
+      - name: Tests
+        working-directory: ./
+        run: |
+          python -m unittest app_python/tests/test_app.py
+
       - name: Snyk Vulnerability Check
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
