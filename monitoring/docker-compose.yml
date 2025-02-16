@@ -17,7 +17,7 @@ services:
     depends_on:
       loki:
         condition: service_started
-      go_app:
+      cs_app:
         condition: service_started
       python_app:
         condition: service_started
