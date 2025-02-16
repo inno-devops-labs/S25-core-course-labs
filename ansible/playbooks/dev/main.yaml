@@ -1,10 +1,11 @@
 ---
-- name: Setup Docker and System Configuration
+- name: Install Docker and Configure System and Deploy
   hosts: all
   become: true
 
   roles:
-    - docker
+    - role: docker
+    - role: web_app
 
   pre_tasks:
     - name: Refresh package lists
