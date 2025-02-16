@@ -1,0 +1,7 @@
+# Ignore everything without extension
+*
+!*.*
+!*/
+
+# Ignore exe
+*.exe
