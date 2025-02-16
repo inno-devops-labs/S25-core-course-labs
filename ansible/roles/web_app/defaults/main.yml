@@ -1,0 +1,10 @@
+docker_image: "gendiro/moscow-time-app:latest"
+docker_container: "moscow-time-app"
+docker_compose_filename: "docker-compose.yml"
+
+web_app_dir: "/webapp"
+
+internal_port: 8000
+external_port: 8000
+
+web_app_full_wipe: true
