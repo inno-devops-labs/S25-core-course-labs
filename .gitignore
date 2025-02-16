@@ -6,3 +6,4 @@ __pycache__
 .env
 key.json
 fact_cache
+yacloud_token
