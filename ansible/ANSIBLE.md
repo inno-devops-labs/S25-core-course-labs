@@ -69,6 +69,7 @@ Output of `ansible-inventory -i ansible/inventory/default_aws_ec2.yml --graph`:
 ```
 
 ## Lab6
+
 Output for command `ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/main.yaml -K`
 
 ```bash
