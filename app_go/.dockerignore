@@ -1,0 +1,8 @@
+*.md
+
+*.git
+.git*
+
+.golangci.yml
+
+*.png

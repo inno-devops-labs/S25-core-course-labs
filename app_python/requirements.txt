@@ -1,0 +1,4 @@
+fastapi
+uvicorn
+pytz
+pytest
