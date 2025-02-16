@@ -1,0 +1,47 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+client:
+  url: http://loki:3100/api/prom/push
+
+scrape_configs:
+  - job_name: docker_logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: docker
+          __path__: /var/lib/docker/containers/*/*-json.log
+    pipeline_stages:
+      - match:
+          selector: '{job="docker"}'
+          stages:
+            - regex:
+                expression: '(?<container_name>[^/]+)-json\.log$'
+                source: '__path__'
+            - labels:
+                container_name: '{{ .container_name }}'
+      - labeldrop:
+          label: '__path__'
+
+  - job_name: python_app
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          app: python
+          job: docker
+          __path__: /var/log/python-app/*.log
+
+  - job_name: scala_app
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          app: scala
+          job: docker
+          __path__: /var/log/scala-app/*.log
