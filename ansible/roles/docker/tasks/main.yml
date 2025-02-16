@@ -1,0 +1,5 @@
+- include_tasks: install_docker.yml
+- include_tasks: install_compose.yml
+- include_tasks: start_docker_on_boot.yml
+- include_tasks: add_user_to_docker_group.yml
+- include_tasks: disable_docker_root.yml
