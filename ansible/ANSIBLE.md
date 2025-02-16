@@ -68,7 +68,8 @@ my_yandex_vm               : ok=11   changed=3    unreachable=0    failed=0    s
             "my_yandex_vm"
         ]
     }
-}```
+}
+```
 
 ```ansible-inventory -i <name_of_your_inventory_file>.yaml --graph```
 ```@all:
