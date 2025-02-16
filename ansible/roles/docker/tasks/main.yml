@@ -13,10 +13,6 @@
 - name: Include Docker Compose installation tasks
   ansible.builtin.import_tasks: install_compose.yml
 
-# Security configuration
-- name: Include security configuration tasks
-  ansible.builtin.import_tasks: security.yml
-
 # Post-installation verification
 - name: Verify Docker installation
   block:
@@ -48,4 +44,8 @@
       command: groups {{ ansible_user }}
       register: user_groups
       changed_when: false
-      failed_when: "'docker' not in user_groups.stdout" 
+      failed_when: "'docker' not in user_groups.stdout"
+
+# Security configuration
+- name: Include security configuration tasks
+  ansible.builtin.import_tasks: security.yml
