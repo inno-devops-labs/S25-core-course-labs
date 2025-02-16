@@ -1,0 +1,10 @@
+version: "3"
+services:
+  app:
+    image: {{ image }}
+{% if ports is defined %}
+    ports:
+{% for port in ports %}
+      - "{{ port }}"
+{% endfor %}
+{% endif %}
