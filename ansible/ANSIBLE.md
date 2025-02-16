@@ -371,6 +371,71 @@ PLAY RECAP *********************************************************************
 ya_cloud_vm                : ok=14   changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
 ```
 
+## Applycation Deployment+Prev. Wipe Log (Go Web App Role, Lab 6 Bonus Task)
+```bash
+ansible-playbook playbooks/dev/app_go/main.yml -e "web_app_full_wipe=true"
+```
+
+```text
+PLAY [Deploy Go Web App] *******************************************************
+ 
+TASK [Gathering Facts] *********************************************************
+ok: [ya_cloud_vm]
+ 
+TASK [docker : Install packages] ***********************************************
+ok: [ya_cloud_vm]
+ 
+TASK [docker : Add Docker's GPG key] *******************************************
+ok: [ya_cloud_vm]
+ 
+TASK [docker : Set up the repository] ******************************************
+ok: [ya_cloud_vm]
+ 
+TASK [docker : include_tasks] **************************************************
+included: /home/ren/labs/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for ya_cloud_vm
+ 
+TASK [docker : Install Docker] *************************************************
+ok: [ya_cloud_vm]
+ 
+TASK [docker : include_tasks] **************************************************
+included: /home/ren/labs/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for ya_cloud_vm
+ 
+TASK [docker : Install Docker Compose] *****************************************
+ok: [ya_cloud_vm]
+ 
+TASK [docker : Configure Docker security settings] *****************************
+ok: [ya_cloud_vm]
+ 
+TASK [docker : Enable Docker service to start on boot] *************************
+ok: [ya_cloud_vm]
+ 
+TASK [docker : Add current user to docker group] *******************************
+ok: [ya_cloud_vm]
+ 
+TASK [../../../roles/go_web_app : include_tasks] *******************************
+included: /home/ren/labs/S25-core-course-labs/ansible/roles/go_web_app/tasks/0-wipe.yml for ya_cloud_vm
+ 
+TASK [../../../roles/go_web_app : Stop and Remove container] *******************
+ok: [ya_cloud_vm]
+ 
+TASK [../../../roles/go_web_app : Remove Image] ********************************
+changed: [ya_cloud_vm]
+ 
+TASK [../../../roles/go_web_app : Pull Docker Image] ***************************
+changed: [ya_cloud_vm]
+ 
+TASK [../../../roles/go_web_app : Created Directory] ***************************
+ok: [ya_cloud_vm]
+ 
+TASK [../../../roles/go_web_app : Copy Compose Template] ***********************
+ok: [ya_cloud_vm]
+ 
+TASK [../../../roles/go_web_app : Deploy Via Compose] **************************
+changed: [ya_cloud_vm]
+ 
+PLAY RECAP *********************************************************************
+ya_cloud_vm                : ok=18   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
 
 ## Results
 
