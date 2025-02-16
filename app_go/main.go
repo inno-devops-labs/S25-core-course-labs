@@ -31,7 +31,17 @@ func setupRouter() *gin.Engine {
 		<!DOCTYPE html>
 		<html lang="en">
 		<head><title>Guess the Number</title></head>
-		<body>{{.Feedback}}</body>
+		<body>
+			<h1>Guess the Number (1-100)</h1>
+			{{if .Feedback}}
+				<p><strong>{{.Feedback}}</strong></p>
+			{{end}}
+			<form method="POST">
+				<label for="guess">Enter your guess:</label>
+				<input type="number" id="guess" name="guess" required>
+				<button type="submit">Submit</button>
+			</form>
+		</body>
 		</html>
 	`)))
 
