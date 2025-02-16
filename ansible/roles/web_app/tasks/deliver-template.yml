@@ -1,0 +1,17 @@
+- name: Deliver the Docker Compose template
+  block:
+    - name: Create directory for the template
+      ansible.builtin.file:
+        path: "/{{ docker_container_name }}"
+        state: directory
+        owner: "{{ ansible_user }}"
+        mode: "0666"
+      tags:
+        - docker-compose
+
+    - name: Deliver the template
+      ansible.builtin.template:
+        src: docker-compose.yml.j2
+        dest: "/{{ docker_container_name }}/docker-compose.yml"
+      tags:
+        - docker-compose
