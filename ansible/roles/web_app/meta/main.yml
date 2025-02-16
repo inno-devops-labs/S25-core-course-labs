@@ -1,0 +1,13 @@
+---
+dependencies:
+  - role: docker
+
+galaxy_info:
+  author: forygg
+  description: Deploys Moscow Time web application
+  license: MIT
+  min_ansible_version: 2.9
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
