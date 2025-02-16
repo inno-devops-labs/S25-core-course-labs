@@ -410,3 +410,103 @@ The custom Docker role was developed following Ansible best practices to ensure 
   ```
 
 - Linting helped identify and fix issues such as improper indentation, missing task names, and deprecated practices.
+
+## Web App Deployment output
+
+```sh
+PLAY [Ansible and Docker Deployment] *******************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : include_tasks] **************************************************
+included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/setup_debian.yml for ec2-54-147-13-93.compute-1.amazonaws.com
+
+TASK [docker : Ensure apt key is not present in trusted.gpg.d] *****************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Ensure old apt source list is not present in /etc/apt/sources.list.d] ***
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Ensure the repo referencing the previous trusted.gpg.d key is not present] ***
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Ensure old versions of Docker are not installed] ****************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Ensure dependencies are installed] ******************************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Ensure directory exists for /etc/apt/keyrings] ******************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Add Docker apt key] *********************************************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Add Docker repository] ******************************************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : include_tasks] **************************************************
+included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for ec2-54-147-13-93.compute-1.amazonaws.com
+
+TASK [docker : Install Docker packages] ****************************************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : include_tasks] **************************************************
+included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for ec2-54-147-13-93.compute-1.amazonaws.com
+
+TASK [docker : Install docker-compose plugin] **********************************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Ensure Docker is started and enabled at boot] *******************
+changed: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Ensure handlers are notified now to avoid firewall conflicts] ***
+
+TASK [docker : Get docker group info using getent] *****************************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Check if there are any users to add to the docker group] ********
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com] => (item=ubuntu)
+
+TASK [docker : include_tasks] **************************************************
+included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/docker_users.yml for ec2-54-147-13-93.compute-1.amazonaws.com
+
+TASK [docker : Ensure docker users are added to the docker group] **************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com] => (item=ubuntu)
+
+TASK [docker : Reset SSH connection to apply user changes] *********************
+
+TASK [docker : include_tasks] **************************************************
+included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/secure_docker.yml for ec2-54-147-13-93.compute-1.amazonaws.com
+
+TASK [docker : Ensure Docker daemon.json exists with secure configuration] *****
+changed: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [web_app : Pull app_python image from DockerHub] **************************
+changed: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [web_app : Create and start app_python container] *************************
+changed: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [web_app : Deliver Docker Compose file] ***********************************
+changed: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [web_app : Execute wipe logic if enabled] *********************************
+included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/web_app/tasks/0-wipe.yml for ec2-54-147-13-93.compute-1.amazonaws.com
+
+TASK [web_app : Stop and remove app_python container] **************************
+changed: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [web_app : Remove Docker image] *******************************************
+changed: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [web_app : Remove Docker volumes] *****************************************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+RUNNING HANDLER [docker : restart docker] **************************************
+changed: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+PLAY RECAP *********************************************************************
+ec2-54-147-13-93.compute-1.amazonaws.com : ok=29   changed=8    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0      
+``
