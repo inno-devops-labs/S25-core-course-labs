@@ -1,4 +1,4 @@
 pytz==2024.2
 DateTime==5.5
 Flask==3.1.0
-prometheus-flask-exporter=0.23.0
+prometheus-flask-exporter==0.23.0
