@@ -1,0 +1,21 @@
+---
+- name: Ensure Docker is running
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Pull the Docker image
+  docker_image:
+    name: "{{ app_image }}"
+    source: pull
+
+- name: Start the Docker container
+  docker_container:
+    name: "{{ container_name }}"
+    image: "{{ app_image }}"
+    state: started
+    recreate: yes
+    ports: "{{ port_mappings }}"
+    volumes: "{{ extra_volumes }}"
+
