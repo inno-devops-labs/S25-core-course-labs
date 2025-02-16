@@ -18,6 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: py-actions/flake8@v2
+        with:
+          exclude: "ansible/plugins/inventory/yacloud_compute.py"
+
 
   test:
     timeout-minutes: 2
