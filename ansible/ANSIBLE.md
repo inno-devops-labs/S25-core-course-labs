@@ -12,6 +12,7 @@ ansible/
 │       └── main.yaml  # Main deployment playbook
 └── roles/            # Roles directory
     ├── docker/       # Docker installation and configuration role
+    └── web_app/      # Web application deployment role
 ```
 
 ## Configuration
@@ -38,6 +39,14 @@ The Docker role handles the installation and configuration of Docker and Docker 
 - Security configurations
 - System configurations for Docker
 - Docker service management
+
+### Web Application Role
+
+The Web Application role handles the deployment of Docker containers for web applications. This role handles:
+
+- Pulling Docker images
+- Creating and starting containers with proper configuration
+- Setting resource limits and environment variables
 
 ## Playbooks
 
@@ -82,3 +91,27 @@ ansible-playbook playbooks/dev/main.yaml --tags docker
 3. Use tags for selective execution of tasks
 4. Maintain proper documentation for roles and playbooks
 5. Follow idempotency principles in all tasks
+
+## Web Application Deployment
+
+### Role Variables
+
+The following variables can be configured in `roles/web_app/defaults/main.yml`:
+- `docker_image_name`: Name of your Docker image
+- `docker_image_tag`: Tag of the Docker image
+- `docker_container_name`: Name for the deployed container
+- `container_ports`: Port mappings
+- `container_env`: Environment variables
+- `restart_policy`: Container restart policy
+- `memory_limit`: Container memory limit
+- `cpu_limit`: Container CPU limit
+
+### Deployment
+
+To deploy the web application, run:
+
+```bash
+ansible-playbook -i inventory/default_aws_ec2.yml playbooks/dev/main.yaml --tags web_app
+```
+
+The deployment output will be updated here after the first successful deployment.
