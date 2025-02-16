@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  author: Your Name
+  author: Andrei Boronin
   description: Install Docker
-  company: Your Company
+  company: My company
   license: MIT
   min_ansible_version: "2.9"
   platforms:

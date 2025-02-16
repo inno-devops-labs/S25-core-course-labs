@@ -1,26 +1,27 @@
-- name: Ensure Docker is installed
-  command: docker --version
-  register: docker_installed
-  changed_when: false
+- name: Pull the latest Docker image
+  docker_image:
+    name: "{{ docker_image }}"
+    source: pull
+  tags:
+    - docker
 
-- debug:
-    msg: "Docker is installed: {{ docker_installed.stdout }}"
-
-- name: Ensure Docker Compose is installed
-  command: docker-compose --version
-  register: compose_installed
-  changed_when: false
-
-- debug:
-    msg: "Docker Compose is installed: {{ compose_installed.stdout }}"
-
-- name: Copy `docker-compose.yml` template
+- name: Copy docker-compose template
   template:
     src: docker-compose.yml.j2
     dest: /home/venom/docker-compose.yml
     mode: '0644'
+  tags:
+    - config
+
+- name: Wipe old application (if enabled)
+  import_tasks: 0-wipe.yml
+  when: web_app_full_wipe
+  tags:
+    - wipe
 
 - name: Start the web application
   shell: docker-compose up -d
   args:
     chdir: /home/venom
+  tags:
+    - deploy
