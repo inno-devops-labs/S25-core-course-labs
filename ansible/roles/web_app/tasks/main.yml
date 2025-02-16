@@ -1,0 +1,24 @@
+- name: Deploy python app
+  block:
+    - name: Pull Docker image
+      docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+      tags:
+        - pull
+
+    - name: Render Docker compose
+      template:
+        src: docker-compose.yml.j2
+        dest: "{{ deploy_dir }}/docker-compose.yml"
+
+    - name: Run the container
+      docker_container:
+        name: "{{ docker_container_name }}"
+        image: "{{ docker_image }}"
+        state: started
+      tags:
+        - docker_start
+
+    - name: Wipe the container
+      import_tasks: tasks/0-wipe.yml
