@@ -1,0 +1,25 @@
+# Ignore editor-specific files
+*.idea/
+*.vscode/
+*.DS_Store
+
+# Ignore documentation files
+*.md
+
+# Ignore Docker-related files
+Dockerfile
+.dockerignore
+
+# Ignore testing files
+spec/
+
+# Ignore git related files
+.git/
+.gitignore
+.gitattributes
+.gitmodules
+.gitkeep
+
+# Ignore configuration files
+.pre-commit-config.yaml
+.robocop.yml

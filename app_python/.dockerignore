@@ -1,0 +1,33 @@
+# Ignore Python bytecode and cache files
+__pycache__/
+*.mypy_cache/
+*.pytest_cache/
+*.pyc
+*.pyo
+
+# Ignore virtual environments
+venv/
+env/
+
+# Ignore editor-specific files
+*.idea/
+*.vscode/
+*.DS_Store
+
+# Ignore documentation files
+*.md
+
+# Ignore Docker-related files
+Dockerfile
+.dockerignore
+
+# Ignore testing files
+test_app.py
+
+# Ignore git related files
+.git/
+.gitignore
+.gitattributes
+.gitmodules
+.gitkeep
+.pre-commit-config.yaml
