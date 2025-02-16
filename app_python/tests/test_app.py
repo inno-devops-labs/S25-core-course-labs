@@ -39,6 +39,7 @@ class TimeAppTests(unittest.TestCase):
 
         moscow_tz = pytz.timezone("Europe/Moscow")
         expected_time = datetime.now(moscow_tz).strftime("%H:%M:%S %d.%m.%Y")
+        print(expected_time)
 
         self.assertEqual(
             f'''
