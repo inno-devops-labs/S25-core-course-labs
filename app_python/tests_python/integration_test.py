@@ -20,5 +20,6 @@ class TestIntegration(unittest.TestCase):
             response.get_data(as_text=True)
         )
 
+
 if __name__ == "__main__":
     unittest.main()
