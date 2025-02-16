@@ -1,0 +1,15 @@
+- name: Pull the latest Docker image
+  docker_image:
+    name: "{{ docker_image }}"
+    source: pull
+
+- name: Run the web application container
+  docker_container:
+    name: "{{ container_name }}"
+    image: "{{ docker_image }}"
+    state: started
+    restart_policy: always
+    published_ports:
+      - "5000:5000"
+    env:
+      TZ: "Europe/Moscow"

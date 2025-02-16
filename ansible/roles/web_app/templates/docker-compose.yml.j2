@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  web_app:
+    image: {{ docker_image }}
+    container_name: {{ container_name }}
+    restart: always
+    ports:
+      - "{{ app_port }}:5000"
+    environment:
+      TZ: "Europe/Moscow"

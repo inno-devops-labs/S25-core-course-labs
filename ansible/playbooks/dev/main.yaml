@@ -3,3 +3,4 @@
   become: yes
   roles:
     - docker
+    - web_app

@@ -1,0 +1,3 @@
+docker_image: "decafattic/moscow-time-app:latest"
+container_name: "moscow-time"
+app_port: "5000"
