@@ -101,3 +101,146 @@ yandex_instance_1          : ok=11   changed=0    unreachable=0    failed=0    s
   |--@ungrouped:
   |  |--yandex_instance_1
 ```
+
+## Web-app
+
+```txt
+(venv) ➜  ansible git:(Lab-6) ✗ ansible-playbook -i inventory/default_yandex_cloud.yml playbooks/dev/app_python/main.yml
+```
+```txt
+PLAY [Deploy Python app] *************************************************************************
+
+TASK [Gathering Facts] ***************************************************************************
+[WARNING]: Platform linux on host yandex_instance_1 is using the discovered Python interpreter at
+/usr/bin/python3.10, but future installation of another Python interpreter could change the
+meaning of that path. See https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+ok: [yandex_instance_1]
+
+TASK [docker : Install Docker dependencies] ******************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Add Docker GPG key] ***************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Add Docker repository] ************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Install Docker] *******************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Ensure Docker service is running and enabled on boot] *****************************
+ok: [yandex_instance_1]
+
+TASK [docker : Download Docker Compose binary] ***************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Verify Docker Compose installation] ***********************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Display installed Docker Compose version] *****************************************
+ok: [yandex_instance_1] => {
+    "msg": "Docker Compose installed successfully: Docker Compose version v2.33.0"
+}
+
+TASK [docker : Configure Docker daemon.json for security] ****************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Add users to the docker group] ****************************************************
+ok: [yandex_instance_1] => (item=yc-user)
+
+TASK [web_app : Deploy App] **********************************************************************
+included: /Users/netpo4ki/PycharmProjects/S25-core-course-labs/ansible/roles/web_app/tasks/deploy_app.yml for yandex_instance_1
+
+TASK [web_app : Pull Docker image] ***************************************************************
+ok: [yandex_instance_1]
+
+TASK [web_app : Start container] *****************************************************************
+ok: [yandex_instance_1]
+
+TASK [web_app : Create directory for docker-compose file] ****************************************
+ok: [yandex_instance_1]
+
+TASK [web_app : Deploy docker-compose file] ******************************************************
+ok: [yandex_instance_1]
+
+TASK [web_app : Remove container] ****************************************************************
+skipping: [yandex_instance_1]
+
+TASK [web_app : Remove docker-compose file] ******************************************************
+skipping: [yandex_instance_1]
+
+PLAY RECAP ***************************************************************************************
+yandex_instance_1          : ok=16   changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0  
+```
+
+```txt
+(venv) ➜  ansible git:(Lab-6) ✗ ansible-playbook -i inventory/default_yandex_cloud.yml playbooks/dev/app_go/main.yml
+```
+```txt
+PLAY [Deploy Go app] *****************************************************************************
+
+TASK [Gathering Facts] ***************************************************************************
+[WARNING]: Platform linux on host yandex_instance_1 is using the discovered Python interpreter at
+/usr/bin/python3.10, but future installation of another Python interpreter could change the
+meaning of that path. See https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+ok: [yandex_instance_1]
+
+TASK [docker : Install Docker dependencies] ******************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Add Docker GPG key] ***************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Add Docker repository] ************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Install Docker] *******************************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Ensure Docker service is running and enabled on boot] *****************************
+ok: [yandex_instance_1]
+
+TASK [docker : Download Docker Compose binary] ***************************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Verify Docker Compose installation] ***********************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Display installed Docker Compose version] *****************************************
+ok: [yandex_instance_1] => {
+    "msg": "Docker Compose installed successfully: Docker Compose version v2.33.0"
+}
+
+TASK [docker : Configure Docker daemon.json for security] ****************************************
+ok: [yandex_instance_1]
+
+TASK [docker : Add users to the docker group] ****************************************************
+ok: [yandex_instance_1] => (item=yc-user)
+
+TASK [web_app : Deploy App] **********************************************************************
+included: /Users/netpo4ki/PycharmProjects/S25-core-course-labs/ansible/roles/web_app/tasks/deploy_app.yml for yandex_instance_1
+
+TASK [web_app : Pull Docker image] ***************************************************************
+ok: [yandex_instance_1]
+
+TASK [web_app : Start container] *****************************************************************
+ok: [yandex_instance_1]
+
+TASK [web_app : Create directory for docker-compose file] ****************************************
+ok: [yandex_instance_1]
+
+TASK [web_app : Deploy docker-compose file] ******************************************************
+ok: [yandex_instance_1]
+
+TASK [web_app : Remove container] ****************************************************************
+skipping: [yandex_instance_1]
+
+TASK [web_app : Remove docker-compose file] ******************************************************
+skipping: [yandex_instance_1]
+
+PLAY RECAP ***************************************************************************************
+yandex_instance_1          : ok=16   changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+
+```

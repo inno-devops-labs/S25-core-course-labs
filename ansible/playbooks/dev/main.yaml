@@ -1,5 +1,0 @@
-- name: Deploy Docker and Configure Security
-  hosts: all
-  become: true
-  roles:
-    - role: docker
