@@ -1,0 +1,6 @@
+all:
+  hosts:
+    lab_1:
+      ansible_host: 89.150.34.19
+      ansible_user: suleimankrimeddin
+      ansible_ssh_private_key_file: /root/.ssh/lab
