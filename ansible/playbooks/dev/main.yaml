@@ -1,0 +1,5 @@
+---
+- name: Deploy Docker 
+  become: yes 
+  roles:
+    - docker
