@@ -1,0 +1,6 @@
+- name: Docker VM
+  hosts: all
+  become: true
+
+  roles:
+    - geerlingguy.docker
