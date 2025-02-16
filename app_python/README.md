@@ -67,7 +67,7 @@ This web application displays the current time in Moscow using the Flask framewo
 To build the Docker image for this application, run the following command:
 
    ```bash
-   docker build -f python.Dockerfile -t app-python .
+   docker build -f Dockerfile -t app-python .
    ```
 
 ### Run the Docker Image

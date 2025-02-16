@@ -79,7 +79,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: app_python
-          file: app_python/python.Dockerfile
+          file: app_python/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/app-python:latest
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/app-python:latest
