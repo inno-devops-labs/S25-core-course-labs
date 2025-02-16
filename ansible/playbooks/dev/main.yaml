@@ -1,6 +1,8 @@
-- name: Deploy Docker and Web App
+---
+- name: Deploy Web Application
   hosts: all
-  gather_facts: yes
+  vars:
+    web_app_wipe: false
   roles:
-    - role: docker
     - role: web_app
+      tags: [webapp]
