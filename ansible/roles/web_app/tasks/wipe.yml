@@ -16,5 +16,4 @@
   ansible.builtin.file:
     path: "{{ web_app_dir }}"
     state: absent
-  ignore_errors: true
   when: app_dir_stat.stat.exists  # Only run if the app directory exists
