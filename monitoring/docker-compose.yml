@@ -24,6 +24,11 @@ services:
       resources:
         limits:
           memory: 512M
+    healthcheck:
+      test: [ "CMD", "pgrep", "loki" ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
 
   promtail:
     image: grafana/promtail:latest
@@ -45,7 +50,13 @@ services:
       resources:
         limits:
           memory: 128M
-
+    # No health check, because it is not possible to check status of
+    # promtail inside container https://github.com/grafana/loki/issues/11590
+    healthcheck: # Dumb check
+      test: [ "CMD-SHELL", "exit 0" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
   grafana:
     image: grafana/grafana:latest
@@ -85,6 +96,11 @@ services:
       resources:
         limits:
           memory: 512M
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3000/login" ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
 
   prometheus:
     image: prom/prometheus:latest
@@ -109,6 +125,11 @@ services:
       resources:
         limits:
           memory: 512M
+    healthcheck:
+      test: [ "CMD", "pgrep", "prometheus" ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
 
   app_python:
     image: raleksan/app_python:v0.1
@@ -126,7 +147,7 @@ services:
         limits:
           memory: 128M
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: "curl -f http://localhost:8000 || exit 1"
       interval: 30s
       timeout: 10s
       retries: 3
@@ -147,7 +168,7 @@ services:
         limits:
           memory: 128M
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      test: "curl -f http://localhost:8000 || exit 1"
       interval: 30s
       timeout: 10s
       retries: 3
