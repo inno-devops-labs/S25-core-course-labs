@@ -1,0 +1,7 @@
+*.md
+
+venv/
+
+__pycache__/
+.ruff_cache/
+.pytest_cache
