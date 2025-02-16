@@ -1,9 +1,4 @@
----
-- name: Install Docker compose
-  become: true
-  apt:
-    name:
-      - docker-buildx-plugin
-      - docker-compose-plugin
+- name: Install Docker Compose
+  ansible.builtin.apt:
+    name: "docker-compose-plugin"
     state: present
-    update_cache: true
