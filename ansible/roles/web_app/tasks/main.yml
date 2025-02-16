@@ -21,6 +21,13 @@
   tags:
     - setup
 
+- name: Execute wipe logic if enabled
+  ansible.builtin.include_tasks: '0-wipe.yml'
+  when: web_app_full_wipe | bool
+  tags:
+    - wipe
+
+
 - name: Deploy Docker Compose File
   template:
     src: docker-compose.yml.j2
