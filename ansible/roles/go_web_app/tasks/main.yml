@@ -13,6 +13,11 @@
   tags:
     - docker
 
+- name: Created Directory
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user }}/go"
+    state: directory
+
 - name: Copy Compose Template
   template:
     src: "docker-compose.yml.j2"
