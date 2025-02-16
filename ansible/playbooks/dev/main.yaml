@@ -1,5 +1,5 @@
 - name: Ansible and Docker Deployment
   hosts: all  
-  become: true 
+  become: yes  
   roles:
-    - geerlingguy.docker 
+    - docker 
