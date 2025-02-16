@@ -1,0 +1,5 @@
+all:
+  hosts:
+    158.160.50.36:
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ~/.ssh/id_ed25519
