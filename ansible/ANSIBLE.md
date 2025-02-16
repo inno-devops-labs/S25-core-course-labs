@@ -250,6 +250,9 @@ To verify successful deployment, included the following screenshots:
 
  ![Inventory](inventory.png)
 
+- **Ansible Graph:**
+
+ ![Graph](graph.png)
 ## Conclusion
 
 This setup successfully deploys Docker and a web application using Ansible. All deployment steps and verifications ensure that Docker and the web application are configured correctly for further development.
