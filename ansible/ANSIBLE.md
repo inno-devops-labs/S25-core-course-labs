@@ -354,3 +354,120 @@ The custom Docker role was developed following Ansible best practices:
   ```sh
   ansible-lint ansible
   ```
+
+
+## Web Python App Deployment output
+
+<summary>Output</summary>
+
+<details>
+
+```cmd
+(devops) devopssaleem@saleem-MCLF-XX:~/Documents/DevOps/S25-core-course-labs/ansible$ ansible-playbook  playbooks/dev/app_python/main.yaml 
+
+PLAY [Deploying Web App && Cleanup] ************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************
+ok: [aws_instance]
+
+TASK [web_app : Pull app_python image from DockerHub] ******************************************************************************************
+ok: [aws_instance]
+
+TASK [web_app : Create and start app_python container] *****************************************************************************************
+ok: [aws_instance]
+
+TASK [web_app : Deliver Docker Compose file] ***************************************************************************************************
+changed: [aws_instance]
+
+TASK [web_app : Execute wipe logic if enabled] *************************************************************************************************
+skipping: [aws_instance]
+
+PLAY RECAP *************************************************************************************************************************************
+aws_instance               : ok=4    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+```
+
+</details>
+
+
+<summary>Output</summary>
+
+<details>
+
+```cmd
+(devops) devopssaleem@saleem-MCLF-XX:~/Documents/DevOps/S25-core-course-labs/ansible$ ansible-playbook  playbooks/dev/app_python/main.yaml --tags wipe
+
+PLAY [Deploying Web App && Cleanup] ************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************
+ok: [aws_instance]
+
+TASK [web_app : Stop and remove app_python container] ******************************************************************************************
+changed: [aws_instance]
+
+TASK [web_app : Remove Docker image] ***********************************************************************************************************
+changed: [aws_instance]
+
+TASK [web_app : Remove Docker volumes] *********************************************************************************************************
+ok: [aws_instance]
+
+PLAY RECAP *************************************************************************************************************************************
+aws_instance               : ok=4    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+```
+</details>
+
+
+
+
+<summary>Output</summary>
+
+<details>
+
+```cmd
+ubuntu@ip-172-31-20-88:~$docker images
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+ubuntu@ip-172-31-20-88:~$ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+ubuntu@ip-172-31-20-88:~$
+```
+</details>
+
+
+
+## For the Go APP 
+
+<summary>Output</summary>
+
+<details>
+
+```cmd
+(devops) devopssaleem@saleem-MCLF-XX:~/Documents/DevOps/S25-core-course-labs/ansible$ ansible-playbook  playbooks/dev/app_go/main.yaml 
+
+PLAY [Deploying go App && Cleanup] *************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************
+ok: [aws_instance]
+
+TASK [web_go : Pull app_python image from DockerHub] *******************************************************************************************
+changed: [aws_instance]
+
+TASK [web_go : Create and start app_python container] ******************************************************************************************
+changed: [aws_instance]
+
+TASK [web_go : Deliver Docker Compose file] ****************************************************************************************************
+changed: [aws_instance]
+
+TASK [web_go : Stop and remove app_python container] *******************************************************************************************
+changed: [aws_instance]
+
+TASK [web_go : Remove Docker image] ************************************************************************************************************
+changed: [aws_instance]
+
+TASK [web_go : Remove Docker volumes] **********************************************************************************************************
+ok: [aws_instance]
+
+PLAY RECAP *************************************************************************************************************************************
+aws_instance               : ok=7    changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+```
+</details>
