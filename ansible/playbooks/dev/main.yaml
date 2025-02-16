@@ -1,0 +1,8 @@
+---
+- name: Deploy Web Application
+  hosts: all
+  vars:
+    web_app_wipe: false
+  roles:
+    - role: web_app
+      tags: [webapp]

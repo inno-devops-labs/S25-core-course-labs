@@ -1,0 +1,18 @@
+---
+- name: Create app directory
+  file:
+    path: /opt/web_app
+    state: directory
+  tags: [deploy]
+
+- name: Deploy Docker Compose template
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/web_app/docker-compose.yml
+  tags: [deploy]
+
+- name: Start containers
+  community.docker.docker_compose:
+    project_src: /opt/web_app
+    state: present
+  tags: [deploy]

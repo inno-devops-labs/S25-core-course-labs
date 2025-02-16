@@ -1,0 +1,5 @@
+all:
+  hosts:
+    my_vm:
+      ansible_host: 51.250.10.113
+      ansible_user: ubuntu
