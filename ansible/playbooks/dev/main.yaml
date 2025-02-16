@@ -3,4 +3,4 @@
   hosts: aws_ec2  # Target hosts from the AWS EC2 inventory
   become: true  # Use elevated privileges for all tasks
   roles:
-    - roles/docker  # Include the custom Docker role
+    - roles/web_app  # Include the custom web app role
