@@ -1,0 +1,8 @@
+#cloud-config
+users:
+  - name: misha
+    groups: sudo
+    shell: /bin/bash
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDey7X4RGJfW05uLNtD2iFXckj1FFMkljjcYkdNngiH13AQ1LBZBE2oC9XcIPCx1ywWzsaNfnFzjpEtlJKWeDpcEXJ9X7Of1RzRWcJXw8Pvn4Se7/bP2QkQQEUa2HlUTwjxZojkMCOYWyCjmsOmLrul68Yrn/T05FOvHAgyOM6yZmI035xFGL3ODXssddHiT4li3Qwnd3MYrwkUgXJ0R0MzDSeRAkbNF7datwM1Lwi2C7MMEsahnyDCdJyCtqwn4mEV5bgYI63Yf3EY2Uejml7/PPz5HdlFVENBvmnoSldbwpSjraRWFpUjFOOnrmkRnvh2tf6qiim9YboIQd23o1oqCJZ1y7RjUOOLthlVC+3jvgjaHwqmQ1+CuSkPOqOA0Jsz3u9FLaq0nzTX+2ECfAozLSLlqtJtLkKtDbGPpvoy2MOrXsNt9Pw7gANROx7waunkgs8pQZNUxP77KqBqJQtmVfTz0Bm6wQTbrCdLKiKb1KtKUPQC+msNgk2iSw8uKsk= mishagladyshev@Mishas-MacBook-Air.local
