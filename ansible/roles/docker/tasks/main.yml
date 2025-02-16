@@ -29,6 +29,21 @@
 
 - name: Post-Setup Docker Configuration
   block:
+    - name: Configure Docker security settings
+      copy:
+        content: |
+          {
+            "no-new-privileges": true,
+            "userns-remap": "default",
+            "selinux-enabled": true
+          }
+        dest: /etc/docker/daemon.json
+        owner: root
+        group: root
+        mode: '0644'
+      notify:
+        - Restart Docker
+
     - name: Enable Docker service to start on boot
       systemd:
         name: docker
@@ -41,21 +56,3 @@
         groups:
           - docker
         append: yes
-
-    - name: Configure Docker security settings
-      copy:
-        content: |
-          {
-            "no-new-privileges": true,
-            "userns-remap": "default",
-            "disable-legacy-registry": true,
-            "selinux-enabled": true
-          }
-        dest: /etc/docker/daemon.json
-        owner: root
-        group: root
-        mode: '0644'
-      notify:
-        - Restart Docker
-  tags:
-    - post-setup

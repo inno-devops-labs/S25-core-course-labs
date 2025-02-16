@@ -251,7 +251,6 @@ Unfortunately, after around 4-5 hours of work, I didnt reach the goal of the tas
       {
         "no-new-privileges": true,
         "userns-remap": "default",
-        "disable-legacy-registry": true,
         "selinux-enabled": true
       }
     dest: /etc/docker/daemon.json
@@ -294,4 +293,57 @@ changed: [ya_cloud_vm]
 
 PLAY RECAP *********************************************************************
 ya_cloud_vm                : ok=3    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
+```
+
+## Applycation Deployment (Web App Role)
+```text
+PLAY [Deploy Python Web App] ***************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [ya_cloud_vm]
+
+TASK [docker : Install packages] ***********************************************
+ok: [ya_cloud_vm]
+
+TASK [docker : Add Docker's GPG key] *******************************************
+ok: [ya_cloud_vm]
+
+TASK [docker : Set up the repository] ******************************************
+ok: [ya_cloud_vm]
+
+TASK [docker : include_tasks] **************************************************
+included: /home/ren/labs/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for ya_cloud_vm
+
+TASK [docker : Install Docker] *************************************************
+ok: [ya_cloud_vm]
+
+TASK [docker : include_tasks] **************************************************
+included: /home/ren/labs/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for ya_cloud_vm
+
+TASK [docker : Install Docker Compose] *****************************************
+ok: [ya_cloud_vm]
+
+TASK [docker : Configure Docker security settings] *****************************
+ok: [ya_cloud_vm]
+
+TASK [docker : Enable Docker service to start on boot] *************************
+ok: [ya_cloud_vm]
+
+TASK [docker : Add current user to docker group] *******************************
+ok: [ya_cloud_vm]
+
+TASK [../../../roles/web_app : Pull Docker Image] ******************************
+ok: [ya_cloud_vm]
+
+TASK [../../../roles/web_app : Copy Compose Template] **************************
+ok: [ya_cloud_vm]
+
+TASK [../../../roles/web_app : Deploy Via Compose] *****************************
+changed: [ya_cloud_vm]
+
+TASK [../../../roles/web_app : include_tasks] **********************************
+skipping: [ya_cloud_vm]
+
+PLAY RECAP *********************************************************************
+ya_cloud_vm                : ok=14   changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
 ```
