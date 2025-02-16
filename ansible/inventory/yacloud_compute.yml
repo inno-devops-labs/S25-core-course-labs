@@ -1,0 +1,3 @@
+plugin: yacloud_compute
+yacloud_token: y0__xCMxeGHBBjB3RMg5-PKmRKg3FKpnEks63tWi31l36kOiLASXg
+yacloud_group_label: environment
