@@ -1,5 +1,4 @@
 ---
-
 - name: Install docker-compose plugin.
   package:
     name: "docker-compose-plugin"
