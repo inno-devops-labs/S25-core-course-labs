@@ -5,3 +5,4 @@ __pycache__
 .terraform
 .env
 key.json
+fact_cache
