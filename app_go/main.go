@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"math/rand"
 	"net/http"
 	"time"
@@ -24,6 +25,8 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		rand.Seed(time.Now().UnixNano())
 		randomPrediction := predictions[rand.Intn(len(predictions))]
+
+        fmt.Println(randomPrediction)
 
 		response := map[string]string{"prediction": randomPrediction}
 		w.Header().Set("Content-Type", "application/json")
