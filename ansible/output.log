@@ -1,0 +1,46 @@
+
+PLAY [Ansible and Docker Deployment] *******************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : include_tasks] **************************************************
+included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/setup_debian.yml for ec2-54-147-13-93.compute-1.amazonaws.com
+
+TASK [docker : Ensure apt key is not present in trusted.gpg.d] *****************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Ensure old apt source list is not present in /etc/apt/sources.list.d] ***
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Ensure the repo referencing the previous trusted.gpg.d key is not present] ***
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Ensure old versions of Docker are not installed] ****************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Ensure dependencies are installed] ******************************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Ensure directory exists for /etc/apt/keyrings] ******************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Add Docker apt key] *********************************************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Add Docker repository] ******************************************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : include_tasks] **************************************************
+included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for ec2-54-147-13-93.compute-1.amazonaws.com
+
+TASK [docker : Install Docker packages] ****************************************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : include_tasks] **************************************************
+included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for ec2-54-147-13-93.compute-1.amazonaws.com
+
+TASK [docker : Install docker-compose plugin] **********************************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
+
+TASK [docker : Ensure Docker is started and enabled at boot] *******************
