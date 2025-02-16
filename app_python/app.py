@@ -4,6 +4,7 @@ import pytz
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 from starlette.responses import Response
 
+
 app = FastAPI()
 
 
