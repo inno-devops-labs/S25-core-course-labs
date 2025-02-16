@@ -1,0 +1,6 @@
+ec2:
+  vars:
+    ansible_user: ubuntu
+    ansible_ssh_private_key_file: /home/saleem/Downloads/lab5_key.pem
+  hosts:
+    ec2-18-234-235-90.compute-1.amazonaws.com
