@@ -224,171 +224,74 @@ The playbook was executed to deploy the Docker role. Below are the last 50 lines
 PLAY [Ansible and Docker Deployment] *******************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
 
 TASK [docker : include_tasks] **************************************************
-included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/setup_debian.yml for ec2-98-81-202-119.compute-1.amazonaws.com
+included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/setup_debian.yml for ec2-54-147-13-93.compute-1.amazonaws.com
 
 TASK [docker : Ensure apt key is not present in trusted.gpg.d] *****************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
 
 TASK [docker : Ensure old apt source list is not present in /etc/apt/sources.list.d] ***
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
 
 TASK [docker : Ensure the repo referencing the previous trusted.gpg.d key is not present] ***
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
 
 TASK [docker : Ensure old versions of Docker are not installed] ****************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
 
 TASK [docker : Ensure dependencies are installed] ******************************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
 
 TASK [docker : Ensure directory exists for /etc/apt/keyrings] ******************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
 
 TASK [docker : Add Docker apt key] *********************************************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
 
 TASK [docker : Add Docker repository] ******************************************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
 
 TASK [docker : include_tasks] **************************************************
-included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for ec2-98-81-202-119.compute-1.amazonaws.com
+included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for ec2-54-147-13-93.compute-1.amazonaws.com
 
 TASK [docker : Install Docker packages] ****************************************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
 
 TASK [docker : include_tasks] **************************************************
-included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for ec2-98-81-202-119.compute-1.amazonaws.com
+included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for ec2-54-147-13-93.compute-1.amazonaws.com
 
 TASK [docker : Install docker-compose plugin] **********************************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
-
-TASK [docker : include_tasks] **************************************************
-included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/secure_docker.yml for ec2-98-81-202-119.compute-1.amazonaws.com
-
-TASK [docker : Ensure Docker daemon.json exists with secure configuration] *****
---- before: /etc/docker/daemon.json
-+++ after: /home/mohamad/.ansible/tmp/ansible-local-122305jxfbohog/tmpwx43fc3u
-@@ -1,6 +1,6 @@
- {
--  "userns-remap": "default",
--  "icc": false,
--  "userland-proxy": false,
--  "no-new-privileges": true
-+  "userns-remap": "default",  # Enable user namespace remapping
-+  "icc": false,  # Disable inter-container communication
-+  "userland-proxy": false,  # Disable userland proxy
-+  "no-new-privileges": true  # Prevent containers from gaining new privileges
- }
-
-changed: [ec2-98-81-202-119.compute-1.amazonaws.com]
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
 
 TASK [docker : Ensure Docker is started and enabled at boot] *******************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
 
-RUNNING HANDLER [docker : restart docker] **************************************
-fatal: [ec2-98-81-202-119.compute-1.amazonaws.com]: FAILED! => {"changed": false, "msg": "Unable to restart service docker: Job for docker.service failed because the control process exited with error code.\nSee \"systemctl status docker.service\" and \"journalctl -xeu docker.service\" for details.\n"}
-
-NO MORE HOSTS LEFT *************************************************************
-
-PLAY RECAP *********************************************************************
-ec2-98-81-202-119.compute-1.amazonaws.com : ok=17   changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
-```
-
-### Dry Run Output
-
-A dry run was performed using the `--check` flag to verify changes before applying them:
-
-```sh
-ansible-playbook ansible/playbooks/dev/main.yaml --check
-```
-
-Output:
-
-```sh
-PLAY [Ansible and Docker Deployment] *******************************************
-
-TASK [Gathering Facts] *********************************************************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
-
-TASK [docker : include_tasks] **************************************************
-included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/setup_debian.yml for ec2-98-81-202-119.compute-1.amazonaws.com
-
-TASK [docker : Ensure apt key is not present in trusted.gpg.d] *****************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
-
-TASK [docker : Ensure old apt source list is not present in /etc/apt/sources.list.d] ***
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
-
-TASK [docker : Ensure the repo referencing the previous trusted.gpg.d key is not present] ***
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
-
-TASK [docker : Ensure old versions of Docker are not installed] ****************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
-
-TASK [docker : Ensure dependencies are installed] ******************************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
-
-TASK [docker : Ensure directory exists for /etc/apt/keyrings] ******************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
-
-TASK [docker : Add Docker apt key] *********************************************
-changed: [ec2-98-81-202-119.compute-1.amazonaws.com]
-
-TASK [docker : Add Docker repository] ******************************************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
-
-TASK [docker : include_tasks] **************************************************
-included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for ec2-98-81-202-119.compute-1.amazonaws.com
-
-TASK [docker : Install Docker packages] ****************************************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
-
-TASK [docker : include_tasks] **************************************************
-included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for ec2-98-81-202-119.compute-1.amazonaws.com
-
-TASK [docker : Install docker-compose plugin] **********************************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
-
-TASK [docker : include_tasks] **************************************************
-included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/secure_docker.yml for ec2-98-81-202-119.compute-1.amazonaws.com
-
-TASK [docker : Ensure Docker daemon.json exists with secure configuration] *****
---- before: /etc/docker/daemon.json
-+++ after: /home/mohamad/.ansible/tmp/ansible-local-121389i0j1taac/tmp7pibdpcr
-@@ -1,6 +1,6 @@
- {
--  "userns-remap": "default",
--  "icc": false,
--  "userland-proxy": false,
--  "no-new-privileges": true
-+  "userns-remap": "default",  # Enable user namespace remapping
-+  "icc": false,  # Disable inter-container communication
-+  "userland-proxy": false,  # Disable userland proxy
-+  "no-new-privileges": true  # Prevent containers from gaining new privileges
- }
-
-changed: [ec2-98-81-202-119.compute-1.amazonaws.com]
-
-TASK [docker : Ensure Docker is started and enabled at boot] *******************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
-
-RUNNING HANDLER [docker : restart docker] **************************************
-changed: [ec2-98-81-202-119.compute-1.amazonaws.com]
+TASK [docker : Ensure handlers are notified now to avoid firewall conflicts] ***
 
 TASK [docker : Get docker group info using getent] *****************************
-ok: [ec2-98-81-202-119.compute-1.amazonaws.com]
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
 
 TASK [docker : Check if there are any users to add to the docker group] ********
-skipping: [ec2-98-81-202-119.compute-1.amazonaws.com] => (item=ubuntu) 
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com] => (item=ubuntu)
 
 TASK [docker : include_tasks] **************************************************
-skipping: [ec2-98-81-202-119.compute-1.amazonaws.com]
+included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/docker_users.yml for ec2-54-147-13-93.compute-1.amazonaws.com
+
+TASK [docker : Ensure docker users are added to the docker group] **************
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com] => (item=ubuntu)
+
+TASK [docker : Reset SSH connection to apply user changes] *********************
+
+TASK [docker : include_tasks] **************************************************
+included: /home/mohamad/Desktop/thirdYear/second-semester/S25-core-course-labs/ansible/roles/docker/tasks/secure_docker.yml for ec2-54-147-13-93.compute-1.amazonaws.com
+
+TASK [docker : Ensure Docker daemon.json exists with secure configuration] *****
+ok: [ec2-54-147-13-93.compute-1.amazonaws.com]
 
 PLAY RECAP *********************************************************************
-ec2-98-81-202-119.compute-1.amazonaws.com : ok=19   changed=3    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0    
+ec2-54-147-13-93.compute-1.amazonaws.com : ok=21   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 ```
 
 ---
