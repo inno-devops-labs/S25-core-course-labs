@@ -2,6 +2,7 @@
 
 The `docker` role allows you to deploy Docker on the server.
 It installs Docker and Docker Compose with necessary dependencies included.
+Also it configures Docker security settings (disable root access).
 
 ## Requirements
 
