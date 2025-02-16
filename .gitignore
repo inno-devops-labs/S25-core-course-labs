@@ -3,3 +3,4 @@ key.json
 data.txt
 **/.terraform/*
 *.tfvars.*
+**/.env

@@ -1,0 +1,33 @@
+---
+- name: Install Docker prerequisites
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+
+- name: Add Docker GPG key
+  apt_key:
+    url: "{{ docker_repo_url }}/ubuntu/gpg"
+    state: present
+
+- name: Add Docker repository
+  apt_repository:
+    repo: "deb [arch=amd64] {{ docker_repo_url }}/ubuntu focal stable"
+    state: present
+
+- name: Install Docker
+  apt:
+    name: docker-ce
+    state: latest
+    update_cache: yes
+
+- name: Enable Docker service
+  service:
+    name: docker
+    enabled: yes
+    state: started

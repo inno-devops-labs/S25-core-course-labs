@@ -1,0 +1,25 @@
+---
+- name: Include task to install Docker
+  include_tasks: install_docker.yml
+
+- name: Include task to install Docker Compose
+  include_tasks: install_compose.yml
+
+- name: Add current user to the docker group
+  user:
+    name: "{{ ansible_user | default('ubuntu') }}"
+    groups: docker
+    append: yes
+
+- name: Ensure Docker starts on boot
+  command: systemctl enable docker
+  notify: restart docker
+
+- name: Copy secure Docker daemon configuration
+  copy:
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart docker

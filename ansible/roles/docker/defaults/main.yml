@@ -1,0 +1,48 @@
+# Docker version config
+docker_edition: 'ce'
+docker_packages:
+    - "docker-{{ docker_edition }}"
+    - "docker-{{ docker_edition }}-cli"
+    - "docker-{{ docker_edition }}-rootless-extras"
+docker_packages_state: present
+
+# Docker Service Config
+docker_service_manage: true
+docker_service_state: started
+docker_service_enabled: true
+docker_restart_handler_state: restarted
+
+# Docker Compose Config
+docker_install_compose: false
+docker_compose_version: "v2.32.1"
+docker_compose_arch: "{{ ansible_architecture }}"
+docker_compose_url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-linux-{{ docker_compose_arch }}"
+docker_compose_path: /usr/local/bin/docker-compose
+
+# Docker Compose Installation Options
+docker_add_repo: true
+
+# Docker Repo Url 
+docker_repo_url: https://download.docker.com/linux
+
+docker_apt_release_channel: stable
+docker_apt_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else 'amd64' }}"
+docker_apt_repository: "deb [arch={{ docker_apt_arch }}{{' signed-by=/etc/apt/keyrings/docker.asc' if add_repository_key is not failed}}] {{ docker_repo_url }}/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
+docker_apt_ignore_key_error: True
+docker_apt_gpg_key: "{{ docker_repo_url }}/{{ ansible_distribution | lower }}/gpg"
+docker_apt_filename: "docker"
+
+docker_yum_repo_url: "{{ docker_repo_url }}/{{ (ansible_distribution == 'Fedora') | ternary('fedora','centos') }}/docker-{{ docker_edition }}.repo"
+docker_yum_repo_enable_nightly: '0'
+docker_yum_repo_enable_test: '0'
+docker_yum_gpg_key: "{{ docker_repo_url }}/centos/gpg"
+
+# Users to be added to docker group
+docker_users: ["{{ ansible_user_id }}"]
+
+# Docker Deamon configuration
+docker_daemon_options:
+  log-driver: "json-file"
+  log-opts:
+    max-size: "100m"
+  storage-driver: "overlay2"
