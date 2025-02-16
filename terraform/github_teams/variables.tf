@@ -62,3 +62,43 @@ variable "required_approving_review_count" {
   type    = number
   default = 1
 }
+
+variable "team1_permission" {
+  type    = string
+  default = "push"
+}
+
+variable "team2_permission" {
+  type    = string
+  default = "triage"
+}
+
+variable "team1_name" {
+  type    = string
+  default = "Developers"
+}
+
+variable "team2_name" {
+  type    = string
+  default = "Testers"
+}
+
+variable "team1_desc" {
+  type    = string
+  default = "Team of developers"
+}
+
+variable "team2_desc" {
+  type    = string
+  default = "Team of testers"
+}
+
+variable "team1_privacy" {
+  type    = string
+  default = "closed"
+}
+
+variable "team2_privacy" {
+  type    = string
+  default = "closed"
+}

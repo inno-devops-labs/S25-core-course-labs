@@ -37,3 +37,28 @@ resource "github_branch_protection" "default_protection" {
     required_approving_review_count = var.required_approving_review_count
   }
 }
+
+
+resource "github_team_repository" "team1_access" {
+  team_id    = github_team.team1.id
+  repository = github_repository.repo.name
+  permission = var.team1_permission
+}
+
+resource "github_team_repository" "team2_access" {
+  team_id    = github_team.team2.id
+  repository = github_repository.repo.name
+  permission = var.team2_permission
+}
+
+resource "github_team" "team1" {
+  name        = var.team1_name
+  description = var.team1_desc
+  privacy     = var.team1_privacy
+}
+
+resource "github_team" "team2" {
+  name        = var.team2_name
+  description = var.team2_desc
+  privacy     = var.team2_privacy
+}
