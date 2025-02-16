@@ -1,0 +1,10 @@
+# app_python/.dockerignore
+venv/
+__pycache__/
+*.pyc
+.git/
+.gitignore
+Dockerfile
+distroless.Dockerfile
+DOCKER.md
+PYTHON.md

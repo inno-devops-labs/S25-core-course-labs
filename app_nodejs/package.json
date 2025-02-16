@@ -1,0 +1,21 @@
+{
+    "name": "app_nodejs",
+    "version": "1.0.0",
+    "description": "Node.js web app",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "test": "mocha"
+    },
+    "keywords": [],
+    "author": "Mohamed Aymen Daassi",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.18.2"
+    },
+    "devDependencies": {
+        "chai": "^5.1.2",
+        "mocha": "^11.1.0",
+        "supertest": "^7.0.0"
+    }
+}

@@ -1,0 +1,14 @@
+# Python cache/eggs
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual Environment
+venv/
+.env/
+
+# OS files
+.DS_Store
+
+# General config
+*.log
