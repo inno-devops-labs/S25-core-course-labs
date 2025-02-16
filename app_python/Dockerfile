@@ -13,4 +13,6 @@ USER service
 
 EXPOSE 8080
 
+ENV PYTHONPATH=/
+
 CMD [ "python3", "main.py" ]
