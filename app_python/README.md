@@ -1,10 +1,20 @@
 # Python Web Application
 
+[![CI Pipeline for Python Web Appplication](https://github.com/MagicWinnie/S25-core-course-labs/actions/workflows/app_python.yml/badge.svg)](https://github.com/MagicWinnie/S25-core-course-labs/actions/workflows/app_python.yml)
+
 ## 📘 Overview
 
 This is a simple web application that is built using Python and FastAPI to show the current time in Moscow (UTC+3)!
 
 ![Main page of the application](media/overview.png)
+
+---
+
+## 🔄 CI/CD
+
+This project uses GitHub Actions for CI/CD to automate testing, security scanning, and Docker image building. The workflow is triggered on pull requests to `master` branch when changes occur in the `app_python/` directory.
+
+You can view workflow runs [here](https://github.com/MagicWinnie/S25-core-course-labs/actions/workflows/app_python.yml).
 
 ---
 
@@ -144,3 +154,11 @@ Containerized version of the web application:
    ```bash
    make check
    ```
+
+### Unit Tests
+
+Pytest is used for testing. Tests can be run using `Makefile`:
+
+```bash
+make test
+```

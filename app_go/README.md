@@ -1,10 +1,20 @@
 # Go Web Application
 
+[![CI Pipeline for Go Web Appplication](https://github.com/MagicWinnie/S25-core-course-labs/actions/workflows/app_go.yml/badge.svg)](https://github.com/MagicWinnie/S25-core-course-labs/actions/workflows/app_go.yml)
+
 ## 📘 Overview
 
 This is a simple web application that is built using Go and Gin to calculate person's age by their date of birth!
 
 ![Main page of the application](media/overview.png)
+
+---
+
+## 🔄 CI/CD
+
+This project uses GitHub Actions for CI/CD to automate testing, security scanning, and Docker image building. The workflow is triggered on pull requests to `master` branch when changes occur in the `app_go/` directory.
+
+You can view workflow runs [here](https://github.com/MagicWinnie/S25-core-course-labs/actions/workflows/app_go.yml).
 
 ---
 
@@ -139,3 +149,11 @@ Containerized version of the web application:
     ```bash
     make build
     ```
+
+### Unit Tests
+
+Package `testing` is used for testing. Tests can be run using `Makefile`:
+
+```bash
+make test
+```

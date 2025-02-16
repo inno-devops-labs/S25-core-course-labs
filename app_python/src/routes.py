@@ -17,9 +17,9 @@ async def index(request: Request):
     formatted_time = curr_time.strftime(settings.DATETIME_FORMAT)
 
     return templates.TemplateResponse(
+        request,
         "index.html",
         {
-            "request": request,
             "timezone": settings.TIMEZONE,
             "formatted_time": formatted_time,
         },
