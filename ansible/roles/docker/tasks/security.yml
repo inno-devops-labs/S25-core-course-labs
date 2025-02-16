@@ -15,7 +15,7 @@
     owner: root
     group: root
     mode: "0644"
-  notify: Restart Docker
+  notify: restart docker
 
 - name: Activate Docker services
   systemd:
