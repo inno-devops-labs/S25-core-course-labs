@@ -20,17 +20,17 @@ WORKDIR /app_python
 # Non-root user is already set in the distroless image
 
 # Copy the installed dependencies from the builder stage
-COPY --chown=nonroot:nonroot --from=builder /python_app/lib /python_app/lib
+COPY --chown=nonroot:nonroot --from=builder /python_app/lib /usr/local/lib/python3.12/site-packages
 
 # Copy the app code from the builder stage
-COPY --chown=nonroot:nonroot --from=builder /app_python/app.py .
+COPY --chown=nonroot:nonroot app.py .
+
+# Set up required for Prometheus environment variables
+ENV PYTHONPATH=/usr/local/lib/python3.12/site-packages
+ENV PROMETHEUS_MULTIPROC_DIR=/tmp
 
 # Set the port for the app
 EXPOSE 5000
 
-# Define environment variable
-ENV PYTHONPATH=/python_app/lib
-ENV FLASK_APP=app.py
-
 # Run the application
-ENTRYPOINT ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
+ENTRYPOINT ["python3", "app.py"]
