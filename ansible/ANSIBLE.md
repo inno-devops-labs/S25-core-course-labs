@@ -87,7 +87,6 @@ nvy@nvy ansible]$ ansible-inventory -i inventory/default_yandex.yml --graph
 }
 ```
 
-
 # Best Practices
 
 - variables: configs organization;
