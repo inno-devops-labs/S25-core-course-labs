@@ -1,19 +1,29 @@
 ---
-- name: Pull Docker image
-  community.docker.docker_image:
-    name: "{{ docker_image_name }}"
-    tag: "{{ docker_image_tag }}"
-    source: pull
-    force_source: yes
-  register: pulled_image
+- name: Docker Image Management
+  block:
+    - name: Pull Docker image
+      community.docker.docker_image:
+        name: "{{ docker_image_name }}"
+        tag: "{{ docker_image_tag }}"
+        source: pull
+        force_source: yes
+      register: pulled_image
+  tags:
+    - docker-image
+    - deploy
 
-- name: Create and start Docker container
-  community.docker.docker_container:
-    name: "{{ docker_container_name }}"
-    image: "{{ docker_image_name }}:{{ docker_image_tag }}"
-    state: started
-    restart_policy: "{{ restart_policy }}"
-    ports: "{{ container_ports }}"
-    env: "{{ container_env }}"
-    memory: "{{ memory_limit }}"
-    cpus: "{{ cpu_limit }}" 
+- name: Container Management
+  block:
+    - name: Create and start Docker container
+      community.docker.docker_container:
+        name: "{{ docker_container_name }}"
+        image: "{{ docker_image_name }}:{{ docker_image_tag }}"
+        state: started
+        restart_policy: "{{ restart_policy }}"
+        ports: "{{ container_ports }}"
+        env: "{{ container_env }}"
+        memory: "{{ memory_limit }}"
+        cpus: "{{ cpu_limit }}"
+  tags:
+    - container
+    - deploy 

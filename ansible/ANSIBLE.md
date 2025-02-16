@@ -81,8 +81,44 @@ Different tags can be used to run specific parts of the playbooks:
 
 ```bash
 # Run only Docker installation
-ansible-playbook playbooks/dev/main.yaml --tags docker
+ansible-playbook -i inventory/default_aws_ec2.yml playbooks/dev/main.yaml --tags docker
+
+# Run only Docker image management
+ansible-playbook -i inventory/default_aws_ec2.yml playbooks/dev/main.yaml --tags docker-image
+
+# Run only container management
+ansible-playbook -i inventory/default_aws_ec2.yml playbooks/dev/main.yaml --tags container
+
+# Run full deployment
+ansible-playbook -i inventory/default_aws_ec2.yml playbooks/dev/main.yaml --tags deploy
 ```
+
+### Role Dependencies
+
+The web_app role has been configured with the following dependencies:
+
+- `docker`: Required for Docker engine and Docker Compose functionality
+
+These dependencies are automatically handled through the role's meta/main.yml configuration.
+
+### Task Organization
+
+Tasks within roles are organized using logical blocks for better maintainability and clarity:
+
+- Docker Image Management Block
+  - Pull Docker image
+  - Tags: docker-image, deploy
+
+- Container Management Block
+  - Create and start container
+  - Configure container settings
+  - Tags: container, deploy
+
+This block-based organization allows for:
+- Better error handling
+- Logical grouping of related tasks
+- Easier maintenance and debugging
+- Selective execution using tags
 
 ## Best Practices
 
