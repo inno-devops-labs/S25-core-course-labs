@@ -1,0 +1,37 @@
+- name: Setup Docker Environment
+  block:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Start Docker Service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+  tags: setup
+
+- name: Pull Docker image
+  docker_image:
+    name: "{{ docker_image }}"
+    source: pull
+  tags: docker
+
+- name: Deploy Docker Compose file
+  template:
+    src: docker-compose.yml.j2
+    dest: /home/venom/docker-compose.yml
+
+- name: Start Docker container
+  docker_container:
+    name: web_app
+    image: "{{ docker_image }}"
+    ports:
+      - "{{ app_port }}:5000"
+    state: started
+  tags: docker
+
+- name: Wipe Docker environment
+  include_tasks: 0-wipe.yml
+  tags: wipe

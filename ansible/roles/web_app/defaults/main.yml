@@ -1,0 +1,3 @@
+docker_image: "leha0704/morozov_devops_webapp"
+app_port: "5000"
+web_app_full_wipe: false
