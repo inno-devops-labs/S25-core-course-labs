@@ -4,10 +4,10 @@
     dest: /etc/docker/daemon.json
     content: |
       {
-        "userns-remap": "default",  # Enable user namespace remapping
-        "icc": false,  # Disable inter-container communication
-        "userland-proxy": false,  # Disable userland proxy
-        "no-new-privileges": true  # Prevent containers from gaining new privileges
+        "userns-remap": "default",  
+        "icc": false,  
+        "userland-proxy": false,  
+        "no-new-privileges": true  
       }
     owner: root
     group: root

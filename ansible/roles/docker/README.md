@@ -6,7 +6,7 @@ This role installs and configures Docker and Docker Compose on a target machine.
 
 ## Requirements
 
-- **Ansible**: 2.9+
+- **Ansible**: 2.17.8
 - **Operating System**: Ubuntu 22.04 (or other Debian-based distributions)
 - **Python**: 3.x
 
