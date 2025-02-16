@@ -3,6 +3,7 @@ networks:
 
 volumes:
   loki_data:
+  prometheus_data:
 
 services:
   loki:
@@ -56,6 +57,21 @@ services:
         /run.sh
     networks:
       - monitoring
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - monitoring
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    depends_on:
+      - loki
 
   app_python:
     image: raleksan/app_python:v0.1
