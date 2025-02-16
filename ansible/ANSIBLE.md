@@ -554,3 +554,86 @@ This task validates the JSON syntax of the daemon.json file to ensure it is corr
 - **Security**: The `userns-remap` setting improves security by remapping user namespaces, reducing the risk of privilege escalation.
 - **Validation**: Ensures the `daemon.json` file is syntactically correct, preventing Docker from failing due to configuration errors.
 - **Idempotency**: The tasks are designed to be idempotent, meaning they can be run multiple times without causing unintended changes.
+
+
+# Additional output
+
+Deployment default app using ansible
+
+```commandline
+ ansible-playbook playbooks/dev/main.yaml
+```
+Output:
+```commandline
+PLAY [Deploy Docker on Yandex Cloud VM] *********************************************************************************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************************************************************************************
+[WARNING]: Platform linux on host yandex_vm_1 is using the discovered Python interpreter at /usr/bin/python3.10, but future installation of another Python interpreter could change the meaning of that
+path. See https://docs.ansible.com/ansible-core/2.17/reference_appendices/interpreter_discovery.html for more information.
+ok: [yandex_vm_1]
+
+TASK [docker : include_tasks] *******************************************************************************************************************************************************************************
+included: /home/nikolai/Documents/DevOpsLabs/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for yandex_vm_1
+
+TASK [docker : Update apt cache] ****************************************************************************************************************************************************************************
+changed: [yandex_vm_1]
+
+TASK [docker : Install dependencies for Docker (Ubuntu)] ****************************************************************************************************************************************************
+ok: [yandex_vm_1]
+
+TASK [docker : Add Docker GPG key for Ubuntu] ***************************************************************************************************************************************************************
+ok: [yandex_vm_1]
+
+TASK [docker : Add Docker repository for Ubuntu] ************************************************************************************************************************************************************
+ok: [yandex_vm_1]
+
+TASK [docker : Install Docker CE] ***************************************************************************************************************************************************************************
+ok: [yandex_vm_1]
+
+TASK [docker : include_tasks] *******************************************************************************************************************************************************************************
+included: /home/nikolai/Documents/DevOpsLabs/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for yandex_vm_1
+
+TASK [docker : Download Docker Compose] *********************************************************************************************************************************************************************
+ok: [yandex_vm_1]
+
+TASK [docker : include_tasks] *******************************************************************************************************************************************************************************
+included: /home/nikolai/Documents/DevOpsLabs/S25-core-course-labs/ansible/roles/docker/tasks/manager.yml for yandex_vm_1
+
+TASK [docker : Ensure Docker service is enabled and started on boot] ****************************************************************************************************************************************
+ok: [yandex_vm_1]
+
+TASK [docker : Add current user to docker group] ************************************************************************************************************************************************************
+ok: [yandex_vm_1]
+
+TASK [docker : include_tasks] *******************************************************************************************************************************************************************************
+included: /home/nikolai/Documents/DevOpsLabs/S25-core-course-labs/ansible/roles/docker/tasks/secure.yml for yandex_vm_1
+
+TASK [docker : Copy secure Docker daemon configuration] *****************************************************************************************************************************************************
+ok: [yandex_vm_1]
+
+TASK [docker : Validate Docker daemon configuration JSON syntax] ********************************************************************************************************************************************
+ok: [yandex_vm_1]
+
+TASK [web_app : Stop and remove Docker Compose deployment] **************************************************************************************************************************************************
+changed: [yandex_vm_1]
+
+TASK [web_app : Remove deployment directory and all its contents] *******************************************************************************************************************************************
+changed: [yandex_vm_1]
+
+TASK [web_app : Create deployment directory for web_app] ****************************************************************************************************************************************************
+changed: [yandex_vm_1]
+
+TASK [web_app : Render Docker Compose template for the application] *****************************************************************************************************************************************
+changed: [yandex_vm_1]
+
+TASK [web_app : Pull Docker image for the application] ******************************************************************************************************************************************************
+ok: [yandex_vm_1]
+
+TASK [web_app : Start the application container using Docker Compose] ***************************************************************************************************************************************
+changed: [yandex_vm_1]
+
+PLAY RECAP **************************************************************************************************************************************************************************************************
+yandex_vm_1                : ok=21   changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+```
