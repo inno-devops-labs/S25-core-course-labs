@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  web:
+    image: nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - /var/www/html:/usr/share/nginx/html
