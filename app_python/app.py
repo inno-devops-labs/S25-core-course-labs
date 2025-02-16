@@ -1,10 +1,11 @@
 from datetime import datetime
 from flask import Flask, render_template
+from prometheus_flask_exporter import PrometheusMetrics
 import pytz
 
 
-# Flask client of the web application
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
 
 
 @app.route('/')
