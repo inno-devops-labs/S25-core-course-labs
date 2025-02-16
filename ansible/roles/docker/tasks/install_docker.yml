@@ -1,0 +1,80 @@
+---
+- name: Clean apt cache
+  command: apt-get clean
+  changed_when: false
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  register: apt_update_result
+  until: apt_update_result is success
+  retries: 5
+  delay: 2
+
+- name: Install required packages
+  apt:
+    name: "{{ docker_required_packages }}"
+    state: present
+    update_cache: no  # We already updated cache in previous task
+  register: pkg_result
+  until: pkg_result is success
+  retries: 5
+  delay: 2
+
+- name: Create Docker GPG directory
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Download Docker GPG key
+  get_url:
+    url: "{{ docker_apt_gpg_key }}"
+    dest: /etc/apt/keyrings/docker.gpg
+    mode: '0644'
+    force: yes
+
+- name: Add Docker repository
+  apt_repository:
+    repo: "{{ docker_apt_repository }}"
+    state: present
+    update_cache: no
+    filename: docker
+  register: repo_result
+  until: repo_result is not failed
+  retries: 2
+  delay: 5
+
+- name: Install Docker packages
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: present
+    update_cache: no
+  register: docker_result
+  until: docker_result is not failed
+  retries: 0
+  delay: 5
+
+- name: Ensure Docker service is enabled and started
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Add users to docker group
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: yes
+  with_items: "{{ docker_users }}"
+  when: docker_users | length > 0
+
+- name: Add current user to docker group
+  user:
+    name: "{{ ansible_user_id }}"
+    groups: docker
+    append: yes 
