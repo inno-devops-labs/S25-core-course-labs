@@ -1,5 +1,5 @@
-- hosts: all
+- name: Setup Docker Environment
+  hosts: all
   become: true
   roles:
     - docker
-    - web_app
