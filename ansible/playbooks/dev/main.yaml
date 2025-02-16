@@ -1,5 +1,0 @@
-- name: Deploy Docker using the custom role
-  hosts: all
-  become: true
-  roles:
-    - docker
