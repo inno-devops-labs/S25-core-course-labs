@@ -1,0 +1,7 @@
+all:
+  hosts:
+    cloud_vm:
+      ansible_host: 158.160.152.199
+      ansible_user: vm-user
+      ansible_ssh_private_key_file: /home/sg/.ssh/id_ed25519
+      ansible_python_interpreter: /usr/bin/python3

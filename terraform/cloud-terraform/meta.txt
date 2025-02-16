@@ -1,0 +1,8 @@
+#cloud-config
+users:
+  - name: galyusha
+    groups: sudo
+    shell: /bin/bash
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    ssh_authorized_keys:
+      - nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoC5m54tC1qA3MkcPYc5w\nPjMXk9tVV0a0I1U1OGFLjetRmGFCPMaH33VKt4lYKPy6m4/kMewDD//PpAXgivin\nPY15TouTL5gBOy+3sFkSzUfKw+YKvh8hJMXc96inRxgbOUkeSPUeSpcbMmkS4MnC\nnK5EEoAI3Jdy4zMkmb4Lbz9cMsuM01ZSqxB4phmC2FscJ8iDn+zT+IRr8XoXgA3g\n6hquIcHpsQQrbeIWqAHjCrfGreGSmOFXMiEQHijwJ/VDOlMvks6afYIkhczP1ekx\nr5Vf4WVtT1OqGHxXXrFKDZ2p8mRqGJ7+MMM4Xzvzn3cGLa1yFPteOxYVwjRMb8Sj\n8QIDAQAB\n
