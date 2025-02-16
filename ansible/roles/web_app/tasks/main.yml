@@ -1,0 +1,29 @@
+- include_tasks: 0-wipe.yml
+  tags: [wipe]
+
+- name: Ensure application directory exists
+  become: true
+  ansible.builtin.file:
+    path: /opt/web_app
+    state: directory
+    mode: '0755'
+  tags: [deploy]
+
+- name: Deploy Docker Compose template
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/web_app/docker-compose.yml
+  tags: [deploy]
+
+- name: Start application services
+  block:
+    - name: Pull Docker images
+      command:
+        chdir: /opt/web_app
+        cmd: docker compose pull
+      
+    - name: Start containers
+      command:
+        chdir: /opt/web_app
+        cmd: docker compose up -d
+  tags: [deploy]
