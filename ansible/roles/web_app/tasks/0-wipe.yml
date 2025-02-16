@@ -7,5 +7,5 @@
 
     - name: Remove Image
       docker_image:
-        name: "{{ docker_image }}:{{ image:tag }}"
+        name: "{{ docker_image }}:{{ image_tag }}"
         state: absent
