@@ -1,0 +1,7 @@
+ec2:
+  vars:
+    ansible_user: admin
+    ansible_ssh_private_key_file: ~/.ssh/id_rsa
+  hosts:
+    51.250.34.70
+
