@@ -19,10 +19,10 @@ scrape_configs:
     static_configs:
       - targets: ["grafana:3000"]
 
-  # - job_name: "app_python"
-  #   static_configs:
-  #     - targets: ["app_python:8001"]
+  - job_name: "app_python"
+    static_configs:
+      - targets: ["app_python:8000"]
 
   # - job_name: "app_rust"
   #   static_configs:
-  #     - targets: ["app_rust:8002"]
+  #     - targets: ["app_rust:8000"]

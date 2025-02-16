@@ -6,9 +6,21 @@ Author: Aleksandr Ryabov (a.ryabov@innoplis.university)
 import pytz
 from os import environ
 from datetime import datetime
-from flask import Flask, render_template
+from flask import Flask, render_template, Response
+from prometheus_client import generate_latest, REGISTRY, Counter, Gauge
 
+# ========== Metrics Setup ==========
+REQUEST_COUNTER = Counter(
+    "app_http_requests_total",
+    "Total HTTP Requests",
+    ["method", "endpoint", "status"],
+)
 
+HEALTH_GAUGE = Gauge(
+    "app_health_status", "Application Health Status (1=healthy, 0=unhealthy)"
+)
+
+# ========== Application Setup ==========
 HOST = environ.get("HOST", "0.0.0.0")
 PORT = int(environ.get("PORT", "8000"))
 
@@ -18,8 +30,6 @@ def create_flask_app() -> Flask:
     Creates an application and configures routes
     """
     app = Flask(__name__)
-
-    # Set nice date and time format
     time_format = "%H:%M:%S %d.%m.%Y"
 
     @app.route("/")
@@ -33,6 +43,17 @@ def create_flask_app() -> Flask:
 
         # Pass the time to the HTML template
         return render_template("moscow_time.html", moscow_time=moscow_time)
+
+    @app.route("/metrics")
+    def metrics():
+        return Response(
+            generate_latest(REGISTRY), 200, {"Content-Type": "text/plain"}
+        )
+
+    @app.route("/health")
+    def health_check():
+        HEALTH_GAUGE.set(1)
+        return "OK", 200
 
     return app
 
