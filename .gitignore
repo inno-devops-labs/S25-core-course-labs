@@ -1,3 +1,12 @@
 __pycache__/
 *.idea
 .coverage
+terraform/.terraform
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate*
+terraform/Github/.terraform
+terraform/Github/.terraform.lock.hcl
+terraform/Github/terraform.tfstate*
+terraform/YandexCloud/.terraform
+terraform/YandexCloud/.terraform.lock.hcl
+terraform/YandexCloud/terraform.tfstate*
