@@ -44,7 +44,7 @@ This role performs the following tasks:
 
 This role is used in three different playbooks:
 
-### **1️⃣ `main.yaml` (Docker Setup Only)**
+### **`main.yaml` (Docker Setup Only)**
 
 ```yaml
 - name: Setup Docker Environment
@@ -54,7 +54,7 @@ This role is used in three different playbooks:
     - docker
 ```
 
-### **2️⃣ `app_python/main.yaml` (Deploys Python + Docker)**
+### **`app_python/main.yaml` (Deploys Python + Docker)**
 
 ```yaml
 - name: Setup Docker and Deploy Python Application
@@ -67,7 +67,7 @@ This role is used in three different playbooks:
     app_port: "{{ app_python_port }}"
 ```
 
-### **3️⃣ `app_node/main.yaml` (Deploys Node.js + Docker)**
+### **`app_node/main.yaml` (Deploys Node.js + Docker)**
 
 ```yaml
 - name: Deploy Node.js Application
@@ -111,8 +111,4 @@ docker ps
 
 Expected Output:
 
-```sh
-CONTAINER ID   IMAGE                  PORTS                   STATUS
-4f0b6c5fb044   em1999jay/python-app  0.0.0.0:5000->5000/tcp   Up 5 minutes
-7g9a3x1cb072   em1999jay/moscow-time-app-node:v1  0.0.0.0:7000->7000/tcp   Up 5 minutes
-```
+![bothrunning](/ansible/Screenshots/bothrunning.png)
