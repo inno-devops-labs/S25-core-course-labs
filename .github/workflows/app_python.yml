@@ -34,7 +34,7 @@ jobs:
       - name: Run Unit Tests
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: python -m unittest discover -s app_python/tests_python -p "test_*.py"
+        run: python -m unittest discover -s app_python/tests_python -p "*.py"
 
   docker-build-and-push:
     name: Build and Push Docker Image
