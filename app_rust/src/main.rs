@@ -3,15 +3,19 @@
 
 use rocket::response::content;
 use chrono::{Utc, TimeZone, FixedOffset};
-use prometheus::{Registry, Counter, TextEncoder, Encoder, register_counter};
+use prometheus::{Registry, Counter, TextEncoder, Encoder};
 
-// Create metrics registry
+// Create metrics registry and register metrics
 lazy_static! {
     static ref REGISTRY: Registry = Registry::new();
-    static ref REQUEST_COUNTER: Counter = register_counter!(
-        "app_http_requests_total",
-        "Total HTTP Requests"
-    ).expect("Failed to create counter");
+    static ref REQUEST_COUNTER: Counter = {
+        let counter = Counter::new(
+            "app_http_requests_total",
+            "Total HTTP Requests"
+        ).expect("Failed to create counter");
+        REGISTRY.register(Box::new(counter.clone())).expect("Failed to register counter");
+        counter
+    };
 }
 
 #[get("/")]
@@ -42,9 +46,6 @@ fn health() -> &'static str {
 
 #[launch]
 fn rocket() -> _ {
-    // Register metrics with the registry
-    REGISTRY.register(Box::new(REQUEST_COUNTER.clone())).unwrap();
-    
     rocket::build()
         .mount("/", routes![index, metrics, health])
 }

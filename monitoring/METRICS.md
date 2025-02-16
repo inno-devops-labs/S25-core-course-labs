@@ -109,7 +109,7 @@ I extended configuration of all services, here is example of this:
   # ...
   # Universal healthcheck for `app_python` or `app_rust`
     healthcheck:
-      test: "curl -f http://localhost:8000 || exit 1"
+      test: "curl -f http://localhost:8000/health"
       interval: 30s
       timeout: 10s
       retries: 3
