@@ -1,0 +1,10 @@
+- name: Download Docker Compose
+  get_url:
+    url: "{{ docker_compose_url }}"
+    dest: "/usr/local/bin/docker-compose"
+    mode: "0755"
+- name: Verify Docker Compose installation
+  command: docker-compose --version
+  register: docker_compose_version_output
+  changed_when: false
+  failed_when: docker_compose_version_output.rc != 0
