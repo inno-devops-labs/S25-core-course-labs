@@ -1,5 +1,5 @@
-- name: Install Docker on Cloud VM
+- name: Deploy Docker with Custom Role
   hosts: all
   become: true
   roles:
-    - geerlingguy.docker
+    - docker
