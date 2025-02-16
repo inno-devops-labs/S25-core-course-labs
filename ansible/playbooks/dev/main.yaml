@@ -1,0 +1,6 @@
+- name: Install and Configure Docker
+  hosts: all
+  become: true
+  roles:
+    - roles/docker
+    - roles/web_app

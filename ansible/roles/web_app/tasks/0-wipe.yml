@@ -1,0 +1,14 @@
+---
+- name: Docker installation and configuration
+  block:
+  - docker_container:
+      name: my_container
+      state: absent
+
+  - docker_image:
+      name: "magel0n/moscowtimeimagepython:latest"
+      state: absent
+      force_absent: yes
+
+  tags:
+  - wipe
