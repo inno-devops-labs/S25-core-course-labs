@@ -1,0 +1,18 @@
+---
+- name: restart web app
+  community.docker.docker_compose:
+    project_src: "{{ app_deploy_path }}"
+    files:
+      - "{{ docker_compose_file_path | basename }}"
+    state: present
+    restarted: true
+  when: docker_compose_file_path is defined
+
+- name: rebuild web app
+  community.docker.docker_compose:
+    project_src: "{{ app_deploy_path }}"
+    files:
+      - "{{ docker_compose_file_path | basename }}"
+    build: true
+    state: present
+  when: docker_compose_file_path is defined 

@@ -1,0 +1,47 @@
+---
+- name: Ensure application directory exists
+  file:
+    path: "{{ app_deploy_path }}"
+    state: directory
+    mode: '0755'
+
+- name: Copy Docker Compose template
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ docker_compose_file_path }}"
+    mode: '0644'
+  notify: restart web app
+
+- name: Create .env file if environment variables are defined
+  template:
+    src: env.j2
+    dest: "{{ app_deploy_path }}/.env"
+    mode: '0600'
+  when: app_env_vars | length > 0
+  notify: restart web app
+
+- name: Pull Docker images
+  community.docker.docker_compose:
+    project_src: "{{ app_deploy_path }}"
+    files:
+      - "{{ docker_compose_file_path | basename }}"
+    pull: true
+    state: present
+
+- name: Deploy application with Docker Compose
+  community.docker.docker_compose:
+    project_src: "{{ app_deploy_path }}"
+    files:
+      - "{{ docker_compose_file_path | basename }}"
+    state: present
+
+- name: Wait for application to be ready
+  uri:
+    url: "http://localhost:{{ app_port }}{{ health_check_endpoint }}"
+    method: GET
+    status_code: 200
+  register: health_check
+  until: health_check.status == 200
+  retries: "{{ health_check_timeout }}"
+  delay: 1
+  when: health_check_endpoint is defined 

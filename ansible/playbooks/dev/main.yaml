@@ -1,0 +1,8 @@
+---
+- name: Deploy Docker to EC2 instances
+  hosts: all
+  become: true
+  
+  roles:
+    - role: docker
+      tags: ['docker'] 
