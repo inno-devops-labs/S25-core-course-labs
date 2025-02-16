@@ -9,6 +9,3 @@
     docker_container:
       name: "{{ docker_container_name }}"
       state: absent
-
-  tags:
-  - stop-delete-container
