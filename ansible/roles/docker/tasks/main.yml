@@ -1,0 +1,3 @@
+---
+- include_tasks: install_docker.yml
+- include_tasks: install_compose.yml
