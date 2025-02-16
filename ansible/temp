@@ -1,0 +1,53 @@
+
+PLAY [Install and Configure Docker] ********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [yandex_instance]
+
+TASK [docker : include_tasks] **************************************************
+included: /home/Matvey/DevOps/ansible/roles/docker/tasks/install_docker.yml for yandex_instance
+
+TASK [docker : Install required dependencies] **********************************
+ok: [yandex_instance]
+
+TASK [docker : Add Docker GPG key] *********************************************
+ok: [yandex_instance]
+
+TASK [docker : Add Docker repository] ******************************************
+ok: [yandex_instance]
+
+TASK [docker : Install Docker engine] ******************************************
+ok: [yandex_instance]
+
+TASK [docker : include_tasks] **************************************************
+included: /home/Matvey/DevOps/ansible/roles/docker/tasks/install_compose.yml for yandex_instance
+
+TASK [docker : Download Docker Compose] ****************************************
+ok: [yandex_instance]
+
+TASK [docker : Ensure Docker service starts on boot] ***************************
+ok: [yandex_instance]
+
+TASK [docker : Add current user to Docker group] *******************************
+ok: [yandex_instance]
+
+TASK [web_app : Pull the Docker Image from Docker Hub] *************************
+changed: [yandex_instance]
+
+TASK [web_app : Stop and Remove Existing Container (if running)] ***************
+changed: [yandex_instance]
+
+TASK [web_app : Run the Docker Container] **************************************
+changed: [yandex_instance]
+
+TASK [web_app : Verify Running Containers] *************************************
+changed: [yandex_instance]
+
+TASK [web_app : Show Running Containers] ***************************************
+ok: [yandex_instance] => {
+    "running_containers.stdout": "CONTAINER ID   IMAGE                         COMMAND           CREATED        STATUS        PORTS                                       NAMES\n29be825e1bcc   matveyplat/flask-app:latest   \"python app.py\"   1 second ago   Up 1 second   0.0.0.0:5000->5000/tcp, :::5000->5000/tcp   web_app"
+}
+
+PLAY RECAP *********************************************************************
+yandex_instance            : ok=15   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
