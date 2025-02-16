@@ -1,0 +1,21 @@
+{
+  "name": "app_nodejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2",
+    "moment-timezone": "^0.5.46"
+  },
+  "devDependencies": {
+    "eslint": "^9.19.0",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
+}
