@@ -1,40 +1,54 @@
 terraform {
   required_providers {
     yandex = {
-      source  = "yandex-cloud/yandex"
-      version = "~> 0.84"
+      source = "yandex-cloud/yandex"
     }
   }
+  required_version = ">= 0.13"
 }
 
 provider "yandex" {
-  token     = "t1.9euelZrLjJaKms2cmM7NxpKVk5mOzu3rnpWakJ7Lx5XGy87KjZqKlM7GnJ7l8_daRmxC-e9BYV0W_t3z9xp1aUL570FhXRb-zef1656VmpOamZCXi5eLkZiNi5eNksqd7_zF656VmpOamZCXi5eLkZiNi5eNksqd.vupmIgNkmfKIDIDHHNTLqyouzfg_jQLSLq2YMDBasq3V55c8mh7pNJQMLzmAvTtic68E_Fm3uFBzZk5uTkQLAA"
-  cloud_id  = "b1g6juhil8j8o6m19tj3"
-  folder_id = "b1g0u5p8fg45gkiq8600"
-  zone      = "ru-central1-a"
+    service_account_key_file = "key.json"
+    cloud_id  = var.yc_cloud_id
+    folder_id = "b1guv9r3njoqnl13l8aa"
+    zone      = "ru-central1-a"
+}
+
+resource "yandex_vpc_network" "network-1" {
+  name = "network1"
+}
+
+resource "yandex_vpc_subnet" "subnet-1" {
+  name           = "subnet1"
+  zone           = "ru-central1-a"
+  network_id     = yandex_vpc_network.network-1.id
+  v4_cidr_blocks = ["192.168.10.0/24"]
 }
 
 resource "yandex_compute_instance" "vm-1" {
-  name        = "my-vm"
-  platform_id = "standard-v1"
+  name = "terraform-vm"
+
   resources {
-    cores         = 2
-    memory        = 2
-    core_fraction = 20
-  }
-  
-  boot_disk {
-    initialize_params {
-      image_id = "fd80bca9kcrb3ubq7eaf"
-    }
-  }
-  
-  network_interface {
-    subnet_id = "e2lt5i47a9sld9hoprnf"
-    nat       = true
+    cores  = 2
+    memory = 2
   }
 
-  metadata = {
-    ssh-keys = "ubuntu:${file("~/ssh_keys.pub")}"
+  boot_disk {
+    initialize_params {
+      image_id = "fd86p66mh3vpkbjsl7qp"
+    }
   }
+
+  network_interface {
+    subnet_id = yandex_vpc_subnet.subnet-1.id
+    nat       = true
+  }
+}
+
+output "internal_ip" {
+  value = yandex_compute_instance.vm-1.network_interface.0.ip_address
+}
+
+output "external_ip" {
+  value = yandex_compute_instance.vm-1.network_interface.0.nat_ip_address
 }
