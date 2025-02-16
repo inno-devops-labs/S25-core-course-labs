@@ -1,6 +1,6 @@
 # ANSIBLE.md
 
-## Task 1 & Task 2
+## Lab 5 Task 1 & Task 2
 
 This lab focuses on using **Ansible** to install **Docker** and **Docker Compose** on a cloud VM. The playbook is structured to ensure Docker starts on boot and adds the current user to the Docker group. Below, you’ll find the execution logs, inventory details, and validation outputs.
 
@@ -124,3 +124,72 @@ Output:
   |--@ungrouped:
   |  |--dev_vm
 ```
+
+## Lab 6
+
+billy@Mohammads-MacBook-Air ansible % ansible-playbook -i inventory/default_aws_ec2.yml playbooks/dev/main.yaml
+
+PLAY [Deploy Docker and Web App] ****************************************************\*\*\*****************************************************
+
+TASK [Gathering Facts] **********************************************************\***********************************************************
+[WARNING]: Platform linux on host my-cloud-vm is using the discovered Python interpreter at /usr/bin/python3.10, but future installation
+of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html
+ok: [my-cloud-vm]
+
+TASK [docker : Include Docker installation tasks] ********************************************\*\*\*********************************************
+included: /Users/billy/Documents/Code/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for my-cloud-vm
+
+TASK [docker : Installing required system packages] ******************************************\*\*\*******************************************
+changed: [my-cloud-vm]
+
+TASK [docker : Add Docker GPG apt Key] ************************************************\*\*\*\*************************************************
+ok: [my-cloud-vm]
+
+TASK [docker : Get Ubuntu release version] **********************************************\*\*\*\***********************************************
+ok: [my-cloud-vm]
+
+TASK [docker : Add Docker Repository] **************************************************\***************************************************
+ok: [my-cloud-vm]
+
+TASK [docker : Install Docker] ****************************************************\*\*\*\*****************************************************
+changed: [my-cloud-vm]
+
+TASK [docker : Ensure Docker service is running] ********************************************\*\*********************************************
+ok: [my-cloud-vm]
+
+TASK [docker : Ensure current user is added to docker group] **************************************\***************************************
+ok: [my-cloud-vm]
+
+TASK [docker : Include Docker Compose installation tasks] ****************************************\*****************************************
+included: /Users/billy/Documents/Code/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for my-cloud-vm
+
+TASK [docker : Install Docker Compose] ************************************************\*\*\*\*************************************************
+ok: [my-cloud-vm]
+
+TASK [web_app : Ensure the application directory exists] ****************************************\*****************************************
+changed: [my-cloud-vm]
+
+TASK [web_app : Generate docker-compose configuration] ****************************************\*\*\*****************************************
+changed: [my-cloud-vm]
+
+TASK [web_app : Fetch latest Docker image] **********************************************\*\*\***********************************************
+changed: [my-cloud-vm]
+
+TASK [web_app : Run the Python web app container] ******************************************\*\*\*******************************************
+changed: [my-cloud-vm]
+
+TASK [web_app : Print Docker version] ************************************************\*\*\*\*************************************************
+ok: [my-cloud-vm] => {
+"msg": "Docker version 27.5.1, build 9f9e405"
+}
+
+TASK [web_app : Print Docker Compose version] ********************************************\*\*\*\*********************************************
+ok: [my-cloud-vm] => {
+"msg": "docker-compose version 1.29.2, build 5becea4c"
+}
+
+TASK [web_app : Restart Docker container] **********************************************\*\*\*\***********************************************
+changed: [my-cloud-vm]
+
+PLAY RECAP **************************************************************\*\*\***************************************************************
+my-cloud-vm : ok=18 changed=7 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0

@@ -1,24 +1,35 @@
----
-- name: Ensure application directory exists
-  file:
-    path: /opt/web_app
-    state: directory
-    mode: "0755"
+- name: Pull application Docker image
+  docker_image:
+    name: "{{ web_app_image }}"
+    source: pull
+    tags:
+      - docker
 
-- name: Copy docker-compose template
+- name: Run the Docker container
+  docker_container:
+    name: "{{ web_app_container_name }}"
+    image: "{{ web_app_image }}"
+    state: started
+    restart_policy: always
+    published_ports:
+      - "80:{{ web_app_port }}"
+    tags:
+      - docker
+
+- name: Run wipe tasks if enabled
+  include_tasks: 0-wipe.yml
+  when: web_app_full_wipe
+
+- name: Generate docker-compose configuration
   template:
     src: docker-compose.yml.j2
     dest: /opt/web_app/docker-compose.yml
-    mode: "0644"
+  tags:
+    - docker
 
-- name: Start application using Docker Compose
-  command: docker-compose -f /opt/web_app/docker-compose.yml up -d
+- name: Launch application with Docker Compose
+  command: docker-compose up -d
   args:
     chdir: /opt/web_app
-
-- name: Ensure app is running
-  command: docker ps
-  register: docker_ps
-
-- debug:
-    msg: "{{ docker_ps.stdout_lines }}"
+  tags:
+    - docker
