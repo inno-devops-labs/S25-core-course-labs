@@ -1,0 +1,6 @@
+- name: Deploy Docker on regcloud
+  hosts: reg_instance_1
+  become: true
+  roles:
+    - docker
+    
