@@ -1,0 +1,5 @@
+---
+app_image: "mazzz3r/app_python:latest"
+app_container_name: "python_app"
+app_port: 5000
+app_external_port: 5000 
