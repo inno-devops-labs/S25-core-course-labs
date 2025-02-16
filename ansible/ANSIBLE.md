@@ -130,7 +130,9 @@ PLAY RECAP *********************************************************************
 
 ## Bonus Task: Dynamic Inventory
 
-In this task, the private SSH key path was specified in ansible.cfg.
+In this task, the private SSH key path was specified in `ansible.cfg`.
+
+The output for command `ansible-playbook playbooks/dev/main.yaml --diff` is the same as it was without this flag.
 
 The output is the following:
 
