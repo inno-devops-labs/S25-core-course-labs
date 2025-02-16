@@ -90,3 +90,35 @@ ANSIBLE_ROLES_PATH=ansible/roles ansible-inventory -i ansible/inventory/default_
 @all:
   |--@ungrouped:
   |  |--cloud_vm
+
+## Output of
+```bash
+ANSIBLE_ROLES_PATH=ansible/roles ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/main.yaml --check --diff | tail -n 50 > ansible/ANSIBLE.md
+```
+PLAY [Deploy Docker with Custom Role] ******************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [cloud_vm]
+
+TASK [web_app : Pull Docker Image] *********************************************
+changed: [cloud_vm]
+
+TASK [web_app : Copy Docker Compose Template] **********************************
+--- before
++++ after: /home/sg/.ansible/tmp/ansible-local-368448bb93d8o/tmpugr9lu8a/docker-compose.yml.j2
+@@ -0,0 +1,6 @@
++version: '3'
++services:
++  app:
++    image: "g1l1a/my-django-app"
++    ports:
++      - "8080:80"
+
+changed: [cloud_vm]
+
+TASK [web_app : Start Application] *********************************************
+skipping: [cloud_vm]
+
+PLAY RECAP *********************************************************************
+cloud_vm                   : ok=3    changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+
