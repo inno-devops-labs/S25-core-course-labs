@@ -7,5 +7,4 @@
   ignore_errors: "{{ ansible_check_mode }}"  # Ignore errors in check mode
   when:  # Only run if Docker Compose installation is enabled and conditions are met
     - docker_install_compose_plugin | bool
-    - ansible_version.full is version_compare('2.12', '<') or ansible_os_family not in ['RedHat', 'Debian']
   tags: docker-compose  # Add a tag for selective execution
