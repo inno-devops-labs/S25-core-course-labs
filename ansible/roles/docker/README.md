@@ -47,3 +47,34 @@ This role ensures the following packages are installed:
 ## 📎 Dependencies
 
 None. This role is self-contained.
+
+## 🛠️ Usage
+
+### **1. Add Role to Your Playbook**
+Ensure the role is included in your Ansible playbook:
+
+```yaml
+- hosts: all
+  become: true
+  roles:
+    - docker
+```
+
+### **2. Run the Playbook**
+Execute the following command to deploy Docker:
+
+```bash
+ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/main.yaml
+```
+
+### **3. Verify Installation**
+After deployment, check Docker status:
+
+```bash
+docker --version
+docker-compose --version
+sudo systemctl status docker
+```
+
+Example on my server:
+![](screenshots/image_2025-02-16_12-00-47.png)
