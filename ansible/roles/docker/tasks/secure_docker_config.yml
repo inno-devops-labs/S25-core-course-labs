@@ -1,0 +1,20 @@
+- name: Secure Docker Daemon Configuration
+  ansible.builtin.copy:
+    content: |
+      {
+        "no-new-privileges": true,
+        "userns-remap": "default",
+        "log-driver": "json-file",
+        "log-opts": {
+          "max-size": "10m",
+          "max-file": "3"
+        },
+        "icc": false,
+        "live-restore": true,
+        "userland-proxy": false
+      }
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart docker
