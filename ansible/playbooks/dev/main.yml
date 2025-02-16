@@ -1,0 +1,5 @@
+- name: Install Docker on cloud
+  hosts: all
+  become: true
+  roles:
+    - docker
