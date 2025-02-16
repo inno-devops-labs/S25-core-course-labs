@@ -1,5 +1,6 @@
-- name: Install Docker
+- name: Install Docker and Deploy Moscow Time App
   hosts: all
   become: true
   roles:
     - docker
+    - web_app
