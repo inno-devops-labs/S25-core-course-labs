@@ -321,3 +321,75 @@ PLAY RECAP *********************************************************************
 WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
 E0000 00:00:1739722036.571654   63753 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
 ```
+
+### Bonus Application Deployment
+
+The output of the bonus application playbook:
+
+```bash
+> ANSIBLE_CONFIG=/mnt/d/dev/inno_dev/new/S25-core-course-labs/ansible/ansible.cfg ansible-playbook playbooks/dev/app_golang/main.yaml
+
+PLAY [Deploy Golang application] *************************************************************************************************************************************
+TASK [Gathering Facts] ***********************************************************************************************************************************************[WARNING]: Platform linux on host terraform1 is using the discovered Python interpreter at /usr/bin/python3.10, but future installation of another Python interpreter
+could change the meaning of that path. See https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [terraform1]
+
+TASK [docker : Install Docker] ***************************************************************************************************************************************included: /mnt/d/dev/inno_dev/new/S25-core-course-labs/ansible/roles/docker/tasks/install-docker.yml for terraform1
+
+TASK [docker : Delete conflicting packages] **************************************************************************************************************************ok: [terraform1] => (item=docker.io)
+ok: [terraform1] => (item=docker.doc)
+ok: [terraform1] => (item=docker-compose)
+ok: [terraform1] => (item=docker-compose-v2)
+ok: [terraform1] => (item=podman-docker)
+ok: [terraform1] => (item=containerd)
+ok: [terraform1] => (item=runc)
+
+TASK [docker : Install Docker dependencies] **************************************************************************************************************************ok: [terraform1] => (item=ca-certificates)
+ok: [terraform1] => (item=curl)
+
+TASK [docker : Add Docker's official GPG key] ************************************************************************************************************************ok: [terraform1]
+
+TASK [docker : Add the repository to Apt sources] ********************************************************************************************************************ok: [terraform1]
+
+TASK [docker : Install Docker] ***************************************************************************************************************************************ok: [terraform1] => (item=docker-ce)
+ok: [terraform1] => (item=docker-ce-cli)
+ok: [terraform1] => (item=containerd.io)
+ok: [terraform1] => (item=docker-buildx-plugin)
+
+TASK [docker : Configure Docker to start on boot] ********************************************************************************************************************ok: [terraform1]
+
+TASK [docker : Configure containerd to start on boot] ****************************************************************************************************************ok: [terraform1]
+
+TASK [docker : Create "docker" group] ********************************************************************************************************************************ok: [terraform1]
+
+TASK [docker : Add user to the "docker" group] ***********************************************************************************************************************ok: [terraform1]
+
+TASK [docker : Secure Docker Configuration] **************************************************************************************************************************included: /mnt/d/dev/inno_dev/new/S25-core-course-labs/ansible/roles/docker/tasks/secure-docker-configuration.yml for terraform1
+
+TASK [docker : Disable root access] **********************************************************************************************************************************ok: [terraform1]
+
+TASK [docker : Install Docker Compose] *******************************************************************************************************************************included: /mnt/d/dev/inno_dev/new/S25-core-course-labs/ansible/roles/docker/tasks/install-compose.yml for terraform1
+
+TASK [docker : Install Docker Compose] *******************************************************************************************************************************ok: [terraform1]
+
+TASK [web_app : Deliver the Docker Compose template] *****************************************************************************************************************included: /mnt/d/dev/inno_dev/new/S25-core-course-labs/ansible/roles/web_app/tasks/deliver-template.yml for terraform1
+
+TASK [web_app : Create directory for the template] *******************************************************************************************************************changed: [terraform1]
+
+TASK [web_app : Deliver the template] ********************************************************************************************************************************changed: [terraform1]
+
+TASK [web_app : Deploy App] ******************************************************************************************************************************************included: /mnt/d/dev/inno_dev/new/S25-core-course-labs/ansible/roles/web_app/tasks/deploy-app.yml for terraform1
+
+TASK [web_app : Pull Docker image] ***********************************************************************************************************************************changed: [terraform1]
+
+TASK [web_app : Start Docker Compose] ********************************************************************************************************************************[WARNING]: Docker compose: unknown None: /app_golang/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential
+confusion
+changed: [terraform1]
+
+TASK [web_app : Wipe application] ************************************************************************************************************************************skipping: [terraform1]
+
+PLAY RECAP ***********************************************************************************************************************************************************terraform1                 : ok=21   changed=4    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739722571.843577   65168 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+```
