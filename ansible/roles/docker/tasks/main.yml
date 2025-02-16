@@ -1,0 +1,6 @@
+---
+- name: Run tasks for Docker installation
+  ansible.builtin.import_tasks: install_docker.yml
+
+- name: Run tasks for installing Docker Compose
+  ansible.builtin.import_tasks: install_compose.yml

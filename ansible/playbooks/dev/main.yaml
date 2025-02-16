@@ -1,0 +1,23 @@
+---
+- name: Setup Docker and System Configuration
+  hosts: all
+  become: true
+
+  roles:
+    - docker
+
+  pre_tasks:
+    - name: Refresh package lists
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+  post_tasks:
+    - name: Check installed Docker version
+      command: docker --version
+      register: docker_info
+      changed_when: false
+
+    - name: Show Docker version
+      debug:
+        msg: "Docker version: {{ docker_info.stdout }}"
