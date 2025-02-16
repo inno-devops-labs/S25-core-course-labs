@@ -6,10 +6,6 @@
   changed_when: false
   failed_when: false
 
-# Security configuration
-- name: Include security configuration tasks
-  ansible.builtin.import_tasks: security.yml
-
 # Main installation tasks
 - name: Include Docker installation tasks
   ansible.builtin.import_tasks: install_docker.yml
@@ -48,4 +44,8 @@
       command: groups {{ ansible_user }}
       register: user_groups
       changed_when: false
-      failed_when: "'docker' not in user_groups.stdout" 
+      failed_when: "'docker' not in user_groups.stdout"
+
+# Security configuration
+- name: Include security configuration tasks
+  ansible.builtin.import_tasks: security.ymlы
