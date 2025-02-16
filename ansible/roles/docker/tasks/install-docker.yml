@@ -64,7 +64,7 @@
 - name: Add user to the "docker" group
   ansible.builtin.user:
     append: true
-    name: dan
+    name: "{{ ansible_user }}"
     groups:
       - docker
   notify: Restart Docker
