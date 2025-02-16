@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: Mikhail Dudinov
+  description: Test
+  license: MIT
+  company: Test
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+  galaxy_tags:
+    - docker
+    - container
+
+dependencies: []
