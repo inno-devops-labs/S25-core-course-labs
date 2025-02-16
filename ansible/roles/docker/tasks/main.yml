@@ -6,16 +6,16 @@
   changed_when: false
   failed_when: false
 
-# Security configuration
-- name: Include security configuration tasks
-  ansible.builtin.import_tasks: security.yml
-
 # Main installation tasks
 - name: Include Docker installation tasks
   ansible.builtin.import_tasks: install_docker.yml
 
 - name: Include Docker Compose installation tasks
   ansible.builtin.import_tasks: install_compose.yml
+
+# Security configuration
+- name: Include security configuration tasks
+  ansible.builtin.import_tasks: security.yml
 
 # Post-installation verification
 - name: Verify Docker installation
