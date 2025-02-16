@@ -1,0 +1,7 @@
+*.md
+.gitignore
+__pycache__/
+.cache/
+.coverage
+test.py
+*.png
