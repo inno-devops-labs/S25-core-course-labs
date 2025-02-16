@@ -1,0 +1,6 @@
+- name: Deploy Docker and Web App
+  hosts: all
+  gather_facts: yes
+  roles:
+    - role: docker
+    - role: web_app
