@@ -1,0 +1,24 @@
+- name: web_app tasks
+  block:
+
+    - name: pull the docker image
+      docker_image:
+        name: "{{ docker_image }}"
+        tag: "{{ docker_image_tag }}"
+        source: pull
+
+    - name: run the docker container
+      docker_container:
+        name: "{{ docker_container_name }}"
+        image: "{{ docker_image }}"
+        state: started
+        ports:
+          - "{{ docker_host_port }}:{{ docker_container_port }}"
+
+    - name: wipe the docker container
+      import_tasks: tasks/0-wipe.yml
+      vars:
+        web_app_full_wipe: true
+
+  tags:
+    - web_app

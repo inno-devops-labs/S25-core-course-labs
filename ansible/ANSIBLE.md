@@ -86,3 +86,34 @@ host1                      : ok=10   changed=1    unreachable=0    failed=0    s
 
 ```
 <br> <br/>
+
+# Lab 6
+
+## Commands Outputs
+
+- `ansible-playbook playbooks/dev/main.yml`
+
+```
+PLAY [all] *******************************************************************************************************
+
+TASK [Gathering Facts] *******************************************************************************************
+ok: [DeHopen]
+
+TASK [docker : Install pip3] *************************************************************************************
+ok: [DeHopen]
+
+TASK [docker : Install docker] ***********************************************************************************
+ok: [DeHopen]
+
+TASK [docker : Install docker-compose] ***************************************************************************
+ok: [DeHopen]
+
+TASK [web_app : pull the docker image] ***************************************************************************
+changed: [DeHopen]
+
+TASK [web_app : run the docker container] ************************************************************************
+changed: [DeHopen]
+
+PLAY RECAP *******************************************************************************************************
+DeHopen                   : ok=6    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+```

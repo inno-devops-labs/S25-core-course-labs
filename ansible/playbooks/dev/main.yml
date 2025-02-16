@@ -1,5 +1,8 @@
 - name: Install Docker on cloud
   hosts: all
-  become: true
   roles:
-    - docker
+    - role: docker
+      become: true
+
+    - role: web_app
+      become: true
