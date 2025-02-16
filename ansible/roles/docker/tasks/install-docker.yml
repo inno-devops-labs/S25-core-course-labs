@@ -1,0 +1,14 @@
+---
+- name: Install keys
+  ansible.builtin.get_url:
+    url: "https://download.docker.com/linux/ubuntu/gpg"
+    dest: /etc/apt/trusted.gpg.d/docker.asc
+    mode: "0644"
+    force: false
+    checksum: "{{ docker_apt_gpg_key_checksum | default(omit) }}"
+
+- name: Add docker repo
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/docker.asc] https://download.docker.com/linux/ubuntu jammy stable
+    filename: /etc/apt/sources.list.d/docker
+    state: present

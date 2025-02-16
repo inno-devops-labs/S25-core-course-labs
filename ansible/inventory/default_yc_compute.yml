@@ -1,0 +1,6 @@
+all:
+  hosts:
+    yacloud-vm:
+      ansible_host: 51.250.86.186
+      ansible_user: app
+      ansible_become: true
