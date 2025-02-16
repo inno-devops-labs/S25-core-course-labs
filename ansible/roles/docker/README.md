@@ -26,7 +26,7 @@ This Ansible role installs Docker on target hosts. It also installs Docker Compo
 - `docker_compose_url`: URL to download Docker Compose from.
 - `docker_compose_path`: Path where Docker Compose should be installed.
 
-### Example Playbook
+### Usage
 
 ```yaml
 - hosts: all
