@@ -87,6 +87,60 @@ dew@dew:~/ansible$ ansible-inventory -i inventory/yandex_cloud.yml --list
 }
 ```
 
+
+## Lab 6
+
+Output for docker and web_app
+
+dew@dew:~/ansible$ ansible-playbook playbooks/dev/main.yaml -i inventory/default_yc.yaml
+
+PLAY [Deploy] ************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************
+ok: [server]
+
+TASK [docker : include_tasks] ******************************************************************************************
+included: /home/gotterkiller/ansible/roles/docker/tasks/install_docker.yaml for vm-lab4
+
+TASK [docker : Install packages] ***************************************************************************************
+ok: [server]
+
+TASK [docker : Add GPG key] ********************************************************************************************
+ok: [server]
+
+TASK [docker : Add repository] *****************************************************************************************
+ok: [server]
+
+TASK [docker : Install] ************************************************************************************************
+ok: [server]
+
+TASK [docker : Enable service] *****************************************************************************************
+ok: [server]
+
+TASK [docker : Add user to group] **************************************************************************************
+ok: [server]
+
+TASK [docker : include_tasks] ******************************************************************************************
+included: /home/dew/ansible/roles/docker/tasks/install_compose.yaml for server
+
+TASK [docker : Install Docker Compose] *********************************************************************************
+ok: [server]
+
+TASK [web_app : Pull Docker image] *************************************************************************************
+changed: [server]
+
+TASK [web_app : Render docker-compose file] ****************************************************************************
+changed: [server]
+
+TASK [web_app : Start application container using docker-compose] ******************************************************
+changed: [server]
+
+TASK [web_app : Wipe Application Deployment] ***************************************************************************
+skipping: [server]
+
+PLAY RECAP *************************************************************************************************************
+server                    : ok=13   changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
 ## Best practices
 - Modules are responsible for one simple & small task.
 - Every task has a meaningful name, empty lines are used for readability 

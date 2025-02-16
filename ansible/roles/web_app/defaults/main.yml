@@ -1,0 +1,5 @@
+docker_image: "dew1769/application-real-time:latest"
+
+app_port: 5000
+
+web_app_full_wipe: false
