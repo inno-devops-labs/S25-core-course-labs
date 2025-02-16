@@ -2,9 +2,5 @@
   become: true
   become_method: sudo
 
-  vars:
-    pip_install_packages:
-      - name: docker
-
   roles:
-    - geerlingguy.docker
+    - roles/docker	

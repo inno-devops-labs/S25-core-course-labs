@@ -1,0 +1,23 @@
+---
+- name: Install Docker packages.
+  package:
+    name: 
+      - "docker-ce"
+      - "docker-ce-cli"
+      - "containerd.io"
+    state: "present"
+    update_cache: true
+  notify: restart docker
+
+- name: Start Docker service.
+  ansible.builtin.systemd:
+    name: docker
+    enabled: true
+    state: started
+    
+- name: Add user to Docker group
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: true
+  notify: restart docker
