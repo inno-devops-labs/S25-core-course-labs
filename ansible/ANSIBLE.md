@@ -257,3 +257,103 @@ To verify successful deployment, included the following screenshots:
 ## Conclusion
 
 This setup successfully deploys Docker and a web application using Ansible. All deployment steps and verifications ensure that Docker and the web application are configured correctly for further development.
+
+## Bonus Task: Dynamic Inventory for AWS
+
+### Implement AWS EC2 Dynamic Inventory
+
+I created a new dynamic inventory file has been created to dynamically fetch AWS EC2 instances instead of using a static inventory file.
+
+**File:** `ansible/inventory/dynamic_inventory.yml`
+
+```yaml
+plugin: amazon.aws.aws_ec2
+regions:
+  - us-east-1
+filters:
+  tag:Name: "ExampleAppServerInstance"
+  instance-state-name: running
+hostnames:
+  - tag:Name
+  - public-ip-address
+compose:
+  ansible_host: public-ip-address
+```
+
+## Bonus Task: Secure Docker Configuration
+
+### **Step 1: Secure Docker Daemon Configuration**
+
+A new security configuration has been added to ensure Docker is hardened against privilege escalation and unnecessary risks. The configuration is applied using the `copy` module in Ansible.
+
+**Task File:** `ansible/roles/docker/tasks/secure_docker_config.yml`
+
+```yaml
+- name: Secure Docker Daemon Configuration
+  ansible.builtin.copy:
+    content: |
+      {
+        "no-new-privileges": true,
+        "userns-remap": "default",
+        "log-driver": "json-file",
+        "log-opts": {
+          "max-size": "10m",
+          "max-file": "3"
+        },
+        "icc": false,
+        "live-restore": true,
+        "userland-proxy": false
+      }
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart docker
+```
+
+### **Step 2: Ensure Docker Restarts After Applying Security Settings**
+
+**Handler File:** `ansible/roles/docker/handlers/main.yml`
+
+```yaml
+- name: restart docker
+  ansible.builtin.systemd:
+    name: docker
+    state: restarted
+    enabled: yes
+```
+
+### **Step 3: Verify Docker Security Configuration**
+
+After applying the playbook, confirm that the security settings are enforced.
+
+Run the following command on the remote server:
+
+```sh
+cat /etc/docker/daemon.json
+```
+
+✅ Expected Output:
+
+```json
+{
+  "no-new-privileges": true,
+  "userns-remap": "default",
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "10m",
+    "max-file": "3"
+  },
+  "icc": false,
+  "live-restore": true,
+  "userland-proxy": false
+}
+```
+
+### **Screenshots**
+
+- **Secure Docker Configuration Applied:** ![Secure Docker Config](bonus.png)
+
+## Conclusion Of This Task
+
+This setup successfully deploys Docker and a web application using Ansible while implementing additional security enhancements through `daemon.json`. All deployment steps and verifications ensure that Docker and the web application are configured correctly for further development.
