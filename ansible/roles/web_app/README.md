@@ -19,6 +19,8 @@ This role deploys a Docker-based web application.
      become: true
      roles:
        - webapp
+```
+
 ## Usage
 
 ```bash
