@@ -48,3 +48,32 @@ ok: [localhost] => {
 PLAY RECAP *********************************************************************
 localhost                  : ok=11   changed=3    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
 
+---
+
+{
+    "_meta": {
+        "hostvars": {
+            "localhost": {
+                "ansible_connection": "local"
+            }
+        }
+    },
+    "all": {
+        "children": [
+            "ungrouped",
+            "local"
+        ]
+    },
+    "local": {
+        "hosts": [
+            "localhost"
+        ]
+    }
+}
+
+---
+
+@all:
+  |--@ungrouped:
+  |--@local:
+  |  |--localhost
