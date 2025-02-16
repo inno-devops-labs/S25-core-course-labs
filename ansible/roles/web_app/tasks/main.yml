@@ -27,10 +27,9 @@
   tags:
     - wipe
 
-
 - name: Deploy Docker Compose File
   template:
-    src: docker-compose.yml.j2
+    src: ./templates/docker-compose.yml.j2
     dest: /home/docker_compose
   tags:
     - docker

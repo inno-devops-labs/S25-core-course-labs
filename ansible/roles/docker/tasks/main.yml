@@ -4,32 +4,36 @@
 - include_tasks: install_compose.yml
 - include_tasks: secure_docker.yml
 
-- name: Ensure Docker is started and enabled at boot
-  ansible.builtin.service:  # Use the fully qualified module name
+- name: Ensure Docker daemon is running
+  ansible.builtin.systemd:
     name: docker
-    state: "{{ docker_service_state }}"
-    enabled: "{{ docker_service_enabled }}"
-  ignore_errors: "{{ ansible_check_mode }}"  # Ignore errors in check mode
-  when: docker_service_manage | bool  # Only run if Docker service management is enabled
-  tags: service  # Add a tag for selective execution
+    state: started
+    enabled: yes
+  tags: service
+
+- name: Verify Docker is running
+  ansible.builtin.command: docker info
+  register: docker_info
+  changed_when: false
+  failed_when: docker_info.rc != 0
 
 - name: Ensure handlers are notified now to avoid firewall conflicts
   meta: flush_handlers
 
 - name: Get docker group info using getent
-  ansible.builtin.getent:  # Use the fully qualified module name
+  ansible.builtin.getent:
     database: group
     key: docker
     split: ':'
-  when: docker_users | length > 0  # Only run if there are users to add
+  when: docker_users | length > 0
 
 - name: Check if there are any users to add to the docker group
-  ansible.builtin.set_fact:  # Use the fully qualified module name
+  ansible.builtin.set_fact:
     at_least_one_user_to_modify: true
   when:
     - docker_users | length > 0
     - item not in ansible_facts.getent_group["docker"][2]
-  loop: "{{ docker_users }}"  # Use `loop` instead of `with_items`
+  loop: "{{ docker_users }}"
 
 - include_tasks: docker_users.yml
-  when: at_least_one_user_to_modify is defined  # Only run if users need to be modified
+  when: at_least_one_user_to_modify is defined
