@@ -1,17 +1,22 @@
-# Web Application Role
+# Web Application Deployment Role
 
-This Ansible role deploys web applications using Docker Compose. It provides a flexible way to deploy containerized applications with proper configuration and environment variables.
+This Ansible role manages the deployment of web applications using Docker Compose. It provides a flexible and maintainable way to deploy containerized applications with proper configuration management.
 
 ## Requirements
 
-- Ansible 2.9+
-- Ubuntu 22.04 (target system)
-- Docker and Docker Compose (installed via dependency on docker role)
-- Community Docker collection (`ansible-galaxy collection install community.docker`)
+- Ansible 2.9 or higher
+- Docker installed on target hosts (this role depends on the `docker` role)
+- Docker Compose v2 or higher
+- Target system: Ubuntu (Focal/Jammy)
 
 ## Role Variables
 
-Available variables are listed below, along with default values:
+### Required Variables
+
+- `docker_image_name`: Name of the Docker image to deploy
+- `app_port`: Port number where the application will be exposed
+
+### Optional Variables
 
 ```yaml
 # Application deployment path
@@ -23,11 +28,7 @@ docker_compose_file_path: "{{ app_deploy_path }}/docker-compose.yml"
 
 # Application configuration
 app_environment: "development"
-app_port: 8080
-
-# Docker image configuration
 docker_registry: ""  # Default to Docker Hub
-docker_image_name: ""
 docker_image_tag: "latest"
 
 # Environment variables for the application
@@ -36,59 +37,52 @@ app_env_vars: {}
 # Health check configuration
 health_check_endpoint: "/health"
 health_check_timeout: 30
+
+# Wipe configuration
+web_app_full_wipe: false  # Set to true to remove all application data
 ```
 
 ## Dependencies
 
-- `docker` role (automatically installed)
+This role depends on the `docker` role which should be installed and configured first.
 
 ## Example Playbook
 
 ```yaml
 - hosts: web_servers
   vars:
-    docker_image_name: "nginx"
-    app_port: 80
+    docker_image_name: "my-web-app"
+    app_port: 8080
     app_env_vars:
-      NGINX_HOST: "example.com"
-      NGINX_PORT: "80"
+      NODE_ENV: production
+      API_KEY: "{{ vault_api_key }}"
   roles:
-    - role: web_app
+    - web_app
 ```
 
-## Usage
+## Tags
 
-1. Set the required variables in your playbook or inventory
-2. Include the role in your playbook
-3. Run your playbook
+- `setup`: Configure application environment
+- `deploy`: Deploy the application
+- `wipe`: Remove application (when web_app_full_wipe=true)
+- `health-check`: Run application health checks
 
-Example command:
-```bash
-ansible-playbook -i inventory/default_aws_ec2.yml playbooks/dev/main.yaml
-```
+## Usage Examples
 
-## Templates
+1. Deploy application:
+   ```bash
+   ansible-playbook playbook.yml -t deploy
+   ```
 
-### Docker Compose Template
+2. Setup environment only:
+   ```bash
+   ansible-playbook playbook.yml -t setup
+   ```
 
-The role includes a default Docker Compose template that supports:
-- Custom image registry
-- Environment variables
-- Health checks
-- Network configuration
-- Port mapping
-
-You can override this template by placing your own version in your playbook's templates directory.
-
-### Environment Variables Template
-
-A template for generating `.env` files is included, which will be used if `app_env_vars` is defined.
-
-## Handlers
-
-The role provides two handlers:
-- `restart web app`: Restarts the application using Docker Compose
-- `rebuild web app`: Rebuilds and restarts the application
+3. Wipe application:
+   ```bash
+   ansible-playbook playbook.yml -t wipe -e "web_app_full_wipe=true"
+   ```
 
 ## License
 
@@ -96,4 +90,4 @@ MIT
 
 ## Author Information
 
-Created for DevOps Core Course Labs 
+Created by DevOps Core Course Team 

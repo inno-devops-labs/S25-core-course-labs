@@ -159,6 +159,34 @@ $ ansible-inventory -i inventory/default_aws_ec2.yml --graph
   |--@ungrouped:
 ```
 
+## Web Application Deployment Output
+```bash
+$ ansible-playbook playbooks/dev/main.yaml --diff
+
+PLAY [Deploy Docker and Web Application to EC2 instances] ***********************
+
+TASK [Gathering Facts] *********************************************************
+ok: [ec2-instance]
+
+TASK [web_app : Include wipe tasks] ********************************************
+skipped: [ec2-instance]
+
+TASK [web_app : Setup application environment] *********************************
+ok: [ec2-instance] => (item=Create application directory)
+changed: [ec2-instance] => (item=Copy Docker Compose template)
+changed: [ec2-instance] => (item=Create .env file)
+
+TASK [web_app : Deploy application] *******************************************
+changed: [ec2-instance] => (item=Pull Docker images)
+changed: [ec2-instance] => (item=Deploy application with Docker Compose)
+
+TASK [web_app : Health check] ************************************************
+ok: [ec2-instance]
+
+PLAY RECAP *******************************************************************
+ec2-instance              : ok=5    changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+```
+
 ## Troubleshooting
 
 1. If the playbook fails with AWS connectivity issues:
