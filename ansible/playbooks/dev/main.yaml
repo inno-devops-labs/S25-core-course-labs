@@ -1,5 +1,22 @@
-- name: Dev
+- name: Setup Docker Environment and Deploy Application
   hosts: all
+  become: true
+
+  tasks:
+    - name: Setup Docker Environment
+      block:
+        - name: Install Docker (if not using role dependency)
+          apt:
+            name: docker.io
+            state: present
+
+        - name: Start Docker Service
+          service:
+            name: docker
+            state: started
+            enabled: yes
+      tags: 
+        - setup
+
   roles:
-    - role: docker
-      become: true
+    - web_app

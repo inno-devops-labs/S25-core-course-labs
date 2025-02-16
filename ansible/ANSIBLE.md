@@ -106,3 +106,61 @@ gotterkiller@GOTTERKILLER:~/ansible$ ansible-inventory -i inventory/default_yc.y
   |  |--vm-lab4
 ```
 </details>
+
+<details>
+    
+<summary>ansible-playbook playbooks/dev/main.yaml -i inventory/default_yc.yaml</summary>
+
+```bash
+gotterkiller@GOTTERKILLER:~/ansible$ ansible-playbook playbooks/dev/main.yaml -i inventory/default_yc.yaml
+
+PLAY [Flask-app deploy] ************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************
+ok: [vm-lab4]
+
+TASK [docker : include_tasks] ******************************************************************************************
+included: /home/gotterkiller/ansible/roles/docker/tasks/install_docker.yaml for vm-lab4
+
+TASK [docker : Install packages] ***************************************************************************************
+ok: [vm-lab4]
+
+TASK [docker : Add GPG key] ********************************************************************************************
+ok: [vm-lab4]
+
+TASK [docker : Add repository] *****************************************************************************************
+ok: [vm-lab4]
+
+TASK [docker : Install] ************************************************************************************************
+ok: [vm-lab4]
+
+TASK [docker : Enable service] *****************************************************************************************
+ok: [vm-lab4]
+
+TASK [docker : Add user to group] **************************************************************************************
+ok: [vm-lab4]
+
+TASK [docker : include_tasks] ******************************************************************************************
+included: /home/gotterkiller/ansible/roles/docker/tasks/install_compose.yaml for vm-lab4
+
+TASK [docker : Install Docker Compose] *********************************************************************************
+ok: [vm-lab4]
+
+TASK [web_app : Pull Docker image] *************************************************************************************
+changed: [vm-lab4]
+
+TASK [web_app : Render docker-compose file] ****************************************************************************
+changed: [vm-lab4]
+
+TASK [web_app : Start application container using docker-compose] ******************************************************
+changed: [vm-lab4]
+
+TASK [web_app : Wipe Application Deployment] ***************************************************************************
+skipping: [vm-lab4]
+
+PLAY RECAP *************************************************************************************************************
+vm-lab4                    : ok=13   changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+```
+    
+</details>
