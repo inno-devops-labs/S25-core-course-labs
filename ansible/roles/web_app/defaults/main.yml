@@ -3,3 +3,4 @@
 # defaults file for roles/web_app
 docker_image: "haidarjbeily/distroless-moscow-time-app"
 container_name: "web_app"
+web_app_full_wipe: true
