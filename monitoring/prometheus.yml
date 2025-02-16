@@ -23,6 +23,6 @@ scrape_configs:
     static_configs:
       - targets: ["app_python:8000"]
 
-  # - job_name: "app_rust"
-  #   static_configs:
-  #     - targets: ["app_rust:8000"]
+  - job_name: "app_rust"
+    static_configs:
+      - targets: ["app_rust:8000"]

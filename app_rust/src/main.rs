@@ -1,23 +1,52 @@
 #[macro_use] extern crate rocket;
+#[macro_use] extern crate lazy_static;
+
 use rocket::response::content;
-use chrono::{Utc, TimeZone};
-use chrono::offset::FixedOffset;
+use chrono::{Utc, TimeZone, FixedOffset};
+use prometheus::{Registry, Counter, TextEncoder, Encoder, register_counter};
+
+// Create metrics registry
+lazy_static! {
+    static ref REGISTRY: Registry = Registry::new();
+    static ref REQUEST_COUNTER: Counter = register_counter!(
+        "app_http_requests_total",
+        "Total HTTP Requests"
+    ).expect("Failed to create counter");
+}
 
 #[get("/")]
 fn index() -> content::RawHtml<String> {
-    // Moscow is UTC+3
-    let moscow_time = FixedOffset::east_opt(3 * 3600).expect("REASON").from_utc_datetime(&Utc::now().naive_utc());
+    REQUEST_COUNTER.inc();
     
-    // Apply formatting
+    let moscow_time = FixedOffset::east_opt(3 * 3600)
+        .expect("Invalid offset")
+        .from_utc_datetime(&Utc::now().naive_utc());
+    
     let formatted_time = moscow_time.format("%Y-%m-%d %H:%M:%S").to_string();
-    
-    // Build HTML page
     content::RawHtml(format!("<h1>Current time in Moscow: {}</h1>", formatted_time))
+}
+
+#[get("/metrics")]
+fn metrics() -> String {
+    let encoder = TextEncoder::new();
+    let metric_families = REGISTRY.gather();
+    let mut buffer = Vec::new();
+    encoder.encode(&metric_families, &mut buffer).unwrap();
+    String::from_utf8(buffer).unwrap()
+}
+
+#[get("/health")]
+fn health() -> &'static str {
+    "OK"
 }
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![index])
+    // Register metrics with the registry
+    REGISTRY.register(Box::new(REQUEST_COUNTER.clone())).unwrap();
+    
+    rocket::build()
+        .mount("/", routes![index, metrics, health])
 }
 
 #[cfg(test)]
