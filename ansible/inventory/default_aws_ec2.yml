@@ -1,7 +1,7 @@
 all:
   hosts:
     master_vm:
-      ansible_host: 158.160.51.157
+      ansible_host: 158.160.49.79
       ansible_user: ubuntu
       ansible_ssh_private_key_file: ~/.ssh/id_ed25519
       ansible_python_interpreter: /usr/bin/python3
