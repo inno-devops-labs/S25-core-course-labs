@@ -1,0 +1,100 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - master
+      - lab3
+    paths:
+      - ".github/workflows/ci.yaml"
+      - "app_python/**"
+  pull_request:
+    branches:
+      - master
+      - lab3
+    paths:
+      - ".github/workflows/ci.yaml"
+      - "app_python/**"
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Cache Python dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-python-${{ hashFiles('app_python/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-python-
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r app_python/requirements.txt
+
+      - name: Run Linter (Flake8)
+        run: |
+          pip install flake8
+          flake8 .
+
+      - name: Run Tests (Pytest)
+        run: |
+          pip install pytest
+          pytest
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python-3.8@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --skip-unresolved --file=app_python/requirements.txt --package-manager=pip
+
+  docker:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-docker-${{ hashFiles('app_python/Dockerfile', 'app_python/**') }}
+          restore-keys: |
+            ${{ runner.os }}-docker-
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./app_python
+          file: ./app_python/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/python-webapp:latest
+          cache-from: type=gha,scope=latest
+          cache-to: type=gha,scope=latest,mode=max
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1
