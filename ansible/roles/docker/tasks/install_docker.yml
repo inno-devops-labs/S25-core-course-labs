@@ -1,0 +1,28 @@
+- name: Installing prerequisites
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+    state: present
+    update_cache: yes
+
+- name: Adding GPG key
+  apt_key:
+    url: "{{ gpg_url }}"
+    state: present
+
+- name: Adding a Docker repository to APT
+  apt_repository:
+    repo: "{{ docker_repo_url }}"
+    state: present
+
+- name: Installing Docker
+  apt:
+    name:
+      - docker-ce={{docker_version}}
+      - docker-ce-cli
+      - containerd.io
+    state: present
+    update_cache: yes
