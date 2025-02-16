@@ -3,4 +3,5 @@
   become_method: sudo
 
   roles:
-    - roles/docker	
+    - roles/docker
+    - roles/web_app	
