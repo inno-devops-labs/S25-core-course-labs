@@ -1,4 +1,4 @@
-dev
+dev/*
 terraform/docker/.*
 terraform/ycloud/.*
 terraform/docker/terraform.tfstate.backup
