@@ -1,0 +1,11 @@
+plugin: amazon.aws.aws_ec2
+regions:
+  - us-east-1  # Update this if your AWS region is different
+filters:
+  tag:Name: "ExampleAppServerInstance"  # Ensure your EC2 instance has this tag
+  instance-state-name: running
+hostnames:
+  - tag:Name
+  - public-ip-address
+compose:
+  ansible_host: public-ip-address
