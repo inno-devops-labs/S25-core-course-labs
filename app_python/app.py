@@ -17,7 +17,8 @@ def home():
     """
     moscow_tz = pytz.timezone('Europe/Moscow')
     moscow_time = datetime.now(moscow_tz).strftime('%H:%M:%S %d.%m.%Y')
-    return render_template('index.html', moscow_time=f'debug=False | {moscow_time}')
+    print(moscow_time)
+    return render_template('index.html', moscow_time=f'debug=False')
 
 
 if __name__ == '__main__':
