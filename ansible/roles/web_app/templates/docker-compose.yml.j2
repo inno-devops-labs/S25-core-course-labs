@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  web_app:
+    image: "{{ docker_image }}"
+    container_name: "{{ docker_container_name }}"
+    networks:
+      - "{{ docker_network }}"
+    ports:
+      {% for port in docker_ports %}
+      - "{{ port }}"
+      {% endfor %}
+    environment:
+      {% for env_var in docker_env %}
+      - "{{ env_var }}"
+      {% endfor %}
+    volumes:
+      {% for volume in docker_volumes %}
+      - "{{ volume }}"
+      {% endfor %}
+
+networks:
+  "{{ docker_network }}":
+    driver: bridge

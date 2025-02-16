@@ -201,3 +201,52 @@ Output:
   |--@ungrouped:
   |  |--yandex_cloud
 ```
+
+## Lab6: Application Deployment
+
+```bash
+ansible-playbook -i ./inventory/default_aws_ec2.yml ./playbooks/dev/main.yml 
+```
+
+```bash
+PLAY [Deploy application with Docker container] *****************************************************************************************
+
+TASK [Gathering Facts] ******************************************************************************************************************
+[WARNING]: Platform linux on host yandex_cloud is using the discovered Python interpreter at /usr/bin/python3.12, but future
+installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [yandex_cloud]
+
+TASK [docker : Install dependencies] ****************************************************************************************************
+ok: [yandex_cloud]
+
+TASK [docker : Add Docker GPG key] ******************************************************************************************************
+ok: [yandex_cloud]
+
+TASK [docker : Add Docker repository] ***************************************************************************************************
+ok: [yandex_cloud]
+
+TASK [docker : Install Docker] **********************************************************************************************************
+ok: [yandex_cloud]
+
+TASK [docker : Install Docker Compose] **************************************************************************************************
+ok: [yandex_cloud]
+
+TASK [docker : Enable Docker service on boot] *******************************************************************************************
+ok: [yandex_cloud]
+
+TASK [docker : Add user to Docker group] ************************************************************************************************
+ok: [yandex_cloud]
+
+TASK [web_app : Install pip for Python3 (Debian/Ubuntu)] ********************************************************************************
+skipping: [yandex_cloud]
+
+TASK [web_app : Pull Docker image for web_app] ******************************************************************************************
+ok: [yandex_cloud]
+
+TASK [web_app : Start web_app container] ************************************************************************************************
+changed: [yandex_cloud]
+
+PLAY RECAP ******************************************************************************************************************************
+yandex_cloud               : ok=10   changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0 
+```
