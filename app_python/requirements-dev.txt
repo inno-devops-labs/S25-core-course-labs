@@ -1,0 +1,6 @@
+-r requirements.txt
+black~=24.10.0
+isort~=5.13.0
+mypy~=1.14.0
+types-pytz==2024.2.0.20241221  # for mypy
+pylint~=3.3.0
