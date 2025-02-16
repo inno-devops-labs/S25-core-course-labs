@@ -2,7 +2,7 @@
 ---
 ## Task 1
 ``` ansible-playbook  <path_to_playbook> --diff --check```
-PLAY [install Docker] **********************************************************
+```PLAY [install Docker] **********************************************************
 
 TASK [Gathering Facts] *********************************************************
 ok: [my_yandex_vm]
@@ -43,11 +43,11 @@ TASK [docker : Activate Docker services] ***************************************
 ok: [my_yandex_vm]
 
 PLAY RECAP *********************************************************************
-my_yandex_vm               : ok=11   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+my_yandex_vm               : ok=11   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   ```
 
 ```ansible-inventory -i <name_of_your_inventory_file>.yaml --list```
 
-{
+```{
     "_meta": {
         "hostvars": {
             "my_yandex_vm": {
@@ -67,9 +67,10 @@ my_yandex_vm               : ok=11   changed=3    unreachable=0    failed=0    s
             "my_yandex_vm"
         ]
     }
-}
+}```
 
 ```ansible-inventory -i <name_of_your_inventory_file>.yaml --graph```
-@all:
+```@all:
   |--@ungrouped:
   |  |--my_yandex_vm
+```
