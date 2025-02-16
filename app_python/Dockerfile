@@ -4,6 +4,10 @@ FROM python:3.10-alpine AS builder
 # Setting working directory
 WORKDIR /app
 
+# Installing curl.
+# hadolint ignore=DL3018
+RUN apk add --no-cache curl
+
 # Installing requirements
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt

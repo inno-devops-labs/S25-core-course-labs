@@ -27,10 +27,10 @@ the only job I have is the collection of logs from all the running Docker contai
 ## Applications
 
 Running Go and Python applications flush their logs to the `STDOUT` and after this
-they can be successfully pulled by Promtail. 
+they can be successfully pulled by Promtail.
 
 In both cases logs do not strictly follow Structured Logging idiom, so the Loki
-can not easily identify labels. However, at least `LOG LEVEL` from the logs of 
+can not easily identify labels. However, at least `LOG LEVEL` from the logs of
 Python application it successfully detected.
 
 ![all-the-logs](./assets/logs-1.png)

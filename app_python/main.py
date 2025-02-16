@@ -7,12 +7,15 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 import pytz
+from prometheus_fastapi_instrumentator import Instrumentator
 
 
 with open("templates/index.html", "r", encoding="utf-8") as f:
     html_template = f.read()
 
 app = FastAPI()
+Instrumentator().instrument(app).expose(app)
+
 static_dir = os.path.join(os.path.dirname(__file__), "static")
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 

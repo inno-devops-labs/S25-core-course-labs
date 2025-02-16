@@ -2,3 +2,4 @@ fastapi
 uvicorn
 pytz
 pytest
+prometheus_fastapi_instrumentator

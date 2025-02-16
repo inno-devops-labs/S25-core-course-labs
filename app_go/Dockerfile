@@ -19,6 +19,10 @@ FROM alpine:3.21 AS final
 # Setting working directory
 WORKDIR /app
 
+# Installing curl.
+# hadolint ignore=DL3018
+RUN apk add --no-cache curl
+
 # Copying static content and binary
 COPY --from=builder /app/cmd/numerologist/static /app/static
 COPY --from=builder /app/goapp /app/.

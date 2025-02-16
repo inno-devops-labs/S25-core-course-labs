@@ -2,6 +2,7 @@
 package server
 
 import (
+	"github.com/ansrivas/fiberprometheus/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 
@@ -14,6 +15,11 @@ func New(cfgs ...fiber.Config) *fiber.App {
 
 	// Enable logging.
 	s.Use(logger.New())
+
+	// Enable metrics collection.
+	prom := fiberprometheus.New("app_go")
+	prom.RegisterAt(s, "/metrics")
+	s.Use(prom.Middleware)
 
 	// Register handlers.
 	handlers.RegisterAll(s)
