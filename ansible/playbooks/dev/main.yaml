@@ -1,5 +1,5 @@
 ---
-- name: Ansible and Docker Deployment
+- name: Deploying Web App && Cleanup
   hosts: aws_ec2  # Target hosts from the AWS EC2 inventory
   become: true  # Use elevated privileges for all tasks
   roles:
