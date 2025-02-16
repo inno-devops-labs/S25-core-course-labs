@@ -236,23 +236,23 @@ To verify successful deployment, included the following screenshots:
 
 - **Docker Installed:**
 
- ![Docker Installed](Docker_installed.png)
+ ![Docker Installed](./Screenshots/Docker_installed.png)
 
 - **Docker Compose Installed:**
 
- ![Docker Compose Installed](docker_compose_installed.png)
+ ![Docker Compose Installed](./Screenshots/docker_compose_installed.png)
 
 - **Running Containers:**
 
- ![Docker ps](docker_ps.png)
+ ![Docker ps](./Screenshots/docker_ps.png)
 
 - **Ansible Inventory:**
 
- ![Inventory](inventory.png)
+ ![Inventory](./Screenshots/inventory.png)
 
 - **Ansible Graph:**
 
- ![Graph](graph.png)
+ ![Graph](./Screenshots/graph.png)
 
 ## Conclusion
 
@@ -354,7 +354,7 @@ cat /etc/docker/daemon.json
 
 - **Secure Docker Configuration Applied:**
 
-![Secure Docker Config](bonus.png)
+![Secure Docker Config](./Screenshots/bonus.png)
 
 ## Conclusion Of This Task
 
