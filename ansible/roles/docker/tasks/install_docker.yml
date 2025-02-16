@@ -2,7 +2,6 @@
 - name: Install Docker dependencies
   apt:
     name:
-      - apt-transport-https
       - ca-certificates
       - curl
       - software-properties-common
@@ -22,3 +21,9 @@
   apt:
     name: docker-ce
     state: present
+
+- name: Add user to Docker group
+  user:
+    name: venom
+    groups: docker
+    append: yes

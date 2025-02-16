@@ -3,4 +3,4 @@ all:
   hosts:
     45.142.122.102:
       ansible_user: venom
-      ansible_ssh_private_key_file: /home/root/.ssh/id_rsa_devops
+      ansible_ssh_private_key_file: /root/.ssh/authtorized_keys/id_rsa_devops
