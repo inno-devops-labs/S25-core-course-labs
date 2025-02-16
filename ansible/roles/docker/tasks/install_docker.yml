@@ -1,0 +1,40 @@
+- name: Remove existing Docker repositories
+  file:
+    path: /etc/apt/sources.list.d/docker*.list
+    state: absent
+
+- name: Install prerequisites
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+    state: present
+    update_cache: yes
+
+- name: Create directory for Docker GPG key
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: 0755
+
+- name: Add Docker GPG key
+  get_url:
+    url: "{{ docker_gpg_url }}"
+    dest: /etc/apt/keyrings/docker.asc
+    mode: 0644
+
+- name: Add Docker repo
+  apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    state: present
+
+- name: Install Docker
+  apt:
+    name:
+      - docker-ce={{ docker_version }}
+      - docker-ce-cli
+      - containerd.io
+    state: present
+    update_cache: yes
