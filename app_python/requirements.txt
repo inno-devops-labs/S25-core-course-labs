@@ -4,3 +4,4 @@ Jinja2
 pytz
 bs4
 httpx
+prometheus_client

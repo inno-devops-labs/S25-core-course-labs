@@ -1,7 +1,24 @@
 version: '3.8'
 
+volumes:
+  prom_data:
+
 networks:
   loki_net:
+
+x-deploy: 
+  &default-deploy
+  resources:
+    limits:
+      memory: 250M
+
+x-logging:
+  &common_logging
+  driver: "json-file"
+  options:
+    tag: "{{.ImageName}}|{{.ContainerName}}"
+    max-size: "20M"
+    max-file: "10"
 
 services:
   loki:
@@ -11,6 +28,13 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     networks:
       - loki_net
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:3100/ready"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging: *common_logging
+    deploy: *default-deploy
   
   promtail:
     image: grafana/promtail:latest
@@ -21,6 +45,13 @@ services:
     command: -config.file=/etc/promtail/config.yml
     networks:
       - loki_net
+    logging: *common_logging
+    deploy: *default-deploy
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:9080/ready"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
   
   grafana:
     container_name: grafana
@@ -52,6 +83,13 @@ services:
       - "3000:3000"
     networks:
       - loki_net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging: *common_logging
+    deploy: *default-deploy
 
   python-web-app: 
     image: lekski/python-web-app:latest
@@ -60,10 +98,21 @@ services:
       - "80:8000"
     networks:
       - loki_net 
+    deploy: *default-deploy
     logging:
       driver: "json-file"
       options:
         tag: "{{.ImageName}}|{{.Name}}"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget --no-verbose --tries=1 --spider http://127.0.0.1:80/ || exit 1",
+        ]
+      interval: 10s
+      timeout: 10s
+      start_period: 10s
+      retries: 5
 
   golang-web-app:
     image: lekski/golang-web-app:latest
@@ -72,8 +121,33 @@ services:
       - "81:8000"
     networks:
       - loki_net
+    deploy: *default-deploy
     logging:
       driver: "json-file"
       options:
         tag: "{{.ImageName}}|{{.Name}}"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget --no-verbose --tries=1 --spider http://127.0.0.1:81/ || exit 1",
+        ]
+      interval: 10s
+      timeout: 10s
+      start_period: 10s
+      retries: 5
 
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prom_data:/prometheus
+    networks:
+      - loki_net
+    logging: *common_logging
+    deploy: *default-deploy
