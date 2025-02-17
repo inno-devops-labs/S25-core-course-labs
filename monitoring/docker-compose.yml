@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - monitoring
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/config.yml
+    networks:
+      - monitoring
+    volumes:
+      - ./loki-config.yml:/etc/loki/config.yml
+      - /tmp/loki:/loki  
+    user: "10001:10001"  
+    environment:
+      - LOKI_STORAGE_DIR=/loki 
+    restart: unless-stopped
+    
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - ./promtail-config.yml:/etc/promtail/config.yml
+      - /var/log:/var/log
+    networks:
+      - monitoring
+
+  python_app:
+    image: vika123vika/app-python  
+    ports:
+      - "5000:5000"
+    networks:
+      - monitoring
+    depends_on:
+      - loki  
+
+networks:
+  monitoring:
+    driver: bridge
