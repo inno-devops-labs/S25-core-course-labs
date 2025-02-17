@@ -25,6 +25,8 @@ dependencies {
     implementation(libs.logback.classic)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.config.yaml)
+    implementation("io.ktor:ktor-server-metrics-micrometer:1.11.0")
+    implementation("io.micrometer:micrometer-registry-prometheus:1.11.0")
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
 }

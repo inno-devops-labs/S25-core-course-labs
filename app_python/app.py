@@ -1,9 +1,11 @@
 from flask import Flask, jsonify, render_template
 from datetime import datetime
 import pytz
+from prometheus_flask_exporter import PrometheusMetrics
 
 app = Flask(__name__)
 
+metrics = PrometheusMetrics(app, group_by='endpoint')
 
 @app.route("/")
 def index():
