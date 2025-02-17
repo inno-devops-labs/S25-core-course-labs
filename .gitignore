@@ -33,3 +33,5 @@ ansible/roles/geerlingguy.*
 ansible/roles/geerlingguy.docker/.*
 ansible/roles/geerlingguy.docker/molecule/
 ansible/roles/geerlingguy.docker/vars/
+
+monitoring/promtail-positions/
