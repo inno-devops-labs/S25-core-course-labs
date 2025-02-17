@@ -1,0 +1,97 @@
+# Outputs
+- `ansible-playbook playbooks/dev/main.yaml --check`
+```
+PLAY [Deploy Docker on VM in Yandex Cloud] *************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************
+fatal: [yandex_cloud_devops_lab4_vm]: FAILED! => {"msg": "The field 'remote_addr' has an invalid value, which includes an undefined variable.. 'dynamic_ip' is undefined"}
+
+PLAY RECAP *********************************************************************************************************
+yandex_cloud_devops_lab4_vm : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+```
+
+- `ansible-playbook playbooks/dev/main.yaml -e "dynamic_ip=89.169.159.227"`
+```
+
+TASK [Gathering Facts] *********************************************************************************************
+fatal: [yandex_cloud_devops_lab4_vm]: FAILED! => {"msg": "The field 'remote_addr' has an invalid value, which includes an undefined variable.. 'dynamic_ip' is undefined"}
+
+PLAY RECAP *********************************************************************************************************
+yandex_cloud_devops_lab4_vm : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
+VM@LVM ~/U/L/P/D/S/ansible (lab5) [2]> ansible-playbook playbooks/dev/main.yaml -e "dynamic_ip=89.169.159.227"
+
+PLAY [Deploy Docker on VM in Yandex Cloud] *************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************
+[WARNING]: Platform linux on host yandex_cloud_devops_lab4_vm is using the discovered Python interpreter at
+/usr/bin/python3.12, but future installation of another Python interpreter could change the meaning of that path.
+See https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html for more
+information.
+ok: [yandex_cloud_devops_lab4_vm]
+
+TASK [docker : include_tasks] **************************************************************************************
+included: /home/VM/User/Learning/Program/DOE/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for yandex_cloud_devops_lab4_vm
+
+TASK [docker : Add GPG key] ****************************************************************************************
+ok: [yandex_cloud_devops_lab4_vm]
+
+TASK [docker : Set up the Docker repository] ***********************************************************************
+ok: [yandex_cloud_devops_lab4_vm]
+
+TASK [docker : Install Docker CE] **********************************************************************************
+changed: [yandex_cloud_devops_lab4_vm]
+
+TASK [docker : include_tasks] **************************************************************************************
+included: /home/VM/User/Learning/Program/DOE/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for yandex_cloud_devops_lab4_vm
+
+TASK [docker : Install docker-compose] *****************************************************************************
+changed: [yandex_cloud_devops_lab4_vm]
+
+TASK [docker : include_tasks] **************************************************************************************
+included: /home/VM/User/Learning/Program/DOE/S25-core-course-labs/ansible/roles/docker/docker_enable.yml for yandex_cloud_devops_lab4_vm
+
+TASK [docker : Enable Docker service to start on boot] *************************************************************
+ok: [yandex_cloud_devops_lab4_vm]
+
+TASK [docker : include_tasks] **************************************************************************************
+included: /home/VM/User/Learning/Program/DOE/S25-core-course-labs/ansible/roles/docker/add_user_to_group.yml for yandex_cloud_devops_lab4_vm
+
+TASK [docker : Add the current user to the docker group] ***********************************************************
+changed: [yandex_cloud_devops_lab4_vm]
+
+PLAY RECAP *********************************************************************************************************
+yandex_cloud_devops_lab4_vm : ok=11   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+```
+
+- `ansible-inventory -i inventory/default_yandex_cloud.yml --list`
+```
+{
+    "_meta": {
+        "hostvars": {
+            "yandex_cloud_devops_lab4_vm": {
+                "ansible_host": "{{ dynamic_ip }}",
+                "ansible_ssh_private_key_file": "/home/VM/.ssh/yandex_cloud_vm",
+                "ansible_user": "user"
+            }
+        }
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    },
+    "ungrouped": {
+        "hosts": [
+            "yandex_cloud_devops_lab4_vm"
+        ]
+    }
+}
+```
+
+- `ansible-inventory -i inventory/default_yandex_cloud.yml --graph`
+```
+@all:
+  |--@ungrouped:
+  |  |--yandex_cloud_devops_lab4_vm
+```
