@@ -46,12 +46,9 @@ This document explains the **Loki + Promtail + Grafana** logging stack, detailin
 
 ### **Containers**
 
-![Containers](https://github.com/user-attachments/assets/926fd045-a623-49af-bf0c-65d7e14bfb45))
+![Containers](https://github.com/user-attachments/assets/926fd045-a623-49af-bf0c-65d7e14bfb45)
 
 ### **Grafana screenshot**
 
 ![Grafana](https://github.com/user-attachments/assets/bcae0feb-3611-40fb-82f8-2c5000cc8547)
 ![Grafana](https://github.com/user-attachments/assets/6d1746f0-a318-4756-b7dc-1caf1c1af8bf)
-
-
-
