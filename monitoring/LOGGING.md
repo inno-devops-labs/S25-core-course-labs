@@ -37,5 +37,4 @@ Grafana provides a user interface for log visualization, querying Loki and displ
 
 ### Python App Logs
 
-![App logs](screenshots/python_app_logs.png)
-
+![App logs](screenshots/app_logs.png)
