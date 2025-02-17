@@ -72,7 +72,7 @@
 ![Python metrics](./img/targets_cs.png)
 ![CSharp metrics](./img/targets_py.png)
 
-### 4. Health Checks
+### Health Checks
 
 - Added health checks for all containers in `docker-compose.yml`:
   - Example for Python App:
