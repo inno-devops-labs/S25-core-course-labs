@@ -1,2 +1,4 @@
 terraform/key.json
-.terraform*
+*.terraform*
+*terraform.tfstate
+ansible/roles/geerlingguy.docker/

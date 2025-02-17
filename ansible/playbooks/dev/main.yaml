@@ -1,0 +1,5 @@
+- name: Deploy Docker on VM in Yandex Cloud
+  hosts: all
+  become: true
+  roles:
+    - geerlingguy.docker
