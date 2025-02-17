@@ -12,8 +12,8 @@ services:
     image: grafana/promtail:2.9.3
     platform: "linux/amd64"
     volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - ./logs:/var/log
-      - ./containers:/var/lib/docker/containers
       - ./promtail.yml:/etc/promtail/config.yml
     command: -config.file=/etc/promtail/config.yml
     networks:

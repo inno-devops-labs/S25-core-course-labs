@@ -15,7 +15,7 @@ scrape_configs:
           - localhost:8080
         labels:
           job: docker
-          __path__: ~/Library/Containers/com.docker.docker/Data/vms/0/data/docker/containers/*/*-json.log # For macOS
+          __path__: /var/lib/docker/containers/*/*-json.log
 
     pipeline_stages:
       - json:
