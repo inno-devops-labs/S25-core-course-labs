@@ -1,0 +1,26 @@
+- name: Ensure Docker is installed
+  command: docker --version
+  register: docker_installed
+  changed_when: false
+
+- debug:
+    msg: "Docker is installed: {{ docker_installed.stdout }}"
+
+- name: Ensure Docker Compose is installed
+  command: docker-compose --version
+  register: compose_installed
+  changed_when: false
+
+- debug:
+    msg: "Docker Compose is installed: {{ compose_installed.stdout }}"
+
+- name: Copy `docker-compose.yml` template
+  template:
+    src: docker-compose.yml.j2
+    dest: /home/venom/docker-compose.yml
+    mode: '0644'
+
+- name: Start the web application
+  shell: docker-compose up -d
+  args:
+    chdir: /home/venom
