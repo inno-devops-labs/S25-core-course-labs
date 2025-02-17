@@ -48,3 +48,11 @@ The following screenshots demonstrate that our monitoring stack is successfully 
 ### Grafana Dashboard
 
 ![Grafana Running](./screenshots/graphana-running.png)
+
+### Example of Query
+
+![Query](./screenshots/stack-working-1.png)
+
+### Example of Query Results
+
+![Query Results](./screenshots/stack-working-2.png)
