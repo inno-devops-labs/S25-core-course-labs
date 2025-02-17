@@ -1,5 +1,5 @@
-- name: Install and Configure Docker
+- name: Deploy application
   hosts: all
   become: true
   roles:
-    - docker
+    - web_app
