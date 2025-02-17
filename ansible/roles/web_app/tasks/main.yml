@@ -1,4 +1,45 @@
 ---
-- include_tasks: install_docker.yml
-- include_tasks: install_compose.yml
+- name: Ensure Docker Installed
+  apt:
+    name: docker.io
+    state: present
+  become: true
+  tags:
+    - docker
+    - apt
+
+- name: Apt Update Cache
+  apt:
+    update_cache: yes
+  become: true
+  tags:
+    - apt
+
+- name: Install Docker‑Image
+  docker_image:
+    name: "{{ web_app_docker_image }}"
+    tag: "{{ web_app_docker_tag }}"
+    source: pull
+  become: true
+  tags:
+    - docker
+
+- name: Launch App Container
+  docker_container:
+    name: "{{ web_app_container_name }}"
+    image: "{{ web_app_docker_image }}:{{ web_app_docker_tag }}"
+    state: started
+    restart_policy: always
+    published_ports:
+      - "{{ web_app_container_port }}:80"
+  become: true
+  tags:
+    - docker
+
+- name: Deploy Docker-Compose
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/docker-compose.yml
+  tags:
+    - docker
 

@@ -1,0 +1,8 @@
+---
+web_app_docker_image: "g3nd4/python-web"
+web_app_docker_tag: "latest"
+web_app_container_name: "python-web"
+web_app_container_port: 5000
+web_app_full_wipe: true
+web_app_deploy_path: /opt/python-web
+
