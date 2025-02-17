@@ -1,0 +1,53 @@
+---
+# Docker Edition: 'ce' (Community Edition) or 'ee' (Enterprise Edition)
+docker_edition: 'ce'
+
+# List of Docker packages to install
+docker_packages:
+  - "docker-{{ docker_edition }}"
+  - "docker-{{ docker_edition }}-cli"
+  - "docker-{{ docker_edition }}-rootless-extras"
+  - "containerd.io"
+  - docker-buildx-plugin
+
+# State of Docker packages (latest or specific version)
+docker_packages_state: latest
+
+# List of obsolete Docker packages to remove
+docker_obsolete_packages:
+  - docker
+  - docker.io
+  - docker-engine
+  - docker-doc
+  - podman-docker
+  - containerd
+  - runc
+
+# Docker service management options
+docker_service_manage: true  # Whether to manage the Docker service
+docker_service_state: started  # Ensure Docker is running
+docker_service_enabled: true  # Enable Docker to start on boot
+docker_restart_handler_state: restarted  # State for the Docker restart handler
+
+# Docker Compose Plugin options
+docker_install_compose_plugin: true
+docker_compose_package: docker-compose-plugin
+docker_compose_package_state: latest
+
+# Docker repository configuration
+docker_add_repo: true
+docker_repo_url: https://download.docker.com/linux
+
+# APT repository configuration for Docker
+docker_apt_ansible_distribution: "ubuntu"
+docker_apt_release_channel: stable
+docker_apt_arch: "amd64"
+docker_apt_repository: "deb [arch={{ docker_apt_arch }}{{' signed-by=/etc/apt/keyrings/docker.asc'
+ if add_repository_key is not failed}}] {{ docker_repo_url }}/{{ ansible_distribution | lower }}
+ {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
+docker_apt_ignore_key_error: true
+docker_apt_gpg_key: "{{ docker_repo_url }}/{{ ansible_distribution | lower }}/gpg"
+docker_apt_filename: "docker"
+
+# List of users to add to the Docker group
+docker_users: ["ubuntu"]
