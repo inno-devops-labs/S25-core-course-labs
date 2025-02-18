@@ -2,3 +2,4 @@
 - include_tasks: install_compose.yml
 - include_tasks: docker_enable.yml
 - include_tasks: add_user_to_group.yml
+- include_tasks: docker_disable_root.yml

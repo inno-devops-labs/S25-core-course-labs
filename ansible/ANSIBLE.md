@@ -1,4 +1,5 @@
 # Outputs
+
 - `ansible-playbook playbooks/dev/main.yaml --check`
 ```
 PLAY [Deploy Docker on VM in Yandex Cloud] *************************************************************************
@@ -89,4 +90,18 @@ yandex_cloud_devops_lab4_vm : ok=11   changed=0    unreachable=0    failed=0    
 @all:
   |--@ungrouped:
   |  |--yandex_cloud_devops_lab4_vm
+```
+
+## Bonus task
+
+- `ansible-playbook playbooks/dev/main.yaml -e "dynamic_ip=158.160.41.38"`
+```
+TASK [docker : Modify daemon to disable root access] ***************************************************************
+changed: [yandex_cloud_devops_lab4_vm]
+
+TASK [docker : Restart docker.service to apply changes] ************************************************************
+changed: [yandex_cloud_devops_lab4_vm]
+
+PLAY RECAP *********************************************************************************************************
+yandex_cloud_devops_lab4_vm : ok=14   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
 ```
