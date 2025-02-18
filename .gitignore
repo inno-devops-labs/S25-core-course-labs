@@ -2,3 +2,5 @@ terraform/key.json
 *.terraform*
 *terraform.tfstate
 ansible/roles/geerlingguy.docker/
+*__pycache__*
+ansible/inventory/token

@@ -1,0 +1,4 @@
+plugin: yacloud_compute
+yacloud_token_file: "inventory/token"
+yacloud_clouds: "devops"
+yacloud_folders: "devops"
