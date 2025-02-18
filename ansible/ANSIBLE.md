@@ -1,4 +1,6 @@
-# Outputs
+# Lab 5
+
+## Outputs
 
 - `ansible-playbook playbooks/dev/main.yaml --check`
 ```
@@ -92,7 +94,7 @@ yandex_cloud_devops_lab4_vm : ok=11   changed=0    unreachable=0    failed=0    
   |  |--yandex_cloud_devops_lab4_vm
 ```
 
-## Bonus task
+### Bonus task
 
 - `ansible-playbook playbooks/dev/main.yaml -e "dynamic_ip=158.160.41.38"`
 ```
@@ -104,4 +106,40 @@ changed: [yandex_cloud_devops_lab4_vm]
 
 PLAY RECAP *********************************************************************************************************
 yandex_cloud_devops_lab4_vm : ok=14   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
+```
+
+# Lab 6
+
+## Outputs
+
+- `ansible-playbook playbooks/dev/main.yaml`
+```
+(venv) [VM@LVM ansible]$ ansible-playbook playbooks/dev/main.yaml 
+
+PLAY [Deploy Docker on VM in Yandex Cloud] *************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************
+[WARNING]: Platform linux on host devops_lab4_vm is using the discovered Python interpreter at /usr/bin/python3.12,
+but future installation of another Python interpreter could change the meaning of that path. See
+https://docs.ansible.com/ansible-core/2.18/reference_appendices/interpreter_discovery.html for more information.
+ok: [devops_lab4_vm]
+
+TASK [web_app : include_tasks] *************************************************************************************
+included: /home/VM/User/Learning/Program/DOE/S25-core-course-labs/ansible/roles/web_app/tasks/pull_image.yml for devops_lab4_vm
+
+TASK [web_app : Pull docker image from Docker Hub] *****************************************************************
+ok: [devops_lab4_vm]
+
+TASK [web_app : include_tasks] *************************************************************************************
+included: /home/VM/User/Learning/Program/DOE/S25-core-course-labs/ansible/roles/web_app/tasks/start_container.yml for devops_lab4_vm
+
+TASK [web_app : Start container] ***********************************************************************************
+changed: [devops_lab4_vm]
+
+PLAY RECAP *********************************************************************************************************
+devops_lab4_vm             : ok=5    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1739903906.085356   13756 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+
 ```
