@@ -61,6 +61,9 @@ jobs:
     needs: [test, snyk_checking]
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Docker Buildx
         uses: docker/setup-buildx-action@v3
 
