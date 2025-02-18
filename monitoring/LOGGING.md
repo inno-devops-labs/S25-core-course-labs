@@ -21,7 +21,7 @@
 
 ### Loki
 
-![Loki](./loki.png)
+![Loki](./loki.jpg)
 
 ### Promtail
 
