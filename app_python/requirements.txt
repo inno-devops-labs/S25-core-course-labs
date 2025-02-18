@@ -4,3 +4,4 @@ pytz
 pytest
 httpx
 pytest-cov
+prometheus-fastapi-instrumentator
