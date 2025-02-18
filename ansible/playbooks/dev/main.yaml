@@ -1,0 +1,9 @@
+---
+- name: Install Docker on localhost
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install Docker
+      ansible.builtin.apt:
+        name: docker.io
+        state: present

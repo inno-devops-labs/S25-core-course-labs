@@ -1,0 +1,5 @@
+---
+- name: Install Docker
+  ansible.builtin.apt:
+    name: "{{ docker_package }}"
+    state: present
