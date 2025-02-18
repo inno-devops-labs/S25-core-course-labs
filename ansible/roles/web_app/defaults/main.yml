@@ -1,0 +1,6 @@
+---
+docker_compose_file: /opt/web_app/docker-compose.yml
+
+app_image: my_fastapi_app:latest
+app_container_name: fastapi_web_app
+app_port: 8000

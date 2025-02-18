@@ -1,0 +1,18 @@
+---
+- name: Create directory for the web application
+  file:
+    path: /opt/web_app
+    state: directory
+    owner: "{{ ansible_user | default('ubuntu') }}"
+    mode: '0755'
+
+- name: Deploy docker-compose file for the web application
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ docker_compose_file }}"
+    mode: '0644'
+
+- name: Pull and start application containers
+  command: docker-compose -f {{ docker_compose_file }} up -d
+  args:
+    chdir: /opt/web_app

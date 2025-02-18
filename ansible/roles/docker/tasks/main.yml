@@ -1,0 +1,4 @@
+---
+- import_tasks: install_docker.yml
+- import_tasks: install_compose.yml
+- import_tasks: add_user_to_docker_group.yml

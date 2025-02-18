@@ -1,0 +1,14 @@
+plugin: aws_ec2
+regions:
+  - ap-southeast-2
+filters:
+  instance-state-name: running
+  tag:Role: webapp
+hostnames:
+  - ubuntu@ec2-3-107-79-201.ap-southeast-2.compute.amazonaws.com
+keyed_groups:
+  - key: tags.Name
+    prefix: Devops
+compose:
+  ansible_user: "ubuntu"
+  ansible_ssh_private_key_file: "~/Devops_Labs_1.pem"
