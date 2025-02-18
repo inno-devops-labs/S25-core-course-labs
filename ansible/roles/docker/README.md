@@ -15,18 +15,18 @@
    
    ## Tasks
 
-      - Add GPG key:
-         Set up key for Docker's repository.
-      - Set up the Docker repository:
-         Add Docker's repository to the packet manager's list.
-      - Install Docker CE:
-         Install Docker Comunity Edition.
-      - Install docker-compose:
-         Install Docker Compose.
-      - Enable Docker service to start on boot:
-         Ensble docker.servise to start up on boot usind systemd.
-      - Add the current user to the docker group:
-         Add user (user) to the docker group to avoid using `sudo` for operations with docker.
+   - Add GPG key:
+      Set up key for Docker's repository.
+   - Set up the Docker repository:
+      Add Docker's repository to the packet manager's list.
+   - Install Docker CE:
+      Install Docker Comunity Edition.
+   - Install docker-compose:
+      Install Docker Compose.
+   - Enable Docker service to start on boot:
+      Ensble docker.servise to start up on boot usind systemd.
+   - Add the current user to the docker group:
+      Add user (user) to the docker group to avoid using `sudo` for operations with docker.
 
    ## Example Playbook
 
