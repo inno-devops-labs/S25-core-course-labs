@@ -1,5 +1,23 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for roles/web_app
-- include_tasks: pull_image.yml
-- include_tasks: start_container.yml
+- import_tasks: 0-wipe.yml
+
+- name: Deploy Docker container
+  block:
+    - name: Pull docker image from Docker Hub
+      docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+      tags:
+        - docker_pull
+
+    - name: Start container
+      docker_container:
+        name: "{{ docker_container_name }}"
+        image: "{{ docker_image }}"
+        state: started
+        detach: true
+      tags:
+        - start_container
+    
