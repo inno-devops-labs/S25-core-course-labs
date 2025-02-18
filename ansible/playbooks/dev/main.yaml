@@ -1,9 +1,12 @@
 ---
-- name: Install Docker on localhost
-  hosts: all
+- name: Install Docker and Deploy Web App
+  hosts: localhost
   become: yes
   tasks:
     - name: Install Docker
-      ansible.builtin.apt:
-        name: docker.io
-        state: present
+      include_role:
+        name: docker
+
+    - name: Pull and deploy Docker image for the web app
+      include_role:
+        name: web_app

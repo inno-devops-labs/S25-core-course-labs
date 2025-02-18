@@ -7,7 +7,14 @@ This role installs Docker on a remote machine.
 - The remote machine should be accessible via SSH.
 - Ansible version 2.x or higher is required.
 - `sudo` privileges are required on the target machine. You will be prompted to enter the `BECOME` password (usually the password for `sudo`), so make sure you have access to it.
+- The `community.docker` Ansible collection is required for Docker management
 
+### Install Ansible Collection
+To use this role, first install the `community.docker` collection:
+
+```bash
+ansible-galaxy collection install community.docker
+```
 
 ## Role Variables
 
@@ -20,7 +27,7 @@ Example in `defaults/main.yml`:
 docker_version: latest
 ```
 ### Dependencies
-None.
+- `community.docker` Ansible collection
 
 ## Example Playbook
 This role can be used in a playbook to install Docker on the remote machines:
