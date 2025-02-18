@@ -12,7 +12,8 @@ To check metrics open in browser https://localhost:9090.
 - Configured prometheus.yml to collect metrics from:
 - Prometheus itself: `prometheus:9090`
 - Grafana: `grafana:3000`
-- Loki: `loki:3100: `python_app:5000`
+- Loki: `loki:3100: 
+- Web App: `python_app:5000`
 
 ## Prometheus Targets Page (Screenshots)
 ![Prometheus Targets](./img/prometheus_targets.png)
