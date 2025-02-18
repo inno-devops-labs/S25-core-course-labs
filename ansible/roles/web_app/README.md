@@ -1,38 +1,46 @@
-Role Name
-=========
+   # Web App Role
 
-A brief description of the role goes here.
+   This role deploys web application in Docker container. Details of realisation described in next sections.
 
-Requirements
-------------
+   ## Requirements
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+   - Ansible 2.9+
+   - Ubuntu 24.04 and compatible with sudo privileges
+   - Access to the network
 
-Role Variables
---------------
+   ## Role Variables
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+   - `docker_image`: Name of docker image, which will be pulled and deloyed (default: `"voronm1522/devops:python-app"`)
+   - `docker_container_name`: Name of the container (default: `"python-app"`)
+   - `web_app_full_wipe`: Whether to wipe the space before deploying (default: `true`)
 
-Dependencies
-------------
+  ## Dependencies
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+  - `docker`: Deploying application in Docker conteiner depends on installation of the docker on the machine.
+  
+  ## Tasks
 
-Example Playbook
-----------------
+  - `0-wipe.yml`: Executes in case `web_app_full_wipe: true`. It stops the conteiner, remove it and remode its image
+  - `main.yml`: It pulls the image from the Docker Hub and deploy it on the machine.
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+  ## Tags
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+    - `stop_container`: Stops specified container (ignore errors).
+    - `remove_container`: Removes specified container (ignore errors).
+    - `remove_image`: Removes specified image.
+    - `docker_pull`: Pulls the image from the Docker Hub.
+    - `start_container`: Starts the container.
 
-License
--------
+  ## Example Playbook
 
-BSD
+   ```yaml
+  - name: Deploy Docker on VM in Yandex Cloud
+    hosts: all
+    become: true
+    vars:
+      ansible_ssh_user: user
+      ansible_ssh_private_key_file: /home/VM/.ssh/devops/yandex_cloud_vm
+    roles:
+      - web_app
 
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+  ```

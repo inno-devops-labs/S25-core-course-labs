@@ -1,4 +1,0 @@
-- name: Pull docker image from Docker Hub
-  docker_image:
-    name: "{{ docker_image }}"
-    source: pull
