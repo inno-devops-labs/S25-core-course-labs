@@ -1,0 +1,11 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for ansible/roles/web_app
+
+app_name: my_web_app
+docker_image: "petrel312/flask_app:latest"
+container_name: "flask_app"
+app_port: 5000
+host_port: 5000
+network_name: "web_app_network"
+web_app_full_wipe: false
