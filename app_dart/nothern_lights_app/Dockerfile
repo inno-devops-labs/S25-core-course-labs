@@ -1,4 +1,4 @@
-FROM cirrusci/flutter:3.10 AS build
+FROM cirrusci/flutter:stable AS build
 
 WORKDIR /app_dart/nothern_lights_app
 
