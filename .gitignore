@@ -1,5 +1,5 @@
 /env
- .DS_Store
+.DS_Store
 /app_python/__pycache__/*
 /app_python/.pytest_cache/*
 
