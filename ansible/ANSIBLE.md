@@ -2,56 +2,106 @@
 
 ## Overview
 
-This repository includes an Ansible playbook that deploys Docker and Docker Compose on a target host using a custom Docker role. The role performs the following tasks:
-- Installs prerequisite packages.
-- Adds Docker’s official GPG key and repository.
-- Installs Docker Engine and Docker Compose.
-- Ensures the Docker service is started and enabled on boot.
-- Adds the current user to the Docker group to avoid using sudo for Docker commands.
+This repository now includes Ansible playbooks and roles for a complete Continuous Deployment (CD) process for our applications. In addition to the Docker installation and configuration provided in Lab 5, this lab (Lab 6) introduces a new **web_app** role that deploys our application's Docker image using Docker Compose. The enhancements include:
+
+- **Application Deployment:**  
+  - A custom **web_app** role that deploys the application's Docker image.
+  - A Docker Compose template to define the container configuration.
+  - A wipe logic to remove existing containers/configuration (controlled via a variable).
+
+- **Best Practices:**  
+  - Grouping tasks with blocks for better organization.
+  - Applying role dependencies (the **web_app** role depends on the **docker** role).
+  - Using tags for selective execution (e.g., `docker`, `deploy`, `wipe`).
+  
+- **Bonus CD Improvement:**  
+  - An extra playbook for deploying a NodeJS application (located in `app_nodejs`), reusing the **web_app** role with overridden variables.
 
 ## Role and Playbook Structure
 
-- **Playbook:** `ansible/playbooks/dev/main.yaml`
-- **Docker Role:** Located in `ansible/roles/docker/`
-  - Default variables: `ansible/roles/docker/defaults/main.yml`
-  - Handlers: `ansible/roles/docker/handlers/main.yml`
-  - Tasks:
-    - `install_docker.yml`
-    - `install_compose.yml`
-    - `add_user_to_docker_group.yml`
-    - Main task file: `ansible/roles/docker/tasks/main.yml`
+- **Playbooks:**  
+  - **Main Playbook:** `ansible/playbooks/dev/main.yaml`  
+    (Deploys both the Docker and the web_app roles.)
+  - **Bonus NodeJS Playbook:** `ansible/playbooks/dev/app_nodejs/main.yaml`  
+    (Overrides the image and port for the NodeJS application.)
 
-## Testing the Playbook
+- **Roles:**  
+  - **Docker Role:** Located in `ansible/roles/docker/`  
+    - Default variables: `ansible/roles/docker/defaults/main.yml`
+    - Handlers: `ansible/roles/docker/handlers/main.yml`
+    - Tasks:
+      - `install_docker.yml`
+      - `install_compose.yml`
+      - `add_user_to_docker_group.yml`
+      - Main task file: `ansible/roles/docker/tasks/main.yml`
+  - **Web App Role:** Located in `ansible/roles/web_app/`  
+    - Defaults: `ansible/roles/web_app/defaults/main.yml` (defines `docker_image`, `app_port`, and `web_app_full_wipe`)
+    - Metadata: `ansible/roles/web_app/meta/main.yml` (declares dependency on the **docker** role)
+    - Tasks:  
+      - Wipe logic: `ansible/roles/web_app/tasks/0-wipe.yml`
+      - Main deployment tasks: `ansible/roles/web_app/tasks/main.yml`  
+        *This file uses blocks to group tasks (e.g., create directory, deploy docker-compose, pull image, and start the container) and applies appropriate tags.*
+    - Templates:  
+      - Docker Compose file template: `ansible/roles/web_app/templates/docker-compose.yml.j2`
+    - Documentation: `ansible/roles/web_app/README.md`
 
-First of all, configure your VM (Access Key id, secret, and region if your using AWS EC2 for example).
+## Testing the Playbooks
 
-A dry run of the playbook was performed using the `--check` and `--diff` flags:
+1. **Prerequisites:**  
+   - Configure your VM (AWS EC2 or other) with proper credentials (Access Key ID, Secret, region, etc.).
+   - Ensure the `ANSIBLE_CONFIG` environment variable is set if needed:
+     ```bash
+     export ANSIBLE_CONFIG=/full/path/to/your/ansible.cfg
+     ```
 
-```bash
-ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/main.yaml --check --diff
-```
+2. **Dry Run (Check Mode):**  
+   A dry run using the `--check` and `--diff` flags can be executed to preview changes:
+   ```bash
+   ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/main.yaml --check --diff
+   ```
 
-If the command fails, you have to manually setup the environment variable for the ansible.cfg file:
-```bach
-export ANSIBLE_CONFIG=/full/path/to/your/ansible.cfg
-```
+3. **Deployment Execution:**
+    To deploy the complete environment (Docker and web_app), run:
+    ```bash
+    ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/main.yaml
+    ```
 
-Output of the playbook:
-```
-[... output truncated for brevity ...]
-TASK [docker : Ensure Docker service is running and enabled on boot] ********************************
-changed: [ec2-3-107-79-201.ap-southeast-2.compute.amazonaws.com]
-TASK [docker : Download Docker Compose binary] *******************************************************
-changed: [ec2-3-107-79-201.ap-southeast-2.compute.amazonaws.com]
-TASK [docker : Create symbolic link for docker-compose] ************************************************
-ok: [ec2-3-107-79-201.ap-southeast-2.compute.amazonaws.com]
-TASK [docker : Ensure the docker group exists] *********************************************************
-changed: [ec2-3-107-79-201.ap-southeast-2.compute.amazonaws.com]
-TASK [docker : Add current user to the docker group] ***************************************************
-changed: [ec2-3-107-79-201.ap-southeast-2.compute.amazonaws.com]
-TASK [docker : restart docker] *************************************************************************
-changed: [ec2-3-107-79-201.ap-southeast-2.compute.amazonaws.com]
-```
+3. **Selective Execution Using Tags:**
+    To run only Docker-related tasks:
+    ```bash
+    ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/main.yaml --tags docker
+    ```
+    To run only the wipe tasks:
+    ```bash
+    ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/main.yaml --tags wipe
+    ```
+
+
+    ## Deployement Output: 
+    Below are the last 50 lines from our deployment command (using a live run or --check --diff):
+
+    ```
+    TASK [docker : Ensure Docker service is running and enabled on boot] ********************************
+    changed: [ec2-3-107-79-201.ap-southeast-2.compute.amazonaws.com]
+    TASK [docker : Download Docker Compose binary] *******************************************************
+    changed: [ec2-3-107-79-201.ap-southeast-2.compute.amazonaws.com]
+    TASK [docker : Create symbolic link for docker-compose] ************************************************
+    ok: [ec2-3-107-79-201.ap-southeast-2.compute.amazonaws.com]
+    TASK [docker : Ensure the docker group exists] *********************************************************
+    changed: [ec2-3-107-79-201.ap-southeast-2.compute.amazonaws.com]
+    TASK [docker : Add current user to the docker group] ***************************************************
+    changed: [ec2-3-107-79-201.ap-southeast-2.compute.amazonaws.com]
+    TASK [docker : restart docker] *************************************************************************
+    changed: [ec2-3-107-79-201.ap-southeast-2.compute.amazonaws.com]
+    TASK [web_app : Create directory for the web application] **********************************************
+    changed: [ec2-3-107-79-201.ap-southeast-2.compute.amazonaws.com]
+    TASK [web_app : Deploy docker-compose file for the web application] **************************************
+    changed: [ec2-3-107-79-201.ap-southeast-2.compute.amazonaws.com]
+    TASK [web_app : Pull the Docker image for the application] ***********************************************
+    changed: [ec2-3-107-79-201.ap-southeast-2.compute.amazonaws.com]
+    TASK [web_app : Start the application container using Docker Compose] ************************************
+    changed: [ec2-3-107-79-201.ap-southeast-2.compute.amazonaws.com]
+    ```
 
 ## Inventory Details
 

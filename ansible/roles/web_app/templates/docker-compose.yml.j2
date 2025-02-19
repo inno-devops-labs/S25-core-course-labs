@@ -1,9 +1,6 @@
 version: '3'
 services:
-  web:
-    image: {{ app_image }}
-    container_name: {{ app_container_name }}
+  app:
+    image: "{{ docker_image }}"
     ports:
-      - "{{ app_port }}:8000"
-    environment:
-      - APP_ENV=production
+      - "{{ app_port }}:80"

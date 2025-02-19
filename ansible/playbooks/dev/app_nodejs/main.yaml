@@ -1,0 +1,9 @@
+---
+- name: Deploy NodeJS Application using Docker
+  hosts: all
+  become: yes
+  vars:
+    docker_image: "my_nodejs_app:latest"
+    app_port: 3000
+  roles:
+    - web_app
