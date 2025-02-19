@@ -71,7 +71,7 @@ services:
         limits:
           memory: 150m
     healthcheck:
-      test: wget --spider -q http://localhost:9080/ready
+      test: pgrep -f promtail
       interval: 10s
       timeout: 10s
       retries: 3
@@ -127,9 +127,9 @@ services:
         limits:
           memory: 150m
     healthcheck:
-      test: wget http://localhost:9090
+      test: wget -O - http://localhost:9090
       interval: 10s
-      timeout: 10s
+      timeout: 15s
       retries: 10
       start_period: 40s
     networks:
