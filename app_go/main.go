@@ -4,15 +4,25 @@ import (
 	"fmt"
 	"net/http"
 	"regexp"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 var (
 	linuxReleaseDate = time.Date(1991, time.October, 5, 0, 0, 0, 0, time.UTC)
 	sharedValue      = "None"
 	mutex            sync.RWMutex
+
+	// Prometheus metric: Tracks number of commits
+	commitCounter = prometheus.NewGauge(prometheus.GaugeOpts{
+		Name: "linux_kernel_commits",
+		Help: "Number of commits in the Linux kernel repository",
+	})
 )
 
 // Queries the GitHub API for the number of commits
@@ -28,29 +38,35 @@ func updateKernelRepositoryData() {
 			continue
 		}
 
-		// Extract the 'Link' section from header
 		linkHeader := resp.Header.Get("link")
 		if linkHeader == "" {
 			fmt.Println("Link header is not present in the response")
 		} else {
 			data := strings.Split(linkHeader, " ")
-
 			matches := re.FindStringSubmatch(data[2])
+
 			if len(matches) > 1 {
 				numberOfCommits := matches[1]
+
 				mutex.Lock()
 				sharedValue = numberOfCommits
 				mutex.Unlock()
+
+				// Convert string to float64 for Prometheus
+				commitCount, err := strconv.ParseFloat(numberOfCommits, 64)
+				if err != nil {
+					fmt.Println("Error converting commit count:", err)
+				} else {
+					commitCounter.Set(commitCount) // Update Prometheus metric
+				}
+
 				fmt.Println("Number of commits in the Linux kernel:", numberOfCommits)
 			} else {
 				fmt.Println("Data about commits is not found...")
 			}
 		}
 
-		err = resp.Body.Close()
-		if err != nil {
-			println("Couldnt close response body: ", err.Error())
-		}
+		_ = resp.Body.Close() // Close response body
 
 		time.Sleep(10 * time.Second)
 	}
@@ -94,29 +110,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	<html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Linux Kernel Data</title>
-		<style>
-			body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9; color: #333; }
-			header { background-color: #333; color: #fff; padding: 10px 20px; text-align: center; }
-			main { padding: 20px; text-align: center; }
-			.container { max-width: 600px; margin: 0 auto; }
-			.info { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
-		</style>
 	</head>
 	<body>
-		<header>
-			<h1>Linux Kernel Repository Statistics</h1>
-		</header>
-		<main>
-			<div class="container">
-				<div class="info">
-					<p><strong>Number of commits:</strong> ` + numberOfCommits + `</p>
-					<p><strong>Time passed since Linux 0.02 release:</strong></p>
-					<p>` + fmt.Sprintf("%d years, %d months, %d days", years, months, days) + `</p>
-				</div>
-			</div>
-		</main>
+		<h1>Linux Kernel Repository Statistics</h1>
+		<p><strong>Number of commits:</strong> ` + numberOfCommits + `</p>
+		<p><strong>Time passed since Linux 0.02 release:</strong> ` + fmt.Sprintf("%d years, %d months, %d days", years, months, days) + `</p>
 	</body>
 	</html>
 	`
@@ -128,16 +127,26 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Registers Prometheus metrics
+func initMetrics() {
+	prometheus.MustRegister(commitCounter)
+}
+
 func main() {
-	// Start the background updater
+	// Register Prometheus metrics
+	initMetrics()
+
+	// Start background updater
 	go updateKernelRepositoryData()
 
-	// Set up HTTP server
+	// HTTP handlers
 	http.HandleFunc("/", handler)
+	http.Handle("/metrics", promhttp.Handler()) // Prometheus endpoint
 
 	fmt.Println("Server running on http://localhost:8080")
-	err := http.ListenAndServe(":8080", nil)
+	fmt.Println("Metrics available on http://localhost:8080/metrics")
 
+	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		println("Server died with error: ", err.Error())
 	}
