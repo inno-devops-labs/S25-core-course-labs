@@ -66,7 +66,11 @@ func updateKernelRepositoryData() {
 			}
 		}
 
-		_ = resp.Body.Close() // Close response body
+		err = resp.Body.Close() // Close response body
+
+		if err != nil {
+			fmt.Println("Something went wrong closing body...")
+		}
 
 		time.Sleep(10 * time.Second)
 	}
