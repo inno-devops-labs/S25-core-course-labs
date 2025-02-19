@@ -1,0 +1,13 @@
+---
+all:
+  children:
+    yacloud:
+      hosts:
+        terraform:
+          ansible_host: 158.160.156.187
+
+plugin: yacloud_compute
+yacloud_clouds: devopslabsinno
+yacloud_folders: default
+yacloud_token_file: ${YC_TOKEN_FILE}
+ansible_python_interpreter: /usr/bin/python3
