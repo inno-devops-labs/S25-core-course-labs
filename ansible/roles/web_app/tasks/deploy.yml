@@ -6,6 +6,7 @@
         path: "{{ web_app_directory }}"
         state: directory
         mode: 0755
+      tags: deploy_create_dir
 
     - name: Copy docker compose
       template:
@@ -13,3 +14,4 @@
         dest: "{{ web_app_directory }}/{{ docker_compose_file }}"
         mode: 0755
       notify: docker_restart_handler
+      tags: deploy_copy_compose

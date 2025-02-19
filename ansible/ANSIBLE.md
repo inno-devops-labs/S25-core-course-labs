@@ -248,3 +248,24 @@ ok: [my_vm]
 PLAY RECAP ****************************************************************************************
 my_vm                      : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
+
+3. Visiting the vm IP page:
+   ![proof.png](proof.png)
+
+## Documentation:
+
+### Docker Role
+
+This Ansible role deploys a python web application using Docker and Docker Compose.
+
+### Requirements
+
+- Ansible 2.9+
+- Ubuntu 22.04
+- Docker should be installed on the target machine
+
+### Role Variables
+
+- web_app_full_wipe - to remove all the files before the deployment
+- web_app_image - to choose the image for deployment
+- web_app_container_port - to choose a port for the app
