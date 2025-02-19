@@ -1,0 +1,12 @@
+---
+- name: Deploy Go Application using Docker Compose
+  hosts: all
+  become: yes
+  roles:
+    - role: web_app
+      vars:
+        docker_image: "azazaki/app_golang:latest"
+        app_port: "8080"
+        container_port: "8080"
+        web_app_deploy_dir: "/opt/app_go"
+        web_app_full_wipe: true

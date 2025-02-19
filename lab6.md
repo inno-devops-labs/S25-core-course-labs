@@ -124,7 +124,7 @@ In this lab, you will utilize Ansible to set up a Continuous Deployment (CD) pro
            `-- dev
                |-- app_python
                |   `-- main.yaml
-               `-- app_go
+               `-- app_golang
                    `-- main.yaml
    ```
 
