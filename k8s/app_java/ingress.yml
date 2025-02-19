@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vacation-calculator-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: vacation-calculator.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: vacation-calculator-service
+            port:
+              number: 8080
