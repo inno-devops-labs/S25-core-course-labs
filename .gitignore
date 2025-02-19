@@ -2,4 +2,5 @@
 terraform/yandex_cloud/cloud_id
 terraform/yandex_cloud/folder_id
 terraform/yandex_cloud/iam_token
-terraform/yandex_cloud/key.json
+terraform/yandex_cloud/key.
+monitoring/positions

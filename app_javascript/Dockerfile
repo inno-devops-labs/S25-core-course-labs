@@ -8,8 +8,8 @@ WORKDIR /app
 # Copy only the package.json and package-lock.json to utilize Docker cache for dependencies
 COPY package*.json ./
 
-# Install only production dependencies to keep the image smaller
-RUN npm install --production
+# Install dependencies
+RUN npm install 
 
 # Copy the rest of the application files
 COPY public/ ./public
