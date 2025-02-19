@@ -4,7 +4,8 @@ from datetime import datetime
 import pytz
 
 # Create a metric to track time spent and requests made
-REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
+REQUEST_TIME = Summary('request_processing_seconds',
+                       'Time spent processing request')
 
 # Create a Flask web app
 app = Flask(__name__)
