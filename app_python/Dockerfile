@@ -1,5 +1,5 @@
 # Use a precise version of base image
-FROM python:3.11-slim
+FROM python:3.11-bullseye
 
 # Create a new user 'angelika2707' and set up the app directory
 RUN useradd angelika2707 \
