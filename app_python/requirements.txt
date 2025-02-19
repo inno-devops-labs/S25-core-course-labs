@@ -1,0 +1,4 @@
+# Main requirements
+fastapi==0.115.7
+uvicorn==0.34.0
+pytz==2024.2
