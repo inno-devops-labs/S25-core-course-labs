@@ -30,6 +30,7 @@ def show_time(request: Request):
 
 @app.get("/metrics")
 def metrics():
+    """Returns Prometheus metrics in the expected format."""
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
 
