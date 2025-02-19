@@ -16,7 +16,7 @@ COPY --chown=app:app app.go go.mod ./
 COPY --chown=app:app templates ./templates
 
 # Download dependencies and compile the application
-RUN go mod download && go build -o app
+RUN go mod tidy && go mod download && go build -o app
 
 # Stage 2: Final minimal image
 FROM gcr.io/distroless/static-debian12:nonroot
