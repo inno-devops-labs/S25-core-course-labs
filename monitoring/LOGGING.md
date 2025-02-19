@@ -19,4 +19,22 @@
 
 ## Screenshots
 
+#### Loki Logs
+![alt text](https://github.com/DoryShibkova/S25-core-course-labs/blob/lab7/monitoring/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%2018-02-2025%20161108.jpg)
 
+
+#### Promtail Logs
+![alt text](https://github.com/DoryShibkova/S25-core-course-labs/blob/lab7/monitoring/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%2018-02-2025%20161239.jpg)
+
+
+#### Grafana Logs
+![alt text](https://github.com/DoryShibkova/S25-core-course-labs/blob/lab7/monitoring/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%2018-02-2025%20161331.jpg)
+![alt text](https://github.com/DoryShibkova/S25-core-course-labs/blob/lab7/monitoring/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%2018-02-2025%20161401.jpg)
+![alt text](https://github.com/DoryShibkova/S25-core-course-labs/blob/lab7/monitoring/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%2018-02-2025%20161433.jpg)
+
+
+
+### docker-compose logs -f
+![alt text](https://github.com/DoryShibkova/S25-core-course-labs/blob/lab7/monitoring/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%2018-02-2025%20161648.jpg)
+![alt text](https://github.com/DoryShibkova/S25-core-course-labs/blob/lab7/monitoring/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%2018-02-2025%20161704.jpg)
+![alt text](https://github.com/DoryShibkova/S25-core-course-labs/blob/lab7/monitoring/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%2018-02-2025%20161951.jpg)
