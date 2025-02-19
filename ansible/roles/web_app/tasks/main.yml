@@ -1,0 +1,22 @@
+- name: Deploy Application
+  block:
+    - name: Pull Docker Image
+      docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+      tags:
+        - docker
+
+    - name: Copy Docker Compose Template
+      template:
+        src: docker-compose.yml.j2
+        dest: /home/{{ ansible_user }}/docker-compose.yml
+      tags:
+        - docker
+
+    - name: Start Application
+      command: docker-compose up -d
+      args:
+        chdir: /home/{{ ansible_user }}
+      tags:
+        - start
