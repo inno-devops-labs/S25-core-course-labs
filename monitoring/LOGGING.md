@@ -21,9 +21,9 @@ Overview of the logging stack implemented within Lab7 + Bonus
 
 ## Screenshots
 
-![Logs of Job Docker](./Docker_logs.png)
+![Logs of Job Docker](./Doker%20logs.png)
 
-![Logs of Job Docker](./Docker_logs_2.png)
+![Logs of Job Docker](./Docker%20logs%202.png)
 
 ## Bonus screenshots
 
