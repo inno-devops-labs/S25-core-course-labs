@@ -1,0 +1,5 @@
+Flask==2.0.3
+Werkzeug==2.0.3
+pytz==2023.3
+flake8>=6.0.0,<7.0.0
+prometheus-flask-exporter
