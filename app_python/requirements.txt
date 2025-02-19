@@ -4,3 +4,4 @@ pytz==2024.2
 pytest==8.3.4
 flake8==7.1.1
 httpx==0.27.2
+prometheus-fastapi-instrumentator==6.1.0

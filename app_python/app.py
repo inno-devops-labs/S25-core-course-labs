@@ -2,9 +2,11 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from datetime import datetime
 import pytz
+from prometheus_fastapi_instrumentator import Instrumentator
 
 app = FastAPI()
 
+Instrumentator().instrument(app).expose(app)
 
 @app.get("/", response_class=HTMLResponse)
 async def get_moscow_time():
