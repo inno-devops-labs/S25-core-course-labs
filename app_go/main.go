@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"time"
 )
@@ -29,9 +30,12 @@ type DateResponse struct {
 // Returns the HTML web page that displays the current date
 // in the specified timezone using API
 func getCurrentDateHTML(w http.ResponseWriter, r *http.Request) {
-	htmlContent, err := ioutil.ReadFile(HTMLFileName)
+	// Log the incoming request
+	log.Printf("Handling HTML page request: %s from %s", r.URL.Path, r.RemoteAddr)
 
+	htmlContent, err := ioutil.ReadFile(HTMLFileName)
 	if err != nil {
+		log.Printf("Error reading HTML file %s: %v", HTMLFileName, err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
@@ -42,9 +46,12 @@ func getCurrentDateHTML(w http.ResponseWriter, r *http.Request) {
 
 // Returns the current date in the specified timezone
 func getCurrentDate(w http.ResponseWriter, r *http.Request) {
-	location, err := time.LoadLocation(timezone)
+	// Log the incoming request
+	log.Printf("Handling API date request: %s from %s", r.URL.Path, r.RemoteAddr)
 
+	location, err := time.LoadLocation(timezone)
 	if err != nil {
+		log.Printf("Error loading timezone %s: %v", timezone, err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
@@ -52,12 +59,17 @@ func getCurrentDate(w http.ResponseWriter, r *http.Request) {
 	response := DateResponse{Date: time.Now().In(location).Format(dateFormat)}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		log.Printf("Error encoding JSON response: %v", err)
+	}
 }
 
 func main() {
 	http.HandleFunc("/", getCurrentDateHTML)
 	http.HandleFunc("/api/date", getCurrentDate)
 
-	http.ListenAndServe(appPort, nil)
+	log.Printf("Starting server on port %s", appPort)
+	if err := http.ListenAndServe(appPort, nil); err != nil {
+		log.Fatalf("Server failed to start: %v", err)
+	}
 }
