@@ -38,3 +38,20 @@ I've configured endpoint `/metrics` in both Python and JS applications
 
 ![first statistics img](./images/prometh_metrics/1.png)
 ![second statistics img](./images/prometh_metrics/2.png)
+
+
+# Health checks
+
+
+### Grafana
+I used `curl` to try access `localhost:3000`
+
+### Loki
+I used `pgrep` to grep `promtail`
+
+### Prometheus
+I used `wget` to access `localhost:9090/-/healthy`
+
+### My apps
+I used `pgrep` to grep `python` and `node` respectively,
+but also created `/health` endpoint in each of the apps

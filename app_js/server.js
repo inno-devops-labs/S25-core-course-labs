@@ -66,6 +66,10 @@ app.get('/metrics', async (req, res) => {
   res.end(await register.metrics())
 })
 
+app.get('/health', (req, res) => {
+  res.status(200).send("OK")
+})
+
 // route to get home page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'))

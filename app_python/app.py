@@ -44,6 +44,10 @@ def home():
 
     return render_template('home.html', cur_time=cur_time, city=CITY)
 
+@app.route('/health')
+def health():
+    return "OK", 200
+
 
 if __name__ == '__main__':
     app.run(debug=False, host=HOST, port=PORT)
