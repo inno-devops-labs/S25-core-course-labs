@@ -1,0 +1,27 @@
+---
+# Wipe logic for the web_app role
+
+- name: Wipe web_app container and related resources
+  block:
+    - name: Stop and remove app_python container
+      community.docker.docker_container:
+        name: "{{ docker_container_name }}"
+        state: absent
+      tags:
+        - wipe
+
+    - name: Remove Docker image
+      community.docker.docker_image:
+        name: "{{ docker_image_name }}:{{ docker_image_tag }}"
+        state: absent
+      tags:
+        - wipe
+
+    - name: Remove Docker volumes
+      ansible.builtin.file:
+        path: "/var/lib/{{ docker_container_name }}"
+        state: absent
+      tags:
+        - wipe
+  tags:
+    - wipe
