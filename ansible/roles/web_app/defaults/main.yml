@@ -1,0 +1,6 @@
+# defaults file for roles/web_app
+docker_image_name: "hayderuni/moscow-time-flask"
+docker_container_name: "web-app"
+container_port: 80:80
+web_app_full_wipe: false # Set to true to stop and delete the container
+dest_file: "./docker-compose.yml"

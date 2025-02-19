@@ -1,0 +1,48 @@
+services:
+
+  app_python:
+    image: "hayderuni/moscow-time-flask"
+    ports:
+      - "5000:5000"
+    logging:
+      driver: "json-file"
+      options:
+        tag: "{{.ImageName}}|{{.Name}}"
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    logging:
+      driver: "json-file"
+      options:
+        tag: "{{.ImageName}}|{{.Name}}"
+
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - /var/log:/var/log
+      - ./promtail.yml:/etc/promtail/config.yml
+      - /var/lib/docker/containers:/var/lib/docker/containers
+    command: -config.file=/etc/promtail/config.yml
+    logging:
+      driver: "json-file"
+      options:
+        tag: "{{.ImageName}}|{{.Name}}"
+
+  grafana:
+    environment:
+      # Allow anonymous access as admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    image: grafana/grafana:latest
+    volumes: # Adding the volume to configure grafana to add Loki as a datasource
+      - ./grafana.yml:/etc/grafana/provisioning/datasources/ds.yaml
+    ports:
+      - "3000:3000"
+    logging:
+      driver: "json-file"
+      options:
+        tag: "{{.ImageName}}|{{.Name}}"
