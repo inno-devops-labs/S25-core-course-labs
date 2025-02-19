@@ -3,5 +3,4 @@ uvicorn~=0.30.3
 pytz==2024.1
 gunicorn==21.2.0
 pylint==3.0.3
-prometheus-fastapi-instrumentator
 prometheus-client==0.21.1
