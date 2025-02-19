@@ -1,4 +1,8 @@
+networks:
+  monitoring:
+
 services:
+
 
   app_python:
     image: "hayderuni/moscow-time-flask"
@@ -16,11 +20,13 @@ services:
         limits: # https://docs.docker.com/reference/compose-file/deploy/#resources
           memory: 150m
     healthcheck: # https://docs.docker.com/reference/compose-file/services/#healthcheck
-      test: ["CMD", "curl", "-f", "http://localhost"]
-      interval: 1m30s
+      test: wget --spider -S 'http://url/to/be/checked' 2>&1 | grep 'HTTP/' | awk '{print $2}'
+      interval: 10s
       timeout: 10s
       retries: 3
       start_period: 40s
+    networks:
+      - monitoring
 
   loki:
     image: grafana/loki:latest
@@ -38,11 +44,13 @@ services:
         limits:
           memory: 150m
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost"]
-      interval: 1m30s
+      test: wget --spider -q http://localhost:3100/ready
+      interval: 10s
       timeout: 10s
       retries: 3
       start_period: 40s
+    networks:
+      - monitoring
 
 
   promtail:
@@ -63,11 +71,13 @@ services:
         limits:
           memory: 150m
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost"]
-      interval: 1m30s
+      test: wget --spider -q http://localhost:9080/ready
+      interval: 10s
       timeout: 10s
       retries: 3
       start_period: 40s
+    networks:
+      - monitoring
 
   grafana:
     environment:
@@ -90,11 +100,13 @@ services:
         limits:
           memory: 150m
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost"]
-      interval: 1m30s
+      test: curl -f http://localhost:3000
+      interval: 10s
       timeout: 10s
       retries: 3
       start_period: 40s
+    networks:
+      - monitoring
 
   prometheus:
     image: prom/prometheus:latest
@@ -115,8 +127,10 @@ services:
         limits:
           memory: 150m
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost"]
-      interval: 1m30s
+      test: wget http://localhost:9090
+      interval: 10s
       timeout: 10s
-      retries: 3
+      retries: 10
       start_period: 40s
+    networks:
+      - monitoring
