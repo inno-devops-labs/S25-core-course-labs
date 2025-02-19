@@ -1,0 +1,18 @@
+- name: deploy
+  block:
+    - name: create directory
+      ansible.builtin.file:
+        name: "{{ app_directory }}"
+        state: directory
+
+    - name: copy docker-compose.yml.j2
+      ansible.builtin.template:
+        src: docker-compose.yml.j2
+        dest: "{{ app_directory }}/docker-compose.yml"
+
+    - name: run app
+      community.docker.docker_compose_v2:
+        project_src: "{{ app_directory }}"
+        state: present
+
+  tags: deploy
