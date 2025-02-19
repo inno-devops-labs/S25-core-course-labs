@@ -10,7 +10,7 @@
 
 - name: Adding GPG key
   apt_key:
-    url: "{{ gpg_url }}"
+    url: "{{ gpg_key_url }}"
     state: present
 
 - name: Adding a Docker repository to APT

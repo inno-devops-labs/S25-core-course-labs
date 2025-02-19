@@ -1,4 +1,3 @@
 - include_tasks: install_docker.yml
 - include_tasks: install_compose.yml
 - include_tasks: start.yml
-- include_tasks: docker_add_new_user.yml

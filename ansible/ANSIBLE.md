@@ -162,3 +162,89 @@ Last login: Sun Feb 16 19:52:09 2025 from 188.130.155.165
 mangocandle@ubuntu:~$ docker --version
 Docker version 27.5.1, build 9f9e405
 ```
+
+# Lab 6
+
+## Deployment Output:
+
+```bash
+ok: [my_vm]
+
+TASK [docker : Adding GPG key] *************************************************
+ok: [my_vm]
+
+TASK [docker : Adding a Docker repository to APT] ******************************
+ok: [my_vm]
+
+TASK [docker : Installing Docker] **********************************************
+ok: [my_vm]
+
+TASK [docker : include_tasks] **************************************************
+included: /Users/akss/Desktop/study/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for my_vm
+
+TASK [docker : Downloading Docker Compose] *************************************
+ok: [my_vm]
+
+TASK [docker : include_tasks] **************************************************
+included: /Users/akss/Desktop/study/S25-core-course-labs/ansible/roles/docker/tasks/start.yml for my_vm
+
+TASK [docker : Add user to Docker group] ***************************************
+ok: [my_vm]
+
+TASK [docker : Disable root login] *********************************************
+ok: [my_vm]
+
+TASK [docker : Start the Docker service] ***************************************
+ok: [my_vm]
+
+TASK [web_app : App dir existence] *********************************************
+skipping: [my_vm]
+
+TASK [web_app : Docker compose existence] **************************************
+skipping: [my_vm]
+
+TASK [web_app : Remove docker compose] *****************************************
+skipping: [my_vm]
+
+TASK [web_app : Remove directory] **********************************************
+skipping: [my_vm]
+
+TASK [web_app : Create Web App directory] **************************************
+ok: [my_vm]
+
+TASK [web_app : Copy docker compose] *******************************************
+ok: [my_vm]
+
+PLAY RECAP *********************************************************************
+my_vm                      : ok=14   changed=0    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0
+```
+
+Checking if the deployment was successfull:
+
+1. Connect to the VM:
+
+```bash
+ssh -l mangocandle 158.160.156.187
+```
+
+2. List all the running docker processes:
+
+```bash
+mangocandle@compute-vm-2-2-10-hdd-1739977927860:~$ docker ps
+CONTAINER ID   IMAGE                    COMMAND           CREATED          STATUS          PORTS                                     NAMES
+70f8c6e8402d   mangocandle/app_python   "python app.py"   43 minutes ago   Up 43 minutes   0.0.0.0:80->5000/tcp, [::]:80->5000/tcp   python_web_app
+```
+
+Removing the deployed image:
+
+```bash
+ansible-playbook -i inventory/default_yacloud_compute.yml -i inventory/default_aws_ec2.yml playbooks/dev/app_python/main.yml --tags wipe
+
+PLAY [Deploy python web app] **********************************************************************
+
+TASK [Gathering Facts] ****************************************************************************
+ok: [my_vm]
+
+PLAY RECAP ****************************************************************************************
+my_vm                      : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
