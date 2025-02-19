@@ -1,0 +1,52 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/web_app
+
+- name: Wipe tasks
+  import_tasks: 0-wipe.yml
+  tags:
+    - wipe
+    - never
+
+- name: Clean previous deployment
+  import_tasks: 0-wipe.yml
+  when: app_clean_install | bool
+
+- name: Setup Docker Environment
+  block:
+    - name: Create application directory
+      become: true
+      file:
+        path: "{{ docker_compose_dir }}"
+        state: directory
+        mode: '0755'
+      tags:
+        - setup
+
+    - name: Deploy Docker Compose template
+      become: true
+      template:
+        src: docker-compose.yml.j2
+        dest: "{{ docker_compose_dir }}/{{ docker_compose_file }}"
+        mode: '0644'
+      tags:
+        - setup
+
+- name: Deploy Application
+  block:
+    - name: Pull Docker image
+      docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+        force_source: yes
+      tags:
+        - deploy
+
+    - name: Deploy with Docker Compose
+      community.docker.docker_compose_v2:
+        project_src: "{{ docker_compose_dir }}"
+        files: "{{ docker_compose_file }}"
+        state: present
+      tags:
+        - deploy
+
