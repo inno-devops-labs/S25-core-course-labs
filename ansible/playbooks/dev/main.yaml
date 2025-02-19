@@ -1,0 +1,10 @@
+---
+- name: Deploy Docker and Web Application
+  hosts: all
+  become: true
+  roles:
+    - docker
+    - role: web_app
+      vars:
+        docker_image: "droznik/moscow-time"
+        app_port: 8080

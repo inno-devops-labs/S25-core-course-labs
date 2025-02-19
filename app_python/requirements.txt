@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+pytz
+pytest
+httpx
+pytest-cov
