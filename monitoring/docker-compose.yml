@@ -1,0 +1,18 @@
+networks:
+  monitoring:
+
+services:
+
+  app_python:
+    image: dmhd6219/inno_devops_lab2_python_bonus:latest
+    ports:
+      - "8000:8000"
+    networks:
+      - monitoring
+
+  app_typescript:
+    image: dmhd6219/inno_devops_lab2_typescript_bonus:latest
+    ports:
+      - "8080:8080"
+    networks:
+      - monitoring
