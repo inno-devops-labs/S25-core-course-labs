@@ -9,12 +9,22 @@ services:
     image: "oshaheen1882051/app_python:app_python-distroless-prod-ci-1.0.0"
     ports:
       - "5000:5000"
+      - "5001:5001"
     logging:
       driver: "json-file"
       options:
         max-size: "100m"
         max-file: "10"
         tag: "{{.ImageName}}|{{.Name}}"
+    mem_limit: "512m"  # Limit memory to 512MB
+    networks:
+      - loki
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
 
 
   
@@ -22,13 +32,22 @@ services:
   app_go:
     image: "oshaheen1882051/app_go:app_go-distroless-prod-ci-1.0.0"
     ports:
-      - "3000:3000"
+      - "3500:3500"
+    networks:
+      - loki
     logging:
       driver: "json-file"
       options:
         max-size: "100m"
         max-file: "10"
         tag: "{{.ImageName}}|{{.Name}}"
+    mem_limit: "512m"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3500"]  # Loki's readiness endpoint
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
     
 
   loki:
@@ -44,6 +63,12 @@ services:
         max-size: "100m"
         max-file: "10"
         tag: "{{.ImageName}}|{{.Name}}"
+    mem_limit: "1g"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3100/ready"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     
 
   promtail:
@@ -61,6 +86,13 @@ services:
         max-size: "100m"
         max-file: "10"
         tag: "{{.ImageName}}|{{.Name}}"
+    mem_limit: "512m"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    
 
   grafana:
     environment:
@@ -89,7 +121,7 @@ services:
         /run.sh
     image: grafana/grafana:latest
     ports:
-      - "4000:3000"
+      - "3000:3000"
     networks:
       - loki
     logging:
@@ -98,3 +130,26 @@ services:
         max-size: "100m"
         max-file: "10"
         tag: "{{.ImageName}}|{{.Name}}"
+    mem_limit: "1g"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]  # Grafana's health endpoint
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+    command: --config.file=/etc/prometheus/prometheus.yml
+    networks:
+      - loki
+    ports:
+      - 9090:9090
+    mem_limit: "1g"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9090/targetss"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
