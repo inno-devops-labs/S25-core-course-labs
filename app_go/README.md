@@ -11,8 +11,10 @@ This is a simple Go web application that displays the current time in Moscow, Ru
 3. [Installation](#installation)
 4. [Running the Application](#running-the-application)
 5. [Testing](#testing)
-6. [Code Quality Checks](#code-quality-checks)
-7. [Author](#author)
+6. [Docker](#docker)
+7. [Distroless Image Version](#distroless-image-version)
+8. [Code Quality Checks](#code-quality-checks)
+9. [Author](#author)
 
 ---
 
@@ -32,18 +34,22 @@ Before proceeding, ensure you have the following installed:
 
 ## Installation
 
-1. Clone this repository to your local machine:
+### 1. Clone the Repository
 
-   ```bash
-   git clone git@github.com:Mohammed-Nour/S25-core-course-labs.git
-   cd S25-core-course-labs/app_go
-   ```
+Clone this repository to your local machine:
 
-2. Install dependencies (if any are required):
+```bash
+git clone git@github.com:Mohammed-Nour/S25-core-course-labs.git
+cd S25-core-course-labs/app_go
+```
 
-   ```bash
-   go mod tidy
-   ```
+### 2. Install Dependencies
+
+Ensure all dependencies are installed:
+
+```bash
+go mod tidy
+```
 
 ---
 
@@ -71,6 +77,119 @@ To ensure the application works correctly:
 
 ---
 
+## Docker
+
+This application is containerized using Docker, following best practices for building and running Docker images.
+
+### How to Build the Docker Image
+
+1. Navigate to the `app_go` directory:
+
+   ```bash
+   cd S25-core-course-labs/app_go
+   ```
+
+2. Build the Docker image:
+
+   ```bash
+   docker build -t oshaheen1882051/app_go:app_go-prod-1.0.0 --no-cache=True .
+   ```
+
+   - The `--no-cache=True` flag ensures a clean build by ignoring cached layers.
+
+### How to Run the Docker Image
+
+1. Run the Docker container:
+
+   ```bash
+   docker run -d -p 3000:3000 --name app_go oshaheen1882051/app_go:app_go-prod-1.0.0
+   ```
+
+2. Access the application at `http://localhost:3000`.
+
+### How to Push the Docker Image to Docker Hub
+
+1. Log in to Docker Hub (if not already logged in):
+
+   ```bash
+   docker login
+   ```
+
+2. Push the Docker image:
+
+   ```bash
+   docker push oshaheen1882051/app_go:app_go-prod-1.0.0
+   ```
+
+### How to Pull the Docker Image from Docker Hub
+
+1. Pull the Docker image:
+
+   ```bash
+   docker pull oshaheen1882051/app_go:app_go-prod-1.0.0
+   ```
+
+2. Run the container as described in the "How to Run the Docker Image" section.
+
+---
+
+## Distroless Image Version
+
+This application is also available in a **Distroless** version, which is a minimal Docker image that only includes the application and its runtime dependencies, without unnecessary tools or package managers.
+
+### How to Build the Distroless Docker Image
+
+1. Navigate to the `app_go` directory:
+
+   ```bash
+   cd S25-core-course-labs/app_go
+   ```
+
+2. Build the Distroless Docker image:
+
+   ```bash
+   docker build -t oshaheen1882051/app_go:app_go-distroless-prod-1.0.0 --file distroless.Dockerfile --no-cache=True .
+   ```
+
+   - The `--file distroless.Dockerfile` flag specifies the custom Dockerfile for the Distroless build.
+   - The `--no-cache=True` flag ensures a clean build by ignoring cached layers.
+
+### How to Run the Distroless Docker Image
+
+1. Run the Distroless Docker container:
+
+   ```bash
+   docker run -d -p 3000:3000 --name app_go_distroless oshaheen1882051/app_go:app_go-distroless-prod-1.0.0
+   ```
+
+2. Access the application at `http://localhost:3000`.
+
+### How to Push the Distroless Docker Image to Docker Hub
+
+1. Log in to Docker Hub (if not already logged in):
+
+   ```bash
+   docker login
+   ```
+
+2. Push the Distroless Docker image:
+
+   ```bash
+   docker push oshaheen1882051/app_go:app_go-distroless-prod-1.0
+   ```
+
+### How to Pull the Distroless Docker Image from Docker Hub
+
+1. Pull the Distroless Docker image:
+
+   ```bash
+   docker pull oshaheen1882051/app_go:app_go-distroless-prod-1.0
+   ```
+
+2. Run the container as described in the "How to Run the Distroless Docker Image" section.
+
+---
+
 ## Code Quality Checks
 
 To ensure the code adheres to best practices and Go coding standards, the following tools are used:
@@ -84,7 +203,7 @@ To ensure the code adheres to best practices and Go coding standards, the follow
    ```
 
    > **Note**: To automatically format your code, run:
-   
+
    ```bash
    gofmt -w .
    ```
@@ -111,4 +230,3 @@ To ensure the code adheres to best practices and Go coding standards, the follow
 
 - **Name**: Mohamad Nour Shahin
 - **Email**: <mo.shahin@innopolis.university>
-
