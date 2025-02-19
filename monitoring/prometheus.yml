@@ -1,0 +1,35 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 11s
+    static_configs:
+      - targets: ['prometheus:9090']
+
+  - job_name: 'loki'
+    scrape_interval: 12s
+    static_configs:
+      - targets: ['loki:3100']
+
+  - job_name: 'promtail'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['promtail:9080']
+
+  - job_name: 'grafana'
+    scrape_interval: 7s
+    static_configs:
+      - targets: ['grafana:3000']
+
+  - job_name: 'app-python'
+    scrape_interval: 7s
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["app-python:8000"]
+
+  - job_name: 'extra-app'
+    scrape_interval: 7s
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["extra-app:8080"]

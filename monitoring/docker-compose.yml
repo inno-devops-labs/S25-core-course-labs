@@ -1,62 +1,93 @@
 networks:
-  default:
-    name: loki
+  monitoring:
+    driver: bridge
+
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
 
 x-logging: &default-logging
   driver: "json-file"
   options:
-    tag: "{{.ImageName}}|{{.Name}}"
-  
+    max-size: "10m"
+    max-file: "3"
+
 services:
+
   app-python:
-    build: ../app_python
+    image: python:3.11-slim
+    command: ["python3", "-m", "http.server", "8000"]
     ports:
       - "8000:8000"
+    networks:
+      - monitoring
     logging: *default-logging
-    
-  extra-app: # add my extra app
-    image: ../app_Java
-    ports:
-      - "8080:8080"
-    logging: *default-logging
+    mem_limit: 512m
 
-  loki:
-    image: grafana/loki:2.9.4
+  prometheus:
+    image: prom/prometheus:latest
     ports:
-      - "3100:3100"
-    command: -config.file=/etc/loki/local-config.yaml
-    logging: *default-logging
-
-  promtail:
-    image: grafana/promtail:2.9.4
+      - "9090:9090"
     volumes:
-      - ./promtail.yml:/etc/promtail/config.yml
-      - /var/lib/docker/containers:/var/lib/docker/containers
-    command: -config.file=/etc/promtail/config.yml
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    networks:
+      - monitoring
     logging: *default-logging
+    mem_limit: 512m
+    restart: always
 
   grafana:
     image: grafana/grafana:latest
     ports:
       - "3000:3000"
     environment:
-      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
-      GF_AUTH_ANONYMOUS_ENABLED: "true"
-      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
-    entrypoint: |
-      sh -euc 'mkdir -p /etc/grafana/provisioning/datasources && \
-      echo "
-      apiVersion: 1
-      datasources:
-      - name: Loki
-        type: loki
-        access: proxy
-        orgId: 1
-        url: http://loki:3100
-        basicAuth: false
-        isDefault: true
-        version: 1
-        editable: false
-      " > /etc/grafana/provisioning/datasources/ds.yaml && \
-      /run.sh'
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - monitoring
     logging: *default-logging
+    mem_limit: 512m
+    restart: always
+
+  loki:
+    image: grafana/loki:2.9.4
+    ports:
+      - "3100:3100"
+    volumes:
+      - /etc/loki/local-config.yaml:/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - monitoring
+    logging: *default-logging
+    mem_limit: 512m
+    restart: always
+
+  promtail:
+    image: grafana/promtail:2.9.4
+    volumes:
+      - ./promtail.yml:/etc/promtail/config.yml
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/log:/var/log:ro
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - monitoring
+    logging: *default-logging
+    mem_limit: 512m
+    restart: always
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    ports:
+      - "9100:9100"
+    networks:
+      - monitoring
+    logging: *default-logging
+    mem_limit: 256m
+    restart: always
