@@ -1,5 +1,7 @@
 FROM python:3.10-slim
 
+RUN apt-get update && apt-get install -y procps && rm -rf /var/lib/apt/lists/*
+
 RUN useradd user && mkdir /app && chown -R user /app
 
 WORKDIR /app
@@ -12,5 +14,7 @@ COPY --chown=user:user templates/ /app/templates/
 RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 5000
+
+USER user
 
 CMD ["python", "app.py"]
