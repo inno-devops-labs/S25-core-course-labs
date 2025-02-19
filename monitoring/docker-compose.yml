@@ -56,6 +56,17 @@ services:
     networks:
       - loki
 
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - loki
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+
   app_python:
     image: nickolaus899/python-msk-time:latest
     ports:

@@ -1,10 +1,13 @@
 from flask import Flask, render_template
 from datetime import datetime
+from prometheus_flask_exporter import PrometheusMetrics
 
 import pytz
 
 
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
+# automatically exports metrics to /metrics
 
 # global vars that represent a city to display time in
 CITY = "Moscow"
@@ -31,6 +34,7 @@ def set_new_timezone(new_tz):
 
 # rendering the home (main) page
 @app.route('/')
+@metrics.counter('homepage_requests', 'Requests to homepage')
 def home():
     localized_time = get_current_time(TIMEZONE)
     if localized_time is None:
@@ -42,4 +46,4 @@ def home():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host=HOST, port=PORT)
+    app.run(debug=False, host=HOST, port=PORT)

@@ -2,11 +2,30 @@ const express = require('express')
 const dotenv = require('dotenv')
 const fetch = require('node-fetch')
 const path = require('path')
+const client = require('prom-client')
 
 dotenv.config()
 
 const app = express()
 const PORT = 3000
+
+const register = new client.Registry()
+client.collectDefaultMetrics({ register })
+
+const httpRequestCounter = new client.Counter({
+  name: 'http_requests_total',
+  help: 'Total number of HTTP requests',
+  labelNames: ['method', 'route', 'status_code']
+})
+register.registerMetric(httpRequestCounter)
+
+// creating middleware
+app.use((req, res, next) => {
+  res.on('finish', () => {
+    httpRequestCounter.inc({ method: req.method, route: req.path, status_code: res.statusCode })
+  })
+  next()
+})
 
 // load API info from .env
 const API_KEY = process.env.YANDEX_API_KEY
@@ -40,6 +59,11 @@ app.get('/get-coordinates', async (req, res) => {
     console.error(err)
     res.status(500).send({ error: 'Internal server error' })
   }
+})
+
+app.get('/metrics', async (req, res) => {
+  res.set('Content-Type', register.contentType)
+  res.end(await register.metrics())
 })
 
 // route to get home page
