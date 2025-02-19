@@ -1,0 +1,66 @@
+- import_tasks: install_docker.yml
+- import_tasks: install_compose.yml
+
+- name: Apt cache
+  apt:
+    update_cache: yes
+
+- name: Install packages
+  apt:
+    name:
+      - python3-pip
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+    state: present
+
+- name: Docker GPG keys
+  file:
+    path: /etc/apt/sources.list.d/docker.list
+    state: absent
+  ignore_errors: yes
+
+- name: Clear cache
+  apt:
+    autoclean: yes
+
+- name: Docker repository configuration
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    state: present
+    filename: docker
+  register: docker_repo
+
+- name: Install Docker
+  apt:
+    name: docker-ce
+    state: present
+  when: docker_repo.changed
+
+- name: Install Docker Compose
+  pip:
+    name: docker-compose
+    state: present
+
+- name: Add Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: Auto-start Docker
+  ansible.builtin.systemd:
+    name: docker
+    enabled: yes
+    state: started
+
+- name: Add user to Docker
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes

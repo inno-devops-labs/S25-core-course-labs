@@ -1,0 +1,14 @@
+[WARNING]: Ansible is being run in a world writable directory
+(/mnt/c/Users/Elizoveta/Desktop/S25-core-course-labs/ansible), ignoring it as
+an ansible.cfg source. For more information see
+https://docs.ansible.com/ansible/devel/reference_appendices/config.html#cfg-in-
+world-writable-dir
+
+PLAY [Docker VM] ***************************************************************
+
+TASK [Gathering Facts] *********************************************************
+fatal: [host_01]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: no such identity: /home/liza/.ssh/id_ed25519_neww.pub: No such file or directory\r\nubuntu@158.160.57.28: Permission denied (publickey,password).", "unreachable": true}
+
+PLAY RECAP *********************************************************************
+host_01                    : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+
