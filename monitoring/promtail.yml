@@ -1,0 +1,35 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+  log_level: "warn"
+
+positions:
+  filename: /var/lib/promtail/positions/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: system-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: system-logs
+          __path__: /var/log/*.log
+
+  - job_name: app_python
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: app_python
+          __path__: /var/log/app_python.log
+
+  - job_name: app_js
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: app_js
+          __path__: /var/log/app_js.log
