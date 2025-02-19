@@ -53,25 +53,25 @@ variable "default_branch" {
 }
 
 variable "strict" {
-  default     = true
+  default     = false
   description = "Require branches to be up to date before merging"
   type        = bool
 }
 
 variable "enforce_admins" {
-  default     = true
+  default     = false
   description = "Enforce all configured restrictions for administrators"
   type        = bool
 }
 
 variable "dismiss_stale_reviews" {
-  default     = true
+  default     = false
   description = "Dismiss approved reviews when someone pushes a new commit"
   type        = bool
 }
 
 variable "require_code_owner_reviews" {
-  default     = true
+  default     = false
   description = "Require an approved review in pull requests including files with a designated code owner"
   type        = bool
 }
