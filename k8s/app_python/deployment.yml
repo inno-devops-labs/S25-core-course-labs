@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: watch-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: watch
+  template:
+    metadata:
+      labels:
+        app: watch
+    spec:
+      containers:
+      - name: watch
+        image: catorleader/python-watch:latest
+        ports:
+        - containerPort: 5000
