@@ -4,10 +4,23 @@ services:
     image: "hayderuni/moscow-time-flask"
     ports:
       - "5000:5000"
+      - "8000:8000"
     logging:
       driver: "json-file"
-      options:
+      options: # https://docs.docker.com/engine/logging/configure/
+        max-size: 10m
+        max-file: 3
         tag: "{{.ImageName}}|{{.Name}}"
+    deploy:
+      resources:
+        limits: # https://docs.docker.com/reference/compose-file/deploy/#resources
+          memory: 150m
+    healthcheck: # https://docs.docker.com/reference/compose-file/services/#healthcheck
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   loki:
     image: grafana/loki:latest
@@ -17,7 +30,19 @@ services:
     logging:
       driver: "json-file"
       options:
+        max-size: 10m
+        max-file: 3
         tag: "{{.ImageName}}|{{.Name}}"
+    deploy:
+      resources:
+        limits:
+          memory: 150m
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
 
   promtail:
@@ -30,7 +55,19 @@ services:
     logging:
       driver: "json-file"
       options:
+        max-size: 10m
+        max-file: 3
         tag: "{{.ImageName}}|{{.Name}}"
+    deploy:
+      resources:
+        limits:
+          memory: 150m
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   grafana:
     environment:
@@ -45,4 +82,41 @@ services:
     logging:
       driver: "json-file"
       options:
+        max-size: 10m
+        max-file: 3
         tag: "{{.ImageName}}|{{.Name}}"
+    deploy:
+      resources:
+        limits:
+          memory: 150m
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  prometheus:
+    image: prom/prometheus:latest
+    restart: unless-stopped
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command: '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - "9090:9090"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 10m
+        max-file: 3
+        tag: "{{.ImageName}}|{{.Name}}"
+    deploy:
+      resources:
+        limits:
+          memory: 150m
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

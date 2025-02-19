@@ -16,7 +16,7 @@ COPY --chown=app:app templates templates
 # Install the application dependencies preventing unnecessary cache
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Set the environment variables 
+# Set the environment variables
 ENV FLASK_APP=main.py
 ENV FLASK_RUN_HOST=0.0.0.0
 
