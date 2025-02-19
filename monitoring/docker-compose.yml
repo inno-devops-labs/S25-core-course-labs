@@ -6,6 +6,18 @@ networks:
 volumes:
   loki_vol:
 
+x-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-size: "200k"
+    max-file: "10"
+
+x-resources: &default-resources
+  limits:
+    memory: "512m"
+  reservations:
+    memory: "256m"
+
 services:
   loki:
     image: grafana/loki:latest
@@ -22,11 +34,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200k"
-        max-file: "10"
+    logging: *default-logging
+    deploy:
+      resources: *default-resources
 
   promtail:
     image: grafana/promtail:latest
@@ -38,11 +48,14 @@ services:
     command: -config.file=/etc/promtail/config.yml
     networks:
       - monitoring
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200k"
-        max-file: "10"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:9080/ready || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    logging: *default-logging
+    deploy:
+      resources: *default-resources
 
   grafana:
     image: grafana/grafana:latest
@@ -81,11 +94,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200k"
-        max-file: "10"
+    logging: *default-logging
+    deploy:
+      resources: *default-resources
   
   app:
     image: ilsiia/app_python:latest
@@ -100,11 +111,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200k"
-        max-file: "10"
+    logging: *default-logging
+    deploy:
+      resources: *default-resources
 
   app2:
     image: ilsiia/app_nodejs:latest
@@ -119,9 +128,26 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200k"
-        max-file: "10"
+    logging: *default-logging
+    deploy:
+      resources: *default-resources
     
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command: --config.file=/etc/prometheus/prometheus.yml
+    networks:
+      - monitoring
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:9090/-/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    logging: *default-logging
+    deploy:
+      resources: *default-resources
+

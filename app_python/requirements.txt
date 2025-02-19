@@ -2,3 +2,6 @@ Flask
 pytz
 flake8
 pytest
+prometheus_client
+werkzeug
+
