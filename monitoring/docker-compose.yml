@@ -20,7 +20,7 @@ services:
         limits: # https://docs.docker.com/reference/compose-file/deploy/#resources
           memory: 150m
     healthcheck: # https://docs.docker.com/reference/compose-file/services/#healthcheck
-      test: wget --spider -S 'http://url/to/be/checked' 2>&1 | grep 'HTTP/' | awk '{print $2}'
+      test: wget --spider -S 'http://localhost:5000' 2>&1 | grep 'HTTP/' | awk '{print $2}'
       interval: 10s
       timeout: 10s
       retries: 3

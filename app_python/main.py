@@ -3,6 +3,9 @@ from flask import Flask, render_template
 from datetime import datetime
 import pytz
 
+# Start up the server to expose the metrics
+start_http_server(8000)
+
 # Create a metric to track time spent and requests made
 REQUEST_TIME = Summary('request_processing_seconds',
                        'Time spent processing request')
@@ -14,8 +17,6 @@ app = Flask(__name__)
 # Define a route for the default URL
 @app.route('/')
 def home():
-    # Start up the server to expose the metrics
-    start_http_server(8000)
     # Get the current time in Moscow
     time_zone = pytz.timezone('Europe/Moscow')
     # Format the time as HH:MM
