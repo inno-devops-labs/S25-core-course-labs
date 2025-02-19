@@ -1,0 +1,7 @@
+all:
+  hosts:
+    my_vm:
+      ansible_host: 158.160.156.187
+      ansible_user: mangocandle
+      ansible_ssh_private_key_file: ~/.ssh/id_ed25519
+      ansible_python_interpreter: /usr/bin/python3

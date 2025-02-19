@@ -1,0 +1,8 @@
+web_app_image: "mangocandle/app_python"
+web_app_version: "latest"
+
+web_app_container_name: "web-app"
+web_app_container_port: 8080
+web_app_host_port: 8080
+
+web_app_full_wipe: true
