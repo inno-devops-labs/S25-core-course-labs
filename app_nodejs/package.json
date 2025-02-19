@@ -11,7 +11,8 @@
   "description": "",
   "dependencies": {
     "express": "^4.21.2",
-    "moment-timezone": "^0.5.46"
+    "moment-timezone": "^0.5.46",
+    "express-prom-bundle": "^6.5.1"
   },
   "devDependencies": {
     "eslint": "^9.19.0",
