@@ -8,6 +8,7 @@
 
 import os
 import uvicorn
+from prometheus_fastapi_instrumentator import Instrumentator
 from fastapi import FastAPI
 from service.routers import time_router
 
@@ -15,6 +16,7 @@ app = FastAPI()
 
 # Include the router from the time module
 app.include_router(time_router)
+Instrumentator().instrument(app).expose(app)
 
 if __name__ == "__main__":
     print("Starting webserver...")

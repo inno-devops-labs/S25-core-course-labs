@@ -6,6 +6,20 @@ networks:
 volumes:
   loki_data:
 
+x-logging:
+  &default-logging
+  driver: "json-file"
+  options:
+    max-size: "200k"
+    max-file: "10"
+    tag: "{{.ImageName}}|{{.Name}}"
+
+x-deploy:
+  &default-deploy
+  resources:
+    limits:
+      memory: 1G
+
 services:
   loki:
     image: grafana/loki:latest
@@ -14,8 +28,14 @@ services:
     volumes:
       - loki_data:/loki
     command: -config.file=/etc/loki/local-config.yaml
+    deploy: *default-deploy
     networks:
       - loki
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:3100/ready || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
 
   promtail:
     image: grafana/promtail:latest
@@ -24,8 +44,14 @@ services:
       - /var/log:/var/log
       - ./promtail-conf.yml:/etc/promtail/config.yaml
     command: -config.file=/etc/promtail/config.yaml
+    deploy: *default-deploy
     networks:
       - loki
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --fail http://localhost:1080/health || exit 1" ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
 
   grafana:
     environment:
@@ -57,6 +83,29 @@ services:
       - "3000:3000"
     networks:
       - loki
+    deploy: *default-deploy
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --fail http://localhost:3000 || exit 1" ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - loki
+    logging: *default-logging
+    deploy: *default-deploy
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --fail http://localhost:9090 || exit 1" ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
 
   app_python:
     container_name: app_python
@@ -69,12 +118,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200k"
-        max-file: "10"
-        tag: "{{.ImageName}}|{{.Name}}"
+    logging: *default-logging
+    deploy: *default-deploy
     networks:
       - loki
 
@@ -89,11 +134,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200k"
-        max-file: "10"
-        tag: "{{.ImageName}}|{{.Name}}"
+    logging: *default-logging
+    deploy: *default-deploy
     networks:
       - loki
