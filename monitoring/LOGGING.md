@@ -56,4 +56,4 @@ Logs are displayed in a user-friendly interface, and users can create dashboards
 
 ---
 
-![image](https://github.com/UTKANOS-RIBA/S25-core-course-labs/Lab7/monitoring/image.png)
+![image](https://github.com/UTKANOS-RIBA/S25-core-course-labs/blob/Lab7/monitoring/image.png)
