@@ -1,0 +1,12 @@
+- name: Remove Docker Containers and Images
+  block:
+    - name: Stop and remove container
+      command: docker rm -f web_app
+      ignore_errors: yes
+
+    - name: Remove Docker image
+      command: docker rmi -f "{{ docker_image }}"
+      ignore_errors: yes
+  when: web_app_full_wipe
+  tags:
+    - wipe
