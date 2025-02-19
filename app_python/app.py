@@ -1,9 +1,21 @@
-from flask import Flask, render_template
+import logging
+import sys
+
+from flask import Flask, render_template, request
 from datetime import datetime
 import pytz
 
 app = Flask(__name__)
 
+handler = logging.StreamHandler(sys.stdout)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+app.logger.addHandler(handler)
+app.logger.setLevel(logging.INFO)
+
+@app.before_request
+def log_request_info():
+    app.logger.info("Received response: %s %s from %s", request.method, request.url, request.remote_addr)
 
 @app.route('/')
 def show_moscow_time():

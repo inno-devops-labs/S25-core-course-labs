@@ -23,6 +23,17 @@ func LoadQuotes(filename string) {
 	quotes = strings.Split(strings.TrimSpace(string(file)), "\n")
 }
 
+func loggingMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		startTime := time.Now()
+
+		// Log request details
+		log.Printf("[%s] %s %s from %s", startTime.Format(time.RFC3339), r.Method, r.URL.Path, r.RemoteAddr)
+
+		next.ServeHTTP(w, r)
+	})
+}
+
 // randomQuoteHandler renders the HTML template with a random quote
 func randomQuoteHandler(w http.ResponseWriter, r *http.Request) {
 	// Seed random number generator
@@ -52,8 +63,10 @@ func randomQuoteHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	LoadQuotes("quotes.txt")
 
+	mux := http.NewServeMux()
+
 	// Set up the route and start the server
-	http.HandleFunc("/", randomQuoteHandler)
+	mux.HandleFunc("/", randomQuoteHandler)
 	log.Println("Starting server at http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8080", loggingMiddleware(mux)))
 }
