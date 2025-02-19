@@ -2,7 +2,7 @@
 
 ## Prometheus targets
 
-<!-- ![](assets/prometheus_targets.png) -->
+![targets](../images/targets_prometheus.png)
 
 ## Dashboards
 

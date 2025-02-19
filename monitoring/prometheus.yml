@@ -8,7 +8,6 @@ scrape_configs:
     static_configs:
       - targets: [ 'app_python:8080' ]
   - job_name: app_go
-    metrics_path: /actuator/prometheus
     static_configs:
       - targets: [ 'app_go:8080' ]
   - job_name: loki
