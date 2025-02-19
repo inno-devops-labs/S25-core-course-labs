@@ -21,6 +21,7 @@ jobs:
         run: |
           pip install -r app_python/requirements.txt
           pip install pytest flake8
+          pip install httpx
       - name: Run Linter
         run: flake8 app_python/app.py --max-line-length=127
 
