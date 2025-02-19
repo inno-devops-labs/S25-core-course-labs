@@ -1,0 +1,83 @@
+name: Python app
+
+on:
+  push:
+    paths:
+      - 'app_python/**'
+      - '.github/workflows/python_app.yaml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip' # caching pip dependencies
+
+      - name: Install Dependencies
+        run: cd app_python && pip install -r requirements.txt
+
+      - name: Run Linter
+        run: pylint app_python
+
+      - name: Run Tests
+        run: python -m unittest app_python/test.py
+
+  security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+        working-directory: app_python
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python-3.10@master
+        
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high --file=app_python/requirements.txt --skip-unresolved --package-manager=pip
+        
+
+  docker:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    needs:
+      - security
+      - build
+    if: ${{ needs.security.result == 'success' && needs.build.result == 'success'}}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+         # Add support for more platforms with QEMU (optional)
+         # https://github.com/marketplace/actions/docker-setup-buildx
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: app_python
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ci_app_python:latest
+
