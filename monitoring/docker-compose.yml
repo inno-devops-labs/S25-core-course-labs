@@ -7,20 +7,40 @@ volumes:
 
 services:
   app-python:
-    image: azamatbayramov/s25-devops-py-dl:latest
+    image: azamatbayramov/s25-devops-py:latest
     restart: unless-stopped
     ports:
       - "8001:8001"
     networks:
       - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+    healthcheck:
+      test: ["CMD", "pgrep", "python"]
+      start_period: 10s
+      retries: 3
+      timeout: 5s
 
   app-go:
-    image: azamatbayramov/s25-devops-go-dl:latest
+    image: azamatbayramov/s25-devops-go:latest
     restart: unless-stopped
     ports:
       - "8002:8002"
     networks:
       - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+    healthcheck:
+      test: ["CMD", "pgrep", "./app"]
+      start_period: 10s
+      retries: 3
+      timeout: 5s
 
   loki:
     image: grafana/loki:latest
@@ -32,6 +52,16 @@ services:
       - "3100:3100"
     networks:
       - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+    healthcheck:
+      test: ["CMD", "pgrep", "loki"]
+      start_period: 10s
+      retries: 3
+      timeout: 5s
 
   grafana:
     image: grafana/grafana:latest
@@ -44,11 +74,24 @@ services:
       - ./grafana-provisioning/datasources:/etc/grafana/provisioning/datasources:ro
     restart: unless-stopped
     depends_on:
-      - loki
+      loki:
+        condition: service_healthy
+      prometheus:
+        condition: service_healthy
     ports:
       - "3000:3000"
     networks:
       - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      start_period: 10s
+      retries: 3
+      timeout: 5s
 
   promtail:
     image: grafana/promtail:latest
@@ -59,6 +102,42 @@ services:
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
     restart: unless-stopped
     depends_on:
-      - loki
+      loki:
+        condition: service_healthy
     networks:
       - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+    healthcheck:
+      test: ["CMD", "pgrep", "promtail"]
+      start_period: 10s
+      retries: 3
+      timeout: 5s
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: unless-stopped
+    depends_on:
+      loki:
+        condition: service_healthy
+      app-python:
+        condition: service_healthy
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+    healthcheck:
+      test: ["CMD", "pgrep", "prometheus"]
+      start_period: 10s
+      retries: 3
+      timeout: 5s
