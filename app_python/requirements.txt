@@ -4,3 +4,4 @@ itsdangerous==2.0.1
 werkzeug==3.0.6
 pytz==2023.3
 pytest==8.2.2
+prometheus_client==0.20.0
