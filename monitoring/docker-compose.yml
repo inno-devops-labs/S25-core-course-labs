@@ -27,6 +27,7 @@ services:
       resources:
         limits:
           memory: "1024m"
+          cpus: "0.5"
 
   app-go:
     image: azamatbayramov/s25-devops-go:latest
@@ -49,6 +50,7 @@ services:
       resources:
         limits:
           memory: "1024m"
+          cpus: "0.5"
 
   loki:
     image: grafana/loki:latest
@@ -74,6 +76,7 @@ services:
       resources:
         limits:
           memory: "1024m"
+          cpus: "0.5"
 
   grafana:
     image: grafana/grafana:latest
@@ -108,6 +111,7 @@ services:
       resources:
         limits:
           memory: "1024m"
+          cpus: "0.5"
 
   promtail:
     image: grafana/promtail:latest
@@ -136,6 +140,7 @@ services:
       resources:
         limits:
           memory: "1024m"
+          cpus: "0.5"
 
   prometheus:
     image: prom/prometheus:latest
@@ -165,3 +170,4 @@ services:
       resources:
         limits:
           memory: "1024m"
+          cpus: "0.5"
