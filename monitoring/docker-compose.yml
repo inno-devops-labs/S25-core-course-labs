@@ -46,6 +46,9 @@ services:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_FEATURE_TOGGLES_ENABLE=alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode
+      - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/var/lib/grafana/dashboards/loki.json
+      - DS_THEMIS=prometheusds
+      - DS_PROMETHEUS=prometheusds
     entrypoint:
       - sh
       - -euc
@@ -63,9 +66,31 @@ services:
           isDefault: true
           version: 1
           editable: false
+          uid: lokids
+        - name: Prometheus
+          type: prometheus
+          access: proxy
+          orgId: 1
+          url: http://prometheus:9090
+          basicAuth: false
+          isDefault: false
+          version: 1
+          editable: false
+          uid: prometheusds
+        EOF
+        mkdir -p /etc/grafana/provisioning/dashboards
+        cat <<EOF > /etc/grafana/provisioning/dashboards/all.yml
+        - name: 'default'
+          org_id: 1
+          folder: ''
+          type: 'file'
+          options:
+            folder: '/var/lib/grafana/dashboards'
         EOF
         /run.sh
     image: grafana/grafana:latest
+    volumes:
+      - ./grafana_dashboards:/var/lib/grafana/dashboards:ro
     ports:
       - "3000:3000"
     networks:
