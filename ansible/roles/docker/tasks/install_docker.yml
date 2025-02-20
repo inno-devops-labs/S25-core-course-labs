@@ -1,0 +1,29 @@
+- name: Install Docker prerequisites
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg2
+      - software-properties-common
+    state: present
+    update_cache: yes
+
+- name: Set up Docker GPG key
+  apt_key:
+    url: "{{ docker_gpg_link }}"
+    state: present
+
+- name: Set up Docker repository
+  apt_repository:
+    repo: "{{ docker_repository_link }}"
+    state: present
+
+- name: Install Docker
+  apt:
+    name:
+      - docker-ce={{ docker_version }}
+      - docker-ce-cli
+      - containerd.io
+    state: present
+    update_cache: yes
