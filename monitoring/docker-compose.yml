@@ -1,0 +1,72 @@
+---
+
+services:
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    volumes:
+      - loki-data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - monitoring
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/containers:/var/lib/docker/containers
+      - ./promtail-config.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana-datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+    depends_on:
+      - loki
+    networks:
+      - monitoring
+
+  moscow-time-app:
+    image: ebob/moscow-time:v1.1
+    ports:
+      - "8080:8080"
+    container_name: moscow-time-app
+    restart: unless-stopped
+    networks:
+      - monitoring
+    labels:
+      - "logging=true"
+      - "app=moscow-time"
+
+  omsk-time-app:
+    image: ebob/omsk-time:v1.0
+    ports:
+      - "8081:4567"
+    container_name: omsk-time-app
+    restart: unless-stopped
+    networks:
+      - monitoring
+    labels:
+      - "logging=true"
+      - "app=omsk-time"
+
+networks:
+  monitoring:
+    driver: bridge
+
+volumes:
+  loki-data:
+  grafana-data:
