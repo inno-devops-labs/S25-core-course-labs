@@ -1,0 +1,4 @@
+Flask==3.1.0
+pytz==2024.2
+prometheus-flask-exporter
+python-logging-loki

@@ -1,0 +1,15 @@
+{
+  "name": "app_node",
+  "version": "1.0.0",
+  "description": "Random programming quote generator",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "prom-client": "^15.1.3",
+    "util": "^0.12.5"
+  }
+}
