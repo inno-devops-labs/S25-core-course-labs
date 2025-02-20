@@ -1,0 +1,35 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+client:
+  url: http://loki:3100/api/prom/push
+
+scrape_configs:
+  - job_name: docker_logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: docker
+          __path__: /var/lib/docker/containers/*/*log
+
+  - job_name: python_app_logs
+    static_configs:
+      - targets: [ "localhost" ]
+        labels:
+          job: python_app
+          __path__: /app_logs/app_python.log
+
+  - job_name: node_app_logs
+    static_configs:
+      - targets: [ "localhost" ]
+        labels:
+          job: node_app
+          __path__: /app_logs/app_nodejs.log
+
+
+  
