@@ -78,6 +78,7 @@ docker run -p 5000:5000 [image_name]
 
 After running the the app should be running on `localhost:5000`
 
+
 ## Unit tests
 
 This section is about unit tests included in the project to to verify its functionality.
@@ -112,3 +113,4 @@ This sections is about the pipeline and how it works:
 
 - **Test Job:** This job ensures the application’s code is linted, the dependencies are installed, and the tests are run.
 - **Docker Job:** This job builds and pushes the Docker image to Docker Hub, ensuring that the latest code is always available in the container.
+
