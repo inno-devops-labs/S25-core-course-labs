@@ -16,4 +16,4 @@ RUN npm run build
 
 ENV NODE_ENV="production"
 EXPOSE 8080
-CMD [ "npm", "run", "preview" ]
+CMD [ "npm", "run", "preview", "--debug" ]

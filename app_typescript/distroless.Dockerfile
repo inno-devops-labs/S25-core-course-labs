@@ -20,4 +20,4 @@ COPY --from=deps-env /app/node_modules ./node_modules
 
 ENV NODE_ENV="production"
 EXPOSE 8080
-CMD ["node_modules/vite/dist/node/cli.js", "preview", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["node_modules/vite/dist/node/cli.js", "preview", "--host", "0.0.0.0", "--port", "8080", "--debug"]
