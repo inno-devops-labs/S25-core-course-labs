@@ -1,0 +1,23 @@
+---
+- name: Ensure Docker Compose is installed
+  include_role:
+    name: docker  # Используем роль docker для установки Docker Compose
+
+- name: Create directory for app
+  file:
+    path: /opt/web-app
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Copy Docker Compose template
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/web-app/docker-compose.yml
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: Deploy application with Docker Compose
+  docker_compose:
+    project_src: /opt/web-app
+    state: present
