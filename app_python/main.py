@@ -2,6 +2,19 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from datetime import datetime
 import pytz
+import logging
+
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelnme)s - %(message)s",
+    handlers=[
+        logging.FileHandler("/var/log/app.log"),
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
@@ -11,7 +24,8 @@ MOSCOW_TZ = pytz.timezone("Europe/Moscow")
 @app.get("/", response_class=HTMLResponse)
 def get_moscow_time():
     moscow_time = datetime.now(MOSCOW_TZ).strftime("%d.%m.%Y %H:%M:%S")
-
+    logger.info(f"Moscow Time API called, current time: {moscow_time}")
+    
     html_content = f"""
     <!DOCTYPE html>
     <html lang="en">

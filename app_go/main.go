@@ -1,9 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
+	"log"
 	"math/rand"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 
@@ -14,10 +17,23 @@ var secretNumber int
 
 var rng = rand.New(rand.NewSource(time.Now().UnixNano()))
 
+var logger *log.Logger
+
 func main() {
+	logFile, err := os.OpenFile("/var/log/app.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		fmt.Println("Failed to open log file:", err)
+		return
+	}
+	defer logFile.Close()
+
+	logger = log.New(logFile, "", log.LstdFlags)
+
 	r := setupRouter()
+	logger.Println("Gin App started on port 8080")
+
 	if err := r.Run(":8080"); err != nil {
-		panic(err)
+		logger.Fatal("Error starting server: %v", err)
 	}
 }
 
@@ -46,6 +62,7 @@ func setupRouter() *gin.Engine {
 	`)))
 
 	r.GET("/", func(c *gin.Context) {
+		logger.Println("GET request on home page received")
 		c.HTML(http.StatusOK, "index", gin.H{"Feedback": nil})
 	})
 
@@ -53,6 +70,7 @@ func setupRouter() *gin.Engine {
 		guessStr := c.PostForm("guess")
 		guess, err := strconv.Atoi(guessStr)
 		if err != nil {
+			logger.Println("Invalid input received during guess")
 			c.HTML(http.StatusBadRequest, "index", gin.H{"Feedback": "Invalid input. Please enter a number."})
 			return
 		}
@@ -67,6 +85,7 @@ func setupRouter() *gin.Engine {
 			resetSecretNumber()
 		}
 
+		logger.Printf("User guessed: %d, Response: %s", guess, feedback)
 		c.HTML(http.StatusOK, "index", gin.H{"Feedback": feedback})
 	})
 
@@ -75,4 +94,5 @@ func setupRouter() *gin.Engine {
 
 func resetSecretNumber() {
 	secretNumber = rng.Intn(100) + 1
+	logger.Println("Reset secret number")
 }

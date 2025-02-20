@@ -5,8 +5,11 @@ ENV PYTHONUNBUFFERED=1
 
 RUN addgroup -S webgroup && adduser -S webuser -G webgroup && \
     mkdir /app && \
+    mkdir -p /var/log && \
+    touch /var/log/app.log && \
     apk add --no-cache curl && \
-    chown webuser:webgroup /app
+    chown -R webuser:webgroup /app /var/log && \
+    chmod -R 777 /var/log/app.log
 
 WORKDIR /app
 
