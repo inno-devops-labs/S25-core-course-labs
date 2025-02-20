@@ -23,6 +23,10 @@ services:
       start_period: 1s
       retries: 3
       timeout: 5s
+    deploy:
+      resources:
+        limits:
+          memory: "1024m"
 
   app-go:
     image: azamatbayramov/s25-devops-go:latest
@@ -41,6 +45,10 @@ services:
       start_period: 1s
       retries: 3
       timeout: 5s
+    deploy:
+      resources:
+        limits:
+          memory: "1024m"
 
   loki:
     image: grafana/loki:latest
@@ -62,6 +70,10 @@ services:
       start_period: 1s
       retries: 3
       timeout: 5s
+    deploy:
+      resources:
+        limits:
+          memory: "1024m"
 
   grafana:
     image: grafana/grafana:latest
@@ -92,6 +104,10 @@ services:
       start_period: 1s
       retries: 3
       timeout: 5s
+    deploy:
+      resources:
+        limits:
+          memory: "1024m"
 
   promtail:
     image: grafana/promtail:latest
@@ -116,6 +132,10 @@ services:
       start_period: 1s
       retries: 3
       timeout: 5s
+    deploy:
+      resources:
+        limits:
+          memory: "1024m"
 
   prometheus:
     image: prom/prometheus:latest
@@ -141,3 +161,7 @@ services:
       start_period: 1s
       retries: 3
       timeout: 5s
+    deploy:
+      resources:
+        limits:
+          memory: "1024m"
