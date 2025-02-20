@@ -68,6 +68,20 @@ services:
         max-size: "10m"
         max-file: "3"
 
+  morozov_devops_webapp:
+    image: leha0704/morozov_devops_webapp
+    container_name: morozov_devops_webapp
+    volumes:
+      - app-logs:/app
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
 volumes:
   grafana_data:
   app-logs:
