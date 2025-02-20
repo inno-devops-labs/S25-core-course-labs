@@ -29,5 +29,5 @@ COPY --from=builder /app_go/app /app_go/app
 COPY --from=builder /app_go/templates /app_go/templates
 
 # Expose the application port
-EXPOSE 3000
+EXPOSE 3500
 ENTRYPOINT ["./app"]

@@ -16,7 +16,7 @@ COPY --chown=app:app app.go go.mod ./
 COPY --chown=app:app templates ./templates
 
 # Download dependencies and compile the application
-RUN go mod download && go build -o app
+RUN go mod tidy && go mod download && go build -o app
 
 # Stage 2: Final minimal image
 FROM builder AS final
@@ -29,5 +29,5 @@ COPY --from=builder /app_go/app /app_go/app
 COPY --from=builder /app_go/templates /app_go/templates
 
 # Expose the application port
-EXPOSE 3000
+EXPOSE 3500
 ENTRYPOINT ["./app"]
