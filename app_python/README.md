@@ -2,6 +2,8 @@
 
 A simple Flask-based web application that displays the current time in Moscow.
 
+[![Moscow Time Web Application CI](https://github.com/HayderSarhan/S25-core-course-labs/actions/workflows/CI.yml/badge.svg)](https://github.com/HayderSarhan/S25-core-course-labs/actions/workflows/CI.yml)
+
 ---
 
 ## Overview
@@ -75,3 +77,40 @@ docker run -p 5000:5000 [image_name]
 **Note:** If the image was pulled from Docker Hub, the name of the image should be: `hayderuni/moscow-time-flask`
 
 After running the the app should be running on `localhost:5000`
+
+
+## Unit tests
+
+This section is about unit tests included in the project to to verify its functionality.
+
+### How to run the tests
+
+Simply run the following command in the app directory
+
+```bash
+pytest test_main.py
+```
+
+### Test overview
+
+- **`test_home`:** This test sends a GET request to the home page (/) of the application and verifies:
+  - The response status code is `200`.
+    - The response contains the correct HTML headings.
+    - The response includes the current time in a correct format.
+
+## CI workflow
+
+This sections is about the pipeline and how it works:
+
+- **Setting up the python environment:** The workflow sets up `python 3.10` and installs the necessary dependencies from the `requirements.txt` file.
+- **Linting:** The workflow uses `Flake8` to check the code style and report any issues.
+- **Testing:** The tests in the workflow are executed using `pytest` to ensure that everything is working as expected.
+- **Docker build and push:**
+  - The Docker image is built with the latest code from the app_python directory.
+    - The image is then pushed to Docker Hub
+
+### Key Components in the Workflow
+
+- **Test Job:** This job ensures the application’s code is linted, the dependencies are installed, and the tests are run.
+- **Docker Job:** This job builds and pushes the Docker image to Docker Hub, ensuring that the latest code is always available in the container.
+
