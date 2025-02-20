@@ -1,6 +1,6 @@
 # Monitoring with Prometheus
 
-## Prometheus Setup
+## Task 1: Prometheus Setup
 
 ### Prometheus Configuration
 
@@ -21,3 +21,28 @@ Here are the screenshots that confirm the successful setup.
 ![Loki query results](./img/prometheus_4.png)
 
 ![Prometheus query results](./img/prometheus_5.png)
+
+## Task 2: Dashboard and Configuration Enhancements
+
+### Grafana Dashboards
+
+I have downloaded Loki and Prometheus dashboards in JSON format and put them into `/var/lib/grafana/dashboards` directory. \
+Also I have specified the `GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH` variable that allows to open some dashboard by default on home page. I used Loki dashboard as a default one.
+
+I added Prometheus as another datasource for Grafana.
+
+![Updated Grafana config](./img/dashboards_grafana.png)
+
+Here are the screenshots displaying successful dashboard configurations.
+
+![Dashboards list](./img/dashboards_list.png)
+
+#### Loki dashboard
+
+![Loki dashboard 1](./img/dashboards_loki_1.png)
+![Loki dashboard 2](./img/dashboards_loki_2.png)
+
+#### Prometheus dashboard
+
+![Prometheus dashboard 1](./img/dashboards_prom_1.png)
+![Prometheus dashboard 2](./img/dashboards_prom_2.png)
