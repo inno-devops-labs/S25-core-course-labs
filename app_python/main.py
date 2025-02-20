@@ -8,7 +8,7 @@ from prometheus_client import (
     CONTENT_TYPE_LATEST
 )
 
- 
+
 app = Flask(__name__)
 
 
@@ -28,7 +28,6 @@ def show_moscow_time():
     current_time_str = current_time.strftime('%Y-%m-%d %H:%M:%S')
     # Update the gauge with the current timestamp (in seconds)
     current_time_gauge.set(current_time.timestamp())
-    
     return (
         f"<h1>Welcome to my Python Web App!</h1>"
         f"<h1>Current Time in Moscow: {current_time_str} MSK</h1>"
