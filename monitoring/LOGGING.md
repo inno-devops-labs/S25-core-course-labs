@@ -44,8 +44,8 @@ The logging stack consists of the following services:
 - **Clients:** Forwards logs to `http://loki:3100/loki/api/v1/push`
 - **Scrape Configurations:**
   - **Docker Logs** (`docker-logs`): Collects logs from `/var/lib/docker/containers/*/*-json.log`
-  - **FastAPI App Logs** (`fastapi-app-logs`): Collects logs from `/var/log/python*.log`
-  - **Gin App Logs** (`gin-app-logs`): Collects logs from `/var/log/go*.log`
+  - **FastAPI App Logs** (`fastapi-app-logs`): Collects logs from `/var/log/python_app_.log`
+  - **Gin App Logs** (`gin-app-logs`): Collects logs from `/var/log/go_app.log`
 
 **Docker Configuration:**
 - **Volumes:**
@@ -156,7 +156,10 @@ To view logs in Grafana:
 
 ## **Demonstrating Success**
 **Screenshots:**
-1. **Logs stored in Loki**:
+0. **Logs Generation**:
+   - ![alt text](image-1.png)
+1. **Logs stored in Loki, visualized via Grafana**:
    - ![alt text](image.png)
+   - ![alt text](image-2.png)
 
 ---
