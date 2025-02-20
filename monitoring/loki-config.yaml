@@ -1,0 +1,49 @@
+server:
+  http_listen_address: 0.0.0.0
+  http_listen_port: 3100
+
+memberlist:
+  join_members: ["read", "write", "backend"]
+  dead_node_reclaim_time: 30s
+  gossip_to_dead_nodes_time: 15s
+  left_ingesters_timeout: 30s
+  bind_addr: ['0.0.0.0']
+  bind_port: 7946
+  gossip_interval: 2s
+
+schema_config:
+  configs:
+    - from: 2023-01-01
+      store: tsdb
+      object_store: filesystem
+      schema: v13
+      index:
+        prefix: index_
+        period: 24h
+
+common:
+  path_prefix: /loki
+  replication_factor: 1
+  compactor_address: http://backend:3100
+  storage:
+    filesystem:
+      chunks_directory: /loki/chunks
+      rules_directory: /loki/rules
+  ring:
+    kvstore:
+      store: memberlist
+
+ruler:
+  alertmanager_url: ""
+  storage:
+    type: local
+    local:
+      directory: /loki/rules
+
+compactor:
+  working_directory: /tmp/compactor
+
+limits_config:
+  ingestion_rate_mb: 20
+  ingestion_burst_size_mb: 50
+  max_entries_limit_per_query: 50000
