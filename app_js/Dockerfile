@@ -9,6 +9,9 @@ COPY package*.json ./
 RUN apt-get update && apt-get install -y tini && apt-get clean && rm -rf /var/lib/apt/lists/*
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
+# for health checking
+RUN apt-get update && apt-get install -y curl
+
 RUN npm install --only=production
 
 # creating non-root user and give him ownership of the /app dir

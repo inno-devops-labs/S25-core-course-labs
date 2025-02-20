@@ -94,7 +94,7 @@ services:
     networks:
       - loki
     healthcheck:
-      test: ["CMD", "pgrep", "python"]
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
       interval: 20s
       timeout: 5s
       retries: 3
@@ -106,7 +106,7 @@ services:
     networks:
       - loki
     healthcheck:
-      test: ["CMD", "pgrep", "node"]
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
       interval: 20s
       timeout: 5s
       retries: 3
