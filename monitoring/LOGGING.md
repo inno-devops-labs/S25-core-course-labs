@@ -20,14 +20,14 @@ Grafana is an open-source platform for analytics and interactive data visualizat
 
 ![My app](./img/My%20app.png)
 
-### Grafana
+### Grafana Screen
 
 ![Grafana](./img/Grafana.png)
 
-### Loki
+### Loki Screen
 
 ![Loki](./img/Loki.png)
 
-### Promtail
+### Promtail Screen
 
 ![Promtail](./img/Promtail.png)
