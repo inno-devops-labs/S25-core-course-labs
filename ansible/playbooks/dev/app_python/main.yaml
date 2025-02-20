@@ -1,0 +1,11 @@
+- hosts: all
+  become: true
+  name: Deploy Python application
+  roles:
+    - role: web_app
+      vars:
+        docker_image_name: dnworks/app_python
+        docker_image_tag: latest
+        docker_app_port: 80
+        docker_container_name: app_python
+        docker_container_port: 80
