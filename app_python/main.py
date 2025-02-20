@@ -1,9 +1,13 @@
 from datetime import datetime, time
+from time import monotonic
+from typing import Callable
 
 import pytz
 import uvicorn
-from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse, PlainTextResponse
+from fastapi.routing import APIRoute
+from prometheus_client import Counter, Histogram, generate_latest as generate_latest_prometheus_metrics
 from pydantic import BaseModel
 
 # Host and port to run the application
@@ -20,8 +24,41 @@ TIMEZONE = "Europe/Moscow"
 # HTML file with the web page
 HTML_FILENAME = "index.html"
 
+REQUESTS_COUNT = Counter(
+    "http_requests_total", "Total count of HTTP requests", ["method", "path", "http_code"]
+)
+REQUESTS_LATENCY = Histogram(
+    "http_request_duration_seconds", "Duration in seconds of HTTP requests", ["path"]
+)
+
+
+class MetricsAPIRoute(APIRoute):
+    def get_route_handler(self) -> Callable:
+        original_handler = super().get_route_handler()
+
+        async def custom_route_handler(request: Request):
+            start_time = monotonic()
+            response = await original_handler(request)
+            finish_time = monotonic()
+
+            process_time = finish_time - start_time
+
+            REQUESTS_COUNT.labels(
+                method=request.method,
+                path=request.url.path,
+                http_code=response.status_code,
+            ).inc()
+
+            REQUESTS_LATENCY.labels(path=request.url.path).observe(process_time)
+
+            return response
+
+        return custom_route_handler
+
+
 # Create a FastAPI application
 app = FastAPI()
+app.router.route_class = MetricsAPIRoute
 
 
 class TimeResponse(BaseModel):
@@ -55,6 +92,11 @@ def get_current_time():
     Returns the current time in the specified timezone
     """
     return TimeResponse(time=datetime.now(pytz.timezone(TIMEZONE)).time())
+
+
+@app.get("/metrics", response_class=PlainTextResponse)
+async def metrics():
+    return PlainTextResponse(generate_latest_prometheus_metrics())
 
 
 if __name__ == "__main__":
