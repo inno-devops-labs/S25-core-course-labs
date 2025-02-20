@@ -46,3 +46,12 @@ Here are the screenshots displaying successful dashboard configurations.
 
 ![Prometheus dashboard 1](./img/dashboards_prom_1.png)
 ![Prometheus dashboard 2](./img/dashboards_prom_2.png)
+
+### Service Configuration Updates:
+
+I have added log rotation mechanisms and memory limits for all containers in `docker-compose.yml` (added config to corresponding services).
+
+For log rotation, I have specified the max number of files for rotation (3) and max size for these files (10 Mb). As for memory limits, I specified 256 Mb for my applications services, and 1 Gb for logging stack services.
+
+![256m conf](./img/updateconf_256m.png)
+![1g conf](./img/updateconf_1g.png)
