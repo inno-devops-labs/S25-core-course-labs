@@ -28,7 +28,7 @@ def index():
 
     time_str = moscow_time.strftime("%Y-%m-%d %H:%M:%S")
 
-    logging.info(f"Served current time: {current_time}")
+    logging.info(f"Served current time: {time_str}")
 
     return render_template("index.html", time=time_str)
 
