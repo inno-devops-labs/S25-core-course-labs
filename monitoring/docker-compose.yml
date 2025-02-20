@@ -19,7 +19,7 @@ services:
         max-size: "20m"
         max-file: "5"
     healthcheck:
-      test: ["CMD", "pgrep", "python"]
+      test: ["CMD", "curl", "-f", "http://localhost:8001/api/time"]
       start_period: 10s
       retries: 3
       timeout: 5s
@@ -37,7 +37,7 @@ services:
         max-size: "20m"
         max-file: "5"
     healthcheck:
-      test: ["CMD", "pgrep", "./app"]
+      test: ["CMD", "curl", "-f", "http://localhost:8002/api/date"]
       start_period: 10s
       retries: 3
       timeout: 5s

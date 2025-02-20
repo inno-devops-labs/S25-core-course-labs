@@ -14,6 +14,9 @@ RUN addgroup -S app_group && adduser -S app_user -G app_group
 # Set the working directory
 WORKDIR /app
 
+# Install curl
+RUN apk add --no-cache curl
+
 # Install dependencies
 COPY requirements.txt ./
 RUN pip install --no-cache-dir --upgrade pip==24.3.1 && pip install --no-cache-dir --upgrade -r requirements.txt
