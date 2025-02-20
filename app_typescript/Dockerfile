@@ -14,6 +14,5 @@ COPY --chown=app_typescript_user:app_typescript_user src/ ./src/
 
 RUN npm run build
 
-ENV NODE_ENV="production"
 EXPOSE 8080
-CMD [ "vite", "preview", "--debug" ]
+CMD [ "npx", "vite", "preview", "--debug" ]
