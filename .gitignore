@@ -1,3 +1,4 @@
+/positions
 .data/
 .terraform/
 *.tfstate
