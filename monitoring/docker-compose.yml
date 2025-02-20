@@ -20,7 +20,7 @@ services:
         max-file: "5"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8001/api/time"]
-      start_period: 10s
+      start_period: 1s
       retries: 3
       timeout: 5s
 
@@ -38,7 +38,7 @@ services:
         max-file: "5"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8002/api/date"]
-      start_period: 10s
+      start_period: 1s
       retries: 3
       timeout: 5s
 
@@ -59,7 +59,7 @@ services:
         max-file: "5"
     healthcheck:
       test: ["CMD", "pgrep", "loki"]
-      start_period: 10s
+      start_period: 1s
       retries: 3
       timeout: 5s
 
@@ -89,7 +89,7 @@ services:
         max-file: "5"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
-      start_period: 10s
+      start_period: 1s
       retries: 3
       timeout: 5s
 
@@ -113,7 +113,7 @@ services:
         max-file: "5"
     healthcheck:
       test: ["CMD", "pgrep", "promtail"]
-      start_period: 10s
+      start_period: 1s
       retries: 3
       timeout: 5s
 
@@ -138,6 +138,6 @@ services:
         max-file: "5"
     healthcheck:
       test: ["CMD", "pgrep", "prometheus"]
-      start_period: 10s
+      start_period: 1s
       retries: 3
       timeout: 5s
