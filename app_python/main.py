@@ -33,7 +33,7 @@ async def index(request: Request):
         request (Request): The incoming HTTP request object.
 
     Returns:
-        TemplateResponse: An HTML response rendered using the "item.html" template,
+        TemplateResponse: An HTML response rendered using the "item.html" template
         with the current time passed to the template context.
     """
     zone = timezone(timedelta(hours=3))
