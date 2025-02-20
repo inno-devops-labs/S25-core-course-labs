@@ -1,0 +1,12 @@
+- name: Deploy voronm1522/devops:python-app on VM in Yandex Cloud
+  hosts: all
+  become: true
+  vars:
+    ansible_ssh_user: user
+    ansible_ssh_private_key_file: /home/VM/.ssh/devops/yandex_cloud_vm
+  roles:
+    - role: web_app
+      vars:
+        docker_image: "voronm1522/devops:python-app"  
+        docker_container_name: "python-app"
+        web_app_full_wipe: true
