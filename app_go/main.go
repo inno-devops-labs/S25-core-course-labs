@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"io"
 	"log"
 	"math/rand"
 	"net/http"
@@ -20,20 +21,21 @@ var rng = rand.New(rand.NewSource(time.Now().UnixNano()))
 var logger *log.Logger
 
 func main() {
-	logFile, err := os.OpenFile("/var/log/app.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	logFile, err := os.OpenFile("/var/log/go_app.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
 		fmt.Println("Failed to open log file:", err)
 		return
 	}
-	defer logFile.Close()
 
-	logger = log.New(logFile, "", log.LstdFlags)
+	multiWriter := io.MultiWriter(logFile, os.Stdout)
+
+	logger = log.New(multiWriter, "", log.LstdFlags)
 
 	r := setupRouter()
 	logger.Println("Gin App started on port 8080")
 
 	if err := r.Run(":8080"); err != nil {
-		logger.Fatal("Error starting server: %v", err)
+		logger.Fatalf("Error starting server: %v", err)
 	}
 }
 

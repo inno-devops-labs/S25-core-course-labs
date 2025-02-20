@@ -1,3 +1,5 @@
+import json
+import sys
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from datetime import datetime
@@ -5,13 +7,21 @@ import pytz
 import logging
 
 
+log_formatter = logging.Formatter(json.dumps({
+    "time": "%(asctime)s",
+    "level": "%(levelname)s",
+    "message": "%(message)s"
+}))
+
+log_file_handler = logging.FileHandler("/var/log/python_app.log")
+log_file_handler.setFormatter(log_formatter)
+
+log_console_handler = logging.StreamHandler(sys.stdout)
+log_console_handler.setFormatter(log_formatter)
+
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler("/var/log/app.log"),
-        logging.StreamHandler()
-    ]
+    handlers=[log_file_handler, log_console_handler]
 )
 
 logger = logging.getLogger(__name__)
