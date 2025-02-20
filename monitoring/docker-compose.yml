@@ -11,6 +11,15 @@ services:
       - "80:80"
     networks:
       - logging
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "15m"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   app_golang:
     container_name: app_golang
@@ -19,6 +28,15 @@ services:
       - "81:80"
     networks:
       - logging
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "15m"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   loki:
     container_name: loki
@@ -28,6 +46,15 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     networks:
       - logging
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "15m"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
 
   promtail:
     container_name: promtail
@@ -38,6 +65,15 @@ services:
     command: -config.file=/etc/promtail/config.yml
     networks:
       - logging
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "15m"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
 
   grafana:
     container_name: grafana
@@ -95,6 +131,15 @@ services:
       - "3000:3000"
     networks:
       - logging
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "15m"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
 
   prometheus:
     image: prom/prometheus:latest
@@ -112,3 +157,12 @@ services:
       - "9090:9090"
     networks:
       - logging
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "15m"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
