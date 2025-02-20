@@ -26,7 +26,7 @@ scrape_configs:
         labels:
           job: fastapi
           host: "fastapi-app"
-          __path__: /var/log/*.log
+          __path__: /var/log/python*.log
   
   - job_name: gin-app-logs
     static_configs:
@@ -35,4 +35,4 @@ scrape_configs:
         labels:
           job: gin
           host: "gin-app"
-          __path__: /var/log/*.log
+          __path__: /var/log/go*.log

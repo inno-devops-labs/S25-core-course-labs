@@ -7,9 +7,9 @@ import logging
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(levelnme)s - %(message)s",
+    format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("/var/log/app.log"),
+        logging.FileHandler("/var/log/python_app.log"),
         logging.StreamHandler()
     ]
 )
