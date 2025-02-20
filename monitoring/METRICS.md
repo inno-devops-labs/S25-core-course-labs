@@ -47,6 +47,14 @@ services:
 
 ## Healthchecks
 
+For each service, a healthcheck has been added to the `docker-compose.yml` file.
+
+``` 
+start_period: 1s
+retries: 3
+timeout: 5s
+```
+
 | Service    | Healthcheck                                |
 |------------|--------------------------------------------|
 | Loki       | `pgrep loki`                               |
