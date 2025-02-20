@@ -3,6 +3,8 @@ from fastapi.responses import HTMLResponse
 import uvicorn
 from zoneinfo import ZoneInfo
 from datetime import datetime
+from prometheus_fastapi_instrumentator import Instrumentator
+
 
 app = FastAPI()
 
@@ -26,6 +28,14 @@ def get_msc_time(request: Request):
         )
     else:
         return {"time": now}
+
+
+instrumentator = Instrumentator().instrument(app)
+
+
+@app.on_event("startup")
+async def _startup():
+    instrumentator.expose(app)
 
 
 if __name__ == "__main__":
