@@ -40,6 +40,16 @@ services:
     depends_on:
       - loki  
 
+  prometheus:
+    image: prom/prometheus:v2.41.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: unless-stopped
+    networks:
+      - monitoring
+
 networks:
   monitoring:
     driver: bridge
