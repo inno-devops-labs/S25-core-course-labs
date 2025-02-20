@@ -156,13 +156,7 @@ To view logs in Grafana:
 
 ## **Demonstrating Success**
 **Screenshots:**
-1. **Docker logs collected by Promtail**:
-   - `docker logs promtail`
-   - Screenshot of logs being sent to Loki.
-2. **Logs stored in Loki**:
+1. **Logs stored in Loki**:
    - ![alt text](image.png)
-   - 
-3. **Grafana dashboard with logs**:
-   - Screenshot of logs visualized in Grafana.
 
 ---
