@@ -15,6 +15,15 @@ services:
     ports:
       - "3100:3100"
     logging: *default-logging
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:3100/ready"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   promtail:
     image: grafana/promtail:latest
@@ -26,6 +35,15 @@ services:
     logging: *default-logging
     depends_on:
       - loki
+    healthcheck:
+      test: ["CMD", "pgrep", "promtail"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   grafana:
     image: grafana/grafana:latest
@@ -51,6 +69,15 @@ services:
           isDefault: true
           version: 1
           editable: false
+        - name: Prometheus
+          type: prometheus
+          access: proxy
+          orgId: 1
+          url: http://prometheus:9090
+          basicAuth: false
+          isDefault: false
+          version: 1
+          editable: true
         EOF
         /run.sh
     ports:
@@ -58,6 +85,36 @@ services:
     logging: *default-logging
     depends_on:
       - loki
+      - prometheus
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:3000/robots.txt"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    logging: *default-logging
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      - loki
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   app_python:
     build:
@@ -67,6 +124,15 @@ services:
     ports:
       - "5001:5001"
     logging: *default-logging
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   app_golang:
     build:
@@ -76,3 +142,12 @@ services:
     ports:
       - "8080:8080"
     logging: *default-logging
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M

@@ -7,6 +7,7 @@ WORKDIR /app
 
 COPY requirements.txt /app/
 COPY app.py /app/
+COPY helpers/middlewares.py /app/helpers/
 COPY templates/ /app/templates/
 
 RUN pip install --no-cache-dir -r requirements.txt
