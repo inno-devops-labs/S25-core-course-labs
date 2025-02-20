@@ -39,8 +39,8 @@ docker-compose up -d --force-recreate --build
 ```
 
 ### **📸 Screenshot: Logs in Grafana**
-![Grafana Logs](screenshots/screen1.png)
+![Grafana Logs](screenshots/screen1.jpg)
 
 ### **📸 Screenshot: Promtail Running**
-![Promtail Logs](screenshots/screen2.png)
+![Promtail Logs](screenshots/screen2.jpg)
 
