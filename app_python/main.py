@@ -7,7 +7,11 @@ import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, PlainTextResponse
 from fastapi.routing import APIRoute
-from prometheus_client import Counter, Histogram, generate_latest as generate_latest_prometheus_metrics
+from prometheus_client import (
+    Counter,
+    Histogram,
+    generate_latest as generate_latest_prometheus_metrics,
+)
 from pydantic import BaseModel
 
 # Host and port to run the application
@@ -25,10 +29,14 @@ TIMEZONE = "Europe/Moscow"
 HTML_FILENAME = "index.html"
 
 REQUESTS_COUNT = Counter(
-    "http_requests_total", "Total count of HTTP requests", ["method", "path", "http_code"]
+    "http_requests_total",
+    "Total count of HTTP requests",
+    ["method", "path", "http_code"],
 )
 REQUESTS_LATENCY = Histogram(
-    "http_request_duration_seconds", "Duration in seconds of HTTP requests", ["path"]
+    "http_request_duration_seconds",
+    "Duration in seconds of HTTP requests",
+    ["method", "path"],
 )
 
 
@@ -49,7 +57,10 @@ class MetricsAPIRoute(APIRoute):
                 http_code=response.status_code,
             ).inc()
 
-            REQUESTS_LATENCY.labels(path=request.url.path).observe(process_time)
+            REQUESTS_LATENCY.labels(
+                method=request.method,
+                path=request.url.path,
+            ).observe(process_time)
 
             return response
 
