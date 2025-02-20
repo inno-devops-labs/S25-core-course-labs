@@ -1,5 +1,20 @@
 const express = require('express');
 const app = express();
+const client = require('prom-client');
+
+
+// Set up Prometheus metrics registry and collect default metrics
+const register = new client.Registry();
+client.collectDefaultMetrics({ register });
+
+
+// Create a custom gauge metric for current Moscow time (in seconds)
+const currentTimeGauge = new client.Gauge({
+  name: 'current_moscow_time',
+  help: 'Current time in Moscow as a Unix timestamp',
+});
+register.registerMetric(currentTimeGauge);
+
 
 // Helper function to format the date in 'YYYY-MM-DD HH:MM:SS' format
 function formatDate(date) {
@@ -28,6 +43,13 @@ app.get('/', (req, res) => {
     <h1>Welcome to my Node.js Web App!</h1>
     <h1>Current Time in Moscow: ${formattedTime} MSK</h1>
   `);
+});
+
+
+// Expose metrics endpoint for Prometheus
+app.get('/metrics', async (req, res) => {
+  res.set('Content-Type', register.contentType);
+  res.end(await register.metrics());
 });
 
 // Start server on port 3000 (or process.env.PORT if defined)

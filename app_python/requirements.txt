@@ -2,3 +2,4 @@ Flask
 pytz
 Werkzeug
 pytest
+prometheus-client

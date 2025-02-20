@@ -11,7 +11,8 @@
     "author": "Mohamed Aymen Daassi",
     "license": "MIT",
     "dependencies": {
-        "express": "^4.18.2"
+        "express": "^4.18.2",
+        "prom-client": "^15.1.3"
     },
     "devDependencies": {
         "chai": "^5.1.2",
