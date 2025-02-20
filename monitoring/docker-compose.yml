@@ -7,7 +7,16 @@ services:
       - "3000:3000"
     networks:
       - monitoring
-
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+      
   loki:
     image: grafana/loki:latest
     ports:
@@ -22,7 +31,16 @@ services:
     environment:
       - LOKI_STORAGE_DIR=/loki 
     restart: unless-stopped
-    
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
   promtail:
     image: grafana/promtail:latest
     volumes:
@@ -30,6 +48,15 @@ services:
       - /var/log:/var/log
     networks:
       - monitoring
+    deploy:
+      resources:
+        limits:
+          memory: 200M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   python_app:
     image: pupolina7/moscow-time-app  
@@ -39,6 +66,15 @@ services:
       - monitoring
     depends_on:
       - loki  
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   prometheus:
     image: prom/prometheus:v2.41.0
@@ -46,9 +82,18 @@ services:
       - "9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    restart: unless-stopped
     networks:
       - monitoring
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 networks:
   monitoring:
