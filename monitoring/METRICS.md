@@ -1,14 +1,14 @@
 # Metrics
 
-Docker Compose Up with Prometheus:
+## Docker Compose Up with Prometheus
 
 ![Docker Compose Up](./img/docker_compose_up_2.png)
 
-Prometheus Targets:
+## Prometheus Targets
 
 ![Prometheus Targets](./img/prometheus_targets.png)
 
-Datasources in Grafana:
+## Datasources in Grafana
 
 ![Grafana Data Sources](./img/grafana_datasources_2.png)
 
