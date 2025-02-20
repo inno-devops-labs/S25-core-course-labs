@@ -2,7 +2,7 @@ networks:
   monitoring:
     ipam:
       config:
-        - subnet: 172.21.0.0/16
+        - subnet: 172.22.0.0/16
 
 volumes:
   loki_data:
@@ -14,19 +14,26 @@ services:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
     volumes:
-      - loki_data:/loki
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
     networks:
       - monitoring
+    healthcheck:
+      test: ["CMD", "pgrep", "loki"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   promtail:
     image: grafana/promtail:latest
     volumes:
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/log:/var/log
-      - ./promtail-config.yml:/etc/promtail/config.yaml
-    command: -config.file=/etc/promtail/config.yaml
+      - ./promtail-config.yml:/etc/promtail/promtail-config.yaml
+    command: -config.file=/etc/promtail/promtail-config.yaml
     networks:
       - monitoring
+    depends_on:
+      - loki
 
   grafana:
     image: grafana/grafana:latest
@@ -57,6 +64,25 @@ services:
         /run.sh
     networks:
       - monitoring
+    depends_on:
+      - loki
+      - prometheus
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yaml
+    depends_on:
+      - loki
+    networks: 
+      - monitoring
+    healthcheck:
+      test: [ "CMD", "wget", "--spider", "http://localhost:9090/-/ready" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   python_app:
     image: theanushervon/moscow_time:latest
@@ -67,6 +93,11 @@ services:
       - loki
     networks:
       - monitoring
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   go_app:
     image: theanushervon/moscow-time-app-go:latest
@@ -81,3 +112,8 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
