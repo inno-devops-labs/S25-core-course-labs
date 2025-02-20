@@ -1,0 +1,79 @@
+services:
+  app-python:
+    build:
+      context: ../app_python
+    container_name: fastapi-app
+    ports:
+      - "8000:8000"
+    networks:
+      - monitoring
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "3"
+  
+  app-go:
+    build:
+      context: ../app_go
+    container_name: gin-app
+    ports:
+      - "8080:8080"
+    networks:
+      - monitoring
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "3"
+
+
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    user: "1000:1000"
+    volumes:
+      - ./loki-cfg.yml:/etc/loki/local-config.yaml
+      - ./loki-data:/loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - monitoring
+    restart: always
+  
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail
+    volumes:
+      - ./promtail-cfg.yml:/etc/promtail/config.yml
+      - /var/log:/var/log
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - monitoring
+    restart: always
+    depends_on:
+      - loki
+  
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - monitoring
+    restart: always
+    depends_on:
+      - loki
+
+networks:
+  monitoring:
+
+volumes:
+  grafana_data:
