@@ -1,8 +1,14 @@
 from flask import Flask, Response
 from datetime import datetime
 import pytz
-from prometheus_client import CollectorRegistry, Gauge, generate_latest, CONTENT_TYPE_LATEST
+from prometheus_client import (
+    CollectorRegistry,
+    Gauge,
+    generate_latest,
+    CONTENT_TYPE_LATEST
+)
 
+ 
 app = Flask(__name__)
 
 
@@ -20,7 +26,6 @@ def show_moscow_time():
     moscow_tz = pytz.timezone('Europe/Moscow')
     current_time = datetime.now(moscow_tz)
     current_time_str = current_time.strftime('%Y-%m-%d %H:%M:%S')
-    
     # Update the gauge with the current timestamp (in seconds)
     current_time_gauge.set(current_time.timestamp())
     
