@@ -3,12 +3,23 @@ networks:
 
 volumes:
   loki-data:
+  prometheus-data:
 
 services:
   loki:
     image: grafana/loki:latest
+    platform: linux/amd64
     ports:
       - "3100:3100"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 50M
     command: -config.file=/etc/loki/local-config.yaml
     volumes:
       - loki-data:/loki
@@ -17,6 +28,7 @@ services:
 
   promtail:
     image: grafana/promtail:latest
+    platform: linux/amd64
     volumes:
       - /var/log:/var/log
       - ./promtail-config.yml:/etc/promtail/config.yml
@@ -26,6 +38,15 @@ services:
       - loki
     networks:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 50M
 
   grafana:
     environment:
@@ -50,30 +71,102 @@ services:
           isDefault: true
           version: 1
           editable: false
+        - name: Prometheus
+          type: prometheus
+          access: proxy
+          orgId: 1
+          url: http://prometheus:9090
+          basicAuth: false
+          isDefault: false
+          version: 1
+          editable: true
         EOF
         /run.sh
     image: grafana/grafana:latest
+    platform: linux/amd64
     ports:
       - "3000:3000"
     depends_on:
       - loki
+      - prometheus
     networks:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 50M
+
+  prometheus:
+    image: prom/prometheus:latest
+    platform: linux/amd64
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    networks:
+      - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 50M
 
   app_python:
-    image: ramilevna/app_python:latest
+    image: ramilevna/app_python
+    platform: linux/amd64
     ports:
-      - "4000:4000"
+      - "4010:4000"
     networks:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 50M
     volumes:
       - ./logs/app-python:/var/log/app-python
+    healthcheck:
+      test: "curl -f http://localhost:4000 || exit 1"
+      retries: 3
+      timeout: 5s
+      start_period: 5s
 
   app_javascript:
-    image: ramilevna/app_javascript:latest
+    image: ramilevna/app_javascript
+    platform: linux/amd64
     ports:
-      - "6000:6000"
+      - "6010:6000"
     networks:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 50M
     volumes:
       - ./logs/app-javascript:/var/log/app-javascript
+    healthcheck:
+      test: "curl -f http://localhost:6000 || exit 1"
+      retries: 3
+      timeout: 5s
+      start_period: 5s

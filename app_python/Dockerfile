@@ -27,8 +27,5 @@ COPY --from=builder /app .
 # Set Python path to include dependencies
 ENV PYTHONPATH=/app/deps
 
-# Expose port
-EXPOSE 8080
-
 # Run the application
 CMD ["python", "app.py"]

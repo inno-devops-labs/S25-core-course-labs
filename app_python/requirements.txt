@@ -3,3 +3,4 @@ pytz==2023.3
 pytest
 flake8
 pytest-cov
+prometheus_client

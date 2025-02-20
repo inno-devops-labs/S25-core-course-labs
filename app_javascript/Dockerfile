@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Install dependencies
-RUN npm install --only=production
+RUN npm install --only=production, prom-client
 
 # Copy source code
 COPY . .
@@ -26,7 +26,7 @@ WORKDIR /app
 COPY --from=builder /app .
 
 # Expose the port
-EXPOSE 3000
+EXPOSE 6000
 
 # Run the application
 CMD ["node", "server.js"]
