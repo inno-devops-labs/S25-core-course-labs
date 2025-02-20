@@ -61,3 +61,10 @@ Traceback (most recent call last):
 NameError: name 'current_time' is not defined
 2025-02-20 03:24:23,866 - INFO - 127.0.0.1 - - [20/Feb/2025 03:24:23] "[35m[1mGET / HTTP/1.1[0m" 500 -
 2025-02-20 03:24:24,172 - INFO - 127.0.0.1 - - [20/Feb/2025 03:24:24] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-02-20 03:25:30,671 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.91.58.84:5000
+2025-02-20 03:25:30,672 - INFO - [33mPress CTRL+C to quit[0m
+2025-02-20 03:25:35,638 - INFO - Served current time: 2025-02-20 03:25:35
+2025-02-20 03:25:35,658 - INFO - 127.0.0.1 - - [20/Feb/2025 03:25:35] "GET / HTTP/1.1" 200 -
