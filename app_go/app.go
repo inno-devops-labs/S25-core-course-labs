@@ -6,25 +6,21 @@ import (
 	"net/http"
 	"time"
 
-
-    "github.com/prometheus/client_golang/prometheus"
-    "github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
-
-
 
 // Define a counter metric
 var requestCount = prometheus.NewCounter(
-    prometheus.CounterOpts{
-        Name: "app_requests_total",
-        Help: "Total number of requests",
-    },
+	prometheus.CounterOpts{
+		Name: "app_requests_total",
+		Help: "Total number of requests",
+	},
 )
 
-
 func init() {
-    // Register the counter with Prometheus
-    prometheus.MustRegister(requestCount)
+	// Register the counter with Prometheus
+	prometheus.MustRegister(requestCount)
 }
 
 // PageData holds the data that will be passed to the HTML template.
@@ -83,13 +79,12 @@ func main() {
 	// Register the home handler for the root path
 	http.HandleFunc("/", Home)
 
-
 	// Expose Prometheus metrics on /metrics
 	http.Handle("/metrics", promhttp.Handler())
 
 	// Start the HTTP server on port 3000
 	log.Println("Starting server on :3500...")
-	err := http.ListenAndServe(":3500", nil)
+	err := http.ListenAndServe("0.0.0.0:3500", nil)
 	if err != nil {
 		log.Fatal("Server failed:", err) // Log and exit if the server fails to start
 	}
