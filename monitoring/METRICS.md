@@ -53,5 +53,9 @@ I used `pgrep` to grep `promtail`
 I used `wget` to access `localhost:9090/-/healthy`
 
 ### My apps
-I used `pgrep` to grep `python` and `node` respectively,
-but also created `/health` endpoint in each of the apps
+I used specially created `/health` endpoint in each of the apps and 
+a command `curl` to get access to this endpoint to cheack whether
+the app is running or not
+
+### Verify health check with `docker ps`
+![health check of containers](./images/healthcheck.png)
