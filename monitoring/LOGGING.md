@@ -31,6 +31,6 @@ The same `loki` network for all components `Promtail` service. It runs on 3100 p
 
 ## Results demonstrarion
 
-![Screenshot](img/screenshot.png)
+![Screenshot](img/lab7.png)
 
 On the screenshot above you may see dashboard with all containers logs. My application on C++ does not write logs, so I had no ability to show them. The simplest way to demonstrate its log aggregation was to manually write in its *.log file. I saved there line from app_python log (look on diference in time).
