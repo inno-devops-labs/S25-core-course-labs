@@ -24,6 +24,10 @@ It listents on port 3000.
 
 ![img.png](images/dockers.png)
 
+### Web application is available
+
+![img.png](images/webapp.png)
+
 ### Grafana logging
 
 ![img.png](images/graf.png)
