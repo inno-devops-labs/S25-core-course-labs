@@ -8,10 +8,13 @@ services:
     volumes:
       - ./loki-config.yaml:/etc/loki/loki-config.yaml
     restart: unless-stopped
+    mem_limit: 512m
 
   promtail:
     image: grafana/promtail:latest
     container_name: promtail
+    ports:
+      - "9080:9080"
     volumes:
       - /var/lib/docker/containers:/var/lib/docker/containers
       - /var/run/docker.sock:/var/run/docker.sock
@@ -19,8 +22,7 @@ services:
       - app-logs:/app
     command: -config.file=/etc/promtail/promtail-config.yml
     restart: unless-stopped
-    depends_on:
-      - loki
+    mem_limit: 512m
 
   grafana:
     image: grafana/grafana:latest
@@ -31,12 +33,21 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_METRICS_ENABLED=true
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
     restart: unless-stopped
+    mem_limit: 512m
     depends_on:
       - loki
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
   moscow-time-app:
     image: enot0704/moscow-time-app
@@ -46,6 +57,43 @@ services:
     ports:
       - "5000:5000"
     restart: unless-stopped
+    mem_limit: 512m
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    depends_on:
+      - loki
+    restart: unless-stopped
+    mem_limit: 512m
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    mem_limit: 512m
+    volumes:
+      - /:/rootfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
     logging:
       driver: "json-file"
       options:
@@ -55,3 +103,4 @@ services:
 volumes:
   grafana_data:
   app-logs:
+  prometheus_data:
