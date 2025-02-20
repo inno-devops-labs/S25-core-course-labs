@@ -24,7 +24,7 @@ ENV PATH="/app_python/bin:${PATH}"
 ENV FLASK_APP=app.py
 
 # Expose the application port
-EXPOSE 5000
+EXPOSE 5000 5001
 
 # Set the entry point to run Flask
 ENTRYPOINT ["python3", "-m", "flask", "run", "--host=0.0.0.0", "--port=5000"]

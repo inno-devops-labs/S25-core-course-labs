@@ -17,13 +17,14 @@ services:
         max-file: "10"
         tag: "{{.ImageName}}|{{.Name}}"
     mem_limit: "512m"  # Limit memory to 512MB
-    networks:
-      - loki
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000"]
-      interval: 30s
+      test: ["CMD", "python3", "-c", "import http.client; conn = http.client.HTTPConnection('localhost', 5000); conn.request('GET', '/'); response = conn.getresponse(); exit(0) if response.status == 200 else exit(1)"]
+      interval: 10s
       timeout: 10s
       retries: 3
+      start_period: 40s
+    networks:
+      - loki
 
 
 
@@ -33,8 +34,6 @@ services:
     image: "oshaheen1882051/app_go:app_go-distroless-prod-ci-1.0.0"
     ports:
       - "3500:3500"
-    networks:
-      - loki
     logging:
       driver: "json-file"
       options:
@@ -43,10 +42,13 @@ services:
         tag: "{{.ImageName}}|{{.Name}}"
     mem_limit: "512m"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3500"]  # Loki's readiness endpoint
-      interval: 30s
+      test: ["CMD", "curl", "-f", "http://0.0.0.0:3500/"]
+      interval: 10s
       timeout: 10s
       retries: 3
+      start_period: 40s
+    networks:
+      - loki
 
     
 
@@ -55,8 +57,6 @@ services:
     ports:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
-    networks:
-      - loki
     logging:
       driver: "json-file"
       options:
@@ -65,10 +65,12 @@ services:
         tag: "{{.ImageName}}|{{.Name}}"
     mem_limit: "1g"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3100/ready"]
+      test: wget --spider -q http://localhost:3100/ready
       interval: 30s
-      timeout: 10s
+      timeout: 30s
       retries: 3
+    networks:
+      - loki
     
 
   promtail:
@@ -78,8 +80,6 @@ services:
       - ./promtail.yml:/etc/promtail/config.yml
       - /var/lib/docker/containers:/var/lib/docker/containers
     command: -config.file=/etc/promtail/config.yml
-    networks:
-      - loki
     logging:
       driver: "json-file"
       options:
@@ -88,10 +88,12 @@ services:
         tag: "{{.ImageName}}|{{.Name}}"
     mem_limit: "512m"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9080"]
+      test: pgrep -f promtail
       interval: 30s
-      timeout: 10s
+      timeout: 30s
       retries: 3
+    networks:
+      - loki
     
 
   grafana:
@@ -122,8 +124,6 @@ services:
     image: grafana/grafana:latest
     ports:
       - "3000:3000"
-    networks:
-      - loki
     logging:
       driver: "json-file"
       options:
@@ -132,10 +132,12 @@ services:
         tag: "{{.ImageName}}|{{.Name}}"
     mem_limit: "1g"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000"]  # Grafana's health endpoint
+      test: ["CMD", "curl", "-f", "http://0.0.0.0:3000/"] 
       interval: 30s
-      timeout: 10s
+      timeout: 30s
       retries: 3
+    networks:
+      - loki
 
 
   prometheus:
@@ -143,13 +145,13 @@ services:
     volumes:
       - "./prometheus.yml:/etc/prometheus/prometheus.yml"
     command: --config.file=/etc/prometheus/prometheus.yml
-    networks:
-      - loki
     ports:
       - 9090:9090
     mem_limit: "1g"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9090/targetss"]
+      test: wget http://localhost:9090
       interval: 30s
-      timeout: 10s
+      timeout: 30s
       retries: 3
+    networks:
+      - loki
