@@ -43,6 +43,9 @@ resource "yandex_compute_instance" "terraform1" {
     subnet_id = yandex_vpc_subnet.subnet_1.id
     nat       = true
   }
+  metadata = {
+    ssh-keys = "ubuntu:${file("/home/akvadevka/.ssh/id_rsa.pub")}"
+  }
 }
 
 resource "yandex_compute_instance" "terraform2" {
@@ -62,6 +65,9 @@ resource "yandex_compute_instance" "terraform2" {
   network_interface {
     subnet_id = yandex_vpc_subnet.subnet_1.id
     nat       = true
+  }
+  metadata = {
+    ssh-keys = "ubuntu:${file("/home/akvadevka/.ssh/id_rsa.pub")}"
   }
 
 }
