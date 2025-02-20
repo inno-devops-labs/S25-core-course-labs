@@ -4,7 +4,15 @@ This is a python web application using Flask framework that shows current time i
 
 from datetime import datetime, timezone, timedelta
 
+import logging
+
 from flask import Flask, render_template
+
+logging.basicConfig(
+    filename="app.log",
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+)
 
 web_app = Flask(__name__)
 
@@ -19,6 +27,8 @@ def index():
     moscow_time = utc_now.astimezone(moscow_tz)
 
     time_str = moscow_time.strftime("%Y-%m-%d %H:%M:%S")
+
+    logging.info(f"Served current time: {current_time}")
 
     return render_template("index.html", time=time_str)
 
