@@ -27,4 +27,6 @@ docker-compose up -d
 go to  http://localhost:3000
 log in via admin / admin 
 
+![image](https://github.com/user-attachments/assets/c83774ea-f9a2-402d-a1d6-817599537eb4)
+
 
