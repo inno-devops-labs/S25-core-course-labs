@@ -230,3 +230,67 @@ docker-compose version 1.29.2, build 5becea4c
   |--@ungrouped:
   |  |--instance
 ```
+
+## Lab 6 Deployment
+
+```bash
+PLAY [Deploy Container] ************************************************************************************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************************************************************
+Enter passphrase for key '/home/azeeez/Desktop/ycld': 
+[WARNING]: Platform linux on host instance is using the discovered Python interpreter at /usr/bin/python3.10, but future installation of another Python interpreter could change the meaning of that path.
+See https://docs.ansible.com/ansible-core/2.17/reference_appendices/interpreter_discovery.html for more information.
+ok: [instance]
+
+TASK [docker : include_tasks] ******************************************************************************************************************************************************************************
+included: /home/azeeez/Desktop/courses/devops/kdi/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for instance
+
+TASK [docker : Install dependencies] ***********************************************************************************************************************************************************************
+ok: [instance]
+
+TASK [docker : Add GPG key] ********************************************************************************************************************************************************************************
+ok: [instance]
+
+TASK [docker : Add repository] *****************************************************************************************************************************************************************************
+ok: [instance]
+
+TASK [docker : Install] ************************************************************************************************************************************************************************************
+ok: [instance]
+
+TASK [docker : Run] ****************************************************************************************************************************************************************************************
+ok: [instance]
+
+TASK [docker : Add user to group] **************************************************************************************************************************************************************************
+ok: [instance]
+
+TASK [docker : include_tasks] ******************************************************************************************************************************************************************************
+included: /home/azeeez/Desktop/courses/devops/kdi/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for instance
+
+TASK [docker : Download Docker Compose] ********************************************************************************************************************************************************************
+ok: [instance]
+
+TASK [../../roles/web_app : Pull Docker image] *************************************************************************************************************************************************************
+ok: [instance]
+
+TASK [../../roles/web_app : Start Docker container] ********************************************************************************************************************************************************
+changed: [instance]
+
+PLAY RECAP *************************************************************************************************************************************************************************************************
+instance                   : ok=12   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+**We can also verify that the image is isntalled and running in the virtual machine by running `docker image ls` and `docker ps`**
+
+**Running `docker image ls`:**
+
+```bash
+REPOSITORY                   TAG       IMAGE ID       CREATED      SIZE
+azeeeez/python_moscow_time   latest    27f91384b2fd   4 days ago   67.7MB
+```
+
+**Running `docker ps`:**
+
+```bash
+CONTAINER ID   IMAGE                        COMMAND           CREATED         STATUS         PORTS                            NAMES
+de6207567a97   azeeeez/python_moscow_time   "python app.py"   4 minutes ago   Up 4 minutes   5000/tcp, 0.0.0.0:5000->80/tcp   web_app
+```
