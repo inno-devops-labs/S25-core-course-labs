@@ -20,6 +20,10 @@ services:
       resources:
         limits:
           memory: 256M
+    healthcheck:
+      test: "curl -s -f http://localhost/ || exit 1"
+      interval: 30s
+      timeout: 3s
 
   app_golang:
     container_name: app_golang
@@ -37,6 +41,10 @@ services:
       resources:
         limits:
           memory: 256M
+    healthcheck:
+      test: "curl -s -f http://localhost/ || exit 1"
+      interval: 30s
+      timeout: 3s
 
   loki:
     container_name: loki
@@ -55,6 +63,10 @@ services:
       resources:
         limits:
           memory: 1G
+    healthcheck:
+      test: "wget --quiet --tries=1 --output-document=- http://127.0.0.1:3100/ready | grep -q -w ready || exit 1"
+      interval: 30s
+      timeout: 3s
 
   promtail:
     container_name: promtail
@@ -63,6 +75,8 @@ services:
       - ./promtail.yml:/etc/promtail/config.yml
       - /var/run/docker.sock:/var/run/docker.sock
     command: -config.file=/etc/promtail/config.yml
+    ports:
+      - "9080:9080"
     networks:
       - logging
     logging:
@@ -74,6 +88,10 @@ services:
       resources:
         limits:
           memory: 1G
+    healthcheck:
+      test: "pgrep promtail || exit 1"
+      interval: 30s
+      timeout: 3s
 
   grafana:
     container_name: grafana
@@ -140,6 +158,10 @@ services:
       resources:
         limits:
           memory: 1G
+    healthcheck:
+      test: "curl -s -f http://127.0.0.1:3000/api/health | grep -q -w ok || exit 1"
+      interval: 30s
+      timeout: 3s
 
   prometheus:
     image: prom/prometheus:latest
@@ -166,3 +188,7 @@ services:
       resources:
         limits:
           memory: 1G
+    healthcheck:
+      test: "wget --quiet --tries=1 --output-document=- http://127.0.0.1:9090/-/healthy | grep -q -w Healthy || exit 1"
+      interval: 30s
+      timeout: 3s
