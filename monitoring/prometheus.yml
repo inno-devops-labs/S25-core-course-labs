@@ -7,6 +7,10 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9090"]
 
+  - job_name: promtail
+    static_configs:
+      - targets: ["promtail:9080"]
+
   - job_name: loki
     static_configs:
       - targets: ["loki:3100"]
