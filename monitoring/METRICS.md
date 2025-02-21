@@ -55,3 +55,59 @@ For log rotation, I have specified the max number of files for rotation (3) and 
 
 ![256m conf](./img/updateconf_256m.png)
 ![1g conf](./img/updateconf_1g.png)
+
+### Metrics Gathering:
+
+I have extended Prometheus configuration to gather metrics from all services defined in `docker-compose.yml`.
+
+![Config that includes all services from docker-compose](./img/prom_all_services.png)
+
+As we can see from the target health status page, the extension of config was successful.
+
+![Successful healthcheck for all services](./img/prom_all_success.png)
+
+## Bonus Task: Metrics and Health Checks
+
+### Application metrics
+
+#### Python app
+
+I have integrated the following metrics in Python app:
+
+- `time_page_visits` - the number of visits of web page with the current time in Moscow
+- `time_json_visits` - the number of visits of API endpoint with the current time in Moscow.
+
+Both metrics are `Counter` metrics because they are not supposed to be less than the previous value (they are supposed just to increase with each new visit).
+
+- `GET /metrics` - introduced a new endpoint that allows to read metrics, mainly for Prometheus
+
+For the setup of these metrics, I used [`prometheus-client`](https://pypi.org/project/prometheus-client/) package.
+
+![Python code 1](./img/bonus_metrics_python_1.png)
+![Python code 2](./img/bonus_metrics_python_2.png)
+![Python code 3](./img/bonus_metrics_python_3.png)
+
+If I try to visit the web page with time or try to make a request to my API endpoint, the metric will increment. We can see this in the Prometheus, if we are querying by `app_python` job.
+
+![Prometheus Python metrics increment](./img/bonus_metrics_python_inc.png)
+
+#### Golang app
+
+I have integrated the following metrics in the Golang application:
+
+- `joke_page_visits` - the number of visits of web page with the joke
+- `joke_json_visits` - the number of visits of API endpoint with the joke.
+
+Both metrics are still `Counter` metrics because they are not supposed to be less than the previous value (they are supposed just to increase with each new visit).
+
+- `GET /metrics` - introduced a new endpoint that allows to read metrics, again, mainly just for Prometheus
+
+For the setup of these metrics, I used [`prometheus`](https://pkg.go.dev/github.com/prometheus/client_golang@v1.21.0/prometheus) and [`promhttp`](https://pkg.go.dev/github.com/prometheus/client_golang@v1.21.0/prometheus/promhttp) packages.
+
+![Golang code 1](./img/bonus_metrics_golang_1.png)
+![Golang code 2](./img/bonus_metrics_golang_2.png)
+
+Similarly to the Python app, if I try to visit the web page with joke or try to make a request to my API joke endpoint, the metric will increment.
+We can see this in the Prometheus, if we are querying by `app_golang` job.
+
+![Prometheus Golang metrics increment](./img/bonus_metrics_golang_inc.png)
