@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random joke</title>
+    <style>
+      body {
+        background-color: #111112;
+        color: white;
+        font-family: sans-serif;
+        margin: 0;
+      }
+
+      .randomizer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .randomizer__content {
+        display: flex;
+        justify-content: center;
+        padding: 1rem;
+        border-radius: 1rem;
+        background: #222223;
+        flex-direction: column;
+        align-items: center;
+        height: 250px;
+      }
+
+      .randomizer__content__joke {
+        padding: 0.75rem 1.25rem;
+        background: #333334;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        font-size: 1.25rem;
+        width: 555px;
+        text-wrap: wrap;
+        text-align: center;
+      }
+
+      .randomizer__content__description {
+        text-align: center;
+        color: white;
+        opacity: 0.75;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="randomizer">
+      <div class="randomizer__content">
+        <h1 class="randomizer__content__title">Random joke</h1>
+        <span class="randomizer__content__joke">{{ .joke }}</span>
+        <p class="randomizer__content__description">
+          Refresh the page to get a new joke!
+        </p>
+      </div>
+    </main>
+  </body>
+</html>
