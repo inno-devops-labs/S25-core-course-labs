@@ -25,4 +25,4 @@ scrape_configs:
   - job_name: "omsk-time-app"
     metrics_path: "/metrics"
     static_configs:
-      - targets: ["omsk-time-app:8081"]
+      - targets: ["omsk-time-app:4567"]
