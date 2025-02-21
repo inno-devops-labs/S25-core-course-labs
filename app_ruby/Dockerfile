@@ -6,8 +6,8 @@ ENV BUNDLE_WITHOUT=development:test \
 # Install system dependencies
 RUN apk add --no-cache \
         gcc=14.2.0-r4 \
-        musl-dev=1.2.5-r8 \
-        tzdata=2024b-r1 \
+        musl-dev=1.2.5-r9 \
+        tzdata=2025a-r0 \
         make=4.4.1-r2
 
 RUN addgroup -S appgroup && \
