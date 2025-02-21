@@ -12,6 +12,10 @@ request_count = Counter('http_requests_total', 'Total number of HTTP requests')
 def metrics():
     return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
 
+@app.route("/health")
+def health():
+    return "OK", 200
+
 @app.route("/")  
 def index():
     request_count.inc()

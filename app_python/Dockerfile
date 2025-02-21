@@ -1,6 +1,7 @@
-FROM python:3.9-slim
+FROM python:3.11-bullseye
 
 RUN apt-get update && apt-get install -y \
+    procps \
     adduser \
     coreutils \
     && rm -rf /var/lib/apt/lists/*
@@ -15,7 +16,7 @@ RUN addgroup --system appgroup && \
 
 COPY . .
 
-RUN chown -R appuser:appgroup /app
+RUN chown -R appuser:appgroup /app && chown -R appuser /app
 
 USER appuser
 
