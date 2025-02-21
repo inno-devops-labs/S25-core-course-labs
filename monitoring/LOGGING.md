@@ -4,9 +4,6 @@
 
 ![image](https://github.com/user-attachments/assets/bc6da33c-deb2-4f36-ac62-452cf59e4c4a)
 
-
-
-
 ### Loki <img src="https://github.com/user-attachments/assets/d349e1ca-abc3-4d05-945a-dbcdbfaa5a23" alt="image" width="22">
 
 **Role:** Loki is a log aggregation system designed for efficiency and cost-effectiveness. It stores logs and provides a query interface for retrieving them.
@@ -46,8 +43,9 @@ Two applications (`moscow-time-app` and `omsk-time-app`) are running in the logg
 - These applications are labeled with `logging=true` to indicate that their logs should be collected.
 - Logs are scraped by Promtail and sent to Loki.
 
-<img width="1470" alt="Снимок экрана 2025-02-21 в 20 30 13" src="https://github.com/user-attachments/assets/e15b449c-1750-45bf-bca8-728939cebb54" />
+<img width="1470" alt="Снимок экрана 2025-02-21 в 20 36 23" src="https://github.com/user-attachments/assets/ee73e10e-8e76-474f-bc0f-01cd502461d4" />
 
+<img width="1470" alt="Снимок экрана 2025-02-21 в 20 30 13" src="https://github.com/user-attachments/assets/e15b449c-1750-45bf-bca8-728939cebb54" />
 
 ## Network and Storage
 
