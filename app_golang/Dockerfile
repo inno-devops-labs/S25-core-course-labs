@@ -12,7 +12,7 @@ FROM alpine:3.21.2 AS run
 
 RUN adduser --system --no-create-home gin
 
-RUN apk add --no-cache curl=8.11.1-r0
+RUN apk add --no-cache curl=8.12.1-r0
 
 HEALTHCHECK --interval=30s --timeout=3s \
     CMD curl -f http://localhost/ || exit 1
