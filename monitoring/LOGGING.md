@@ -25,10 +25,20 @@ further monitoring and analysis.
 
 ### app_python
 
+![app_python](assets/app_python.png)
+
 ### app_typescript
+
+![app_typescript](assets/app_typescript.png)
 
 ### grafana
 
+![grafana](assets/grafana.png)
+
 ### loki
 
+![loki](assets/loki.png)
+
 ### promtail
+
+![promtail](assets/promtail.png)
