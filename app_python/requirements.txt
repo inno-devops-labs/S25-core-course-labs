@@ -4,3 +4,4 @@ pydantic==2.10.6
 pytz==2024.2
 beautifulsoup4==4.12.3
 pytest==8.2.2
+prometheus_client==0.20.0
