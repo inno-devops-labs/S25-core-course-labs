@@ -47,7 +47,7 @@ Here are the screenshots displaying successful dashboard configurations.
 ![Prometheus dashboard 1](./img/dashboards_prom_1.png)
 ![Prometheus dashboard 2](./img/dashboards_prom_2.png)
 
-### Service Configuration Updates:
+### Service Configuration Updates
 
 I have added log rotation mechanisms and memory limits for all containers in `docker-compose.yml` (added config to corresponding services).
 
@@ -56,7 +56,7 @@ For log rotation, I have specified the max number of files for rotation (3) and 
 ![256m conf](./img/updateconf_256m.png)
 ![1g conf](./img/updateconf_1g.png)
 
-### Metrics Gathering:
+### Metrics Gathering
 
 I have extended Prometheus configuration to gather metrics from all services defined in `docker-compose.yml`.
 
@@ -111,3 +111,14 @@ Similarly to the Python app, if I try to visit the web page with joke or try to 
 We can see this in the Prometheus, if we are querying by `app_golang` job.
 
 ![Prometheus Golang metrics increment](./img/bonus_metrics_golang_inc.png)
+
+### Health Checks
+
+I have enhanced the `docker-compose.yml` by adding health checks for the containers.
+
+![App Python health check](./img/bonus_health_python.png)
+![App Golang health check](./img/bonus_health_golang.png)
+![Loki health check](./img/bonus_health_loki.png)
+![Promtail health check](./img/bonus_health_promtail.png)
+![Grafana health check](./img/bonus_health_grafana.png)
+![Prometheus health check](./img/bonus_health_prometheus.png)
