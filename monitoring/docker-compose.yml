@@ -10,6 +10,15 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     networks:
       - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
   promtail:
     image: grafana/promtail:latest
@@ -22,6 +31,15 @@ services:
       - loki
     networks:
       - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   grafana:
     image: grafana/grafana:latest
@@ -39,6 +57,15 @@ services:
       - prometheus
     networks:
       - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
   prometheus:
     image: prom/prometheus:latest
@@ -50,6 +77,15 @@ services:
       - "--config.file=/etc/prometheus/prometheus.yml"
     networks:
       - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
   moscow-time-app:
     image: ebob/moscow-time:v1.1
@@ -62,6 +98,15 @@ services:
     labels:
       - "logging=true"
       - "app=moscow-time"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   omsk-time-app:
     image: ebob/omsk-time:v1.0
@@ -74,6 +119,15 @@ services:
     labels:
       - "logging=true"
       - "app=omsk-time"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
 networks:
   monitoring:
