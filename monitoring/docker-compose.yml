@@ -1,5 +1,5 @@
 networks:
-  loki:
+  monitoring:
 
 volumes:
   loki-data:
@@ -13,7 +13,7 @@ services:
     volumes:
       - loki-data:/loki
     networks:
-      - loki
+      - monitoring
 
   promtail:
     image: grafana/promtail:latest
@@ -25,7 +25,7 @@ services:
     depends_on:
       - loki
     networks:
-      - loki
+      - monitoring
 
   grafana:
     environment:
@@ -55,14 +55,42 @@ services:
     image: grafana/grafana:latest
     ports:
       - "3000:3000"
-    depends_on:
-      - loki
     networks:
-      - loki
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus:v2.41.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - monitoring
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 350M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   app_python:
     image: mirgasimovk/python-msk:latest
     ports:
       - "5000:5000"
-    networks:
+    depends_on:
       - loki
+    deploy:
+      resources:
+        limits:
+          memory: 350M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - monitoring

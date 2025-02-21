@@ -11,4 +11,5 @@ COPY templates/ ./templates/
 ENTRYPOINT [ "python" ]
 
 USER docker-user
+EXPOSE 5000
 CMD ["main.py"]
