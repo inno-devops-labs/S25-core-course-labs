@@ -1,7 +1,10 @@
 package com.ktor
 
 import io.ktor.server.application.Application
-import io.ktor.server.http.content.*
+import io.ktor.server.http.content.defaultResource
+import io.ktor.server.http.content.files
+import io.ktor.server.http.content.static
+import io.ktor.server.http.content.staticRootFolder
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing

@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 metrics = PrometheusMetrics(app, group_by='endpoint')
 
+
 @app.route("/")
 def index():
     return render_template("index.html")
