@@ -1,0 +1,15 @@
+---
+db_image: jmartynova123/dev-lab1-db:latest
+db_name: times
+db_user: myuser
+db_password: mypassword
+db_init_script: ./backend/database/init.sql
+db_port: 5432
+
+backend_image: jmartynova123/dev-lab1-back:latest
+backend_port: 8080
+
+frontend_image: jmartynova123/dev-lab1-frontend:latest
+frontend_port: 3000
+
+ansible_user: "julia"
