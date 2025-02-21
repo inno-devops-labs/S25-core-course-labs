@@ -1,38 +1,38 @@
-Role Name
-=========
+# Docker Role README
+## Overview
+This Ansible role automates the installation and configuration of Docker and Docker Compose on a target system. It ensures that Docker is installed, Docker Compose is available, and the current user is added to the Docker group for seamless Docker operations.
 
-A brief description of the role goes here.
+## Requirements
+Ansible installed on the control machine.
+Access to the target machine with sudo privileges.
+## Role Variables
+`ansible_user`: The user to be added to the Docker group. This is typically the user running the Ansible playbook.
+## Dependencies
+- Ansible 2.9+
+ - Ubuntu 22.04
 
-Requirements
-------------
+## Example Playbook
+Here is an example of how to use this role in a playbook:
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+``` yaml
+- hosts: localhost
+  connection: local
+  become: yes
+  roles:
+    - docker
+```
+## Tasks
+- Update apt cache: Ensures the package list is up-to-date.
+- Install Docker: Installs Docker using the apt module.
+- Install Docker Compose: Downloads and installs Docker Compose from the official GitHub releases.
+- Add current user to the Docker group: Adds the current user to the Docker group to allow running Docker commands without sudo.
+## Usage
+Ensure you have Ansible installed on your control machine.
 
-Role Variables
---------------
+Create a playbook file (e.g., main.yml) and include this role.
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Run the playbook using the command:
 
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
-Example Playbook
-----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
-
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+``` bash
+ansible-playbook -i local main.yml
+```
