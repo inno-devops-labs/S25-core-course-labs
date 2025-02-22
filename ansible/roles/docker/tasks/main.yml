@@ -1,0 +1,32 @@
+- name: Setup Docker Environment
+  block:
+    - name: Install Docker
+      import_tasks: install_docker.yml
+    
+    - name: Install Docker Compose
+      import_tasks: install_compose.yml
+
+    - name: Add current user to the docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+  tags:
+    -setup
+
+- name: Secure Docker Configuration
+  block:
+    - name: Disable Root Access
+      copy:
+        dest: /etc/docker/daemon.json
+        content: |
+          {
+            "no-new-privileges": true,
+            "userns-remap": "default"
+          }
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Restart Docker
+  tags:
+    - security
