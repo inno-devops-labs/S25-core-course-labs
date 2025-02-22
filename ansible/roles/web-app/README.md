@@ -33,5 +33,5 @@ Create a playbook file (e.g., main.yml) and include this role.
 Run the playbook using the command:
 
 ``` bash
-ansible-playbook -i local main.yml
+ansible-playbook -i local ./playbook/dev/main.yml
 ```
