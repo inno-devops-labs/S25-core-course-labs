@@ -1,0 +1,10 @@
+.dart_tool
+.idea
+.gitignore
+analysis_options.yaml
+app_dart.iml
+DART.md
+pubspec.lock
+README.md
+build
+test
