@@ -24,7 +24,7 @@ docker pull raydenoir/app_js:alpine
 ### How to Run
 
 ```bash
-docker run -p 127.0.0.1:<desired_port>:3000 -d --name app_js-alpine app_js:alpine
+docker run -p 127.0.0.1:<desired_port>:3005 -d --name app_js-alpine app_js:alpine
 ```
 
 ## Docker Distroless Image Version
@@ -44,7 +44,7 @@ docker pull raydenoir/app_js:distroless
 ### How to Run
 
 ```bash
-docker run -p 127.0.0.1:<desired_port>:3000 -d --name app_js-distroless app_js:distroless
+docker run -p 127.0.0.1:<desired_port>:3005 -d --name app_js-distroless app_js:distroless
 ```
 
 ## Manual Setup
@@ -71,4 +71,4 @@ npm start
 
 ## Using the Application
 
-Go to <http://127.0.0.1:3000/time> (in case it runs locally)
+Go to <http://127.0.0.1:3005/time> (in case it runs locally)
