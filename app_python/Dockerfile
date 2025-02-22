@@ -1,18 +1,17 @@
-# Use a precise version of the base image
-FROM python:3.9-slim
+# Use the official lightweight Python image
+FROM python:3.11-slim
+
+# Set the working directory inside the container
 WORKDIR /app
 
-# Set a non-root user for security
-RUN useradd -ms /bin/bash appuser
-USER appuser
+# Copy application files into the container
+COPY web_app.py /app/web_app.py
 
-# Copy only necessary files
-COPY requirements.txt ./
-COPY web_app.py ./
+# Install required Python packages
+RUN pip install flask prometheus-client pytz
 
-# Install dependencies and expose the application port
-RUN pip install --no-cache-dir -r requirements.txt
-EXPOSE 5000
+# Expose ports for the app and metrics
+EXPOSE 8000 8001
 
 # Command to run the application
-CMD ["python", "web_app.py"]
+CMD ["python3", "web_app.py"]
