@@ -21,7 +21,7 @@ def hello():
     with REQUEST_LATENCY.time():  # Measure latency
         time.sleep(0.5)
     return "Hello, World!"
-    
+
 
 @app.route('/moscow_time')
 def moscow_time():
@@ -31,6 +31,7 @@ def moscow_time():
     moscow_tz = pytz.timezone('Europe/Moscow')
     current_time = datetime.now(moscow_tz).strftime('%Y-%m-%d %H:%M:%S')
     return f"<h1>Time in Moscow</h1><p>{current_time}</p>"
+
 
 # Start the app and expose metrics
 if __name__ == '__main__':
