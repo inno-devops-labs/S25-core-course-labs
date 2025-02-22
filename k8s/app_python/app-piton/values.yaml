@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: paranid5/app_flutter
+  repository: paranid5/app_piton
   pullPolicy: IfNotPresent
   tag: "latest"
 
@@ -16,7 +16,7 @@ serviceAccount:
   name: ""
 
 podAnnotations: {}
-podLabels: {flutter}
+podLabels: {piton}
 
 podSecurityContext: {}
 
@@ -24,15 +24,15 @@ securityContext: {}
 
 service:
   type: NodePort
-  port: 8081
-  targetPort: 80
+  port: 8082
+  targetPort: 8080
 
 ingress:
   enabled: false
   className: ""
   annotations: {}
   hosts:
-    - host: paranid5.app_flutter.local
+    - host: paranid5.app_piton.local
       paths:
         - path: /
           pathType: ImplementationSpecific
