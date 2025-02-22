@@ -1,0 +1,25 @@
+local.file_match "fastapi" {
+	path_targets = [{"__path__" = "/var/log/python*.log"}]
+	sync_period = "5s"
+}
+
+local.file_match "gin" {
+	path_targets = [{"__path__" = "/var/log/go*.log"}]
+	sync_period = "5s"
+}
+
+loki.source.file "log_scrape" {
+	targets = local.file_match.fastapi.targets
+	forward_to = [loki.process.filter_logs.receiver]
+	tail_from_end = true
+}
+
+loki.process "filter_logs" {
+	forward_to = [loki.write.grafana_loki.receiver]
+}
+
+loki.write "grafana_loki" {
+	endpoint {
+		url = "http://loki:3100/loki/api/v1/push"
+	}
+}

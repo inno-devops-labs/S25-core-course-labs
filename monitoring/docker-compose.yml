@@ -13,7 +13,7 @@ services:
       options:
         max-size: "30m"
         max-file: "3"
-  
+
   app-go:
     build:
       context: ../app_go
@@ -43,21 +43,21 @@ services:
     networks:
       - monitoring
     restart: always
-  
-  promtail:
-    image: grafana/promtail:latest
-    container_name: promtail
+
+  alloy:
+    image: grafana/alloy:latest
+    container_name: alloy
     volumes:
-      - ./promtail-cfg.yml:/etc/promtail/config.yml
+      - ./config.alloy:/etc/alloy/config.alloy
       - /var/log:/var/log
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
-    command: -config.file=/etc/promtail/config.yml
+    command: -config.file=/etc/alloy/config.alloy
     networks:
       - monitoring
     restart: always
     depends_on:
       - loki
-  
+
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
