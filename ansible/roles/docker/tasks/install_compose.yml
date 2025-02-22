@@ -1,0 +1,15 @@
+---
+- name: Install Docker Compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system | lower }}-{{ ansible_architecture }}"
+    dest: /usr/local/bin/docker-compose
+    mode: 'u+x'
+
+- name: Verify version Docker Compose
+  command: docker-compose --version
+  register: compose_version
+  changed_when: false
+
+- name: Output version Docker Compose
+  debug:
+    var: compose_version.stdout

@@ -1,0 +1,10 @@
+- name: Deploy Python App
+  hosts: all
+  become: true
+  roles:
+    - role: roles/web_app
+      vars:
+        container_name: "app_python"
+        docker_image: "twentythree3/flask-app"
+        app_port: 5001
+        container_port: 5001
