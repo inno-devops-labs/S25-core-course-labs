@@ -21,6 +21,7 @@ def hello():
     with REQUEST_LATENCY.time():  # Measure latency
         time.sleep(0.5)
     return "Hello, World!"
+    
 
 @app.route('/moscow_time')
 def moscow_time():
