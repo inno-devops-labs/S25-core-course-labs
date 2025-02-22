@@ -1,5 +1,5 @@
 # Prometheus
 
-![1](attachments/screenshot1.png)
+![1](attachments/screenshot1.jpg)
 
-![2](attachments/screenshot2.png)
+![2](attachments/screenshot2.jpg)
