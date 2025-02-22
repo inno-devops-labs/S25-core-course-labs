@@ -31,8 +31,9 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        pip install --upgrade pip
+        python -m pip install --upgrade pip
         pip install -r app_python/requirements.txt
+        pip install prometheus-client  # Ensure Prometheus client is installed
 
     - name: Run Linter (flake8)
       run: |
@@ -40,6 +41,8 @@ jobs:
         flake8 app_python/web_app.py app_python/test_web_app.py
 
     - name: Run Unit Tests
+      env:
+        PYTHONPATH: ${{ github.workspace }}/app_python  # Ensure app_python is in path
       run: |
         python -m unittest discover app_python
 
