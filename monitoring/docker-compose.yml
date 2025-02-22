@@ -31,11 +31,26 @@ services:
       - loki
     volumes:
       - grafana_data:/var/lib/grafana
+      
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command: 
+      - '--config.file=/etc/prometheus/prometheus.yml'
 
   app_python:
     image: meowal/msk-time-app:latest
     ports:
-      - "8080:8080"
+      - "5000:5000"
+    mem_limit: 512m
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 volumes:
   loki_data:
