@@ -1,0 +1,56 @@
+---
+- name: Include wipe tasks if enabled
+  import_tasks: 0-wipe.yml
+  tags:
+    - wipe
+    - never
+
+- name: Prepare deployment environment
+  block:
+    - name: Create application directory
+      file:
+        path: "/opt/moscow-time"
+        state: directory
+        mode: '0755'
+
+    - name: Generate docker-compose configuration
+      template:
+        src: docker-compose.yml.j2
+        dest: "/opt/moscow-time/docker-compose.yml"
+        mode: '0644'
+      notify: "recreate web app"
+  tags:
+    - setup
+    - config
+
+- name: Deploy application
+  block:
+    - name: Pull Docker image
+      docker_image:
+        name: "{{ web_app_image }}"
+        source: pull
+        force_source: yes
+      register: pull_result
+      until: pull_result is success
+      retries: 3
+      delay: 5
+      notify: "recreate web app"
+
+    - name: Create and start Moscow Time container
+      docker_container:
+        name: "{{ web_app_container_name }}"
+        image: "{{ web_app_image }}"
+        state: started
+        restart_policy: "{{ web_app_restart_policy }}"
+        ports:
+          - "{{ web_app_host_port }}:{{ web_app_port }}"
+        memory: "{{ web_app_memory }}"
+        cpus: "{{ web_app_cpus }}"
+        healthcheck:
+          test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+          interval: 30s
+          timeout: 10s
+          retries: 3
+  tags:
+    - deploy
+    - docker
