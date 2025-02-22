@@ -1,38 +1,37 @@
-Role Name
-=========
+# WebApp Role README
+## Overview
+This Ansible role automates the deployment of a web application using Docker Compose. It ensures that Docker Compose is installed, creates the necessary directory structure, copies the Docker Compose configuration, and deploys the application.
 
-A brief description of the role goes here.
-
-Requirements
-------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
-
-Role Variables
---------------
-
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
+## Requirements
+Ansible installed on the control machine.
+Access to the target machine with sudo privileges.
+The docker role must be available to ensure Docker Compose is installed.
+## Role Variables
+`ansible_user` : The user who will own the application directory and files. This is typically the user running the Ansible playbook.
+## Dependencies
+The docker role is a dependency and must be included to ensure Docker Compose is installed.
 Example Playbook
-----------------
+Here is an example of how to use this role in a playbook:
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```yaml
+- hosts: localhost
+  connection: local
+  become: yes
+  roles:
+    - web-app
+```
+## Tasks
+1. Ensure Docker Compose is installed: Includes the docker role to install Docker Compose.
+2. Create directory for app: Creates a directory at /opt/web-app for the application, setting the owner and group to the current user.
+3. Copy Docker Compose template: Copies the Docker Compose configuration template to the application directory.
+4. Deploy application with Docker Compose: Uses Docker Compose to deploy the application from the configuration file.
+## Usage
+Ensure you have Ansible installed on your control machine.
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Create a playbook file  and include this role.
 
-License
--------
+Run the playbook using the command:
 
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+``` bash
+ansible-playbook -i local ./playbook/dev/main.yml
+```
