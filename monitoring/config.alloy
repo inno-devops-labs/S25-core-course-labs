@@ -1,20 +1,63 @@
 local.file_match "fastapi" {
-	path_targets = [{"__path__" = "/var/log/python*.log"}]
+	path_targets = [{"__path__" = "/var/log/app_logs/python_app.log"}]
 	sync_period = "5s"
 }
 
 local.file_match "gin" {
-	path_targets = [{"__path__" = "/var/log/go*.log"}]
+	path_targets = [{"__path__" = "/var/log/app_logs/go_app.log"}]
 	sync_period = "5s"
 }
 
-loki.source.file "log_scrape" {
+local.file_match "docker" {
+	path_targets = [{"__path__" = "/var/lib/docker/containers/*/*-json.log"}]
+	sync_period = "15s"
+}
+
+loki.source.file "log_scrape_python" {
 	targets = local.file_match.fastapi.targets
-	forward_to = [loki.process.filter_logs.receiver]
+	forward_to = [loki.process.fastapi_process.receiver]
 	tail_from_end = true
 }
 
-loki.process "filter_logs" {
+loki.source.file "log_scrape_go" {
+	targets = local.file_match.gin.targets
+	forward_to = [loki.process.gin_process.receiver]
+	tail_from_end = true
+}
+
+loki.source.file "log_scrape_docker" {
+	targets = local.file_match.docker.targets
+	forward_to = [loki.process.docker_process.receiver]
+	tail_from_end = true
+}
+
+loki.process "docker_process" {
+        stage.static_labels {
+                values = {
+                        service = "docker",
+                        job = "docker containers log",
+                }
+        }
+        forward_to = [loki.write.grafana_loki.receiver]
+}
+
+loki.process "fastapi_process" {
+	stage.static_labels {
+		values = {
+			service = "fastapi-app",
+			job = "fastapi",
+		}
+	}
+	forward_to = [loki.write.grafana_loki.receiver]
+}
+
+loki.process "gin_process" {
+	stage.static_labels {
+                values = {
+                        service = "gin-app",
+                        job = "gin",
+                }
+        }
 	forward_to = [loki.write.grafana_loki.receiver]
 }
 

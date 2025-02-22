@@ -13,6 +13,8 @@ services:
       options:
         max-size: "30m"
         max-file: "3"
+    volumes:
+      - ./logs:/var/log/app_logs
 
   app-go:
     build:
@@ -28,6 +30,8 @@ services:
       options:
         max-size: "30m"
         max-file: "3"
+    volumes:
+      - ./logs:/var/log/app_logs
 
 
   loki:
@@ -49,9 +53,8 @@ services:
     container_name: alloy
     volumes:
       - ./config.alloy:/etc/alloy/config.alloy
-      - /var/log:/var/log
+      - ./logs:/var/log/app_logs:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
-    command: -config.file=/etc/alloy/config.alloy
     networks:
       - monitoring
     restart: always

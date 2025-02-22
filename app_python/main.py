@@ -8,12 +8,11 @@ import logging
 
 
 log_formatter = logging.Formatter(json.dumps({
-    "time": "%(asctime)s",
     "level": "%(levelname)s",
     "message": "%(message)s"
 }))
 
-log_file_handler = logging.FileHandler("/var/log/python_app.log")
+log_file_handler = logging.FileHandler("/var/log/app_logs/python_app.log")
 log_file_handler.setFormatter(log_formatter)
 
 log_console_handler = logging.StreamHandler(sys.stdout)

@@ -1,0 +1,36 @@
+2025/02/22 19:29:19 Reset secret number
+2025/02/22 19:29:19 Gin App started on port 8080
+2025/02/22 19:29:41 Reset secret number
+2025/02/22 19:29:41 Gin App started on port 8080
+2025/02/22 19:29:55 User guessed: 124, Response: Too High!
+2025/02/22 19:30:41 GET request on home page received
+2025/02/22 19:31:42 GET request on home page received
+2025/02/22 19:32:42 GET request on home page received
+2025/02/22 19:33:42 GET request on home page received
+2025/02/22 19:34:42 GET request on home page received
+2025/02/22 19:35:13 User guessed: 42, Response: Too Low!
+2025/02/22 19:35:42 GET request on home page received
+2025/02/22 19:36:43 GET request on home page received
+2025/02/22 19:37:43 GET request on home page received
+2025/02/22 19:38:43 GET request on home page received
+2025/02/22 19:39:43 GET request on home page received
+2025/02/22 19:40:43 GET request on home page received
+2025/02/22 19:41:44 GET request on home page received
+2025/02/22 19:42:44 GET request on home page received
+2025/02/22 19:43:44 GET request on home page received
+2025/02/22 19:44:44 GET request on home page received
+2025/02/22 19:45:44 GET request on home page received
+2025/02/22 19:46:44 GET request on home page received
+2025/02/22 19:47:45 GET request on home page received
+2025/02/22 19:48:45 GET request on home page received
+2025/02/22 19:49:43 User guessed: 42, Response: Too Low!
+2025/02/22 19:49:45 User guessed: 42, Response: Too Low!
+2025/02/22 19:49:45 GET request on home page received
+2025/02/22 19:50:45 GET request on home page received
+2025/02/22 19:51:45 GET request on home page received
+2025/02/22 19:52:45 GET request on home page received
+2025/02/22 19:53:46 GET request on home page received
+2025/02/22 19:54:46 GET request on home page received
+2025/02/22 19:55:46 GET request on home page received
+2025/02/22 19:56:46 GET request on home page received
+2025/02/22 19:57:46 GET request on home page received
