@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 var secretNumber int
@@ -90,6 +91,8 @@ func setupRouter() *gin.Engine {
 		logger.Printf("User guessed: %d, Response: %s", guess, feedback)
 		c.HTML(http.StatusOK, "index", gin.H{"Feedback": feedback})
 	})
+
+	r.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
 	return r
 }

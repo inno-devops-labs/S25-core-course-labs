@@ -2,6 +2,7 @@ import json
 import sys
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+from prometheus_fastapi_instrumentator import Instrumentator
 from datetime import datetime
 import pytz
 import logging
@@ -26,6 +27,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
+
+Instrumentator().instrument(app).expose(app, endpoint="/metrics")
 
 MOSCOW_TZ = pytz.timezone("Europe/Moscow")
 

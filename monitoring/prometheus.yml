@@ -10,3 +10,23 @@ scrape_configs:
     metrics_path: "/metrics"
     static_configs:
       - targets: ["loki:3100"]
+  
+  - job_name: "app-python"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["fastapi-app:8000"]
+  
+  - job_name: "app-go"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["gin-app:8080"]
+  
+  - job_name: "alloy"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["alloy:12345"]
+  
+  - job_name: "grafana"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["grafana:3000"]
