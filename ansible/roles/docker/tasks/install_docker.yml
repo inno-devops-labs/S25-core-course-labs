@@ -1,0 +1,30 @@
+- name: Install docker
+  block:
+  - name: Download docker
+    ansible.builtin.apt:
+      name:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-buildx-plugin
+        - docker-compose-plugin
+      state: latest
+      update_cache: true
+
+  - name: Start and enable service docker
+    ansible.builtin.service:
+      name: docker
+      enabled: yes
+      state: started
+
+  - name: Create docker group
+    group:
+      name: "{{ docker_group }}"
+      state: present
+
+  - name: Add user to docker group
+    user:
+      name: "{{ ansible_user }}"
+      group: "{{ docker_group }}"
+  tags:
+  - setup
