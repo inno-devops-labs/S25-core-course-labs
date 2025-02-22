@@ -51,7 +51,7 @@ services:
   loki:
     image: grafana/loki:latest
     container_name: loki
-    user: "1000:1000"
+    user: "root"
     volumes:
       - ./loki-cfg.yml:/etc/loki/local-config.yaml
       - ./loki-data:/loki
