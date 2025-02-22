@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "moscow-time.fullname" . }}
-  labels:    
-    {{- include "moscow-time.labels" . | nindent 4 }}
-    {{- include "library.labels" . | indent 4 }}
+  name: {{ include "numbers-app.fullname" . }}
+  labels:
+    {{- include "library.labels" . | nindent 4 }}
+    {{- include "numbers-app.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "moscow-time.selectorLabels" . | nindent 6 }}
-      {{- include "library.labels" . | indent 6 }}
+      {{- include "numbers-app.selectorLabels" . | nindent 6 }}
+      {{- include "library.labels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -20,17 +20,17 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "moscow-time.labels" . | nindent 8 }}
+        {{- include "numbers-app.labels" . | nindent 8 }}
+        {{- include "library.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
-        {{- include "library.labels" . | indent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "moscow-time.serviceAccountName" . }}
+      serviceAccountName: {{ include "numbers-app.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
