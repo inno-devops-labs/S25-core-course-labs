@@ -9,6 +9,8 @@
     state: directory
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
+  tags: 
+    - createdir
 
 - name: Copy Docker Compose template
   template:
@@ -16,8 +18,13 @@
     dest: /opt/web-app/docker-compose.yml
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
+  tags: 
+    - copytemp
 
 - name: Deploy application with Docker Compose
   docker_compose:
     project_src: /opt/web-app
     state: present
+  tags:
+    - setup
+
