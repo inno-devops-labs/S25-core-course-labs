@@ -1,3 +1,12 @@
+# METRICS Setup and Verification
+
+## Integration with Docker Compose
+
+In this setup, Prometheus is integrated into the `docker-compose.yml` file to collect metrics from Loki and Prometheus containers.
+
+### Docker Compose Configuration:
+
+```yaml
 version: "3"
 
 networks:
@@ -12,7 +21,6 @@ services:
     image: chr1st1na/app_python:latest
     ports:
       - "5000:5000"
-
 
   loki:
     image: grafana/loki:latest
@@ -73,4 +81,34 @@ services:
     user: root 
     depends_on:
       - loki
+```
 
+Prometheus Configuration (`prometheus.yml`):
+
+```yaml
+global:
+  scrape_interval: 15s  
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['prometheus:9090']
+
+  - job_name: 'loki'
+    static_configs:
+      - targets: ['loki:3100']
+```
+
+## Prometheus Configuration Verification
+### Verify Prometheus Targets:
+Navigate to http://localhost:9090/targets in your browser.
+
+Ensure that Prometheus is scraping data from both the prometheus and loki containers.
+
+The target list should show both `prometheus:9090` and `loki:3100`.
+
+![Like this](22.png)
+
+
+## Conclusion
+By following the above configuration, Prometheus is set up to collect metrics from both the prometheus and loki containers.
