@@ -1,0 +1,27 @@
+- name: Pull the latest Docker image
+  community.docker.docker_image:
+    name: '{{ docker_image }}'
+    source: pull
+    tag: latest
+    state: present
+  tags:
+  - docker
+
+- name: Run Docker container
+  community.docker.docker_container:
+    name: '{{ container_name }}'
+    image: '{{ docker_image }}'
+    state: started
+    restart_policy: always
+    ports:
+      - "8000:8000"
+  tags:
+  - app
+
+- name: Generate Docker Compose file from template
+  template:
+    src: docker-compose.yml.j2
+    dest: "docker-compose.yml"
+    mode: '0644'
+  tags:
+    - docker-compose
