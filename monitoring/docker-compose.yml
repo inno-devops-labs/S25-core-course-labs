@@ -15,14 +15,25 @@ x-logging: &default-logging
 services:
 
   app-python:
-    image: python:3.11-slim
-    command: ["python3", "-m", "http.server", "8000"]
+    build:
+      context: ../app_python
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
+      - "8001:8001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 512m
     networks:
       - monitoring
-    logging: *default-logging
-    mem_limit: 512m
 
   prometheus:
     image: prom/prometheus:latest
