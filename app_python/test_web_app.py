@@ -1,5 +1,5 @@
 import unittest
-from app_python.web_app import app  # Ensure correct import based on project structure
+from app_python.web_app import app 
 from datetime import datetime
 import pytz
 
@@ -16,7 +16,8 @@ class FlaskAppTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_moscow_time_format(self):
-        """Test if the Moscow time endpoint returns the correct format."""
+        """Test if the Moscow time endpoint 
+        returns the correct format."""
         response = self.app.get('/moscow_time')  # Corrected endpoint
         self.assertEqual(response.status_code, 200)
         self.assertIn("Time in Moscow", response.data.decode())
