@@ -1,5 +1,6 @@
 fastapi[standard]
 jinja2
+prometheus_fastapi_instrumentator
 pytest
 pre-commit
 mypy

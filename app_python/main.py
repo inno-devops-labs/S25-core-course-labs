@@ -14,12 +14,15 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import uvicorn
+from prometheus_fastapi_instrumentator import Instrumentator
 
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
+
+Instrumentator().instrument(app).expose(app)
 
 
 @app.get("/", response_class=HTMLResponse)
