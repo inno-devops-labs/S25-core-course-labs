@@ -1,3 +1,14 @@
+x-logging-defaults: &logging-defaults
+  driver: "json-file"
+  options:
+    max-file: "3"
+    max-size: "15m"
+
+x-deploy-defaults: &deploy-defaults
+  resources:
+    limits:
+      memory: "512m"
+
 services:
   loki:
     image: grafana/loki:latest
@@ -5,6 +16,8 @@ services:
       - "3100:3100"
     networks:
         - my-network
+    logging: *logging-defaults
+    deploy: *deploy-defaults
 
   promtail:
     image: grafana/promtail:latest
@@ -24,6 +37,20 @@ services:
       - grafana-storage:/var/lib/grafana
     networks:
         - my-network
+    logging: *logging-defaults
+    deploy: *deploy-defaults
+
+  prometheus:
+    image: ubuntu/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
+    command: --config.file=/etc/prometheus/prometheus.yml
+    networks:
+        - my-network
+    logging: *logging-defaults
+    deploy: *deploy-defaults
 
 volumes:
   grafana-storage:
