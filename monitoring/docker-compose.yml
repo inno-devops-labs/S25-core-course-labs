@@ -16,6 +16,7 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    mem_limit: "512m"  # Limit container memory usage to 512MB
     restart: unless-stopped
 
   loki:
@@ -26,6 +27,12 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     networks:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: "512m"
     restart: unless-stopped
 
   promtail:
@@ -37,6 +44,12 @@ services:
     command: -config.file=/etc/promtail/config.yml
     networks:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: "256m"
     restart: unless-stopped
 
   grafana:
@@ -70,5 +83,28 @@ services:
         /run.sh
     networks:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: "512m"
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"  # Expose Prometheus web UI
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml  # Mount Prometheus config file
+    networks:
+      - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: "512m"
     restart: unless-stopped
 
