@@ -40,8 +40,8 @@ The stack comprises three primary components—**Loki**, **Promtail**, and **Gra
 
 ## Docker Compose Configuration
 
-I created this Docker Compose file to define my entire logging stack, which includes my application containers (<em1999jay/python-app>
- and <em1999jay/moscow-time-app-node>), Loki, Promtail, and Grafana. I set up a custom network named "loki" and configured each service with the necessary port mappings, volume mounts, and logging options. I also used the json-file logging driver with a custom tag format ({{.ImageName}}|{{.Name}}) to ensure Promtail can extract labels efficiently.
+I created this Docker Compose file to define my entire logging stack, which includes my application containers (```sh em1999jay/python-app>```
+ and ```sh em1999jay/moscow-time-app-node```), Loki, Promtail, and Grafana. I set up a custom network named "loki" and configured each service with the necessary port mappings, volume mounts, and logging options. I also used the json-file logging driver with a custom tag format ({{.ImageName}}|{{.Name}}) to ensure Promtail can extract labels efficiently.
 
 ```yaml
 
