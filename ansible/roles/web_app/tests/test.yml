@@ -1,0 +1,5 @@
+- name: Test Web App Role
+  hosts: localhost
+  become: true
+  roles:
+    - web_app

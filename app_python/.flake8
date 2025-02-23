@@ -1,0 +1,4 @@
+[flake8]
+exclude = .env,venv,env,__pycache__,migrations
+max-line-length = 127
+max-complexity = 10

@@ -1,0 +1,31 @@
+# .dockerignore
+
+# Ignore Python bytecode/cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore local environments
+venv/
+env/
+
+# Ignore Git files
+.git
+.gitignore
+
+# Ignore coverage/test reports
+coverage/
+*.cover
+*.log
+
+# Ignore local configuration
+.env
+
+# Ignore documentation files (if you don't need them in the image)
+PYTHON.md
+README.md
+DOCKER.md
+
+# (Optional) If you don't want to copy Dockerfile into the image build context:
+Dockerfile
