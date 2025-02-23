@@ -2,13 +2,6 @@
 
 ## Prometheus:
 
-Prometheus is configured to scrape metrics from:
-
-- Itself (`http://localhost:9090`)
-- Loki (`http://loki:3100`)
-
-![prometheus.png](prometheus.png)
-
 ### Targets:
 
 ![firstMetrics.png](firstMetrics.png)
@@ -81,3 +74,7 @@ retries: 3
 ## App Metrics on the localhost:5001/metrics:
 
 ![appMetrics.png](appMetrics.png)
+
+## Full Prometeus setup:
+
+![prometheus.png](prometheus.png)
