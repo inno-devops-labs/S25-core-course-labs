@@ -1,0 +1,12 @@
+---
+- name: Deploy NodeJS Time app
+  hosts: all
+  become: true
+  roles:
+    - role: web_app
+      vars:
+        web_app_docker_image: "zerohalf/app_nodejs"
+        web_app_docker_image_tag: "nonroot"
+        web_app_container_name: nodejs_app
+        web_app_container_port: 3000
+        web_app_port: 8080
