@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ktor-deployment
+  namespace: default
+  labels:
+    app: ktor
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ktor
+  template:
+    metadata:
+      labels:
+        app: ktor
+    spec:
+      containers:
+        - name: ktor-container
+          image: rwkals/app_kotlin_distroless
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: 200m
+              memory: 200Mi
+            limits:
+              cpu: 200m
+              memory: 200Mi
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
