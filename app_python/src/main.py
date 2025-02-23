@@ -1,7 +1,10 @@
+from prometheus_fastapi_instrumentator import Instrumentator
+
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+
 import datetime
 import pytz
 
@@ -16,3 +19,6 @@ async def homepage(request: Request):
     return templates.TemplateResponse(
         request, "index.html", {"time": current_date.strftime("%H:%M")}
     )
+
+
+Instrumentator().instrument(app).expose(app)
