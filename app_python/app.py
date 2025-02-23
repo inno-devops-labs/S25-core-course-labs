@@ -1,8 +1,6 @@
 from flask import Flask, render_template, Response
 from datetime import datetime
-import pytz
 from prometheus_client import generate_latest, Counter, Histogram
-import time
 
 from services.get_time_service import GetTimeService
 
@@ -12,8 +10,13 @@ app = Flask(__name__)
 app.config.from_mapping(config)
 
 # Prometheus metrics
-REQUESTS = Counter('moscow_time_requests_total', 'Total requests to the Moscow time app')
-REQUEST_TIME = Histogram('moscow_time_request_duration_seconds', 'Time spent processing request')
+REQUESTS = Counter(
+    'moscow_time_requests_total',
+    'Total requests to the Moscow time app'
+    )
+REQUEST_TIME = Histogram(
+    'moscow_time_request_duration_seconds',
+    'Time spent processing request')
 
 
 @app.get("/")
