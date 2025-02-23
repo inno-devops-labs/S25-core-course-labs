@@ -312,7 +312,319 @@ CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 
 ## Yandex Cloud
 
+```
+terraform init
+Initializing the backend...
+Initializing provider plugins...
+- Finding latest version of yandex-cloud/yandex...
+- Installing yandex-cloud/yandex v0.138.0...
+- Installed yandex-cloud/yandex v0.138.0 (unauthenticated)
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
 
+╷
+│ Warning: Incomplete lock file information for providers
+│ 
+│ Due to your customized provider installation methods, Terraform was forced to calculate lock file checksums locally for the following providers:
+│   - yandex-cloud/yandex
+│ 
+│ The current .terraform.lock.hcl file only includes checksums for linux_amd64, so Terraform running on another platform will fail to install these providers.
+│ 
+│ To calculate additional checksums for another platform, run:
+│   terraform providers lock -platform=linux_amd64
+│ (where linux_amd64 is the platform to generate)
+╵
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+```
+
+```
+terraform apply
+yandex_vpc_network.network: Refreshing state... [id=enp1nacqff18d8eu1cjl]
+yandex_compute_disk.disk: Refreshing state... [id=fhme2co1ibae62snpv0a]
+yandex_vpc_subnet.subnet: Refreshing state... [id=e9bbnvq6ag2ehc0pl987]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # yandex_compute_instance.vm will be created
+  + resource "yandex_compute_instance" "vm" {
+      + created_at                = (known after apply)
+      + folder_id                 = (known after apply)
+      + fqdn                      = (known after apply)
+      + gpu_cluster_id            = (known after apply)
+      + hardware_generation       = (known after apply)
+      + hostname                  = (known after apply)
+      + id                        = (known after apply)
+      + maintenance_grace_period  = (known after apply)
+      + maintenance_policy        = (known after apply)
+      + metadata                  = {
+          + "ssh-keys" = <<-EOT
+                ubuntu:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCydFBFk+I0Wwy7kQ0pH5n6nO3xIQhH6wuyPBjBvETZ azamat@azamat-pc
+            EOT
+        }
+      + name                      = "devops-terraform-vm"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v1"
+      + service_account_id        = (known after apply)
+      + status                    = (known after apply)
+      + zone                      = (known after apply)
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = "fhme2co1ibae62snpv0a"
+          + mode        = (known after apply)
+
+          + initialize_params (known after apply)
+        }
+
+      + metadata_options (known after apply)
+
+      + network_interface {
+          + index              = (known after apply)
+          + ip_address         = (known after apply)
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = true
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = "e9bbnvq6ag2ehc0pl987"
+        }
+
+      + placement_policy (known after apply)
+
+      + resources {
+          + core_fraction = 100
+          + cores         = 2
+          + memory        = 2
+        }
+
+      + scheduling_policy (known after apply)
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + external_ip_address_vm = (known after apply)
+  + internal_ip_address_vm = (known after apply)
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+yandex_compute_instance.vm: Creating...
+yandex_compute_instance.vm: Still creating... [10s elapsed]
+yandex_compute_instance.vm: Still creating... [20s elapsed]
+yandex_compute_instance.vm: Still creating... [30s elapsed]
+yandex_compute_instance.vm: Creation complete after 35s [id=fhmhbdv6aur8mue092l8]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+external_ip_address_vm = "51.250.71.157"
+internal_ip_address_vm = "192.168.0.30"
+```
+
+```
+terraform destroy
+yandex_vpc_network.network: Refreshing state... [id=enp1nacqff18d8eu1cjl]
+yandex_compute_disk.disk: Refreshing state... [id=fhme2co1ibae62snpv0a]
+yandex_vpc_subnet.subnet: Refreshing state... [id=e9bbnvq6ag2ehc0pl987]
+yandex_compute_instance.vm: Refreshing state... [id=fhmhbdv6aur8mue092l8]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # yandex_compute_disk.disk will be destroyed
+  - resource "yandex_compute_disk" "disk" {
+      - block_size  = 4096 -> null
+      - created_at  = "2025-02-23T01:50:17Z" -> null
+      - folder_id   = "b1gfnm5rm6vsvks6ucq4" -> null
+      - id          = "fhme2co1ibae62snpv0a" -> null
+      - image_id    = "fd8308aanqma9v5n76aj" -> null
+      - labels      = {} -> null
+      - name        = "devops-terraform-disk" -> null
+      - product_ids = [
+          - "f2e4lbir1thld1d4j0f6",
+        ] -> null
+      - size        = 10 -> null
+      - status      = "ready" -> null
+      - type        = "network-hdd" -> null
+      - zone        = "ru-central1-a" -> null
+        # (2 unchanged attributes hidden)
+
+      - disk_placement_policy {
+            # (1 unchanged attribute hidden)
+        }
+
+      - hardware_generation {
+          - legacy_features {
+              - pci_topology = "PCI_TOPOLOGY_V1" -> null
+            }
+        }
+    }
+
+  # yandex_compute_instance.vm will be destroyed
+  - resource "yandex_compute_instance" "vm" {
+      - created_at                = "2025-02-23T02:23:55Z" -> null
+      - folder_id                 = "b1gfnm5rm6vsvks6ucq4" -> null
+      - fqdn                      = "fhmhbdv6aur8mue092l8.auto.internal" -> null
+      - hardware_generation       = [
+          - {
+              - generation2_features = []
+              - legacy_features      = [
+                  - {
+                      - pci_topology = "PCI_TOPOLOGY_V1"
+                    },
+                ]
+            },
+        ] -> null
+      - id                        = "fhmhbdv6aur8mue092l8" -> null
+      - labels                    = {} -> null
+      - metadata                  = {
+          - "ssh-keys" = <<-EOT
+                ubuntu:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCydFBFk+I0Wwy7kQ0pH5n6nO3xIQhH6wuyPBjBvETZ azamat@azamat-pc
+            EOT
+        } -> null
+      - name                      = "devops-terraform-vm" -> null
+      - network_acceleration_type = "standard" -> null
+      - platform_id               = "standard-v1" -> null
+      - status                    = "running" -> null
+      - zone                      = "ru-central1-a" -> null
+        # (5 unchanged attributes hidden)
+
+      - boot_disk {
+          - auto_delete = true -> null
+          - device_name = "fhme2co1ibae62snpv0a" -> null
+          - disk_id     = "fhme2co1ibae62snpv0a" -> null
+          - mode        = "READ_WRITE" -> null
+
+          - initialize_params {
+              - block_size  = 4096 -> null
+              - image_id    = "fd8308aanqma9v5n76aj" -> null
+              - name        = "devops-terraform-disk" -> null
+              - size        = 10 -> null
+              - type        = "network-hdd" -> null
+                # (3 unchanged attributes hidden)
+            }
+        }
+
+      - metadata_options {
+          - aws_v1_http_endpoint = 1 -> null
+          - aws_v1_http_token    = 2 -> null
+          - gce_http_endpoint    = 1 -> null
+          - gce_http_token       = 1 -> null
+        }
+
+
+      - network_interface {
+          - index              = 0 -> null
+          - ip_address         = "192.168.0.30" -> null
+          - ipv4               = true -> null
+          - ipv6               = false -> null
+          - mac_address        = "d0:0d:11:5b:7e:65" -> null
+          - nat                = true -> null
+          - nat_ip_address     = "51.250.71.157" -> null
+          - nat_ip_version     = "IPV4" -> null
+          - security_group_ids = [] -> null
+          - subnet_id          = "e9bbnvq6ag2ehc0pl987" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - placement_policy {
+          - host_affinity_rules       = [] -> null
+          - placement_group_partition = 0 -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - resources {
+          - core_fraction = 100 -> null
+          - cores         = 2 -> null
+          - gpus          = 0 -> null
+          - memory        = 2 -> null
+        }
+
+      - scheduling_policy {
+          - preemptible = false -> null
+        }
+    }
+
+  # yandex_vpc_network.network will be destroyed
+  - resource "yandex_vpc_network" "network" {
+      - created_at                = "2025-02-23T01:50:17Z" -> null
+      - default_security_group_id = "enpi98pbc6lmh339985d" -> null
+      - folder_id                 = "b1gfnm5rm6vsvks6ucq4" -> null
+      - id                        = "enp1nacqff18d8eu1cjl" -> null
+      - labels                    = {} -> null
+      - name                      = "devops-terraform-network" -> null
+      - subnet_ids                = [
+          - "e9bbnvq6ag2ehc0pl987",
+        ] -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # yandex_vpc_subnet.subnet will be destroyed
+  - resource "yandex_vpc_subnet" "subnet" {
+      - created_at     = "2025-02-23T01:50:20Z" -> null
+      - folder_id      = "b1gfnm5rm6vsvks6ucq4" -> null
+      - id             = "e9bbnvq6ag2ehc0pl987" -> null
+      - labels         = {} -> null
+      - name           = "devops-terraform-subnet" -> null
+      - network_id     = "enp1nacqff18d8eu1cjl" -> null
+      - v4_cidr_blocks = [
+          - "192.168.0.0/16",
+        ] -> null
+      - v6_cidr_blocks = [] -> null
+      - zone           = "ru-central1-a" -> null
+        # (2 unchanged attributes hidden)
+    }
+
+Plan: 0 to add, 0 to change, 4 to destroy.
+
+Changes to Outputs:
+  - external_ip_address_vm = "51.250.71.157" -> null
+  - internal_ip_address_vm = "192.168.0.30" -> null
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+yandex_compute_instance.vm: Destroying... [id=fhmhbdv6aur8mue092l8]
+yandex_compute_instance.vm: Still destroying... [id=fhmhbdv6aur8mue092l8, 10s elapsed]
+yandex_compute_instance.vm: Still destroying... [id=fhmhbdv6aur8mue092l8, 20s elapsed]
+yandex_compute_instance.vm: Still destroying... [id=fhmhbdv6aur8mue092l8, 30s elapsed]
+yandex_compute_instance.vm: Destruction complete after 38s
+yandex_vpc_subnet.subnet: Destroying... [id=e9bbnvq6ag2ehc0pl987]
+yandex_compute_disk.disk: Destroying... [id=fhme2co1ibae62snpv0a]
+yandex_compute_disk.disk: Destruction complete after 0s
+yandex_vpc_subnet.subnet: Destruction complete after 3s
+yandex_vpc_network.network: Destroying... [id=enp1nacqff18d8eu1cjl]
+yandex_vpc_network.network: Destruction complete after 1s
+
+Destroy complete! Resources: 4 destroyed.
+```
 
 ## GitHub
 
