@@ -40,7 +40,7 @@ The stack comprises three primary components—**Loki**, **Promtail**, and **Gra
 
 ## Docker Compose Configuration
 
-This Docker Compose file defines the entire logging stack, including your application containers (Python-app and Node-app), Loki, Promtail, and Grafana. It sets up a custom network named "loki" and configures each service with the necessary port mappings, volume mounts, and logging options. The logging options use the json-file driver with a custom tag format ({{.ImageName}}|{{.Name}}) to help Promtail extract labels efficiently.
+I created this Docker Compose file to define my entire logging stack, which includes my application containers (Python-app and Node-app), Loki, Promtail, and Grafana. I set up a custom network named "loki" and configured each service with the necessary port mappings, volume mounts, and logging options. I also used the json-file logging driver with a custom tag format ({{.ImageName}}|{{.Name}}) to ensure Promtail can extract labels efficiently.
 
 ```yaml
 
@@ -144,7 +144,7 @@ services:
 
 ## Promtail Configuration
 
-This Promtail configuration file specifies how Promtail collects logs from Docker containers and forwards them to Loki. It sets up the server parameters and positions file, and defines the client endpoint for pushing logs to Loki. The scrape_configs section targets log files within Docker containers and includes pipeline stages to parse JSON log entries, extract relevant labels (such as image_name and container_name), and adjust timestamps.
+I developed this Promtail configuration file to specify how Promtail collects logs from Docker containers and forwards them to Loki. I set up the server parameters and positions file, and defined the client endpoint for pushing logs to Loki. In the scrape_configs section, I target the log files in Docker containers and include pipeline stages to parse JSON log entries, extract relevant labels such as image_name and container_name, and adjust timestamps. This configuration is designed to process only new log entries, thereby avoiding the ingestion of outdated logs.
 
 ```yaml
 
