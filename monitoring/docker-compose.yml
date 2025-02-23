@@ -1,3 +1,17 @@
+x-logging:
+  &default-logging
+  driver: "json-file"
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+x-deploy:
+  &default-deploy
+  resources:
+    limits:
+      memory: "512m"
+
+
 networks:
   monitor:
 
@@ -10,6 +24,8 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     networks:
       - monitor
+    logging: *default-logging
+    deploy: *default-deploy
 
   promtail:
     container_name: promtail
@@ -20,6 +36,8 @@ services:
     command: -config.file=/etc/promtail/config.yml
     networks:
       - monitor
+    logging: *default-logging
+    deploy: *default-deploy
 
   grafana:
     container_name: grafana
@@ -52,6 +70,22 @@ services:
       - "3000:3000"
     networks:
       - monitor
+    logging: *default-logging
+    deploy: *default-deploy
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - monitor
+    logging: *default-logging
+    deploy: *default-deploy
 
   app_python:
     image: mishablin/devops-labs:latest
@@ -59,4 +93,6 @@ services:
       - "5000:5000"
     networks:
       - monitor
+    logging: *default-logging
+    deploy: *default-deploy
 
