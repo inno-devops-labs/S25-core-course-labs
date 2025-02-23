@@ -14,6 +14,8 @@ services:
         max-size: "10m"
         max-file: "3"
     mem_limit: 512m
+    networks:
+      - loki_net
 
   loki:
     image: grafana/loki:latest
@@ -21,6 +23,12 @@ services:
     ports:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
+    logging:
+      driver: "json-file" 
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 512m
     networks:
       - loki_net
   
@@ -32,6 +40,12 @@ services:
       - ./logs:/var/log
       - ./promtail.yml:/etc/promtail/config.yml
     command: -config.file=/etc/promtail/config.yml
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 256m
     networks:
       - loki_net
   
@@ -64,6 +78,14 @@ services:
     image: grafana/grafana:11.4.1
     ports:
       - "3000:3000"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 512m
     networks:
       - loki_net
 
@@ -79,6 +101,9 @@ services:
       driver: "json-file"
       options:
         tag: "{{.ImageName}}|{{.Name}}"
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 256m
 
   rust-web-app:
     image: haidarjbeily/distroless-random-quote-app:latest
@@ -92,8 +117,9 @@ services:
       driver: "json-file"
       options:
         tag: "{{.ImageName}}|{{.Name}}"
-
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 256m
 
 networks:
   loki_net:
-
