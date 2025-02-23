@@ -1,0 +1,8 @@
+app_name: "app_piton"
+app_internal_port: 8080
+app_external_port: 8080
+app_dir: "~/app_python"
+app_full_wipe: false
+docker_username: "paranid5"
+docker_image: "{{ docker_username }}/{{ app_name }}"
+docker_image_tag: "latest"
