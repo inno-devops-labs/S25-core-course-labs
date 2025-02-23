@@ -24,7 +24,7 @@ services:
     container_name: loki
     ports:
       - "3100:3100"
-    command: -config.file=/etc/loki/local-config.yaml  # Uses default config
+    command: -config.file=/etc/loki/local-config.yaml
     networks:
       - logging
     logging:
@@ -76,10 +76,28 @@ services:
           isDefault: true
           version: 1
           editable: false
+        - name: Prometheus
+          type: prometheus
+          access: proxy
+          url: http://prometheus:9090
+          isDefault: false
         EOF
         /run.sh
     logging:
       driver: "json-file"
       options:
         tag: "{{.ImageName}}|{{.Name}}"
+    restart: always
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - logging
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
     restart: always
