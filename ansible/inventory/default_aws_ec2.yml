@@ -1,0 +1,6 @@
+all:
+  hosts:
+    ec2-instance:
+      ansible_host: ec2-13-51-69-92.eu-north-1.compute.amazonaws.com
+      ansible_user: admin
+      ansible_ssh_private_key_file: "./devops-homework.pem"
