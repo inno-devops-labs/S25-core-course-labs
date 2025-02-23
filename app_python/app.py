@@ -11,4 +11,5 @@ def show_time():
     return f"<h1>Current Time in Moscow: {moscow_time}</h1>"
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
+

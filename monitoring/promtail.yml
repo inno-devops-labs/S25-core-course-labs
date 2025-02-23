@@ -1,0 +1,17 @@
+# https://github.com/black-rosary/loki-nginx/blob/master/promtail/promtail.yml
+
+server:
+  http_listen_port: 9080 # Promtail’s HTTP API will run on port 9080
+  grpc_listen_port: 0 #  gRPC is turned off
+positions:
+  filename: /tmp/positions.yaml # does not re-read old logs
+client:
+  url: http://loki:3100/api/prom/push # Sends logs to Loki, running at loki:3100.
+scrape_configs:
+  - job_name: docker_logs
+    static_configs:
+      - targets:
+          - localhost # Promtail runs locally and reads log files directly
+        labels: #  Adds metadata to logs
+          job: docker # Labels these logs as "docker".
+          __path__: /var/lib/docker/containers/*/*log # For linux only,  Path where Docker stores logs on Linux
