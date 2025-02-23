@@ -1,6 +1,6 @@
-## **Lab 8: Monitoring with Prometheus**
+# **Lab 8: Monitoring with Prometheus**
 
-### **Overview**
+## **Overview**
 
 In this lab, I set up Prometheus to monitor my applications using Docker Compose. I configured Prometheus to collect metrics, created dashboards in Grafana, implemented service enhancements, and integrated health checks. Additionally, I successfully completed the **bonus task**, ensuring that my applications export metrics and are fully monitored.
 
