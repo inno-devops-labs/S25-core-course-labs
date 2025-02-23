@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse
 from datetime import datetime
 import pytz
 import logging
+from prometheus_fastapi_instrumentator import Instrumentator
 
 # Configure logging
 logging.basicConfig(
@@ -19,6 +20,8 @@ app = FastAPI(
 )
 
 link = "https://kudamoscow.ru/uploads/9151b31fb2ef1543969b65e6bc111bea.png"
+
+Instrumentator().instrument(app).expose(app)
 
 def get_location_time(region):
     """

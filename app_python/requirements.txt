@@ -3,3 +3,4 @@ uvicorn
 pytz
 pytest
 flake8
+prometheus_fastapi_instrumentator
