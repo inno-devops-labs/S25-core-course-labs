@@ -1,0 +1,20 @@
+---
+- name: Docker installation and configuration
+  block:
+  - docker_container:
+      name: "webapp"
+      state: absent
+
+  - docker_image:
+      name: "{{ docker_image }}"
+      state: absent
+      force_absent: yes
+  
+  - community.docker.docker_compose_v2:
+      project_src: /
+      files:
+      - /docker-compose.yml
+      state: absent
+    
+  tags:
+  - wipe
