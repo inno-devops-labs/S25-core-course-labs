@@ -61,8 +61,8 @@ services:
     networks:
       - monitoring
   
-  cpp_app:
-    image: tedor49/cpp_msk_time:latest 
+  c_app:
+    image: tedor49/c_msk_time:latest 
     ports:
       - "8000:8080"
     networks:
