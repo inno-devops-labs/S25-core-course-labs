@@ -1,0 +1,11 @@
+- name: Deploy Go Web App
+  hosts: all
+  become: true
+  roles:
+    - role: web_app
+      vars:
+        docker_image: "nshlyakhtin/devops:lab2_app_go-amd64"
+        container_name: "web_app_go"
+        app_port: 8080
+        container_port: 8080
+
