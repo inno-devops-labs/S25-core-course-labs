@@ -1,9 +1,19 @@
-from flask import Flask, render_template_string
+from flask import Flask, render_template_string, request
 from datetime import datetime
 import pytz
 import os
+import logging
+import sys
 
 app = Flask(__name__)
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    handlers=[logging.StreamHandler(sys.stdout)]
+)
+logger = logging.getLogger(__name__)
 
 HTML_TEMPLATE = '''
 <!DOCTYPE html>
@@ -48,6 +58,18 @@ HTML_TEMPLATE = '''
 '''
 
 
+@app.before_request
+def log_request():
+    logger.info(
+        f"Received {request.method} request from {request.remote_addr} to {request.path}")
+
+
+@app.after_request
+def log_response(response):
+    logger.info(f"Returning response with status {response.status}")
+    return response
+
+
 @app.route('/')
 def index():
     moscow_tz = pytz.timezone('Europe/Moscow')
@@ -56,8 +78,16 @@ def index():
     time_str = moscow_time.strftime('%H:%M:%S')
     date_str = moscow_time.strftime('%B %d, %Y')
 
+    logger.info(f"Generated Moscow time: {time_str} and date: {date_str}")
     return render_template_string(HTML_TEMPLATE, time=time_str, date=date_str)
 
 
+@app.route('/health')
+def health():
+    logger.info("Health check endpoint called")
+    return {"status": "healthy", "timestamp": datetime.now().isoformat()}
+
+
 if __name__ == '__main__':
+    logger.info("Starting Moscow Time application")
     app.run(host='0.0.0.0', debug=os.environ.get('FLASK_DEBUG', False))

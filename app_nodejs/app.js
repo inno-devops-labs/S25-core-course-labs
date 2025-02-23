@@ -1,11 +1,43 @@
 const express = require('express');
 const moment = require('moment-timezone');
+const winston = require('winston');
 
 const app = express();
 const port = 3000;
 
+// Configure winston logger
+const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.json()
+    ),
+    transports: [
+        new winston.transports.Console()
+    ]
+});
+
+// Middleware for logging requests
+app.use((req, res, next) => {
+    const start = Date.now();
+    res.on('finish', () => {
+        const duration = Date.now() - start;
+        logger.info('Request processed', {
+            method: req.method,
+            path: req.path,
+            statusCode: res.statusCode,
+            duration: `${duration}ms`
+        });
+    });
+    next();
+});
+
 app.get('/', (req, res) => {
     const moscowTime = moment().tz('Europe/Moscow');
+    logger.info('Generating Moscow time', {
+        time: moscowTime.format('HH:mm:ss'),
+        date: moscowTime.format('MMMM D, YYYY')
+    });
     
     const html = `
         <!DOCTYPE html>
@@ -52,9 +84,15 @@ app.get('/', (req, res) => {
     res.send(html);
 });
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+    logger.info('Health check requested');
+    res.status(200).json({ status: 'healthy' });
+});
+
 if (require.main === module) {
     app.listen(port, () => {
-        console.log(`Server running at http://localhost:${port}`);
+        logger.info(`Server started`, { port });
     });
 }
 
