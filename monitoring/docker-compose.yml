@@ -1,4 +1,20 @@
 services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+        - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 512m
+
   loki:
     image: grafana/loki:latest
     platform: "linux/amd64"
