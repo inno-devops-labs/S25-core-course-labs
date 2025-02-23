@@ -1,0 +1,6 @@
+version: '3'
+services:
+  app:
+    image: "{{ docker_image }}:{{ docker_tag }}"
+    ports:
+      - "{{ internal_port }}:{{ external_port }}"
