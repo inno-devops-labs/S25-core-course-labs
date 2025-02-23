@@ -1,0 +1,28 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  when: ansible_os_family == "Debian" or ansible_distribution == "Ubuntu"
+  tags:
+    - setup
+
+- name: Include Docker installation tasks
+  include_tasks: install_docker.yml
+
+- name: Include Docker Compose installation tasks
+  include_tasks: install_compose.yml
+
+- name: Setup Docker Environment
+  block:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Start Docker Service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+  tags:
+    - setup 

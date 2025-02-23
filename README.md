@@ -1,3 +1,5 @@
+[![Python application](https://github.com/favelanky/S25-core-course-labs/actions/workflows/python-app.yml/badge.svg?branch=lab3)](https://github.com/favelanky/S25-core-course-labs/actions/workflows/python-app.yml)
+
 # DevOps Engineering Labs
 
 ## Introduction
