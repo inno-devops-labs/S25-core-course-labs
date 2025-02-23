@@ -312,6 +312,8 @@ CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 
 ## Yandex Cloud
 
+Using tutorial I set up the yandex cloud provider and created a VM instance.
+
 ```
 terraform init
 Initializing the backend...
@@ -628,6 +630,8 @@ Destroy complete! Resources: 4 destroyed.
 
 ## GitHub
 
+I set up the GitHub provider and imported the repository.
+
 ```
 terraform init
 Initializing the backend...
@@ -671,6 +675,8 @@ Import successful!
 The resources that were imported are shown above. These resources are now in
 your Terraform state and will henceforth be managed by Terraform.
 ```
+
+Then I started to set up the GitHub repository, but I got an error.
 
 ```
 terraform apply
@@ -746,6 +752,8 @@ github_branch_protection.default_branch_protection: Creation complete after 6s [
 ╵
 ```
 
+I changed the default branch to master and applied the changes.
+
 ```
 terraform apply
 var.token
@@ -793,6 +801,8 @@ github_branch_protection.default_branch_protection: Modifications complete after
 
 Apply complete! Resources: 1 added, 1 changed, 0 destroyed.
 ```
+
+Then I decided to destroy the resource, to return to the initial state.
 
 ```
 terraform destroy
@@ -920,6 +930,10 @@ github_repository.repository: Destruction complete after 2s
 Destroy complete! Resources: 3 destroyed.
 ```
 
+But I deleted my repository...
+
+Then I created a new one and imported it.
+
 ```
 terraform init
 Initializing the backend...
@@ -963,6 +977,8 @@ Import successful!
 The resources that were imported are shown above. These resources are now in
 your Terraform state and will henceforth be managed by Terraform.
 ```
+
+Then I set up the GitHub repository again.
 
 ```
 terraform plan
