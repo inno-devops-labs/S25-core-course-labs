@@ -94,10 +94,18 @@ This setup ensures a centralized logging solution using Loki, Promtail, and Graf
 
 ## Screenshots
 
+- Web Application Logs
+
 ![Web Application Logs](images/moscow-time-app.png)
+
+- Loki Logs
 
 ![Loki Logs](images/loki.png)
 
+- Grafana Logs
+
 ![Grafana Logs](images/grafana.png)
+
+- Promtail Logs
 
 ![Promtail Logs](images/promtail.png)
