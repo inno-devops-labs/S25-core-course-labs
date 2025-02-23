@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moscow-time
+  labels:
+    app: moscow-time
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: moscow-time
+  template:
+    metadata:
+      labels:
+        app: moscow-time
+    spec:
+      containers:
+      - name: moscow-time
+        image: ebob/moscow-time:v1.1
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"

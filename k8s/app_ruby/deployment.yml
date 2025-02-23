@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: omsk-time
+  labels:
+    app: omsk-time
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: omsk-time
+  template:
+    metadata:
+      labels:
+        app: omsk-time
+    spec:
+      containers:
+      - name: omsk-time
+        image: ebob/omsk-time:v1.1
+        ports:
+        - containerPort: 4567
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
