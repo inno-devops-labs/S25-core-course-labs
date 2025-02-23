@@ -16,6 +16,20 @@ services:
       - loki-data:/loki             
     networks:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+    healthcheck:
+      test: ["CMD", "pgrep", "loki"]
+      start_period: 5s
+      retries: 5
+      timeout: 5s
 
   promtail:
     image: grafana/promtail:latest
@@ -25,9 +39,24 @@ services:
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
     command: -config.file=/etc/promtail/config.yml
     depends_on:
-      - loki
+      loki:
+        condition: service_healthy
     networks:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+    healthcheck:
+      test: ["CMD", "pgrep", "promtail"]
+      start_period: 5s
+      retries: 5
+      timeout: 5s
 
   grafana:
     image: grafana/grafana:latest
@@ -37,6 +66,7 @@ services:
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_FEATURE_TOGGLES_ENABLE=alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode
     entrypoint:
       - sh
       - -euc
@@ -57,16 +87,78 @@ services:
         EOF
         /run.sh
     depends_on:
-      - loki
+      loki:
+        condition: service_healthy
+      prometheus:
+        condition: service_healthy
     networks:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 15s
+      retries: 5
+      timeout: 5s
 
   app_python:
-    image: g1l1a/my-django-app
+    image: g1l1a/my-django-app:v2.3
+    restart: always
     ports:
-      - "8080:8000"
+      - "8000:8000"
     networks:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+    healthcheck:
+      test: ["CMD", "pgrep", "python"]
+      interval: 15s
+      retries: 5
+      timeout: 5s
+    depends_on:
+      loki:
+        condition: service_healthy
 
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+    ports:
+      - "9090:9090"
+    depends_on:
+      loki:
+        condition: service_healthy
+      app_python:
+        condition: service_healthy
+    networks:
+      - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+    healthcheck:
+      test: ["CMD", "pgrep", "prometheus"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
 
   

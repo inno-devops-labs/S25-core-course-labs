@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.urls import path
 from .views import moscow_time
+from django_prometheus.exports import ExportToDjangoView
+from .views import metrics_view
 
 urlpatterns = [
     path('', moscow_time, name='moscow_time'),
+    path('metrics/', ExportToDjangoView, name='metrics'),
 ]
