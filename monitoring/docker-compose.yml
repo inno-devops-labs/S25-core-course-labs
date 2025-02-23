@@ -1,31 +1,71 @@
-version: "3.7"
+version: '3.8'
 
 services:
-  loki:
-    image: grafana/loki:latest
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
-      - "3100:3100"
-    volumes:
-      - ./loki-config.yaml:/etc/loki/local-config.yaml
-    command: -config.file=/etc/loki/local-config.yaml
-
-  promtail:
-    image: grafana/promtail:latest
-    volumes:
-      - ./promtail-config.yaml:/etc/promtail/config.yml
-      - /var/log:/var/log
-    command: -config.file=/etc/promtail/config.yml
+      - "9090:9090"
+    restart: unless-stopped
+    depends_on:
+      - loki
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 5s
 
   grafana:
     image: grafana/grafana:latest
+    container_name: grafana
     ports:
       - "3000:3000"
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    volumes:
+      - grafana_data:/var/lib/grafana
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
-    depends_on:
-      - loki
 
-  app_python:
-    image: app_python:latest
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    ports:
+      - "3100:3100"
+    restart: unless-stopped
+    command: -config.file=/etc/loki/loki-config.yml
     volumes:
-      - ./app-logs:/var/log/app_python
+      - ./loki-config.yml:/etc/loki/loki-config.yml
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:3100/ready"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 5s
+
+  app:
+    image: app_python:latest
+    container_name: app_python
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    environment:
+      - PROMETHEUS_METRICS=true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 5s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  grafana_data:
