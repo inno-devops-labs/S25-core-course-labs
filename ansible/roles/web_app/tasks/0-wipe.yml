@@ -1,0 +1,14 @@
+- name: Wipe Docker Web App
+  block:
+    - name: Stop and Remove Container
+      community.docker.docker_container:
+        name: "web_app"
+        state: absent
+
+    - name: Remove Docker Compose File
+      file:
+        path: /home/fridorovich/docker-compose.yml
+        state: absent
+  when: web_app_full_wipe | bool
+  tags:
+    - wipe
