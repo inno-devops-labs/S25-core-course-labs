@@ -64,6 +64,6 @@ services:
   c_app:
     image: tedor49/c_msk_time:latest 
     ports:
-      - "8000:8080"
+      - "8080:8000"
     networks:
       - monitoring 
