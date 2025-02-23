@@ -7,11 +7,25 @@ volumes:
 
 services:
   app_python:
-    image: anyarylova/app_python:latest
+    image: anyarylova/app_python
     ports:
       - "5000:5000"
     networks:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+    healthcheck:
+      test: ["CMD", "pgrep", "python"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   loki:
     image: grafana/loki:latest
@@ -22,6 +36,20 @@ services:
       - loki-data:/loki
     networks:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+    healthcheck:
+      test: ["CMD", "pgrep", "loki"]
+      start_period: 5s
+      retries: 5
+      timeout: 5s
 
   promtail:
     image: grafana/promtail:latest
@@ -34,6 +62,20 @@ services:
       - loki
     networks:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+    healthcheck:
+      test: ["CMD", "pgrep", "promtail"]
+      start_period: 5s
+      retries: 5
+      timeout: 5s
   
   grafana:
     image: grafana/grafana:latest
@@ -67,5 +109,49 @@ services:
       - grafana-data:/var/lib/grafana
     networks:
       - loki
+    depends_on:
+      loki:
+        condition: service_healthy
+      prometheus:
+        condition: service_healthy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - loki
+    depends_on:
+      loki:
+        condition: service_healthy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+    healthcheck:
+      test: ["CMD", "pgrep", "prometheus"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
