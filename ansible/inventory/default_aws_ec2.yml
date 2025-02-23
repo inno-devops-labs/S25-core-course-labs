@@ -1,0 +1,7 @@
+all:
+  hosts:
+    master_vm:
+      ansible_host: "89.169.155.153"
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: "/home/dm/.ssh/id_rsa"
+      ansible_python_interpreter: /usr/bin/python3

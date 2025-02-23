@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Time in Moscow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Current Time in Moscow</h1>
+
+    <p class="digital-clock" id="digital-time">{{ moscow_time }}</p>
+
+    <div class="clock">
+        <div class="number number-12">12</div>
+        <div class="number number-3">3</div>
+        <div class="number number-6">6</div>
+        <div class="number number-9">9</div>
+
+        <div class="hour" id="hour-hand"></div>
+        <div class="minute" id="minute-hand"></div>
+        <div class="second" id="second-hand"></div>
+    </div>
+
+    <script>
+        const moscowTime = new Date("{{ moscow_time }}");
+
+        if (isNaN(moscowTime)) {
+            console.error("Invalid Date:", moscowTime);
+        } else {
+            function updateClock() {
+                const digitalTime = moscowTime.toLocaleTimeString();
+                document.getElementById('digital-time').innerText = `${digitalTime}`;
+
+                const hours = moscowTime.getHours();
+                const minutes = moscowTime.getMinutes();
+                const seconds = moscowTime.getSeconds();
+
+                const hourAngle = (hours % 12) * 30 + (minutes / 60) * 30;
+                const minuteAngle = minutes * 6 + (seconds / 60) * 6;
+                const secondAngle = seconds * 6;
+
+                document.getElementById('hour-hand').style.transform = `rotate(${90 + hourAngle}deg)`;
+                document.getElementById('minute-hand').style.transform = `rotate(${90 + minuteAngle}deg)`;
+                document.getElementById('second-hand').style.transform = `rotate(${90 + secondAngle}deg)`;
+            }
+
+            updateClock();
+        }
+    </script>
+</body>
+</html>
