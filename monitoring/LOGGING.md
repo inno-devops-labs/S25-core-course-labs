@@ -105,4 +105,4 @@ S25-core-course-labss/
 
 ## Conclusion
 
-The logging stack successfully aggregates logs from multiple application containers (including the bonus extra application), processes them with Promtail, stores them in Loki, and provides visualization through Grafana. This setup not only meets the requirements of Lab 7 but also demonstrates a robust logging solution suitable for production environments.
+The logging stack successfully aggregates logs from multiple application containers (including the bonus extra application), processes them with Promtail, stores them in Loki, and provides visualization through Grafana.
