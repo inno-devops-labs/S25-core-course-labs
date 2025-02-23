@@ -1,1 +1,2 @@
 Flask==3.1.0
+prometheus_flask_exporter==0.23.1
