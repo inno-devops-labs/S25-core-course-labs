@@ -1,0 +1,6 @@
+all:
+  hosts:
+    my_vm:
+      ansible_host: 172.28.156.120
+      ansible_user: ubuntu2404
+      ansible_ssh_private_key_file: /.ssh/id_rsa
