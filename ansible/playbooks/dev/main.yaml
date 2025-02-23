@@ -4,3 +4,4 @@
 
   roles:
     - role: docker
+    - role: web_app
