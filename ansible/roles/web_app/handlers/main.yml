@@ -1,0 +1,6 @@
+---
+- name: restart application
+  community.docker.docker_compose_v2:
+    project_src: "{{ deploy_directory }}"
+    state: present
+    recreate: true
