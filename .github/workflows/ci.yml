@@ -45,7 +45,7 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: app_python
           file: app_python/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/moscow-time:latest
