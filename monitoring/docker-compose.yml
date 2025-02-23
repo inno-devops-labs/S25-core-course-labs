@@ -58,7 +58,7 @@ services:
       - GF_FEATURE_TOGGLES_ENABLE=alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode
     image: grafana/grafana:latest
     volumes:
-      - ./grafana-ds.yml:/etc/grafana/provisioning/datasources/ds.yml
+      - ./grafana/provisioning:/etc/grafana/provisioning
     ports:
       - "3000:3000"
     networks:

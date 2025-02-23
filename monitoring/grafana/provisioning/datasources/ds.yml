@@ -1,0 +1,34 @@
+apiVersion: 1
+
+deleteDatasources:
+- name: Loki
+  orgId: 1
+
+- name: Prometheus
+  orgId: 1
+
+
+datasources:
+- name: Loki
+  type: loki
+  access: proxy 
+  orgId: 1
+  url: http://loki:3100
+  basicAuth: false
+  isDefault: true
+  version: 1
+  editable: false
+
+- name: Prometheus
+  type: prometheus
+  access: proxy
+  orgId: 1
+  url: http://prometheus:9090
+  basicAuth: false
+  isDefault: false
+  jsonData:
+    graphiteVersion: "1.1"
+    tlsAuth: false
+    tlsAuthWithCACert: false
+  version: 1
+  editable: false
