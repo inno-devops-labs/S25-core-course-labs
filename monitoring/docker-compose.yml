@@ -2,6 +2,35 @@ networks:
   monitoring:
 
 services:
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+    networks:
+      - monitoring
+    ports:
+      - 9090:9090
+    depends_on:
+      loki:
+        condition: service_started
+      python_app:
+        condition: service_started
+      c_app:
+        condition: service_started
+    deploy:
+      resources:
+        limits:
+          memory: 50M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 2
+    healthcheck:
+      test: ["CMD", "pgrep", "prometheus"]
+      start_period: 5s
+      retries: 3
+      timeout: 5s
 
   loki:
     container_name: loki
@@ -46,6 +75,12 @@ services:
           isDefault: true
           version: 1
           editable: false
+        - name: Prometheus
+          type: prometheus
+          basicAuth: false
+          url: http://prometheus:9090
+          version: 0
+          editable: false
         EOF
         /run.sh
     image: grafana/grafana:latest
@@ -61,9 +96,9 @@ services:
     networks:
       - monitoring
   
-  cpp_app:
-    image: tedor49/cpp_msk_time:latest 
+  c_app:
+    image: tedor49/c_msk_time:latest 
     ports:
-      - "8000:8080"
+      - "8888:8000"
     networks:
       - monitoring 
