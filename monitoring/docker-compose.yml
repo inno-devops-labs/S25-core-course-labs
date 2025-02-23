@@ -23,6 +23,39 @@ services:
     networks:
       - loki
 
+  prometheus:
+    image: prom/prometheus:v2.49.1
+    container_name: monitoring-prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - loki
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.47.2
+    container_name: monitoring-cadvisor
+    privileged: true
+    devices:
+      - /dev/kmsg:/dev/kmsg
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    ports:
+      - "8080:8080"
+    networks:
+      - loki
+
   loki:
     image: grafana/loki:2.9.0
     container_name: monitoring-loki
@@ -39,7 +72,7 @@ services:
   promtail:
     image: grafana/promtail:2.9.0
     container_name: monitoring-promtail
-    user: root  # Добавим root права для доступа к логам
+    user: root
     volumes:
       - ./promtail-config.yaml:/etc/promtail/config.yml
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
@@ -56,11 +89,16 @@ services:
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
-      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+      - GF_FEATURE_TOGGLES_ENABLE=publicDashboards
     volumes:
-      - grafana-data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
+      - grafana-data:/var/lib/grafana
     networks:
+      - loki
+    restart: always
+    depends_on:
+      - prometheus
       - loki
 
 networks:
@@ -69,3 +107,4 @@ networks:
 volumes:
   grafana-data:
   loki-data:
+  prometheus_data:
