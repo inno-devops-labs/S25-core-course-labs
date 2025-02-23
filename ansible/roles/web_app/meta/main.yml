@@ -1,0 +1,14 @@
+---
+dependencies:
+  - role: docker
+
+galaxy_info:
+  author: Your Name
+  description: Deploy Python web application using Docker
+  license: MIT
+  min_ansible_version: 2.9
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy 
