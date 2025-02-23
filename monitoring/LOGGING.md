@@ -126,4 +126,10 @@ Recommended improvements:
 docker-compose exec loki-push-gateway curl -X POST -d @logs.json http://localhost:9095/api/v1/push
 ```
 
-### 3. Просмотр логов в Grafana 
+
+## Screenshots (additional)
+
+![curl http://localhost:5000](./images/image-copy-3.png)
+*Screenshot showing the successful retrieval of labels from Loki.*
+
+
