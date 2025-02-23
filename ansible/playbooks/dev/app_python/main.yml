@@ -1,0 +1,10 @@
+- name: Deploy Python Web App
+  hosts: all
+  become: true
+  roles:
+    - role: web_app
+      vars:
+        docker_image: "deedjei/lab2"
+        container_name: "web_app_python"
+        app_port: 5000
+        container_port: 5000
