@@ -3,6 +3,19 @@ version: "3.3"
 networks:
   loki:
 
+x-logging:
+  &default-logging
+  driver: "json-file"
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+x-deploy:
+  &default-deploy
+  resources:
+    limits:
+      memory: "512m"
+
 services:
   loki:
     container_name: loki
@@ -61,3 +74,17 @@ services:
     restart: always
     ports:
       - "5000:5000"
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - loki
+    logging: *default-logging
+    deploy: *default-deploy
