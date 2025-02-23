@@ -14,7 +14,7 @@ services:
       - /var/lib/docker/containers:/var/lib/docker/containers
       - /var/run/docker.sock:/var/run/docker.sock
       - ./promtail-config.yml:/etc/promtail/promtail-config.yml
-      - ./app-logs:/logs
+      - app-logs:/logs
     command: -config.file=/etc/promtail/promtail-config.yml
     restart: unless-stopped
     depends_on:
@@ -37,7 +37,9 @@ services:
       - loki
 
   bakina_devops_webapp:
-    image: bakinasa/moscow-time-app
+    build:
+      context: ../app_python
+#    image: bakinasa/moscow-time-app
     container_name: moscow-time-app
     volumes:
       - app-logs:/logs
