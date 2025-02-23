@@ -2,6 +2,7 @@ import json
 import sys
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+from starlette.responses import Response
 from prometheus_fastapi_instrumentator import Instrumentator
 from datetime import datetime
 import pytz
@@ -32,12 +33,15 @@ Instrumentator().instrument(app).expose(app, endpoint="/metrics")
 
 MOSCOW_TZ = pytz.timezone("Europe/Moscow")
 
+@app.get("/health")
+async def health_check():
+    return Response(status_code=200)
 
 @app.get("/", response_class=HTMLResponse)
 def get_moscow_time():
     moscow_time = datetime.now(MOSCOW_TZ).strftime("%d.%m.%Y %H:%M:%S")
     logger.info(f"Moscow Time API called, current time: {moscow_time}")
-    
+
     html_content = f"""
     <!DOCTYPE html>
     <html lang="en">
