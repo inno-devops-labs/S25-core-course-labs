@@ -6,6 +6,7 @@ from datetime import datetime
 import pytz
 from pathlib import Path
 from pydantic import BaseModel
+from prometheus_fastapi_instrumentator import Instrumentator
 
 app = FastAPI()
 
@@ -37,3 +38,5 @@ async def read_root(request: Request) -> HTMLResponse:
         "index.html",
         {"current_time": current_time}
     )
+
+Instrumentator().instrument(app).expose(app, endpoint="/metrics")
