@@ -1,0 +1,72 @@
+version: "3.7"
+
+networks:
+  monitoring:
+    driver: bridge
+
+services:
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    volumes:
+      - loki-data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - monitoring
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/containers:/var/lib/docker/containers
+      - ./promtail.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_FEATURE_TOGGLES_ENABLE=alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+    networks:
+      - monitoring
+    depends_on:
+      - loki
+    restart: always
+
+  app_python:
+    image: shelma13/app_python:latest
+    container_name: app_python
+    ports:
+      - "5000:5000"
+    networks:
+      - monitoring
+    restart: always
+    labels:
+      - "logging=promtail"
+
+  app_js:
+    build: ../app_js
+    container_name: app_js
+    ports:
+      - "3001:3000"
+    networks:
+      - monitoring
+    restart: always
+    labels:
+      - "logging=promtail"
+
+volumes:
+  loki-data:
+  grafana-data:
