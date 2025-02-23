@@ -1,0 +1,5 @@
+flask==3.1.0
+tzdata==2025.1
+WebTest==3.0.3
+beautifulsoup4==4.12.3
+prometheus_flask_exporter==0.23.1
