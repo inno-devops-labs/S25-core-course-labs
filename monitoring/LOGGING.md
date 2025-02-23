@@ -71,7 +71,7 @@ S25-core-course-labss/
 ├── monitoring/  
    ├── docker-compose.yml  
    ├── promtail.yml  
-   |── LOGGING.md
+   ├── LOGGING.md
 ```
 
 ### Running the Stack
