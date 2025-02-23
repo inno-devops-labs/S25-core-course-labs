@@ -1,0 +1,7 @@
+---
+plugin: yacloud_compute
+yacloud_clouds:
+  - inno-devops-labs
+yacloud_folders:
+  - default
+yacloud_token_file: yacloud_token
