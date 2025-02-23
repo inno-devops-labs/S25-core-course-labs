@@ -51,7 +51,7 @@ The stack comprises three primary components—**Loki**, **Promtail**, and **Gra
     tag: "{{.ImageName}}|{{.Name}}"  
 ```
 
-  - This tagging allows Promtail to extract meaningful labels while avoiding high cardinality.
+- This tagging allows Promtail to extract meaningful labels while avoiding high cardinality.
 
 ### Bonus: Extra Application Integration
 
@@ -66,32 +66,31 @@ The stack comprises three primary components—**Loki**, **Promtail**, and **Gra
 
 ### Directory Structure
 
-(Sample directory tree)
 ```sh
 S25-core-course-labss/  
 ├── monitoring/  
-│  ├── docker-compose.yml  
-│  ├── promtail.yml  
-└── LOGGING.md
+   ├── docker-compose.yml  
+   ├── promtail.yml  
+   |── LOGGING.md
 ```
+
 ### Running the Stack
 
-1. **Start the Stack:**  
+**Start the Stack:**  
    Navigate to the monitoring directory and run:  
 
 ```sh
    docker-compose up  
 ```
 
-2. **Verify Component Operation:**
-   - **Loki:** Confirm that logs are being received on port **3100**.
-   - **Promtail:** Check container logs to ensure that log scraping is occurring.
-   - **Grafana:** Open your browser at <http://localhost:4000> to verify that the Loki data source is correctly configured and logs are visible.
-   - **Extra Application:** Ensure that logs from the extra app are visible, demonstrating that the logging stack collects logs from every container.
+**Verify Component Operation:**
+
+- **Loki:** Confirm that logs are being received on port **3100**.
+  - **Promtail:** Check container logs to ensure that log scraping is occurring.
+  - **Grafana:** Open your browser at <http://localhost:4000> to verify that the Loki data source is correctly configured and logs are visible.
+  - **Extra Application:** Ensure that logs from the extra app are visible, demonstrating that the logging stack collects logs from every container.
 
 ### Screenshots
-
-Include the following screenshots in your report (update the paths if necessary):
 
 - **Container Logs:**  
   ![Container Logs](screenshots/containerlogs.png)
