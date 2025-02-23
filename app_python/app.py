@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from bottle import Bottle
+from flask import Flask
 from datetime import datetime
 
 
@@ -15,8 +15,8 @@ class TemplateService(ABC):
         pass
 
 
-def create_app(time_service: TimeService, template_service: TemplateService) -> Bottle:
-    app = Bottle()
+def create_app(time_service: TimeService, template_service: TemplateService) -> Flask:
+    app = Flask(__name__)
 
     @app.route('/')
     def index():

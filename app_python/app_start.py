@@ -1,9 +1,9 @@
 from app import TimeService, TemplateService, create_app
-from bottle import run
 from datetime import datetime
 from zoneinfo import ZoneInfo, available_timezones
 from argparse import ArgumentParser
 from sys import stderr
+from prometheus_flask_exporter import PrometheusMetrics
 
 
 class ZonedTimeService(TimeService):
@@ -50,4 +50,8 @@ if __name__ == '__main__':
         print(f"time-application: error: argument -t/--timezone: invalid choice: '{args.timezone}'", file=stderr)
         print(f'available: {timezones}', file=stderr)
     else:
-        run(create_app(ZonedTimeService(args.timezone), HtmlTemplateService()), host=args.host, port=args.port)
+        app = create_app(ZonedTimeService(args.timezone), HtmlTemplateService())
+        metrics = PrometheusMetrics(app)
+
+        metrics.info('time_app_py', 'Python Time Display Application', version='1.0.0')
+        app.run(host=args.host, port=args.port)

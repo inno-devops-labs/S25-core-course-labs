@@ -3,6 +3,8 @@
 Because this application is very small and there is no need in Flask features,
 I chose lightweight `Bottle` framework.
 
+*lab8 edit*: `Bottle` was changed to `Flask`, because there is no `Promtheus` library for the first one.
+
 ## Applied best practice
 
 * **Separate logic into services**: This not only makes it easier to test the application, but also allows you to easily
