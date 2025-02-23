@@ -1,6 +1,6 @@
 all:
   hosts:
     yc_instance:
-      ansible_host: 51.250.19.210
+      ansible_host: 158.160.86.198
       ansible_user: ubuntu
       ansible_ssh_private_key_file: ~/.ssh/id_rsa

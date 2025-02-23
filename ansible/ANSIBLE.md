@@ -100,3 +100,57 @@ ansible-inventory -i inventory/default_aws_ec2.yml --graph
   |--@ungrouped:
   |  |--yc_instance
 ```
+
+# Deployment Output for web app 
+
+## last 50 lines
+
+TASK [docker : Install required apt packages] **********************************
+ok: [yc_instance]
+
+TASK [docker : Add Docker's official GPG key] **********************************
+ok: [yc_instance]
+
+TASK [docker : Add Docker's official apt repository] ***************************
+ok: [yc_instance]
+
+TASK [docker : Install Docker] *************************************************
+ok: [yc_instance]
+
+TASK [docker : Add Docker group] ***********************************************
+ok: [yc_instance]
+
+TASK [docker : Add user to Docker group] ***************************************
+ok: [yc_instance]
+
+TASK [docker : Configure Docker security settings] *****************************
+ok: [yc_instance]
+
+TASK [docker : Enable and start Docker services] *******************************
+ok: [yc_instance] => (item=docker.service)
+ok: [yc_instance] => (item=containerd.service)
+
+TASK [docker : include_tasks] **************************************************
+included: /home/akvadevka/PycharmProjects/pythonProject2/S25-core-course-labs/ansible/roles/docker/tasks/install_compose.yml for yc_instance
+
+TASK [docker : Install Docker Compose] *****************************************
+ok: [yc_instance]
+
+TASK [web_app : Remove web application container] ******************************
+skipping: [yc_instance]
+
+TASK [web_app : Remove image] **************************************************
+skipping: [yc_instance]
+
+TASK [web_app : Fetch latest Docker image] *************************************
+changed: [yc_instance]
+
+TASK [web_app : Generate Docker Compose configuration] *************************
+changed: [yc_instance]
+
+TASK [web_app : Launch application container via Docker Compose] ***************
+changed: [yc_instance]
+
+PLAY RECAP *********************************************************************
+yc_instance                : ok=16   changed=3    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+

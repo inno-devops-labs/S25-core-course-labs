@@ -1,7 +1,7 @@
 variable "token" {
   type      = string
-  default   = "t1.9euelZqUzc2LjpGSjcuWiseRi5aWjO3rnpWay5mbzM7HnImMkcmMicqTzozl9PcUJCNC-e8XYgSk3fT3VFIgQvnvF2IEpM3n9euelZqajZuciZXNxs-SlpiTx43Kke_8xeuelZqajZuciZXNxs-SlpiTx43KkQ.2b-O7Vz4Lnda2AoXUl8Zos2tf1jcQH9hK-ns7P297PL0v9EiBx2N3cXeTOf16ZrYy8-0N59N3ioJkQexD1FsDA"
- }
+  default   = "t1.9euelZrNyZOOz8-Mj4nHysiczp2Um-3rnpWay5mbzM7HnImMkcmMicqTzozl8_dtNxNC-e92axN8_d3z9y1mEEL573ZrE3z9zef1656VmsjKm8bJl8uRm4rMkJuek8qb7_zF656VmsjKm8bJl8uRm4rMkJuek8qb.DzhxbcO4wMPJ7rx9FCWwrAjdljjkf2eO_tP159uMKL8mNP09Y4t75PzWil8DGf4ZGytjoQbp0CBtkZUxU5ohCg"
+}
 
 variable "zone" {
   type    = string

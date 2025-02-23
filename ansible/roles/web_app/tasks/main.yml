@@ -1,0 +1,21 @@
+---
+- name: Remove previous deployment if enabled
+  import_tasks: 0-wipe.yml
+  when: web_app_full_wipe
+  tags: [ "cleanup" ]
+
+- name: Fetch latest Docker image
+  docker_image:
+    name: "{{ docker_image }}"
+    source: pull
+  tags: [ "update" ]
+
+- name: Generate Docker Compose configuration
+  template:
+    src: docker-compose.yml.j2
+    dest: /home/{{ ansible_user }}/docker-compose.yml
+  tags: [ "config" ]
+
+- name: Launch application container via Docker Compose
+  command: docker-compose -f /home/{{ ansible_user }}/docker-compose.yml up -d
+  tags: [ "deploy" ]
