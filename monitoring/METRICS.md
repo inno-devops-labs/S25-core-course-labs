@@ -209,7 +209,10 @@ healthcheck:
   start_period: 10s
 ```
 
-**Screenshot:**  ![Both healthy](screenshots/bothhealthy.png)
+#### **Metrics screenshots ran locally for preview**
+
+**Screenshot:**  ![metricsnodelocalexample](screenshots/metricsnodelocalexample.png)
+**Screenshot:**  ![metricspythonexample](screenshots/metricspythonexample.png)
 
 ---
 
