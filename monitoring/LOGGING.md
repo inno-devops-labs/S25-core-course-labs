@@ -22,8 +22,8 @@ Promtail here listens to docker socket and picks data labelled as "promtail", to
 
 - app_python
 
-![querying app_python](app_python_sc.png)
+![querying app_python](screenshots/app_python-loki.png)
 
 - app_js
 
-![querying app_js](app_js_sc.png)
+![querying app_js](screenshots/app_js-loki.png)
