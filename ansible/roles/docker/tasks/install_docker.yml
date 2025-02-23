@@ -8,14 +8,15 @@
       - python3-pip
       - virtualenv
       - python3-setuptools
-      - docker.io
     state: present
-    update_cache: true
+    update_cache: yes
+  become: yes
 
 - name: Add Docker GPG apt Key
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
+  become: yes
 
 - name: Get Ubuntu release version
   command: lsb_release -cs
@@ -27,6 +28,7 @@
     repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ubuntu_version.stdout }} stable"
     state: present
     update_cache: yes
+  become: yes
 
 - name: Install Docker
   apt:
@@ -35,16 +37,19 @@
       - docker-ce-cli
       - containerd.io
     state: present
-    update_cache: true
+    update_cache: yes
+  become: yes
 
 - name: Ensure Docker service is running
   service:
     name: docker
     state: started
-    enabled: true
+    enabled: yes
+  become: yes
 
 - name: Ensure current user is added to docker group
   user:
     name: "{{ ansible_user }}"
     groups: docker
     append: yes
+  become: yes
