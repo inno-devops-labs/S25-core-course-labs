@@ -1,0 +1,30 @@
+---
+- name: Wipe Docker Container and Related Files
+  when: web_app_full_wipe | default(false) | bool
+  block:
+    - name: Stop and remove Docker container
+      community.docker.docker_container:
+        name: "{{ docker_container_name }}"
+        state: absent
+        force_kill: yes
+      ignore_errors: yes
+
+    - name: Remove Docker image
+      community.docker.docker_image:
+        name: "{{ docker_image_name }}"
+        tag: "{{ docker_image_tag }}"
+        state: absent
+        force: yes
+      ignore_errors: yes
+
+    - name: Remove Docker Compose files
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - "/opt/{{ docker_container_name }}/docker-compose.yml"
+        - "/opt/{{ docker_container_name }}"
+      ignore_errors: yes
+  tags:
+    - never
+    - wipe 

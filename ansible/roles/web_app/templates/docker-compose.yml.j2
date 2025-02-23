@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  {{ docker_container_name }}:
+    image: "{{ docker_image_name }}:{{ docker_image_tag }}"
+    container_name: "{{ docker_container_name }}"
+    ports:
+      {{ container_ports | to_nice_yaml(indent=2) | indent(6) }}
+    environment:
+      {{ container_env | to_nice_yaml(indent=2) | indent(6) }}
+    restart: "{{ restart_policy }}"
+    deploy:
+      resources:
+        limits:
+          memory: "{{ memory_limit }}"
+          cpus: "{{ cpu_limit }}" 
