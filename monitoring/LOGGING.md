@@ -38,6 +38,154 @@ The stack comprises three primary components—**Loki**, **Promtail**, and **Gra
   - Runs on port **4000** (accessible via <http://localhost:4000>).
   - Offers query and visualization capabilities to monitor application performance and troubleshoot issues.
 
+## Docker Compose Configuration
+
+This Docker Compose file defines the entire logging stack, including your application containers (Python-app and Node-app), Loki, Promtail, and Grafana. It sets up a custom network named "loki" and configures each service with the necessary port mappings, volume mounts, and logging options. The logging options use the json-file driver with a custom tag format ({{.ImageName}}|{{.Name}}) to help Promtail extract labels efficiently.
+
+```yaml
+
+version: "3.3"
+
+networks:
+  loki:
+
+services:
+  Python-app:
+    image: "em1999jay/python-app:latest"
+    ports:
+      - "5000:5000"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+        tag: "{{.ImageName}}|{{.Name}}"
+
+  Node-app:
+    image: "em1999jay/moscow-time-app-node:v1"
+    ports:
+      - "3000:3000"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+        tag: "{{.ImageName}}|{{.Name}}"
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+        tag: "{{.ImageName}}|{{.Name}}"
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - /var/log:/var/log
+      - ./promtail.yml:/etc/promtail/config.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+        tag: "{{.ImageName}}|{{.Name}}"
+
+  grafana:
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_FEATURE_TOGGLES_ENABLE=alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy
+          orgId: 1
+          url: http://loki:3100
+          basicAuth: false
+          isDefault: true
+          version: 1
+          editable: false
+        EOF
+        /run.sh
+    image: grafana/grafana:latest
+    ports:
+      - "4000:3000"
+    networks:
+      - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+        tag: "{{.ImageName}}|{{.Name}}"
+```
+
+---
+
+## Promtail Configuration
+
+This Promtail configuration file specifies how Promtail collects logs from Docker containers and forwards them to Loki. It sets up the server parameters and positions file, and defines the client endpoint for pushing logs to Loki. The scrape_configs section targets log files within Docker containers and includes pipeline stages to parse JSON log entries, extract relevant labels (such as image_name and container_name), and adjust timestamps.
+
+```yaml
+
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+client:
+  url: http://loki:3100/loki/api/v1/push
+scrape_configs:
+  - job_name: containers
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: containerlogs
+          __path__: /var/lib/docker/containers/*/*log  # For Linux systems only
+    pipeline_stages:
+      - json:
+          expressions:
+            stream: stream
+            attrs: attrs
+            tag: attrs.tag
+            time: time
+            log: log
+      - timestamp:
+          source: time
+          format: RFC3339Nano
+      - regex:
+          expression: ^(?P<image_name>([^|]+))\|(?P<container_name>([^|]+))$
+          source: "tag"
+      - labels:
+          stream:
+          time:
+          image_name:
+          container_name:
+          container_id:
+```
+
 ### Application Containers
 
 - **Role:**  
