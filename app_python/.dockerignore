@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+
+# Virtual Environment
+venv/
+.env/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Build
+dist/
+build/
+
+*.md
+.coverage
