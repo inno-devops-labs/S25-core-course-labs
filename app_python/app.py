@@ -1,5 +1,4 @@
 from flask import Flask, render_template, Response
-from datetime import datetime
 from prometheus_client import generate_latest, Counter, Histogram
 
 from services.get_time_service import GetTimeService
