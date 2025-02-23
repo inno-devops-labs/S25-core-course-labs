@@ -88,7 +88,9 @@ I configured Grafana to visualize Prometheus and Loki metrics. My `grafana` serv
 I created dashboards to display:
 
 - **Loki logs** ![lokigraphs](screenshots/lokigraphs.png)
-- **Prometheus metrics** ![prometheusgraph](screenshots/prometheusgraph.png)
+- **Prometheus metrics**
+![prometheusgraph](screenshots/prometheusgraph.png)
+![prometheusgraph2](screenshots/prometheusgraph2.png)
 
 ### **2. Service Configuration Enhancements**
 
