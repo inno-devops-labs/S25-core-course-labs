@@ -15,6 +15,7 @@ app.config.from_mapping(config)
 REQUESTS = Counter('moscow_time_requests_total', 'Total requests to the Moscow time app')
 REQUEST_TIME = Histogram('moscow_time_request_duration_seconds', 'Time spent processing request')
 
+
 @app.get("/")
 @REQUEST_TIME.time()
 def get_time():
@@ -33,9 +34,11 @@ def get_time():
         # Handle invalid timezone errors gracefully
         return f"Error: {e}", 400
 
+
 @app.get('/metrics')
 def metrics():
     return Response(generate_latest(), mimetype='text/plain')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
