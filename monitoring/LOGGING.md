@@ -69,6 +69,13 @@ Grafana is visualization platform that allows us to:
     - Real-time log viewing
     - Custom dashboard creation
 
+![img.png](img.png)
+
+![img_2.png](img_2.png)
+
+![img_3.png](img_3.png)
+
+
 ### 4. Application
 
 Python application is configured to:
