@@ -1,0 +1,15 @@
+- name: Deploy web app
+  hosts: all
+  become: true
+  vars:
+    docker_image: "wensiet/devops-go-app"
+    docker_tag: "latest"
+    internal_port: 8080
+    external_port: 8080
+    deploy_path: /opt/golang_deploy
+  roles:
+    - role: web_app
+      tags:
+        - web_app_full_wipe
+        - render-docker-compose
+        - start-web-app 
