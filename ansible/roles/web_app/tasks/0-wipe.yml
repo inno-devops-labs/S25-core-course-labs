@@ -1,0 +1,18 @@
+- name: Remove container
+  command: docker-compose down
+  args:
+    chdir: /opt/web_app
+  when: web_app_full_wipe
+
+- name: Remove Docker Compose file
+  file:
+    path: /opt/web_app/docker-compose.yml
+    state: absent
+  when: web_app_full_wipe
+
+- name: Remove Docker image
+  docker_image:
+    name: "{{ docker_image }}"
+    state: absent
+  when: web_app_full_wipe
+  
