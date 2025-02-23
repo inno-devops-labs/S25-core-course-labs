@@ -96,11 +96,11 @@ S25-core-course-labss/
   ![Container Logs](screenshots/containerlogs.png)
 - **Grafana Logs:**  
   ![Grafana Logs](screenshots/grafanalogs.png)
-- **Node Logs:**  
+- **Node App Logs:**  
   ![Node Logs](screenshots/nodelogs.png)
 - **Promtail Logs:**  
   ![Promtail Logs](screenshots/promtaillogs.png)
-- **Python Logs:**  
+- **Python App Logs:**  
   ![Python Logs](screenshots/pythonlogs.png)
 
 ## Conclusion
