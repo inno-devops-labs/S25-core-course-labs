@@ -4,3 +4,4 @@
   roles:
     - geerlingguy.docker
     - docker
+    - web_app
