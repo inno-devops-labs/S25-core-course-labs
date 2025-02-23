@@ -93,7 +93,9 @@ func setupRouter() *gin.Engine {
 	})
 
 	r.GET("/metrics", gin.WrapH(promhttp.Handler()))
-
+	r.GET("/health", func(c *gin.Context) {
+		c.Status(200)
+	})
 	return r
 }
 
