@@ -1,0 +1,33 @@
+version: "3.7"
+
+
+services:
+  loki:
+    image: grafana/loki:latest
+    command: -config.file=/etc/loki/local-config.yml
+    volumes:
+      - ./loki-config.yml:/etc/loki/local-config.yml
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - /var/log:/var/log
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./promtail-config.yml:/etc/promtail/config.yml
+      - ./promtail-positions:/var/lib/promtail/positions
+    command: -config.file=/etc/promtail/config.yml
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
+
+  app:
+    image: ksenon9/lab2:latest
+    ports:
+      - "5000:5000"
+    depends_on:
+      - loki
