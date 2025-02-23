@@ -212,7 +212,7 @@ healthcheck:
 #### **Metrics screenshots ran locally for preview**
 
 **Screenshot:**  ![metricsnodelocalexample](screenshots/metricsnodelocalexample.png)
-**Screenshot:**  ![metricspythonexample](screenshots/metricspythonexample.png)
+                ![metricspythonexample](screenshots/metricspythonexample.png)
 
 ---
 
