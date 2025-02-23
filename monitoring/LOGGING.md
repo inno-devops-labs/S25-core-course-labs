@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the logging stack implemented for Lab 7. The stack comprises three primary components—**Loki**, **Promtail**, and **Grafana**—which together enable centralized collection, storage, and visualization of container logs. In addition, the configuration has been extended (bonus task) to include an extra application for comprehensive logging across all services.
+The stack comprises three primary components—**Loki**, **Promtail**, and **Grafana**—which together enable centralized collection, storage, and visualization of container logs. In addition, the configuration has been extended (bonus task) to include an extra application for comprehensive logging across all services.
 
 ## Components
 
@@ -12,7 +12,7 @@ This document outlines the logging stack implemented for Lab 7. The stack compri
   Loki is the backend log aggregation system. It stores and indexes logs sent by Promtail, making them queryable via Grafana.
 - **Configuration:**  
   - Runs on port **3100**.
-  - Configured with a local configuration file (e.g., local-config.yaml).
+  - Configured with a local configuration file.
   - Receives logs at the endpoint: /loki/api/v1/push.
 
 ### Promtail
@@ -47,9 +47,9 @@ This document outlines the logging stack implemented for Lab 7. The stack compri
   - **Node App:** em1999jay/moscow-time-app-node:v1
   - Both are configured to use the json-file logging driver with a custom tag.
   
-    (Insert a code block here with the following content:)  
+```sh
     tag: "{{.ImageName}}|{{.Name}}"  
-    (End code block)
+```
 
   - This tagging allows Promtail to extract meaningful labels while avoiding high cardinality.
 
@@ -67,21 +67,21 @@ This document outlines the logging stack implemented for Lab 7. The stack compri
 ### Directory Structure
 
 (Sample directory tree)
-
+```sh
 S25-core-course-labss/  
 ├── monitoring/  
 │  ├── docker-compose.yml  
 │  ├── promtail.yml  
 └── LOGGING.md
-
+```
 ### Running the Stack
 
 1. **Start the Stack:**  
    Navigate to the monitoring directory and run:  
 
-   (Insert a code block here with the command:)  
+```sh
    docker-compose up  
-   (End code block)
+```
 
 2. **Verify Component Operation:**
    - **Loki:** Confirm that logs are being received on port **3100**.
@@ -94,15 +94,15 @@ S25-core-course-labss/
 Include the following screenshots in your report (update the paths if necessary):
 
 - **Container Logs:**  
-  (Insert an image block here with: ![Container Logs](screenshots/containerlogs.png))
+  ![Container Logs](screenshots/containerlogs.png)
 - **Grafana Logs:**  
-  (Insert an image block here with: ![Grafana Logs](screenshots/grafanalogs.png))
+  ![Grafana Logs](screenshots/grafanalogs.png)
 - **Node Logs:**  
-  (Insert an image block here with: ![Node Logs](screenshots/nodelogs.png))
+  ![Node Logs](screenshots/nodelogs.png)
 - **Promtail Logs:**  
-  (Insert an image block here with: ![Promtail Logs](screenshots/promtaillogs.png))
+  ![Promtail Logs](screenshots/promtaillogs.png)
 - **Python Logs:**  
-  (Insert an image block here with: ![Python Logs](screenshots/pythonlogs.png))
+  ![Python Logs](screenshots/pythonlogs.png)
 
 ## Conclusion
 
