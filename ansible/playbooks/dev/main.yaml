@@ -1,4 +1,6 @@
-- hosts: all
-  become: yes
+- name: Deploy Docker on Cloud VM
+  hosts: all
+  become: true
   roles:
-    - role: geerlingguy.docker
+    - geerlingguy.docker
+    - web_app

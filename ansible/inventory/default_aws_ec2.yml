@@ -1,12 +1,7 @@
-plugin: aws_ec2
-regions:
-  - us-east-1
-filters:
-  instance-state-name: running
-keyed_groups:
-  - key: tags.Name
-    prefix: tag
-hostnames:
-  - tag:Name
-  - dns-name
-  - private-ip-address
+all:
+  hosts:
+    instance1:
+      ansible_host: 158.160.140.144
+      ansible_user: matt
+      ansible_ssh_private_key_file: ~/.ssh/id_rsa.pub
+      ansible_ssh_common_args: '-o StrictHostKeyChecking=no'

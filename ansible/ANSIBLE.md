@@ -1,3 +1,20 @@
+# Ansible Deployment for Docker and Web App
+
+This repository contains Ansible playbooks and roles for deploying Docker and a sample web application on a cloud VM.
+
+## Setup
+
+1. Install Ansible: `sudo apt install ansible`
+2. Configure SSH keys for the cloud VM.
+3. Run the playbook: `ansible-playbook -i ansible/inventory/default_aws_ec2.yml ansible/playbooks/dev/main.yaml`
+
+## Roles
+
+- **docker**: Installs Docker and Docker Compose.
+- **web_app**: Deploys a web application using Docker Compose.
+
+
+
 ```bash
 ansible-playbook ansible/playbooks/dev/main.yaml --diff
 [WARNING]: No inventory was parsed, only implicit localhost is available
