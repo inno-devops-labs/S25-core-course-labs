@@ -6,6 +6,7 @@ networks:
 
 volumes:
   loki-storage:
+  prometheus-data:
 
 services:
   app-python:
@@ -15,6 +16,15 @@ services:
       - "8001:8001"
     networks:
       - logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    deploy:
+      resources:
+        limits:
+          memory: "500M"
 
   app-go:
     image: alekseikureikin/my-go-app:latest
@@ -23,6 +33,15 @@ services:
       - "8002:8002"
     networks:
       - logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    deploy:
+      resources:
+        limits:
+          memory: "500M"
 
   loki:
     image: grafana/loki:latest
@@ -34,6 +53,15 @@ services:
       - "3100:3100"
     networks:
       - logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    deploy:
+      resources:
+        limits:
+          memory: "500M"
 
   grafana:
     image: grafana/grafana:latest
@@ -51,3 +79,34 @@ services:
       - "3000:3000"
     networks:
       - logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    deploy:
+      resources:
+        limits:
+          memory: "500M"
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    networks:
+      - logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    deploy:
+      resources:
+        limits:
+          memory: "500M"
