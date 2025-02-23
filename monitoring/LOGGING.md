@@ -13,7 +13,7 @@ The stack comprises three primary components—**Loki**, **Promtail**, and **Gra
 - **Configuration:**  
   - Runs on port **3100**.
   - Configured with a local configuration file.
-  - Receives logs at the endpoint: /loki/api/v1/push.
+  - Receives logs at the endpoint: ```/loki/api/v1/push.```
 
 ### Promtail
 
@@ -21,12 +21,12 @@ The stack comprises three primary components—**Loki**, **Promtail**, and **Gra
   Promtail acts as a log collector. It scrapes logs from Docker containers and forwards them to Loki.
 - **Configuration Details:**
   - **Positions File:**  
-    Tracks which log entries have been processed (configured with /tmp/positions.yaml or a persistent file).
+    Tracks which log entries have been processed (configured with ```/tmp/positions.yaml```).
   - **Scrape Target:**  
-    Reads logs from /var/lib/docker/containers/*/*log.
+    Reads logs from ```/var/lib/docker/containers/*/*log```.
   - **Pipeline Stages:**  
     - Parses JSON log entries.
-    - Extracts labels (such as image_name and container_name) from the Docker logging tag formatted as {{.ImageName}}|{{.Name}}.
+    - Extracts labels (such as image_name and container_name) from the Docker logging tag formatted as ```{{.ImageName}}|{{.Name}}.```
     - Uses start_position: end to only process new log entries, avoiding the ingestion of old logs.
 
 ### Grafana
@@ -35,13 +35,13 @@ The stack comprises three primary components—**Loki**, **Promtail**, and **Gra
   Grafana is used for log visualization and analysis. It provides a dashboard to explore logs stored in Loki.
 - **Configuration Details:**
   - Auto-provisions Loki as a data source.
-  - Runs on port **4000** (accessible via <http://localhost:4000>).
+  - Runs on port **4000** (accessible via ```<http://localhost:4000>```).
   - Offers query and visualization capabilities to monitor application performance and troubleshoot issues.
 
 ## Docker Compose Configuration
 
-I created this Docker Compose file to define my entire logging stack, which includes my application containers (```sh em1999jay/python-app>```
- and ```sh em1999jay/moscow-time-app-node```), Loki, Promtail, and Grafana. I set up a custom network named "loki" and configured each service with the necessary port mappings, volume mounts, and logging options. I also used the json-file logging driver with a custom tag format ({{.ImageName}}|{{.Name}}) to ensure Promtail can extract labels efficiently.
+I created this Docker Compose file to define my entire logging stack, which includes my application containers (```em1999jay/python-app>```
+ and ```em1999jay/moscow-time-app-node```), Loki, Promtail, and Grafana. I set up a custom network named "loki" and configured each service with the necessary port mappings, volume mounts, and logging options. I also used the json-file logging driver with a custom tag format ({{.ImageName}}|{{.Name}}) to ensure Promtail can extract labels efficiently.
 
 ```yaml
 
@@ -192,8 +192,8 @@ scrape_configs:
 - **Role:**  
   These are the main application services that generate logs.
 - **Configuration Details:**
-  - **Python App:** em1999jay/python-app:latest
-  - **Node App:** em1999jay/moscow-time-app-node:v1
+  - **Python App:** ```em1999jay/python-app:latest```
+  - **Node App:** ```em1999jay/moscow-time-app-node:v1```
   - Both are configured to use the json-file logging driver with a custom tag.
   
 ```sh
@@ -236,7 +236,7 @@ S25-core-course-labss/
 
 - **Loki:** Confirm that logs are being received on port **3100**.
   - **Promtail:** Check container logs to ensure that log scraping is occurring.
-  - **Grafana:** Open your browser at <http://localhost:4000> to verify that the Loki data source is correctly configured and logs are visible.
+  - **Grafana:** Open your browser at ```<http://localhost:4000>``` to verify that the Loki data source is correctly configured and logs are visible.
   - **Extra Application:** Ensure that logs from the extra app are visible, demonstrating that the logging stack collects logs from every container.
 
 ### Screenshots
