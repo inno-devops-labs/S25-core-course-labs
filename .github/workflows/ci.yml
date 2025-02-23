@@ -29,7 +29,7 @@ jobs:
         run: |
           export PYTHONPATH=$PWD/app_python
           pytest app_python/tests/ -v      
-
+          
   docker-publish:
     runs-on: ubuntu-latest
     needs: build-test
