@@ -74,6 +74,36 @@ services:
     networks:
       - grafana-lab
     logging: *default-logging
+  
+  prometheus:
+    image: prom/prometheus:v2.45.0
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    ports:
+      - "9090:9090"
+    networks:
+      - grafana-lab
+    logging: *default-logging
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      retries: 3
+      timeout: 5s
+  
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:latest
+    container_name: nginx-exporter
+    command: -nginx.scrape-uri=http://nginx-app/nginx_status
+    ports:
+      - "9113:9113"
+    networks:
+      - grafana-lab
+    depends_on:
+      - nginx-app
+    logging: *default-logging
 
 networks:
   grafana-lab:
