@@ -1,0 +1,1 @@
+cd app_typescript && npx lint-staged
