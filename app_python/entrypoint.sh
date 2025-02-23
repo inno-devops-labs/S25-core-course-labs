@@ -4,6 +4,7 @@ _term() {
   kill -INT "$child" 2>/dev/null
 }
 
+trap _term SIGTERM
 trap _term SIGINT
 
 uvicorn \

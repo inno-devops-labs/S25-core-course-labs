@@ -5,6 +5,7 @@ _term() {
 }
 
 trap _term SIGINT
+trap _term SIGTERM
 
 npm run \
   $([ "$DEV" == 1 ] && 
