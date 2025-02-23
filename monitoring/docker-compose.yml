@@ -1,0 +1,71 @@
+version: "3"
+
+services:
+  python-app:
+    image: dexnight/moscow-time-app:latest
+    container_name: monitoring-python-app
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app/app
+      - PYTHONUNBUFFERED=1
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--log-level", "info"]
+    working_dir: /app/app
+    labels:
+      logging: "promtail"
+      logging_jobname: "containerlogs"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        tag: "{{.Name}}"
+    networks:
+      - loki
+
+  loki:
+    image: grafana/loki:2.9.0
+    container_name: monitoring-loki
+    user: "10001"
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+      - loki-data:/loki
+    networks:
+      - loki
+
+  promtail:
+    image: grafana/promtail:2.9.0
+    container_name: monitoring-promtail
+    user: root  # Добавим root права для доступа к логам
+    volumes:
+      - ./promtail-config.yaml:/etc/promtail/config.yml
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - loki
+
+  grafana:
+    image: grafana/grafana:10.2.0
+    container_name: monitoring-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - loki
+
+networks:
+  loki:
+
+volumes:
+  grafana-data:
+  loki-data:
