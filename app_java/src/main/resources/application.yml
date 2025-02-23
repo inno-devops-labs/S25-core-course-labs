@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: picker
+
+server:
+  port: 8081
+
+logging:
+  level:
+    root: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, health, info
+  metrics:
+    enable:
+      all: true
+
+  prometheus:
+    metrics:
+      export:
+        enabled: true
