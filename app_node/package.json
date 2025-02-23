@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "express": "^4.21.2",
-    "moment-timezone": "^0.5.47"
+    "moment-timezone": "^0.5.47",
+    "prom-client": "^15.1.3"
   }
 }

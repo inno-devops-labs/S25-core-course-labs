@@ -5,13 +5,14 @@ FROM node:18-alpine AS builder
 WORKDIR /app_node
 
 # Copy package.json explicitly from app_node/
-COPY app_node/package.json .  
+COPY package.json .  
 
 # Install dependencies
 RUN npm install --omit=dev
+RUN npm install prom-client
 
 # Copy the rest of the application files
-COPY app_node/ .
+COPY . .
 
 # Expose port 3000
 EXPOSE 3000

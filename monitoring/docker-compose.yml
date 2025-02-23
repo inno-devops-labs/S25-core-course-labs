@@ -4,7 +4,7 @@ networks:
   loki:
 
 services:
-  Python-app:
+  python-app:
     image: "em1999jay/python-app:latest"
     ports:
       - "5000:5000"
@@ -14,9 +14,25 @@ services:
         max-size: "100m"
         max-file: "10"
         tag: "{{.ImageName}}|{{.Name}}"
+    networks:
+      - loki        
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import flask; print('Flask is installed')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+          resources:
+            limits:
+              memory: 512M
+            reservations:
+              memory: 256M
 
-  Node-app:
-    image: "em1999jay/moscow-time-app-node:v1"
+
+
+  node-app:
+    image: "em1999jay/node-moscow-time:latest"
     ports:
       - "3000:3000"
     logging:
@@ -25,6 +41,20 @@ services:
         max-size: "100m"
         max-file: "10"
         tag: "{{.ImageName}}|{{.Name}}"
+    networks:
+      - loki
+    healthcheck:
+      test: ["CMD", "pgrep", "-x", "node"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+          resources:
+            limits:
+              memory: 512M
+            reservations:
+              memory: 256M
 
   loki:
     image: grafana/loki:latest
@@ -39,6 +69,12 @@ services:
         max-size: "100m"
         max-file: "10"
         tag: "{{.ImageName}}|{{.Name}}"
+    deploy:
+          resources:
+            limits:
+              memory: 512M
+            reservations:
+              memory: 256M
 
   promtail:
     image: grafana/promtail:latest
@@ -55,6 +91,12 @@ services:
         max-size: "100m"
         max-file: "10"
         tag: "{{.ImageName}}|{{.Name}}"
+    deploy:
+          resources:
+            limits:
+              memory: 512M
+            reservations:
+              memory: 256M
 
   grafana:
     environment:
@@ -92,3 +134,29 @@ services:
         max-size: "100m"
         max-file: "10"
         tag: "{{.ImageName}}|{{.Name}}"
+    deploy:
+          resources:
+            limits:
+              memory: 512M
+            reservations:
+              memory: 256M
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+    deploy:
+          resources:
+            limits:
+              memory: 512M
+            reservations:
+              memory: 256M
