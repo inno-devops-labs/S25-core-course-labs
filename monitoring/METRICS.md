@@ -1,5 +1,3 @@
-# **METRICS.md**
-
 ## **Lab 8: Monitoring with Prometheus**
 
 ### **Overview**
