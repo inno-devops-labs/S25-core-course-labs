@@ -1,5 +1,6 @@
 from datetime import datetime, timezone, timedelta
 from flask import Flask, render_template
+from prometheus_flask_exporter import PrometheusMetrics
 
 app = Flask(
     __name__,
@@ -7,9 +8,21 @@ app = Flask(
     static_folder="resources/static"
 )
 
+metrics = PrometheusMetrics(app)
+
 # Moscow time zone is UTC+3
 TIMEZONE = 3
 DATE_FORMAT = "%a %b %d %H:%M:%S %Y"
+
+# Serve status to Prometheus
+@app.route('/status/<int:status>')
+@metrics.do_not_track()
+@metrics.summary('requests_by_status', 'Request latencies by status',
+                 labels={'status': lambda r: r.status_code})
+@metrics.histogram('requests_by_status_and_path', 'Request latencies by status and path',
+                   labels={'status': lambda r: r.status_code, 'path': lambda: request.path})
+def echo_status(status):
+    return 'Status: %s' % status, status
 
 # The main page serves time in Moscow
 @app.route("/")

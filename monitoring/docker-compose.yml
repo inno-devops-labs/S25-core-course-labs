@@ -15,8 +15,6 @@ services:
         condition: service_started
       python_app:
         condition: service_started
-      c_app:
-        condition: service_started
     deploy:
       resources:
         limits:
@@ -95,10 +93,3 @@ services:
       - "8000:8000"
     networks:
       - monitoring
-  
-  c_app:
-    image: tedor49/c_msk_time:latest 
-    ports:
-      - "8888:8000"
-    networks:
-      - monitoring 
