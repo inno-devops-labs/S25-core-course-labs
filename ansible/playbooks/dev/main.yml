@@ -1,0 +1,7 @@
+- name: Deploy Container
+  hosts: all
+  become: true
+  roles:
+      - ../../roles/web_app
+      # - ../../roles/docker
+    # - geerlingguy.docker
