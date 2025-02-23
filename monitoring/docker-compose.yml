@@ -1,68 +1,63 @@
 version: "3.8"
 
 networks:
-  default:
-   name: loki
+  loki:
+   
+x-logging:
+  &default-logging
+  driver: "json-file"
+  options:
+    max-size: "10m"
+    max-file: "10"
+    tag: "{{.ImageName}}|{{.Name}}"
 
+x-deploy:
+  &default-deploy
+  resources:
+    limits:
+      memory: 100M
 
 services:
 
   app_python:
-    image: dehopen/app_python:latest
+    image: dehopen/app_python:latest_metrics
     ports:
-      - "8080:5000"
+      - "8080:6000"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080"]
       interval: 10s
       timeout: 5s
       retries: 3
-    logging:
-      driver: json-file
-      options:
-        tag: app_python
-        max-size: "10m"
-        max-file: "10"
-    
-  app_js:
-    image: dehopen/app_js:latest
+    logging: *default-logging
+    deploy: *default-deploy
+    networks:
+      - loki
+
+  app_flutter:
+    image: dehopen/app_js:latest_metrics
     ports:
-      - "80:80"
+      - "80:8080"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost"]
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
       interval: 10s
       timeout: 5s
       retries: 3
-    logging:
-      driver: json-file
-      options:
-        tag: app_js
-        max-size: "10m"
-        max-file: "10"
+    logging: *default-logging
+    deploy: *default-deploy
+    networks:
+      - loki 
+
 
   loki:
     image: grafana/loki:2.9.2
     ports:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
-    logging:
-      driver: json-file
-      options:
-        tag: loki
-        max-size: "10m"
-        max-file: "10"
+    logging: *default-logging
+    deploy: *default-deploy
+    networks:
+      - loki
 
-  promtail:
-    image: grafana/promtail:2.9.2
-    volumes:
-      - ./promtail.yml:/etc/promtail/config.yml
-      - /var/lib/docker/containers:/var/lib/docker/containers
-    command: -config.file=/etc/promtail/config.yml
-    logging:
-      driver: json-file
-      options:
-        tag: promtail
-        max-size: "10m"
-        max-file: "10"
 
   grafana:
     environment:
@@ -91,9 +86,32 @@ services:
     image: grafana/grafana:latest
     ports:
       - "3000:3000"
-    logging:
-      driver: json-file
-      options:
-        tag: grafana
-        max-size: "10m"
-        max-file: "10"
+    logging: *default-logging
+    deploy: *default-deploy
+    networks:
+      - loki
+
+
+  prometheus:
+    image: prom/prometheus:v2.51.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    logging: *default-logging
+    deploy: *default-deploy
+    networks:
+      - loki
+
+  promtail:
+    image: grafana/promtail:2.9.2
+    volumes:
+      - ./promtail.yml:/etc/promtail/config.yml
+      - /var/lib/docker/containers:/var/lib/docker/containers
+    command: -config.file=/etc/promtail/config.yml
+    logging: *default-logging
+    deploy: *default-deploy
+    networks:
+      - loki
