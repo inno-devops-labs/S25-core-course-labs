@@ -1,0 +1,17 @@
+---
+- name: Pull Docker image
+  docker_image:
+    name: "{{ app_image }}"
+    source: pull
+    force_source: yes
+
+- name: Create and start container
+  docker_container:
+    name: "{{ app_container_name }}"
+    image: "{{ app_image }}"
+    state: started
+    restart_policy: unless-stopped
+    ports:
+      - "{{ app_external_port }}:{{ app_port }}"
+    env:
+      TZ: "Europe/Moscow" 
