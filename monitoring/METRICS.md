@@ -62,6 +62,25 @@ I have extended the metric gathering to include other services.
 
 ## Bonus Task
 
+### - App Metric and How to obtain it
+
+For the Python web application, I have implemented two custom Prometheus metrics:
+
+1. `http_requests_total`: A counter that tracks the total number of HTTP requests made to the application
+
+These metric can be obtained by:
+
+1. Making requests to the application endpoints
+2. Accessing the `/metrics` endpoint at `http://localhost:8000/metrics`
+
+The metric is implemented using the `prometheus_client` library with the following details:
+
+- The metric is defined as Counter types, which only increase over time and are ideal for tracking cumulative values like request counts
+- The counter is incremented in the main endpoint handler using the `.inc()` method
+- The metrics endpoint is automatically created and mounted using `make_asgi_app()` from prometheus_client
+
+The metrics data is automatically scraped by Prometheus based on the configuration in prometheus.yml, making it available for querying and visualization.
+
 ### - Adding healthchecks
 
 I have added healthchecks to all services to ensure they are running properly:
