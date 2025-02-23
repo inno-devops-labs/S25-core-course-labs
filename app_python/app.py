@@ -2,7 +2,6 @@ from flask import Flask
 from datetime import datetime
 import pytz
 import logging
-import json
 from pythonjsonlogger import jsonlogger
 
 
