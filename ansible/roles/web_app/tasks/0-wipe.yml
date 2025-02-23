@@ -1,0 +1,25 @@
+- name: Clean up previous application deployment
+  block:
+    - name: Check if application directory exists
+      stat:
+        path: "{{ app_base_dir }}"
+      register: app_dir_status
+
+    - name: Check if compose file exists
+      stat:
+        path: "{{ app_base_dir }}/{{ compose_filename }}"
+      register: compose_file_status
+
+    - name: Shut down any running containers and remove images
+      when: compose_file_status.stat.exists
+      command: docker compose down --remove-orphans --rmi all
+      args:
+        chdir: "{{ app_base_dir }}"
+
+    - name: Delete the application directory if it exists
+      when: app_dir_status.stat.exists
+      file:
+        path: "{{ app_base_dir }}"
+        state: absent
+  tags: [cleanup]
+  when: remove_app
