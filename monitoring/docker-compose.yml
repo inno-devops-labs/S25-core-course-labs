@@ -16,6 +16,11 @@ services:
     mem_limit: 512m
     networks:
       - loki_net
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   loki:
     image: grafana/loki:latest
@@ -31,6 +36,11 @@ services:
     mem_limit: 512m
     networks:
       - loki_net
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3100/ready"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
   
   promtail:
     image: grafana/promtail:2.9.3
@@ -89,6 +99,11 @@ services:
     mem_limit: 512m
     networks:
       - loki_net
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   python-web-app: 
     image: haidarjbeily/distroless-moscow-time-app:latest
@@ -105,6 +120,11 @@ services:
         max-size: "10m"
         max-file: "3"
     mem_limit: 256m
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   rust-web-app:
     image: haidarjbeily/distroless-random-quote-app:latest
@@ -121,6 +141,11 @@ services:
         max-size: "10m"
         max-file: "3"
     mem_limit: 256m
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 networks:
   loki_net:

@@ -60,4 +60,45 @@ I have extended the metric gathering to include other services.
 
 ![Metrics](screenshots/extended_metric_gathering.png)
 
+## Bonus Task
 
+### - Adding healthchecks
+
+I have added healthchecks to all services to ensure they are running properly:
+
+1. Prometheus:
+
+   - Endpoint: `http://localhost:9090/-/healthy`
+   - Interval: 30s
+   - Timeout: 10s
+   - Retries: 3
+
+2. Loki:
+
+   - Endpoint: `http://localhost:3100/ready`
+   - Interval: 30s
+   - Timeout: 10s
+   - Retries: 3
+
+3. Grafana:
+
+   - Endpoint: `http://localhost:3000/api/health`
+   - Interval: 30s
+   - Timeout: 10s
+   - Retries: 3
+
+4. Python Web App:
+
+   - Endpoint: `http://localhost:8000`
+   - Interval: 30s
+   - Timeout: 10s
+   - Retries: 3
+
+5. Rust Web App:
+
+   - Endpoint: `http://localhost:8080`
+   - Interval: 30s
+   - Timeout: 10s
+   - Retries: 3
+
+All healthchecks use wget to make HTTP requests to the respective service endpoints. If a service becomes unhealthy, Docker will mark it accordingly and take appropriate action based on the restart policy.
