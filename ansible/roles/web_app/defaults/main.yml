@@ -1,0 +1,5 @@
+---
+app_directory: /opt/web_app
+docker_image: "{{ lookup('env', 'DOCKERHUB_USERNAME') }}/python-moscow-time:latest"
+app_port: 3000
+web_app_full_wipe: false
