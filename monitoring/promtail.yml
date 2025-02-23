@@ -10,26 +10,13 @@ clients:
   - url: http://loki:3100/loki/api/v1/push
 
 scrape_configs:
-  - job_name: system-logs
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: system-logs
-          __path__: /var/log/*.log
-
-  - job_name: app_python
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: app_python
-          __path__: /var/log/app_python.log
-
-  - job_name: app_js
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: app_js
-          __path__: /var/log/app_js.log
+  - job_name: docker
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+    relabel_configs:
+      - source_labels: ['__meta_docker_container_name']
+        regex: '/(.*)'
+        target_label: 'container'
+      - source_labels: ['__meta_docker_container_log_stream']
+        target_label: 'logstream'
