@@ -1,0 +1,5 @@
+.pytest_cache
+terraform/yandex_cloud/cloud_id
+terraform/yandex_cloud/folder_id
+terraform/yandex_cloud/iam_token
+terraform/yandex_cloud/key.json
