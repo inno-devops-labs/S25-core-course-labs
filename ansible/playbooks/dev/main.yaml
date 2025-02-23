@@ -1,0 +1,5 @@
+- name: Configure and Deploy Docker
+  hosts: all
+  become: true
+  roles:
+    - docker
