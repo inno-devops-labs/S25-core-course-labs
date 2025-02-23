@@ -1,0 +1,5 @@
+- name: restart app container
+  listen: restart_app
+  command: "docker compose up -d"
+  args:
+    chdir: "{{ app_base_dir }}"

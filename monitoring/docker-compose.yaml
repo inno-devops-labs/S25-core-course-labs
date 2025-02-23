@@ -1,0 +1,110 @@
+x-logging:
+  &default-logging
+  driver: "json-file"
+  options:
+    max-size: "1m"
+    max-file: "1"
+    tag: "{{.Name}}"
+
+services:
+  nginx-app:
+    container_name: nginx-app
+    image: nginx
+    labels:
+      logging: "promtail"
+      logging_jobname: "containerlogs"
+    ports:
+      - 8888:80
+    networks:
+      - grafana-lab
+    logging: *default-logging
+
+  grafana:
+    image: grafana/grafana:11.2.0
+    container_name: grafana
+    ports:
+      - 3000:3000/tcp
+    volumes:
+      - ./grafana/datasources/grafana.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+      - ./grafana/plugins/app.yaml:/etc/grafana/provisioning/plugins/app.yaml
+      - ./grafana/plugins/data:/var/lib/grafana/plugins
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+      - GF_FEATURE_TOGGLES_ENABLE=accessControlOnCall lokiLogsDataplane
+      - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=grafana-lokiexplore-app
+      #- GF_INSTALL_PLUGINS=https://storage.googleapis.com/integration-artifacts/grafana-lokiexplore-app/grafana-lokiexplore-app-latest.zip;grafana-lokiexplore-app
+    networks:
+      - grafana-lab
+    logging: *default-logging
+
+  loki:
+    image: grafana/loki:3.0.0
+    container_name: loki
+    ports:
+      - 3100:3100
+    command: -config.file=/etc/loki/loki-config.yaml
+    volumes:
+      - ./loki-config.yaml:/etc/loki/loki-config.yaml
+    networks:
+      - grafana-lab
+    logging: *default-logging
+
+  promtail:
+    image:  grafana/promtail:3.0.0
+    container_name: promtail
+    volumes:
+      - ./promtail-config.yaml:/etc/promtail/docker-config.yaml
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -config.file=/etc/promtail/docker-config.yaml
+    depends_on:
+      - loki
+    networks:
+      - grafana-lab
+    logging: *default-logging
+
+  log-generator:
+    image: us-docker.pkg.dev/grafanalabs-global/docker-explore-logs-prod/fake-log-generator:latest
+    container_name: log-generator
+    command: -url http://loki:3100/loki/api/v1/push
+    depends_on:
+      - loki
+    networks:
+      - grafana-lab
+    logging: *default-logging
+  
+  prometheus:
+    image: prom/prometheus:v2.45.0
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    ports:
+      - "9090:9090"
+    networks:
+      - grafana-lab
+    logging: *default-logging
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      retries: 3
+      timeout: 5s
+  
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:latest
+    container_name: nginx-exporter
+    command: -nginx.scrape-uri=http://nginx-app/nginx_status
+    ports:
+      - "9113:9113"
+    networks:
+      - grafana-lab
+    depends_on:
+      - nginx-app
+    logging: *default-logging
+
+networks:
+  grafana-lab:
+    name: grafana-lab
