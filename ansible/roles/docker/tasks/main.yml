@@ -1,0 +1,34 @@
+- name: Install Docker
+  include_tasks: install_docker.yml
+
+- name: Install Docker Compose
+  include_tasks: install_compose.yml
+
+- name: Enable and Start Docker Service
+  systemd:
+    name: docker
+    enabled: yes
+    state: started
+
+- name: Add user to Docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
+
+- name: Configure Docker daemon (User Namespace Remap)
+  copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "userns-remap": "default"
+      }
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart Docker
+
+- name: Restart Docker
+  systemd:
+    name: docker
+    state: restarted
