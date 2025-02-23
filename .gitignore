@@ -1,0 +1,6 @@
+.history
+.vscode
+.terraform*
+terraform.*
+.venv
+loki-data
