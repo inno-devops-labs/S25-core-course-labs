@@ -40,6 +40,6 @@ Promtail is lightweight, efficient, and specifically optimized for use with Loki
 
 ![promtail](photos/promtail_photo.png)
 
-### app_typescript
+### app_php
 
-![app_typescript](photos/php_photo.png)
+![app_php](photos/php_photo.png)
