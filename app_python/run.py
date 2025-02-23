@@ -1,6 +1,9 @@
 from datetime import datetime
 import pytz
-from flask import Flask, render_template
+from flask import Flask, render_template, Response
+from prometheus_client import Counter, generate_latest
+
+METRIC_REQUESTS = Counter("app_requests_total", "Total Requests")
 
 
 def create_app():
@@ -9,6 +12,11 @@ def create_app():
 
 
 app = create_app()
+
+
+@app.route('/metrics')
+def metrics():
+    return Response(generate_latest(), mimetype="text/plain")
 
 
 @app.route('/')
