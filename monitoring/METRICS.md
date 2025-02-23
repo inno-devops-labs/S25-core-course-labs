@@ -1,14 +1,36 @@
-# Monitoring Setup Documentation
+# Monitoring
 
-## Prometheus Setup
+## Task 1
 
-### Components Overview
+I have added Prometheus monitoring with the following configuration:
 
-- Prometheus: Metrics collection and storage
-- Loki: Log aggregation
-- Grafana: Visualization platform
+- Running on port 9090
+- Using the official `prom/prometheus:latest` image
+- Configured with a memory limit of 512MB
+- Mounted prometheus.yml configuration file which scrapes metrics from:
+  - Prometheus itself (localhost:9090)
+  - Loki (port 3100)
+  - Python web app (port 8000)
+  - Grafana (port 3000)
+  - Promtail (port 9080)
 
-### Configuration Details
+You can verify Prometheus is running correctly by checking the screenshot.
+
+![Prometheus Running](screenshots/prometheus-running.png)
+
+## Task 2
+
+### - Setup Dashboard
+
+- Loki Dashboard
+
+![Loki Dashboard](screenshots/loki-dash.png)
+
+- Prometheus Dashboard
+
+![Prometheus Dashboard](screenshots/prometheus-dashboard.png)
+
+### - Configuration Details
 
 1. Prometheus is configured to scrape metrics from:
 
@@ -32,24 +54,10 @@
    - Using json-file logging driver
    - Custom tags for Python and Rust apps
 
-### Grafana Dashboards
+### - Metric Gathering
 
-1. Loki Dashboard:
+I have extended the metric gathering to include other services.
 
-   - Using template ID 13407
-   - Configured for log visualization
-   - [Screenshot of Loki dashboard]
+![Metrics](screenshots/extended_metric_gathering.png)
 
-2. Prometheus Dashboard:
-   - Using template ID 3662
-   - Configured for metrics visualization
-   - [Screenshot of Prometheus dashboard]
 
-### Verification Steps
-
-1. Access Prometheus targets at `http://localhost:9090/targets`
-2. Access Grafana at `http://localhost:3000`
-   - Username: admin
-   - Password: admin
-
-[Include screenshots of Prometheus targets page and Grafana dashboards here]
