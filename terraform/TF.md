@@ -607,3 +607,226 @@ github_repository.repository: Destruction complete after 2s
 
 Destroy complete! Resources: 3 destroyed.
 ```
+
+```
+terraform init
+Initializing the backend...
+Initializing provider plugins...
+- Finding integrations/github versions matching "~> 4.0"...
+- Installing integrations/github v4.31.0...
+- Installed integrations/github v4.31.0 (signed by a HashiCorp partner, key ID 38027F80D7FD5FB2)
+Partner and community providers are signed by their developers.
+If you'd like to know more about provider signing, you can read about it here:
+https://www.terraform.io/docs/cli/plugins/signing.html
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+```
+
+```
+terraform import "github_repository.repository" "S25-core-course-labs"
+var.token
+  Token for GitHub
+
+  Enter a value: 
+
+github_repository.repository: Importing from ID "S25-core-course-labs"...
+github_repository.repository: Import prepared!
+  Prepared github_repository for import
+github_repository.repository: Refreshing state... [id=S25-core-course-labs]
+
+Import successful!
+
+The resources that were imported are shown above. These resources are now in
+your Terraform state and will henceforth be managed by Terraform.
+```
+
+```
+terraform plan
+var.token
+  Token for GitHub
+
+  Enter a value: 
+
+github_repository.repository: Refreshing state... [id=S25-core-course-labs]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # github_branch_default.default_branch will be created
+  + resource "github_branch_default" "default_branch" {
+      + branch     = "master"
+      + id         = (known after apply)
+      + repository = "S25-core-course-labs"
+    }
+
+  # github_branch_protection.default_branch_protection will be created
+  + resource "github_branch_protection" "default_branch_protection" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + blocks_creations                = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + pattern                         = "master"
+      + repository_id                   = "S25-core-course-labs"
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + required_approving_review_count = 1
+        }
+    }
+
+  # github_repository.repository will be updated in-place
+  ~ resource "github_repository" "repository" {
+      + description                 = "Repository for the S25 core course labs"
+      - has_downloads               = true -> null
+      - has_projects                = true -> null
+      - has_wiki                    = true -> null
+        id                          = "S25-core-course-labs"
+        name                        = "S25-core-course-labs"
+        # (29 unchanged attributes hidden)
+    }
+
+Plan: 2 to add, 1 to change, 0 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform
+apply" now.
+```
+
+```
+terraform apply
+var.token
+  Token for GitHub
+
+  Enter a value: 
+
+github_repository.repository: Refreshing state... [id=S25-core-course-labs]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # github_branch_default.default_branch will be created
+  + resource "github_branch_default" "default_branch" {
+      + branch     = "master"
+      + id         = (known after apply)
+      + repository = "S25-core-course-labs"
+    }
+
+  # github_branch_protection.default_branch_protection will be created
+  + resource "github_branch_protection" "default_branch_protection" {
+      + allows_deletions                = false
+      + allows_force_pushes             = false
+      + blocks_creations                = false
+      + enforce_admins                  = true
+      + id                              = (known after apply)
+      + pattern                         = "master"
+      + repository_id                   = "S25-core-course-labs"
+      + require_conversation_resolution = true
+      + require_signed_commits          = false
+      + required_linear_history         = false
+
+      + required_pull_request_reviews {
+          + required_approving_review_count = 1
+        }
+    }
+
+  # github_repository.repository will be updated in-place
+  ~ resource "github_repository" "repository" {
+      + description                 = "Repository for the S25 core course labs"
+      - has_downloads               = true -> null
+      - has_projects                = true -> null
+      - has_wiki                    = true -> null
+        id                          = "S25-core-course-labs"
+        name                        = "S25-core-course-labs"
+        # (29 unchanged attributes hidden)
+    }
+
+Plan: 2 to add, 1 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_repository.repository: Modifying... [id=S25-core-course-labs]
+github_repository.repository: Modifications complete after 2s [id=S25-core-course-labs]
+github_branch_default.default_branch: Creating...
+github_branch_protection.default_branch_protection: Creating...
+github_branch_default.default_branch: Creation complete after 3s [id=S25-core-course-labs]
+╷
+│ Error: Your token has not been granted the required scopes to execute this query. The 'id' field requires one of the following scopes: ['read:org', 'read:discussion'], but your token has only been granted the: ['repo', 'workflow'] scopes. Please modify your token's scopes at: https://github.com/settings/tokens.
+│ 
+│   with github_branch_protection.default_branch_protection,
+│   on main.tf line 25, in resource "github_branch_protection" "default_branch_protection":
+│   25: resource "github_branch_protection" "default_branch_protection" {
+```
+
+```
+terraform apply
+var.token
+  Token for GitHub
+
+  Enter a value: 
+
+github_repository.repository: Refreshing state... [id=S25-core-course-labs]
+github_branch_default.default_branch: Refreshing state... [id=S25-core-course-labs]
+github_branch_protection.default_branch_protection: Refreshing state... [id=BPR_kwDON9-MJc4DkxOJ]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+  # github_branch_protection.default_branch_protection is tainted, so must be replaced
+-/+ resource "github_branch_protection" "default_branch_protection" {
+      ~ id                              = "BPR_kwDON9-MJc4DkxOJ" -> (known after apply)
+      - push_restrictions               = [] -> null
+        # (9 unchanged attributes hidden)
+
+      ~ required_pull_request_reviews {
+          - dismiss_stale_reviews           = false -> null
+          - dismissal_restrictions          = [] -> null
+          - pull_request_bypassers          = [] -> null
+          - require_code_owner_reviews      = false -> null
+          - restrict_dismissals             = false -> null
+            # (1 unchanged attribute hidden)
+        }
+    }
+
+Plan: 1 to add, 0 to change, 1 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+github_branch_protection.default_branch_protection: Destroying... [id=BPR_kwDON9-MJc4DkxOJ]
+github_branch_protection.default_branch_protection: Destruction complete after 1s
+github_branch_protection.default_branch_protection: Creating...
+github_branch_protection.default_branch_protection: Creation complete after 5s [id=BPR_kwDON9-MJc4DkxQ5]
+
+Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
+```
