@@ -1,0 +1,13 @@
+galaxy_info:
+  author: "Mohammad Safi"
+  description: "Ansible role to deploy a Docker-based web application."
+  company: "Safi"
+  license: "MIT"
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+
+dependencies:
+  - role: docker
