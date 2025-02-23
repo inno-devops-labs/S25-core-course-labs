@@ -1,0 +1,17 @@
+{
+  "name": "app_node",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2",
+    "moment-timezone": "^0.5.47",
+    "prom-client": "^15.1.3"
+  }
+}
