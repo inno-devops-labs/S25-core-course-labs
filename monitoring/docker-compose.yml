@@ -1,5 +1,3 @@
-version: "3.3"
-
 networks:
   loki:
 
@@ -18,6 +16,7 @@ services:
       - /var/log:/var/log
       - ./promtail.yml:/etc/promtail/config.yml
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/lib/promtail/positions:/var/lib/promtail/positions
     command: -config.file=/etc/promtail/config.yml
     networks:
       - loki
