@@ -1,0 +1,12 @@
+---
+- name: Deploy Node.js Moscow Time Web Application
+  hosts: all
+  become: yes
+  
+  roles:
+    - role: web_app
+      vars:
+        docker_image: dantetemplar/nodejs-time-webapp:latest
+        app_port: 8001  # Changed port to avoid conflict
+        app_name: nodejs_time_webapp
+        container_name: "{{ app_name }}_container"
