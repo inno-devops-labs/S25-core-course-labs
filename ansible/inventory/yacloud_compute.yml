@@ -1,0 +1,6 @@
+plugin: yacloud_compute
+yacloud_token_file: "inventory/auth_token"
+yacloud_clouds:
+  - "cloud-d3mak0der5"
+yacloud_folders:
+  - "default"
