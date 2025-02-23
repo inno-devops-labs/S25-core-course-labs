@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "canvas": "^3.1.0",
+    "eslint": "^9.19.0",
+    "globals": "^15.14.0",
+    "jest": "^29.7.0",
+    "jsdom": "^26.0.0"
+  },
+  "scripts": {
+    "test": "jest",
+    "lint": "npx eslint ."
+  }
+}
