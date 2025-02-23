@@ -35,7 +35,7 @@ The stack comprises three primary components—**Loki**, **Promtail**, and **Gra
   Grafana is used for log visualization and analysis. It provides a dashboard to explore logs stored in Loki.
 - **Configuration Details:**
   - Auto-provisions Loki as a data source.
-  - Runs on port **4000** (accessible via ```<http://localhost:4000>```).
+  - Runs on port **4000** (accessible via ```http://localhost:4000```).
   - Offers query and visualization capabilities to monitor application performance and troubleshoot issues.
 
 ## Docker Compose Configuration
@@ -236,7 +236,7 @@ S25-core-course-labss/
 
 - **Loki:** Confirm that logs are being received on port **3100**.
   - **Promtail:** Check container logs to ensure that log scraping is occurring.
-  - **Grafana:** Open your browser at ```<http://localhost:4000>``` to verify that the Loki data source is correctly configured and logs are visible.
+  - **Grafana:** Open your browser at ```http://localhost:4000``` to verify that the Loki data source is correctly configured and logs are visible.
   - **Extra Application:** Ensure that logs from the extra app are visible, demonstrating that the logging stack collects logs from every container.
 
 ### Screenshots
