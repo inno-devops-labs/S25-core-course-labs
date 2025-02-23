@@ -1,6 +1,7 @@
 const express = require('express');
 const moment = require('moment-timezone');
 const winston = require('winston');
+const promClient = require('prom-client');
 
 const app = express();
 const port = 3000;
@@ -17,6 +18,22 @@ const logger = winston.createLogger({
     ]
 });
 
+// Configure Prometheus metrics
+const collectDefaultMetrics = promClient.collectDefaultMetrics;
+collectDefaultMetrics();
+
+const requestCounter = new promClient.Counter({
+    name: 'nodejs_http_requests_total',
+    help: 'Total number of HTTP requests',
+    labelNames: ['method', 'route', 'status']
+});
+
+const requestDuration = new promClient.Histogram({
+    name: 'nodejs_http_request_duration_seconds',
+    help: 'Duration of HTTP requests in seconds',
+    labelNames: ['method', 'route']
+});
+
 // Middleware for logging requests
 app.use((req, res, next) => {
     const start = Date.now();
@@ -28,6 +45,8 @@ app.use((req, res, next) => {
             statusCode: res.statusCode,
             duration: `${duration}ms`
         });
+        requestCounter.inc({ method: req.method, route: req.path, status: res.statusCode });
+        requestDuration.observe({ method: req.method, route: req.path }, duration / 1000);
     });
     next();
 });
@@ -88,6 +107,16 @@ app.get('/', (req, res) => {
 app.get('/health', (req, res) => {
     logger.info('Health check requested');
     res.status(200).json({ status: 'healthy' });
+});
+
+// Metrics endpoint
+app.get('/metrics', async (req, res) => {
+    try {
+        res.set('Content-Type', promClient.register.contentType);
+        res.end(await promClient.register.metrics());
+    } catch (err) {
+        res.status(500).end(err);
+    }
 });
 
 if (require.main === module) {

@@ -1,9 +1,11 @@
-from flask import Flask, render_template_string, request
+from flask import Flask, render_template_string, request, jsonify
 from datetime import datetime
 import pytz
 import os
 import logging
 import sys
+from prometheus_client import Counter, Histogram, make_wsgi_app
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
 app = Flask(__name__)
 
@@ -57,6 +59,9 @@ HTML_TEMPLATE = '''
 </html>
 '''
 
+# Prometheus metrics
+REQUEST_COUNT = Counter('app_request_count', 'Total number of requests', ['endpoint'])
+REQUEST_LATENCY = Histogram('app_request_latency_seconds', 'Request latency in seconds', ['endpoint'])
 
 @app.before_request
 def log_request():
@@ -72,21 +77,30 @@ def log_response(response):
 
 @app.route('/')
 def index():
-    moscow_tz = pytz.timezone('Europe/Moscow')
-    moscow_time = datetime.now(moscow_tz)
+    REQUEST_COUNT.labels(endpoint='/').inc()
+    with REQUEST_LATENCY.labels(endpoint='/').time():
+        moscow_tz = pytz.timezone('Europe/Moscow')
+        moscow_time = datetime.now(moscow_tz)
 
-    time_str = moscow_time.strftime('%H:%M:%S')
-    date_str = moscow_time.strftime('%B %d, %Y')
+        time_str = moscow_time.strftime('%H:%M:%S')
+        date_str = moscow_time.strftime('%B %d, %Y')
 
-    logger.info(f"Generated Moscow time: {time_str} and date: {date_str}")
-    return render_template_string(HTML_TEMPLATE, time=time_str, date=date_str)
+        logger.info(f"Generated Moscow time: {time_str} and date: {date_str}")
+        return render_template_string(HTML_TEMPLATE, time=time_str, date=date_str)
 
 
 @app.route('/health')
 def health():
-    logger.info("Health check endpoint called")
-    return {"status": "healthy", "timestamp": datetime.now().isoformat()}
+    REQUEST_COUNT.labels(endpoint='/health').inc()
+    with REQUEST_LATENCY.labels(endpoint='/health').time():
+        logger.info("Health check endpoint called")
+        return jsonify({"status": "healthy", "timestamp": datetime.now().isoformat()})
 
+
+# Add prometheus wsgi middleware
+app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
+    '/metrics': make_wsgi_app()
+})
 
 if __name__ == '__main__':
     logger.info("Starting Moscow Time application")
