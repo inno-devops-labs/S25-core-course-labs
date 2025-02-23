@@ -6,7 +6,8 @@ networks:
 x-logging: &default-logging
   driver: "json-file"
   options:
-    tag: "{{.ImageName}}|{{.Name}}"
+    max-size: "10m"
+    max-file: "3"
 
 services:
   loki:
@@ -17,6 +18,9 @@ services:
     networks:
       - loki
     logging: *default-logging
+    labels:
+      - "prometheus.io/scrape=true"
+      - "prometheus.io/port=3100"
 
   promtail:
     image: grafana/promtail:2.9.2
@@ -51,15 +55,33 @@ services:
           access: proxy
           orgId: 1
           url: http://loki:3100
-          basicAuth: false
           isDefault: true
-          version: 1
-          editable: false
         EOF
         /run.sh
 
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - loki
+    depends_on:
+      - loki
+      - app
+
   app:
     image: vechkanovvv/app_python:v1
+    ports:
+      - "8000:8000"
     networks:
       - loki
     logging: *default-logging
+    labels:
+      - "prometheus.io/scrape=true"
+      - "prometheus.io/port=8000"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
