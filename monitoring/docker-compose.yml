@@ -1,5 +1,18 @@
 version: "3.3"
 
+x-logging:
+  &default-logging
+  driver: "json-file"
+  options:
+    max-size: "200k"
+    max-file: "10"
+
+x-deploy:
+  &default-deploy
+  resources:
+    limits:
+      memory: 512M
+
 networks:
   loki:
 
@@ -12,6 +25,13 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     networks:
       - loki
+    logging: *default-logging
+    deploy: *default-deploy
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:3100/ready || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
 
   promtail:
     container_name: promtail
@@ -22,6 +42,13 @@ services:
     command: -config.file=/etc/promtail/config.yml
     networks:
       - loki
+    logging: *default-logging
+    deploy: *default-deploy
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:1080/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
 
   grafana:
     container_name: grafana
@@ -54,6 +81,13 @@ services:
       - "3000:3000"
     networks:
       - loki
+    logging: *default-logging
+    deploy: *default-deploy
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:3000 || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
 
   time-app-py:
     container_name: time-app-py
@@ -61,3 +95,29 @@ services:
     image: unileonid/time-app-py:latest
     ports:
       - "8080:8080"
+    networks:
+      - loki
+    logging: *default-logging
+    deploy: *default-deploy
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:8080 || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - loki
+    logging: *default-logging
+    deploy: *default-deploy
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:9090 || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
