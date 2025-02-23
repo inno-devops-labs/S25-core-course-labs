@@ -1,0 +1,14 @@
+- name: Create app directory
+  file:
+    path: "/home/ubuntu/{{ app_name }}"
+    state: directory
+
+- name: Copy Docker Compose template
+  template:
+    src: "docker-compose.yml.j2"
+    dest: "/home/ubuntu/{{ app_name }}/docker-compose.yml"
+
+- name: Start application using Docker Compose
+  command:
+    cmd: "docker-compose -f /home/ubuntu/{{ app_name }}/docker-compose.yml up -d"
+    chdir: "/home/ubuntu/{{ app_name }}"
