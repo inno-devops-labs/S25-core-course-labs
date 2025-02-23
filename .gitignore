@@ -5,6 +5,7 @@ venv/
 *.pyd
 *.db
 *.sqlite3
+*.zip
 app.log
 .env
 
@@ -48,3 +49,6 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# grafana plugins
+monitoring/grafana/plugins/data/*
