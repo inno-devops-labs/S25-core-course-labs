@@ -14,6 +14,15 @@
         - data:/loki
       networks:
         - loki
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "120m"
+          max-file: "3"
+      deploy:
+        resources:
+          limits:
+            memory: 512M
 
     promtail:
       image: grafana/promtail:latest
@@ -24,6 +33,15 @@
       command: -config.file=/etc/promtail/config.yaml
       networks:
         - loki
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "120m"
+          max-file: "3"
+      deploy:
+        resources:
+          limits:
+            memory: 512M
 
     grafana:
       image: grafana/grafana:latest
@@ -54,6 +72,33 @@
           /run.sh
       networks:
         - loki
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "120m"
+          max-file: "3"
+      deploy:
+        resources:
+          limits:
+            memory: 512M
+      
+    prometheus:
+      image: prom/prometheus:latest
+      volumes:
+        - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      ports:
+        - "9090:9090"
+      networks:
+        - loki
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "120m"
+          max-file: "3"
+      deploy:
+        resources:
+          limits:
+            memory: 512M
 
     python_app:
       image: dew1769/application-real-time:latest 
