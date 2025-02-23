@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro  # Critical for Docker discovery
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./promtail-config.yaml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - loki
+
+  myapp:
+    image: yehiasobeh/moscow-time-app  
+    ports:
+      - "8080:8080"
+
+  extra-app:
+    image: nginx:alpine  # Bonus app
+    ports:
+      - "8081:80"
