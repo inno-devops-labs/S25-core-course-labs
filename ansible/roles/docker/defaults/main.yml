@@ -1,0 +1,4 @@
+docker_version: latest
+docker_package: "docker-ce"
+docker_compose_version: "v2.20.3"
+docker_users: []
