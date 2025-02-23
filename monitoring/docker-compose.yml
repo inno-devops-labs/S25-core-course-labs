@@ -21,7 +21,7 @@ services:
         tag: app_python
         max-size: "10m"
         max-file: "10"
-    # depends_on: # If your app relies on other services
+    mem_limit: 256m
 
   loki:
     image: grafana/loki:2.9.2
@@ -37,6 +37,7 @@ services:
         tag: loki
         max-size: "10m"
         max-file: "10"
+    mem_limit: 256m
 
   promtail:
     image: grafana/promtail:2.9.2
@@ -53,6 +54,7 @@ services:
         tag: promtail
         max-size: "10m"
         max-file: "10"
+    mem_limit: 256m
 
   grafana:
     image: grafana/grafana:latest
@@ -90,3 +92,21 @@ services:
         tag: grafana
         max-size: "10m"
         max-file: "10"
+    mem_limit: 256m
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    logging:
+      driver: json-file
+      options:
+        tag: prometheus
+        max-size: "10m"
+        max-file: "10"
+    mem_limit: 256m
+    depends_on:
+      - loki
