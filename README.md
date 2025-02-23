@@ -1,5 +1,7 @@
 # DevOps Engineering Labs
 
+![CI Status](https://github.com/ArturLukianov/S25-core-course-labs/actions/workflows/app_python.yaml/badge.svg)
+
 ## Introduction
 
 Welcome to the DevOps Engineering course labs! These hands-on labs are designed to guide you through various aspects of DevOps practices and principles. As you progress through the labs, you'll gain practical experience in application development, containerization, testing, infrastructure setup, CI/CD processes, and more.
