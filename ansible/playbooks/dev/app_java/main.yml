@@ -1,0 +1,12 @@
+---
+- name: Deploy Python Application using Docker Compose
+  hosts: all
+  become: yes
+  roles:
+    - role: web_app
+      vars:
+        docker_image: "nickwidbestie/random-color-picker:6d9f319aeb8fe1782ca1a1037371a90ab8867a3f"
+        app_port: "8081"
+        container_port: "8081"
+        web_app_deploy_dir: "/opt/app_java"
+        web_app_full_wipe: true
