@@ -4,6 +4,8 @@ services:
     container_name: loki
     ports:
       - "3100:3100"
+    volumes:
+      - ./loki-config.yml:/etc/loki/local-config.yaml
     command: -config.file=/etc/loki/local-config.yaml
     restart: unless-stopped
 
@@ -19,6 +21,38 @@ services:
     restart: unless-stopped
     depends_on:
       - loki
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    restart: unless-stopped
+    depends_on:
+      - loki
+      - promtail
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    volumes:
+      - /:/rootfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
 
   grafana:
     image: grafana/grafana:latest
@@ -37,6 +71,8 @@ services:
       - loki
 
   bakina_devops_webapp:
+#    build:
+#      context: ../app_python
     image: bakinasa/moscow-time-app
     container_name: moscow-time-app
     volumes:
@@ -53,3 +89,4 @@ services:
 volumes:
   grafana_data:
   app-logs:
+  prometheus_data:

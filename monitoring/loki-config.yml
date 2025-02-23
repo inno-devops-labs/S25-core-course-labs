@@ -33,6 +33,7 @@ common:
     kvstore:
       store: memberlist
 
+
 ruler:
   alertmanager_url: ""
   storage:
@@ -45,5 +46,6 @@ compactor:
 
 limits_config:
   ingestion_rate_mb: 20
+  retention_period: 168h
   ingestion_burst_size_mb: 50
-  max_entries_limit_per_query: 50000
+  max_entries_limit_per_query: 5000
