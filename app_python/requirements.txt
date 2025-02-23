@@ -3,3 +3,4 @@ pytz==2024.2
 uvicorn
 pytest==7.4.0
 httpx>=0.23.0
+prometheus_fastapi_instrumentator
