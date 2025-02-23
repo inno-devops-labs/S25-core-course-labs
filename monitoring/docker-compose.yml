@@ -37,9 +37,7 @@ services:
       - loki
 
   bakina_devops_webapp:
-    build:
-      context: ../app_python
-#    image: bakinasa/moscow-time-app
+    image: bakinasa/moscow-time-app
     container_name: moscow-time-app
     volumes:
       - app-logs:/logs
