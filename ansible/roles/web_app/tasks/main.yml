@@ -1,0 +1,53 @@
+---
+# tasks file for roles/web_app
+- import_tasks: 0-wipe.yml
+  when: web_app_full_wipe | default(false)
+  tags:
+    - wipe
+
+- name: Setup Docker and dependencies
+  block:
+    - name: Ensure Docker is installed
+      import_role:
+        name: docker
+
+    - name: Install Docker SDK for Python
+      pip:
+        name: docker
+        state: forcereinstall
+  tags:
+    - setup
+
+- name: Pull Docker image
+  docker_image:
+    name: "{{ docker_image }}"
+    source: pull
+  tags:
+    - docker
+
+- name: Ensure /opt/web_app directory exists
+  file:
+    path: /opt/web_app
+    state: directory
+    mode: '0755'
+  tags:
+    - deploy
+
+
+- name: Deploy docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/web_app/docker-compose.yml
+  tags:
+    - deploy
+
+- name: Run the application container
+  docker_container:
+    name: "{{ container_name }}"
+    image: "{{ docker_image }}"
+    state: started
+    restart_policy: always
+    ports:
+      - "{{ app_port }}:{{ app_port }}"
+  tags:
+    - deploy
