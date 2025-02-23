@@ -1,0 +1,105 @@
+name: C# CI Workflow
+
+on:
+  pull_request:
+    paths:
+      - 'app_csharp/**'
+      - '.github/workflows/csharp_app_ci.yml'
+
+jobs:
+  build-test-lint:
+    name: Build, Lint, and Test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Cache NuGet packages
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.nuget/packages
+          app_csharp/MoscowTimeApp/[!bin|obj]*/
+          app_csharp/MoscowTimeApp.Tests/[!bin|obj]*/
+        key: ${{ runner.os }}-nuget-${{ hashFiles('app_csharp/MoscowTimeApp/MoscowTimeApp.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
+    - name: Restore dependencies
+      working-directory: app_csharp/MoscowTimeApp
+      run: dotnet restore
+
+    - name: Run Linter
+      working-directory: app_csharp/MoscowTimeApp
+      run: dotnet format MoscowTimeApp.sln --verify-no-changes
+
+    - name: Build and Test
+      working-directory: app_csharp/MoscowTimeApp
+      run: |
+        dotnet build --configuration Release --no-restore
+        dotnet test --configuration Release --no-build --verbosity normal
+
+  security-check:
+    runs-on: ubuntu-latest
+    needs: [build-test-lint]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore dependencies
+      working-directory: app_csharp/MoscowTimeApp
+      run: dotnet restore
+
+    - name: Run Snyk Security Scan
+      uses: snyk/actions/dotnet@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: --file=app_csharp/MoscowTimeApp/MoscowTimeApp.sln
+
+  docker-build-push:
+    name: Build & Push Docker Images
+    runs-on: ubuntu-latest
+    needs: [build-test-lint, security-check]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build and push standard image
+      uses: docker/build-push-action@v5
+      with:
+        context: app_csharp
+        file: app_csharp/Dockerfile
+        tags: ${{ secrets.DOCKER_USERNAME }}/moscow-time-cs-app:latest
+        push: true
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: Build and push distroless image
+      uses: docker/build-push-action@v5
+      with:
+        context: app_csharp
+        file: app_csharp/distroless.Dockerfile
+        tags: ${{ secrets.DOCKER_USERNAME }}/moscow-time-cs-app:distroless
+        push: true
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
