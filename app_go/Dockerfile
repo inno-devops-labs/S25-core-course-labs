@@ -1,11 +1,11 @@
 # Stage 1: Builder
-FROM golang:1.20 AS builder
+FROM golang:1.23 AS builder
 
 # Set working directory
 WORKDIR /app
 
 # Copy go.mod and go.sum for dependency management
-COPY go.mod ./
+COPY go.mod go.sum ./
 
 # Download dependencies
 RUN go mod download

@@ -15,9 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.http import HttpResponse
 from django.urls import path, include
+from prometheus_client import start_http_server, REGISTRY, MetricsHandler
+
+# Define a custom metrics view
+def metrics_view(request):
+    from prometheus_client.exposition import generate_latest
+    return HttpResponse(generate_latest(REGISTRY), content_type='text/plain')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('display_time.urls'))
+    path('', include('display_time.urls')), 
+    path('metrics', metrics_view),
 ]
