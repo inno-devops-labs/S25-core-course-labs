@@ -1,0 +1,18 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: numbers-app-service
+  namespace: default
+spec:
+  selector:
+    app: numbers-app
+  type: NodePort
+  ports:
+  - name: numbers-app-service
+    protocol: TCP
+    port: 8082
+    targetPort: 8080
+    nodePort: 30002
+---
+
