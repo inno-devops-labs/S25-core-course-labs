@@ -1,0 +1,6 @@
+---
+- name: Install docker-compose plugin.
+  package:
+    name: "docker-compose-plugin"
+    state: "present"
+  notify: restart docker
