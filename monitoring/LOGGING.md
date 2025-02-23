@@ -1,3 +1,55 @@
+# Logging Stack Documentation
+
+## Overview
+
+This LOGGING.md provides details of my sffors in solvig this lab like the logging stack setup, detailing its components, configuration, and how logs are collected and visualized.
+
+---
+
+## Logging Stack Components
+
+The logging stack consists of the following components:
+
+### 1- **Grafana**
+- **Purpose:** Visualization and querying of logs.
+- **Port:** Accessible at `http://localhost:4000`.
+- **Usage:**
+  - Connects to Loki as the data source.
+  - Provides an interactive UI for searching and analyzing logs.
+
+![Grafana Dashboard](screen-sh/grafana.jpg)
+
+### 2️- **Loki**
+- **Purpose:** A log aggregation system that stores logs efficiently.
+- **Port:** Runs on `http://localhost:3100`.
+- **Usage:**
+  - Receives logs from Promtail.
+  - Stores logs in a structured format for efficient querying.
+
+![Loki Logs](screen-sh/loki.jpg)
+
+### 3️- **Promtail**
+- **Purpose:** Log collector that forwards container logs to Loki.
+- **Configuration:** Uses `promtail.yml` to define log sources.
+- **Usage:**
+  - Monitors logs from all running containers.
+  - Pushes logs to Loki for indexing.
+
+![Promtail Logs](screen-sh/promtail.jpg)
+
+### 4- **Application (`app_python`)**
+- **Purpose:** A sample application (`moscow-time-app`) whose logs are monitored.
+- **Port:** Runs on `http://localhost:5001` (beacuse the port 5000 is occupied on on my machine for the system).
+- **Logging:** Logs requests and internal events using JSON logging.
+
+![app_python Logs](screen-sh/app-python.jpg)
+
+---
+
+## 🛠 **Configuration Details**
+
+### **1️- `docker-compose.yml` (Logging Stack)**
+```yaml
 version: "3.3"
 
 networks:
