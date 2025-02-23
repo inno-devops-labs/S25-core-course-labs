@@ -97,6 +97,8 @@ ebob@laptop ~ % minikube service --all
 
 Screenshot from browser:
 
+<img width="560" alt="screenshot" src="https://github.com/user-attachments/assets/3dc62692-6418-42f2-97c9-6c2166a44531" />
+
 ## Ruby App and Ingress
 
 Apply manifests for Ruby app:
@@ -157,3 +159,5 @@ ebob@laptop ~ % curl http://moscow-time.local/
 ebob@laptop ~ % curl http://omsk-time.local/
 Current time in Omsk: 2025-02-23 05:32:22
 ```
+
+<img width="511" alt="ingress-screenshot" src="https://github.com/user-attachments/assets/b9177771-2ac5-4c1a-9a96-05118cbdd128" />
