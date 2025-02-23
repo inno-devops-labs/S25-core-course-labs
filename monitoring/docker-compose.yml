@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  fastapi_app:
+    build: ../app_python
+    ports:
+      - "8000:8000"
+
+  nodejs_app:
+    build: ../app_nodejs
+    ports:
+      - "8080:3000"
+
+  loki:
+    image: grafana/loki:2.7.1
+    command: -config.file=/etc/loki/config.yml
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki/config/config.yml:/etc/loki/config.yml
+      - loki_data:/loki
+
+  promtail:
+    image: grafana/promtail:2.7.1
+    command: -config.file=/etc/promtail/config.yml
+    volumes:
+      - ./promtail/config/config.yml:/etc/promtail/config.yml
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - loki
+
+  grafana:
+    image: grafana/grafana-oss:9.4.7
+    ports:
+      - "4000:3000"
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+    depends_on:
+      - loki
+
+volumes:
+  loki_data:
