@@ -1,5 +1,5 @@
 ### README.MD
-```markdown
+
 # Random Hex Color Picker Web Application
 A simple Java web application built with **Spring Boot** that generates and displays a random hex color code.
 ---
