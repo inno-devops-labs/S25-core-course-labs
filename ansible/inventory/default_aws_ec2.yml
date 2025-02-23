@@ -1,0 +1,8 @@
+ec2:
+  vars:
+    ansible_user: admin
+    ansible_ssh_private_key_file: ~/.ssh/id_ed25519
+  hosts:
+    local
+
+
