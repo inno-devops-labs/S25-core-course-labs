@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-python-deployment
+  labels:
+    app: app-python
+spec:
+  # 3 Pods of the application should run at all times.
+  replicas: 3
+  #  how Kubernetes selects Pods that belong to this Deployment.
+  selector:
+    matchLabels:
+      app: app-python
+  template:
+    metadata:
+      labels:
+        app: app-python
+    spec:
+      containers:
+      - name: app-python
+        image: saleemasekrea/app_python:latest
+        ports:
+        - containerPort: 8000
