@@ -1,0 +1,6 @@
+dependencies:
+- name: raleksan-library
+  repository: file://../raleksan-library
+  version: 1.0.0
+digest: sha256:3e54fb61657e54c057b79659ab3951c9ba389c16121892ad510b464ce0241a6e
+generated: "2025-02-22T23:32:07.081103696+03:00"
