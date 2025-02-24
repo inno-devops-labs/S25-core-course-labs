@@ -134,7 +134,7 @@ Using `curl --resolve "python.app:80:$( minikube ip )" -i http://python.app`, th
 
 ![curl](images/curl.png)
 
-For the go app 
+For the go app
 
 ![curl](images/go_curl.png)
 
@@ -162,5 +162,3 @@ deployment.apps "app-go-deployment" deleted
 service "app-go-service" deleted
 
 ```
-
-![Ingress](images/clean_up.png)
