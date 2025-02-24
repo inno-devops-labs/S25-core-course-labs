@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appjava-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: appjava
+  template:
+    metadata:
+      labels:
+        app: appjava
+    spec:
+      containers:
+        - name: omsktimeapp
+          image: doryshibkova03/appjava:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: TZ
+              value: "Asia/Omsk"
