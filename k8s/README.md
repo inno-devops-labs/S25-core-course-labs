@@ -64,9 +64,9 @@ python-app-77bdd85497-774sf   1/1     Running   0          21m
 
 Running `minikube service python-app` would open the service in the default browser.
 
-![Terminal](images/terminal.png)
+- ![Terminal](images/terminal.png)
 
-![Browser window](images/browser.png)
+- ![Browser window](images/browser.png)
 
 To remove the created pods and services, the following commands were used:
 
