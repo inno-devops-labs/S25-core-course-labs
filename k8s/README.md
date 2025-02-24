@@ -128,9 +128,15 @@ Using `minkube ip`, the IP address can be found-
 
 ![IP](images/IP.png)
 
+![ingress](images/get_ingress.png)
+
 Using `curl --resolve "python.app:80:$( minikube ip )" -i http://python.app`, the app can be accessed.
 
 ![curl](images/curl.png)
+
+For the go app 
+
+![curl](images/go_curl.png)
 
 To clean up, the following commands were used:
 
@@ -139,13 +145,21 @@ To clean up, the following commands were used:
 
 ingress.networking.k8s.io "deployment-ingress" deleted
 
-> kubectl delete -f deployment.yml
+> kubectl delete -f app_python/deployment.yml
 
 deployment.apps "app-python-deployment" deleted
 
-> kubectl delete -f service.yml
+> kubectl delete -f app_python/service.yml
 
 service "app-python-service" deleted
+
+> kubectl delete -f app_go/deployment.yml
+
+deployment.apps "app-go-deployment" deleted
+
+> kubectl delete -f app_go/service.yml
+
+service "app-go-service" deleted
 
 ```
 
