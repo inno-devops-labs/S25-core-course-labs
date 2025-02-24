@@ -86,24 +86,24 @@ deployment.apps "python-app" deleted
 
 After creating the `yml` files for the deployment and service, I used `kubectl apply -f <filename>` to create the deployment and service.
 
-![Manifest apply](images/Manifest%20apply.png)
+- ![Manifest apply](images/Manifest%20apply.png)
 
 Running `kubectl get pods,svc` would shows the created pods and services.
 
-![manifest applied](images/pod&svc.png)
+- ![manifest applied](images/pod&svc.png)
 
 This could also be verified on the dashboard by running `minikube dashboard`.
 
-![minikube dashboard](images/minikube%20dashboard.png)
+- ![minikube dashboard](images/minikube%20dashboard.png)
 
 Running `minikube service --all` opens the services in the default browser.
 
-![terminal services](images/minikube%20service%20--all.png)
+- ![terminal services](images/minikube%20service%20--all.png)
 
 Browser window for the python app-
-![python app](images/res.png)
+- ![python app](images/res.png)
 
-![python app](images/client.png)
+- ![python app](images/client.png)
 
 ## Ingress Controller
 
@@ -114,7 +114,7 @@ The ingress controller was installed and verified using the following commands:
 > kubectl get pods -n ingress-nginx
 ```
 
-![ingress](images/ingress_install.png)
+- ![ingress](images/ingress_install.png)
 
 Then the `ingress.yml` file was created and applied.
 
@@ -126,17 +126,17 @@ ingress.networking.k8s.io/deployment-ingress created
 
 Using `minkube ip`, the IP address can be found-
 
-![IP](images/IP.png)
+- ![IP](images/IP.png)
 
-![ingress](images/get_ingress.png)
+- ![ingress](images/get_ingress.png)
 
 Using `curl --resolve "python.app:80:$( minikube ip )" -i http://python.app`, the app can be accessed.
 
-![curl](images/curl.png)
+- ![curl](images/curl.png)
 
 For the go app
 
-![curl](images/go_curl.png)
+- ![curl](images/go_curl.png)
 
 To clean up, the following commands were used:
 
