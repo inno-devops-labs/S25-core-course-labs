@@ -1,0 +1,9 @@
+__pycache__
+.vscode
+.mypy_cache
+.pytest_cache
+.terraform
+.env
+key.json
+fact_cache
+yacloud_token
