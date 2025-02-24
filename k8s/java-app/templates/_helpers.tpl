@@ -60,3 +60,10 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "common.env" }}
+- name: LOG_LEVEL
+  value: {{ .Values.env.LOG_LEVEL | quote }}
+- name: APP_MODE
+  value: {{ .Values.env.APP_MODE | lower | quote }}
+{{ end }}
