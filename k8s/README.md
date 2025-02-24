@@ -5,6 +5,7 @@
 - [Kubernetes](#kubernetes)
   - [Table of Contents](#table-of-contents)
   - [K8s Setup and Basic Deployment](#k8s-setup-and-basic-deployment)
+  - [Declarative Kubernetes Manifests](#declarative-kubernetes-manifests)
 
 
 ## K8s Setup and Basic Deployment
@@ -78,3 +79,27 @@ service "python-app" deleted
 deployment.apps "python-app" deleted
 ```
 ![cleaning](images/clean.png)
+
+
+## Declarative Kubernetes Manifests
+
+After creating the `yml` files for the deployment and service, I used `kubectl apply -f <filename>` to create the deployment and service.
+
+![Manifest apply](images/Manifest%20apply.png)
+
+Running `kubectl get pods,svc` would shows the created pods and services.
+
+![manifest applied](images/pod&svc.png)
+
+This could also be verified on the dashboard by running `minikube dashboard`.
+
+![minikube dashboard](images/minikube%20dashboard.png)
+
+Running `minikube service --all` opens the services in the default browser.
+
+![terminal services](images/minikube%20service%20--all.png)
+
+Browser window for the python app-
+![python app](images/res.png)
+
+![python app](images/client.png)
