@@ -6,3 +6,5 @@
 yc-key.json
 *.pem
 
+minikube-linux-amd64
+
