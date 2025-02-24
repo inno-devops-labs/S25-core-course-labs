@@ -11,3 +11,5 @@ meta.txt
 [project_name]
 venv
 authorized_key.json
+kubectl 
+minikube-linux-amd64

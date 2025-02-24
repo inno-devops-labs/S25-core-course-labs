@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golang-web-app-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: golang-web-app
+  template:
+    metadata:
+      labels:
+        app: golang-web-app
+    spec:
+      containers:
+      - name: golang-web-app
+        image: lekski/golang-web-app
+        ports:
+        - containerPort: 8000
