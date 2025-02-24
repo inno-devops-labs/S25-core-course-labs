@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-time-app
+  labels:
+    app: python-time-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: python-time-app
+  template:
+    metadata:
+      labels:
+        app: python-time-app
+    spec:
+      containers:
+      - name: python-time-app
+        image: bugay/python-msk-time-app-distroless:1.0
+        ports:
+        - containerPort: 5000
+          name: python-time-app

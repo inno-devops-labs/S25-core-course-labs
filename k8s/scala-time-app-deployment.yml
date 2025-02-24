@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scala-time-app
+  labels:
+    app: scala-time-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: scala-time-app
+  template:
+    metadata:
+      labels:
+        app: scala-time-app
+    spec:
+      containers:
+      - name: scala-time-app
+        image: bugay/scala-msk-time-app-distroless:1.0
+        ports:
+        - containerPort: 9090
+          name: scala-time-app
