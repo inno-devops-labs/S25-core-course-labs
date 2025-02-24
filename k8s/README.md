@@ -101,5 +101,3 @@ service/kubernetes        ClusterIP   10.96.0.1     <none>        443/TCP    13m
 dariashib@dariashib-virtual-machine:~/S25-core-course-labs/app_python$ curl http://appjava.local
 <h1>Time in Omsk</h1><p>2025-02-24 20:04:56</p>
 ```
-
-```
