@@ -80,3 +80,26 @@ minikube service --all
 dariashib@dariashib-virtual-machine:~/S25-core-course-labs/app_python$ curl 127.0.0.1:30899
 <h1>Time in Moscow</h1><p>2025-02-24 16:58:56</p>
 ```
+---
+
+# App Java
+
+![alt text](https://github.com/DoryShibkova/S25-core-course-labs/blob/lab9/k8s/image3.jpg)
+
+```
+kubectl get pods,svc
+NAME                                      READY   STATUS    RESTARTS   AGE
+pod/appjava-deployment-5465dcb687-5dz4f   1/1     Running   0          104s
+pod/appjava-deployment-5465dcb687-fvpxv   1/1     Running   0          104s
+pod/appjava-deployment-5465dcb687-gm4qr   1/1     Running   0          104s
+
+NAME                      TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)    AGE
+service/appjava-service   ClusterIP   10.103.8.60   <none>        8080/TCP   93s
+service/kubernetes        ClusterIP   10.96.0.1     <none>        443/TCP    13m
+```
+```
+dariashib@dariashib-virtual-machine:~/S25-core-course-labs/app_python$ curl http://appjava.local
+<h1>Time in Omsk</h1><p>2025-02-24 20:04:56</p>
+```
+
+```
