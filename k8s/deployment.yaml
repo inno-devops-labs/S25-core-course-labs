@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moscow-time-deployment
+  labels:
+    app: moscow-time-container
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: moscow-time-container
+  template:
+    metadata:
+      labels:
+        app: moscow-time-container
+    spec:
+      containers:
+      - name: moscow-time-container
+        image: pupolina7/moscow-time-app:latest
+        ports:
+        - containerPort: 8000
