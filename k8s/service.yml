@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-time-app-service
+spec:
+  selector:
+    app: python-time-app
+  ports:
+    - name: python-time-app-service
+      protocol: TCP
+      port: 8080
+      targetPort: 5000
+      nodePort: 30007
+  type: NodePort
