@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: app_java
+
+springdoc:
+  swagger-ui:
+    path: "/"
+
+server:
+  port: 8080
+
+logging:
+  config: classpath:log4j2-plain.xml
+
+management:
+  server:
+    port: 8081
+  endpoints:
+    web:
+      base-path: "/"
+      exposure:
+        include: "health,info,prometheus"
+      path-mapping:
+        "prometheus": "/metrics"
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    tags:
+      "application": ${spring.application.name}

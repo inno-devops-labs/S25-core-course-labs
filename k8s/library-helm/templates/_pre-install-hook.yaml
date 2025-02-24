@@ -1,0 +1,17 @@
+{{- define "library-helm.pre-install-hook" -}}
+apiVersion: v1
+kind: Pod
+metadata:
+   name: {{ default (printf "pre-hook-%s" .Chart.Name) .HookName }}
+   annotations:
+       "helm.sh/hook": "pre-install"
+       "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  containers:
+  - name: pre-install-container
+    image: busybox
+    imagePullPolicy: IfNotPresent
+    command: ['sh', '-c', 'echo The pre-install hook is running && sleep 20' ]
+  restartPolicy: Never
+  terminationGracePeriodSeconds: 0
+{{- end -}}
