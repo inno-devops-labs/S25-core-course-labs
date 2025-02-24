@@ -6,7 +6,7 @@
   - [Table of Contents](#table-of-contents)
   - [K8s Setup and Basic Deployment](#k8s-setup-and-basic-deployment)
   - [Declarative Kubernetes Manifests](#declarative-kubernetes-manifests)
-
+  - [Ingress Controller](#ingress-controller)
 
 ## K8s Setup and Basic Deployment
 
@@ -35,6 +35,7 @@ Now, to access the deployment, a service was created:
 ```bash
 > kubectl expose deployment python-app --type=LoadBalancer --port=8000
 ```
+
 This could be verified using `kubectl get services` and `kubectl get pods`:
 
 <details>
@@ -78,8 +79,8 @@ service "python-app" deleted
 
 deployment.apps "python-app" deleted
 ```
-![cleaning](images/clean.png)
 
+![cleaning](images/clean.png)
 
 ## Declarative Kubernetes Manifests
 
@@ -103,3 +104,49 @@ Browser window for the python app-
 ![python app](images/res.png)
 
 ![python app](images/client.png)
+
+## Ingress Controller
+
+The ingress controller was installed and verified using the following commands:
+
+```bash
+> minikube addons enable ingress
+> kubectl get pods -n ingress-nginx
+```
+
+![ingress](images/ingress_install.png)
+
+Then the `ingress.yml` file was created and applied.
+
+```bash
+> kubectl apply -f ingress.yml
+
+ingress.networking.k8s.io/deployment-ingress created
+```
+
+Using `minkube ip`, the IP address can be found-
+
+![IP](images/IP.png)
+
+Using `curl --resolve "python.app:80:$( minikube ip )" -i http://python.app`, the app can be accessed.
+
+![curl](images/curl.png)
+
+To clean up, the following commands were used:
+
+```bash
+> kubectl delete -f ingress.yml
+
+ingress.networking.k8s.io "deployment-ingress" deleted
+
+> kubectl delete -f deployment.yml
+
+deployment.apps "app-python-deployment" deleted
+
+> kubectl delete -f service.yml
+
+service "app-python-service" deleted
+
+```
+
+![Ingress](images/clean_up.png)
