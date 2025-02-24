@@ -101,3 +101,6 @@ minikube service --all
 ❗  Because you are using a Docker driver on linux, the terminal needs to be open to run it.
 
 ```
+
+![](https://github.com/user-attachments/assets/00e83fe3-2532-48b3-bc17-5345bf6ffdbf)
+
