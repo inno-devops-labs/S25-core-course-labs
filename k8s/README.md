@@ -1,4 +1,33 @@
+# Kubernetes
 
+## Installation and Setup
+Ensure that `kubectl` and `minikube` are installed:
+```bash
+kubectl version --client
+minikube version
+```
+Start the Minikube cluster:
+```bash
+minikube start
+```
+
+## Application Deployment
+Deploy the application using the `kubectl create` command:
+```bash
+kubectl create deployment myapp --image=doryshibkova03/myapp:latest
+```
+
+## Expose Application
+Create a service to expose the application:
+```bash
+kubectl expose deployment myapp --type=LoadBalancer --port=8000
+```
+
+## Verify Deployment and Service
+List running pods and services:
+```bash
+kubectl get pods,svc
+```
 ```
 NAME                                    READY   STATUS             RESTARTS      AGE
 pod/myapp-deployment-7b86c865fd-2p969   1/1     Running            0             16s
@@ -10,6 +39,15 @@ service/kubernetes      ClusterIP      10.96.0.1      <none>        443/TCP     
 service/myapp-service   LoadBalancer   10.105.64.39   127.0.0.1     8000:30899/TCP   76s
 ```
 
+## Cleanup
+Delete the deployment and service:
+```bash
+kubectl delete deployment myapp
+kubectl delete service myapp
+```
+---
+
+# Kubernetes Manifests
 ```
 minikube service --all
 |-----------|------------|-------------|--------------|
@@ -35,7 +73,9 @@ minikube service --all
 🎉  Opening service default/kubernetes in default browser...
 ❗  Because you are using a Docker driver on linux, the terminal needs to be open to run it.
 ```
+![alt text](https://github.com/DoryShibkova/S25-core-course-labs/blob/lab9/k8s/image2.jpg)
 
+![alt text](https://github.com/DoryShibkova/S25-core-course-labs/blob/lab9/k8s/image1.jpg)
 ```
 dariashib@dariashib-virtual-machine:~/S25-core-course-labs/app_python$ curl 127.0.0.1:30899
 <h1>Time in Moscow</h1><p>2025-02-24 16:58:56</p>
