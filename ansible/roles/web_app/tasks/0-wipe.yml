@@ -1,0 +1,26 @@
+- name: Wipe Application
+  tags: wipe
+  when: app_wipe
+  block:
+    - name: Check if Application Directory exists
+      stat:
+        path: "{{ app_dir }}"
+      register: app_dir_s
+
+    - name: Check if Docker Compose File exists
+      stat:
+        path: "{{ app_dir }}/{{ docker_compose_file_name }}"
+      register: docker_compose_file_s
+
+    - name: Stop and Remove Application
+      when: docker_compose_file_s.stat.exists == true
+      become_user: "{{ ansible_user }}"
+      command: docker compose down --rmi all --remove-orphans
+      args:
+        chdir: "{{ app_dir }}"
+
+    - name: Remove Application Directory
+      when: app_dir_s.stat.exists == true
+      file:
+        path: "{{ app_dir }}"
+        state: absent
