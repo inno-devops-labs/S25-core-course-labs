@@ -1,21 +1,17 @@
 networks:
   monitoring:
-
 x-logging:
   &default-logging
   driver: "json-file"
   options:
     max-size: "200k"
     max-file: "10"
-
 x-deploy:
   &default-deploy
   resources:
     limits:
       memory: 256M
-
 services:
-
   loki:
     container_name: loki
     image: grafana/loki:latest
@@ -27,11 +23,10 @@ services:
     logging: *default-logging
     deploy: *default-deploy
     healthcheck:
-      test: [ "CMD-SHELL", "curl --fail http://localhost:3100/ready || exit 1" ]
+      test: [ "CMD-SHELL", "wget --spider --quiet http://localhost:3100/ready || exit 1" ]
       interval: 10s
       timeout: 3s
       retries: 3
-
   promtail:
     container_name: promtail
     image: grafana/promtail:latest
@@ -44,11 +39,10 @@ services:
     logging: *default-logging
     deploy: *default-deploy
     healthcheck:
-      test: [ "CMD-SHELL", "curl --fail http://localhost:1080/health || exit 1" ]
+      test: [ "CMD-SHELL", "wget --spider --quiet http://localhost:1080/health || exit 1" ]
       interval: 10s
       timeout: 3s
       retries: 3
-
   grafana:
     container_name: grafana
     environment:
@@ -83,26 +77,23 @@ services:
     logging: *default-logging
     deploy: *default-deploy
     healthcheck:
-      test: [ "CMD-SHELL", "curl --fail http://localhost:3000 || exit 1" ]
+      test: [ "CMD-SHELL", "wget --spider --quiet http://localhost:3000 || exit 1" ]
       interval: 10s
       timeout: 3s
       retries: 3
-
   app_python:
     image: dmhd6219/inno_devops_lab2_python_bonus:latest
     ports:
       - "8000:8000"
     networks:
       - monitoring
-
     logging: *default-logging
     deploy: *default-deploy
     healthcheck:
-      test: [ "CMD-SHELL", "curl --fail http://localhost:8000 || exit 1" ]
+      test: [ "CMD-SHELL", "wget --spider --quiet http://localhost:8000 || exit 1" ]
       interval: 10s
       timeout: 3s
       retries: 3
-
   app_typescript:
     image: dmhd6219/inno_devops_lab2_typescript_basic:latest
     ports:
@@ -112,11 +103,10 @@ services:
     logging: *default-logging
     deploy: *default-deploy
     healthcheck:
-      test: [ "CMD-SHELL", "curl --fail http://localhost:8080 || exit 1" ]
+      test: [ "CMD-SHELL", "wget --spider --quiet http://localhost:8080 || exit 1" ]
       interval: 10s
       timeout: 3s
       retries: 3
-
   prometheus:
     image: prom/prometheus
     ports:
@@ -128,7 +118,7 @@ services:
     logging: *default-logging
     deploy: *default-deploy
     healthcheck:
-      test: [ "CMD-SHELL", "curl --fail http://localhost:9090 || exit 1" ]
+      test: [ "CMD-SHELL", "wget --spider --quiet http://localhost:9090 || exit 1" ]
       interval: 10s
       timeout: 3s
       retries: 3
