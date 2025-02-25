@@ -1,0 +1,74 @@
+version: '3'
+
+services:
+  # Loki is responsible for storing and querying logs
+  loki:
+    image: grafana/loki:2.9.2
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+      - loki-data:/tmp/loki
+      - loki-wal:/wal
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - logging-network
+    restart: unless-stopped
+    user: "0"  # Run as root to avoid permission issues
+
+  # Promtail is the agent responsible for gathering logs and forwarding them to Loki
+  promtail:
+    image: grafana/promtail:2.9.2
+    volumes:
+      - ./promtail-config.yaml:/etc/promtail/config.yaml
+      - /var/log:/var/log
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    command: -config.file=/etc/promtail/config.yaml
+    networks:
+      - logging-network
+    depends_on:
+      - loki
+    restart: unless-stopped
+
+  # Grafana is the visualization platform
+  grafana:
+    image: grafana/grafana:10.2.2
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - logging-network
+    depends_on:
+      - loki
+    restart: unless-stopped
+
+  # Python application (assuming we want to monitor the Python app)
+  python-app:
+    build:
+      context: ../app_python
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - logging-network
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  logging-network:
+    driver: bridge
+
+volumes:
+  grafana-storage:
+  loki-data:
+  loki-wal: 
