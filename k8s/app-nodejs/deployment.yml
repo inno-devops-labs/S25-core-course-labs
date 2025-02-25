@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-nodejs-deployment
+spec:
+  replicas: 3 
+  selector:
+    matchLabels:
+      app: app-nodejs
+  template:
+    metadata:
+      labels:
+        app: app-nodejs
+    spec:
+      containers:
+        - name: app-nodejs
+          image: ilsiia/app-nodejs:latest
+          ports:
+            - containerPort: 3001
