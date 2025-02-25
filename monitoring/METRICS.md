@@ -14,8 +14,8 @@ BUUUUT
 I have configured Yandex Metrics as alternative:
 
 ![Yandex Metrics](assets/yandex.png)
-
-All information about visits will be available in ~24h, I will update report as it will be.
+![Yandex Metrics](assets/yandex2.png)
+![Yandex Metrics](assets/yandex3.png)
 
 ## Dashboards
 
