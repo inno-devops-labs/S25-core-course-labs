@@ -64,6 +64,7 @@ public class VacationPaymentController implements VacationPaymentControllerAPI {
           Files.createDirectories(folder);
         } catch (Exception any) {
           folder = Path.of(targetFolder);
+          Files.createDirectories(folder);
         }
       }
 
