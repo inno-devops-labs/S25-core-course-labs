@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-dart-app
+  labels:
+    app: my-dart-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-dart-app
+  template:
+    metadata:
+      labels:
+        app: my-dart-app
+    spec:
+      containers:
+      - name: my-dart-app
+        image: g1l1a/my-dart-app:latest
+        ports:
+        - containerPort: 8080
+          name: my-dart-app

@@ -1,0 +1,4 @@
+django
+pytz
+django-prometheus
+prometheus_client
