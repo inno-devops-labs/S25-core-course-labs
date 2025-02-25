@@ -68,4 +68,4 @@ jobs:
           context: app_python
           file: app_python/distroless.Dockerfile
           push: true
-          tags: nai1ka/time-service-cicd:latest
+          tags: nai1ka/time-service:latest
