@@ -33,12 +33,12 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-# This is for setting Kubernetes Annotations to a Pod.
-# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+# Removed to easier testing purposes for further labs (when minikube is restarted, it is necessary to again
+# make the same manipulations as in the lab11)
 podAnnotations: {
-  vault.hashicorp.com/agent-inject: 'true',
-  vault.hashicorp.com/role: 'internal-app',
-  vault.hashicorp.com/agent-inject-secret-database-config.txt: 'internal/data/database/config'
+#  vault.hashicorp.com/agent-inject: 'true',
+#  vault.hashicorp.com/role: 'internal-app',
+#  vault.hashicorp.com/agent-inject-secret-database-config.txt: 'internal/data/database/config'
 }
 # This is for setting Kubernetes Labels to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
@@ -107,20 +107,22 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+volumes:
+  - name: config-volume
+    configMap:
+      name: config-map-python-app
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts:
+  - name: config-volume
+    mountPath: /etc/config
+    readOnly: true
 
 nodeSelector: {}
 
 tolerations: []
 
 affinity: {}
+
+config:
+  path: "files/config.json"
