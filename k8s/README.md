@@ -97,7 +97,9 @@ $ minikube service --all
 ```
 
 - **Kubernetes service:**
-![kubernetes-service](images/kub-service.png)
+
+    ![kubernetes-service](images/kub-service.png)
 
 - **Application service:**
-![web-app-service](images/web-app-service.png)
+
+    ![web-app-service](images/web-app-service.png)
