@@ -58,7 +58,7 @@ public class VacationPaymentController implements VacationPaymentControllerAPI {
     try {
       Path folder = Path.of(new File("/home/appuser").getAbsolutePath(), "data");
       if (!Files.exists(folder) || !Files.isDirectory(folder)) {
-        Files.createDirectory(folder);
+        Files.createDirectories(folder);
       }
 
       Path visitsFile = folder.resolve("visits");
