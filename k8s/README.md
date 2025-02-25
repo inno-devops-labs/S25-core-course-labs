@@ -29,7 +29,7 @@ http://127.0.0.1:61540
 ! Because you are using a Docker driver on windows, the terminal needs to be open to run it.
 ```
 
-[Running app screenshot](screenshots/app_python_running.png)
+[Running app screenshot](screenshots/kub/app_python_running.png)
 
 ### Cleaning-up
 
@@ -92,7 +92,7 @@ PS C:\Users\egora\PycharmProjects\S25-core-course-labs> minikube service --all
 ! Because you are using a Docker driver on windows, the terminal needs to be open to run it.
 ```
 
-[Screenshot](screenshots/app_python_matches.png)
+[Screenshot](screenshots/kub/app_python_matches.png)
 
 ## Bonus
 
@@ -126,7 +126,7 @@ http://127.0.0.1:65289
 ! Because you are using a Docker driver on windows, the terminal needs to be open to run it.
 ```
 
-[Screenshot](screenshots/app_python_b.png)
+[Screenshot](screenshots/kub/app_python_b.png)
 
 ```text
 PS C:\Users\egora\PycharmProjects\S25-core-course-labs> minikube service ktor-service --url 
@@ -134,4 +134,4 @@ http://127.0.0.1:65349
 ! Because you are using a Docker driver on windows, the terminal needs to be open to run it.
 ```
 
-[Screenshot](screenshots/app_kotlin_b.png)
+[Screenshot](screenshots/kub/app_kotlin_b.png)
