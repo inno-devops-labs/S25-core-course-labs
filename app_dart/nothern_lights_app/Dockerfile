@@ -15,9 +15,7 @@ RUN adduser -D -g 'flutter' flutter
 
 WORKDIR /usr/share/nginx/html
 
-COPY --from=build /app/build/web /usr/share/nginx/html
-
-USER flutter
+COPY --from=build /app_dart/nothern_lights_app/build/web .
 
 EXPOSE 80
 

@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'app_python',
     'localhost',
+    '*',
 ]
 
 
