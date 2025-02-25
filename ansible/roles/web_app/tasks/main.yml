@@ -1,0 +1,29 @@
+---
+- name: Deploy Web Application
+  block:
+  
+    - name: Pull the latest Docker image
+      community.docker.docker_image:
+        name: "{{ app_image }}"
+        source: pull
+      tags:
+        - docker
+        - deploy
+      
+    - name: Generate Docker Compose file from template
+      template:
+        src: docker-compose.yml.j2
+        dest: /home/ubuntu/docker-compose.yml
+      tags:
+        - compose
+        - deploy
+
+    - name: Start services using Docker Compose
+        command: docker-compose -f /home/ubuntu/docker-compose.yml up -d
+        tags:
+          - compose
+          - deploy
+        
+  tags:
+    - deploy
+
