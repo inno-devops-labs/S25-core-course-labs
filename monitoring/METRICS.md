@@ -10,6 +10,13 @@ But I want to note that `app_typescript` is missing here because this is a web a
 Unfortunately, at the very beginning of the course, it wasn't mentioned that a backend was required, and collecting 
 statistics from the frontend with Prometheus isn't an option =(
 
+BUUUUT
+I have configured Yandex Metrics as alternative:
+
+![Loki dashboard](assets/dashboard_loki.png) ![Yandex Metrics](assets/yandex.png)
+
+All information about visits will be available in ~24h, I will update report as it will be.
+
 ## Dashboards
 
 Dashboards for Loki nad Prometheus:
