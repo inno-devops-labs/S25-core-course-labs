@@ -1,0 +1,7 @@
+web_app_name: "web_app"
+web_app_wipe: true
+web_app_deploy: true
+web_app_path: /app
+web_app_port: 80
+web_container_port: 8080
+web_app_image: busybox
