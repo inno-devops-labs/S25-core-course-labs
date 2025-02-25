@@ -13,7 +13,7 @@ statistics from the frontend with Prometheus isn't an option =(
 BUUUUT
 I have configured Yandex Metrics as alternative:
 
-![Loki dashboard](assets/dashboard_loki.png) ![Yandex Metrics](assets/yandex.png)
+![Yandex Metrics](assets/yandex.png)
 
 All information about visits will be available in ~24h, I will update report as it will be.
 
