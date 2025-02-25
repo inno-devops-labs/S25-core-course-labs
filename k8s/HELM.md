@@ -43,8 +43,8 @@ E:\Innopolis\BS-3 (S25, S-2)\DevOps Engineering\Labs\S25-core-course-labs\k8s>mi
 * Opening http://127.0.0.1:51220/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/ in your default browser...
 ```
 
-![Web page](images/Dashboard_1.png)
-![Web page](images/Dashboard_2.png)
+![Dashboard_1](images/Dashboard_1.png)
+![Dashboard_2](images/Dashboard_2.png)
 
 - This is an output of `kubectl get pods,svc` command:
 
@@ -81,7 +81,7 @@ E:\Innopolis\BS-3 (S25, S-2)\DevOps Engineering\Labs\S25-core-course-labs\k8s>mi
 ! Because you are using a Docker driver on windows, the terminal needs to be open to run it.
 ```
 
-![Web page](images/Application.png)
+![Application_1](images/Application_1.png)
 
 ---
 
@@ -236,6 +236,63 @@ Events:
 
 ## Bonus Task
 
+For this task I completed the same steps for my second (Scala) application. Then, I created library chart with labels template and setted up dependencies in other charts.
 
+Updating dependencies:
+
+```bash
+E:\Innopolis\BS-3 (S25, S-2)\DevOps Engineering\Labs\S25-core-course-labs\k8s>helm dependency update ./python-time-app
+
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "stable" chart repository
+Update Complete. ⎈Happy Helming!⎈
+Saving 1 charts
+Deleting outdated charts
+
+E:\Innopolis\BS-3 (S25, S-2)\DevOps Engineering\Labs\S25-core-course-labs\k8s>helm dependency update ./scala-time-app
+
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "stable" chart repository
+Update Complete. ⎈Happy Helming!⎈
+Saving 1 charts
+Deleting outdated charts
+```
+
+Reinstalling both applications:
+
+```bash
+E:\Innopolis\BS-3 (S25, S-2)\DevOps Engineering\Labs\S25-core-course-labs\k8s>helm install python-time-app ./python-time-app --set appName=python-time-app --set appVersion=1.0
+
+NAME: python-time-app
+LAST DEPLOYED: Tue Feb 25 21:46:42 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=python-time-app,app.kubernetes.io/instance=python-time-app" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
+
+E:\Innopolis\BS-3 (S25, S-2)\DevOps Engineering\Labs\S25-core-course-labs\k8s>helm install scala-time-app ./scala-time-app --set appName=scala-time-app --set appVersion=1.0
+
+NAME: scala-time-app
+LAST DEPLOYED: Tue Feb 25 21:47:25 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=scala-time-app,app.kubernetes.io/instance=scala-time-app" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
+```
+
+And it is working, so I can access both applications by `minikube service python-time-app` and `minikube service scala-time-app` commands:
+
+![Application_2](images/Application_2.png)
+![Application_3](images/Application_3.png)
 
 ---

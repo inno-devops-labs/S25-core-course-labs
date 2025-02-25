@@ -1,9 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "python-time-app.fullname" . }}
+  name: {{ include "library-chart.fullname" . }}
   labels:
-    {{- include "python-time-app.labels" . | nindent 4 }}
     {{- include "library-chart.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
@@ -11,8 +10,7 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "python-time-app.selectorLabels" . | nindent 6 }}
-      {{- include "library-chart.labels" . | nindent 6 }}
+      {{- include "library-chart.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -21,7 +19,6 @@ spec:
       {{- end }}
       labels:
         {{- include "library-chart.labels" . | nindent 8 }}
-        {{- include "python-time-app.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -30,7 +27,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "python-time-app.serviceAccountName" . }}
+      serviceAccountName: {{ include "library-chart.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -45,9 +42,8 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 5000
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
-          {{- /*
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
@@ -60,7 +56,6 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          */ -}}
           {{- with .Values.volumeMounts }}
           volumeMounts:
             {{- toYaml . | nindent 12 }}
