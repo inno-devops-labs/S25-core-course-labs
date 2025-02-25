@@ -5,7 +5,11 @@ from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
 
 app = Flask(__name__)
 
-REQUEST_COUNT = Counter('http_requests_total', 'Total number of HTTP requests', ['method', 'endpoint'])
+REQUEST_COUNT = Counter(
+    'http_requests_total',
+    'Total number of HTTP requests',
+    ['method', 'endpoint']
+)
 
 
 @app.route("/")
