@@ -1,0 +1,15 @@
+- name: Deploy Go App
+  hosts: all
+  become: yes
+  roles:
+    - name: web_app
+      vars:
+        docker_image: "azamatbayramov/s25-devops-go-dl:latest"
+        docker_container: "go-app"
+        docker_compose_file_name: "docker-compose.yml"
+
+        internal_port: 8002
+        external_port: 8002
+
+        app_dir: "/app"
+        app_wipe: true
