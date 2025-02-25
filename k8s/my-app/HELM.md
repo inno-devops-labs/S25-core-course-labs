@@ -2,7 +2,7 @@
 
 ## Task 1
 
-### Pods review
+### Get pods
 
 #### Command
 
@@ -17,7 +17,7 @@ NAME                         READY   STATUS    RESTARTS   AGE
 app-my-app-b6cb97564-g2zzb   1/1     Running   0          4m20s
 ```
 
-### Services review
+### Get services
 
 #### Command
 
@@ -35,13 +35,15 @@ kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP   9h
 
 ## Task 2
 
-### Command
+### Helm liting 
+
+#### Command
 
 ```bash
 helm lint my-app
 ```
 
-### Output
+#### Output
 
 ```bash
 ==> Linting my-app
@@ -50,13 +52,15 @@ helm lint my-app
 1 chart(s) linted, 0 chart(s) failed
 ```
 
-### Command
+### Helm install dry-run
+
+#### Command
 
 ```bash
 helm install --dry-run helm-hooks my-app
 ```
 
-### Output
+#### Output
 
 ```bash
 NAME: helm-hooks
@@ -198,22 +202,17 @@ spec:
             httpGet:
               path: /
               port: http
-
-NOTES:
-1. Get the application URL by running these commands:
-  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=my-app,app.kubernetes.io/instance=helm-hooks" -o jsonpath="{.items[0].metadata.name}")
-  export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
-  echo "Visit http://127.0.0.1:8080 to use your application"
-  kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
 ```
 
-### Command
+### Get all pods
+
+#### Command
 
 ```bash
 kubectl get po
 ```
 
-### Output
+#### Output
 
 ```bash
 NAME                                READY   STATUS      RESTARTS   AGE
@@ -223,13 +222,15 @@ postinstall-hook                    0/1     Completed   0          3m16s
 preinstall-hook                     0/1     Completed   0          4m24s
 ```
 
-### Command
+### Get running pods
+
+#### Command
 
 ```bash
 kubectl get pods
 ```
 
-### Output
+#### Output
 
 ```bash
 NAME                                READY   STATUS    RESTARTS   AGE
@@ -237,13 +238,15 @@ app-my-app-b6cb97564-g2zzb          1/1     Running   0          26m
 helm-hooks-my-app-7cc9b5684-n94z4   1/1     Running   0          76s
 ```
 
-### Command
+### Get services
+
+#### Command
 
 ```bash
 kubectl get svc
 ```
 
-### Output
+#### Output
 ```bah
 NAME                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
 app-my-app          ClusterIP   10.97.119.126    <none>        80/TCP    26m
