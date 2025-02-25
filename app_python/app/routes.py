@@ -61,7 +61,8 @@ def get_and_increment_visits(need_increment: bool = True):
             app.logger.error("Error reading visits file: %s", e)
             count = 0
 
-    if need_increment: count += 1
+    if need_increment:
+        count += 1
 
     try:
         with open(visits_file, 'w') as f:
