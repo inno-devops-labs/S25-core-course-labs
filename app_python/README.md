@@ -145,3 +145,33 @@ The CI workflow of this application is quite ordinary: there are three main stag
 The workflow takes place only when a PR is opened to the master/main branch. Why? Because we have a simple project,
 and it will be too resource-consuming and messy if we start our jobs on each push to the remote repository (IMO).
 In the production environments, there are CI/CD almost every push because companies have self-hosted VMs (runners).
+
+---
+
+### Persistence
+
+* `docker-compose.yaml` is placed under the `monitoring` folder (in the project root), then persistence `visit` file
+  is placed on root `./monitoring/app_python`
+
+```yaml
+...
+  python:
+    build: ../app_python
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./app_python:/app/data  # <-- New volume
+      - app_logs:/app
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+...
+```
+
+* Accessible application in the docker compose set up
+
+![img.png](res/img.png)
+
+![img_1.png](res/img_1.png)
+
+![img_2.png](res/img_2.png)
+
+I delete the `app_python` folder in the `monitoring` folder to not keep a mess

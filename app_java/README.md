@@ -127,3 +127,33 @@ The covered business functionality by tests:
 
 * `/calculate` - the single endpoint that evaluated by different HTTP status codes that returned
 * Util Classes which are used for the calculation process
+
+---
+
+### Persistence
+
+* `docker-compose.yaml` is placed under the `monitoring` folder (in the project root), then persistence `visit` file
+  is placed on root `./monitoring/app_java`
+
+```yaml
+...
+  java:
+    build: ../app_java
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    volumes:
+      - ./app_java:/home/appuser/data # <-- New volume
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+...
+```
+
+* Accessible application in the docker compose set up
+
+![img.png](res/img.png)
+
+![img_1.png](res/img_1.png)
+
+![img_2.png](res/img_2.png)
+
+* I delete the `app_java` folder in the `monitoring` folder to not keep a mess

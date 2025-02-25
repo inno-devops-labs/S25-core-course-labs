@@ -100,10 +100,11 @@ services:
       retries: 5
 
   python:
-    image: catorleader/python-watch:lab8
+    build: ../app_python
     ports:
       - "5000:5000"
     volumes:
+      - ./app_python:/app/data
       - app_logs:/app
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
     networks:
@@ -131,6 +132,7 @@ services:
       - "8080:8080"
       - "8081:8081"
     volumes:
+      - ./app_java:/home/appuser/data
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
     networks:
       - monitoring_stack
