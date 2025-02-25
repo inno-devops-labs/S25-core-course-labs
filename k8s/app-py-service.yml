@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-python-service
+spec:
+  selector:
+    app: app-python
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 5000
+      nodePort: 31000
