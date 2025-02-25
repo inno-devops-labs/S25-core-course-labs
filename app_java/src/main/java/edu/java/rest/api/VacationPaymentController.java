@@ -56,9 +56,15 @@ public class VacationPaymentController implements VacationPaymentControllerAPI {
 
   private long getAndIncrement(boolean needIncrement) {
     try {
-      Path folder = Path.of(new File("/home/appuser").getAbsolutePath(), "data");
+      final String targetFolder = "data";
+
+      Path folder = Path.of(new File("/home/appuser").getAbsolutePath(), targetFolder);
       if (!Files.exists(folder) || !Files.isDirectory(folder)) {
-        Files.createDirectories(folder);
+        try {
+          Files.createDirectories(folder);
+        } catch (Exception any) {
+          folder = Path.of(targetFolder);
+        }
       }
 
       Path visitsFile = folder.resolve("visits");
