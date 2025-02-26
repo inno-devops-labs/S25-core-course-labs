@@ -198,22 +198,3 @@ Events:
   Normal  Started    8m2s  kubelet            Started container post-install
 ```
 
-# Helm Chart for Java Application
-
-kubectl get pods,svc
-```
-NAME                                    READY   STATUS              RESTARTS   AGE
-pod/appjava-7f67fb7c47-ggl8d            0/1     ContainerCreating   0          17s
-pod/appjava-7f67fb7c47-vn2j2            0/1     ContainerCreating   0          17s
-pod/helm-hooks-myapp-6cbc7bd8bc-mz72k   1/1     Running             0          27m
-pod/myapp-7fdbcfb478-nr68g              1/1     Running             0          16h
-pod/post-install-job-wddjj              0/1     Completed           0          27m
-pod/preinstall-hook                     0/1     Completed           0          27m
-
-NAME                       TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-service/appjava            ClusterIP   10.106.138.50    <none>        4567/TCP         17s
-service/helm-hooks-myapp   NodePort    10.109.231.41    <none>        8000:30106/TCP   27m
-service/kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP          20h
-service/myapp              ClusterIP   10.100.242.107   <none>        80/TCP           16h
-```
-
