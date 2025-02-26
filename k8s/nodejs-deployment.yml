@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-app
+  labels:
+    app: nodejs-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nodejs-app
+  template:
+    metadata:
+      labels:
+        app: nodejs-app
+    spec:
+      containers:
+      - name: nodejs-app
+        image: node:20-slim
+        workingDir: /app
+        command: ["sh", "-c"]
+        args:
+          - |
+            npm install
+            npm start
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - name: app-source
+          mountPath: /app
+      volumes:
+      - name: app-source
+        hostPath:
+          path: /app_nodejs
+          type: Directory

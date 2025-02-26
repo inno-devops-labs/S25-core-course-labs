@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app
+  labels:
+    app: python-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: python-app
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      containers:
+      - name: python-app
+        image: python:3.11-slim
+        workingDir: /app
+        command: ["sh", "-c"]
+        args:
+          - |
+            pip install -r requirements.txt
+            python app.py
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - name: app-source
+          mountPath: /app
+      volumes:
+      - name: app-source
+        hostPath:
+          path: /app_python
+          type: Directory
