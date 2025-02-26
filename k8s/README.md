@@ -9,14 +9,14 @@ kubectl create deployment app-python --image=kira354/app_python-distroless:lates
 kubectl expose deployment app-python --type=NodePort --port=5000
 ```
 
-![task1](task1_1.png)
+![task1](images_lab9/task1_1.png)
 
 **Outputs from kubectl get pods,svc commands**
-![task1](task1_2.png)
-![task1](task1_3.png)
+![task1](images_lab9/task1_2.png)
+![task1](images_lab9/task1_3.png)
 
 **Cleanup**
-![task1](task1_4.png)
+![task1](images_lab9/task1_4.png)
 
 ## Task 2
 
@@ -27,26 +27,26 @@ kubectl apply -f k8s/
 ```
 
 **Outputs from kubectl get pods,svc commands**
-![task2](task2_1.png)
-![task2](task2_2.png)
+![task2](images_lab9/task2_1.png)
+![task2](images_lab9/task2_2.png)
 
 **The output of the `minikube service --all` command and the result from my browser**
-![task2](task2_3.png)
-![task2](task2_4.png)
-![task2](task2_5.png)
+![task2](images_lab9/task2_3.png)
+![task2](images_lab9/task2_4.png)
+![task2](images_lab9/task2_5.png)
 
 ## Bonus Task
 
 Firstly, I did the same steps for app_javascript and created development_js.yml and service_js.yml.
 
 **Outputs from kubectl get pods,svc commands**
-![bonus](bonus_1.png)
-![bonus](bonus_2.png)
+![bonus](images_lab9/bonus_1.png)
+![bonus](images_lab9/bonus_2.png)
 
 **Checked output of the `minikube service --all` command in browser**
-![bonus](bonus_3.png)
-![bonus](bonus_4.png)
-![bonus](bonus_5.png)
+![bonus](images_lab9/bonus_3.png)
+![bonus](images_lab9/bonus_4.png)
+![bonus](images_lab9/bonus_5.png)
 
 Secondly, I worked on ingress manifests for both apps and created ingress.yml:
 
@@ -95,10 +95,10 @@ minikube tunnel
 ```
 
 **Curl commands to verify the availability of applications**
-![bonus](bonus_8.png)
-![bonus](bonus_9.png)
+![bonus](images_lab9/bonus_8.png)
+![bonus](images_lab9/bonus_9.png)
 
 **Checking in browser**
-![bonus](bonus_7.png)
-![bonus](bonus_10.png)
-![bonus](bonus_11.png)
+![bonus](images_lab9/bonus_7.png)
+![bonus](images_lab9/bonus_10.png)
+![bonus](images_lab9/bonus_11.png)
