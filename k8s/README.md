@@ -84,12 +84,80 @@ python-app   3/3     3            0           4s
 ```
 - Created `python-app/service.yml` and applied it:
 ```sh
-(venv) vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9) [0|1]> kubectl apply -f python-app/service.yml
-
+vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9)> kubectl apply -f python-app/service.yml
 service/python-app-service created
-(venv) vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9)> 
-(venv) vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9)> kubectl get services
-NAME                 TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
-kubernetes           ClusterIP   10.96.0.1        <none>        443/TCP    3h9m
-python-app-service   ClusterIP   10.104.237.164   <none>        5000/TCP   14s
+vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9)> kubectl get services
+NAME                 TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+kubernetes           ClusterIP      10.96.0.1      <none>        443/TCP          12m
+python-app-service   LoadBalancer   10.106.52.47   <pending>     5000:31980/TCP   2s
+vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9)> minikube service python-app-service
+|-----------|--------------------|-------------|---------------------------|
+| NAMESPACE |        NAME        | TARGET PORT |            URL            |
+|-----------|--------------------|-------------|---------------------------|
+| default   | python-app-service |        5000 | http://192.168.49.2:31980 |
+|-----------|--------------------|-------------|---------------------------|
+🎉  Opening service default/python-app-service in default browser...
+```
+- Checked availability:
+![Custom manifest demo](img/custom_manifest_work_demo.png)
+- Asked output:
+```sh
+vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9)> kubectl get pods,svc
+NAME                              READY   STATUS    RESTARTS   AGE
+pod/python-app-5989f4654b-h96kf   1/1     Running   0          16m
+pod/python-app-5989f4654b-jkdn7   1/1     Running   0          16m
+pod/python-app-5989f4654b-snvxz   1/1     Running   0          16m
+
+NAME                         TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+service/kubernetes           ClusterIP      10.96.0.1      <none>        443/TCP          16m
+service/python-app-service   LoadBalancer   10.106.52.47   <pending>     5000:31980/TCP   3m53s
+vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9)> minikube service --all
+|-----------|------------|-------------|--------------|
+| NAMESPACE |    NAME    | TARGET PORT |     URL      |
+|-----------|------------|-------------|--------------|
+| default   | kubernetes |             | No node port |
+|-----------|------------|-------------|--------------|
+😿  service default/kubernetes has no node port
+|-----------|--------------------|-------------|---------------------------|
+| NAMESPACE |        NAME        | TARGET PORT |            URL            |
+|-----------|--------------------|-------------|---------------------------|
+| default   | python-app-service |        5000 | http://192.168.49.2:31980 |
+|-----------|--------------------|-------------|---------------------------|
+❗  Services [default/kubernetes] have type "ClusterIP" not meant to be exposed, however for local development minikube allows you to access this !
+🎉  Opening service default/python-app-service in default browser...
+🏃  Starting tunnel for service kubernetes.
+Gtk-Message: 19:24:12.652: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+[27197, Main Thread] WARNING: GTK+ module /snap/firefox/5783/gnome-platform/usr/lib/gtk-2.0/modules/libcanberra-gtk-module.so cannot be loaded.
+GTK+ 2.x symbols detected. Using GTK+ 2.x and GTK+ 3 in the same process is not supported.: 'glib warning', file /build/firefox/parts/firefox/build/toolkit/xre/nsSigHandlers.cpp:201
+
+(firefox_firefox:27197): Gtk-WARNING **: 19:24:12.697: GTK+ module /snap/firefox/5783/gnome-platform/usr/lib/gtk-2.0/modules/libcanberra-gtk-module.so cannot be loaded.
+GTK+ 2.x symbols detected. Using GTK+ 2.x and GTK+ 3 in the same process is not supported.
+Gtk-Message: 19:24:12.697: Failed to load module "canberra-gtk-module"
+[27197, Main Thread] WARNING: GTK+ module /snap/firefox/5783/gnome-platform/usr/lib/gtk-2.0/modules/libcanberra-gtk-module.so cannot be loaded.
+GTK+ 2.x symbols detected. Using GTK+ 2.x and GTK+ 3 in the same process is not supported.: 'glib warning', file /build/firefox/parts/firefox/build/toolkit/xre/nsSigHandlers.cpp:201
+
+(firefox_firefox:27197): Gtk-WARNING **: 19:24:12.698: GTK+ module /snap/firefox/5783/gnome-platform/usr/lib/gtk-2.0/modules/libcanberra-gtk-module.so cannot be loaded.
+GTK+ 2.x symbols detected. Using GTK+ 2.x and GTK+ 3 in the same process is not supported.
+Gtk-Message: 19:24:12.698: Failed to load module "canberra-gtk-module"
+|-----------|------------|-------------|------------------------|
+| NAMESPACE |    NAME    | TARGET PORT |          URL           |
+|-----------|------------|-------------|------------------------|
+| default   | kubernetes |             | http://127.0.0.1:41667 |
+|-----------|------------|-------------|------------------------|
+🎉  Opening service default/kubernetes in default browser...
+❗  Because you are using a Docker driver on linux, the terminal needs to be open to run it.
+Gtk-Message: 19:24:13.843: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
+[27339, Main Thread] WARNING: GTK+ module /snap/firefox/5783/gnome-platform/usr/lib/gtk-2.0/modules/libcanberra-gtk-module.so cannot be loaded.
+GTK+ 2.x symbols detected. Using GTK+ 2.x and GTK+ 3 in the same process is not supported.: 'glib warning', file /build/firefox/parts/firefox/build/toolkit/xre/nsSigHandlers.cpp:201
+
+(firefox_firefox:27339): Gtk-WARNING **: 19:24:13.887: GTK+ module /snap/firefox/5783/gnome-platform/usr/lib/gtk-2.0/modules/libcanberra-gtk-module.so cannot be loaded.
+GTK+ 2.x symbols detected. Using GTK+ 2.x and GTK+ 3 in the same process is not supported.
+Gtk-Message: 19:24:13.887: Failed to load module "canberra-gtk-module"
+[27339, Main Thread] WARNING: GTK+ module /snap/firefox/5783/gnome-platform/usr/lib/gtk-2.0/modules/libcanberra-gtk-module.so cannot be loaded.
+GTK+ 2.x symbols detected. Using GTK+ 2.x and GTK+ 3 in the same process is not supported.: 'glib warning', file /build/firefox/parts/firefox/build/toolkit/xre/nsSigHandlers.cpp:201
+
+(firefox_firefox:27339): Gtk-WARNING **: 19:24:13.888: GTK+ module /snap/firefox/5783/gnome-platform/usr/lib/gtk-2.0/modules/libcanberra-gtk-module.so cannot be loaded.
+GTK+ 2.x symbols detected. Using GTK+ 2.x and GTK+ 3 in the same process is not supported.
+Gtk-Message: 19:24:13.888: Failed to load module "canberra-gtk-module"
+^C✋  Stopping tunnel for service kubernetes.
 ```

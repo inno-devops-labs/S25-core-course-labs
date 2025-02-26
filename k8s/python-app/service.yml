@@ -4,7 +4,7 @@ metadata:
   name: python-app-service
 spec:
   selector:
-    app.kubernetes.io/name: python-app
+    app: python-app
   type: LoadBalancer
   ports:
   - protocol: TCP
