@@ -380,7 +380,6 @@ NOTES:
 
   - ![Library chart run](images/Library%20chart%20run.png)
 
-- Afterwards `minikube service` and `kubectl get svc` commands were run to start and check the services.
+- Afterwards `kubectl get svc` commands were run to start and check the services.
 
-  - ![Library chart working](images/lib-run.png)
   - ![Library chart working](images/lib-get.png)
