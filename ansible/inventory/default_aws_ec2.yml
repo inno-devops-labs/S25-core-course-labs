@@ -1,0 +1,9 @@
+all:
+  hosts:
+    my_vm:
+      ansible_host: 94.159.109.179
+      ansible_user: root
+      ansible_ssh_pass: "{{ lookup('env', 'MY_VM_SSH_PASS') }}"
+      #ansible_ssh_pass: kN9nI4sY3tcQ
+      ansible_become: yes
+      ansible_become_method: sudo
