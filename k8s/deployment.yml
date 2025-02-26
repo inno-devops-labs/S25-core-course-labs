@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: msk-time-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: msk-time
+  template:
+    metadata:
+      labels:
+        app: msk-time
+    spec:
+      containers:
+      - name: msk-time-container
+        image: meowal/msk-time-app:latest
+        ports:
+        - containerPort: 5000
+
