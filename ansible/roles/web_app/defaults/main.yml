@@ -1,0 +1,3 @@
+docker_app_port: 80
+docker_container_port: 80
+web_app_full_wipe: false
