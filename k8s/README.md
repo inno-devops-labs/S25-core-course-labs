@@ -82,7 +82,7 @@ Here is the screenshot demonstrating that the IP matches the output of `minikube
 
 ## Bonus Task: Additional Configuration and Ingress
 
-### Manifests for Extra App:
+### Manifests for Extra App
 
 I have created `deployment.yml` and `service.yml` for my additional application.
 
@@ -135,13 +135,13 @@ ows you to access this !
 
 ![Screenshot with browser result](./img/k8s_bonus.png)
 
-### Ingress Manifests:
+### Ingress Manifests
 
 I have constructed Ingress manifests for all my applications:
 
 - Python app
 - Golang app
 
-### Application Availability Check:
+### Application Availability Check
 
 ![Output of curl availability check](./img/k8s_bonus_ingress.png)
