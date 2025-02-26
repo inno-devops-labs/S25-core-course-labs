@@ -12,7 +12,7 @@ spec:
   selector:
     matchLabels:
       {{- include "numbers-app.selectorLabels" . | nindent 6 }}
-      {{- include "library.labels" . | nindent 6 }}
+      {{- include "library.labels" . | indent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -43,6 +43,8 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{ include "common.env" . | nindent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
