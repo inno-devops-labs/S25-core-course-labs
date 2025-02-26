@@ -7,7 +7,7 @@ __pycache__/
 venv/
 env/
 ENV/
-+.venv/
+.venv/
 
 # IDE stuff
 .vscode/
@@ -67,3 +67,22 @@ app_python/terraform/yandex/authorized_key.json
 # AWS credentials
 .aws/
 aws.credentials
+
+# Kubernetes and binary files
+minikube-linux-amd64
+**/minikube-linux-amd64
+*.exe
+*.bin
+*.tar.gz
+*.zip
+
+# Kubernetes local files
+.kube/
+.minikube/
+
+# Large binary files
+*.iso
+*.img
+*.vdi
+*.box
+*.ova

@@ -11,15 +11,6 @@ services:
       - monitoring
     user: "0:0"
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 1G
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
 
   promtail:
     image: grafana/promtail:2.9.0
@@ -34,15 +25,6 @@ services:
     depends_on:
       - loki
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
 
   grafana:
     image: grafana/grafana:latest
@@ -64,15 +46,6 @@ services:
     depends_on:
       - loki
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
 
   flask-app:
     image: marketer7/flask-time:latest
@@ -93,29 +66,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-
-  prometheus:
-    image: prom/prometheus:latest
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    networks:
-      - monitoring
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 2G
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
 
 networks:
   monitoring:
