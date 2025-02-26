@@ -1,0 +1,6 @@
+dependencies:
+- name: lib-label-chart
+  repository: file://../lib-label-chart
+  version: 0.1.0
+digest: sha256:f8b42a6b86543f444cbf504468070ac64108b0f96a9c190f3c44c2b1292280e5
+generated: "2025-02-27T00:15:44.603899415+03:00"
