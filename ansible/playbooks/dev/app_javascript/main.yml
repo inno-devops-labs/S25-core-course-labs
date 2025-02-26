@@ -1,0 +1,8 @@
+- hosts: all
+  become: yes
+  roles:
+    - role: web_app
+      vars:
+        docker_image: "kira354/app_javascript-distroless"
+        container_name: "app_javascript"
+        app_port: 3000
