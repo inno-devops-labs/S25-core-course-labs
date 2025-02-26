@@ -1,0 +1,17 @@
+---
+- name: Pull Docker image
+  docker_image:
+    name: "{{ docker_image }}"
+    source: pull
+  tags:
+    - docker
+
+- name: Start Docker container
+  docker_container:
+    name: "web_app"
+    image: "{{ docker_image }}"
+    state: started
+    ports:
+      - "{{ app_port }}:80"
+  tags:
+    - docker
