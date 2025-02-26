@@ -1,3 +1,5 @@
+app_python/a.txt
+app_python/venv/
 .terraform/
 .terraform.lock.hcl
 terraform.tfstate
