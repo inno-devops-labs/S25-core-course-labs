@@ -1,0 +1,9 @@
+---
+- name: Install and configure Docker
+  hosts: all
+  roles:
+    - role: web_app
+      docker_compose_dir: "/opt/app_python"
+      docker_image: "fallenchromium/moscow-timezone-app:latest"
+      app_port: 8000
+      app_bind_port: "127.0.0.1:80"

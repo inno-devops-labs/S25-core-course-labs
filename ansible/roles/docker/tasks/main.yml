@@ -1,0 +1,21 @@
+- block:
+    - name: Remove old versions
+      ansible.builtin.include_tasks: remove_old_versions.yml
+    - name: Add repo
+      ansible.builtin.include_tasks: add_repo.yml
+
+- name: Install Docker
+  ansible.builtin.include_tasks: install_docker.yml
+
+- name: Add user(s) to Docker group
+  ansible.builtin.include_tasks: add_to_group.yml
+
+- name: Start docker on startup
+  ansible.builtin.include_tasks: enable_on_boot.yml
+
+- name: Configure Docker security settings
+  ansible.builtin.include_tasks: secure_docker.yml
+
+- name: Install Docker Python module
+  ansible.builtin.include_tasks: ansible_docker.yml
+  when: install_docker_pip | bool

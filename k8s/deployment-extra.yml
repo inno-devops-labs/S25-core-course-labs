@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: propositional-logic-app-deployment
+  labels:
+    app: propositional-logic-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: propositional-logic-app
+  template:
+    metadata:
+      labels:
+        app: propositional-logic-app
+    spec:
+      containers:
+      - name: propositional-logic-app
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+        image: fallenchromium/propositional-logic-app:latest
+        ports:
+        - containerPort: 80
