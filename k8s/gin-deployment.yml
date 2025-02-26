@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gin-mt-deployment
+  labels:
+    app: gin-mt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gin-mt
+  template:
+    metadata:
+      labels:
+        app: gin-mt
+    spec:
+      containers:
+      - name: gin-mt
+        image: iucd/gin-mt:latest
+        ports:
+        - containerPort: 8080

@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lab9-bonus-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: lab9.bonus
+    http:
+      paths:
+      - path: /fastapi
+        pathType: Prefix
+        backend:
+          service:
+            name: fastapi-mt-service
+            port:
+              number: 8000
+      - path: /gin
+        pathType: Prefix
+        backend:
+          service:
+            name: gin-mt-service
+            port:
+              number: 8080

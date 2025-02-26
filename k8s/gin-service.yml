@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gin-mt-service
+spec:
+  type: ClusterIP
+  selector:
+    app: gin-mt
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
