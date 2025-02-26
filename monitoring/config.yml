@@ -6,8 +6,8 @@ server:
 positions:
   filename: /var/lib/promtail/positions/positions.yaml
 
-client:
-  url: http://loki:3100/loki/api/v1/push
+clients:
+  - url: http://loki:3100/loki/api/v1/push
 
 scrape_configs:
   - job_name: containers
@@ -30,6 +30,5 @@ scrape_configs:
       - labels:
           container_name:
           image_name:
-      - match:
-          selector: '{job="docker"}'
-          action: keep
+      - output:
+          source: log

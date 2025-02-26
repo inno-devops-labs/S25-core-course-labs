@@ -1,26 +1,20 @@
-version: "3.3"
-
-volumes:
-  loki-data:
-
 networks:
   loki:
 
 services:
   loki:
+    container_name: loki
     image: grafana/loki:latest
     ports:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
-    volumes:
-      - loki-data:/loki
     networks:
       - loki
 
   promtail:
+    container_name: promtail
     image: grafana/promtail:latest
     volumes:
-      - /var/log:/var/log
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - ./config.yml:/etc/promtail/config.yml:ro
     command: -config.file=/etc/promtail/config.yml
@@ -28,6 +22,7 @@ services:
       - loki
 
   grafana:
+    container_name: grafana
     environment:
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
       - GF_AUTH_ANONYMOUS_ENABLED=true
@@ -59,6 +54,7 @@ services:
       - loki
 
   python_moscow_time:
+    container_name: python_app
     image: azeeeez/python_moscow_time
     logging:
       driver: "json-file"
@@ -71,6 +67,7 @@ services:
       - loki
 
   go_moscow_time:
+    container_name: go_app
     image: azeeeez/go_moscow_time
     logging:
       driver: "json-file"
