@@ -1,0 +1,20 @@
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.200Z caller=main.go:495 level=info msg="No time or size retention was set so using the default time retention" duration=15d
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.200Z caller=main.go:539 level=info msg="Starting Prometheus Server" mode=server version="(version=2.38.0, branch=HEAD, revision=818d6e60888b2a3ea363aee8a9828c7bafd73699)"
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.200Z caller=main.go:544 level=info build_context="(go=go1.18.5, user=root@e6b781f65453, date=20220816-13:23:14)"
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.200Z caller=main.go:545 level=info host_details="(Linux 6.11.0-14-generic #15-Ubuntu SMP PREEMPT_DYNAMIC Fri Jan 10 23:48:25 UTC 2025 x86_64 606355fab19f (none))"
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.200Z caller=main.go:546 level=info fd_limits="(soft=1024, hard=524288)"
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.200Z caller=main.go:547 level=info vm_limits="(soft=unlimited, hard=unlimited)"
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.203Z caller=web.go:553 level=info component=web msg="Start listening for connections" address=0.0.0.0:9090
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.204Z caller=main.go:976 level=info msg="Starting TSDB ..."
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.204Z caller=tls_config.go:195 level=info component=web msg="TLS is disabled." http2=false
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.206Z caller=head.go:495 level=info component=tsdb msg="Replaying on-disk memory mappable chunks if any"
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.206Z caller=head.go:538 level=info component=tsdb msg="On-disk memory mappable chunks replay completed" duration=1.661µs
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.206Z caller=head.go:544 level=info component=tsdb msg="Replaying WAL, this may take a while"
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.206Z caller=head.go:615 level=info component=tsdb msg="WAL segment loaded" segment=0 maxSegment=0
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.206Z caller=head.go:621 level=info component=tsdb msg="WAL replay completed" checkpoint_replay_duration=24.806µs wal_replay_duration=177.385µs total_replay_duration=215.051µs
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.207Z caller=main.go:997 level=info fs_type=EXT4_SUPER_MAGIC
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.207Z caller=main.go:1000 level=info msg="TSDB started"
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.207Z caller=main.go:1181 level=info msg="Loading configuration file" filename=/etc/prometheus/prometheus.yml
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.207Z caller=main.go:1218 level=info msg="Completed loading of configuration file" filename=/etc/prometheus/prometheus.yml totalDuration=365.473µs db_storage=708ns remote_storage=1.086µs web_handler=213ns query_engine=524ns scrape=141.526µs scrape_sd=31.136µs notify=891ns notify_sd=1.305µs rules=1.078µs tracing=4.621µs
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.207Z caller=main.go:961 level=info msg="Server is ready to receive web requests."
+monitoring-prometheus-1  | ts=2025-02-19T17:28:59.207Z caller=manager.go:941 level=info component="rule manager" msg="Starting rule manager..."
