@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-python
+spec:
+  replicas: 3  # At least 3 replicas as required
+  selector:
+    matchLabels:
+      app: app-python
+  template:
+    metadata:
+      labels:
+        app: app-python
+    spec:
+      containers:
+      - name: app-python
+        image: favelanky/app_python:latest
+        ports:
+        - containerPort: 5000
+
