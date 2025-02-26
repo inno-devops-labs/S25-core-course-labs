@@ -1,3 +1,4 @@
 flask
 pytz
 pytest
+prometheus_client
