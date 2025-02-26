@@ -178,3 +178,27 @@ Here are the screenshots confirming the correctness of Hook Delete Policy:
 - [x] Helm Chart with Hooks implemented, including the hook delete policy.
 - [x] Output of the `kubectl get pods,svc` command in `HELM.md`.
 - [x] Output of all commands from the step 4 of Task 2 in `HELM.md`.
+
+## Bonus Task: Helm Library Chart
+
+### Helm Chart for Extra App
+
+I have added Helm Chart for my additional Golang application. I have decided to keep the same functionality, as for Python application Helm chart.
+
+![Helm Chart for Extra app](./img/helm_bonus_1.png)
+
+### Create a Library Chart
+
+I have developed a simple library chart that includes `labels` template.
+
+The dependency was specified in the following way:
+
+![The way how dependency was specified](./img/helm_bonus_2.png)
+
+So, then I have successfully updated the dependencies of both charts and used my library in both applications:
+
+![Messages about successful dependency update](./img/helm_bonus_3.png)
+
+![Usage of library in Python app](./img/helm_bonus_4.png)
+
+![Usage of library in Golang app](./img/helm_bonus_5.png)
