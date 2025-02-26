@@ -197,4 +197,3 @@ Events:
   Normal  Created    8m2s  kubelet            Created container: post-install
   Normal  Started    8m2s  kubelet            Started container post-install
 ```
-
