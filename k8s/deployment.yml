@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-python-deployment
+  # labels:
+  #   app: app-python
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-python-deployment
+  template:
+    metadata:
+      labels:
+        app: app-python-deployment
+    spec:
+      containers:
+      - name: app-python
+        image: absorian/s25-devops-msk-time:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: APP_HOST
+          value: "0.0.0.0"
+        - name: APP_PORT
+          value: "80"
