@@ -1,5 +1,9 @@
 # Helm
 
+Install Helm, verify the Workloads page in the Minikube dashboard.
+
+<img width="1468" alt="Снимок экрана 2025-02-27 в 00 41 40" src="https://github.com/user-attachments/assets/e1387691-8abf-4d92-97f0-3d6c6cd0b754" />
+
 ## Deploy moscow-time app using Helm
 
 Create helm chart for python app:
@@ -384,6 +388,7 @@ moscow-time-pre-install        0/1     Completed   0          46h
 ### Hook Delete Policy
 
 Add this to `hook.yaml`:
+
 ```bash
 "helm.sh/hook-delete-policy": hook-succeeded
 ```
