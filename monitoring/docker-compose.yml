@@ -8,9 +8,17 @@ services:
       - "5000:8080"
     labels:
       log_collect: "true"
+      app_logs: "true"
     networks:
       - logging-network
     restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 512M
+    cpus: '0.5'
 
   alloy:
     image: grafana/alloy:latest
@@ -21,6 +29,15 @@ services:
       - logging-network
     depends_on:
       - loki
+    labels:
+      app_logs: "true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 512M
+    cpus: '0.5'
 
   loki:
     image: grafana/loki:latest
@@ -29,6 +46,15 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     networks:
       - logging-network
+    labels:
+      app_logs: "true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 512M
+    cpus: '0.5'
 
   grafana:
     image: grafana/grafana:latest
@@ -44,6 +70,38 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
       - loki
+    labels:
+      app_logs: "true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 512M
+    cpus: '0.5'
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - logging-network
+    depends_on:
+      - flask-app
+      - alloy
+      - loki
+      - grafana
+    labels:
+      app_logs: "true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 512M
+    cpus: '0.5'
 
 networks:
   logging-network:

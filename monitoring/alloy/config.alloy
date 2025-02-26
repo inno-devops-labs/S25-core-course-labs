@@ -1,8 +1,8 @@
 discovery.docker "linux" {
   host = "unix:///var/run/docker.sock"
   filter {
-    name = "name"
-    values = ["flask-app"]
+    name = "label"
+    values = ["app_logs=true"]
   }
 }
 
@@ -25,7 +25,6 @@ loki.source.docker "default" {
   relabel_rules = discovery.relabel.logs_integrations_docker.rules
   refresh_interval = "5s" 
 }
-
 
 loki.write "loki_receiver" {
   endpoint {
