@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "time-moscow.fullname" . }}
+  name: {{ include "propositional-logic.fullname" . }}
   labels:
     {{- include "common-lib.labels" . | nindent 4 }}
 spec:
@@ -27,7 +27,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "time-moscow.serviceAccountName" . }}
+      serviceAccountName: {{ include "propositional-logic.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}

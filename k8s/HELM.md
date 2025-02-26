@@ -133,7 +133,7 @@ Events:
   Normal  Started    29s   kubelet            Started container post-install-job
 ```
 
-kubectl status:
+## Kubernetes status
 
 ```bash
 >> kubectl get pods,svc
@@ -152,4 +152,180 @@ service/kubernetes                        ClusterIP      10.43.0.1       <none> 
 service/propositional-logic-app-service   LoadBalancer   10.43.195.163   <pending>     8000:32447/TCP   79m
 service/time-moscow                       ClusterIP      10.43.126.72    <none>        8000/TCP         2m4s
 service/time-moscow-hooks                 ClusterIP      10.43.49.76     <none>        8000/TCP         6m48s
+```
+
+## Bonus task
+
+- [x] Bonus app chart implemented
+- [x] Library chart implemented (it's actually pretty comfy to do labels like this, I can see why people do it)
+
+Dry-run of the bonus app chart that uses a library chart:
+
+```bash
+> helm install --dry-run --debug propositional-logic-test ./propositional-logic
+install.go:225: 2025-02-26 20:27:34.467233 +0300 +03 m=+0.131662043 [debug] Original chart version: ""
+install.go:242: 2025-02-26 20:27:34.468189 +0300 +03 m=+0.132617668 [debug] CHART PATH: /Users/fallenchromium/Study/Innopolis/devops/k8s/helm-charts/propositional-logic
+
+NAME: propositional-logic-test
+LAST DEPLOYED: Wed Feb 26 20:27:34 2025
+NAMESPACE: default
+STATUS: pending-install
+REVISION: 1
+USER-SUPPLIED VALUES:
+{}
+
+COMPUTED VALUES:
+affinity: {}
+autoscaling:
+  enabled: false
+  maxReplicas: 100
+  minReplicas: 1
+  targetCPUUtilizationPercentage: 80
+common-lib:
+  global: {}
+fullnameOverride: ""
+image:
+  pullPolicy: IfNotPresent
+  repository: fallenchromium/propositional-logic-app
+  tag: latest
+imagePullSecrets: []
+ingress:
+  annotations: {}
+  className: ""
+  enabled: false
+  hosts:
+  - host: chart-example.local
+    paths:
+    - path: /
+      pathType: ImplementationSpecific
+  tls: []
+livenessProbe: {}
+nameOverride: ""
+nodeSelector: {}
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+readinessProbe: {}
+replicaCount: 3
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+securityContext: {}
+service:
+  port: 8001
+  type: ClusterIP
+serviceAccount:
+  annotations: {}
+  automount: true
+  create: true
+  name: ""
+tolerations: []
+volumeMounts: []
+volumes: []
+
+HOOKS:
+---
+# Source: propositional-logic/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "propositional-logic-test-test-connection"
+  labels:
+    helm.sh/chart: propositional-logic-0.1.0
+    app.kubernetes.io/name: propositional-logic
+    app.kubernetes.io/instance: propositional-logic-test
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['propositional-logic-test:8001']
+  restartPolicy: Never
+MANIFEST:
+---
+# Source: propositional-logic/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: propositional-logic-test
+  labels:
+    helm.sh/chart: propositional-logic-0.1.0
+    app.kubernetes.io/name: propositional-logic
+    app.kubernetes.io/instance: propositional-logic-test
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+automountServiceAccountToken: true
+---
+# Source: propositional-logic/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: propositional-logic-test
+  labels:
+    helm.sh/chart: propositional-logic-0.1.0
+    app.kubernetes.io/name: propositional-logic
+    app.kubernetes.io/instance: propositional-logic-test
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8001
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: propositional-logic
+    app.kubernetes.io/instance: propositional-logic-test
+---
+# Source: propositional-logic/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: propositional-logic-test
+  labels:
+    app.kubernetes.io/name: propositional-logic
+    app.kubernetes.io/instance: propositional-logic-test
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: propositional-logic-0.1.0
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: propositional-logic
+      app.kubernetes.io/instance: propositional-logic-test
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: propositional-logic
+        app.kubernetes.io/instance: propositional-logic-test
+        app.kubernetes.io/version: "1.16.0"
+        app.kubernetes.io/managed-by: Helm
+        helm.sh/chart: propositional-logic-0.1.0
+    spec:
+      serviceAccountName: propositional-logic-test
+      containers:
+        - name: propositional-logic
+          image: "fallenchromium/propositional-logic-app:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8001
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 50m
+              memory: 64Mi
 ```
