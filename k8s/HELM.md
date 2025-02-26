@@ -1,3 +1,7 @@
+![image](https://github.com/user-attachments/assets/d0d0ad0f-5784-45c9-be8b-a9f49008c202)
+
+
+```
 meowal@meowal-1-2:~/S25-core-course-labs/k8s$ minikube service  my-release-time-app
 |-----------|---------------------|-------------|--------------|
 | NAMESPACE |        NAME         | TARGET PORT |     URL      |
@@ -246,5 +250,6 @@ Events:
 meowal@meowal-1-2:~/S25-core-course-labs/k8s$ 
 
 
+```
 
 
