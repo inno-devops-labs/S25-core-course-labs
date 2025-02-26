@@ -8,6 +8,6 @@ spec:
   ports:
   # load balancer
     - protocol: TCP
-      port: 80
+      port: 8001
       targetPort: 80
   type: LoadBalancer
