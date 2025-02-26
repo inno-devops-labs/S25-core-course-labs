@@ -56,7 +56,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: /tmp/.buildx-cache
-        key: ubuntu-docker-${{ hashFiles('app_python/Dockerfile') }}
+        key: ubuntu-docker-${{ hashFiles('app_C++/Dockerfile') }}
         restore-keys: |
           ubuntu-docker-
 
