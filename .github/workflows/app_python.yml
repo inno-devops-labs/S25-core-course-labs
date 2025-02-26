@@ -1,0 +1,157 @@
+name: Python CI
+
+on:
+  push:
+    paths:
+      - "app_python/**"
+      - ".github/workflows/app_python.yml"
+  pull_request:
+    paths:                            
+      - "app_python/**"
+      - ".github/workflows/app_python.yml"
+
+jobs:
+  dependencies:
+    name: Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache Venv with Dependencies
+        uses: actions/cache@v3
+        with:
+          path: app_python/venv
+          key: ${{ runner.os }}-venv-${{ hashFiles('app_python/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-venv-
+
+      - name: Install Dependencies
+        run: | 
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+        working-directory: app_python
+
+
+  lint:
+    name: Lint 
+    runs-on: ubuntu-latest
+    needs: dependencies
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      
+      - name: Restore Cached venv
+        uses: actions/cache@v3
+        with:
+          path: app_python/venv
+          key: ${{ runner.os }}-venv-${{ hashFiles('app_python/requirements.txt') }}
+
+      - name: Run Flake8 Linter
+        run: |
+          source venv/bin/activate
+          flake8  --exclude=venv,__pycache__,.git --max-line-length=100 .
+        working-directory: app_python
+
+  snyk:
+    name: Snyk Security Scan
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run Snyk Security Scan
+        uses: snyk/actions/python-3.10@master
+        with:
+          args: --skip-unresolved app_python/
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+
+  run:
+    name: Run
+    runs-on: ubuntu-latest
+    needs: snyk
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Restore Cached venv
+        uses: actions/cache@v3
+        with:
+          path: app_python/venv
+          key: ${{ runner.os }}-venv-${{ hashFiles('app_python/requirements.txt') }}
+
+      - name: Start Application
+        run: |
+          source venv/bin/activate
+          nohup python app.py > app.log 2>&1 & 
+        working-directory: app_python 
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: run
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Restore Cached venv
+        uses: actions/cache@v3
+        with:
+          path: app_python/venv
+          key: ${{ runner.os }}-venv-${{ hashFiles('app_python/requirements.txt') }}
+
+      - name: Run Tests
+        run: |
+          source venv/bin/activate
+          pytest --disable-warnings --maxfail=3
+        working-directory: app_python 
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build & Push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: "${{ vars.DOCKER_USERNAME }}/app_python:latest"
+          context: ./app_python
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
