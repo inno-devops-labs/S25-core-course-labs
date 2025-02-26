@@ -263,3 +263,5 @@ xdg-open: no method available for opening 'http://127.0.0.1:45321'
 
 
 ## Library Charts
+
+Created and configured, `library` dependency was added to the both apps
