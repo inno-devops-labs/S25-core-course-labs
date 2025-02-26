@@ -79,3 +79,69 @@ ows you to access this !
 
 Here is the screenshot demonstrating that the IP matches the output of `minikube service --all`:
 ![Screenshot with browser result](./img/k8s_task2.png)
+
+## Bonus Task: Additional Configuration and Ingress
+
+### Manifests for Extra App:
+
+I have created `deployment.yml` and `service.yml` for my additional application.
+
+Here are the outputs of `kubectl get pods,svc` and `minikube service --all`:
+
+```bash
+> kubectl get pods,svc
+
+NAME                                        READY   STATUS    RESTARTS   AGE
+pod/app-golang-deployment-67648d5cd-2dr9t   1/1     Running   0          23s
+pod/app-golang-deployment-67648d5cd-6544p   1/1     Running   0          23s
+pod/app-golang-deployment-67648d5cd-68rq6   1/1     Running   0          23s
+
+NAME                         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+service/app-golang-service   ClusterIP   10.101.151.193   <none>        82/TCP    23s
+service/kubernetes           ClusterIP   10.96.0.1        <none>        443/TCP   80m
+```
+
+```bash
+> minikube service --all
+
+|-----------|--------------------|-------------|--------------|
+| NAMESPACE |        NAME        | TARGET PORT |     URL      |
+|-----------|--------------------|-------------|--------------|
+| default   | app-golang-service |             | No node port |
+|-----------|--------------------|-------------|--------------|
+😿  service default/app-golang-service has no node port
+|-----------|------------|-------------|--------------|
+| NAMESPACE |    NAME    | TARGET PORT |     URL      |
+|-----------|------------|-------------|--------------|
+| default   | kubernetes |             | No node port |
+|-----------|------------|-------------|--------------|
+😿  service default/kubernetes has no node port
+❗  Services [default/app-golang-service default/kubernetes] have type "ClusterIP" not meant to be exposed, however for local development minikube all
+ows you to access this !
+🏃  Starting tunnel for service app-golang-service.
+🏃  Starting tunnel for service kubernetes.
+|-----------|--------------------|-------------|------------------------|
+| NAMESPACE |        NAME        | TARGET PORT |          URL           |
+|-----------|--------------------|-------------|------------------------|
+| default   | app-golang-service |             | http://127.0.0.1:46247 |
+| default   | kubernetes         |             | http://127.0.0.1:44187 |
+|-----------|--------------------|-------------|------------------------|
+🎉  Opening service default/app-golang-service in default browser...
+👉  http://127.0.0.1:46247
+🎉  Opening service default/kubernetes in default browser...
+👉  http://127.0.0.1:44187
+❗  Because you are using a Docker driver on linux, the terminal needs to be open to run it.
+```
+
+![Screenshot with browser result](./img/k8s_bonus.png)
+
+### Ingress Manifests:
+
+I have constructed Ingress manifests for all my applications:
+
+- Python app
+- Golang app
+
+### Application Availability Check:
+
+![Output of curl availability check](./img/k8s_bonus_ingress.png)
