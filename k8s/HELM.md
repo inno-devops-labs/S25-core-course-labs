@@ -53,6 +53,10 @@ service/myapp        ClusterIP   10.100.242.107   <none>        80/TCP    74s
 ❗  Because you are using a Docker driver on linux, the terminal needs to be open to run it.
 
 ```
+![alt text](https://github.com/DoryShibkova/S25-core-course-labs/blob/lab10/k8s/img1.jpg)
+![alt text](https://github.com/DoryShibkova/S25-core-course-labs/blob/lab10/k8s/img2.jpg)
+![alt text](https://github.com/DoryShibkova/S25-core-course-labs/blob/lab10/k8s/img3.jpg)
+---
 
 # Helm Chart Hooks
 
