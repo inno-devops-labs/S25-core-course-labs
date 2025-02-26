@@ -1,0 +1,12 @@
+---
+- name: Deploy Go app
+  hosts: all
+  become: true
+  roles:
+    - role: web_app
+      vars:
+        docker_image: "dtolmach/go-app"
+        docker_image_tag: "latest"
+        container_name: go-app
+        container_port: 8080
+        port: 8080
