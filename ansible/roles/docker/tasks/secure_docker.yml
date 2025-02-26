@@ -1,0 +1,12 @@
+---
+- name: Secure Docker Daemon
+  copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "icc": false,
+        "userns-remap": "default",
+        "no-new-privileges": true
+      }
+    mode: "0644"
+  notify: Docker Restart
