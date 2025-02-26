@@ -1,0 +1,8 @@
+#cloud-config
+users:
+  - name: <имя_пользователя>
+    groups: sudo
+    shell: /bin/bash
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBq0yg8cFu+exbiUDmSODxEv5KBARUJuiQGlt+iznZ2poKPoL9gmNXahDNNseAuJqZg4Y5Z7XVW/lWvLe139eBD2Xg3q/Vs5QNDXct09SMQ179yM8YfVB+x0Sxy5Rrkyx8PYkwx/lQeuvC9yXPra1OHKbFnWZ7PaTJHWa0hPdY/d6fSzPjYlVew5UGxhw6o4aV/0mFeX8YBz8c+tQNktQ/mr58CzTtETHMTlGXxWFrrWdg1SVhHLOjMW1WSu0w9Z4f6G21mMhVrHLIads0wFMurM052A3sTFguNES2QE4b0B0ZBDABeXLxVQbt9vXn7go5RXRg/CdaEfITvG5mXsgQn5eqTQoKr43L/4w6tWwJYZ2MWn0RRzaAXwua4mUTNJ1Y+aj8PbVItAQkK+eM1CaQQ+PntGV1Gz7scMfVXSLQgCmRW4Untf7PTywE5Zv+4P4L+fJAblTyebXBGE+yhvTTnVgin7xw6phbLPVGPhsY4JwJQWqkr9dhmdBpBVffrJU= almazgaazov@MacBook-Air-Almaz.local
