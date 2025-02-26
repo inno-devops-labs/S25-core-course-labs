@@ -50,7 +50,7 @@ service/kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP    2d2h
 
 ### Helm Chart Hooks
 
-#### Troubleshooting
+**1)** Troubleshooting
 
 ```bash
 helm lint app-python                                       
@@ -268,7 +268,7 @@ NOTES:
 
 ```
 
-#### Hooks without deletion policy
+**2)** Hooks without deletion policy
 
 ```bash
 helm install app-python ./app-python                      
