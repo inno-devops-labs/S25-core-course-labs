@@ -35,5 +35,5 @@ def moscow_time():
 
 # Start the app and expose metrics
 if __name__ == '__main__':
-    start_http_server(8001)  # Expose metrics on port 8001
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    start_http_server(8001)
+    app.run(host='0.0.0.0', port=8000, debug=False)

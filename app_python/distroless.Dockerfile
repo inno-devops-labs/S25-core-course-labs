@@ -21,7 +21,7 @@ WORKDIR /app
 COPY --from=build /app /app
 
 # Expose the application port
-EXPOSE 5000
+EXPOSE 8000
 
 # Run the application
 CMD ["web_app.py"]
