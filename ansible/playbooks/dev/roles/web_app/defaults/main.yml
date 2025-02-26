@@ -1,0 +1,7 @@
+app_name: "web_app"
+app_user: "appuser"
+app_group: "appgroup"
+app_port: 5000
+app_dir: "/app"
+docker_compose_file: "{{ app_dir }}/docker-compose.yml"
+app_src_dir: "/home/egor/PycharmProjects/S25-core-course-labs/app_python"
