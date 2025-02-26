@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: app-python-pre-install
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  template:
+    spec:
+      containers:
+        - name: pre-install-job
+          image: busybox
+          command: ["/bin/sh", "-c", "echo Pre-install job running"]
+      restartPolicy: Never
