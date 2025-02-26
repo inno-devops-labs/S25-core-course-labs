@@ -1,0 +1,9 @@
+# This is the default AWS EC2 inventory file for Ansible
+# It defines the basic inventory structure for local development and testing
+
+all:                              # The 'all' group contains all hosts
+ hosts:                          # Define the hosts in this group
+   localhost:                    # Configure localhost as a target
+     ansible_connection: local   # Use local connection type instead of SSH
+                                # This allows Ansible to run commands directly
+                                # on the control node without SSH
