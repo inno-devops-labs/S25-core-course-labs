@@ -1,5 +1,34 @@
+# Lab 10: Introduction to Helm | Mametov Eldar
+
+In this report you will find all the steps I took to successfully complete lab 10, as well as the bonus task. 
+
+## Task 1: Helm Setup and Chart Creation
+
+I went through the documentation in detail and also set up the helm according to the guide.
+I then created my heml chart for the web app and followed the steps below for what to set up: 
+- A chart template was generated in the k8s folder using the helm create web-apps command.
+- In the values.yaml file, I replaced the repository and tag with my own: lekski/python-web-app:latest.
+- In the deployment.yaml file, I changed the containerPort to 8000.
+- There were no problems with livenessProbe and readinessProbe, so I left them unchanged.
+  
+I then installed this heml chart: 
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ helm install helm-hooks-release ./web-apps
+NAME: helm-hooks-release
+LAST DEPLOYED: Mon Feb 24 13:43:39 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get the application URL by running these commands:
+  http://python-web-app.local/
+```
+
+Then I made sure it worked by visiting the Workloads page in the Minikube dashboard
+
 ![alt text](image-1.png)
 
+The availability of the app was verified with the `minikube service web-apps` command. I also ran a query using curl:
 ```
 lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ curl python-web-app.local
 <!DOCTYPE html>
@@ -20,6 +49,7 @@ lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ curl pyt
 ```
 
 
+I created a file `HELM.md` and included the output of the `kubectl get pods,svc` command: 
 ```
 NAME                            READY   STATUS    RESTARTS   AGE
 pod/web-apps-6c5469f97d-j8wfw   1/1     Running   0          6m2s
@@ -29,27 +59,19 @@ service/kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP    10m
 service/web-apps     ClusterIP   10.106.108.139   <none>        8000/TCP   6m2s
 ```
 
+## Task 2: Helm Chart Hooks
 
-```
-lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ helm install helm-hooks-release ./web-apps
-NAME: helm-hooks-release
-LAST DEPLOYED: Mon Feb 24 13:43:39 2025
-NAMESPACE: default
-STATUS: deployed
-REVISION: 1
-NOTES:
-1. Get the application URL by running these commands:
-  http://python-web-app.local/
-```
+I have familiarized myself with the concept of hooks in Helm and created two hooks as specified in the task for my `web-apps`, the hooks `post-install-hook.yaml` and `pre-install-hook.yaml`. 
+You can read the hooks themselves directly in the hooks file. 
 
-```
-lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl get po
-NAME                                           READY   STATUS    RESTARTS   AGE
-helm-hooks-release-web-apps-67688955f8-q6hwj   1/1     Running   0          4m29s
-web-apps-6c5469f97d-j8wfw                      1/1     Running   0          83m
-```
+To check the correctness I executed the commands:
+- helm lint web-apps - no errors detected.
+- helm install --dry-run helm-hooks web-apps - dry-run was successful.
+- kubectl get po - confirmed the creation of the pods.
 
-Часть 2
+Below is the console output: 
+
+- Output of the kubectl get po command:
 ```
 lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl get po
 NAME                                           READY   STATUS      RESTARTS   AGE
@@ -58,6 +80,8 @@ my-web-apps-84bf78bd7f-t5nsz                   0/1     Running     0          12
 postinstall-hook                               0/1     Completed   0          8m37s
 preinstall-hook                                0/1     Completed   0          35s
 ```
+
+- The output of the kubectl describe po postinstall-hook command:
 ```
 lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl describe po postinstall-hook
 Name:             postinstall-hook
@@ -121,6 +145,7 @@ Events:
   Normal  Started    83s   kubelet            Started container post-install-container
 ```
 
+- The output of the kubectl describe po preinstall-hook command:
 ```
 lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl describe po preinstall-hook
 Name:             preinstall-hook
@@ -183,6 +208,7 @@ Events:
   Normal  Started    3m39s  kubelet            Started container pre-install-container
 ```
 
+- The output of the kubectl get pods,svc command:
 ```
 lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl get pods,svc
 NAME                                               READY   STATUS      RESTARTS   AGE
@@ -198,14 +224,26 @@ service/my-web-apps                   ClusterIP   10.103.98.88     <none>       
 service/web-apps                      ClusterIP   10.106.108.139   <none>        8000/TCP   129m
 ```
 
+I implemented a hook-delete policy by adding the annotation “helm.sh/hook-delete-policy”: “hook-succeeded” to both hooks. This ensured that they would be deleted after successful execution.
 
-Бонусное задание: 
-Я создал дополнительную helm конфигурацию для моего экстра веб приложения на golang. 
-Затем по гайду приведенному в задании создал mylibchart, указал тип как library, а так же использовал шаблок для _labels.tlp из гайда. 
+## Bonus Task: Helm Library Chart
 
-Затем в самих веб приложениях я добавил зависимости от mylibchart и в метаданных указал include "mylibchart.labels" . | nindent 4. 
-После этого я проверил корректно работы mylibchart используя helm template ./golang-web-app --debug для обеих веб приложения и проверил строку с метаданными на корректность вывода. Вывод этой команды вы можете увидеть ниже, как видно ошибок нет и метаданные выводятся корректно, что нам говорит о правильной работе mylibchart. 
+I created a Helm chart for an additional Golang app (golang-web-app) using a structure similar to web-apps, with the image lekski/golang-web-app:latest. Repeated the same steps with it as with web-apps(my python web-app). 
 
+Then I created a library mylibchart:
+- Specified the library type in Chart.yaml.
+- Created a _labels.tpl template based on the manual.
+- In the web-apps and golang-web-app charts, added the mylibchart dependency in Chart.yaml:
+```
+dependencies:
+  - name: mylibchart
+    version: "0.1.0"
+    repository: "file://../mylibchart"
+```
+
+Checking if the library chart is working correctly
+I verified the correct operation using the helm template command. 
+The command is for `web-apps`: 
 ```
 lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ helm template ./web-apps --debug
 install.go:225: 2025-02-26 11:39:23.072574783 +0300 MSK m=+1.947332066 [debug] Original chart version: ""
@@ -367,6 +405,10 @@ spec:
       command: ['wget']
       args: ['release-name-web-apps:8000']
   restartPolicy: Never
+```
+
+For `golang-web-app`:
+```
 lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ helm template ./golang-web-app --debug
 install.go:225: 2025-02-26 11:39:59.338521641 +0300 MSK m=+1.521960738 [debug] Original chart version: ""
 install.go:242: 2025-02-26 11:39:59.34224403 +0300 MSK m=+1.525683127 [debug] CHART PATH: /mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s/golang-web-app
@@ -506,3 +548,5 @@ spec:
       args: ['release-name-golang-web-app:8000']
   restartPolicy: Never
 ```
+
+**The output confirmed that the metadata is correctly substituted from the library chart, indicating that it is working correctly.**
