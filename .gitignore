@@ -86,3 +86,7 @@ minikube-linux-amd64
 *.vdi
 *.box
 *.ova
+
+# Helm
+charts/
+*.tgz
