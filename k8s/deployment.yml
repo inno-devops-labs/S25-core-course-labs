@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-python
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-python
+  template:
+    metadata:
+      labels:
+        app: app-python
+    spec:
+      containers:
+        - name: app-python
+          image: ramilevna/app_python
+          ports:
+            - containerPort: 4000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-javascript
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-javascript
+  template:
+    metadata:
+      labels:
+        app: app-javascript
+    spec:
+      containers:
+        - name: app-javascript
+          image: ramilevna/app_javascript
+          ports:
+            - containerPort: 6000
