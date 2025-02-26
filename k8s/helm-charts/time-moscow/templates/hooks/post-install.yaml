@@ -5,6 +5,7 @@ metadata:
   annotations:
     "helm.sh/hook": post-install
     "helm.sh/hook-weight": "5"
+    "helm.sh/hook-delete-policy": before-hook-creation
 spec:
   containers:
   - name: post-install-job
