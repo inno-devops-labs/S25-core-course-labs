@@ -18,6 +18,17 @@ services:
     depends_on:
       - loki
 
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yaml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yaml'
+    depends_on:
+      - loki
+
   grafana:
     image: grafana/grafana:latest
     ports:
@@ -26,6 +37,7 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
       - loki
+      - prometheus
     volumes:
       - grafana-storage:/var/lib/grafana
 
