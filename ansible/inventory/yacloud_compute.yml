@@ -1,0 +1,6 @@
+---
+plugin: yacloud_compute
+yacloud_token_file: "./inventory/yandex-cloud-token"
+yacloud_clouds: cloud-ilsya-nasibullina
+yacloud_folders: default
+ansible_python_interpreter: /usr/bin/python3
