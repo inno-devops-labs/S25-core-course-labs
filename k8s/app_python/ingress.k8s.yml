@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: watch-ingress
+metadata:
+  name: watch-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: paranid5.app_piton.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app-piton-service
+            port:
+              number: 8082
