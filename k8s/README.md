@@ -1,3 +1,12 @@
+# Lab 9: Introduction to Kubernetes | Mametov Eldar
+
+This report details the steps I took to successfully complete Lab 9, learning the fundamentals of Kubernetes, and also the steps for completing the bonus task.
+
+## Task 1: Kubernetes Setup and Basic Deployment
+
+To complete the first task, focusing on Kubernetes setup and basic deployment, I reviewed all the provided documentation. I followed the guide's steps to install kubectl and minikube. Then, I created a resource for my application, which I named `web-app`. For the initial example, I used `python-web-app`. (Later, for the extra application, I renamed the files and now have two files for python and golang web applications).
+
+To confirm the successful deployment of the application, I am attaching the output of `kubectl get pods,svc`:
 ```
 lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ kubectl get pods,svc
 NAME                        READY   STATUS    RESTARTS   AGE
@@ -9,6 +18,9 @@ service/myapp        NodePort    10.108.77.51   <none>        8000:31814/TCP   8
 lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ minikube ip
 192.168.49.2
 ```
+
+
+I also verified the web application's functionality using curl: 
 ```
 lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ curl 192.168.49.2:31814
 <!DOCTYPE html>
@@ -28,6 +40,10 @@ lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ curl
 </html>
 ```
 
+## Task 2: Declarative Kubernetes Manifests
+For the second task, focusing on declarative Kubernetes manifests, I read the specified documentation in the task description and created service.yml for my web application (named it python-service.yml).
+
+Below you can see the console output and screenshots confirming the completion of the second task:
 ```
 lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ kubectl get pods,svc
 NAME                                            READY   STATUS    RESTARTS   AGE
@@ -39,7 +55,6 @@ NAME                             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT
 service/kubernetes               ClusterIP   10.96.0.1        <none>        443/TCP          179m
 service/python-web-app-service   NodePort    10.106.233.164   <none>        8000:31028/TCP   2m38s
 ```
-
 
 ```
 lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ minikube service --all
@@ -70,8 +85,14 @@ lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ minikube
 ❗  Because you are using a Docker driver on linux, the terminal needs to be open to run it.
 ```
 
+Screenshot of the application running:
 ![alt text](image.png)
 
+## Bonus Task: Additional Configuration and Ingress
+
+For the bonus task, involving additional configuration and Ingress, I repeated all the steps I performed previously for my Python web application, but this time I did it for my additional application in golang. I don't see the point in demonstrating its functionality again, as the code was analogous, so it's logical.
+
+Then, following the guide (the link to which is provided in the task), I wrote ingress.yml and tested it. Below are the commands demonstrating the ingress functionality:
 
 ```
 </html>lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ kubectl get ingress web-apps-ingress
@@ -99,6 +120,7 @@ lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ curl htt
 ```
 
 ```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ curl http://golang-web-app.local
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -116,3 +138,4 @@ lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ curl htt
     </body>
 </html>
 ```
+As you can see, ingress is working correctly, and I can access my web applications through specified hostnames.
