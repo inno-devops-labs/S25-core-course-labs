@@ -11,7 +11,8 @@ CONFIG_FILE = "config.txt"
 
 # Prometheus metrics
 REQUEST_COUNT = Counter('app_request_count', 'Total number of requests')
-REQUEST_TIME = Gauge('app_request_time_seconds', 'Time spent processing requests')
+REQUEST_TIME = Gauge('app_request_time_seconds',
+                     'Time spent processing requests')
 ERROR_COUNT = Counter('app_error_count', 'Total number of errors')
 
 
@@ -46,7 +47,8 @@ def current_time() -> str:
 
     time = datetime.now(TIME_ZONE)
     REQUEST_COUNT.inc()  # Increment request counter
-    REQUEST_TIME.set((datetime.now() - start_time).total_seconds())  # Set request time
+    REQUEST_TIME.set((datetime.now() -
+                      start_time).total_seconds())  # Set request time
 
     return f"Current time in {TIME_ZONE} is {time.strftime('%H:%M:%S')}"
 
