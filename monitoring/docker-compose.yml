@@ -5,11 +5,38 @@ services:
     build: ../app_python
     ports:
       - "8000:8000"
+    # Bonus task: log rotation settings
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    # Bonus task: memory limits
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
   nodejs_app:
     build: ../app_nodejs
     ports:
       - "8080:3000"
+    # Bonus task: log rotation settings
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    # Bonus task: memory limits
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   loki:
     image: grafana/loki:2.7.1
@@ -19,15 +46,39 @@ services:
     volumes:
       - ./loki/config/config.yml:/etc/loki/config.yml
       - loki_data:/loki
+    # Bonus task: log rotation settings
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    # Bonus task: memory limits
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   promtail:
     image: grafana/promtail:2.7.1
     command: -config.file=/etc/promtail/config.yml
+    ports: 
+      - "9080:9080"
     volumes:
       - ./promtail/config/config.yml:/etc/promtail/config.yml
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - loki
+    # Bonus task: log rotation settings
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    # Bonus task: memory limits
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   grafana:
     image: grafana/grafana-oss:9.4.7
@@ -37,6 +88,44 @@ services:
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
     depends_on:
       - loki
+    # Bonus task: log rotation settings
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    # Bonus task: memory limits
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - loki
+      - promtail
+      - grafana
+      - fastapi_app
+      - nodejs_app
+    # Bonus task: log rotation settings
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    # Bonus task: memory limits
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
 volumes:
   loki_data:

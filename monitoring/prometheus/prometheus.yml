@@ -1,0 +1,34 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # Scrape Prometheus itself
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["prometheus:9090"]
+
+  # Scrape Loki
+  - job_name: "loki"
+    static_configs:
+      - targets: ["loki:3100"]
+
+  # Scrape Promtail
+  - job_name: "promtail"
+    static_configs:
+      - targets: ["promtail:9080"]
+
+  # Scrape Grafana
+  - job_name: "grafana"
+    static_configs:
+      - targets: ["grafana:3000"]
+
+  # Scrape FastAPI app
+  - job_name: "fastapi_app"
+    static_configs:
+      - targets: ["fastapi_app:8000"]
+
+  # Scrape Node.js app
+  - job_name: "nodejs_app"
+    static_configs:
+      - targets: ["nodejs_app:3000"]
