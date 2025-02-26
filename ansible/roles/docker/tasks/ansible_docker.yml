@@ -1,0 +1,16 @@
+- name: Install pip
+  apt:
+    name: python3-pip
+    state: present
+  tags:
+    - pip-docker
+
+- name: Install Docker pip module
+  pip:
+    name: 'docker==7.1.0'
+    state: present
+    # this is needed on the new distros to adhere to externally managed dependencies policy of pip
+    # it wouldn't actually break the system packages since the package is relatively self-contained and doesn't have upper version limits on dependencies
+    break_system_packages: true
+  tags:
+    - pip-docker

@@ -1,0 +1,7 @@
+docker_users:
+  "{{ lookup('env', 'USER') }}"
+
+docker_on_boot: true
+
+# Whether to install the Docker Python module
+install_docker_pip: false
