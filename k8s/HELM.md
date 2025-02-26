@@ -17,6 +17,8 @@ Here are the screenshots that confirm the healthiness of Helm:
 
 ![Verify that application is accessible](./img/helm_3.png)
 
+Output of `kubectl get pods,svc`:
+
 ![kubectl get pods,svc](./img/helm_4.png)
 
 ## Task 2: Helm Chart Hooks
