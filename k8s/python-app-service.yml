@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-app-moscow-time-service
+  labels:
+    app: python-app-moscow-time
+spec:
+  selector:
+    app: python-app-moscow-time
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: NodePort
