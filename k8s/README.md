@@ -76,17 +76,17 @@ k8s % minikube service --all
 
 Manifests for an extra app were created:
 
-![Extra app](./extra_app.png)
+![Extra app](./pics/extra_app.png)
 
-![Screenshot of apps running](./two_apps.png)
+![Screenshot of apps running](./pics/two_apps.png)
 
 Ingress was added:
 
-![Adding ingress](./ingress_add.png)
+![Adding ingress](./pics/ingress_add.png)
 
 After creating manifest, curl tool was used to check:
 
-![Curl python](./curl_python.png)
+![Curl python](./pics/curl_python.png)
 
-![Curl nodejs](./curl_nodejs.png)
+![Curl nodejs](./pics/curl_nodejs.png)
 
