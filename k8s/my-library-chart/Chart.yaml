@@ -1,0 +1,6 @@
+apiVersion: v2
+name: my-library-chart
+description: A Helm chart for reusable templates (labels template)
+type: library
+version: 0.1.0
+
