@@ -164,3 +164,77 @@ Gtk-Message: 19:24:13.888: Failed to load module "canberra-gtk-module"
 
 ## Bonus Task
 
+In this tash I;
+
+- Enabled `ingress`:
+```sh
+vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9)> minikube addons enable ingress
+💡  ingress is an addon maintained by Kubernetes. For any concerns contact minikube on GitHub.
+You can view the list of minikube maintainers at: https://github.com/kubernetes/minikube/blob/master/OWNERS
+    ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.4.4
+    ▪ Using image registry.k8s.io/ingress-nginx/controller:v1.11.3
+    ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.4.4
+🔎  Verifying ingress addon...
+🌟  The 'ingress' addon is enabled
+vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9)> kubectl get pods -n ingress-nginx
+NAME                                        READY   STATUS      RESTARTS   AGE
+ingress-nginx-admission-create-2qf7d        0/1     Completed   0          96s
+ingress-nginx-admission-patch-hh5l2         0/1     Completed   0          96s
+ingress-nginx-controller-56d7c84fd4-k4t2z   1/1     Running     0          96s
+```
+- Created and applied `Deployment` and `Service`:
+```sh
+vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9)> kubectl apply -f cpp-app/deployment.yml
+deployment.apps/cpp-app created
+vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9)> kubectl get deployments.apps 
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+cpp-app   3/3     3            0           7s
+vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9)> kubectl apply -f cpp-app/service.yml
+service/cpp-app-service created
+vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9)> kubectl get service
+NAME              TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+cpp-app-service   LoadBalancer   10.110.237.118   <pending>     8080:31316/TCP   9s
+kubernetes        ClusterIP      10.96.0.1        <none>        443/TCP          9m52s
+vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9)> minikube service cpp-app-service
+|-----------|-----------------|-------------|---------------------------|
+| NAMESPACE |      NAME       | TARGET PORT |            URL            |
+|-----------|-----------------|-------------|---------------------------|
+| default   | cpp-app-service |        8080 | http://192.168.49.2:31316 |
+|-----------|-----------------|-------------|---------------------------|
+🎉  Opening service default/cpp-app-service in default browser...
+```
+- Created and applied `Ingess`
+```sh
+vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9)> kubectl apply -f cpp-app/ingress.yml 
+ingress.networking.k8s.io/cpp-app-ingress created
+vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9)> kubectl get ingress
+NAME              CLASS   HOSTS         ADDRESS        PORTS   AGE
+cpp-app-ingress   nginx   cpp-app.com   192.168.49.2   80      3m1s
+```
+- Availability check:
+```sh
+vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9) [6]> curl --resolve "cpp-app.com:80:$( minikube ip )" -i http://cpp-app.com
+HTTP/1.1 200 OK
+Date: Wed, 26 Feb 2025 23:47:14 GMT
+Content-Type: text/plain
+Content-Length: 28
+Connection: keep-alive
+
+Random number is: 1731514229⏎ 
+```
+- Required output:
+```sh
+vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab9)> kubectl get pods,svc,ingress
+NAME                           READY   STATUS    RESTARTS   AGE
+pod/cpp-app-78d9569698-hsx8c   1/1     Running   0          23m
+pod/cpp-app-78d9569698-rnmzd   1/1     Running   0          23m
+pod/cpp-app-78d9569698-zm4sm   1/1     Running   0          23m
+
+NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/cpp-app-service   NodePort    10.110.58.110   <none>        8080:32245/TCP   10m
+service/kubernetes        ClusterIP   10.96.0.1       <none>        443/TCP          102m
+
+NAME                                        CLASS   HOSTS         ADDRESS        PORTS   AGE
+ingress.networking.k8s.io/cpp-app-ingress   nginx   cpp-app.com   192.168.49.2   80      10m
+
+```

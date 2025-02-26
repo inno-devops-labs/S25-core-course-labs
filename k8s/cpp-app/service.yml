@@ -5,7 +5,7 @@ metadata:
 spec:
   selector:
     app: cpp-app
-  type: LoadBalancer
+  type: NodePort
   ports:
   - protocol: TCP
     port: 8080
