@@ -56,14 +56,14 @@ jobs:
       uses: actions/cache@v3
       with:
         path: /tmp/.buildx-cache
-        key: ubuntu-docker-${{ hashFiles('app_python/Dockerfile') }}
+        key: ubuntu-docker-${{ hashFiles('app_C++/Dockerfile') }}
         restore-keys: |
           ubuntu-docker-
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
-        context: app_python
+        context: app_C++
         push: true
         tags: ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
 
