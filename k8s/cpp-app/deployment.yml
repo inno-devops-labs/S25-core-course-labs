@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: python-app-deployment
+  name: cpp-app
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: python-app
+      app: cpp-app
   minReadySeconds: 5
   template:
     metadata:
       labels:
-        app: python-app
+        app: cpp-app
     spec:
       containers:
-      - name: python-app
-        image: voronm1522/devops:python-app
+      - name: cpp-app
+        image: voronm1522/devops:cpp-app
         ports:
-        - containerPort: 5000
+        - containerPort: 8080
