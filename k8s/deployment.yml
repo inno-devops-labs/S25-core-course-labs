@@ -3,9 +3,9 @@ kind: Deployment
 metadata:
   name: moscow-time-app
 spec:
-  replicas: 3               
+  replicas: 3
   selector:
-    matchLabels:             
+    matchLabels:
       app: moscow-time-app
   template:
     metadata:
@@ -17,10 +17,10 @@ spec:
         image: utkanosss/moscow-time-app
         ports:
         - containerPort: 5000 
-        resources:           
+        resources:
           limits:
             memory: "128Mi"   
             cpu: "500m"      
           requests:
-            memory: "64Mi"   
-            cpu: "250m" 
+            memory: "64Mi"    
+            cpu: "250m"      

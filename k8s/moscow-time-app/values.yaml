@@ -1,0 +1,65 @@
+replicaCount: 3
+
+image:
+  repository: utkanosss/moscow-time-app  
+  tag: latest                          
+  pullPolicy: IfNotPresent              
+
+service:
+  type: NodePort                        
+  port: 80                              
+  targetPort: 8000                      
+resources:
+  limits:
+    cpu: "1"                            
+    memory: "512Mi"                    
+  requests:
+    cpu: "250m"                         
+    memory: "256Mi"                     
+
+
+serviceAccount:
+  create: false                     
+  annotations: {}                       
+  name: ""                             
+
+
+autoscaling:
+  enabled: false                        
+  minReplicas: 2                       
+  maxReplicas: 5                        
+  targetCPUUtilizationPercentage: 80   
+
+
+livenessProbe:
+  enabled: false                       
+  httpGet:
+    path: /healthz                    
+    port: http                         
+
+readinessProbe:
+  enabled: false                       
+  httpGet:
+    path: /ready                      
+    port: http                         
+
+volumeMounts: []
+volumes: []
+
+nodeSelector: {}
+
+affinity: {}
+
+tolerations: []
+
+podAnnotations: {}
+
+podLabels: {}
+
+ingress:
+  enabled: false         
+  annotations: {}         
+  hosts:
+    - host: chart-example.local   
+      paths: [/]                  
+  tls: []                       
