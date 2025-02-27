@@ -1,0 +1,73 @@
+version: '3'
+
+services:
+  loki:
+    image: grafana/loki:2.9.1
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - logging-network
+
+  promtail:
+    image: grafana/promtail:2.9.1
+    volumes:
+      - ./promtail-config.yaml:/etc/promtail/config.yml
+      - /var/log:/var/log
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - python-app-logs:/home/appuser/logs:ro
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki
+    networks:
+      - logging-network
+
+  grafana:
+    image: grafana/grafana:10.1.0
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    volumes:
+      - ./grafana-provisioning:/etc/grafana/provisioning
+    depends_on:
+      - loki
+    networks:
+      - logging-network
+
+  # Python Flask application
+  python-app:
+    build:
+      context: ../app_python
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5000"
+    volumes:
+      - python-app-logs:/home/appuser/logs
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["python", "app.py"]
+    networks:
+      - logging-network
+    depends_on:
+      - loki
+      - promtail
+
+  # Sample application to generate logs
+  demo-app:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    networks:
+      - logging-network
+
+networks:
+  logging-network:
+    driver: bridge
+
+volumes:
+  python-app-logs:
+    driver: local 
