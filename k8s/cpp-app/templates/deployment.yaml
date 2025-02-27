@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "python-app.fullname" . }}
+  name: {{ .Release.Name }}
   labels:
     {{- include "library-chart.labels" . | indent 4 }}
 spec:
@@ -24,7 +24,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "python-app.serviceAccountName" . }}
+      serviceAccountName: {{ include "cpp-app.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
