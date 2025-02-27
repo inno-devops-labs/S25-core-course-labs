@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: Ivan Sannikov
+  description: Install Docker
+  license: MIT
+  company: Some Test compony
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+  galaxy_tags:
+    - docker
+    - container
+
+dependencies: []
