@@ -1,0 +1,8 @@
+---
+# Web application deployment variables
+web_app_name: "demo-app"
+web_app_port: 8080
+web_app_image: "nginx:latest"
+web_app_container_name: "{{ web_app_name }}"
+web_app_data_dir: "/opt/{{ web_app_name }}"
+web_app_restart_policy: "unless-stopped" 
