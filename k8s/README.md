@@ -366,7 +366,7 @@ To simplify access, I created an **Ingress resource** that routes traffic to bot
 I created `k8s/ingress.yml`:
 
 ```yaml
-yamlapiVersion: networking.k8s.io/v1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: my-ingress
@@ -392,6 +392,8 @@ spec:
             name: node-app-service
             port:
               number: 80
+
+
 
 ```
 
