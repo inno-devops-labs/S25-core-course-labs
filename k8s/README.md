@@ -208,7 +208,8 @@ Connection: keep-alive
 
 ### Go App
 
-```(venv) ➜  S25-core-course-labs git:(Lab-9) ✗ curl --resolve "go-app.local:80:127.0.0.1" -i http://go-app.local
+```txt
+(venv) ➜  S25-core-course-labs git:(Lab-9) ✗ curl --resolve "go-app.local:80:127.0.0.1" -i http://go-app.local
 HTTP/1.1 200 OK
 Date: Thu, 27 Feb 2025 03:46:50 GMT
 Content-Type: text/plain; charset=utf-8
