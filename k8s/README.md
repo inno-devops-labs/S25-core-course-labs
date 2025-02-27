@@ -1,9 +1,9 @@
-- Task 1.3-1.4:
-    - ![alt text](image.png)
+## Task 1.3-1.4:
+- ![alt text](images/image.png)
 
 ## Task 1.5:
 - Screenshot:
-    - ![alt text](image-1.png)
+    - ![alt text](images/image-1.png)
 - Text format:
     - ```bash
       kubectl get pods,svc
@@ -19,12 +19,12 @@
 
 ## Task 1.6:
 - Screenshot:
-    - ![alt text](image-2.png)
+    - ![alt text](images/image-2.png)
 
 ## Task 2.3
 - Used `deployment.yml` and `service.yml` with kubectl apply -f `{{path}}`.
 - Screenshot for bullet point 2:
-    - ![alt text](image-3.png)
+    - ![alt text](images/image-3.png)
 - Text format:
     - ```bash
       kubectl get pods,svc
@@ -42,7 +42,7 @@
     - ```bash
       minikube service --all
       ```
-      ![alt text](image-4.png)
+      ![alt text](images/image-4.png)
 
 ## Bonus Task 1
 - `gin-deployment.yml` and `gin-service.yml` are created for additional application.
@@ -51,10 +51,10 @@
 - `ingress.yml` created as an ingress manifests for applications.
 
 ## Bonus Task 3
-- Applying ingress ![alt text](image-5.png)
+- Applying ingress ![alt text](images/image-5.png)
 - Application availability check:
-    - ![alt text](image-6.png) 
-    - ![alt text](image-7.png)
+    - ![alt text](images/image-6.png) 
+    - ![alt text](images/image-7.png)
 
 ## Steps to reproduce:
 1. ```bash

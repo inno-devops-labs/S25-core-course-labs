@@ -162,13 +162,13 @@ To view logs in Grafana:
 ## **Demonstrating Success**
 **Screenshots:**
 0. **Running Containers**:
-   - ![alt text](image-3.png)
+   - ![alt text](images/image-3.png)
 1. **Adding Loki to Grafana as Data Source**:
-   - ![alt text](image.png)
+   - ![alt text](images/image.png)
 2. **Generating Logs via Interaction with web apps**:
-   - ![alt text](image-1.png)
+   - ![alt text](images/image-1.png)
 3. **Logs Demonstraton**
-   - ![alt text](image-2.png)
+   - ![alt text](images/image-2.png)
 4. **Containers Logs Demonstration (Bonus)**:
-   - ![alt text](image-4.png)
+   - ![alt text](images/image-4.png)
 ---
