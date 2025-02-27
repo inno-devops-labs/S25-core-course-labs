@@ -1,0 +1,9 @@
+- name: Stop a container
+  community.docker.docker_container:
+    name: "{{container_name}}"
+    state: stopped
+
+- name: Remove container
+  community.docker.docker_container:
+    name: "{{container_name}}"
+    state: absent
