@@ -165,7 +165,7 @@ Before implementing Helm hooks, I reviewed their functionality:
 - **Post-install Hook**: Runs after the application is successfully deployed.
 - **Hook Delete Policy**: Ensures that completed hooks do not persist unnecessarily.
 
-📌 **References:**
+**References:**
 
 - [Helm Hooks Documentation](https://helm.sh/docs/topics/charts_hooks/)
 - [Best Practices for Helm Hooks](https://helm.sh/docs/chart_best_practices/)
@@ -178,7 +178,7 @@ I created **pre-install** and **post-install** hooks for both applications insid
 
 ### **Pre-Install Hook for `python-app`**
 
-📍 File: `k8s/python-app/templates/pre-install-hook.yaml`
+ File: `k8s/python-app/templates/pre-install-hook.yaml`
 
 ```yaml
 apiVersion: batch/v1
@@ -202,7 +202,7 @@ spec:
 
 ### **Post-Install Hook for `python-app`**
 
-📍 File: `k8s/python-app/templates/post-install-hook.yaml`
+ File: `k8s/python-app/templates/post-install-hook.yaml`
 
 ```yaml
 apiVersion: batch/v1
@@ -228,7 +228,7 @@ spec:
 
 ### **Pre-Install Hook for `node-app`**
 
-📍 File: `k8s/node-app/templates/pre-install-hook.yaml`
+ File: `k8s/node-app/templates/pre-install-hook.yaml`
 
 ```yaml
 apiVersion: batch/v1
@@ -252,7 +252,7 @@ spec:
 
 ### **Post-Install Hook for `node-app`**
 
-📍 File: `k8s/node-app/templates/post-install-hook.yaml`
+ File: `k8s/node-app/templates/post-install-hook.yaml`
 
 ```yaml
 apiVersion: batch/v1
@@ -292,7 +292,7 @@ helm lint node-app
 
 ![image.png](./ScreenshotsLab10/image%2011.png)
 
-✔ **Both charts passed linting without errors.**
+**Both charts passed linting without errors.**
 
 ### **Testing Hooks with Dry-Run**
 
@@ -308,7 +308,7 @@ helm install node-app ./node-app
 
 ![image.png](./ScreenshotsLab10/image%2013.png)
 
-✔ **Hooks appeared in the simulated output, confirming their recognition by Helm.**
+**Hooks appeared in the simulated output, confirming their recognition by Helm.**
 
 ### **Deploying Helm Charts**
 
@@ -324,7 +324,7 @@ helm upgrade --install node-app ./node-app
 
 ![image.png](./ScreenshotsLab10/image%2015.png)
 
-✔ **Deployments were successful.**
+**Deployments were successful.**
 
 ---
 
@@ -339,7 +339,7 @@ kubectl get pods
 
 ![image.png](./ScreenshotsLab10/image%2016.png)
 
-✔ **Output:**
+**Output:**
 
 ```sh
 NAME                           READY   STATUS      RESTARTS   AGE
@@ -351,9 +351,9 @@ pre-install-node-hook-gxrs2    0/1     Completed   0          11m
 python-app-5d47767f7f-gwdbf    1/1     Running     0          10m
 ```
 
-✔ **Both applications (`python-app` and `node-app`) are running.**
+**Both applications (`python-app` and `node-app`) are running.**
 
-✔ **All four hooks (`pre-install` and `post-install` for both apps) completed successfully.**
+**All four hooks (`pre-install` and `post-install` for both apps) completed successfully.**
 
 ### **Checking Hook Logs**
 
@@ -366,7 +366,7 @@ kubectl logs pre-install-node-hook-p95gg
 
 ![image.png](./ScreenshotsLab10/image%2017.png)
 
-✔ Logs confirmed the hooks executed successfully.
+Logs confirmed the hooks executed successfully.
 
 ---
 
@@ -381,7 +381,7 @@ kubectl get svc
 
 ![image.png](./ScreenshotsLab10/image%2018.png)
 
-✔ **Expected Output:**
+**Expected Output:**
 
 ```sh
 NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
@@ -402,7 +402,7 @@ minikube service node-app
 
 ![image.png](./ScreenshotsLab10/image%2020.png)
 
-✔ **Both applications were accessible in the browser.**
+**Both applications were accessible in the browser.**
 
 ---
 
@@ -414,7 +414,7 @@ this line right here assures Hook Delete Policy which removes the hook once it h
 "helm.sh/hook-delete-policy": hook-succeeded
 ```
 
-✔ **This removed completed hook pods while keeping deployments intact.**
+**This removed completed hook pods while keeping deployments intact.**
 
 ---
 
@@ -442,7 +442,7 @@ Before implementing the library chart, I studied:
     - Ensures **consistent settings** across multiple applications.
     - Improves **maintainability** of Helm charts.
 
-📌 **References:**
+**References:**
 
 - [Helm Library Chart Documentation](https://helm.sh/docs/topics/library_charts/)
 
@@ -481,7 +481,7 @@ managed-by: Helm
 
 ![image.png](./ScreenshotsLab10/image%2023.png)
 
-✔ **This ensures that `python-app` and `node-app` automatically inherit these labels.**
+**This ensures that `python-app` and `node-app` automatically inherit these labels.**
 
 ---
 
@@ -529,7 +529,7 @@ dependencies:
 
 ![image.png](./ScreenshotsLab10/image%2027.png)
 
-✔ **Now both applications use the same standardized labels from `my-library-chart`.**
+**Now both applications use the same standardized labels from `my-library-chart`.**
 
 ---
 
@@ -543,7 +543,7 @@ helm dependency update ./k8s/node-app
 
 ```
 
-✔ **This successfully added `my-library-chart` to the dependencies.**
+**This successfully added `my-library-chart` to the dependencies.**
 
 ---
 
@@ -559,7 +559,7 @@ helm upgrade --install my-node-app ./k8s/node-app
 
 ![image.png](./ScreenshotsLab10/image%2028.png)
 
-✔ **Both applications deployed successfully!** 🎉
+**Both applications deployed successfully!** 🎉
 
 ---
 
@@ -574,7 +574,7 @@ kubectl get pods --show-labels
 
 ![image.png](./ScreenshotsLab10/image%2029.png)
 
-✔ **Both applications now have the shared labels from `my-library-chart`**.
+**Both applications now have the shared labels from `my-library-chart`**.
 
 ---
 
