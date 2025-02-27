@@ -1,0 +1,6 @@
+services:
+  node_app:
+    image: "{{ docker_image_node }}"
+    ports:
+      - "{{ app_node_port }}:7000"
+    restart: always
