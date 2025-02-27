@@ -1,0 +1,33 @@
+- name: Include tasks to install Docker
+  import_tasks: install_docker.yml
+
+
+- name: Include tasks to install Docker Compose
+  import_tasks: install_compose.yml
+
+
+- name: Configure Docker daemon.json for security
+  copy:
+   dest: /etc/docker/daemon.json
+   content: |
+     {
+       "icc": false,
+       "log-driver": "json-file",
+       "log-opts": {
+         "max-size": "100m"
+       },
+       "live-restore": true,
+       "userns-remap": "default"
+     }
+   owner: root
+   group: root
+   mode: '0644'
+  notify: Restart Docker
+
+
+- name: Add users to the docker group
+  user:
+   name: "{{ item }}"
+   groups: docker
+   append: yes
+  loop: "{{ docker_users }}"
