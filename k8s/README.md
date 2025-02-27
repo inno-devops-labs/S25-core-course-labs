@@ -45,7 +45,7 @@ minikube start
 
 ```
 
-![image.png](./ScreenshotsLab9/image 1.png)
+![image.png](./ScreenshotsLab9/image%201.png)
 
 This ensured that my environment was ready for application deployment.
 
@@ -58,7 +58,7 @@ kubectl create deployment python-app --image=em1999jay/python-app:latest
 
 ```
 
-![image.png](./screenshotslab/image 2.png)
+![image.png](./screenshotslab9/image%202.png)
 
 I verified that the deployment was successful using:
 
@@ -68,9 +68,9 @@ kubectl get pods
 
 ```
 
-![image.png](./ScreenshotsLab9/image 3.png)
+![image.png](./ScreenshotsLab9/image%203.png)
 
-![image.png](./ScreenshotsLab9/image 4.png)
+![image.png](./ScreenshotsLab9/image%204.png)
 
 ### **5. Exposing My Application**
 
@@ -81,7 +81,7 @@ kubectl expose deployment python-app --type=NodePort --port=80 --target-port=500
 
 ```
 
-![image.png](./ScreenshotsLab9/image 5.png)
+![image.png](./ScreenshotsLab9/image%205.png)
 
 I checked the Service details:
 
@@ -90,7 +90,7 @@ kubectl get svc
 
 ```
 
-![image.png](./ScreenshotsLab9/image 6.png)
+![image.png](./ScreenshotsLab9/image%206.png)
 
 ### **6. Accessing My Application**
 
@@ -101,7 +101,7 @@ minikube service python-app-service --url
 
 ```
 
-![image.png](./ScreenshotsLab9/image 7.png)
+![image.png](./ScreenshotsLab9/image%207.png)
 
 I retrieved the IP and accessed my application at:
 
@@ -110,7 +110,7 @@ http://192.168.49.2:30637
 
 ```
 
-![image.png](./ScreenshotsLab9/image 8.png)
+![image.png](./ScreenshotsLab9/image%208.png)
 
 ### **7. Cleanup**
 
@@ -122,7 +122,7 @@ kubectl delete svc python-app
 
 ```
 
-![image.png](./ScreenshotsLab9/image 9.png)
+![image.png](./ScreenshotsLab9/image%209.png)
 
 ---
 
@@ -188,7 +188,7 @@ kubectl apply -f k8s/service.yml
 
 ```
 
-![image.png](./ScreenshotsLab9/image 10.png)
+![image.png](./ScreenshotsLab9/image%2010.png)
 
 ### **4. Verifying the Deployment**
 
@@ -200,7 +200,7 @@ kubectl get svc
 
 ```
 
-![image.png](./ScreenshotsLab9/image 11.png)
+![image.png](./ScreenshotsLab9/image%2011.png)
 
 ### **5. Accessing My Application**
 
@@ -211,11 +211,11 @@ minikube service python-app --url
 
 ```
 
-![image.png](./ScreenshotsLab9/image 12.png)
+![image.png](./ScreenshotsLab9/image%2012.png)
 
 Then, I accessed my application in a browser and verified its availability.
 
-![image.png](./ScreenshotsLab9/image 13.png)
+![image.png](./ScreenshotsLab9/image%2013.png)
 
 ### **6. Collecting Outputs**
 
@@ -268,9 +268,9 @@ I documented the following outputs in this report:
 
 - A **screenshot** of the application running in my browser, demonstrating that the IP matches the output from `minikube service --all`.
 
-    ![image.png](./ScreenshotsLab9/image 14.png)
+    ![image.png](./ScreenshotsLab9/image%2014.png)
 
-    ![image.png](./ScreenshotsLab9/image 15.png)
+    ![image.png](./ScreenshotsLab9/image%2015.png)
 
 ---
 
@@ -341,7 +341,7 @@ kubectl apply -f k8s/node-service.yml
 
 ```
 
-![image.png](./ScreenshotsLab9/image 16.png)
+![image.png](./ScreenshotsLab9/image%2016.png)
 
 After deployment, I verified that both applications were running:
 
@@ -351,9 +351,9 @@ kubectl get svc
 
 ```
 
-![image.png](./ScreenshotsLab9/image 17.png)
+![image.png](./ScreenshotsLab9/image%2017.png)
 
-![image.png](./ScreenshotsLab9/image 18.png)
+![image.png](./ScreenshotsLab9/image%2018.png)
 
 ---
 
@@ -404,7 +404,7 @@ minikube addons enable ingress
 
 ```
 
-![image.png](./ScreenshotsLab9/image 19.png)
+![image.png](./ScreenshotsLab9/image%2019.png)
 
 Then, I applied the Ingress configuration:
 
@@ -413,7 +413,7 @@ kubectl apply -f k8s/ingress.yml
 
 ```
 
-![image.png](./ScreenshotsLab9/image 20.png)
+![image.png](./ScreenshotsLab9/image%2020.png)
 
 ### **Updating `/etc/hosts`**
 
@@ -432,7 +432,7 @@ And added:
 
 ```
 
-![image.png](./ScreenshotsLab9/image 21.png)
+![image.png](./ScreenshotsLab9/image%2021.png)
 
 I saved and exited (`CTRL+X`, then `Y` and `Enter`).
 
@@ -448,9 +448,9 @@ curl -H "Host: node-app.local" http://192.168.49.2/
 
 ```
 
-![image.png](./ScreenshotsLab9/image 22.png)
+![image.png](./ScreenshotsLab9/image%2022.png)
 
-![image.png](./ScreenshotsLab9/image 23.png)
+![image.png](./ScreenshotsLab9/image%2023.png)
 
 Both returned the expected responses.
 
@@ -475,21 +475,21 @@ I documented:
 
 - The output of `kubectl get pods,svc` after deploying both applications.
 
-    ![image.png](./ScreenshotsLab9/image 24.png)
+    ![image.png](./ScreenshotsLab9/image%2024.png)
 
 - The output of `minikube service --all`.
 
-![image.png](./ScreenshotsLab9/image 25.png)
+![image.png](./ScreenshotsLab9/image%2025.png)
 
-![image.png](./ScreenshotsLab9/image 26.png)
+![image.png](./ScreenshotsLab9/image%2026.png)
 
-![image.png](./ScreenshotsLab9/image 27.png)
+![image.png](./ScreenshotsLab9/image%2027.png)
 
 - Screenshots of `python-app.local` and `node-app.local` in the browser, proving successful deployment.
 
-    ![image.png](./ScreenshotsLab9/image 28.png)
+    ![image.png](./ScreenshotsLab9/image%2028.png)
 
-    ![image.png](./ScreenshotsLab9/image 29.png)
+    ![image.png](./ScreenshotsLab9/image%2029.png)
 
 ---
 
