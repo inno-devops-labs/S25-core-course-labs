@@ -51,3 +51,7 @@
 - `ingress.yml` created as an ingress manifests for applications.
 
 ## Bonus Task 3
+- Applying ingress ![alt text](image-5.png)
+- Application availability check:
+    - ![alt text](image-6.png) 
+    - ![alt text](image-7.png)
