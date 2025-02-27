@@ -1,0 +1,187 @@
+version: '3.7'
+
+networks:
+  monitoring:
+    driver: bridge
+
+volumes:
+  loki_data:
+
+services:
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    volumes:
+      - loki_data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - monitoring
+    deploy:
+      resources:
+        limits:
+          memory: 200M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 2
+    healthcheck:
+      test: ["CMD", "pgrep", "loki"]
+      start_period: 5s
+      retries: 3
+      timeout: 5s
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - ./promtail-config.yml:/etc/promtail/config.yaml
+      - /var/log:/var/log
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    command: -config.file=/etc/promtail/config.yaml
+    networks:
+      - monitoring
+    depends_on:
+      loki:
+        condition: service_started
+    deploy:
+      resources:
+        limits:
+          memory: 50M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 2
+    healthcheck:
+      test: [ "CMD", "pgrep", "promtail" ]
+      start_period: 5s
+      retries: 3
+      timeout: 5s
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 0
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy 
+          orgId: 0
+          url: http://loki:3100
+          basicAuth: false
+          isDefault: true
+          version: 0
+          editable: false
+        - name: Prometheus
+          type: prometheus
+          basicAuth: false
+          url: http://prometheus:9090
+          version: 0
+          editable: false
+        EOF
+        /run.sh
+    networks:
+      - monitoring
+    depends_on:
+      loki:
+        condition: service_started
+      promtail:
+        condition: service_started
+    deploy:
+      resources:
+        limits:
+          memory: 200M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 2
+    healthcheck:
+      test: [ "CMD", "pgrep", "grafana" ]
+      start_period: 5s
+      retries: 3
+      timeout: 5s
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+    networks:
+      - monitoring
+    ports:
+      - "9090:9090"
+    depends_on:
+      loki:
+        condition: service_started
+      python_app:
+        condition: service_started
+      go_app:
+        condition: service_started
+    deploy:
+      resources:
+        limits:
+          memory: 50M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 2
+    healthcheck:
+      test: [ "CMD", "pgrep", "prometheus" ]
+      start_period: 5s
+      retries: 3
+      timeout: 5s
+
+  python_app:
+    image: netpo4ki/python-web:latest
+    ports:
+      - "8081:8000"
+    networks:
+      - monitoring
+    deploy:
+      resources:
+        limits:
+          memory: 50M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 2
+    healthcheck:
+      test: "curl -f http://localhost:8000"
+      retries: 3
+      start_period: 5s
+      timeout: 5s
+
+  go_app:
+    image: netpo4ki/go-web:latest
+    ports:
+      - "8082:8080"
+    networks:
+      - monitoring
+    deploy:
+      resources:
+        limits:
+          memory: 600M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 2
+    healthcheck:
+      test: "curl -f http://localhost:8080"
+      retries: 3
+      timeout: 5s
+      start_period: 5s
