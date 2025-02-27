@@ -387,3 +387,28 @@ In this task I:
   ```
 
 ## Bonus Task
+
+In this task I:
+
+- Prepared Helm chart for cpp-app
+- Created `library-chart`, which descrides lables' template
+- Edited `Chart.yaml` and `templates/deployment.yaml` for `python-app` and `cpp-app`
+- Updated dependencies
+- Installed charts
+- Checked changes
+
+  ![Dashboard with updated lables](img/updated_lables_demo.png)
+- Provided outputs
+
+  ```sh
+  vm@vm /m/v/d/h/V/U/L/P/D/S/k8s (lab10)> kubectl get pods,svc
+  NAME                                         READY   STATUS    RESTARTS   AGE
+  pod/cpp-app-1740669813-774df45499-wg9nj      1/1     Running   0          7m46s
+  pod/python-app-1740670060-5479f684dc-scfhz   1/1     Running   0          3m21s
+
+  NAME                            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+  service/cpp-app-1740669813      ClusterIP   10.104.215.181   <none>        8080/TCP   7m46s
+  service/kubernetes              ClusterIP   10.96.0.1        <none>        443/TCP    17h
+  service/python-app-1740670060   ClusterIP   10.104.68.247    <none>        5000/TCP   3m21s
+
+  ```
