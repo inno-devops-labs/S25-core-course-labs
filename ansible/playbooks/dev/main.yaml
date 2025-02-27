@@ -1,20 +1,44 @@
 ---
-- name: Deploy Docker on EC2 instances
+- name: Deploy Docker and Web Application on EC2 instances
   hosts: all
   become: true
   vars:
     docker_version: "latest"
     docker_compose_version: "2.15.1"
+    web_app_name: "demo-app"
+    web_app_port: 8080
+    web_app_image: "nginx:latest"
   
   roles:
     - docker
+    - web_app
   
   tasks:
     - name: Check Docker installation
       command: docker --version
       register: docker_version_output
       changed_when: false
+      tags:
+        - check
       
     - name: Display Docker version
       debug:
-        var: docker_version_output.stdout 
+        var: docker_version_output.stdout
+      tags:
+        - check
+        
+    - name: Check Web Application Status
+      uri:
+        url: "http://localhost:{{ web_app_port }}"
+        method: GET
+        status_code: 200
+      register: app_status
+      ignore_errors: true
+      tags:
+        - check
+        
+    - name: Display Web Application Status
+      debug:
+        msg: "Web Application is {{ 'running' if app_status.status == 200 else 'not running' }}"
+      tags:
+        - check 

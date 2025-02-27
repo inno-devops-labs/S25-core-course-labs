@@ -9,6 +9,16 @@ services:
       - "{{ web_app_port }}:80"
     volumes:
       - ./data:/usr/share/nginx/html
+      - ./logs:/var/log/app
+    environment:
+{% for key, value in web_app_env_vars.items() %}
+      {{ key }}: "{{ value }}"
+{% endfor %}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80{{ web_app_health_check_path }}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     networks:
       - web_network
 

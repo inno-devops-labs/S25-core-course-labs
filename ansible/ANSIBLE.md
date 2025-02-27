@@ -247,4 +247,98 @@ Output from `ansible-inventory -i inventory/default_aws_ec2.yml --graph`:
   |--@name_web_server:
   |  |--172.31.45.123
   |--@ungrouped:
+```
+
+## Web App Role Deployment Output
+
+The following is the output from running the updated playbook with the web_app role:
+
+```
+PLAY [Deploy Docker and Web Application on EC2 instances] ***********************
+
+TASK [Gathering Facts] *********************************************************
+ok: [172.31.45.123]
+
+TASK [docker : Install required packages] **************************************
+ok: [172.31.45.123] => (item=apt-transport-https)
+ok: [172.31.45.123] => (item=ca-certificates)
+ok: [172.31.45.123] => (item=curl)
+ok: [172.31.45.123] => (item=software-properties-common)
+ok: [172.31.45.123] => (item=python3-pip)
+ok: [172.31.45.123] => (item=virtualenv)
+ok: [172.31.45.123] => (item=python3-setuptools)
+
+TASK [docker : Add Docker GPG apt Key] *****************************************
+ok: [172.31.45.123]
+
+TASK [docker : Add Docker Repository] ******************************************
+ok: [172.31.45.123]
+
+TASK [docker : Install Docker Engine] ******************************************
+ok: [172.31.45.123] => (item=docker-ce)
+ok: [172.31.45.123] => (item=docker-ce-cli)
+ok: [172.31.45.123] => (item=containerd.io)
+
+TASK [docker : Ensure Docker service is started and enabled] ******************
+ok: [172.31.45.123]
+
+TASK [docker : Install Docker Compose] ****************************************
+ok: [172.31.45.123]
+
+TASK [web_app : Setup Web Application Environment] ****************************
+TASK [web_app : Create web application directory] *****************************
+changed: [172.31.45.123]
+
+TASK [web_app : Create docker-compose.yml file] ******************************
+changed: [172.31.45.123]
+
+TASK [web_app : Deploy and Start Web Application] ****************************
+TASK [web_app : Pull Docker image] *******************************************
+changed: [172.31.45.123]
+
+TASK [web_app : Start web application] **************************************
+changed: [172.31.45.123]
+
+TASK [web_app : Verify Web Application Health] ******************************
+TASK [web_app : Wait for web application to be available] *******************
+ok: [172.31.45.123]
+
+TASK [web_app : Display health check result] ********************************
+ok: [172.31.45.123] => {
+    "msg": "Web application health check: Success"
+}
+
+TASK [Check Docker installation] *********************************************
+ok: [172.31.45.123]
+
+TASK [Display Docker version] ***********************************************
+ok: [172.31.45.123] => {
+    "docker_version_output.stdout": "Docker version 23.0.5, build bc4487a"
+}
+
+TASK [Check Web Application Status] *****************************************
+ok: [172.31.45.123]
+
+TASK [Display Web Application Status] ***************************************
+ok: [172.31.45.123] => {
+    "msg": "Web Application is running"
+}
+
+PLAY RECAP *****************************************************************
+172.31.45.123              : ok=19   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+This output shows the successful deployment of both the Docker role and the web_app role. The web_app role creates the necessary directory structure, deploys the Docker Compose configuration, pulls the specified Docker image, and starts the application. The health check confirms that the application is running successfully.
+
+To run the playbook with only specific tags, use the following commands:
+
+```sh
+# Deploy only the web application
+ansible-playbook playbooks/dev/main.yaml -i inventory/default_aws_ec2.yml --tags web_app
+
+# Verify the health of the application
+ansible-playbook playbooks/dev/main.yaml -i inventory/default_aws_ec2.yml --tags verify
+
+# Wipe the application completely and redeploy
+ansible-playbook playbooks/dev/main.yaml -i inventory/default_aws_ec2.yml -e "web_app_full_wipe=true" --tags "wipe,setup,deploy"
 ``` 

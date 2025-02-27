@@ -1,31 +1,60 @@
 ---
-- name: Create web application directory
-  file:
-    path: "{{ web_app_data_dir }}"
-    state: directory
-    mode: '0755'
+# Include wipe tasks
+- import_tasks: 0-wipe.yml
+  tags:
+    - wipe
 
-- name: Create docker-compose.yml file
-  template:
-    src: docker-compose.yml.j2
-    dest: "{{ web_app_data_dir }}/docker-compose.yml"
-    mode: '0644'
-  notify: restart web application
+- name: Setup Web Application Environment
+  block:
+    - name: Create web application directory
+      file:
+        path: "{{ web_app_data_dir }}"
+        state: directory
+        mode: '0755'
+        
+    - name: Create docker-compose.yml file
+      template:
+        src: docker-compose.yml.j2
+        dest: "{{ web_app_data_dir }}/docker-compose.yml"
+        mode: '0644'
+      notify: restart web application
+  tags:
+    - setup
+    - web_app
 
-- name: Start web application
-  command: docker-compose up -d
-  args:
-    chdir: "{{ web_app_data_dir }}"
-  changed_when: false
+- name: Deploy and Start Web Application
+  block:
+    - name: Pull Docker image
+      docker_image:
+        name: "{{ web_app_image }}"
+        source: pull
+        
+    - name: Start web application
+      command: docker-compose up -d
+      args:
+        chdir: "{{ web_app_data_dir }}"
+      changed_when: false
+  tags:
+    - deploy
+    - web_app
 
-- name: Check if web application is running
-  uri:
-    url: "http://localhost:{{ web_app_port }}"
-    return_content: no
-    status_code: 200
-  register: health_check
-  ignore_errors: true
-
-- name: Display health check result
-  debug:
-    msg: "Web application health check: {{ 'Success' if health_check.status == 200 else 'Failed' }}" 
+- name: Verify Web Application Health
+  block:
+    - name: Wait for web application to be available
+      uri:
+        url: "http://localhost:{{ web_app_port }}{{ web_app_health_check_path }}"
+        return_content: no
+        status_code: 200
+        timeout: "{{ web_app_health_check_timeout }}"
+      register: health_check
+      retries: 5
+      delay: 10
+      until: health_check.status == 200
+      ignore_errors: true
+    
+    - name: Display health check result
+      debug:
+        msg: "Web application health check: {{ 'Success' if health_check.status == 200 else 'Failed' }}"
+  tags:
+    - verify
+    - web_app 

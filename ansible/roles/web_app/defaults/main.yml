@@ -5,4 +5,13 @@ web_app_port: 8080
 web_app_image: "nginx:latest"
 web_app_container_name: "{{ web_app_name }}"
 web_app_data_dir: "/opt/{{ web_app_name }}"
-web_app_restart_policy: "unless-stopped" 
+web_app_restart_policy: "unless-stopped"
+# Wipe configuration
+web_app_full_wipe: false
+# Health check configuration
+web_app_health_check_path: "/"
+web_app_health_check_timeout: 10
+# Environment variables for the container
+web_app_env_vars:
+  NODE_ENV: "production"
+  LOG_LEVEL: "info" 
