@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "fastapi-mt.fullname" . }}
+  name: {{ include "gin-mt.fullname" . }}
   labels:
     {{- include "common.labels" . | nindent 4 }}
 spec:
@@ -10,7 +10,7 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "fastapi-mt.selectorLabels" . | nindent 6 }}
+      {{- include "gin-mt.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "fastapi-mt.labels" . | nindent 8 }}
+        {{- include "gin-mt.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -27,7 +27,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "fastapi-mt.serviceAccountName" . }}
+      serviceAccountName: {{ include "gin-mt.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -45,12 +45,12 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           {{- with .Values.livenessProbe }}
-          #livenessProbe:
-          #  {{- toYaml . | nindent 12 }}
+          ##livenessProbe:
+          ##  {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.readinessProbe }}
-          #readinessProbe:
-          #  {{- toYaml . | nindent 12 }}
+          ##readinessProbe:
+          ##  {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.resources }}
           resources:
