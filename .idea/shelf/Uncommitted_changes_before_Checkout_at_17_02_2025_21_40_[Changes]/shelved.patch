@@ -1,0 +1,22 @@
+Index: .idea/S25-core-course-labs.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"PYTHON_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\">\r\n    <content url=\"file://$MODULE_DIR$\" />\r\n    <orderEntry type=\"jdk\" jdkName=\"Python 3.9\" jdkType=\"Python SDK\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n  </component>\r\n</module>
+===================================================================
+diff --git a/.idea/S25-core-course-labs.iml b/.idea/S25-core-course-labs.iml
+--- a/.idea/S25-core-course-labs.iml	(revision f7e31e568b2a6aa2926c22d965b8bf90a0e3186f)
++++ b/.idea/S25-core-course-labs.iml	(date 1739817593349)
+@@ -1,8 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+-<module type="PYTHON_MODULE" version="4">
+-  <component name="NewModuleRootManager">
+-    <content url="file://$MODULE_DIR$" />
+-    <orderEntry type="jdk" jdkName="Python 3.9" jdkType="Python SDK" />
+-    <orderEntry type="sourceFolder" forTests="false" />
++<module version="4">
++  <component name="PyDocumentationSettings">
++    <option name="format" value="GOOGLE" />
++    <option name="myDocStringFormat" value="Google" />
+   </component>
+ </module>
+\ No newline at end of file

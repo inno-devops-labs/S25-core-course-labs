@@ -1,0 +1,4 @@
+apiVersion: v2
+name: libchart
+version: 1.0.0
+type: library

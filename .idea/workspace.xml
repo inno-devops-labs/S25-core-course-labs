@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d58190c2-1340-463b-90f5-b49c32ff05ab" name="Changes" comment="Lab-9" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform)); sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo, NoAppException&#10;for module in [&quot;main.py&quot;, &quot;wsgi.py&quot;, &quot;app.py&quot;]:&#10;    try: locals().update(ScriptInfo(app_import_path=module, create_app=None).load_app().make_shell_context()); print(&quot;\nFlask App: %s&quot; % app.import_name); break&#10;    except NoAppException: pass">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform)); sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo, NoAppException&#10;for module in [&quot;main.py&quot;, &quot;wsgi.py&quot;, &quot;app.py&quot;]:&#10;    try: locals().update(ScriptInfo(app_import_path=module, create_app=None).load_app().make_shell_context()); print(&quot;\nFlask App: %s&quot; % app.import_name); break&#10;    except NoAppException: pass" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;AskArtwentythree&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/AskArtwentythree/S25-core-course-labs.git&quot;,
+    &quot;accountId&quot;: &quot;9cd5a0a5-0cad-4864-823e-f2010d8ade0d&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2s84VzWHBqoIqBvdIM0yTudWkyq" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;Docker.app_python/Dockerfile.executor&quot;: &quot;Run&quot;,
+    &quot;Node.js.app.js.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in test_app.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.app.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;lab9&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/PycharmProjects/Assignment2/S25-core-course-labs/app_node&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\User\PycharmProjects\Assignment2\S25-core-course-labs\app_node" />
+      <recent name="C:\Users\User\PycharmProjects\Assignment2\S25-core-course-labs\app_python" />
+      <recent name="C:\Users\User\PycharmProjects\Assignment2\S25-core-course-labs" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\User\PycharmProjects\Assignment2\S25-core-course-labs" />
+      <recent name="C:\Users\User\PycharmProjects\Assignment2\S25-core-course-labs\monitoring" />
+      <recent name="C:\Users\User\PycharmProjects\Assignment2\S25-core-course-labs\ansible\inventory" />
+      <recent name="C:\Users\User\PycharmProjects\Assignment2\S25-core-course-labs\app_python" />
+      <recent name="C:\Users\User\PycharmProjects\Assignment2\S25-core-course-labs\app_node" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="app_python/Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="containerName" value="" />
+          <option name="sourceFilePath" value="app_python/Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.app_python/Dockerfile" />
+        <item itemvalue="Docker.app_python/Dockerfile" />
+        <item itemvalue="Docker.app_python/Dockerfile" />
+        <item itemvalue="Docker.app_python/Dockerfile" />
+        <item itemvalue="Docker.app_python/Dockerfile" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-PY-243.22562.220" />
+        <option value="bundled-python-sdk-0fc6c617c4bd-9a18a617cbe4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.22562.220" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d58190c2-1340-463b-90f5-b49c32ff05ab" name="Changes" comment="" />
+      <created>1737823895303</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1737823895303</updated>
+      <workItem from="1737823896478" duration="2487000" />
+      <workItem from="1737826803127" duration="6769000" />
+      <workItem from="1737988054607" duration="1408000" />
+      <workItem from="1737997039508" duration="1516000" />
+      <workItem from="1738604546377" duration="7071000" />
+      <workItem from="1738778245342" duration="159000" />
+      <workItem from="1738778412931" duration="951000" />
+      <workItem from="1738779382164" duration="1220000" />
+      <workItem from="1738780613530" duration="5725000" />
+      <workItem from="1738790511374" duration="592000" />
+      <workItem from="1738792392926" duration="194000" />
+      <workItem from="1739206790293" duration="3886000" />
+      <workItem from="1739278531474" duration="5386000" />
+      <workItem from="1739411731251" duration="7733000" />
+      <workItem from="1739447980210" duration="3464000" />
+      <workItem from="1739456572815" duration="1341000" />
+      <workItem from="1739466712490" duration="5213000" />
+      <workItem from="1739816083331" duration="1114000" />
+      <workItem from="1739817374852" duration="293000" />
+      <workItem from="1739817725139" duration="624000" />
+      <workItem from="1739818462072" duration="2021000" />
+      <workItem from="1740026854865" duration="1969000" />
+      <workItem from="1740052192717" duration="1622000" />
+      <workItem from="1740602663296" duration="827000" />
+      <workItem from="1740620449517" duration="52000" />
+    </task>
+    <task id="LOCAL-00001" summary="Lab-1">
+      <option name="closed" value="true" />
+      <created>1737827179836</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1737827179836</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Lab-1">
+      <option name="closed" value="true" />
+      <created>1737828215639</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1737828215639</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Lab-2">
+      <option name="closed" value="true" />
+      <created>1737832851285</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1737832851285</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Lab-2">
+      <option name="closed" value="true" />
+      <created>1737998311972</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1737998311973</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Lab-3">
+      <option name="closed" value="true" />
+      <created>1738604810576</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1738604810576</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Lab-3">
+      <option name="closed" value="true" />
+      <created>1738605990151</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1738605990151</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Lab-3">
+      <option name="closed" value="true" />
+      <created>1738606806274</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1738606806274</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Lab-3">
+      <option name="closed" value="true" />
+      <created>1738609953727</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1738609953727</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Lab-3">
+      <option name="closed" value="true" />
+      <created>1738610251592</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1738610251592</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Lab-3">
+      <option name="closed" value="true" />
+      <created>1738778304448</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1738778304448</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Lab-4">
+      <option name="closed" value="true" />
+      <created>1738785718896</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1738785718896</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Lab-5">
+      <option name="closed" value="true" />
+      <created>1739214580468</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1739214580468</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Lab-6">
+      <option name="closed" value="true" />
+      <created>1739214914972</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1739214914972</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Lab-7">
+      <option name="closed" value="true" />
+      <created>1740052769062</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1740052769062</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Lab-8">
+      <option name="closed" value="true" />
+      <created>1740053325200</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1740053325200</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Lab-9">
+      <option name="closed" value="true" />
+      <created>1740603153205</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1740603153205</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Lab-1" />
+    <MESSAGE value="Lab-2" />
+    <MESSAGE value="Lab-3" />
+    <MESSAGE value="Lab-4" />
+    <MESSAGE value="Lab-5" />
+    <MESSAGE value="Lab-6" />
+    <MESSAGE value="Lab-7" />
+    <MESSAGE value="Lab-8" />
+    <MESSAGE value="Lab-9" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lab-9" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/S25_core_course_labs$app.coverage" NAME="app Coverage Results" MODIFIED="1737826882898" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_python" />
+    <SUITE FILE_PATH="coverage/S25_core_course_labs$.coverage" NAME=" Coverage Results" MODIFIED="1737825059242" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app_python" />
+  </component>
+</project>
