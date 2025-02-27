@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: timezone-nodejs-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: timezone-nodejs-app
+  template:
+    metadata:
+      labels:
+        app: timezone-nodejs-app
+    spec:
+      containers:
+        - name: timezone-nodejs-container
+          image: louayfarah/timezone_app_nodejs:latest
+          ports:
+            - containerPort: 3000

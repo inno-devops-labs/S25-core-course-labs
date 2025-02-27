@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+  annotations:
+    "kubernetes.io/ingress.class": "nginx"
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /fastapi
+            pathType: Prefix
+            backend:
+              service:
+                name: timezone-python-app
+                port:
+                  number: 8000
+          - path: /nodejs
+            pathType: Prefix
+            backend:
+              service:
+                name: timezone-nodejs-app
+                port:
+                  number: 3000

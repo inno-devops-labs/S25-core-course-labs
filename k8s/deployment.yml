@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: timezone-python-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: timezone-python-app
+  template:
+    metadata:
+      labels:
+        app: timezone-python-app
+    spec:
+      containers:
+        - name: timezone-python-container
+          image: louayfarah/timezone_app_python:latest
+          ports:
+            - containerPort: 8000
