@@ -192,5 +192,5 @@ $ curl -H "Host: httpd.local" http://$(minikube ip)
 <html><body><h1>It works!</h1></body></html>
 ```
 
-![HTTPD Screenshot](./images/bonus-task_image.png)
+![](./images/bonus_task_image.png)
 
