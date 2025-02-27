@@ -58,7 +58,7 @@ kubectl create deployment python-app --image=em1999jay/python-app:latest
 
 ```
 
-![image.png](./screenshotslab9/image%202.png)
+![image.png](./ScreenshotsLab9/image%202.png)
 
 I verified that the deployment was successful using:
 
