@@ -70,6 +70,13 @@ helm create python-app
 
 ![image.png](./ScreenshotsLab10/image%202.png)
 
+Verifying this by checking the Workloads page in the Minikube dashboard:
+
+![image.png](./ScreenshotsLab10/workload.png)
+![image.png](./ScreenshotsLab10/workloadjobs.png)
+![image.png](./ScreenshotsLab10/workloadpods.png)
+![image.png](./ScreenshotsLab10/workloadreplica.png)
+
 This created a directory structure like:
 
 ```sh
