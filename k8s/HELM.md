@@ -44,7 +44,7 @@ helm version
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image.png)
+![image.png](./ScreenshotsLab10/image.png)
 
 I then initialized the Helm repository:
 
@@ -54,7 +54,7 @@ helm repo update
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%201.png)
+![image.png](./ScreenshotsLab10/image%201.png)
 
 ---
 
@@ -68,7 +68,7 @@ helm create python-app
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%202.png)
+![image.png](./ScreenshotsLab10/image%202.png)
 
 This created a directory structure like:
 
@@ -83,7 +83,7 @@ k8s/
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%203.png)
+![image.png](./ScreenshotsLab10/image%203.png)
 
 I modified the `values.yaml` file to use my Docker repository:
 
@@ -94,7 +94,7 @@ image:
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%204.png)
+![image.png](./ScreenshotsLab10/image%204.png)
 
 And updated `templates/deployment.yaml` to set the correct port:
 
@@ -104,7 +104,7 @@ ports:
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%205.png)
+![image.png](./ScreenshotsLab10/image%205.png)
 
 ---
 
@@ -117,7 +117,7 @@ helm install python-app ./python-app
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%206.png)
+![image.png](./ScreenshotsLab10/image%206.png)
 
 To confirm successful deployment:
 
@@ -127,9 +127,9 @@ kubectl get pods,svc
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%207.png)
+![image.png](./ScreenshotsLab10/image%207.png)
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%208.png)
+![image.png](./ScreenshotsLab10/image%208.png)
 
 ---
 
@@ -142,7 +142,7 @@ minikube service python-app
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%209.png)
+![image.png](./ScreenshotsLab10/image%209.png)
 
 I confirmed the correct service endpoint and accessed the application in a browser.
 
@@ -281,9 +281,9 @@ helm lint node-app
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2010.png)
+![image.png](./ScreenshotsLab10/image%2010.png)
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2011.png)
+![image.png](./ScreenshotsLab10/image%2011.png)
 
 ✔ **Both charts passed linting without errors.**
 
@@ -297,9 +297,9 @@ helm install node-app ./node-app
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2012.png)
+![image.png](./ScreenshotsLab10/image%2012.png)
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2013.png)
+![image.png](./ScreenshotsLab10/image%2013.png)
 
 ✔ **Hooks appeared in the simulated output, confirming their recognition by Helm.**
 
@@ -313,9 +313,9 @@ helm upgrade --install node-app ./node-app
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2014.png)
+![image.png](./ScreenshotsLab10/image%2014.png)
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2015.png)
+![image.png](./ScreenshotsLab10/image%2015.png)
 
 ✔ **Deployments were successful.**
 
@@ -330,7 +330,7 @@ kubectl get pods
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2016.png)
+![image.png](./ScreenshotsLab10/image%2016.png)
 
 ✔ **Output:**
 
@@ -357,7 +357,7 @@ kubectl logs pre-install-hook-wt2zd
 kubectl logs pre-install-node-hook-p95gg
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2017.png)
+![image.png](./ScreenshotsLab10/image%2017.png)
 
 ✔ Logs confirmed the hooks executed successfully.
 
@@ -372,7 +372,7 @@ kubectl get svc
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2018.png)
+![image.png](./ScreenshotsLab10/image%2018.png)
 
 ✔ **Expected Output:**
 
@@ -391,9 +391,9 @@ minikube service node-app
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2019.png)
+![image.png](./ScreenshotsLab10/image%2019.png)
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2020.png)
+![image.png](./ScreenshotsLab10/image%2020.png)
 
 ✔ **Both applications were accessible in the browser.**
 
@@ -451,11 +451,11 @@ helm create my-library-chart
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2021.png)
+![image.png](./ScreenshotsLab10/image%2021.png)
 
  **File Structure:**
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2022.png)
+![image.png](./ScreenshotsLab10/image%2022.png)
 
 ---
 
@@ -472,7 +472,7 @@ managed-by: Helm
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2023.png)
+![image.png](./ScreenshotsLab10/image%2023.png)
 
 ✔ **This ensures that `python-app` and `node-app` automatically inherit these labels.**
 
@@ -490,7 +490,7 @@ dependencies:
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2024.png)
+![image.png](./ScreenshotsLab10/image%2024.png)
 
  **File:** `k8s/node-app/Chart.yaml`
 
@@ -502,7 +502,7 @@ dependencies:
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2025.png)
+![image.png](./ScreenshotsLab10/image%2025.png)
 
  **Both applications now depend on `my-library-chart`.**
 
@@ -514,13 +514,13 @@ dependencies:
 
  **File:** `k8s/python-app/templates/deployment.yaml`
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2026.png)
+![image.png](./ScreenshotsLab10/image%2026.png)
 
 ### **Updating `deployment.yaml` for `node-app`**
 
  **File:** `k8s/node-app/templates/deployment.yaml`
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2027.png)
+![image.png](./ScreenshotsLab10/image%2027.png)
 
 ✔ **Now both applications use the same standardized labels from `my-library-chart`.**
 
@@ -550,7 +550,7 @@ helm upgrade --install my-node-app ./k8s/node-app
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2028.png)
+![image.png](./ScreenshotsLab10/image%2028.png)
 
 ✔ **Both applications deployed successfully!** 🎉
 
@@ -565,7 +565,7 @@ kubectl get pods --show-labels
 
 ```
 
-![image.png](Lab%2010%20Introduction%20to%20Helm%2013cf3f87232a80e7a8ebf93a0afb9c1b/image%2029.png)
+![image.png](./ScreenshotsLab10/image%2029.png)
 
 ✔ **Both applications now have the shared labels from `my-library-chart`**.
 
