@@ -55,3 +55,34 @@
 - Application availability check:
     - ![alt text](image-6.png) 
     - ![alt text](image-7.png)
+
+## Steps to reproduce:
+1. ```bash
+   git clone https://github.com/creepydanunity/S25-core-course-labs.git
+   cd S25-core-course-labs
+   git checkout lab9
+   ```
+2. ```bash
+   minikube start
+   minikube addons enable ingress
+   ```
+3. ```bash
+   minikube ip # e.g 192.168.49.2
+   ```
+4. Add minikube ip to /etc/hosts # e.g. 192.168.49.2 lab9.bonus
+
+5. ```bash
+   docker pull iucd/fastapi-mt:latest
+   docker pull iucd/gin-mt:latest
+   ```
+6. ```bash
+   kubectl apply -f fastapi-deployment.yml
+   kubectl apply -f fastapi-service.yml
+   kubectl apply -f gin-deployment.yml
+   kubectl apply -f gin-service.yml
+   kubectl apply -f ingress.yml
+   ```
+7. ```bash
+   curl -i http://lab9.bonus/fastapi
+   curl -i http://lab9.bonus/gin
+   ```
