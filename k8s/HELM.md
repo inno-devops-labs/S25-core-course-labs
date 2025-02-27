@@ -559,7 +559,7 @@ helm upgrade --install my-node-app ./k8s/node-app
 
 ![image.png](./ScreenshotsLab10/image%2028.png)
 
-**Both applications deployed successfully!** 🎉
+**Both applications deployed successfully!** 
 
 ---
 
