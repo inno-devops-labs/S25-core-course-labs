@@ -40,14 +40,14 @@ service/app-python exposed
 ```
 
 ```bash
-$ minikube service app-python
+minikube service app-python
 ```
+
 | NAMESPACE |    NAME    | TARGET PORT |            URL            |
 |-----------|------------|-------------|---------------------------|
-| default   | app-python |        8080 | http://192.168.49.2:30203 |
+| default   | app-python |        8080 | <http://192.168.49.2:30203> |
 
 🎉  Opening service default/app-python in default browser...
-
 
 ### Pods and services
 
@@ -66,7 +66,6 @@ service/kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP         
 ### Validate
 
 I used `curl http://192.168.49.2:30203` with the address displayed above to verify that everything works just fine
-
 
 ```html
 <!DOCTYPE html>
@@ -99,8 +98,7 @@ service "app-python" deleted
 
 ### Setup
 
-I created `deployment.yml` and `service.yml`, and filled them out analagously to the first task. 
-
+I created `deployment.yml` and `service.yml`, and filled them out analagously to the first task.
 
 ### Start
 
@@ -112,7 +110,7 @@ deployment.apps/app-python created
 service/app-python created
 ```
 
-### Pods and services
+### Pods and services II
 
 Here is the output of reqired commands:
 
@@ -133,11 +131,12 @@ service/kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP         
 Here is the output of `minikube service --all`
 
 ```bash
-$ minikube service --all
+minikube service --all
 ```
+
 | NAMESPACE |    NAME    | TARGET PORT |            URL            |
 |-----------|------------|-------------|---------------------------|
-| default   | app-python |        8080 | http://192.168.49.2:32717 |
+| default   | app-python |        8080 | <http://192.168.49.2:32717> |
 
 | NAMESPACE |    NAME    | TARGET PORT |     URL      |
 |-----------|------------|-------------|--------------|
@@ -149,9 +148,10 @@ $ minikube service --all
 🎉  Opening service default/app-python in default browser...
 🏃  Starting tunnel for service kubernetes.
 ```
+
 | NAMESPACE |    NAME    | TARGET PORT |          URL           |
 |-----------|------------|-------------|------------------------|
-| default   | kubernetes |             | http://127.0.0.1:33625 |
+| default   | kubernetes |             | <http://127.0.0.1:33625> |
 
 ```bash
 🎉  Opening service default/kubernetes in default browser...
@@ -167,9 +167,9 @@ $ minikube service --all
 
 For this task I rebuilt and pushed the image of `app_python` where the exposed port is now **8081**, not 8080 as it was in the first 2 tasks.
 
-### Go app 
+### Go app
 
-I created the same files for [deployment](/k8s/deployment_go.yml) and [service](/k8s/service_go.yml) of my url shortener. 
+I created the same files for [deployment](/k8s/deployment_go.yml) and [service](/k8s/service_go.yml) of my url shortener.
 
 ### Ingress
 
@@ -197,7 +197,6 @@ You can view the list of minikube maintainers at: https://github.com/kubernetes/
 🌟  The 'ingress' addon is enabled
 ```
 
-
 And I started the tunnel:
 
 ```bash
@@ -214,13 +213,12 @@ Status:
                 loadbalancer emulator: no errors
 ```
 
-
 ### Results
 
 I curled both my hostnames:
 
 ```bash
-$ curl http://go.justcgh9.app/manage
+curl http://go.justcgh9.app/manage
 ```
 
 ```html
@@ -255,9 +253,8 @@ $ curl http://go.justcgh9.app/manage
 </html>
 ```
 
-
 ```bash
-$ curl http://python.justcgh9.app/
+curl http://python.justcgh9.app/
 ```
 
 ```html
