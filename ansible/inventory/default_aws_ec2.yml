@@ -1,0 +1,7 @@
+all:
+  hosts:
+    vm:
+      ansible_host: 10.130.0.19
+      ansible_user: anijack
+      ansible_ssh_private_key_file: ~/.ssh/yc_rsa
+      ansible_python_interpreter: /usr/bin/python3
