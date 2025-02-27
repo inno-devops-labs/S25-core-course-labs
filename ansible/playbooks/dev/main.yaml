@@ -1,0 +1,7 @@
+---
+- name: Deploy Docker
+  hosts: all
+  become: yes
+  roles:
+    - docker
+    - web_app

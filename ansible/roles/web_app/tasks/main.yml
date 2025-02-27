@@ -1,0 +1,21 @@
+- name: Include wipe tasks if enabled
+  include_tasks: 0-wipe.yml
+  when: web_app_full_wipe
+
+- name: Ensure installation directory exists
+  file:
+    path: "{{ app_install_dir }}"
+    state: directory
+  tags: setup
+
+- name: Template Docker Compose file
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ app_install_dir }}/docker-compose.yml"
+  tags: config
+
+- name: Start Docker services
+  community.docker.docker_compose:
+    project_src: "{{ app_install_dir }}"
+    state: present
+  tags: docker
