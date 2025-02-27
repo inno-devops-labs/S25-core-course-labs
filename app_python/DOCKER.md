@@ -1,0 +1,22 @@
+# Docker best practices employed within application
+
+- Use of `ARG` & `FROM`
+    - `FROM python:${PYTHON_VERSION}-slim` allow for flexibility in specifying the Python version
+- Explicitly tag the base image version `3.11.1`
+- Use of slim base image to reduce the size of the final image
+- Set env variables to improve Python behavior
+    - `PYTHONDONTWRITEBYTECODE=1` - prevents Python from writing `.pyc` files
+    - `PYTHONUNBUFFERED=1` - ensures that Python output is sent straight to the terminal without being buffered
+- Set working directory for clarity and reliability
+- Use of non-privileged user (& explicit UID/GID)
+- Use `--no-cache-dir` for `pip` to keep an image as small as possible
+- Copy source code files with explicitly setting their ownership to `appuser`
+    - Ensure that the non-privileged user has appropriate access to the application files
+- Expose port indicates that the application listens on port `5000` at runtime
+- Use of `ENTRYPOINT` & `CMD`
+    - This combination allows for flexible command execution while ensuring that the application starts with Python
+- Use of JSON array syntax in `ENTRYPOINT` & `CMD`
+- Leverage build cache
+    - Use of common strategy to copy requirements file and install dependencies first, after that copy the rest of
+      application code
+- Exclude with `.dockerignore` files not relevant to the build
