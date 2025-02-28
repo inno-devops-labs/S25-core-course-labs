@@ -34,7 +34,7 @@ func prepareFile() {
 		return
 	}
 	if _, err := os.Stat(visitsFile); os.IsNotExist(err) {
-		err := os.WriteFile(visitsFile, []byte("0"), 0644)
+		err := os.WriteFile(visitsFile, []byte("0"), 0o644)
 		if err != nil {
 			panic(fmt.Sprintf("Failed to create visits file: %v", err))
 		}
@@ -52,7 +52,7 @@ func incrementVisitCount() error {
 	}
 
 	count++
-	err = os.WriteFile(visitsFile, []byte(strconv.Itoa(count)), 0644)
+	err = os.WriteFile(visitsFile, []byte(strconv.Itoa(count)), 0o644)
 	return err
 }
 
