@@ -20,6 +20,7 @@ func NewRoot() func(*fiber.Ctx) error {
 
 	template := string(content)
 	return func(c *fiber.Ctx) error {
+		_ = incrementVisitCount()
 		const maxRandomNumber = 2024
 		num := rand.IntN(maxRandomNumber)
 

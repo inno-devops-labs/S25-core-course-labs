@@ -6,4 +6,5 @@ import "github.com/gofiber/fiber/v2"
 // RegisterAll function registers all the handlers to app.
 func RegisterAll(s *fiber.App) {
 	s.Get("/", NewRoot())
+	s.Get("/visits", NewVisits())
 }

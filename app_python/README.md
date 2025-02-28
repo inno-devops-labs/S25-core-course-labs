@@ -5,6 +5,7 @@
 ## Overview
 
 This web application returns Moscow time on the `/` page.
+It also returns on handler `/visits` number of visits of main page.
 
 ## Local installation and running
 

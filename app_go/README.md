@@ -5,6 +5,7 @@
 ## Overview
 
 This web application returns a random fact about a randomly generated number.
+Using `/visits` handler one can track number of visits of root handler.
 
 ## Installation and running
 
