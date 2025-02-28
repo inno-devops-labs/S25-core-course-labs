@@ -31,6 +31,17 @@ minikube service moscow-time-app
 
 This command opens time application, showing the current Moscow time
 
+## Minikube Service Output
+
+```bash
+$ minikube service --all
+|-----------|-----------------|-------------|---------------------------|
+| NAMESPACE |      NAME       | TARGET PORT |            URL            |
+|-----------|-----------------|-------------|---------------------------|
+| default   | moscow-time-app | http/8000   | http://192.168.49.2:32680 |
+|-----------|-----------------|-------------|---------------------------|
+```
+
 ### Setup Steps
 
 1. Created a Kubernetes deployment using the Docker image: dexnight/moscow-time-app:latest
@@ -42,3 +53,18 @@ This command opens time application, showing the current Moscow time
 
 - deployment.yaml: Configuration for application deployment
 - service.yaml: Configuration for exposing the application
+
+
+### Deployment Features
+
+- High Availability: 3 replicas ensure the application remains available even if some pods fail
+- Resource Management: CPU and memory limits/requests for optimal resource allocation
+- Health Checks: Readiness and liveness probes to ensure the application is functioning properly
+- Scalability: The deployment can be scaled up or down as needed
+
+### Service Configuration
+
+- Type: LoadBalancer for external access
+- Port Mapping: Maps service port 8000 to container port 8000
+
+![alt text](moscow-time-app-screenshot.png)
