@@ -10,6 +10,7 @@ import (
 
 const visitsFile = "/data/visits.txt"
 
+// WithVisits variable enabling / disabling visits count functionality
 var WithVisits = false
 
 func getVisitCount() (int, error) {
@@ -55,6 +56,7 @@ func incrementVisitCount() error {
 	return err
 }
 
+// NewVisits creates handler to return number of visits
 func NewVisits() func(*fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		visitsCnt, err := getVisitCount()
