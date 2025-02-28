@@ -18,6 +18,7 @@ def disable_visits():
     global with_visits
     with_visits = False
 
+
 with open("templates/index.html", "r", encoding="utf-8") as f:
     html_template = f.read()
 
@@ -26,6 +27,7 @@ Instrumentator().instrument(app).expose(app)
 
 static_dir = os.path.join(os.path.dirname(__file__), "static")
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
 
 def visit():
     """Increments visits count of root handler"""
@@ -38,13 +40,15 @@ def visit():
         v = int(file.read())
     with open(VISITS_FILE, "w") as file:
         file.write(str(v + 1))
-        
+
+
 @app.get("/visits", response_class=JSONResponse)
 async def get_visits():
     if not with_visits:
         return JSONResponse(content={"visits": 0})
     with open(VISITS_FILE, "r") as file:
         return JSONResponse(content={"visits": int(file.read())})
+
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root():

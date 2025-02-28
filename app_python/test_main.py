@@ -10,6 +10,7 @@ from main import app, disable_visits
 disable_visits()
 client = TestClient(app)
 
+
 def test_time_is_equal():
     """
     Check that time on API is real Moscow time.
