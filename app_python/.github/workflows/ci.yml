@@ -24,7 +24,7 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-          pip install -r requirements.txt
+          pip install -r app_python/requirements.txt
           pip install pytest Flask-Testing
 
       - name: Run Linter (flake8)
@@ -68,13 +68,7 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-
-      - name: Install Dependencies
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-          pip install -r requirements.txt
-
+        
       - name: Run Snyk Vulnerability Scan
         uses: snyk/actions/python@master
         env:
