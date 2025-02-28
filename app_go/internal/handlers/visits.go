@@ -11,6 +11,7 @@ import (
 const visitsFile = "/data/visits.txt"
 
 func getVisitCount() (int, error) {
+	prepareFile()
 	data, err := os.ReadFile(visitsFile)
 	if err != nil {
 		return 0, err
@@ -22,7 +23,18 @@ func getVisitCount() (int, error) {
 	return count, nil
 }
 
+func prepareFile() {
+	if _, err := os.Stat(visitsFile); os.IsNotExist(err) {
+		err := os.WriteFile(visitsFile, []byte("0"), 0644)
+		if err != nil {
+			panic(fmt.Sprintf("Failed to create visits file: %v", err))
+		}
+	}
+
+}
+
 func incrementVisitCount() error {
+	prepareFile()
 	count, err := getVisitCount()
 	if err != nil {
 		return err
@@ -34,12 +46,6 @@ func incrementVisitCount() error {
 }
 
 func NewVisits() func(*fiber.Ctx) error {
-	if _, err := os.Stat(visitsFile); os.IsNotExist(err) {
-		err := os.WriteFile(visitsFile, []byte("0"), 0644)
-		if err != nil {
-			panic(fmt.Sprintf("Failed to create visits file: %v", err))
-		}
-	}
 	return func(c *fiber.Ctx) error {
 		visitsCnt, err := getVisitCount()
 		if err != nil {
