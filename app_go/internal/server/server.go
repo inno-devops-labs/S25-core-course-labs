@@ -10,8 +10,9 @@ import (
 )
 
 // New creates a fiber application returning a fact about random number.
-func New(cfgs ...fiber.Config) *fiber.App {
+func New(withVisits bool, cfgs ...fiber.Config) *fiber.App {
 	s := fiber.New(cfgs...)
+	handlers.WithVisits = withVisits
 
 	// Enable logging.
 	s.Use(logger.New())

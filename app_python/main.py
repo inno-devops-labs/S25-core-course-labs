@@ -10,6 +10,13 @@ import pytz
 from prometheus_fastapi_instrumentator import Instrumentator
 
 VISITS_FILE = "/data/visits.txt"
+with_visits = True
+
+
+def disable_visits():
+    """Disables visits functionality"""
+    global with_visits
+    with_visits = False
 
 with open("templates/index.html", "r", encoding="utf-8") as f:
     html_template = f.read()
@@ -22,6 +29,8 @@ app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 def visit():
     """Increments visits count of root handler"""
+    if not with_visits:
+        return
     if not os.path.isfile(VISITS_FILE):
         with open(VISITS_FILE, "w") as file:
             file.write("0")
@@ -32,6 +41,8 @@ def visit():
         
 @app.get("/visits", response_class=JSONResponse)
 async def get_visits():
+    if not with_visits:
+        return JSONResponse(content={"visits": 0})
     with open(VISITS_FILE, "r") as file:
         return JSONResponse(content={"visits": int(file.read())})
 

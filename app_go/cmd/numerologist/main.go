@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	app := server.New()
+	app := server.New(true)
 
 	if err := app.Listen(":8080"); err != nil {
 		log.Fatal(err)

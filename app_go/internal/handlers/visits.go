@@ -10,7 +10,12 @@ import (
 
 const visitsFile = "/data/visits.txt"
 
+var WithVisits = false
+
 func getVisitCount() (int, error) {
+	if !WithVisits {
+		return 0, nil
+	}
 	prepareFile()
 	data, err := os.ReadFile(visitsFile)
 	if err != nil {
@@ -24,16 +29,21 @@ func getVisitCount() (int, error) {
 }
 
 func prepareFile() {
+	if !WithVisits {
+		return
+	}
 	if _, err := os.Stat(visitsFile); os.IsNotExist(err) {
 		err := os.WriteFile(visitsFile, []byte("0"), 0644)
 		if err != nil {
 			panic(fmt.Sprintf("Failed to create visits file: %v", err))
 		}
 	}
-
 }
 
 func incrementVisitCount() error {
+	if !WithVisits {
+		return nil
+	}
 	prepareFile()
 	count, err := getVisitCount()
 	if err != nil {

@@ -17,7 +17,7 @@ func TestRootHandler(t *testing.T) {
 	// To properly import static content.
 	os.Chdir("../../cmd/numerologist")
 
-	app := server.New()
+	app := server.New(false)
 
 	// Building a request to root page.
 	req := httptest.NewRequest("GET", "/", nil)

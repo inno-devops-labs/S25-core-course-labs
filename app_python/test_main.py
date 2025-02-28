@@ -5,10 +5,10 @@ from datetime import datetime
 
 import pytz
 from fastapi.testclient import TestClient
-from main import app
+from main import app, disable_visits
 
+disable_visits()
 client = TestClient(app)
-
 
 def test_time_is_equal():
     """
