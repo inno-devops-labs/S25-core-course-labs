@@ -3,3 +3,6 @@ max-line-length = 100
 
 [MASTER]
 reports = no
+
+[MESSAGES CONTROL]
+disable=C0103, W0603, W1514, C0116, W0105
