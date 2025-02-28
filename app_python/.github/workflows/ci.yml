@@ -30,12 +30,12 @@ jobs:
       - name: Run Linter (flake8)
         run: |
           pip install flake8
-          flake8 app_python/time_app.py
+          flake8 time_app.py
 
       - name: Run Tests
         run: |
           source venv/bin/activate
-          pytest app_python/tests/
+          pytest tests/
 
   docker:
     name: Docker Build & Push
