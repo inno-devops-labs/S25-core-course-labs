@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build-test:
+    name: Build, Lint, and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+          pip install pytest Flask-Testing
+
+      - name: Run Linter (flake8)
+        run: |
+          pip install flake8
+          flake8 time_app.py
+
+      - name: Run Tests
+        run: |
+          source venv/bin/activate
+          pytest tests/
+
+  docker:
+    name: Docker Build & Push
+    runs-on: ubuntu-latest
+    needs: build-test
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker Image
+        run: |
+          docker build -t your-nickname/moscow-time-app:latest .
+
+      - name: Push Docker Image
+        run: |
+          docker push your-nickname/moscow-time-app:latest
+
+  security:
+    name: Snyk Security Scan
+    runs-on: ubuntu-latest
+    needs: docker
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Run Snyk Vulnerability Scan
+        uses: snyk/actions/python@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
