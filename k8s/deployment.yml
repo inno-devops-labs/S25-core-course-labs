@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: time-app
+  labels:
+    app: time-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: time-app
+  template:
+    metadata:
+      labels:
+        app: time-app
+    spec:
+      containers:
+      - name: time-app
+        image: haidarjbeily/distroless-moscow-time-app
+        ports:
+        - containerPort: 8000
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "512Mi"
+          requests:
+            cpu: "0.2"
+            memory: "256Mi" 
