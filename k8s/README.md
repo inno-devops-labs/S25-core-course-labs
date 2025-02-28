@@ -51,3 +51,26 @@ service/quote-app   LoadBalancer  10.100.151.190 <pending>     8000:32024/TCP   
      kubectl delete deployment quote-app
      kubectl delete service quote-app
      ```
+
+## Task 2: Declarative Kubernetes Manifests
+
+### Output of `kubectl get pods,svc` after running the manifests with `kubectl apply`
+
+```bash
+NAME                                   READY   STATUS    RESTARTS   AGE
+pod/quote-app-d8bd47796-t2vr4         1/1     Running   0          31s
+pod/quote-app-d8bd47796-wf428          1/1     Running   0          31s
+pod/quote-app-d8bd47796-wx4pd          1/1     Running   0          31s
+
+NAME                TYPE          CLUSTER-IP      EXTERNAL-IP   PORT(S)               AGE
+service/kubernetes  ClusterIP     10.96.0.1      <none>        443/TCP              40m
+service/quote-app   LoadBalancer  10.109.191.197 <pending>     8000:30624/TCP       4s
+```
+
+### Screenshot of the output of `minikube service --all`
+
+![minikube service --all](./screenshots/mini_service_all.png)
+
+### Screenshot of the Browser
+
+![Browser](./screenshots/app_running.png)
