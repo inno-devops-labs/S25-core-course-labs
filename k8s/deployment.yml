@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: app-python-deploy
 spec:
-  replicas: 3 
+  replicas: 3
   selector:
     matchLabels:
       app: app-python
@@ -17,3 +17,15 @@ spec:
           image: decafattic/moscow-time-app:latest
           ports:
             - containerPort: 5000
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
