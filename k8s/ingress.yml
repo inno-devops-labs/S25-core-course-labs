@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apps-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: apps.local
+    http:
+      paths:
+      - path: /quotes
+        pathType: Prefix
+        backend:
+          service:
+            name: quote-app
+            port:
+              number: 8080
+      - path: /time
+        pathType: Prefix
+        backend:
+          service:
+            name: time-app
+            port:
+              number: 8000 
