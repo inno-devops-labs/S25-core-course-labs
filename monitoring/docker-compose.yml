@@ -4,6 +4,10 @@ networks:
   monitoring_net:
     driver: bridge
 
+volumes:
+  grafana-storage:
+  prometheus-data:
+
 services:
   loki:
     image: grafana/loki:3.4.0
@@ -14,6 +18,12 @@ services:
       - ./loki-config.yaml:/etc/loki/local-config.yaml
     networks:
       - monitoring_net
+    mem_limit: 512m
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   promtail:
     image: grafana/promtail:3.4.0
@@ -25,6 +35,20 @@ services:
       - loki
     networks:
       - monitoring_net
+    mem_limit: 128m
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    networks:
+      - monitoring_net
+    mem_limit: 512m
 
   grafana:
     image: grafana/grafana:latest
@@ -34,10 +58,12 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
       - loki
+      - prometheus
     volumes:
       - grafana-storage:/var/lib/grafana
     networks:
       - monitoring_net
+    mem_limit: 256m
 
   app_python:
     image: friji/moscow-time-app:latest
@@ -45,8 +71,12 @@ services:
       - "5000:5000"
     depends_on:
       - loki
+      - prometheus
     networks:
       - monitoring_net
-
-volumes:
-  grafana-storage:
+    mem_limit: 256m
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
