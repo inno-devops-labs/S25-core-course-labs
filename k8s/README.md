@@ -142,6 +142,48 @@ service/quote-app   LoadBalancer  10.109.191.197 <pending>     8000:30624/TCP   
    Content-Type: text/html
    Content-Length: 1213
    Connection: keep-alive
+
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Random Quote</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    margin: 0;
+                    background-color: #f5f5f5;
+                }
+                .quote-container {
+                    text-align: center;
+                    padding: 2rem;
+                    background-color: white;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    max-width: 600px;
+                }
+                .quote {
+                    font-size: 24px;
+                    color: #333;
+                    margin-bottom: 1rem;
+                }
+                .author {
+                    font-style: italic;
+                    color: #666;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="quote-container">
+                <div class="quote">"First, solve the problem. Then, write the code."</div>
+                <div class="author">- John Johnson</div>
+                <p><small>Refresh the page for a new quote</small></p>
+            </div>
+        </body>
+    </html>
    ```
 
 3. **Attempting to Access a Non-Existent Route**:
