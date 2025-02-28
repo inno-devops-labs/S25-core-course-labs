@@ -45,6 +45,7 @@ service/quote-app   LoadBalancer  10.100.151.190 <pending>     8000:32024/TCP   
    - Used the command `kubectl get pods,svc` to confirm that the pod and service were running correctly, as shown in the output above.
 
 5. **Cleanup**:
+
    - After testing, I removed the `Deployment` and `Service` resources to maintain a clean Kubernetes environment:
 
      ```bash
@@ -74,3 +75,97 @@ service/quote-app   LoadBalancer  10.109.191.197 <pending>     8000:30624/TCP   
 ### Screenshot of the Browser
 
 ![Browser](./screenshots/app_running.png)
+
+## Bonus Task
+
+### Output of `curl` commands to verify application availability
+
+1. **Accessing the Time Application**:
+
+   ```bash
+   curl --resolve "apps.local:80:127.0.0.1" -i http://apps.local/time
+   ```
+
+   **Response**:
+
+   ```bash
+    HTTP/1.1 200 OK
+    Date: Fri, 28 Feb 2025 19:14:55 GMT
+    Content-Type: text/html; charset=utf-8
+    Content-Length: 892
+    Connection: keep-alive
+
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Moscow Time</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    margin: 0;
+                    background-color: #f0f2f5;
+                }
+                .time-container {
+                    text-align: center;
+                    padding: 2rem;
+                    background-color: white;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                }
+            </style>
+        </head>
+        <body>
+            <div class="time-container">
+                <h1>Current Time in Moscow</h1>
+                <h2>2025-02-28 22:14:55 MSK</h2>
+                <p><small>Refresh the page to update the time</small></p>
+            </div>
+        </body>
+    </html>
+   ```
+
+2. **Accessing the Quotes Application**:
+
+   ```bash
+   curl --resolve "apps.local:80:127.0.0.1" -i http://apps.local/quotes
+   ```
+
+   **Response**:
+
+   ```bash
+   HTTP/1.1 200 OK
+   Date: Fri, 28 Feb 2025 19:15:12 GMT
+   Content-Type: text/html
+   Content-Length: 1213
+   Connection: keep-alive
+   ```
+
+3. **Attempting to Access a Non-Existent Route**:
+
+   ```bash
+   curl --resolve "apps.local:80:127.0.0.1" -i http://apps.local/qoutes
+   ```
+
+   **Response**:
+
+   ```bash
+   HTTP/1.1 404 Not Found
+   Date: Fri, 28 Feb 2025 19:15:03 GMT
+   Content-Type: text/html
+   Content-Length: 146
+   Connection: keep-alive
+
+    <html>
+    <head><title>404 Not Found</title></head>
+    <body>
+    <center><h1>404 Not Found</h1></center>
+    <hr><center>nginx</center>
+    </body>
+    </html>
+   ```
+
+These commands confirm that the applications are accessible and functioning as expected, with the time application returning a 200 OK status and the quotes application also returning a 200 OK status. The 404 error for the misspelled route indicates proper error handling.

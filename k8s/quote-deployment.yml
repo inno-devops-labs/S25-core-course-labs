@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: time-app
+  name: quote-app
   labels:
-    app: time-app
+    app: quote-app
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: time-app
+      app: quote-app
   template:
     metadata:
       labels:
-        app: time-app
+        app: quote-app
     spec:
       containers:
-      - name: time-app
-        image: haidarjbeily/distroless-moscow-time-app
+      - name: quote-app
+        image: haidarjbeily/distroless-random-quote-app
         ports:
-        - containerPort: 8000
+        - containerPort: 8080
         resources:
           limits:
             cpu: "0.5"
