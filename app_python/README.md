@@ -53,6 +53,10 @@ This application provides an endpoint that displays the current Moscow time. It'
 
     Visit `http://localhost:8000` to see the current Moscow time displayed.
 
+3. **Access the visits endpoint:**
+
+    Visit `http://localhost:8000/visits` to see the number of visits.
+
 ## Unit tests
 
 Tests are written using `pytest`.
