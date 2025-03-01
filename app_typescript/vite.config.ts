@@ -10,6 +10,7 @@ export default defineConfig({
     preview: {
         port: 8080,
         strictPort: true,
+        allowedHosts: ['app-typescript.local'],
     },
     server: {
         port: 8080,
