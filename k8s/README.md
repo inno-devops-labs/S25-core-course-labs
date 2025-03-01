@@ -226,3 +226,160 @@ PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> minikube service 
 
 ## Bonus Task: Additional Configuration and Ingress
 
+### Configure Ingress
+
+`minikube addons enable ingress`
+
+```
+PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> minikube addons enable ingress
+* ingress is an addon maintained by Kubernetes. For any concerns contact minikube on GitHub.
+You can view the list of minikube maintainers at: https://github.com/kubernetes/minikube/blob/master/OWNERS
+* After the addon is enabled, please run "minikube tunnel" and your ingress resources would be available at "127.0.0.1"
+  - Using image registry.k8s.io/ingress-nginx/controller:v1.11.3
+  - Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.4.4
+  - Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.4.4
+* Verifying ingress addon...
+* The 'ingress' addon is enabled
+```
+
+`kubectl apply -f ingress.yml`
+
+```
+PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> kubectl apply -f ingress.yml 
+ingress.networking.k8s.io/app-ingress created
+```
+
+`kubectl get ingress`
+
+```
+PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> kubectl get ingress                     
+NAME          CLASS   HOSTS                                   ADDRESS   PORTS   AGE
+app-ingress   nginx   app-python.local,app-typescript.local             80      11s
+```
+
+
+`minikube tunnel`
+
+```
+PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> minikube tunnel
+* Tunnel successfully started
+
+* NOTE: Please do not close this terminal as this process must stay alive for the tunnel to be accessible ...
+```
+
+### Update hosts file
+
+Add to the end of `\etc\hosts` file::
+
+```
+127.0.0.1 app-python.local
+127.0.0.1 app-typescript.local
+```
+
+### Check deployment:
+
+`curl app-python`
+
+```
+PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> curl app-python.local
+
+
+StatusCode        : 200
+StatusDescription : OK
+Content           : <html>
+                    <head>
+                        <title>Item Details</title>
+                        <link href="http://app-python.local/static/styles.css" rel="stylesheet">
+                    </head>
+                    <body>
+                    <h1>
+                        Current time at Moscow: 2025-03-01 20:54:44.400722+03...
+RawContent        : HTTP/1.1 200 OK
+                    Connection: keep-alive
+                    Content-Length: 327
+                    Content-Type: text/html; charset=utf-8
+                    Date: Sat, 01 Mar 2025 17:54:44 GMT
+
+                    <html>
+                    <head>
+                        <title>Item Details</title>
+                        <link hre...
+Forms             : {}
+Headers           : {[Connection, keep-alive], [Content-Length, 327], [Content-Type, text/html; charset=utf-8], [Date, Sat, 01 Mar 2025 17:54:44 GMT]}
+Images            : {}
+InputFields       : {}
+Links             : {@{innerHTML=here; innerText=here; outerHTML=<A href="https://www.timeanddate.com/worldclock/russia/moscow">here</A>; outerText=here; tagName=A;    
+                    href=https://www.timeanddate.com/worldclock/russia/moscow}}
+ParsedHtml        : mshtml.HTMLDocumentClass
+RawContentLength  : 327
+```
+
+![app_python_local](assets/app_python_local.png)
+
+`curl app-typescript.local`
+
+```
+curl : The remote server returned an error: (403) Forbidden.
+At line:1 char:1
++ curl app-typescript.local
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-WebRequest], WebException
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeWebRequestCommand
+```
+
+![app_typescript_local](assets/app_typescript_local.png)
+
+It seems like I need to update my web application to accept this url..
+
+Let's update `vite.config.ts`:
+
+```
+export default defineConfig({
+    preview: {
+        allowedHosts: ['app-typescript.local'],
+    },
+});
+```
+
+Re-deploy everything...
+
+`minikube delete`
+
+...
+
+Complete all previous steps again...
+
+And... Everything works!
+
+`curl app-typescript.local`
+
+```
+PS C:\Projects\University\S25\DevOps\S25-core-course-labs> curl app-typescript.local                                                                                    
+
+
+StatusCode        : 200
+StatusDescription : OK
+Content           : <!doctype html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8" />
+                        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+                        <meta name="viewport" content="width=device-width, initial-scale=...
+RawContent        : HTTP/1.1 200 OK
+                    Connection: keep-alive
+                    Vary: Origin
+                    Content-Length: 1372
+                    Cache-Control: no-cache
+                    Content-Type: text/html
+                    Date: Sat, 01 Mar 2025 18:24:15 GMT
+                    ETag: W/"55c-srrTDlrmw4gpYt+QEmuQnS5...
+Forms             : {}
+Headers           : {[Connection, keep-alive], [Vary, Origin], [Content-Length, 1372], [Cache-Control, no-cache]...}
+Images            : {}
+InputFields       : {}
+Links             : {}
+ParsedHtml        : mshtml.HTMLDocumentClass
+RawContentLength  : 1372
+```
+
+![app_typescript_local2](assets/app_typescript_local2.png)
