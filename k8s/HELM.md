@@ -548,3 +548,43 @@ PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> minikube service 
 
 ![app_typescript3](assets/app_typescript3.png)
 
+### Create a Library Chart
+
+`helm create mylibchart`
+
+```
+PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> helm create mylibchart
+Creating mylibchart
+```
+
+`helm dependency update app-python`
+
+```
+PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> helm dependency update app-python
+Saving 1 charts
+Deleting outdated charts
+```
+
+`helm dependency update app-typescript`
+
+```
+PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> helm dependency update app-typescript
+Saving 1 charts
+Deleting outdated charts
+```
+
+### Check deployment
+
+`kubectl get pods,svc`
+
+```
+PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> kubectl get pods,svc                
+NAME                                  READY   STATUS              RESTARTS   AGE
+pod/app-python-696b768f9d-6ww6l       0/1     ContainerCreating   0          37s
+pod/app-typescript-6dd6479464-gwjv7   1/1     Running             0          22m
+
+NAME                     TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+service/app-python       ClusterIP   10.109.184.254   <none>        80/TCP    37s
+service/app-typescript   ClusterIP   10.106.22.49     <none>        80/TCP    22m
+service/kubernetes       ClusterIP   10.96.0.1        <none>        443/TCP   22m
+```
