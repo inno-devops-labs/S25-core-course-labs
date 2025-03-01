@@ -2,6 +2,8 @@
 #[macro_use] extern crate lazy_static;
 
 use rocket::response::content;
+use rocket::tokio::fs::File;
+use rocket::tokio::io::{self, AsyncReadExt, AsyncWriteExt};
 use chrono::{Utc, TimeZone, FixedOffset};
 use prometheus::{Registry, Counter, TextEncoder, Encoder};
 
@@ -18,16 +20,58 @@ lazy_static! {
     };
 }
 
+const VISITS_FILE: &str = "visits.txt";
+
+// Function to read the current number of visits from the file
+async fn read_visits() -> io::Result<u64> {
+    match File::open(VISITS_FILE).await {
+        Ok(mut file) => {
+            let mut contents = String::new();
+            file.read_to_string(&mut contents).await?;
+            // Parse the file contents to u64, defaulting to 0 if empty or invalid
+            match contents.trim().parse::<u64>() {
+                Ok(visits) => Ok(visits),
+                Err(_) => Ok(0), // Return 0 if parsing fails
+            }
+        },
+        Err(_) => {
+            // Create the file if it doesn't exist and initialize the visits count
+            let mut file = File::create(VISITS_FILE).await?;
+            file.write_all(b"0").await?; // Initialize with "0"
+            Ok(0) // Return 0 since it was a new file
+        }
+    }
+}
+
+// Function to update the visit counter in the file
+async fn update_visits(count: u64) -> io::Result<()> {
+    let mut file = File::create(VISITS_FILE).await?;
+    file.write_all(count.to_string().as_bytes()).await?;
+    Ok(())
+}
+
 #[get("/")]
-fn index() -> content::RawHtml<String> {
+async fn index() -> content::RawHtml<String> {
     REQUEST_COUNTER.inc();
     
+    // Increment the visit counter
+    let current_visits = read_visits().await.unwrap_or(0);
+    let updated_visits = current_visits + 1;
+    update_visits(updated_visits).await.unwrap();
+
+    // Get the current time in Moscow
     let moscow_time = FixedOffset::east_opt(3 * 3600)
         .expect("Invalid offset")
         .from_utc_datetime(&Utc::now().naive_utc());
     
     let formatted_time = moscow_time.format("%Y-%m-%d %H:%M:%S").to_string();
     content::RawHtml(format!("<h1>Current time in Moscow: {}</h1>", formatted_time))
+}
+
+#[get("/visits")]
+async fn visits() -> content::RawHtml<String> {
+    let visits_count = read_visits().await.unwrap_or(0);
+    content::RawHtml(format!("<h1>Total Visits: {}</h1>", visits_count))
 }
 
 #[get("/metrics")]
@@ -47,8 +91,9 @@ fn health() -> &'static str {
 #[launch]
 fn rocket() -> _ {
     rocket::build()
-        .mount("/", routes![index, metrics, health])
+        .mount("/", routes![index, metrics, health, visits])
 }
+
 
 #[cfg(test)]
 mod tests {
