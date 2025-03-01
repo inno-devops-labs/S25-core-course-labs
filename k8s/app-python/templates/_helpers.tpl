@@ -60,3 +60,15 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create vars for bonus task
+*/}}
+{{- define "app-python.envDate" -}}
+- name: DATE
+  value: "01.03.2025"
+{{- end }}
+{{- define "app-python.envTaskName" -}}
+- name: TASK_NAME
+  value: "Bonus Task: Resource Management and Environment Variables"
+{{- end }}

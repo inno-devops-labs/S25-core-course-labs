@@ -49,6 +49,8 @@ spec:
                 secretKeyRef:
                   name: credentials
                   key: password
+            {{- include "app-python.envDate" . | nindent 12 }}
+            {{- include "app-python.envTaskName" . | nindent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
