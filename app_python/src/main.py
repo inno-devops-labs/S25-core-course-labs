@@ -5,6 +5,7 @@ Main file for the web application. It includes two endpoints:
 - `/time` - returns current time in Moscow in JSON format
 """
 
+from pathlib import Path
 from fastapi import FastAPI, Request, status
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
@@ -31,6 +32,16 @@ time_json_visits = Counter(
     'Visits of API endpoint containing current time in Moscow. Bring time to robots!'
 )
 
+counter = 0
+
+def increment_counter():
+    global counter
+    counter += 1
+    Path("visits").mkdir(parents=True, exist_ok=True)
+    visits = open("visits/visits", "w")
+    visits.write(str(counter))
+    visits.close()
+
 
 @app.get(
     "/",
@@ -48,6 +59,7 @@ time_json_visits = Counter(
 async def read_time(request: Request):
     """Returns web page containing current time in Moscow."""
     time_page_visits.inc()
+    increment_counter()
     current_time = get_time().strftime("%d.%m.%Y %H:%M:%S")
     return templates.TemplateResponse(
         request=request, name="time.html", context={"time": current_time}
@@ -68,6 +80,7 @@ async def read_time(request: Request):
 async def read_time_json():
     """Returns current time in Moscow in JSON format."""
     time_json_visits.inc()
+    increment_counter()
     current_time = str(get_time())
     return {"time": current_time}
 
@@ -87,3 +100,20 @@ async def read_time_json():
 async def read_metrics():
     metrics = generate_latest(registry=REGISTRY)
     return HTMLResponse(metrics, media_type=CONTENT_TYPE_LATEST)
+
+@app.get(
+    "/visits",
+    response_model=None,
+    status_code=status.HTTP_200_OK,
+    description="""Get number of times the app accessed""",
+    tags=["metrics"],
+    summary="Returns number of times the app accessed",
+    responses={
+        status.HTTP_200_OK: {
+            "description": "Number of times the app accessed"
+        }
+    }
+)
+async def read_counter():
+    global counter
+    return counter
