@@ -75,7 +75,6 @@
 
 - I extended Prometheus to gather metrics from all services:
   - **Python Application**: Exposed metrics on `http://localhost:5001/metrics`.
-  - **Go Application**: Exposed metrics on `http://localhost:3000/metrics`.
 
 ---
 
@@ -83,9 +82,8 @@
 
 ### 1. Application Metrics
 
-- I integrated Prometheus metrics into both the Python and Go applications:
+- I integrated Prometheus metrics into the Python applications:
   - **Python**: Used the `prometheus_client` library to expose metrics.
-  - **Go**: Used the `prometheus/client_golang` library to expose metrics.
 
 ### 2. Obtain Application Metrics
 
@@ -109,9 +107,9 @@
       static_configs:
         - targets: ['app_python:5001']
 
-    - job_name: app_go
-      static_configs:
-        - targets: ['app_go:3500']
+    #- job_name: app_go
+      #static_configs:
+        #- targets: ['app_go:3500']
 
     - job_name: grafana
       static_configs:
@@ -129,12 +127,12 @@
       interval: 30s
       timeout: 10s
       retries: 3
-  app_go:
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+  #app_go:
+    #healthcheck:
+      #test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      #interval: 30s
+      #timeout: 10s
+      #retries: 3
   ```
 
 - health checks using `docker ps`:
