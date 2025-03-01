@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-java
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: app-java
+  template:
+    metadata:
+      labels:
+        app: app-java
+    spec:
+      containers:
+        - name: app-java
+          image: mangocandle/app_java
+          ports:
+            - containerPort: 8080
