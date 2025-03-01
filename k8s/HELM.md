@@ -478,3 +478,73 @@ NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
 service/app-python   ClusterIP   10.106.217.69   <none>        80/TCP    3m52s
 service/kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP   5m33s
 ```
+
+## Bonus Task: Helm Library Chart
+
+### Helm chart for an additional application
+
+`helm create app-typescript`
+
+```
+PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> helm create app-typescript
+Creating app-typescript
+```
+
+`helm install app-typescript ./app-typescript`
+
+```
+PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> helm install app-typescript ./app-typescript
+NAME: app-typescript
+LAST DEPLOYED: Sat Mar  1 23:42:30 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get the application URL by running these commands:
+  http://app-typescript.local/
+```
+
+`kubectl get pods,svc`
+
+```
+PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> kubectl get pods,svc
+NAME                                  READY   STATUS              RESTARTS   AGE
+pod/app-typescript-6dd6479464-gwjv7   0/1     ContainerCreating   0          12s
+
+NAME                     TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+service/app-typescript   ClusterIP   10.106.22.49   <none>        80/TCP    12s
+service/kubernetes       ClusterIP   10.96.0.1      <none>        443/TCP   19s
+```
+
+`minikube service --all`
+
+```
+PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> minikube service --all
+|-----------|----------------|-------------|--------------|
+| NAMESPACE |      NAME      | TARGET PORT |     URL      |
+|-----------|----------------|-------------|--------------|
+| default   | app-typescript |             | No node port |
+|-----------|----------------|-------------|--------------|
+* service default/app-typescript has no node port
+|-----------|------------|-------------|--------------|
+| NAMESPACE |    NAME    | TARGET PORT |     URL      |
+|-----------|------------|-------------|--------------|
+| default   | kubernetes |             | No node port |
+|-----------|------------|-------------|--------------|
+* service default/kubernetes has no node port
+! Services [default/app-typescript default/kubernetes] have type "ClusterIP" not meant to be exposed, however for local development minikube allows you to access this !
+* Starting tunnel for service app-typescript.
+* Starting tunnel for service kubernetes.
+|-----------|----------------|-------------|------------------------|
+| NAMESPACE |      NAME      | TARGET PORT |          URL           |
+|-----------|----------------|-------------|------------------------|
+| default   | app-typescript |             | http://127.0.0.1:60779 |
+| default   | kubernetes     |             | http://127.0.0.1:60781 |
+|-----------|----------------|-------------|------------------------|
+* Opening service default/app-typescript in default browser...
+* Opening service default/kubernetes in default browser...
+! Because you are using a Docker driver on windows, the terminal needs to be open to run it.
+```
+
+![app_typescript3](assets/app_typescript3.png)
+
