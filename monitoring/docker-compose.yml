@@ -4,6 +4,7 @@ networks:
 volumes:
   loki_data:
   prometheus_data:
+  app_python_data:
 
 services:
   loki:
@@ -137,6 +138,8 @@ services:
       - "8001:8000"
     networks:
       - monitoring
+    volumes:
+      - app_python_data:/app_python/app/visits.txt
     logging:
       driver: "json-file"
       options:
