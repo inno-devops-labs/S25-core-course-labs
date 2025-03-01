@@ -43,6 +43,14 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: MY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: credentials
+                  key: password
+            {{- include "app-golang.envDate" . | nindent 12 }}
+            {{- include "app-golang.envTaskName" . | nindent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
