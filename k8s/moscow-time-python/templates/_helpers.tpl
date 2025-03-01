@@ -62,11 +62,9 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
-Generate environment variable definitions for the container.
+Environment variables
 */}}
-{{- define "my-library.envVars" -}}
-{{- range $key, $value := .Values.env }}
-- name: {{ $key | upper }}
-  value: {{ $value | quote }}
+{{- define "moscow-time-python.env" -}}
+- name: RALEKSAN_TEST
+  value: "the_bird_of_hermes"
 {{- end }}
-{{- end -}}
