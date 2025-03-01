@@ -1,0 +1,59 @@
+x-logging-defaults: &logging-defaults
+  driver: "json-file"
+  options:
+    max-file: "3"
+    max-size: "15m"
+
+x-deploy-defaults: &deploy-defaults
+  resources:
+    limits:
+      memory: "512m"
+
+services:
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    networks:
+        - my-network
+    logging: *logging-defaults
+    deploy: *deploy-defaults
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - ./configs/promtail-config.yaml:/etc/promtail/config.yaml
+      - /var/lib/docker/containers:/var/lib/docker/containers
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -config.file=/etc/promtail/config.yaml
+    networks:
+        - my-network
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    networks:
+        - my-network
+    logging: *logging-defaults
+    deploy: *deploy-defaults
+
+  prometheus:
+    image: ubuntu/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
+    command: --config.file=/etc/prometheus/prometheus.yml
+    networks:
+        - my-network
+    logging: *logging-defaults
+    deploy: *deploy-defaults
+
+volumes:
+  grafana-storage:
+
+networks:
+  my-network:
