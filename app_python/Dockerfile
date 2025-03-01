@@ -15,6 +15,8 @@ RUN pip install --no-cache-dir --upgrade -r /app_python/requirements.txt
 
 COPY src/ /app_python/src/
 
+RUN mkdir -p /app_python/visits && touch /app_python/visits/visits && chown -R fastapi /app_python/visits
+
 USER fastapi
 
 EXPOSE 80/tcp
