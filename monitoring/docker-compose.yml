@@ -6,7 +6,9 @@ networks:
 services:
   app_python:
     container_name: app_python
-    image: dnworks/app_python:latest
+    image: dnworks/app_python
+    volumes:
+      - ./visits:/app_python/visits
     ports:
       - "80:80"
     networks:
