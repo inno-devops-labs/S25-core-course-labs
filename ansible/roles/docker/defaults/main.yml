@@ -1,0 +1,5 @@
+docker_compose_version: "1.29.2"
+
+gpg_url: "https://download.docker.com/linux/ubuntu/gpg"
+docker_repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+docker_compose_url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-linux-x86_64"
