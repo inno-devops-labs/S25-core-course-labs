@@ -43,7 +43,6 @@ In this lab, you will get acquainted with Ansible, a powerful configuration mana
      |   |       `-- templates
      |   |           `-- docker-compose.yml.j2
      |   `-- ansible.cfg
-     |-- app_go
      |-- app_python
      `-- terraform
      ```

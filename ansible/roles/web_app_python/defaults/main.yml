@@ -1,0 +1,14 @@
+---
+# Default variables for the web_app role
+
+docker_image_name: "ali12hamdan/moscow-time-app"
+docker_image_tag: "app_python-distroless-prod-ci-1.0.0"
+docker_container_name: "app_python"
+docker_container_published_ports: "5001:5001"
+
+# Toggle to enable/disable full wipe logic
+web_app_full_wipe: true
+
+# Paths for the Docker Compose template
+docker_compose_src: "templates/docker-compose.yml.j2"
+docker_compose_dest: "./docker-compose.yml"
