@@ -12,6 +12,8 @@ This web application displays the current time in Moscow. It supports two format
 
 The Swagger documentation is available at the following path: `/docs`.
 
+Also, this application tracks the number of times it's accessed. The data is available in `/visits` endpoint and the `visits/visits` file in your directory. File updates as the counter updates.
+
 ## Tools
 
 - [FastAPI](https://fastapi.tiangolo.com/)
