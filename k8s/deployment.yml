@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moscow-time-api
+  labels:
+    app: moscow-time-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: moscow-time-api
+  template:
+    metadata:
+      labels:
+        app: moscow-time-api
+    spec:
+      containers:
+      - name: moscow-time-api
+        image: moscow-time-api:v1
+        ports:
+        - containerPort: 8001
+          name: api
+        - containerPort: 8000
+          name: metrics
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8001
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8001
+          initialDelaySeconds: 15
+          periodSeconds: 20
