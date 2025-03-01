@@ -1,3 +1,31 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: {{ .Release.Name }}
+#   labels:
+#     {{ include "my-library.labels" . | nindent 4 }}
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       {{- include "my-library.labels" . | nindent 6 }}
+#   template:
+#     metadata:
+#       labels:
+#         {{- include "my-library.labels" . | nindent 8 }}
+#     spec:
+#       containers:
+#         - name: {{ .Chart.Name }}
+#           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+#           ports:
+#             - containerPort: 80
+#       volumeMounts:
+#         - name: vault-secret
+#           mountPath: /vault/secrets
+#   volumes:
+#     - name: vault-secret
+#       emptyDir: {}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,19 +42,17 @@ spec:
       labels:
         {{- include "my-library.labels" . | nindent 8 }}
     spec:
+      serviceAccountName: "internal-app"
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
-            - containerPort: 80
-          env:
-            - name: MY_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: my-helm-secret
-                  key: username
-            - name: MY_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: my-helm-secret
-                  key: password
+            - containerPort: 8000
+        - name: vault-agent
+          image: hashicorp/vault:1.14.0
+          volumeMounts:
+            - name: vault-secret
+              mountPath: /vault/secrets
+      volumes:
+        - name: vault-secret
+          emptyDir: {}

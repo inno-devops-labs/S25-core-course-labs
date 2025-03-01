@@ -60,3 +60,13 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Generate environment variable definitions for the container.
+*/}}
+{{- define "my-library.envVars" -}}
+{{- range $key, $value := .Values.env }}
+- name: {{ $key | upper }}
+  value: {{ $value | quote }}
+{{- end }}
+{{- end -}}
