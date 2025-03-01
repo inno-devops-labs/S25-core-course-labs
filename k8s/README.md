@@ -149,6 +149,80 @@ PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> minikube service 
 ! Because you are using a Docker driver on windows, the terminal needs to be open to run it.
 ```
 
-### Open deployment:
+### Open app_python deployment:
 
 ![app_python2](assets/app_python2.png)
+
+### Apply manifests for app_typescript:
+
+`kubectl apply -f app_typescript`
+
+```
+PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> kubectl apply -f app_typescript 
+deployment.apps/app-typescript created
+service/app-typescript-service created
+```
+
+`kubectl get pods,svc`
+
+```
+PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> kubectl get pods,svc
+NAME                                  READY   STATUS    RESTARTS   AGE
+pod/app-python-65cf4749b8-25zfs       1/1     Running   0          3m25s
+pod/app-python-65cf4749b8-rwvgf       1/1     Running   0          3m25s
+pod/app-python-65cf4749b8-wv8gh       1/1     Running   0          3m25s
+pod/app-typescript-5667f9666c-266sv   1/1     Running   0          86s
+pod/app-typescript-5667f9666c-jxt8z   1/1     Running   0          86s
+pod/app-typescript-5667f9666c-n66wm   1/1     Running   0          86s
+
+NAME                             TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+service/app-python-service       ClusterIP   10.98.225.19   <none>        80/TCP    3m25s
+service/app-typescript-service   ClusterIP   10.97.175.83   <none>        80/TCP    86s
+service/kubernetes               ClusterIP   10.96.0.1      <none>        443/TCP   3d19h
+```
+
+`minikube service --all`
+
+```
+PS C:\Projects\University\S25\DevOps\S25-core-course-labs\k8s> minikube service --all
+|-----------|--------------------|-------------|--------------|
+| NAMESPACE |        NAME        | TARGET PORT |     URL      |
+|-----------|--------------------|-------------|--------------|
+| default   | app-python-service |             | No node port |
+|-----------|--------------------|-------------|--------------|
+* service default/app-python-service has no node port
+|-----------|------------------------|-------------|--------------|
+| NAMESPACE |          NAME          | TARGET PORT |     URL      |
+|-----------|------------------------|-------------|--------------|
+| default   | app-typescript-service |             | No node port |
+|-----------|------------------------|-------------|--------------|
+* service default/app-typescript-service has no node port
+|-----------|------------|-------------|--------------|
+| NAMESPACE |    NAME    | TARGET PORT |     URL      |
+|-----------|------------|-------------|--------------|
+| default   | kubernetes |             | No node port |
+|-----------|------------|-------------|--------------|
+* service default/kubernetes has no node port
+! Services [default/app-python-service default/app-typescript-service default/kubernetes] have type "ClusterIP" not meant to be exposed, however for local development minikube allows you to access this !
+* Starting tunnel for service app-python-service.
+* Starting tunnel for service app-typescript-service.
+* Starting tunnel for service kubernetes.
+|-----------|------------------------|-------------|------------------------|
+| NAMESPACE |          NAME          | TARGET PORT |          URL           |
+|-----------|------------------------|-------------|------------------------|
+| default   | app-python-service     |             | http://127.0.0.1:54678 |
+| default   | app-typescript-service |             | http://127.0.0.1:54680 |
+| default   | kubernetes             |             | http://127.0.0.1:54682 |
+|-----------|------------------------|-------------|------------------------|
+* Opening service default/app-python-service in default browser...
+* Opening service default/app-typescript-service in default browser...
+* Opening service default/kubernetes in default browser...
+! Because you are using a Docker driver on windows, the terminal needs to be open to run it.
+```
+
+### Open app_typescript deployment:
+
+![app_python2](assets/app_typescript2.png)
+
+## Bonus Task: Additional Configuration and Ingress
+
