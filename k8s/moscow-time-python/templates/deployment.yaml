@@ -1,31 +1,3 @@
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: {{ .Release.Name }}
-#   labels:
-#     {{ include "my-library.labels" . | nindent 4 }}
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       {{- include "my-library.labels" . | nindent 6 }}
-#   template:
-#     metadata:
-#       labels:
-#         {{- include "my-library.labels" . | nindent 8 }}
-#     spec:
-#       containers:
-#         - name: {{ .Chart.Name }}
-#           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-#           ports:
-#             - containerPort: 80
-#       volumeMounts:
-#         - name: vault-secret
-#           mountPath: /vault/secrets
-#   volumes:
-#     - name: vault-secret
-#       emptyDir: {}
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -48,6 +20,10 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: 8000
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config/config.json
+              subPath: config.json
         - name: vault-agent
           image: hashicorp/vault:1.14.0
           volumeMounts:
@@ -56,3 +32,6 @@ spec:
       volumes:
         - name: vault-secret
           emptyDir: {}
+        - name: config-volume
+          configMap:
+            name: {{ .Release.Name }}-config
