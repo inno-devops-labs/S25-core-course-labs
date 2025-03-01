@@ -45,9 +45,12 @@ services:
   time-app:
     image: xrvst/time_app:latest
     ports:
-      - "5123:5000"
+      - "5123:8000"
     depends_on:
       - loki
+    volumes:
+      - visits:/tmp/app
 
 volumes:
   grafana-storage:
+  visits:
