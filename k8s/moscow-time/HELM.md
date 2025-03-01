@@ -38,6 +38,7 @@
    ```
 
    **Expected Output:**
+
    ![services](../images/charts/services.png)
 
 2. **Access the Minikube Dashboard:**
@@ -78,6 +79,7 @@ NOTES:
 ```
 
 - `kubectl get pods`
+
   **Expected Output:**
 
 ```sh
@@ -92,6 +94,7 @@ preinstall-hook                                 0/1     Completed   0          7
 ```
 
 - `kubectl describe po preinstall-hook`
+
   **Expected Output:**
 
 ```sh
