@@ -25,3 +25,10 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}-secrets
                   key: MY_SECRET
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ .Release.Name }}-config
