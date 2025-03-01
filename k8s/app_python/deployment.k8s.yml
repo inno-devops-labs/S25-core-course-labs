@@ -1,9 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-piton-deployment
+  name: app-piton
+  labels:
+    app: app-piton
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: app-piton
@@ -12,6 +14,7 @@ spec:
       labels:
         app: app-piton
     spec:
+      serviceAccountName: internal-app
       containers:
       - name: app-piton
         image: paranid5/app_piton:latest
