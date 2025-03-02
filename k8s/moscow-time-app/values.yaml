@@ -1,0 +1,14 @@
+image:
+  repository: nshlyakhtin/devops
+  tag: lab8-app-python-amd64
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 5000
+  targetPort: 5000
+
+containerPort: 5000
+
+secrets:
+  my_secret: "qwerty"
