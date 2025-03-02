@@ -1,0 +1,7 @@
+- name: Deploy python app
+  hosts: all
+  become: true
+  roles:
+    - web_app
+  vars:
+    - web_app_full_wipe: true
