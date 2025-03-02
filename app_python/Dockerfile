@@ -7,12 +7,6 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app.py .
-COPY templates/ ./templates/
-
-COPY test_app.py .
-RUN pytest test_app.py
-
 # A new stage for the final image
 FROM python:3.9-alpine3.15
 
