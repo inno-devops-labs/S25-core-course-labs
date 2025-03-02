@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golang-app-deployment
+  labels:
+    app: golang-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: golang-app
+  template:
+    metadata:
+      labels:
+        app: golang-app
+    spec:
+      containers:
+        - name: golang-app-container
+          image: azazaki/app_golang:latest
+          ports:
+            - containerPort: 8080

@@ -1,0 +1,39 @@
+---
+- import_tasks: 0-wipe.yml
+  tags: wipe
+
+- name: Deploy Web Application using Docker Compose
+  block:
+    - name: Create deployment directory for web_app
+      file:
+        path: "{{ web_app_deploy_dir }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+      tags:
+        - deploy
+
+    - name: Render Docker Compose template for the application
+      template:
+        src: docker-compose.yml.j2
+        dest: "{{ web_app_deploy_dir }}/docker-compose.yml"
+      tags:
+        - deploy
+        -
+    - name: Pull Docker image for the application
+      docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+      tags:
+        - deploy
+
+    - name: Start the application container using Docker Compose
+      command: docker-compose -f docker-compose.yml up -d
+      args:
+        chdir: "{{ web_app_deploy_dir }}"
+      tags:
+        - deploy
+
+  tags:
+    - web_app
