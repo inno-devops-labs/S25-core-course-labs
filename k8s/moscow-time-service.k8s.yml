@@ -1,0 +1,18 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: moscow-time-service
+  namespace: default
+spec:
+  selector:
+    app: moscow-time
+  type: NodePort
+  ports:
+  - name: moscow-time-service
+    protocol: TCP
+    port: 8081
+    targetPort: 8000
+    nodePort: 30001
+---
+
