@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: js-app
+  labels:
+    app: js-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: js-app
+  template:
+    metadata:
+      labels:
+        app: js-app
+    spec:
+      containers:
+      - name: js-app
+        image: js-app:v1
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "512Mi"
+          requests:
+            cpu: "0.2"
+            memory: "256Mi"
+        livenessProbe:
+          tcpSocket:
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          tcpSocket:
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5 
