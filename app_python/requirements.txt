@@ -1,0 +1,4 @@
+flask
+python-dotenv
+pytz
+prometheus-flask-exporter
