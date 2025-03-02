@@ -1,0 +1,9 @@
+all:
+  hosts:
+    test_host:
+      ansible_host: 127.0.0.1
+      ansible_port: 2222
+      ansible_user: root
+      ansible_password: root
+      ansible_connection: ssh
+      ansible_python_interpreter: /usr/bin/python3
