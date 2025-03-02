@@ -1,0 +1,37 @@
+server:
+  http_listen_port: 3100
+distributor:
+  ring:
+    kvstore:
+      store: inmemory
+ingester:
+  lifecycler:
+    ring:
+      kvstore:
+        store: inmemory
+  chunk_idle_period: 5m
+  chunk_retain_period: 30s
+  max_transfer_retries: 0
+limits_config:
+  ingestion_rate_mb: 8
+  ingestion_burst_size_mb: 16
+  max_cache_freshness_per_query: 10m
+schema_config:
+  configs:
+    - from: 2023-01-01
+      store: boltdb-shipper
+      object_store: filesystem
+      schema: v11
+      index:
+        prefix: index_
+        period: 24h
+storage_config:
+  boltdb_shipper:
+    active_index_directory: /tmp/loki/index
+    cache_location: /tmp/loki/boltdb-cache
+    shared_store: filesystem
+  filesystem:
+    directory: /tmp/loki/chunks
+table_manager:
+  retention_deletes_enabled: false
+  retention_period: 0s
