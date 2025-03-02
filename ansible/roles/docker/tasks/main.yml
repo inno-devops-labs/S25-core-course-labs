@@ -1,0 +1,8 @@
+- name: Install Docker
+  include_tasks: install_docker.yml
+
+- name: Install Docker Compose
+  include_tasks: install_compose.yml
+
+- name: Configure Docker Compose
+  include_tasks: add_user_to_docker.yml
