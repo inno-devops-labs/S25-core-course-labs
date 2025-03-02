@@ -1,0 +1,71 @@
+# HELP.md
+
+# General build artifacts
+target/
+build/
+
+# Maven specific files and directories
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/
+
+# Generated source directories
+generated-sources/
+generated-test-sources/
+
+# Specific exclusions for target and build directories within src/main and src/test
+!**/src/main/**/target/
+!**/src/main/**/build/
+!**/src/test/**/target/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+# Common IDE generated files and directories
+__pycache__/
+.class
+.log
+.jar
+.war
+*.iws
+*.iml
+*.ipr
+.project
+.classpath
+.settings/
+out/
+.DS_Store
+
+# Additional common patterns
+*.class
+*.log
+*.jar
+*.war
+
+# Terraform
+.terraform
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
