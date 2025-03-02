@@ -1,0 +1,10 @@
+---
+# Handlers for the web_app role
+
+- name: Restart app_go container
+  community.docker.docker_container:
+    name: "{{ docker_container_name }}"
+    restart: true
+    state: started
+  tags:
+    - restart_container
