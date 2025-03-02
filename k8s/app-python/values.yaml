@@ -1,0 +1,4 @@
+image:
+  repository: billyboone/python-moscow-time
+  tag: latest
+  pullPolicy: IfNotPresent
