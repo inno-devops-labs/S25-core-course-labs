@@ -1,0 +1,12 @@
+web_app_full_wipe: true
+
+base_path: "app_python"
+web_app_service: "web_app"
+ports:
+  int: 80
+  ext: 80
+docker:
+  user: "anasalatasi"
+  image_name: "moscow-time-app"
+  tag: "latest"
+container_name: "Abodi"
