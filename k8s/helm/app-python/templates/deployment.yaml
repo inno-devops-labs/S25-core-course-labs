@@ -43,6 +43,9 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- include "app_python_chart.envName" . | nindent 12 }}
+            {{- include "app_python_chart.envEmail" . | nindent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
