@@ -1,0 +1,16 @@
+---
+- name: Wipe Docker data
+  when: time_app_wipe_container | bool
+  block:
+    - name: Stop Docker container
+      ansible.builtin.docker_container:
+        name: "{{ time_app_docker_container_name }}"
+        state: absent
+
+    - name: Remove Docker image
+      ansible.builtin.docker_image:
+        name: "unileonid/time-app-py"
+        tag: "{{ time_app_version }}"
+        state: absent
+  tags:
+    - docker-wipe
