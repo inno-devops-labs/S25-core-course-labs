@@ -1,0 +1,4 @@
+docker_image: "anyarylova/app_python"
+docker_container: "app_python"
+app_port: 8080
+web_app_full_wipe: false
