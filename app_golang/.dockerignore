@@ -1,0 +1,6 @@
+*.exe
+.gitignore
+*.md
+Dockerfile
+*.png
+src.test.*
