@@ -23,16 +23,17 @@ templates = Jinja2Templates(directory="src/templates")
 
 # Register metrics
 time_page_visits = Counter(
-    'time_page_visits',
-    'Visits of web page containing current time in Moscow. Bring time to human!'
+    "time_page_visits",
+    "Visits of web page containing current time in Moscow. Bring time to human!",
 )
 
 time_json_visits = Counter(
-    'time_json_visits',
-    'Visits of API endpoint containing current time in Moscow. Bring time to robots!'
+    "time_json_visits",
+    "Visits of API endpoint containing current time in Moscow. Bring time to robots!",
 )
 
 counter = 0
+
 
 def increment_counter():
     global counter
@@ -84,6 +85,7 @@ async def read_time_json():
     current_time = str(get_time())
     return {"time": current_time}
 
+
 @app.get(
     "/metrics",
     response_model=None,
@@ -91,15 +93,12 @@ async def read_time_json():
     description="""Get latest metrics""",
     tags=["metrics"],
     summary="Returns latest metrics",
-    responses={
-        status.HTTP_200_OK: {
-            "description": "Latest metrics"
-        }
-    }
+    responses={status.HTTP_200_OK: {"description": "Latest metrics"}},
 )
 async def read_metrics():
     metrics = generate_latest(registry=REGISTRY)
     return HTMLResponse(metrics, media_type=CONTENT_TYPE_LATEST)
+
 
 @app.get(
     "/visits",
@@ -108,11 +107,7 @@ async def read_metrics():
     description="""Get number of times the app accessed""",
     tags=["metrics"],
     summary="Returns number of times the app accessed",
-    responses={
-        status.HTTP_200_OK: {
-            "description": "Number of times the app accessed"
-        }
-    }
+    responses={status.HTTP_200_OK: {"description": "Number of times the app accessed"}},
 )
 async def read_counter():
     global counter
