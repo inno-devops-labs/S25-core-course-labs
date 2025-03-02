@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moscow-js-time
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: moscow-js-time
+  template:
+    metadata:
+      labels:
+        app: moscow-js-time
+        lang: dart
+    spec:
+      containers:
+      - name: moscow-js-time
+        image: dehopen/app_js:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80

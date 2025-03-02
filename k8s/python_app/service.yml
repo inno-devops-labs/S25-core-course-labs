@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: moscow-python-time-service
+spec:
+  selector:
+    app: moscow-python-time
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: LoadBalancer

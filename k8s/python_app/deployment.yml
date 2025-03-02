@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moscow-python-time
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: moscow-python-time
+  template:
+    metadata:
+      labels:
+        app: moscow-python-time
+        lang: python
+    spec:
+      containers:
+      - name: moscow-python-time
+        image: dehopen/app_python:latest
+        ports:
+        - containerPort: 5000
