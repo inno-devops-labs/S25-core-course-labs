@@ -1,0 +1,61 @@
+- name: Install required packages
+  apt:
+    pkg:
+      - ca-certificates
+      - curl
+      - apt-transport-https
+      - gnupg-agent
+      - software-properties-common
+    state: present
+    update_cache: true
+
+- name: Create /etc/apt/keyrings directory
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Download Docker GPG keys
+  uri:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    method: GET
+    dest: /etc/apt/keyrings/docker.asc
+  register: result
+  failed_when: result.status not in [200, 304] # ignore error if downloaded again
+
+- name: Add +r perm for installed GPG keys
+  file:
+    path: /etc/apt/keyrings/docker.asc
+    mode: 'a+x'
+
+- name: Check if docker repo file is present
+  stat:
+    path: /etc/apt/sources.list.d/docker.list
+  register: docker_repo_file
+
+- name: Add docker repository to Apt sources
+  lineinfile:
+    path: /etc/apt/sources.list.d/docker.list
+    line: >
+      deb [arch={{ 'amd64' if ansible_architecture == 'x86_64' else ansible_architecture }} signed-by=/etc/apt/keyrings/docker.asc]
+      https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
+    create: true
+    mode: '0644'
+  when: docker_repo_file.stat.exists == false
+
+- name: Install docker packages
+  apt:
+    pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+    update_cache: true
+
+- name: Add user to the Docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: true
