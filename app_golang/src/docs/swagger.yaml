@@ -38,4 +38,19 @@ paths:
       summary: Returns a random joke in JSON format
       tags:
       - joke
+  /visits:
+    get:
+      consumes:
+      - application/json
+      description: Returns number of times the app accessed
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Returns number of times the app accessed
+      tags:
+      - visits
 swagger: "2.0"

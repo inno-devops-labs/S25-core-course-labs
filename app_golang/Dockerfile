@@ -22,6 +22,8 @@ WORKDIR /app_golang
 COPY --from=build /app_golang/main /app_golang/.
 COPY --from=build /app_golang/src/templates/ /app_golang/src/templates/
 
+RUN mkdir -p /app_golang/visits && touch /app_golang/visits/visits && chown -R gin /app_golang/visits
+
 USER gin
 
 EXPOSE 80/tcp

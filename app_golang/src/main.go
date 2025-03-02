@@ -5,6 +5,7 @@ import (
 
 	docs "github.com/danmaninc/S25-core-course-labs/app_golang/src/docs"
 	"github.com/danmaninc/S25-core-course-labs/app_golang/src/endpoints"
+	"github.com/danmaninc/S25-core-course-labs/app_golang/src/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -48,8 +49,9 @@ func setupRouter() *gin.Engine {
 	// Register endpoints
 	v1 := router.Group("/")
 	{
-		v1.GET("/", endpoints.JokePage, func (c *gin.Context) { jokePageCounter.Inc() })
-		v1.GET("/joke", endpoints.Joke, func (c *gin.Context) { jokeJsonCounter.Inc() })
+		v1.GET("/", endpoints.JokePage, func (c *gin.Context) { jokePageCounter.Inc(); utils.IncrementCounter() })
+		v1.GET("/joke", endpoints.Joke, func (c *gin.Context) { jokeJsonCounter.Inc(); utils.IncrementCounter() })
+		v1.GET("/visits", endpoints.Visits)
 	}
 
 	// Run router

@@ -11,6 +11,8 @@ This web application displays a random joke from the [public API](https://jokeap
 
 The Swagger documentation is available at the following path: `/swagger/index.html`.
 
+Also, this application tracks the number of times it's accessed. The data is available in `/visits` endpoint and the `visits/visits` file in your directory. File updates as the counter updates.
+
 ## Tools
 
 - [Gin](https://github.com/gin-gonic/gin)

@@ -50,6 +50,29 @@
                     }
                 }
             }
+        },
+        "/visits": {
+            "get": {
+                "description": "Returns number of times the app accessed",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "visits"
+                ],
+                "summary": "Returns number of times the app accessed",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
