@@ -125,3 +125,8 @@ tolerations: []
 affinity: {}
 
 secretPassword: "mysecretpassword"
+
+vault:
+  enabled: true
+  address: "http://vault.default.svc.cluster.local:8200"
+  secretPath: "secret/data/myapp/config"

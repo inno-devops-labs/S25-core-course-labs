@@ -5,7 +5,7 @@ metadata:
   labels:
     app: {{ include "python-app.name" . }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.replicaCount | default 3 }}
   selector:
     matchLabels:
       app: {{ include "python-app.name" . }}
@@ -13,9 +13,22 @@ spec:
     metadata:
       labels:
         app: {{ include "python-app.name" . }}
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/agent-inject-secret-myapp-config: "{{ .Values.vault.secretPath }}"
+        vault.hashicorp.com/agent-inject-template-myapp-config: |
+          {{- with secret .Values.vault.secretPath -}}
+          username: {{ .Data.data.username }}
+          password: {{ .Data.data.password }}
+          {{- end }}
     spec:
+      serviceAccountName: myapp-sa
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.containerPort }}
+          env:
+            - name: VAULT_ADDR
+              value: {{ .Values.vault.address | quote }}
