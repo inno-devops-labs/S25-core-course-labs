@@ -1,0 +1,31 @@
+---
+- name: Create web application directory
+  file:
+    path: "{{ web_app_data_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Create docker-compose.yml file
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ web_app_data_dir }}/docker-compose.yml"
+    mode: '0644'
+  notify: restart web application
+
+- name: Start web application
+  command: docker-compose up -d
+  args:
+    chdir: "{{ web_app_data_dir }}"
+  changed_when: false
+
+- name: Check if web application is running
+  uri:
+    url: "http://localhost:{{ web_app_port }}"
+    return_content: no
+    status_code: 200
+  register: health_check
+  ignore_errors: true
+
+- name: Display health check result
+  debug:
+    msg: "Web application health check: {{ 'Success' if health_check.status == 200 else 'Failed' }}" 

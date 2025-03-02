@@ -1,0 +1,20 @@
+---
+- name: Deploy Docker on EC2 instances
+  hosts: all
+  become: true
+  vars:
+    docker_version: "latest"
+    docker_compose_version: "2.15.1"
+  
+  roles:
+    - docker
+  
+  tasks:
+    - name: Check Docker installation
+      command: docker --version
+      register: docker_version_output
+      changed_when: false
+      
+    - name: Display Docker version
+      debug:
+        var: docker_version_output.stdout 
