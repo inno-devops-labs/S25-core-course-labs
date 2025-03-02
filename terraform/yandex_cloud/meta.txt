@@ -1,0 +1,8 @@
+#cloud-config
+users:
+  - name: demyanzverev
+    groups: sudo
+    shell: /bin/bash
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    ssh_authorized_keys:
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDKmUl3PYWpatEWY4UGufevITlGpxIXL4PLxYBG7a6bXbGRCEXMFICESQr7CUgWn9mVU3r6C1TQoZCeRTcC9DPGsBdrwxBq84dWPRC+focMLaPziVXxbnz6kCv0hGQPa/nZzIvAhYxwunMSzF7dJZBKMfvFZ/xLbJFRJlf1GyDtBSDLxi+yIGdJo1B5p9DkKjEN+AOR//azIciieW5JMgeUoPoCjN96SgAS00oSsbFw1DYg6A76w5zYP5UManJRf9zsikZOg3+lypM7yFX+A0WMB4ABZz0QwhbnTjHW71bP/qgFmDUJL23FVrxBOJEb2pi1/DlRENQhX+xs0GGqDEWSjpwy3auAsSZtsJIeK/+NgOboKauWKFncFBUWibexq8OszLLB9QUCsGhdPMJ4AxXs++DB/CqRcDenlmXkGD2cnVxzj0gzdPQefGqEI6WGiXPlcyc+W5XLEXtRcWfLZmumVIb3ce1/BDMTrcLiVRM+5FudSU6BsTSlqT33GO3KPvXWoqEq4Dfktio3tqHLCV2FUp/ZuHOfwva75xWeP8u7LPHWt/1Pup3KkUTnVIT2PlEjhH2LGAU4NAjtfAPIICFrixjZE6jL2WB4kp5wsfiY5zVMnqU15pMlBEFnloOsAbF3lG3nBlY2iySPJytY6NUGNo83/EtgSU5RxEFGGXrC+w== asotruzikovic@gmail.com
