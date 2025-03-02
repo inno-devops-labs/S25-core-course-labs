@@ -1,0 +1,10 @@
+- hosts: all
+  roles:
+    - role: docker
+      become: true
+
+    - role: web_app
+      become: true
+
+  vars:
+    ansible_ssh_private_key_file: "~/.ssh/id_ed25519"
