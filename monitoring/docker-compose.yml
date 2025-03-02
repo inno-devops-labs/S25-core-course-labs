@@ -12,6 +12,11 @@ services:
       - loki-data:/tmp/loki
     networks:
       - logging-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   promtail:
     image: grafana/promtail:2.9.2
@@ -22,6 +27,12 @@ services:
     command: -config.file=/etc/promtail/config.yml
     networks:
       - logging-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 512m
     depends_on:
       - loki
 
@@ -36,8 +47,35 @@ services:
       - grafana-data:/var/lib/grafana
     networks:
       - logging-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 512m
     depends_on:
       - loki
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus-config.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+    networks:
+      - logging-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 512m
 
   python_app:
     image: jodak628286/python_app:latest
@@ -52,6 +90,7 @@ services:
         max-size: "200k"
         max-file: "10"
         tag: "{{.Name}}"
+    mem_limit: 512m
 
 networks:
   logging-network:
@@ -59,3 +98,4 @@ networks:
 volumes:
   loki-data:
   grafana-data:
+  prometheus-data:
