@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: MIT-0
+version: '3'
+services:
+  {{ web_app_container_name }}:
+  image: "{{ web_app_image }}:{{ web_app_image_tag }}"
+  ports:
+      {% for port in web_app_ports %}
+    - "{{ port }}"
+      {% endfor %}
+  restart: {{ web_app_restart_policy }}
