@@ -1,0 +1,6 @@
+- name: Install Docker compose
+  uri:
+    url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-{{ ansible_architecture }}
+    dest: /usr/local/bin/docker-compose
+    mode: "u+x,g+x"
+  failed_when: result.status not in [200, 304] # ignore error if downloaded again
