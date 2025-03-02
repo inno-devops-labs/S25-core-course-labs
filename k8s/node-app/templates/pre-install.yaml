@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-pre-install-hook
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-delete-policy": hook-succeeded
+
+spec:
+  containers:
+  - name: pre-install
+    image: busybox
+    command: ['sh', '-c', 'echo Starting pre-install hook && sleep 20 && echo Pre-install hook completed']
+  restartPolicy: Never 
