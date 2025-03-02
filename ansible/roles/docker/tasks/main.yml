@@ -1,0 +1,8 @@
+- name: Install Docker
+  ansible.builtin.include_tasks: install-docker.yml
+
+- name: Secure Docker Configuration
+  ansible.builtin.include_tasks: secure-docker-configuration.yml
+
+- name: Install Docker Compose
+  ansible.builtin.include_tasks: install-compose.yml
