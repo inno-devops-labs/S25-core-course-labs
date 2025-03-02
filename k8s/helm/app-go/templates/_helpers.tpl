@@ -60,3 +60,15 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create environment variables 
+*/}}
+{{- define "app-go.envName" -}}
+- name: NAME
+  value: "Mohamad Nour Shahin"
+{{- end }}
+{{- define "app-go.envEmail" -}}
+- name: EMAIL
+  value: "mo.shahin@innopolis.university"
+{{- end }}
