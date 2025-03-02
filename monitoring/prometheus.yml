@@ -19,9 +19,9 @@ scrape_configs:
     static_configs:
       - targets: ['app_python:5001']
 
-  # - job_name: app_go
-  #   static_configs:
-  #     - targets: ['app_go:3500']
+  - job_name: app_go
+    static_configs:
+      - targets: ['app_go:3500']
 
   - job_name: grafana
     static_configs:

@@ -107,9 +107,9 @@
       static_configs:
         - targets: ['app_python:5001']
 
-    #- job_name: app_go
-      #static_configs:
-        #- targets: ['app_go:3500']
+    - job_name: app_go
+      static_configs:
+        - targets: ['app_go:3500']
 
     - job_name: grafana
       static_configs:
@@ -127,12 +127,12 @@
       interval: 30s
       timeout: 10s
       retries: 3
-  #app_go:
-    #healthcheck:
-      #test: ["CMD", "curl", "-f", "http://localhost:3000"]
-      #interval: 30s
-      #timeout: 10s
-      #retries: 3
+  app_go:
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
   ```
 
 - health checks using `docker ps`:

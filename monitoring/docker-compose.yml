@@ -29,25 +29,25 @@ services:
 
   
 
-  # app_go:
-  #   image: "ali12hamdan/moscow-time-app:latest"
-  #   ports:
-  #     - "3500:3500"
-  #   logging:
-  #     driver: "json-file"
-  #     options:
-  #       max-size: "100m"
-  #       max-file: "10"
-  #       tag: "{{.ImageName}}|{{.Name}}"
-  #   mem_limit: "512m"
-  #   healthcheck:
-  #     test: ["CMD", "curl", "-f", "http://0.0.0.0:3500/"]
-  #     interval: 10s
-  #     timeout: 10s
-  #     retries: 3
-  #     start_period: 40s
-  #   networks:
-  #     - loki
+  app_go:
+    image: "ali12hamdan/moscow-time-app:latest"
+    ports:
+      - "3500:3500"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+        tag: "{{.ImageName}}|{{.Name}}"
+    mem_limit: "512m"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://0.0.0.0:3500/"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - loki
 
     
 

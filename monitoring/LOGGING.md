@@ -71,16 +71,16 @@ services:
 
   
 
-  # app_go:
-  #   image: "ali12hamdan/moscow-time-app-go"
-  #   ports:
-  #     - "3000:3000"
-  #   logging:
-  #     driver: "json-file"
-  #     options:
-  #       max-size: "100m"
-  #       max-file: "10"
-  #       tag: "{{.ImageName}}|{{.Name}}"
+  app_go:
+    image: "ali12hamdan/moscow-time-app-go"
+    ports:
+      - "3000:3000"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+        tag: "{{.ImageName}}|{{.Name}}"
     
 
   loki:
