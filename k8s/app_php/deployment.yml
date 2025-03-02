@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: webapp
-  name: webapp
+    app: webapp2
+  name: webapp2
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: webapp
+      app: webapp2
   template:
     metadata:
       labels:
-        app: webapp
+        app: webapp2
     spec:
       containers:
-      - image: magel0n/moscowtimeimagepython:latest
-        name: webapp
+      - image: magel0n/moscowtimeimagephp:latest
+        name: webapp2
         ports:
-        - containerPort: 5000
-          name: app-python-port
+        - containerPort: 8000
+          name: app-php-port

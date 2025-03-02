@@ -19,3 +19,4 @@ spec:
         name: webapp
         ports:
         - containerPort: 5000
+          name: app-python-port
