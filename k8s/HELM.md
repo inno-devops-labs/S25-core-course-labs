@@ -73,7 +73,7 @@ service/python-app-release    ClusterIP   10.105.167.122            80/TCP     5
 ```
 
 Screenshot from the Minikube Dashboard:
-[]
+![Minikube Dashboard](../static/dashboardkube.png)
 
 ### Task 2: Helm Chart Hooks
 
