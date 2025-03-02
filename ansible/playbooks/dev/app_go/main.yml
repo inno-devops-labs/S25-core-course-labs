@@ -1,0 +1,11 @@
+- name: Deploy Go Application using Docker Compose
+  hosts: all
+  become: yes
+  roles:
+    - role: web_app
+      vars:
+        docker_image: "secretanry/app_go:latest"
+        app_port: "8001"
+        container_port: "8080"
+        web_app_deploy_dir: "/home/misha/app_go"
+        web_app_full_wipe: true
