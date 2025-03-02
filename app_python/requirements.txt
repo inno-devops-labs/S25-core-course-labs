@@ -1,9 +1,17 @@
+ansible==11.2.0
+ansible-core==2.18.2
 blinker==1.9.0
+cffi==1.17.1
 click==8.1.8
+cryptography==44.0.1
 Flask==3.1.0
 gunicorn==23.0.0
 itsdangerous==2.2.0
 Jinja2==3.1.5
 MarkupSafe==3.0.2
 packaging==24.2
+prometheus_client==0.21.1
+pycparser==2.22
+PyYAML==6.0.2
+resolvelib==1.0.1
 Werkzeug==3.1.3

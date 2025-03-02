@@ -52,8 +52,25 @@ services:
       - loki
   app_python:
     image: denisnesterov/app:latest
+    ports:
+      - "8000:8000"
     depends_on:
       - loki
       - promtail 
+    networks:
+      - loki
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    depends_on:
+      - loki
+      - promtail
+      - app_python
     networks:
       - loki
