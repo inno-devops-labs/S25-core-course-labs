@@ -1,0 +1,4 @@
+*.exe
+main
+src.test.*
+visits/

@@ -1,0 +1,56 @@
+basePath: /
+definitions:
+  endpoints.JokeResponse:
+    properties:
+      joke:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: Returns a web page with the random joke
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Returns a web page with the random joke
+      tags:
+      - joke
+  /joke:
+    get:
+      consumes:
+      - application/json
+      description: Returns a random joke in JSON format
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/endpoints.JokeResponse'
+      summary: Returns a random joke in JSON format
+      tags:
+      - joke
+  /visits:
+    get:
+      consumes:
+      - application/json
+      description: Returns number of times the app accessed
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Returns number of times the app accessed
+      tags:
+      - visits
+swagger: "2.0"
