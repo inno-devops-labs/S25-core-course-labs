@@ -1,0 +1,10 @@
+- name: Deploy app_js
+  hosts: all
+  become: true
+  roles:
+    - web_app
+  vars:
+    web_app_name: app_js
+    web_app_internal_port: 3000
+    web_app_external_port: 3000
+    web_app_full_wipe: true

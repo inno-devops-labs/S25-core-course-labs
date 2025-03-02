@@ -1,0 +1,9 @@
+- name: Stop and remove existing container
+  docker_container:
+    name: flask_app
+    state: absent
+
+- name: Remove Docker image
+  docker_image:
+    name: "{{ docker_image_python }}"
+    state: absent
