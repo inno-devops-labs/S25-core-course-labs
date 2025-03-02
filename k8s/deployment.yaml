@@ -17,4 +17,9 @@ spec:
         image: favelanky/app_python:latest
         ports:
         - containerPort: 5000
-
+        env:
+          - name: MY_PASS
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: MY_PASS

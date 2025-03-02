@@ -121,3 +121,12 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+secretValue: "LazarusHi1337"
+
+vault:
+  enabled: true
+  role: "my-role"
+  secretPath: "secret/data/myapp"
+  secretKey: "password"
+
