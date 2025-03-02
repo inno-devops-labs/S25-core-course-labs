@@ -1,0 +1,3 @@
+docker_image: "enot0704/moscow-time-app"
+app_port: "5000"
+web_app_full_wipe: false
