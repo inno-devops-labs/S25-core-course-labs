@@ -64,11 +64,11 @@ Create the name of the service account to use
 {{/*
 Create vars for bonus task
 */}}
-{{- define "app-python.envDate" -}}
+{{- define "app-golang.envDate" -}}
 - name: DATE
   value: "01.03.2025"
 {{- end }}
-{{- define "app-python.envTaskName" -}}
+{{- define "app-golang.envTaskName" -}}
 - name: TASK_NAME
   value: "Bonus Task: Resource Management and Environment Variables"
 {{- end }}
