@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-kotlin
+  labels:
+    app: app-kotlin
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-kotlin
+  template:
+    metadata:
+      labels:
+        app: app-kotlin
+    spec:
+      containers:
+        - name: app-kotlin
+          image: emapfff/app_kotlin:latest
+          ports:
+            - containerPort: 8080
+              name: app-kotlin-port
