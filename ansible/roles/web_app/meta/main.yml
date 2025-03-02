@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  author: DevOps Core Course Team
+  description: Role for deploying web applications using Docker Compose
+  license: MIT
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+
+  galaxy_tags:
+    - docker
+    - compose
+    - web
+    - deployment
+
+dependencies:
+  - role: docker 
