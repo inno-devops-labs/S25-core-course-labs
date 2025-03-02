@@ -1,0 +1,4 @@
+- name: Restart Web App
+  command:
+    cmd: docker-compose restart
+    chdir: /home/ubuntu/
