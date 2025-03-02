@@ -13,9 +13,11 @@ from backend.database.db import db, Zones
 
 # Load environment variables from .env file
 load_dotenv()
-
+os.makedirs('/var/log/backend', exist_ok=True)
 # Set up logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(filename='/var/log/backend/app.log',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)

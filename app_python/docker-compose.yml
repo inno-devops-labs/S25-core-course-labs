@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   db:
-    image: jmartynova123/dev-lab1-db:latest
+    image: jmartynova123/dev-lab3-db
     environment:
       POSTGRES_DB: times
       POSTGRES_USER: myuser
@@ -18,7 +18,7 @@ services:
       retries: 5
 
   backend:
-    image: jmartynova123/dev-lab1-back:latest
+    image: jmartynova123/dev-lab3-back
     environment:
       DATABASE_URI: postgres://myuser:mypassword@db:5432/times
     ports:
@@ -32,9 +32,11 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    volumes:
+      - ./backend/logs:/var/log/backend  # Монтируем директорию для логов бэкенда
 
   frontend:
-    image: jmartynova123/dev-lab1-frontend:latest
+    image: jmartynova123/dev-lab3-front
     ports:
       - "3000:3000"
     depends_on:
@@ -46,3 +48,31 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    # volumes:
+    #   - ./frontend/logs:/var/log/frontend  # Монтируем директорию для логов фронтенда
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/local-config.yaml
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - ./promtail-config.yaml:/etc/promtail/config.yml
+      - ./backend/logs:/var/log/backend  # Монтируем логи бэкенда
+      #- ./frontend/logs:/var/log/frontend  # Монтируем логи фронтенда
+    command: -config.file=/etc/promtail/config.yml
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3001"  # Измените порт, чтобы не конфликтовать с фронтендом
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      loki:
+        condition: service_healthy
