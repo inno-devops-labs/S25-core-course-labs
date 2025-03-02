@@ -1,0 +1,412 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+    "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+    "https://checkstyle.org/dtds/configuration_1_3.dtd">
+<!--
+    Checkstyle configuration
+-->
+<module name="Checker">
+
+    <!-- https://checkstyle.org/property_types.html -->
+    <property name="charset" value="UTF-8"/>
+    <property name="fileExtensions" value="java, properties, xml"/>
+
+
+    <!-- https://checkstyle.org/config_filefilters.html -->
+    <!--     Excludes all 'module-info.java' files      -->
+    <module name="BeforeExecutionExclusionFileFilter">
+        <property name="fileNamePattern" value="module\-info\.java$"/>
+    </module>
+
+
+    <!-- https://checkstyle.org/config_javadoc.html#JavadocPackage     -->
+    <!-- Checks that a package-info.java file exists for each package. -->
+    <!-- <module name="JavadocPackage"/> -->
+
+
+    <!-- https://checkstyle.org/config_misc.html#NewlineAtEndOfFile -->
+    <!--       Checks whether files end with a new line.            -->
+    <module name="NewlineAtEndOfFile"/>
+
+
+    <!-- https://checkstyle.org/config_misc.html#Translation -->
+    <!--   Checks that property files contain the same keys. -->
+    <module name="Translation"/>
+
+
+    <!-- https://checkstyle.org/config_misc.html#UniqueProperties -->
+    <!--             Check for duplicate properties.              -->
+    <module name="UniqueProperties"/>
+
+
+    <!-- https://checkstyle.org/config_sizes.html -->
+    <!--      Checks for Size Violations.         -->
+    <module name="FileLength"/>
+    <module name="LineLength">
+        <property name="max" value="120"/>
+        <property name="fileExtensions" value="java"/>
+        <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
+    </module>
+
+
+    <!-- https://checkstyle.org/config_whitespace.html -->
+    <!--            Checks for tabs                    -->
+    <module name="FileTabCharacter"/>
+
+
+    <!-- https://checkstyle.org/config_misc.html -->
+    <!--      Check for trailing spaces.        -->
+    <module name="RegexpSingleline">
+        <property name="format" value="\s+$"/>
+        <property name="minimum" value="0"/>
+        <property name="maximum" value="0"/>
+        <property name="message" value="Line has trailing spaces."/>
+    </module>
+
+
+    <!-- https://checkstyle.org/config_filters.html -->
+    <!--  Suppression with comments/annotation .    -->
+    <module name="SuppressWithPlainTextCommentFilter"/>
+    <module name="SuppressWarningsFilter"/>
+
+
+    <module name="TreeWalker">
+        <!-- https://checkstyle.org/config_javadoc.html -->
+        <!--         Checks for Javadoc comments.       -->
+        <!-- <module name="AtclauseOrder"/> -->
+        <!-- <module name="InvalidJavadocPosition"/> -->
+        <!--<module name="JavadocContentLocationCheck"/>-->
+        <!-- <module name="JavadocMethod"/> -->
+        <module name="JavadocMissingLeadingAsteriskCheck"/>
+        <module name="JavadocMissingWhitespaceAfterAsterisk"/>
+        <!-- <module name="JavadocParagraph"/> -->
+        <module name="JavadocStyle">
+            <property name="checkFirstSentence" value="false"/>
+            <property name="checkEmptyJavadoc" value="true"/>
+            <property name="tokens"
+                      value="ANNOTATION_DEF, ANNOTATION_FIELD_DEF, CLASS_DEF, CTOR_DEF, ENUM_CONSTANT_DEF, ENUM_DEF, INTERFACE_DEF, METHOD_DEF, VARIABLE_DEF"/>
+        </module>
+        <!--<module name="JavadocTagContinuationIndentation"/>-->
+        <!--<module name="JavadocType">-->
+        <!--    <property name="scope" value="public"/>-->
+        <!--</module>-->
+        <!-- <module name="JavadocVariable"/> -->
+        <!-- <module name="MissingJavadocMethod"/> -->
+        <!-- <module name="MissingJavadocPackage"/> -->
+        <!-- <module name="MissingJavadocType"/> -->
+        <module name="NonEmptyAtclauseDescription"/>
+        <module name="SingleLineJavadoc"/>
+        <!-- <module name="SummaryJavadoc"/> -->
+        <!-- <module name="WriteTag"/> -->
+
+
+        <!-- https://checkstyle.org/config_annotation.html -->
+        <!--              Annotations                      -->
+        <!-- <module name="AnnotationLocation">-->
+        <!--  <property name="id" value="AnnotationLocationMostCases"/>-->
+        <!--  <property name="tokens" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, CTOR_DEF"/>-->
+        <!-- </module>-->
+        <!-- <module name="AnnotationLocation">-->
+        <!--  <property name="id" value="AnnotationLocationVariables"/>-->
+        <!--  <property name="tokens" value="VARIABLE_DEF"/>-->
+        <!--  <property name="allowSamelineMultipleAnnotations" value="true"/>-->
+        <!-- </module>-->
+        <!-- <module name="AnnotationOnSameLine"/> -->
+        <!-- <module name="AnnotationUseStyle"/> -->
+        <!-- <module name="MissingDeprecated"/> -->
+        <module name="MissingOverride"/>
+        <!-- <module name="PackageAnnotation"/> -->
+
+
+        <!-- https://checkstyle.org/config_naming.html -->
+        <!--      Checks for Naming Conventions.       -->
+        <!-- <module name="AbbreviationAsWordInName"/> -->
+        <!-- <module name="AbstractClassName"/> -->
+        <module name="CatchParameterName"/>
+        <module name="ClassTypeParameterName"/>
+        <module name="ConstantName"/>
+        <module name="IllegalIdentifierName"/>
+        <module name="InterfaceTypeParameterName"/>
+        <module name="LambdaParameterName"/>
+        <module name="LocalVariableName"/>
+        <module name="MemberName"/>
+        <module name="MethodName"/>
+        <module name="MethodTypeParameterName"/>
+        <module name="PackageName"/>
+        <module name="ParameterName"/>
+        <module name="PatternVariableName"/>
+        <module name="RecordTypeParameterName"/>
+        <module name="RecordComponentName"/>
+        <module name="StaticVariableName"/>
+        <module name="TypeName"/>
+
+
+        <!-- https://checkstyle.org/config_imports.html -->
+        <!--            Checks for imports              -->
+        <module name="AvoidStarImport"/>
+        <!-- <module name="AvoidStaticImport"/> -->
+        <!-- <module name="CustomImportOrder"/> -->
+        <module name="IllegalImport"/> <!-- defaults to sun.* packages -->
+        <!-- <module name="ImportControl"/> -->
+        <module name="ImportOrder">
+            <property name="option" value="under"/>
+            <property name="sortStaticImportsAlphabetically" value="true"/>
+        </module>
+        <module name="RedundantImport"/>
+        <module name="UnusedImports"/>
+
+
+        <!-- https://checkstyle.org/config_sizes.html -->
+        <!--      Checks for Size Violations.         -->
+        <module name="AnonInnerLength">
+            <property name="max" value="40"/>
+        </module>
+        <!-- <module name="ExecutableStatementCount"/> -->
+        <module name="LambdaBodyLength">
+            <property name="max" value="40"/>
+        </module>
+        <!-- <module name="MethodCount"/> -->
+        <module name="MethodLength"/>
+        <module name="OuterTypeNumber"/>
+        <module name="ParameterNumber"/>
+        <!-- <module name="RecordComponentNumber"/> -->
+
+
+        <!-- https://checkstyle.org/config_whitespace.html -->
+        <!--          Checks for whitespace                -->
+        <!-- <module name="EmptyForInitializerPad"/> -->
+        <module name="EmptyForIteratorPad"/>
+        <module name="EmptyLineSeparator">
+            <property name="allowNoEmptyLineBetweenFields" value="true"/>
+        </module>
+        <module name="GenericWhitespace"/>
+        <module name="MethodParamPad"/>
+        <module name="NoLineWrap"/>
+        <module name="NoWhitespaceAfter"/>
+        <module name="NoWhitespaceBefore"/>
+        <module name="NoWhitespaceBeforeCaseDefaultColon"/>
+        <module name="OperatorWrap"/>
+        <module name="ParenPad"/>
+        <module name="SeparatorWrap">
+            <property name="id" value="SeparatorWrapDot"/>
+            <property name="tokens" value="DOT"/>
+            <property name="option" value="nl"/>
+        </module>
+        <module name="SeparatorWrap">
+            <property name="id" value="SeparatorWrapComma"/>
+            <property name="tokens" value="COMMA"/>
+            <property name="option" value="EOL"/>
+        </module>
+        <module name="SeparatorWrap">
+            <property name="id" value="SeparatorWrapEllipsis"/>
+            <property name="tokens" value="ELLIPSIS"/>
+            <property name="option" value="EOL"/>
+        </module>
+        <module name="SeparatorWrap">
+            <property name="id" value="SeparatorWrapArrayDeclarator"/>
+            <property name="tokens" value="ARRAY_DECLARATOR"/>
+            <property name="option" value="EOL"/>
+        </module>
+        <module name="SeparatorWrap">
+            <property name="id" value="SeparatorWrapMethodRef"/>
+            <property name="tokens" value="METHOD_REF"/>
+            <property name="option" value="nl"/>
+        </module>
+        <!-- <module name="SingleSpaceSeparator"/> -->
+        <module name="TypecastParenPad"/>
+        <module name="WhitespaceAfter"/>
+        <module name="WhitespaceAround">
+            <property name="allowEmptyConstructors" value="true"/>
+            <property name="allowEmptyLambdas" value="true"/>
+            <property name="allowEmptyMethods" value="true"/>
+            <property name="allowEmptyTypes" value="true"/>
+            <property name="allowEmptyLoops" value="true"/>
+            <message key="ws.notFollowed"
+                     value="WhitespaceAround: ''{0}'' is not followed by whitespace. Empty blocks may only be represented as '{}' when it's ctor, method, type, lambda or loop"/>
+            <message key="ws.notPreceded"
+                     value="WhitespaceAround: ''{0}'' is not preceded with whitespace."/>
+        </module>
+
+
+        <!-- https://checkstyle.org/config_modifier.html -->
+        <!--             Modifier Checks                 -->
+        <!-- <module name="ClassMemberImpliedModifier"/> -->
+        <!-- <module name="InterfaceMemberImpliedModifier"/> -->
+        <!--<module name="ModifierOrder"/>-->
+        <module name="RedundantModifier"/>
+
+
+        <!-- https://checkstyle.org/config_blocks.html -->
+        <!-- Checks for blocks. You know, those {}'s   -->
+        <module name="AvoidNestedBlocks">
+            <property name="allowInSwitchCase" value="true"/>
+        </module>
+        <module name="EmptyBlock">
+            <property name="option" value="TEXT"/>
+            <property name="tokens" value="LITERAL_TRY, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, LITERAL_SWITCH"/>
+        </module>
+        <module name="LeftCurly"/>
+        <module name="NeedBraces"/>
+        <module name="RightCurly"/>
+
+
+        <!-- https://checkstyle.org/config_coding.html -->
+        <!--      Checks for common coding problems    -->
+        <!-- <module name="ArrayTrailingComma"/> -->
+        <!-- <module name="AvoidDoubleBraceInitialization"/> -->
+        <!-- <module name="AvoidInlineConditionals"/> -->
+        <module name="AvoidNoArgumentSuperConstructorCall"/>
+        <module name="CovariantEquals"/>
+        <!--<module name="DeclarationOrder"/>-->
+        <module name="DefaultComesLast"/>
+        <module name="EmptyStatement"/>
+        <!-- <module name="EqualsAvoidNull"/> -->
+        <module name="EqualsHashCode"/>
+        <!-- <module name="ExplicitInitialization"/> -->
+        <module name="FallThrough"/>
+        <!-- <module name="FinalLocalVariable"/> -->
+        <module name="HiddenField">
+            <property name="tokens" value="VARIABLE_DEF"/>
+        </module>
+        <!-- <module name="IllegalCatch"/> -->
+        <module name="IllegalInstantiation">
+            <property name="classes" value="java.lang.Boolean"/>
+        </module>
+        <!-- <module name="IllegalThrows"/> -->
+        <!-- <module name="IllegalToken"/> -->
+        <!-- <module name="IllegalTokenText"/> -->
+        <!-- <module name="IllegalType"/> -->
+        <module name="InnerAssignment"/>
+        <module name="MagicNumber">
+            <property name="ignoreHashCodeMethod" value="true"/>
+            <property name="ignoreAnnotation" value="true"/>
+            <message key="magic.number"
+                     value="Most likely the value ''{0}'' is a configuration one. You should move it to configuration file instead of source code."/>
+        </module>
+        <!-- <module name="MissingCtor"/> -->
+        <module name="MissingSwitchDefault"/>
+        <module name="ModifiedControlVariable"/>
+        <module name="MultipleStringLiterals">
+            <!-- Allow zero-length and 1-character strings -->
+            <property name="ignoreStringsRegexp" value='^(("")|(".")|("..")|("..>"))$'/>
+        </module>
+        <module name="MultipleVariableDeclarations"/>
+        <module name="NestedForDepth">
+            <property name="max" value="2"/>
+        </module>
+        <module name="NestedIfDepth">
+            <property name="max" value="2"/>
+        </module>
+        <module name="NestedTryDepth">
+            <property name="max" value="2"/>
+        </module>
+        <!--<module name="NoArrayTrailingComma"/>-->
+        <!--<module name="NoEnumTrailingComma"/>-->
+        <module name="NoClone"/>
+        <module name="NoFinalizer"/>
+        <module name="OneStatementPerLine"/>
+        <!--<module name="OverloadMethodsDeclarationOrder"/>-->
+        <module name="PackageDeclaration"/>
+        <module name="ParameterAssignment"/>
+        <!-- <module name="RequireThis"/> -->
+        <module name="ReturnCount">
+            <property name="max" value="4"/>
+        </module>
+        <module name="SimplifyBooleanExpression"/>
+        <module name="SimplifyBooleanReturn"/>
+        <module name="StringLiteralEquality"/>
+        <module name="SuperClone"/>
+        <module name="SuperFinalize"/>
+        <!-- <module name="UnnecessaryParentheses"/> -->
+        <!-- <module name="UnnecessarySemicolonInEnumeration"/> -->
+        <!-- <module name="UnnecessarySemicolonInTryWithResources"/> -->
+        <!-- <module name="UnnecessarySemicolonAfterOuterTypeDeclaration"/> -->
+        <!-- <module name="UnusedLocalVariable"/> -->
+        <!-- <module name="VariableDeclarationUsageDistance"/> -->
+
+        <!-- https://checkstyle.org/config_design.html -->
+        <!--       Checks for class design             -->
+        <!-- <module name="DesignForExtension"/> -->
+        <module name="FinalClass">
+            <property name="severity" value="warning"/>
+            <message key="final.class"
+                     value="Private ctor in non-final class. Inspect the code and make sure it's intended."/>
+        </module>
+        <module name="HideUtilityClassConstructor"/>
+        <module name="SuppressionXpathSingleFilter">
+            <property name="checks" value="HideUtilityClassConstructor"/>
+            <property name="query" value="//*[MODIFIERS//*[@text = 'UtilityClass' or @text='NoArgsConstructor' or @text = 'SpringBootApplication']]/descendant-or-self::node()"/>
+        </module>
+        <module name="InnerTypeLast"/>
+        <!--<module name="InterfaceIsType"/>-->
+        <module name="MutableException"/>
+        <module name="OneTopLevelClass"/>
+        <!-- <module name="ThrowsCount"/> -->
+        <!-- <module name="VisibilityModifier"/> -->
+
+
+        <!-- Miscellaneous other checks.                   -->
+        <!-- https://checkstyle.org/config_misc.html -->
+        <module name="ArrayTypeStyle"/>
+        <!-- <module name="AvoidEscapedUnicodeCharacters"/> -->
+        <!-- <module name="CommentsIndentation"/> -->
+        <!-- <module name="DescendantToken"/> -->
+        <!-- <module name="FinalParameters"/> -->
+        <module name="NoCodeInFile"/>
+
+        <!-- https://github.com/checkstyle/checkstyle/issues/3122 -->
+        <!-- https://github.com/checkstyle/checkstyle/issues/3342 -->
+        <!-- this module is broken for a long time, I'm not sure if we should use it -->
+        <!-- <module name="Indentation"/> -->
+
+        <!-- <module name="OrderedProperties"/> -->
+        <module name="OuterTypeFilename"/>
+        <!-- <module name="TodoComment" /> -->
+        <!-- <module name="TrailingComment"/> -->
+        <module name="UncommentedMain">
+            <property name="excludedClasses" value="Application|Main"/>
+        </module>
+        <module name="UpperEll"/>
+
+
+        <!-- https://checkstyle.org/config_metrics.html -->
+        <!--         Checks for Code Metrics.           -->
+        <!-- <module name="BooleanExpressionComplexity"/> -->
+        <!-- <module name="ClassDataAbstractionCoupling"/> -->
+        <!-- <module name="ClassFanOutComplexity"/> -->
+        <module name="CyclomaticComplexity">
+            <property name="max" value="16"/>
+        </module>
+        <!-- <module name="JavaNCSS"/> -->
+        <!-- <module name="NPathComplexity"/> -->
+
+
+        <!-- https://checkstyle.org/config_regexp.html -->
+        <!--      Checks for forbidden code.           -->
+        <module name="RegexpSinglelineJava">
+            <property name="format" value="\.printStackTrace"/>
+            <property name="ignoreComments" value="true"/>
+            <property name="message" value="Using printStackTrace is a bad practice. Use a logger instead."/>
+        </module>
+        <module name="RegexpSinglelineJava">
+            <property name="format" value="System\.out\.print"/>
+            <property name="ignoreComments" value="true"/>
+            <property name="message" value="Using System.out for logging is a bad practice. Use a logger instead."/>
+        </module>
+        <module name="RegexpSinglelineJava">
+            <property name="format" value="javax\.annotation\.Nonnull|javax\.annotation\.Nullable|javax\.annotation\.ParametersAreNonnullByDefault|javax\.annotation\.ParametersAreNullableByDefault|org\.springframework\.lang\.Nullable|org\.springframework\.lang\.NonNull|org\.springframework\.lang\.NonNullApi|org\.springframework\.lang\.NonNullFields|edu\.umd\.cs\.findbugs\.annotations\.Nullable|edu\.umd\.cs\.findbugs\.annotations\.NonNull"/>
+            <property name="ignoreComments" value="true"/>
+            <property name="message" value="Use org.jetbrains.annotations.* for nullability."/>
+        </module>
+
+
+        <!-- https://checkstyle.org/config_filters.html -->
+        <!-- Comments/annotation suppression.           -->
+        <module name="SuppressionCommentFilter"/>
+        <!-- <module name="SuppressWarnings"/> -->
+        <module name="SuppressWarningsHolder"/>
+        <module name="SuppressWithNearbyCommentFilter"/>
+
+    </module>
+
+</module>
