@@ -1,0 +1,24 @@
+---
+- name: Wipe web application
+  block:
+    - name: Stop and remove Docker container
+      command: docker-compose down -v
+      args:
+        chdir: "{{ web_app_data_dir }}"
+      ignore_errors: yes
+      
+    - name: Remove Docker images
+      docker_image:
+        name: "{{ web_app_image }}"
+        state: absent
+        force_absent: yes
+      ignore_errors: yes
+      
+    - name: Remove application directory
+      file:
+        path: "{{ web_app_data_dir }}"
+        state: absent
+  when: web_app_full_wipe | default(false) | bool
+  tags:
+    - wipe
+    - never 
