@@ -1,0 +1,51 @@
+---
+# Pre-installation tasks
+- name: Check if Docker is already installed
+  command: which docker
+  register: docker_check
+  changed_when: false
+  failed_when: false
+
+# Main installation tasks
+- name: Include Docker installation tasks
+  ansible.builtin.import_tasks: install_docker.yml
+
+- name: Include Docker Compose installation tasks
+  ansible.builtin.import_tasks: install_compose.yml
+
+# Post-installation verification
+- name: Verify Docker installation
+  block:
+    - name: Check Docker service status
+      service_facts:
+      register: services_state
+
+    - name: Verify Docker service is running and enabled
+      assert:
+        that:
+          - "'docker.service' in services_state.ansible_facts.services"
+          - "services_state.ansible_facts.services['docker.service'].state == 'running'"
+          - "services_state.ansible_facts.services['docker.service'].status == 'enabled'"
+        fail_msg: "Docker service is not properly configured"
+        success_msg: "Docker service is properly configured and running"
+
+    - name: Verify Docker Compose installation
+      command: docker-compose --version
+      register: compose_version
+      changed_when: false
+      failed_when: false
+
+    - name: Display Docker Compose version
+      debug:
+        var: compose_version.stdout
+      when: compose_version.rc == 0
+
+    - name: Verify user group membership
+      command: groups {{ ansible_user }}
+      register: user_groups
+      changed_when: false
+      failed_when: "'docker' not in user_groups.stdout"
+
+# Security configuration
+- name: Include security configuration tasks
+  ansible.builtin.import_tasks: security.yml
