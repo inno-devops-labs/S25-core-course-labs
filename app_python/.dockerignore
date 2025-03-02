@@ -1,0 +1,6 @@
+# Caches
+__pycache__
+.*_cache
+
+# Virtial environments
+.venv
