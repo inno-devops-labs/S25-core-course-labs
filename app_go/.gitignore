@@ -1,0 +1,18 @@
+# Binary
+app_go
+
+# Go specific
+*.exe
+*.test
+*.out
+
+# Binaries for programs and plugins
+*.dll
+*.so
+*.dylib
+
+# Output of the go coverage tool
+*.out
+
+# Go workspace file
+go.work 
