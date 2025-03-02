@@ -1,0 +1,22 @@
+---
+- name: Stop and remove containers
+  docker_compose:
+    project_src: "{{ app_directory }}"
+    state: absent
+  tags:
+    - wipe
+
+- name: Remove Docker image
+  docker_image:
+    name: "{{ docker_image }}"
+    state: absent
+    force: yes
+  tags:
+    - wipe
+
+- name: Remove application directory
+  file:
+    path: "{{ app_directory }}"
+    state: absent
+  tags:
+    - wipe 
