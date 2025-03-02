@@ -1,0 +1,5 @@
+---
+- name: Restart Docker container
+  ansible.builtin.docker_container:
+    name: "{{ time_app_docker_container_name }}"
+    state: restarted

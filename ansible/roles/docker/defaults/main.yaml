@@ -1,0 +1,4 @@
+---
+docker_version: "latest"
+docker_distro: "ubuntu oracular stable"
+docker_user: "leonidm"
