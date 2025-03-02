@@ -1,0 +1,40 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for ansible/roles/web_app
+
+# ansible/roles/web_app/tasks/main.yml
+- name: Setup Docker Environment
+  block:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Start Docker Service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+  tags:
+    - setup
+
+- name: Create Docker Compose file
+  template:
+    src: docker-compose.yml.j2
+    dest: "/home/ubuntu/docker-compose.yml"
+  notify: Restart Application
+
+- name: Pull Docker image
+  docker_image:
+    name: "{{ docker_image }}"
+    source: pull
+  tags:
+    - docker
+
+- name: Start application with Docker Compose
+  command:
+    cmd: docker-compose up -d
+    chdir: /home/ubuntu/
+  tags:
+    - docker
+
