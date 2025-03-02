@@ -1,0 +1,4 @@
+internal_port: 8080
+docker_image: docker.io/muhammaduss/app-python
+web_app_full_wipe: false
+web_app_dir: app
