@@ -1,0 +1,78 @@
+name: Build, test, and push to DockerHub
+
+on:
+  push:
+    paths:
+      - app_python/**
+      - .github/**
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest coverage pytest-cov 
+        pip install -r app_python/requirements.txt
+    - name: Cache Python packages
+      uses: actions/cache@v4
+      with:
+        key: test-cache
+        path: |
+          app_python/.cache
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      run: |
+        pytest app_python/test.py --cov=app
+  
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache Python packages
+        uses: actions/cache@v4
+        with:
+          key: snyk-cache
+          path: |
+            app_python/.cache
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python-3.8@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --workdir app_python --skip-unresolved
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+ 
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/build-push-action@v6
+        with:
+          context: app_python
+          push: true
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/python_msk_time:latest
