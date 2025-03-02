@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-javascript-deployment
+  labels:
+    app: app-javascript
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-javascript
+  template:
+    metadata:
+      labels:
+        app: app-javascript
+    spec:
+      containers:
+      - name: app-javascript
+        image: gendiro/js-app-distroless:latest
+        ports:
+        - containerPort: 3000
+
