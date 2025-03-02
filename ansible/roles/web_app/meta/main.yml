@@ -1,0 +1,14 @@
+galaxy_info:
+  author: i.shamsutdinov@innopolis.university 
+  description: Ansible role for deploying python devops app 
+  company: Innopolis University 
+
+  license: license (GPL-2.0-or-later, MIT, etc)
+
+  min_ansible_version: 2.1
+
+
+  galaxy_tags: []
+
+dependencies:
+  - role: docker
