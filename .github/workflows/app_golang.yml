@@ -19,6 +19,8 @@ jobs:
     defaults:
       run:
         working-directory: ./app_golang
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
