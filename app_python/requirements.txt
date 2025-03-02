@@ -1,0 +1,6 @@
+Flask>=2.2.0,<3.0
+Werkzeug==3.0.6
+pytz==2023.3
+flake8
+pytest
+python-json-logger
