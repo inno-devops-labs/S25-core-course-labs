@@ -53,4 +53,6 @@ Gtk-Message: 19:37:07.185: Not loading module "atk-bridge": The functionality is
 Gtk-Message: 19:37:08.380: Not loading module "atk-bridge": The functionality is provided by GTK natively. Please try to not load it.
 ```
 
+![image](https://github.com/user-attachments/assets/72a90d15-a0ae-457a-8517-8daa53a31f37)
+
 
