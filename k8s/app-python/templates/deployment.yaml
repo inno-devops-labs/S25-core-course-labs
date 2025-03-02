@@ -1,0 +1,4 @@
+ports:
+  - name: http
+    containerPort: { { .Values.containerPort } }
+    protocol: TCP

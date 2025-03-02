@@ -1,0 +1,5 @@
+web_app_image: "billyboone/python-moscow-time:latest"
+web_app_container_name: "python-moscow-app"
+web_app_port: 5000
+web_app_restart_policy: "always"
+web_app_full_wipe: false
