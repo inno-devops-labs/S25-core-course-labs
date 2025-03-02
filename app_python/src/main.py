@@ -9,9 +9,9 @@ from pathlib import Path
 from fastapi import FastAPI, Request, status
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
+from prometheus_client import Counter, CONTENT_TYPE_LATEST, REGISTRY, generate_latest
 from src.utils import get_time
 from src.models import Time
-from prometheus_client import Counter, CONTENT_TYPE_LATEST, REGISTRY, generate_latest
 
 
 # Create FastAPI application
@@ -32,16 +32,17 @@ time_json_visits = Counter(
     "Visits of API endpoint containing current time in Moscow. Bring time to robots!",
 )
 
-counter = 0
+COUNTER = 0
 
 
 def increment_counter():
-    global counter
-    counter += 1
+    """Increments visits counter."""
+    global COUNTER
+    COUNTER += 1
     Path("visits").mkdir(parents=True, exist_ok=True)
-    visits = open("visits/visits", "w")
-    visits.write(str(counter))
-    visits.close()
+    with open("visits/visits", "w", encoding="utf-8") as visits:
+        visits.write(str(COUNTER))
+        visits.close()
 
 
 @app.get(
@@ -96,6 +97,7 @@ async def read_time_json():
     responses={status.HTTP_200_OK: {"description": "Latest metrics"}},
 )
 async def read_metrics():
+    """Returns latest metrics."""
     metrics = generate_latest(registry=REGISTRY)
     return HTMLResponse(metrics, media_type=CONTENT_TYPE_LATEST)
 
@@ -110,5 +112,6 @@ async def read_metrics():
     responses={status.HTTP_200_OK: {"description": "Number of times the app accessed"}},
 )
 async def read_counter():
-    global counter
-    return counter
+    """Returns current counter value."""
+    global COUNTER
+    return COUNTER
