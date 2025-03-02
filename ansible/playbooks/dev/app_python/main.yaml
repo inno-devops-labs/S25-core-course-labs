@@ -1,0 +1,13 @@
+- name: python_app
+  hosts: all
+  become: true
+  become_method: 'sudo'
+  roles:
+    - name: web_app
+      tags: [web_app-python]
+      vars:
+        web_app_name: app_python
+        web_app_path: /app_python
+        web_app_port: 8080
+        web_container_port: 8080
+        web_app_image: docker.io/maksalena/server-app:latest
