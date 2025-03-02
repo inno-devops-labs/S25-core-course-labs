@@ -6,7 +6,7 @@ networks:
 services:
   app_python:
     container_name: app_python
-    image: dnworks/app_python
+    image: dnworks/app_python:latest
     volumes:
       - ./visits:/app_python/visits
     ports:
@@ -30,6 +30,8 @@ services:
   app_golang:
     container_name: app_golang
     image: dnworks/app_golang:latest
+    volumes:
+      - ./visits_go:/app_golang/visits
     ports:
       - "81:80"
     networks:
