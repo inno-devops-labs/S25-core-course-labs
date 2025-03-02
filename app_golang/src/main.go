@@ -23,6 +23,8 @@ var jokeJsonCounter = prometheus.NewGauge(prometheus.GaugeOpts{
 	Help: "Count of received jokes via API endpoint. Bring humour to the robots!",
 })
 
+var DisableFile = false
+
 func init() {
 	prometheus.MustRegister(jokePageCounter, jokeJsonCounter)
 }
@@ -36,9 +38,13 @@ func prometheusHandler() gin.HandlerFunc {
  }
 // @BasePath /
 
-func setupRouter() *gin.Engine {
+func setupRouter(isVisitsFileDisabled bool) *gin.Engine {
 	jokePageCounter.Set(0)
 	jokeJsonCounter.Set(0)
+
+	if isVisitsFileDisabled {
+		DisableFile = true;
+	}
 
 	router := gin.Default()
 	docs.SwaggerInfo.BasePath = "/"
@@ -49,8 +55,8 @@ func setupRouter() *gin.Engine {
 	// Register endpoints
 	v1 := router.Group("/")
 	{
-		v1.GET("/", endpoints.JokePage, func (c *gin.Context) { jokePageCounter.Inc(); utils.IncrementCounter() })
-		v1.GET("/joke", endpoints.Joke, func (c *gin.Context) { jokeJsonCounter.Inc(); utils.IncrementCounter() })
+		v1.GET("/", endpoints.JokePage, func (c *gin.Context) { jokePageCounter.Inc(); utils.IncrementCounter(DisableFile) })
+		v1.GET("/joke", endpoints.Joke, func (c *gin.Context) { jokeJsonCounter.Inc(); utils.IncrementCounter(DisableFile) })
 		v1.GET("/visits", endpoints.Visits)
 	}
 
@@ -64,7 +70,7 @@ func setupRouter() *gin.Engine {
 
 // The main function.
 func main() {
-	router := setupRouter()
+	router := setupRouter(true)
 	
 	router.Run(":80")
 }

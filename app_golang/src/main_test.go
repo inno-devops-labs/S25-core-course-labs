@@ -9,7 +9,7 @@ import (
 )
 
 func TestJokeJson(t *testing.T) {
-	router := setupRouter()
+	router := setupRouter(false)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/joke", nil)
@@ -20,7 +20,7 @@ func TestJokeJson(t *testing.T) {
 }
 
 func TestJoke(t *testing.T) {
-	router := setupRouter()
+	router := setupRouter(false)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/", nil)
