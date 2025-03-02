@@ -102,5 +102,5 @@ service/python-app   NodePort    10.107.42.4   <none>        80:31037/TCP   50s
 ❗  Because you are using a Docker driver on darwin, the terminal needs to be open to run it.
 ```
 
-![python-app](k8s0.png)
-![kubernetes](k8s1.png)
+![python-app](img/k8s0.png)
+![kubernetes](img/k8s1.png)
