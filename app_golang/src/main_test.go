@@ -9,7 +9,7 @@ import (
 )
 
 func TestJokeJson(t *testing.T) {
-	router := setupRouter(false)
+	router := setupRouter(true)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/joke", nil)

@@ -70,7 +70,7 @@ func setupRouter(isVisitsFileDisabled bool) *gin.Engine {
 
 // The main function.
 func main() {
-	router := setupRouter(true)
+	router := setupRouter(false)
 	
 	router.Run(":80")
 }
