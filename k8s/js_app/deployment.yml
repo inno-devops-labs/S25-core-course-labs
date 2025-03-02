@@ -11,7 +11,7 @@ spec:
     metadata:
       labels:
         app: moscow-js-time
-        lang: dart
+        lang: js
     spec:
       containers:
       - name: moscow-js-time
