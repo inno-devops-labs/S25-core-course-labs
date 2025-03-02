@@ -1,0 +1,7 @@
+- hosts: all
+  become: true
+  become_method: sudo
+
+  roles:
+    - roles/docker
+    - roles/web_app	
