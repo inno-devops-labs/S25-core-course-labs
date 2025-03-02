@@ -1,0 +1,10 @@
+---
+# defaults file for web_app
+image_name: jodak628286/python_app
+image_tag: latest
+container_name: python-app
+app_dir: "/opt/{{ container_name }}"
+app_port: 8080
+exposed_port: 80
+restart_policy: always
+web_app_full_wipe: false
