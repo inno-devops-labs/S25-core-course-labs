@@ -16,5 +16,5 @@ This role installs and configures Docker and Docker Compose.
 ```yaml
 - hosts: all
   roles:
-  - docker
+  - role: docker
 ```
