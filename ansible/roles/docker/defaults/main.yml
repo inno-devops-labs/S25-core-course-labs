@@ -1,0 +1,26 @@
+---
+# Docker version to install
+docker_version: "latest"
+
+# Docker Compose version to install
+docker_compose_version: "2.15.1"
+
+# Additional packages required for Docker
+docker_packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg
+  - lsb-release
+  - software-properties-common
+
+# User to add to the docker group
+docker_users:
+  - "{{ ansible_user }}"
+
+# Docker daemon configuration
+docker_daemon_config:
+  log-driver: "json-file"
+  log-opts:
+    max-size: "100m"
+    max-file: "3" 
