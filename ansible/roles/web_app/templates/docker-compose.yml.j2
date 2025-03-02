@@ -1,0 +1,6 @@
+services:
+  web:
+    image: "{{ docker_image }}:{{ docker_image_tag }}"
+    ports:
+      - target: "{{ app_internal_port }}"
+        published: "{{ app_external_port }}"
