@@ -1,0 +1,12 @@
+*.git
+.git*
+
+.venv
+__pycache__
+.mypy_cache
+.idea
+
+pyproject.toml
+poetry.lock
+
+*.md
