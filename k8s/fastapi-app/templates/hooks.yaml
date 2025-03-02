@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: preinstall-hook
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  containers:
+    - name: preinstall-hook
+      image: busybox
+      command: ["sh", "-c"]
+      args: ["echo 'Running pre-install'; sleep 20"]
+  restartPolicy: Never
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postinstall-hook
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  containers:
+    - name: postinstall-hook
+      image: busybox
+      command: ["sh", "-c"]
+      args: ["echo 'Running post-install'; sleep 20"]
+  restartPolicy: Never
