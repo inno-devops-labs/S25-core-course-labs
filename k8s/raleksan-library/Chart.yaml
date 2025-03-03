@@ -1,0 +1,5 @@
+apiVersion: v2
+name: raleksan-library
+version: 1.0.0
+type: library
+description: A library chart for Kubernetes applications
