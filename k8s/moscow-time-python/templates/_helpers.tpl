@@ -60,3 +60,11 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Environment variables
+*/}}
+{{- define "moscow-time-python.env" -}}
+- name: RALEKSAN_TEST
+  value: "the_bird_of_hermes"
+{{- end }}
