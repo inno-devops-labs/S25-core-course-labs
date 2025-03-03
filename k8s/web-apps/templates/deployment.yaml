@@ -40,7 +40,13 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
+          env:
+          - name: MY_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: credentials
+                key: password
+          {{- include "web-apps.env" . | nindent 10 }}
             - name: http
               containerPort: 8000
               protocol: TCP

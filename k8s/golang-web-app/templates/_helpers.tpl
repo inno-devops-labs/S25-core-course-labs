@@ -60,3 +60,11 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+environment variables
+*/}}
+{{- define "golang-web-app.env" -}}
+- name: STUDENT
+  value: "Eldar Mametov"
+{{- end }}
