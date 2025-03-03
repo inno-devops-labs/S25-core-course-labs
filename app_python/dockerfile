@@ -1,0 +1,22 @@
+FROM python:3.12.8-alpine3.21 AS base
+
+# Rootless user
+RUN adduser python_usr --system --shell=/bin/false
+
+WORKDIR /app_python
+
+# Copy dependecies
+COPY --chown=python_usr:python_usr requirements.txt ./
+
+# Install dependecies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy sources
+COPY --chown=python_usr:python_usr app/ ./app/
+
+USER python_usr
+EXPOSE 8000
+
+# Run application
+ENTRYPOINT ["gunicorn"]
+CMD ["--bind", "0.0.0.0:8000", "app:wsgi_app", "--chdir", "app"]

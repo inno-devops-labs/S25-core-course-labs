@@ -1,0 +1,19 @@
+services:
+  ubuntu:
+    image: ubuntu:latest
+    container_name: ubuntu_python_ssh
+    restart: unless-stopped
+    ports:
+      - "2222:22"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["/usr/sbin/sshd", "-D"]
+    privileged: true
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+      - /var/run/docker.sock:/var/run/docker.sock
