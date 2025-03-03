@@ -20,6 +20,13 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: 8000
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config/config.json
+              subPath: config.json
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-config
         - name: vault-agent
           image: hashicorp/vault:1.14.0
           volumeMounts:
@@ -28,3 +35,6 @@ spec:
       volumes:
         - name: vault-secret
           emptyDir: {}
+        - name: config-volume
+          configMap:
+            name: {{ .Release.Name }}-config

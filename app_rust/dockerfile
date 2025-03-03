@@ -1,7 +1,7 @@
 # Stage 1: Build the application
 FROM rust:1.84-slim-bullseye AS builder
 
-# Rooless user
+# Rootless user
 RUN useradd -m appuser
 WORKDIR /home/appuser/app
 
@@ -22,13 +22,19 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy application binary with Rocket.toml config
+# Create the app directory in runtime and ensure appropriate permissions
 WORKDIR /app
+RUN useradd -m appuser
+RUN mkdir -p /app/data && chown -R appuser:appuser /app
+
+# Copy application binary with Rocket.toml config
 COPY --from=builder /home/appuser/app/target/release/app_rust ./app
 COPY --from=builder /home/appuser/app/Rocket.toml ./Rocket.toml
 
-# Rootless user
-RUN useradd -m appuser
+# Ensure that the appuser can write to the `visits.txt` file
+RUN touch /app/data/visits.txt && chown appuser:appuser /app/data/visits.txt
+
+# Switch to rootless user
 USER appuser
 
 EXPOSE 8000

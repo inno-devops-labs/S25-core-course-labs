@@ -4,7 +4,7 @@ Author: Aleksandr Ryabov (a.ryabov@innoplis.university)
 """
 
 import pytz
-from os import environ
+import os
 from datetime import datetime
 from flask import Flask, render_template, Response
 from prometheus_client import generate_latest, REGISTRY, Counter, Gauge
@@ -21,8 +21,29 @@ HEALTH_GAUGE = Gauge(
 )
 
 # ========== Application Setup ==========
-HOST = environ.get("HOST", "0.0.0.0")
-PORT = int(environ.get("PORT", "8000"))
+HOST = os.environ.get("HOST", "0.0.0.0")
+PORT = int(os.environ.get("PORT", "8000"))
+
+VISITS_FILE = "visits.txt"
+
+
+def get_visit_count():
+    """Retrieve the current visit count from the file."""
+    if not os.path.exists(VISITS_FILE):
+        return 0
+    try:
+        with open(VISITS_FILE, "r") as f:
+            return int(f.read().strip())
+    except ValueError:
+        return 0
+
+
+def update_visit_count():
+    """Increment and update the visit count in the file."""
+    count = get_visit_count() + 1
+    with open(VISITS_FILE, "w") as f:
+        f.write(str(count))
+    return count
 
 
 def create_flask_app() -> Flask:
@@ -37,6 +58,10 @@ def create_flask_app() -> Flask:
         """
         Returns an html page with current time in Moscow
         """
+
+        # Update visits counter
+        update_visit_count()
+
         # Get the timezone and current time
         moscow_tz = pytz.timezone("Europe/Moscow")
         moscow_time = datetime.now(moscow_tz).strftime(time_format)
@@ -54,6 +79,11 @@ def create_flask_app() -> Flask:
     def health_check():
         HEALTH_GAUGE.set(1)
         return "OK", 200
+
+    @app.route("/visits")
+    def visits():
+        """Returns the number of recorded visits."""
+        return {"visits": get_visit_count()}, 200
 
     return app
 

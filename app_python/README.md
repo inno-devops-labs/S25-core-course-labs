@@ -4,7 +4,9 @@
 
 ## Overview
 
-This is a simple python web application that shows current time in Moscow.
+This is a simple python web application that shows current time in Moscow on the `/` page.
+It also returns on endpoint `/visits` number of visits to main page, application metrics on `/metrics` endpoint,
+and health status on `/health` endpoint.
 
 ## Copy sources
 
