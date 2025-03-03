@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moscow-time-python
+  namespace: default
+  labels:
+    app: moscow_time_python
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: moscow_time_python
+  strategy:
+    rollingUpdate:
+      maxSurge: 40%
+      maxUnavailable: 40%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: moscow-time
+      labels:
+        app: moscow_time_python
+    spec:
+      containers:
+        - name: moscow-time
+          image: raleksan/app_python:v0.1
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
+          ports:
+            - containerPort: 8000
+              name: moscow-time
+      restartPolicy: Always
+---
