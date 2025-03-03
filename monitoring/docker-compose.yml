@@ -1,0 +1,100 @@
+networks:
+  default:
+    name: loki-network
+
+x-logging:
+  &common-logging
+  driver: "json-file"
+  options:
+    tag: "{{.ImageName}}|{{.Name}}"
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  webapp:
+    image: nikolaevaelizaveta/my-flask-app:latest
+    ports:
+      - "4000:80"
+    logging: *common-logging
+    deploy:
+      resources:
+        limits:
+          memory: "100M"
+
+  loki:
+    image: grafana/loki:2.9.2
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    logging: *common-logging
+    deploy:
+      resources:
+        limits:
+          memory: "200M"
+
+  promtail:
+    image: grafana/promtail:2.9.2
+    volumes:
+      - "./promtail-config.yaml:/etc/promtail/config.yml"
+      - /var/lib/docker/containers:/var/lib/docker/containers
+    command: -config.file=/etc/promtail/config.yml
+    logging: *common-logging
+    deploy:
+      resources:
+        limits:
+          memory: "150M"
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy
+          orgId: 1
+          url: http://loki:3100
+          basicAuth: false
+          isDefault: true
+          version: 1
+          editable: false
+        - name: Prometheus
+          type: prometheus
+          access: proxy
+          orgId: 1
+          url: http://prometheus:9090
+          basicAuth: false
+          isDefault: false
+          version: 1
+          editable: false
+        EOF
+        /run.sh
+    logging: *common-logging
+    deploy:
+      resources:
+        limits:
+          memory: "300M"
+          
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml:ro"
+    command: --config.file=/etc/prometheus/prometheus.yml
+    logging: *common-logging
+    deploy:
+      resources:
+        limits:
+          memory: "100M"
