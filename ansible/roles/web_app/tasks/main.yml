@@ -1,0 +1,7 @@
+- name: Web App role
+  tags: [webapp]
+  become: true
+  block:
+    - name: Wipe
+      ansible.builtin.include_tasks:
+        file: 0-wipe.yml
