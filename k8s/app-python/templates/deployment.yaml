@@ -44,6 +44,17 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          env:
+            - name: MY_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: my-helm-secret
+                  key: username
+            - name: MY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: my-helm-secret
+                  key: password
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}

@@ -17,4 +17,3 @@ spec:
         image: vika123vika/app-python  
         ports:
         - containerPort: 5000 
-
