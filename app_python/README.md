@@ -29,3 +29,7 @@ docker pull favelanky/app_python
 docker run favelanky/app_python
 ```
 
+## New Features
+- **Visit Counter**: The application now tracks the number of times it has been accessed. This count is stored in a file named `visits.txt`.
+- **New Endpoint**: A new endpoint `/visits` has been added to display the total number of visits.
+
