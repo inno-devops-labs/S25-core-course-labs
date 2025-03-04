@@ -50,18 +50,23 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
+          # Fixed volumeMounts section
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/config.json  # Full file path
+              subPath: config.json         # Mount single file
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
+      # Fixed volumes section (removed with condition)
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: config-volume
+          configMap:
+            name: your-app-config  # Must match ConfigMap name
+            items:
+              - key: config.json     # Key in ConfigMap
+                path: config.json    # File name in volume
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -74,5 +79,3 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-
-
