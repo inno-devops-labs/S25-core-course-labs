@@ -8,7 +8,10 @@ app = Flask(__name__)
 
 VISITS_FILE = 'data/visits'
 
+
 @app.route('/metrics')
+
+
 def metrics():
     return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
 
@@ -31,6 +34,8 @@ def update_visits():
 
 
 @app.route('/')
+
+
 def index():
 
     visits = update_visits()
@@ -140,6 +145,7 @@ def index():
         </body>
     </html>
     """
+
 
 @app.route('/visits')
 def visits_endpoint():
