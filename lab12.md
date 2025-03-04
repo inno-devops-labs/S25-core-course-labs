@@ -8,8 +8,6 @@ In this lab, you'll delve into Kubernetes ConfigMaps, focusing on managing non-c
 
 **6 Points:**
 
-In this task, you'll enhance your application to persist data and explore ConfigMaps in Kubernetes.
-
 1. Upgrade Your Application:
    - Modify your application to:
      - Implement a counter logic in your application to keep track of the number of times it's accessed.
