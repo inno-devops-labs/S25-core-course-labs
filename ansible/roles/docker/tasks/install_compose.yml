@@ -1,0 +1,10 @@
+- name: Install Docker packages
+  apt:
+    name:
+      - docker-compose-plugin
+
+- name: Check if Docker service is enabled
+  service:
+    name: docker
+    state: started
+    enabled: yes

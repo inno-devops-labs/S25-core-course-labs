@@ -1,0 +1,9 @@
+- name: Deploy web app
+  hosts: all
+  become: true
+  roles:
+    - role: web_app
+      tags:
+        - web_app_full_wipe
+        - render-docker-compose
+        - start-web-app 
