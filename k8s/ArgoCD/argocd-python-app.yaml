@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/CatOrLeader/S25-core-course-labs.git
     targetRevision: lab13
-    path: <k8s/python_app>
+    path: k8s/python-app
     helm:
       valueFiles:
         - values.yaml

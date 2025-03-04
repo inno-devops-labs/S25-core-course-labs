@@ -1,1 +1,1 @@
-{{- include "library-helm.pre-install-hook" . -}}
+#{{- include "library-helm.pre-install-hook" . -}}
