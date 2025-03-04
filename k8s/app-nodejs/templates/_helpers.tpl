@@ -60,3 +60,9 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+
+{{- define "common.env" }}
+- name: MY_ENV
+  value: {{ .Values.env.MY_ENV | quote }}
+{{ end }}

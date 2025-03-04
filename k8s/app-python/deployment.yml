@@ -12,6 +12,7 @@ spec:
       labels:
         app: app-python
     spec:
+      serviceAccountName: app-python
       containers:
         - name: app-python
           image: ilsiia/app-python:latest
