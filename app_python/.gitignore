@@ -1,0 +1,15 @@
+# Distribution / packaging
+.Python
+build/
+lib/
+
+# PyBuilder
+target/
+
+# Environments
+app/.env
+app/.env.stage
+app/.env.prod
+
+# VS Code settings
+.vscode/
