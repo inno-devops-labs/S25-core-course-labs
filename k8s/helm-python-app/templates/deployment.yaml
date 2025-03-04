@@ -60,6 +60,12 @@ spec:
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          env:
+            - name: TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: token
+                  key: token
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
