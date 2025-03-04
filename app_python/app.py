@@ -25,6 +25,9 @@ def get_visits():
 
 
 def update_visits():
+    directory = os.path.dirname(VISITS_FILE)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
     visits = get_visits() + 1
     with open(VISITS_FILE, 'w') as f:
         f.write(str(visits))
