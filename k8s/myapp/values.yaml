@@ -15,7 +15,19 @@ serviceAccount:
   annotations: {}
   name: ""
 
-podAnnotations: {}
+env:
+  - name: APP_ENV
+    value: "production"
+  - name: DEBUG_MODE
+    value: "false"
+
+podAnnotations: {
+  vault.hashicorp.com/agent-inject: 'true',
+  vault.hashicorp.com/agent-inject-status: 'update',
+  vault.hashicorp.com/role: 'internal-app',
+  vault.hashicorp.com/agent-inject-secret-database-config.txt: 'internal/data/database/config',
+  vault.hashicorp.com/agent-inject-template-database-config.txt: '{{- with secret "internal/data/database/config" -}}Bearer token: {{ .Data.data.token }}{{- end -}}'
+}
 podLabels: {}
 
 podSecurityContext: {}
@@ -39,6 +51,8 @@ ingress:
   tls: []
 
 resources: {}
+
+mySecret: "DoryShibkovaSecret"
 
 livenessProbe:
   httpGet:
