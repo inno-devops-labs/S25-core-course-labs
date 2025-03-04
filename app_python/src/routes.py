@@ -1,13 +1,44 @@
+import time
 from datetime import datetime
 
+import prometheus_client
 import pytz
 from fastapi import APIRouter, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response
+from fastapi.routing import APIRoute
 from fastapi.templating import Jinja2Templates
+from prometheus_client import Counter, Histogram
 
 from .config import settings
 
-router = APIRouter()
+
+class MetricsRoute(APIRoute):
+    def get_route_handler(self):
+        original_handler = super().get_route_handler()
+
+        async def custom_route_handler(request: Request):
+            start_time = time.time()
+            response = await original_handler(request)
+            process_time = time.time() - start_time
+            REQUEST_COUNT.labels(
+                method=request.method,
+                endpoint=request.url.path,
+                http_status=response.status_code,
+            ).inc()
+            REQUEST_LATENCY.labels(endpoint=request.url.path).observe(process_time)
+            return response
+
+        return custom_route_handler
+
+
+REQUEST_COUNT = Counter(
+    "http_requests_total", "Total HTTP Requests", ["method", "endpoint", "http_status"]
+)
+REQUEST_LATENCY = Histogram(
+    "http_request_duration_seconds", "HTTP request latency", ["endpoint"]
+)
+
+router = APIRouter(route_class=MetricsRoute)
 templates = Jinja2Templates(directory="src/templates")
 
 
@@ -23,4 +54,11 @@ async def index(request: Request):
             "timezone": settings.TIMEZONE,
             "formatted_time": formatted_time,
         },
+    )
+
+
+@router.get("/metrics", response_class=Response)
+async def metrics():
+    return Response(
+        content=prometheus_client.generate_latest(), media_type="text/plain"
     )
