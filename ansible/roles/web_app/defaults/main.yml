@@ -1,0 +1,14 @@
+---
+# Docker image configuration
+docker_image: "favelanky/app_python"
+app_port: "80"
+web_app_compose_dir: /opt/web-app
+web_app_compose_file: docker-compose.yml
+web_app_full_wipe: false
+
+# Docker Compose configuration
+web_app_container_name: "app_python_container"
+web_app_ports:
+  - "80:80"
+web_app_environment: []
+web_app_volumes: []
