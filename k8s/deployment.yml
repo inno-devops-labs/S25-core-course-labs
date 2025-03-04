@@ -17,3 +17,11 @@ spec:
           image: doryshibkova03/myapp:latest
           ports:
             - containerPort: 8000
+          volumeMounts:
+            - name: secret-volume
+              mountPath: "/etc/secrets"
+              readOnly: true
+      volumes:
+        - name: secret-volume
+          secret:
+            secretName: my-secret 
