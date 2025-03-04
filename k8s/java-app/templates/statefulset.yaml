@@ -1,16 +1,26 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "java-app.fullname" . }}
   labels:
     {{- include "library-chart.labels" . | indent 4 }}
 spec:
+  podManagementPolicy: Parallel
+  serviceName: {{ include "java-app.fullname" . }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
       {{- include "library-chart.labels" . | indent 6 }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Values.volumeClaimTemplatesName }}
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: {{ .Values.volumeClaimTemplatesRequestStorage }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}

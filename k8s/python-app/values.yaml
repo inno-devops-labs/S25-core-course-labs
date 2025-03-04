@@ -9,7 +9,7 @@ replicaCount: 3
 image:
   repository: catorleader/python-watch
   pullPolicy: IfNotPresent
-  tag: "latest"
+  tag: "lab8"
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -42,7 +42,9 @@ podAnnotations: {
 }
 # This is for setting Kubernetes Labels to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-podLabels: {watch}
+podLabels: {
+             app_name: watch
+}
 
 podSecurityContext: {}
   # fsGroup: 2000
@@ -89,14 +91,16 @@ resources:
      memory: 128Mi
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-#livenessProbe:
-#  httpGet:
-#    path: /
-#    port: http
-#readinessProbe:
-#  httpGet:
-#    path: /
-#    port: http
+livenessProbe:
+  tcpSocket:
+    port: 5000
+  initialDelaySeconds: 5
+  periodSeconds: 10
+readinessProbe:
+  tcpSocket:
+    port: 5000
+  initialDelaySeconds: 5
+  periodSeconds: 10
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
@@ -117,6 +121,11 @@ volumeMounts:
   - name: config-volume
     mountPath: /etc/config
     readOnly: true
+  - name: python-app-pvc
+    mountPath: /app/data
+
+volumeClaimTemplatesName: python-app-pvc
+volumeClaimTemplatesRequestStorage: 512Mi
 
 nodeSelector: {}
 

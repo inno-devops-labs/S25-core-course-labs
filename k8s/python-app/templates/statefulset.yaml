@@ -1,16 +1,30 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "python-app.fullname" . }}
   labels:
     {{- include "library-chart.labels" . | indent 4 }}
 spec:
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
+  podManagementPolicy: Parallel
+  serviceName: {{ include "python-app.fullname" . }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
       {{- include "library-chart.labels" . | indent 6 }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Values.volumeClaimTemplatesName }}
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: {{ .Values.volumeClaimTemplatesRequestStorage }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
