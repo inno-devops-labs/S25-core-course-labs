@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ printf "config-map-%s" .Chart.Name }}
+data:
+  config.json: |-
+{{ .Files.Get  .Values.config.path | indent 4 }}
