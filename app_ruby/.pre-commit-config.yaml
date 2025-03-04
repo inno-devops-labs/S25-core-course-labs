@@ -1,0 +1,31 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-added-large-files
+
+  - repo: local
+    hooks:
+      - id: rubocop
+        name: RuboCop
+        entry: rubocop --auto-correct
+        language: system
+        files: \.rb$
+
+  - repo: local
+    hooks:
+      - id: reek
+        name: Reek
+        entry: reek
+        language: system
+        files: ^app_ruby/
+
+  - repo: local
+    hooks:
+      - id: rails_best_practices
+        name: Rails Best Practices
+        entry: rails_best_practices
+        language: system
+        files: ^app_ruby/
