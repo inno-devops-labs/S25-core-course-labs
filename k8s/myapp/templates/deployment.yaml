@@ -15,9 +15,11 @@ spec:
     metadata:
       {{- with .Values.podAnnotations }}
       annotations:
+        {{- if .Values.vault.enabled }}
         vault.hashicorp.com/agent-inject: "true"
         vault.hashicorp.com/role: "{{ .Values.vault.role }}"
         vault.hashicorp.com/agent-inject-secret-{{ .Values.vault.agentInjectSecret }}: "{{ .Values.vault.secretPath }}"
+        {{- end }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -49,12 +51,6 @@ spec:
               # containerPort: {{ .Values.service.port }}
               protocol: TCP
           {{- with .Values.livenessProbe }}
-          env:
-          - name: MY_PASS
-            valueFrom:
-              secretKeyRef:
-                name: my-secret
-                key: MY_PASS
           livenessProbe:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -66,14 +62,19 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
+          - name: config-volume
+            mountPath: /config
+          env:
+          - name: MY_PASS
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: MY_PASS
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      - name: config-volume
+        configMap:
+          name: config
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

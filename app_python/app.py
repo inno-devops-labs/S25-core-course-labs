@@ -1,18 +1,40 @@
-from flask import Flask
+from flask import Flask, jsonify
+import os
 from datetime import datetime
 import pytz
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 
 app = Flask(__name__)
 
+VISITS_FILE = 'data/visits'
 
 @app.route('/metrics')
 def metrics():
     return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
 
 
+def get_visits():
+    if not os.path.exists(VISITS_FILE):
+        return 0
+    with open(VISITS_FILE, 'r') as f:
+        try:
+            return int(f.read().strip())
+        except ValueError:
+            return 0
+
+
+def update_visits():
+    visits = get_visits() + 1
+    with open(VISITS_FILE, 'w') as f:
+        f.write(str(visits))
+    return visits
+
+
 @app.route('/')
 def index():
+
+    visits = update_visits()
+
     # Setting Moscow timezone
     moscow_tz = pytz.timezone('Europe/Moscow')
     current_time = datetime.now(moscow_tz).strftime('%Y-%m-%d %H:%M:%S')
@@ -81,6 +103,7 @@ def index():
             </style>
         </head>
         <body>
+            <h1>Hello! You are visitor number {visits}.<br>
             <h1>Current Time in Moscow: {current_time}</h1>
 
             <!-- CSS Flowers for decoration -->
@@ -117,6 +140,11 @@ def index():
         </body>
     </html>
     """
+
+@app.route('/visits')
+def visits_endpoint():
+    visits = get_visits()
+    return jsonify({"visits": visits})
 
 
 if __name__ == '__main__':

@@ -20,6 +20,8 @@ services:
       resources:
         limits:
           memory: "100M"
+    volumes:
+      - ./data:/app/data
 
   loki:
     image: grafana/loki:2.9.2

@@ -32,6 +32,13 @@ This is a simple Python web application that displays the current time in Moscow
 
 5. Open the browser at <http://127.0.0.1:5000>.
 
+## New Features
+
+- The application now implements a visit counter.
+- Each time you access the root endpoint (`/`), the application increments the counter and writes the new count to the `visits` file.
+- A new endpoint `/visits` displays the stored count.
+- When using Docker or docker-compose, a volume is used to persist the `visits` file.
+
 ## Docker
 
 1. How to build
