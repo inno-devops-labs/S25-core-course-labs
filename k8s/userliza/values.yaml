@@ -1,4 +1,4 @@
-# Default values for myapp.
+# Default values for userliza.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -7,11 +7,11 @@ replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: nikolaevaelizaveta/my-flask-app
+  repository: nginx
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: latest
+  tag: ""
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -121,9 +121,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-vault:
-  enabled: true
-  role: userliza
-  secretPath: secret/data/myapp
-  agentInjectSecret: mysecret.txt

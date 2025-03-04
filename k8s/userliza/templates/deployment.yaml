@@ -1,27 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "myapp.fullname" . }}
+  name: {{ include "userliza.fullname" . }}
   labels:
-    {{- include "myapp.labels" . | nindent 4 }}
+    {{- include "userliza.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "myapp.selectorLabels" . | nindent 6 }}
+      {{- include "userliza.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
       annotations:
-        vault.hashicorp.com/agent-inject: "true"
-        vault.hashicorp.com/role: "{{ .Values.vault.role }}"
-        vault.hashicorp.com/agent-inject-secret-{{ .Values.vault.agentInjectSecret }}: "{{ .Values.vault.secretPath }}"
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "myapp.labels" . | nindent 8 }}
+        {{- include "userliza.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -30,7 +27,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "myapp.serviceAccountName" . }}
+      serviceAccountName: {{ include "userliza.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -45,16 +42,9 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 5000
-              # containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
           {{- with .Values.livenessProbe }}
-          env:
-          - name: MY_PASS
-            valueFrom:
-              secretKeyRef:
-                name: my-secret
-                key: MY_PASS
           livenessProbe:
             {{- toYaml . | nindent 12 }}
           {{- end }}
