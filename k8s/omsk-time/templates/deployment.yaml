@@ -17,6 +17,8 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          env:
+            {{ include "common.env" . | nindent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

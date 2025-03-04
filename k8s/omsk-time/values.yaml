@@ -31,3 +31,21 @@ resources:
   requests:
     cpu: 250m
     memory: 64Mi
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+env:
+  ENVIRONMENT: stage
