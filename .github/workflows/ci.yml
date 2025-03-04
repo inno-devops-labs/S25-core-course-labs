@@ -1,0 +1,47 @@
+name: CI Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r app_python/requirements.txt
+
+      - name: Run linter (flake8)
+        run: |
+          pip install flake8
+          flake8 app_python --max-line-length=120
+
+      - name: Run tests
+        run: |
+          python -m unittest discover -s tests
+
+  docker:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build Docker image
+        run: docker build -t nikolaevaelizaveta/my-flask-app:latest app_python/
+
+      - name: Push Docker image
+        run: docker push nikolaevaelizaveta/my-flask-app:latest
