@@ -1,0 +1,4 @@
+plugin: yacloud_compute
+yacloud_token_file: .yacloud/token
+yacloud_clouds: catorleader
+yacloud_folders: default
