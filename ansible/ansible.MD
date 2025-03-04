@@ -1,51 +1,38 @@
-Step 1: Setting Up the Environment
 
-1.1. Cloning the Docker Role
-I started by cloning the geerlingguy.docker Ansible role from GitHub into my local roles directory. This role automates the installation and configuration of Docker on target machines.
-cd roles
-git clone https://github.com/geerlingguy/ansible-role-docker.git
+TASK [geerlingguy.docker : Ensure handlers are notified now to avoid firewall conflicts.] *************************************************************
+task path: /Users/almazgaazov/.ansible/roles/geerlingguy.docker/tasks/main.yml:76
+META: triggered running handlers for yandex_vm
 
-1.2. Verifying the Role
-After cloning the role, I ensured it was correctly placed in the roles directory by listing its contents:
-ls roles/ansible-role-docker
+TASK [geerlingguy.docker : include_tasks] *************************************************************************************************************
+task path: /Users/almazgaazov/.ansible/roles/geerlingguy.docker/tasks/main.yml:79
+skipping: [yandex_vm] => {
+    "changed": false,
+    "false_condition": "docker_install_compose | bool",
+    "skip_reason": "Conditional result was False"
+}
 
-Step 2: Creating the Ansible Playbook
+TASK [geerlingguy.docker : Get docker group info using getent.] ***************************************************************************************
+task path: /Users/almazgaazov/.ansible/roles/geerlingguy.docker/tasks/main.yml:82
+skipping: [yandex_vm] => {
+    "changed": false,
+    "false_condition": "docker_users | length > 0",
+    "skip_reason": "Conditional result was False"
+}
 
-2.1. Writing the Playbook
-I created a playbook named main.yaml in the playbooks/dev/ directory. This playbook defines the tasks to be executed on the target hosts. Here’s the content of the playbook:
----
-- name: Install Docker via Ansible Galaxy role
-  hosts: all
-  become: yes
-  roles:
-    - role: ansible-role-docker
+TASK [geerlingguy.docker : Check if there are any users to add to the docker group.] ******************************************************************
+task path: /Users/almazgaazov/.ansible/roles/geerlingguy.docker/tasks/main.yml:89
+skipping: [yandex_vm] => {
+    "changed": false,
+    "skipped_reason": "No items in the list"
+}
 
-2.2. Configuring the Inventory
+TASK [geerlingguy.docker : include_tasks] *************************************************************************************************************
+task path: /Users/almazgaazov/.ansible/roles/geerlingguy.docker/tasks/main.yml:97
+skipping: [yandex_vm] => {
+    "changed": false,
+    "false_condition": "at_least_one_user_to_modify is defined",
+    "skip_reason": "Conditional result was False"
+}
 
-I created an inventory file named default_aws_ec2.yml to define the target hosts. In this case, I targeted a single host (yandex_vm) with the following details:
-all:
-  hosts:
-    yandex_vm:
-      ansible_host: 158.160.128.245
-      ansible_user: almaz
-      ansible_ssh_private_key_file: ~/.ssh/id_rsa
-
-Step 3: Running the Playbook
-
-3.1. Executing the Playbook
-With the playbook and inventory ready, I ran the following command to execute the playbook:
-
-ansible-playbook -i default_aws_ec2.yml playbooks/dev/main.yaml
-
-This command instructed Ansible to:
-Use the inventory file default_aws_ec2.yml.
-Execute the tasks defined in playbooks/dev/main.yaml.
-
-Step 4: Verifying the Installation
-
-After the playbook completed, I verified that Docker was installed and running on the target machine (yandex_vm). I SSHed into the machine and ran the following commands:
-ssh -i ~/.ssh/id_rsa almaz@158.160.128.245
-docker --version
-sudo systemctl status docker
-docker --version: Confirmed the installed Docker version.
-systemctl status docker: Verified that the Docker service was running and enabled.
+PLAY RECAP ********************************************************************************************************************************************
+yandex_vm                  : ok=14   changed=0    unreachable=0    failed=0    skipped=11   rescued=0    ignored=0   

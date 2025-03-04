@@ -3,4 +3,5 @@
   hosts: all
   become: yes
   roles:
-    - ansible-role-docker
+    - geerlingguy.docker
+    - web_app
