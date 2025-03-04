@@ -44,11 +44,11 @@ spec:
             - configMapRef:
                 name: config-map-python-app
           env:
-            - name: MY_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: {{ printf "common-secret-%s" .Chart.Name }}
-                  key: MY_PASS
+#            - name: MY_PASS
+#              valueFrom:
+#                secretKeyRef:
+#                  name: {{ printf "common-secret-%s" .Chart.Name }}
+#                  key: MY_PASS
             {{ include "common.env" . | nindent 12 }}
           ports:
             - name: http
