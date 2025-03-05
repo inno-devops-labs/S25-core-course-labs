@@ -14,6 +14,8 @@ COPY --chown=appuser:appgroup app.py requirements.txt ./
 COPY --chown=appuser:appgroup templates/ ./templates/
 COPY --chown=appuser:appgroup utils/ ./utils/
 
+RUN touch /app_python/visits && chown appuser:appgroup /app_python/visits
+
 # install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
