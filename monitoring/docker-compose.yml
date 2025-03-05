@@ -69,6 +69,23 @@ services:
         max-size: "10m"
         max-file: "3"
 
+  moscow-time-api:
+    image: moscow-time-api
+    container_name: moscow-time-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/data  
+    restart: always
+    depends_on:
+      - prometheus 
+    mem_limit: "256m"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
 volumes:
   grafana-data:
-
+  data:

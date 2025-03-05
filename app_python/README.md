@@ -4,7 +4,7 @@
 
 ## Project Overview
 
-The web application that provides the current time in Moscow.
+The web application that provides the current time in Moscow and tracks visit counts.
 
 ## Technologies used
 
@@ -15,6 +15,10 @@ The web application that provides the current time in Moscow.
 
 * Current time display: the web application displays the current time in Moscow.
 * Dynamic update: the displayed time is updated when the page is refreshed.
+* Visit tracking: the web application keeps a persistent count of how many times the app has been accessed.
+* Exposed endpoints:
+  - `/` → Displays the current time.
+  - `/visits` → Returns the total number of visits.
 
 ## Quick start without Docker
 
@@ -42,7 +46,9 @@ The web application that provides the current time in Moscow.
    uvicorn main:app --reload
    ```
 
-5. Access the application in your browser at <http://127.0.0.1:8000>.
+5. Access the application in your browser at:
+	Time endpoint: <http://127.0.0.1:8000/>
+	Visit counter: <http://127.0.0.1:8000/visits>
 
 ## Docker section
 
@@ -90,7 +96,9 @@ This application has been containerized using Docker to make deployment easier a
    docker run -p 8000:8000 nikachek/moscow-time-api:latest
    ```
 
-2. Access the application in your browser at <http://127.0.0.1:8000>.
+2. Access the application in your browser at <http://127.0.0.1:8000>:
+	Time endpoint: <http://127.0.0.1:8000/>
+	Visit counter: <http://127.0.0.1:8000/visits>
 
 ## Unit Tests
 

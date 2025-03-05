@@ -33,6 +33,10 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: my-app-config
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.securityContext }}
@@ -51,6 +55,11 @@ spec:
             - name: http
               containerPort: 8000
               protocol: TCP
+              
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+              readOnly: true
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
