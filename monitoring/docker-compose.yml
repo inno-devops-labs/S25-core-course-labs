@@ -5,6 +5,7 @@ networks:
 volumes:
   prometheus_data: {}
   grafana_data: {}
+  visits_data: {}
 
 x-logging: &default-logging
   driver: "json-file"
@@ -34,6 +35,8 @@ services:
     mem_limit: 512m
     networks:
       - monitoring
+    volumes:
+      - visits_data:/app
 
   prometheus:
     image: prom/prometheus:latest
@@ -72,7 +75,7 @@ services:
     ports:
       - "3100:3100"
     volumes:
-      - /etc/loki/local-config.yaml:/etc/loki/local-config.yaml
+      - /local-config.yaml:/etc/loki/local-config.yaml
     command: -config.file=/etc/loki/local-config.yaml
     networks:
       - monitoring
