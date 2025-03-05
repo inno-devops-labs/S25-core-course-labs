@@ -22,6 +22,7 @@ spec:
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
+        vault-integration: enabled
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -55,6 +56,12 @@ spec:
                 secretKeyRef:
                   name: my-helm-secret
                   key: password
+            # Injecting Vault secret environment variables
+            - name: MY_VAULT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: myapp-secret-key  # Replace with the actual key in your Vault secret
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
@@ -67,14 +74,14 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
+            - name: vault-secrets
+              mountPath: /vault/secrets
+              readOnly: true
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: vault-secrets
+          secret:
+            secretName: my-secret  # Replace with your Vault secret name
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

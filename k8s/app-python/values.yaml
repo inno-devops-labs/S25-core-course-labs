@@ -87,6 +87,12 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
@@ -107,17 +113,14 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+vaultSecrets:
+  username: admin
+  password: SuperSecret123
 
-# Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+vault:
+  enabled: true
+  address: "http://vault.default.svc.cluster.local:8200"
+  secretPath: "secret/data/myapp/config"
 
 nodeSelector: {}
 
