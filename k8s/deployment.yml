@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: time-app-py-deployment
+  labels:
+    app: time-app-py
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: time-app-py
+  template:
+    metadata:
+      labels:
+        app: time-app-py
+    spec:
+      containers:
+      - name: time-app-py
+        image: unileonid/time-app-py:latest
+        ports:
+          - containerPort: 8080
