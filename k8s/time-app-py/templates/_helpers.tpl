@@ -60,3 +60,10 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "time-app-py.env" }}
+- name: DB_USER
+  value: "admin"
+- name: DB_HOST
+  value: "http://localhost:5432"
+{{- end }}
