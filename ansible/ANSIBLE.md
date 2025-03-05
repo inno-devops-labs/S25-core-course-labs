@@ -142,3 +142,170 @@ all defaults are defined
    ```bash
    ansible-playbook -i inventory/default_ya.yml playbooks/dev/main.yaml
    ```
+
+## Lab 6: Ansible Best Practices Implementation
+
+Needs to be notised, I understand that bash commands in Ansible is an anti-pattern, but I don't know how to in adequate amount of time implement docker interaction without pip plugins with docker and usage of community plugin. I didn't done this, because in the las lab we did the docker role, and I wanted to use only it
+For this lab, I've implemented several Ansible best practices as required:
+
+
+### 1. Group Tasks with Blocks
+
+I organized related tasks within blocks in my `web_app` role:
+
+```yaml
+# Setup application source code
+- name: Setup application source code
+  block:
+    - name: Install Git
+      ansible.builtin.apt:
+        name: git
+        state: present
+        update_cache: yes
+    
+    - name: Create app source directory
+      ansible.builtin.file:
+        path: "{{ app_source_dir }}"
+        state: directory
+        mode: '0755'
+    
+    - name: Clone application repository
+      ansible.builtin.git:
+        repo: "{{ app_repo }}"
+        dest: "{{ app_source_dir }}"
+  tags:
+    - setup
+    - source
+```
+
+### 2. Role Dependency
+
+I set up the `web_app` role to depend on the `docker` role in `roles/web_app/meta/main.yml`:
+
+```yaml
+---
+dependencies:
+  - role: docker
+```
+
+### 3. Tags Implementation
+
+I implemented tags throughout my roles to enable selective task execution:
+
+```yaml
+# Deploy application
+- name: Deploy application
+  block:
+    - name: Build Docker image
+      ansible.builtin.command:
+        cmd: docker build -t {{ docker_image_name }} {{ app_source_dir }}/app_python
+      
+    - name: Start Docker container with Docker Compose
+      ansible.builtin.command:
+        cmd: docker-compose -f {{ docker_compose_file }} up -d
+        chdir: "{{ docker_compose_dir }}"
+  tags:
+    - deploy
+    - docker
+```
+
+### 4. Wipe Logic
+
+Created wipe logic in `roles/web_app/tasks/0-wipe.yml` that can be enabled with a variable:
+
+```yaml
+---
+- name: Wipe application environment
+  block:
+    - name: Stop and remove Docker container using Docker Compose
+      ansible.builtin.command:
+        cmd: docker-compose -f {{ docker_compose_file }} down
+        chdir: "{{ docker_compose_dir }}"
+      ignore_errors: yes
+    
+    - name: Remove Docker image
+      ansible.builtin.command:
+        cmd: docker rmi {{ docker_image_name }}
+      ignore_errors: yes
+    
+    # Additional removal tasks...
+  tags:
+    - wipe
+    - never
+```
+
+### 5. Docker Compose Template
+
+Created a Jinja2 template for Docker Compose in `roles/web_app/templates/docker-compose.yml.j2`:
+
+```yaml
+version: '3'
+
+services:
+  app:
+    image: "{{ docker_image_name }}"
+    container_name: "{{ docker_container_name }}"
+    ports:
+      - "{{ app_port }}:5000"
+    restart: unless-stopped
+```
+
+
+### Lab 6: Last 50 lines of run
+
+Below are the last 50 lines of output from the deployment command:
+
+
+below is the output of task2 lab06
+```bash
+dpttk@codenv:~/uni/devops/S25-core-course-labs$ ansible-playbook -i ansible/inventory/default_ya.yml ansible/playbooks/dev/main.yaml | tail -n 50
+ok: [yandex_vm]
+
+TASK [docker : Install prerequisites for Docker] *******************************
+ok: [yandex_vm]
+
+TASK [docker : Add Docker’s official GPG key] **********************************
+ok: [yandex_vm]
+
+TASK [docker : Add Docker repository] ******************************************
+ok: [yandex_vm]
+
+TASK [docker : Install Docker CE] **********************************************
+ok: [yandex_vm]
+
+TASK [docker : Ensure Docker service is started and enabled] *******************
+ok: [yandex_vm]
+
+TASK [docker : Add current user to docker group] *******************************
+ok: [yandex_vm]
+
+TASK [docker : Download Docker Compose] ****************************************
+ok: [yandex_vm]
+
+TASK [docker : Verify Docker Compose installation] *****************************
+ok: [yandex_vm]
+
+TASK [../../roles/web_app : Install Git] ***************************************
+ok: [yandex_vm]
+
+TASK [../../roles/web_app : Create app source directory] ***********************
+ok: [yandex_vm]
+
+TASK [../../roles/web_app : Clone application repository] **********************
+ok: [yandex_vm]
+
+TASK [../../roles/web_app : Create Docker Compose directory] *******************
+ok: [yandex_vm]
+
+TASK [../../roles/web_app : Create Docker Compose file from template] **********
+ok: [yandex_vm]
+
+TASK [../../roles/web_app : Build Docker image] ********************************
+changed: [yandex_vm]
+
+TASK [../../roles/web_app : Start Docker container with Docker Compose] ********
+changed: [yandex_vm]
+
+PLAY RECAP *********************************************************************
+yandex_vm                  : ok=26   changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
+```

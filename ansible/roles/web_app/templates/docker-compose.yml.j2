@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  app:
+    image: "{{ docker_image_name }}"
+    container_name: "{{ docker_container_name }}"
+    ports:
+      - "{{ app_port }}:5000"
+    restart: unless-stopped
