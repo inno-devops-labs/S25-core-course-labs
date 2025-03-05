@@ -1,0 +1,12 @@
+all:
+  hosts:
+    yandex_cloud_terraform1:
+      ansible_host: 158.160.53.154
+      ansible_user: devops
+      ansible_ssh_private_key_file: /Users/nikitashlyakhtin/.ssh/id_ed25519
+      ansible_python_interpreter: /usr/bin/python3
+    yandex_cloud_terraform2:
+      ansible_host: 89.169.158.134
+      ansible_user: devops
+      ansible_ssh_private_key_file: /Users/nikitashlyakhtin/.ssh/id_ed25519
+      ansible_python_interpreter: /usr/bin/python3

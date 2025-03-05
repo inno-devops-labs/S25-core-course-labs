@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: crypto-price-tracker
+spec:
+  type: ClusterIP
+  selector:
+    app: crypto-price-tracker
+  ports:
+    - port: 8080
+      targetPort: 8080
