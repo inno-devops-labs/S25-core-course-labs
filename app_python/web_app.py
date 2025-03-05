@@ -10,16 +10,22 @@ import time
 app = Flask(__name__)
 
 # File to store visit counts
-VISITS_FILE = "/app/visits"
+VISITS_DIR = "/app"
+VISITS_FILE = f"{VISITS_DIR}/visits"
+
+# Ensure the directory exists
+os.makedirs(VISITS_DIR, exist_ok=True)
+
+# Ensure the file exists
+if not os.path.exists(VISITS_FILE):
+    with open(VISITS_FILE, "w") as f:
+        f.write("0")
+
 
 # Ensure the file exists and is not a directory
 if os.path.isdir(VISITS_FILE):
     os.rmdir(VISITS_FILE)  # Remove if it's mistakenly a directory
 
-
-if not os.path.exists(VISITS_FILE):
-    with open(VISITS_FILE, "w") as f:
-        f.write("0")
 
 # Create metrics
 REQUEST_COUNT = Counter('app_requests_total', 'Total number of requests')
