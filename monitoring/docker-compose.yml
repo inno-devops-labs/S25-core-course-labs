@@ -75,6 +75,8 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    volumes:
+      - ./visits:/app/visits
 
   prometheus:
     image: prom/prometheus:v2.41.0

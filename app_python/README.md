@@ -166,3 +166,26 @@ This project integrates **Snyk** for vulnerability scanning of Python dependenci
 
 - Every **push or pull request** triggers a **Snyk security scan**.
 - If vulnerabilities are found, the workflow fails, preventing unsafe deployments.
+
+## New Counter Feature
+
+This version of the application implements a counter that tracks the number of times the application is accessed. The count is persisted to a file and can be viewed via a new endpoint.
+
+### Endpoints
+
+- **GET /**  
+  Increments the counter and returns a message with the current count.
+- **GET /visits**  
+  Returns the current visit count as JSON.
+
+### Volume Mapping
+
+The Docker Compose file mounts a volume (`./visits`) to `/app/visits` in the container so that the visits file is persisted on the host.
+
+### How to Verify
+
+1. Run the application:
+
+```bash
+docker-compose up -d
+```
