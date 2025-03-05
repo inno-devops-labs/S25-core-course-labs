@@ -13,14 +13,6 @@ spec:
     metadata:
       labels:
         app: {{ include "python-app.name" . }}
-      annotations:
-        vault.hashicorp.com/agent-inject: "true"
-        vault.hashicorp.com/agent-inject-secret-myapp-config: "{{ .Values.vault.secretPath }}"
-        vault.hashicorp.com/agent-inject-template-myapp-config: |
-          {{- with secret .Values.vault.secretPath -}}
-          username: {{ .Data.data.username }}
-          password: {{ .Data.data.password }}
-          {{- end }}
     spec:
       serviceAccountName: myapp-sa
       containers:
@@ -29,6 +21,11 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.containerPort }}
-          env:
-            - name: VAULT_ADDR
-              value: {{ .Values.vault.address | quote }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config.json
+              subPath: config.json
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "python-app.fullname" . }}-config
