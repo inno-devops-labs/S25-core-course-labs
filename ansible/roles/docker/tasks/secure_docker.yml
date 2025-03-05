@@ -1,0 +1,25 @@
+---
+- name: Create docker config directory
+  become: true
+  ansible.builtin.file:
+    path: "/etc/docker"
+    state: directory
+    mode: '0755'
+
+- name: Configure Docker daemon security settings
+  become: true
+  ansible.builtin.copy:
+    dest: "/etc/docker/daemon.json"
+    content: |
+      {
+        "live-restore": true,
+        "no-new-privileges": true,
+        "userns-remap": "default",
+        "log-driver": "json-file",
+        "log-opts": {
+          "max-size": "100m",
+          "max-file": "3"
+        }
+      }
+    mode: '0644'
+  notify: Restart Docker service
