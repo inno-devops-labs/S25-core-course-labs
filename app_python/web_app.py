@@ -1,7 +1,6 @@
 from datetime import datetime
 import pytz
 import os
-
 from flask import Flask
 from prometheus_client import start_http_server, Counter, Histogram
 import time
@@ -9,12 +8,12 @@ import time
 # Initialize the Flask app
 app = Flask(__name__)
 
-# File to store visit counts
-VISITS_DIR = "/app"
-VISITS_FILE = f"{VISITS_DIR}/visits"
 
-# Ensure the directory exists
-os.makedirs(VISITS_DIR, exist_ok=True)
+# Check if running in a test environment
+if "PYTEST_CURRENT_TEST" in os.environ or "GITHUB_ACTIONS" in os.environ:
+    VISITS_FILE = "visits_test"
+else:
+    VISITS_FILE = "/app/visits"
 
 # Ensure the file exists
 if not os.path.exists(VISITS_FILE):
