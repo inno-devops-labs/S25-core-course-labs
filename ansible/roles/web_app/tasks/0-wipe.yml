@@ -1,0 +1,15 @@
+- name: Remove web_app container (wipe)
+  docker_container:
+    name: "{{ container_name }}"
+    state: absent
+  when: web_app_full_wipe | bool
+  tags:
+    - wipe
+
+- name: Remove docker-compose file (wipe)
+  file:
+    path: "/opt/web_app/docker-compose.yml"
+    state: absent
+  when: web_app_full_wipe | bool
+  tags:
+    - wipe
