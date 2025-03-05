@@ -50,7 +50,13 @@ ingress:
           pathType: ImplementationSpecific
   tls: []
 
-resources: {}
+resources:
+  requests:
+    memory: "128Mi"
+    cpu: "100m"
+  limits:
+    memory: "256Mi"
+    cpu: "500m"
 
 mySecret: "DoryShibkovaSecret"
 
@@ -74,9 +80,15 @@ autoscaling:
   maxReplicas: 5
   targetCPUUtilizationPercentage: 80
 
-volumes: []
+volumes:
+  - name: config-volume
+    configMap:
+      name: app-config
 
-volumeMounts: []
+volumeMounts:
+  - mountPath: "/config.json"
+    subPath: "config.json"
+    name: config-volume
 
 nodeSelector: {}
 
