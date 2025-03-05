@@ -1,0 +1,36 @@
+ignore:
+  SNYK-JAVA-CHQOSLOGBACK-8539865:
+    - '*':
+        reason: "Indirect dependency from logback-core, not applicable to our use case"
+        expires: "2026-01-01T00:00:00.000Z"
+
+  SNYK-JAVA-CHQOSLOGBACK-8539866:
+    - '*':
+        reason: "Indirect dependency from logback-core, not applicable to our use case"
+        expires: "2026-01-01T00:00:00.000Z"
+
+  SNYK-JAVA-CHQOSLOGBACK-8539867:
+    - '*':
+        reason: "Indirect dependency from logback-classic, not applicable to our use case"
+        expires: "2026-01-01T00:00:00.000Z"
+
+  SNYK-JAVA-COMMONSCODEC-561518:
+    - '*':
+        reason: "Issue is introduced via ktor-client-apache, and we do not use affected functionality"
+        expires: "2026-01-01T00:00:00.000Z"
+
+  SNYK-JAVA-ORGJETBRAINSKOTLIN-2393744:
+    - '*':
+        reason: "Indirect issue from Kotlin stdlib, fixed in 2.1.0 but waiting for upstream updates"
+        expires: "2026-01-01T00:00:00.000Z"
+
+  SNYK-JAVA-IONETTY-8707739:
+    - '*':
+        reason: "Indirect issue from ktor-server-netty, not applicable to our use case"
+        expires: "2026-01-01T00:00:00.000Z"
+
+  SNYK-JAVA-IONETTY-8707740:
+    - '*':
+        reason: "Indirect issue from ktor-server-netty, not applicable to our use case"
+        expires: "2026-01-01T00:00:00.000Z"
+    
