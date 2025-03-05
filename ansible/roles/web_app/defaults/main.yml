@@ -1,0 +1,18 @@
+---
+# Docker image configuration
+docker_image_name: moscow_time_app
+docker_container_name: moscow_time_app
+
+# App source code
+app_source_dir: "/opt/app_source"
+app_repo: "https://github.com/dpttk/S25-core-course-labs.git"
+
+# Application configuration
+app_port: 5000
+
+# Docker Compose configuration
+docker_compose_dir: /opt/moscow_time
+docker_compose_file: "{{ docker_compose_dir }}/docker-compose.yml"
+
+# Wipe configuration
+web_app_full_wipe: false
