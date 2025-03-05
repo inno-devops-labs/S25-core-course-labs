@@ -3,5 +3,5 @@
 
 # Allow specific files and directories
 !requirements.txt
-!main.py
-!templates/index.html
+!app
+!run.py
