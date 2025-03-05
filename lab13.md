@@ -128,7 +128,7 @@ In this lab, you will implement ArgoCD to automate Kubernetes application deploy
      argocd app status python-app
      ```
 
-### Task 2: Real-World Scenario – Multi-Environment Deployment & Auto-Sync
+### Task 2: Multi-Environment Deployment & Auto-Sync
 
 **4 Points:**
 
@@ -197,6 +197,7 @@ In this lab, you will implement ArgoCD to automate Kubernetes application deploy
 1. Configure ArgoCD for Bonus App
    - Create an `argocd-<bonus>-app.yaml` similar to Task 1, pointing to your bonus app’s helm chart folder.
    - Sync and validate deployment with:
+
      ```bash
      kubectl get pods -n <namespace>
      ```
