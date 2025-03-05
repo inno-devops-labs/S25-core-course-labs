@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: js-app
+  labels:
+    app: js-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: js-app
+
+  template:
+    metadata:
+      labels:
+        app: js-app
+    spec:
+      containers:
+        - name: js-app
+          image: nickolaus899/js-cities-dist:latest
+          ports:
+            - containerPort: 3000
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 3
+            periodSeconds: 5
