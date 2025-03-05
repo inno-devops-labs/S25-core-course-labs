@@ -1,0 +1,22 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+  log_level: "debug"
+positions:
+  filename: /var/lib/promtail/positions/positions.yaml
+clients:
+  - url: http://loki:3100/api/prom/push
+scrape_configs:
+  - job_name: systemd-journal
+    journal: 
+      path: /var/log/journal/72ee27df170c483e9892149eeb48b425
+    relabel_configs:
+      - source_labels: ['__journal__systemd_unit']
+        target_label: 'unit'
+      - source_labels: ['__journal__hostname']
+        target_label: 'host'
+      - source_labels: ['__journal__syslog_identifier']
+        target_label: 'service_name'
+      - replacement: "systemd-journal"
+        target_label: "job"
+        

@@ -1,0 +1,8 @@
+version: '3'
+services:
+  app:
+    image: "{{ app_image }}"
+    ports:
+      - "{{ host_port }}:80"
+    restart: always
+
