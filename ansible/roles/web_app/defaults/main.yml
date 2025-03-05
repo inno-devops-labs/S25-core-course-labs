@@ -1,0 +1,5 @@
+---
+app_image: "nikachek/moscow-time-api:latest"  
+container_name: "web_app"
+app_port: 80
+host_port: 8080
