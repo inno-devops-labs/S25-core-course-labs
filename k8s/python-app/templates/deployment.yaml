@@ -46,6 +46,7 @@ spec:
                 secretKeyRef:
                   name: credentials
                   key: password
+              {{ include "common.env" . | nindent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
