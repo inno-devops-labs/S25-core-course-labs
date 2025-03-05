@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: main-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /time(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: moscow-time-app
+                port:
+                  number: 5000
+          - path: /crypto(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: crypto-price-tracker
+                port:
+                  number: 8080
