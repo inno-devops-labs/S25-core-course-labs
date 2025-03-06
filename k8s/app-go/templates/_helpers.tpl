@@ -60,3 +60,13 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "app-go.environmentVars" -}}
+- name: SPONGEBOB_ADDRESS
+  value: {{ .Values.environment.spongebobAddress | quote }}
+- name: PATRICK_ADDRESS
+  value: {{ .Values.environment.patrickAddress | quote }}
+- name: SQUIDWARD_ADDRESS
+  value: {{ .Values.environment.squidwardAddress | quote }}
+{{- end -}}
+

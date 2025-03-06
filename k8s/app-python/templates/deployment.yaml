@@ -44,11 +44,12 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: lab11-secret
-                  key: API_KEY
+          - name: API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: lab11-secret
+                key: API_KEY
+          {{- include "app-python.environmentVars" . | nindent 10 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
