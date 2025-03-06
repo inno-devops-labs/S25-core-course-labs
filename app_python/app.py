@@ -8,7 +8,7 @@ import os
 
 app = FastAPI()
 
-VISITS_FILE = "/data/visits"
+VISITS_FILE = "data/visits"
 
 
 def get_visit_count():

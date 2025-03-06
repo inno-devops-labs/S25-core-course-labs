@@ -160,7 +160,7 @@ services:
       start_period: 5s
       timeout: 5s
     volumes:
-      - ./py-app/data:/data
+      - ./py_visits_data:/app/data
 
   cs_app:
     image: efimpuzhalov/moscow-time-cs-app:latest 
@@ -183,4 +183,4 @@ services:
       timeout: 5s
       start_period: 5s
     volumes:
-      - ./cs-app/data:/data
+      - ./cs_visits_data:/app/data

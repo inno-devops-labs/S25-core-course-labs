@@ -8,7 +8,7 @@ namespace MoscowTimeApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private static readonly string VisitsFilePath = Path.Combine("/data", "visits");
+        private static readonly string VisitsFilePath = Path.Combine("data", "visits");
 
         private static readonly Counter MoscowTimeRequests = Metrics
             .CreateCounter("moscow_time_requests_total", "Number of requests to the Moscow Time endpoint.");
