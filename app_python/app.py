@@ -8,7 +8,8 @@ import os
 
 app = FastAPI()
 
-VISITS_FILE = "data/visits"
+VISITS_FILE = "/data/visits"
+
 
 def get_visit_count():
     """Read the current visit count from the file."""
@@ -18,6 +19,7 @@ def get_visit_count():
     except FileNotFoundError:
         return 0
 
+
 def increment_visit_count():
     """Increment the visit count and save to the file."""
     count = get_visit_count() + 1
@@ -26,6 +28,7 @@ def increment_visit_count():
         f.write(str(count))
     return count
 
+
 @app.get("/")
 def moscow_time():
     increment_visit_count()
@@ -33,6 +36,7 @@ def moscow_time():
     moscow_tz = pytz.timezone("Europe/Moscow")
     current_time = datetime.now(moscow_tz).strftime("%Y-%m-%d %H:%M:%S")
     return {"Current time in Moscow": current_time}
+
 
 @app.get("/visits")
 def get_visits():

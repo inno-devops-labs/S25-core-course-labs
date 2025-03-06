@@ -140,7 +140,7 @@ services:
       timeout: 5s
 
   python_app:
-    image: efimpuzhalov/moscow-time-py-app:distroless 
+    image: efimpuzhalov/moscow-time-py-app:latest
     ports:
       - "8081:5000"
     networks:
@@ -159,9 +159,11 @@ services:
       retries: 3
       start_period: 5s
       timeout: 5s
+    volumes:
+      - ./py-app/data:/data
 
   cs_app:
-    image: efimpuzhalov/moscow-time-cs-app:distroless 
+    image: efimpuzhalov/moscow-time-cs-app:latest 
     ports:
       - "8082:80"
     networks:
@@ -180,3 +182,5 @@ services:
       retries: 3
       timeout: 5s
       start_period: 5s
+    volumes:
+      - ./cs-app/data:/data
