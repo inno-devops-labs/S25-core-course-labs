@@ -1,0 +1,7 @@
+services:
+  {{ container_name }}:
+    image: "{{ web_app_image }}"
+    container_name: "{{ container_name }}"
+    restart: unless-stopped
+    ports:
+      - "{{ external_app_port }}:{{ internal_app_port }}"
