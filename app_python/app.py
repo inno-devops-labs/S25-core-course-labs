@@ -44,7 +44,6 @@ def visit_page():
         f = open(VISITS_FILE, "w")
         f.write("0")
         f.close()
-    
 
     visits = get_visits()
     if visits >= 0:

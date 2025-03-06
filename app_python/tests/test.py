@@ -24,7 +24,7 @@ class Testing(unittest.TestCase):
         visits = 10
         set_visits(visits)
         self.assertEqual(get_visits(), visits)
-        
+
         set_visits(0)
         self.assertEqual(get_visits(), 0)
 
@@ -75,7 +75,7 @@ class Testing(unittest.TestCase):
         set_new_timezone(TIMEZONE)
 
     def test_healthcheck(self):
-        health = self.client.get('/health') # not visiting main page
+        health = self.client.get('/health')  # not visiting main page
         self.assertEqual(health.status_code, STATUS_OK)
 
     def test_visits(self):
