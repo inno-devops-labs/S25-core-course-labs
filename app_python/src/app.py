@@ -7,6 +7,9 @@ import os
 def create_app():
     app = Flask(__name__)
     VISITS_FILE = "src/data/visits.txt"
+
+    os.makedirs(os.path.dirname(VISITS_FILE), exist_ok=True)
+
     if not os.path.exists(VISITS_FILE):
         with open(VISITS_FILE, "w") as f:
             f.write("0")
