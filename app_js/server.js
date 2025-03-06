@@ -22,7 +22,7 @@ const httpRequestCounter = new client.Counter({
 })
 register.registerMetric(httpRequestCounter)
 
-function getVisits() {
+function getVisits () {
   try {
     if (!fs.existsSync(VISITS_FILE)) {
       console.log(`File ${VISITS_FILE} doesn't exist, creating it with value 0`)
@@ -32,30 +32,29 @@ function getVisits() {
     const data = fs.readFileSync(VISITS_FILE, 'utf8')
     return parseInt(data, 10)
   } catch (e) {
-    console.error("Error while getting visits:", e)
-    return -1;
+    console.error('Error while getting visits:', e)
+    return -1
   }
 }
 
-function setVisits(visits) {
+function setVisits (visits) {
   try {
     fs.writeFileSync(VISITS_FILE, visits.toString(), 'utf8')
   } catch (e) {
-    console.error("Error while setting visits:", e)
+    console.error('Error while setting visits:', e)
   }
 }
 
-function visitPage() {
+function visitPage () {
   let visits = getVisits()
-  console.log("Visit:", visits)
+  console.log('Visit:', visits)
   if (visits >= 0) {
     setVisits(visits + 1)
   } else {
-    console.log("Cannot get visits")
+    console.log('Cannot get visits')
     setVisits(visits)
   }
 }
-
 
 // creating middleware
 app.use((req, res, next) => {
@@ -110,7 +109,7 @@ app.get('/health', (req, res) => {
 
 app.get('/visits', (req, res) => {
   res.status(200).send(`Number of page visits: ${getVisits()}`)
-});
+})
 
 // route to get home page
 app.get('/', (req, res) => {
