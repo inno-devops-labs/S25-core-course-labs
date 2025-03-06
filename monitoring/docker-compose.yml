@@ -77,6 +77,8 @@ services:
   python-time-app:
     container_name: python-time-app
     image: emiliogain/my-python-app:latest
+    volumes:
+      - ./src/data:/app/src/data
     restart: always
     ports:
       - "8080:5000"
