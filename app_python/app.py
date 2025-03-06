@@ -44,6 +44,7 @@ def get_visits():
     count = get_visit_count()
     return {"visits": count}
 
+
 @app.get("/metrics")
 def metrics():
     # Generate Prometheus metrics in the text format
