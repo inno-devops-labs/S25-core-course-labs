@@ -1,5 +1,10 @@
 # Python Web Application
 
+## Endpoints
+
+`/`: displays current time
+`/visits`: displays number of visits
+
 ## Features
 
 - Displays the current time in Moscow.
