@@ -56,20 +56,21 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+            - name: app-config-volume
+              mountPath: /app_python/config
           env:
             - name: TOKEN
               valueFrom:
                 secretKeyRef:
                   name: token
                   key: token
-      {{- with .Values.volumes }}
+
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: app-config-volume
+          configMap:
+            name: app-config
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
