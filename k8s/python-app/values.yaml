@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
-replicaCount: 3
+replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
@@ -115,6 +115,34 @@ volumes:
   - name: config-volume
     configMap:
       name: config-map-python-app
+  - name: shared-volume
+    emptyDir: {}
+
+initContainers:
+  - name: init-container-1
+    image: busybox
+    command: ['wget', '-O', '/shared/message.txt', 'http://info.cern.ch']
+    volumeMounts:
+      - name: shared-volume
+        mountPath: /shared
+  - name: init-container-2
+    image: busybox
+    command: ['sh', '-c', 'echo "Line from init container 2" >> /shared/message.txt']
+    volumeMounts:
+      - name: shared-volume
+        mountPath: /shared
+  - name: init-container-3
+    image: busybox
+    command: ['sh', '-c', 'echo "Line from init container 3" >> /shared/message.txt']
+    volumeMounts:
+      - name: shared-volume
+        mountPath: /shared
+  - name: init-container-4
+    image: busybox
+    command: [ 'sh', '-c', 'sleep 3600' ]
+    volumeMounts:
+      - name: shared-volume
+        mountPath: /shared
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:

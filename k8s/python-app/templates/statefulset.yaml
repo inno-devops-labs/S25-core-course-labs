@@ -5,10 +5,6 @@ metadata:
   labels:
     {{- include "library-chart.labels" . | indent 4 }}
 spec:
-  updateStrategy:
-    type: RollingUpdate
-    rollingUpdate:
-      partition: 0
   podManagementPolicy: Parallel
   serviceName: {{ include "python-app.fullname" . }}
   {{- if not .Values.autoscaling.enabled }}
@@ -37,6 +33,10 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
+      {{- with .Values.initContainers }}
+      initContainers:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
