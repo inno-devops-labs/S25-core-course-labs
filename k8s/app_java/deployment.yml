@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vacation-calculator-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: vacation-calculator
+  template:
+    metadata:
+      labels:
+        app: vacation-calculator
+    spec:
+      containers:
+      - name: watch
+        image: catorleader/vacation_calculator:latest
+        ports:
+        - containerPort: 8080

@@ -1,0 +1,74 @@
+root = true
+
+[*]
+charset = utf-8
+tab_width = 2
+indent_size = 2
+indent_style = space
+max_line_length = 120
+insert_final_newline = true
+trim_trailing_whitespace = true
+ij_continuation_indent_size = 4
+
+[*.java]
+ij_java_imports_layout = *, $*
+ij_java_packages_to_use_import_on_demand = ""
+ij_java_class_count_to_use_import_on_demand = 999
+ij_java_names_count_to_use_import_on_demand = 999
+
+ij_java_array_initializer_wrap = normal
+ij_java_assert_statement_wrap = normal
+ij_java_assignment_wrap = normal
+ij_java_binary_operation_wrap = normal
+ij_java_enum_constants_wrap = normal
+ij_java_extends_keyword_wrap = normal
+ij_java_extends_list_wrap = normal
+ij_java_for_statement_wrap = normal
+ij_java_method_call_chain_wrap = normal
+ij_java_parameter_annotation_wrap = normal
+ij_java_resource_list_wrap = normal
+ij_java_ternary_operation_wrap = normal
+ij_java_throws_keyword_wrap = normal
+ij_java_throws_list_wrap = normal
+ij_java_variable_annotation_wrap = normal
+ij_java_class_annotation_wrap = normal
+ij_java_field_annotation_wrap = normal
+ij_java_method_annotation_wrap = normal
+
+ij_java_call_parameters_wrap = on_every_item
+ij_java_call_parameters_new_line_after_left_paren = true
+ij_java_call_parameters_right_paren_on_new_line = true
+
+ij_java_annotation_parameter_wrap = on_every_item
+ij_java_align_multiline_annotation_parameters = true
+
+ij_java_method_parameters_wrap = on_every_item
+ij_java_method_parameters_new_line_after_left_paren = true
+ij_java_method_parameters_right_paren_on_new_line = true
+
+ij_java_space_before_array_initializer_left_brace = true
+ij_java_align_multiline_parameters = false
+ij_java_spaces_within_record_header = false
+
+ij_java_do_while_brace_force = always
+ij_java_for_brace_force = always
+ij_java_if_brace_force = always
+ij_java_while_brace_force = always
+
+ij_java_blank_lines_before_package = 1
+ij_java_keep_blank_lines_before_right_brace = 1
+ij_java_keep_blank_lines_between_package_declaration_and_header = 1
+ij_java_keep_blank_lines_in_code = 1
+ij_java_keep_blank_lines_in_declarations = 1
+
+ij_java_doc_do_not_wrap_if_one_line = true
+ij_java_doc_indent_on_continuation = true
+ij_java_doc_keep_empty_parameter_tag = false
+ij_java_doc_keep_empty_return_tag = false
+ij_java_doc_keep_empty_throws_tag = false
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.{yml,yaml}]
+indent_size = 2

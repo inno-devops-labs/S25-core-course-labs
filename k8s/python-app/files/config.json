@@ -1,0 +1,11 @@
+{
+  "some-very-unusual-data": "config-deploy-production",
+  "very-structured-data": {
+    "unbelievable-array": [
+      "empty",
+      "not-empty",
+      "idgaf rly"
+    ],
+    "plain-obj": "kapusta"
+  }
+}
