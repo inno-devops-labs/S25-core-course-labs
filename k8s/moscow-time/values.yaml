@@ -9,7 +9,7 @@ replicaCount: 3
 image:
   repository: m0t9docker/pyapp
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
@@ -18,6 +18,7 @@ imagePullSecrets: []
 # This is to override the chart name.
 nameOverride: ""
 fullnameOverride: ""
+name: "moscow-time"
 
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
@@ -59,6 +60,8 @@ service:
   type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 8000
+  externalIPs: 
+    - 192.168.1.100 
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
@@ -86,14 +89,14 @@ resources:
     memory: 128Mi
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-livenessProbe:
-  httpGet:
-    path: /
-    port: http
-readinessProbe:
-  httpGet:
-    path: /
-    port: http
+# livenessProbe:
+#   httpGet:
+#     path: /
+#     port: http
+# readinessProbe:
+#   httpGet:
+#     path: /
+#     port: http
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
@@ -108,8 +111,14 @@ volumes:
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
+  - name: moscow-time-pvc
+    mountPath: /data
 
 nodeSelector: {}
+
+volumeClaimTemplate:
+  name: "moscow-time-pvc"
+  requestStorage: "100Mi"
 
 tolerations: []
 

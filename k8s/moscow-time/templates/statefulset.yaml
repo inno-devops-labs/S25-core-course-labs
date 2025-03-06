@@ -1,11 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "moscow-time.fullname" . }}
   labels:    
     {{- include "moscow-time.labels" . | nindent 4 }}
     {{- include "library.labels" . | indent 4 }}
 spec:
+  serviceName:  {{ include "moscow-time.fullname" . }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
@@ -13,6 +14,16 @@ spec:
     matchLabels:
       {{- include "moscow-time.selectorLabels" . | nindent 6 }}
       {{- include "library.labels" . | indent 6 }}
+
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Values.volumeClaimTemplate.name }}
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: {{ .Values.volumeClaimTemplate.requestStorage }}
+
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -69,6 +80,7 @@ spec:
       volumes:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

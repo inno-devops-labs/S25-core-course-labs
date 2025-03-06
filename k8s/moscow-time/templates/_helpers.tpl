@@ -34,6 +34,7 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "moscow-time.labels" -}}
+app: {{ include "moscow-time.name" . }}
 helm.sh/chart: {{ include "moscow-time.chart" . }}
 {{ include "moscow-time.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
@@ -46,6 +47,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "moscow-time.selectorLabels" -}}
+app: {{ include "moscow-time.name" . }}
 app.kubernetes.io/name: {{ include "moscow-time.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
