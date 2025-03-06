@@ -3,6 +3,7 @@ from datetime import datetime
 import pytz
 import os
 
+
 def create_app():
     app = Flask(__name__)
     VISITS_FILE = "src/data/visits.txt"
