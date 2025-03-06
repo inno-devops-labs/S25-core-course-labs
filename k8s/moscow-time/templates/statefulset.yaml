@@ -6,6 +6,7 @@ metadata:
     {{- include "moscow-time.labels" . | nindent 4 }}
     {{- include "library.labels" . | indent 4 }}
 spec:
+  podManagementPolicy: {{ .Values.podManagementPolicy }}
   serviceName:  {{ include "moscow-time.fullname" . }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}

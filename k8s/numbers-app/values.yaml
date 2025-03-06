@@ -123,3 +123,5 @@ env:
   
 config:
   path: "files/config.json"
+
+podManagementPolicy: Parallel

@@ -1,11 +1,17 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet 
 metadata:
   name: {{ include "numbers-app.fullname" . }}
   labels:
     {{- include "library.labels" . | nindent 4 }}
     {{- include "numbers-app.labels" . | nindent 4 }}
 spec:
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 1
+  podManagementPolicy: {{ .Values.podManagementPolicy }}
+  serviceName:  {{ include "numbers-app.fullname" . }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
