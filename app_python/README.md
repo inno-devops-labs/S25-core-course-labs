@@ -4,6 +4,16 @@
 ## Overview
 This Python web application displays the current time in Moscow using Flask.
 
+## New Features
+- Visit counter persistence between restarts
+- New endpoint `/visits` to show total visits
+- Data stored in `visits.txt` on host machine
+
+## Endpoints
+- `/` - Shows current Moscow time and total visits (increments counter)
+- `/visits` - Shows total visits without incrementing
+
+
 ## Local Installation
 1. Clone the repository:
    ```sh

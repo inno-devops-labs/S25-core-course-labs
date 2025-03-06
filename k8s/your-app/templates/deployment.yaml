@@ -56,10 +56,9 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+            - name: config-volume
+              mountPath: /app/config
           env:
             - name: DB_PASSWORD
               valueFrom:
@@ -67,11 +66,11 @@ spec:
                   name: db-user-pass
                   key: password
             {{- include "your-app.env" . | nindent 12 }}
-      {{- with .Values.volumes }}
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.nodeSelector }}
+        - name: config-volume
+          configMap:
+            name: emil-config
+      {{- with .Values.volumes }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
