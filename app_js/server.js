@@ -46,7 +46,7 @@ function setVisits (visits) {
 }
 
 function visitPage () {
-  let visits = getVisits()
+  const visits = getVisits()
   console.log('Visit:', visits)
   if (visits >= 0) {
     setVisits(visits + 1)
