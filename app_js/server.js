@@ -3,14 +3,14 @@ const dotenv = require('dotenv')
 const fetch = require('node-fetch')
 const path = require('path')
 const client = require('prom-client')
-const fs = require('fs');
+const fs = require('fs')
 
 dotenv.config()
 
 const app = express()
 const PORT = 3000
 
-const VISITS_FILE = path.join(__dirname, 'visits');
+const VISITS_FILE = path.join(__dirname, 'visits')
 
 const register = new client.Registry()
 client.collectDefaultMetrics({ register })
@@ -22,38 +22,37 @@ const httpRequestCounter = new client.Counter({
 })
 register.registerMetric(httpRequestCounter)
 
-
 function getVisits() {
   try {
-      if (!fs.existsSync(VISITS_FILE)) {
-          console.log(`File ${VISITS_FILE} doesn't exist, creating it with value 0`);
-          fs.writeFileSync(VISITS_FILE, '0', 'utf8');
-      }
+    if (!fs.existsSync(VISITS_FILE)) {
+      console.log(`File ${VISITS_FILE} doesn't exist, creating it with value 0`)
+      fs.writeFileSync(VISITS_FILE, '0', 'utf8')
+    }
 
-      const data = fs.readFileSync(VISITS_FILE, 'utf8');
-      return parseInt(data, 10);
+    const data = fs.readFileSync(VISITS_FILE, 'utf8')
+    return parseInt(data, 10)
   } catch (e) {
-      console.error("Error while getting visits:", e);
-      return -1;
+    console.error("Error while getting visits:", e)
+    return -1;
   }
 }
 
 function setVisits(visits) {
   try {
-      fs.writeFileSync(VISITS_FILE, visits.toString(), 'utf8');
+    fs.writeFileSync(VISITS_FILE, visits.toString(), 'utf8')
   } catch (e) {
-      console.error("Error while setting visits:", e);
+    console.error("Error while setting visits:", e)
   }
 }
 
 function visitPage() {
-  let visits = getVisits();
+  let visits = getVisits()
   console.log("Visit:", visits)
   if (visits >= 0) {
-      setVisits(visits + 1);
+    setVisits(visits + 1)
   } else {
-      console.log("Cannot get visits");
-      setVisits(visits);
+    console.log("Cannot get visits")
+    setVisits(visits)
   }
 }
 
@@ -109,18 +108,15 @@ app.get('/health', (req, res) => {
   res.status(200).send('OK')
 })
 
-
 app.get('/visits', (req, res) => {
   res.status(200).send(`Number of page visits: ${getVisits()}`)
 });
 
-
 // route to get home page
 app.get('/', (req, res) => {
-  visitPage();
+  visitPage()
   res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
-
 
 app.use(express.static(path.join(__dirname, 'public')))
 
