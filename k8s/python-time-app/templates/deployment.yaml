@@ -47,8 +47,10 @@ spec:
           - name: MY_PASS
             valueFrom:
               secretKeyRef:
-                name: app-secret
+                name: app-secret-1
                 key: MY_PASS
+          {{- include "python-time-app.environmentVars" . | nindent 10 }}
+
           ports:
             - name: http
               containerPort: 5000
@@ -62,11 +64,11 @@ spec:
           readinessProbe:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          */ -}}
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          */ -}}
           {{- with .Values.volumeMounts }}
           volumeMounts:
             {{- toYaml . | nindent 12 }}

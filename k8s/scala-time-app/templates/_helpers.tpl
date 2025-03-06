@@ -60,3 +60,13 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Environment variables
+*/}}
+{{- define "scala-time-app.environmentVars" -}}
+- name: AUTHOR
+  value: {{ .Values.environment.author | quote }}
+- name: COURSE
+  value: {{ .Values.environment.course | quote }}
+{{- end -}}
