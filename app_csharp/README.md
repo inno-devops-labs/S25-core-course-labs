@@ -14,6 +14,7 @@ A web application that displays the current time in **Moscow (MSK)** using ASP.N
 
 - Real-time Moscow time (UTC+3) using `DateTime` calculations.  
 - MVC architecture for clean separation of concerns.  
+- **/visits**: Displays the number of times the root endpoint has been accessed.
 
 ---
 

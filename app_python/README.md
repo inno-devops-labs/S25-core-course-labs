@@ -15,6 +15,7 @@ A simple web application that displays the current time in **Moscow (MSK)** usin
 - Real-time Moscow time (UTC+3) using `pytz`.  
 - PEP8-compliant code with clean structure.  
 - Interactive API documentation (Swagger UI and ReDoc).  
+- **/visits**: Displays the number of times the root endpoint has been accessed.
 
 ---
 
