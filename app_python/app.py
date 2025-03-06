@@ -1,6 +1,8 @@
 '''python web-app program'''
 import os
+import threading
 from datetime import datetime
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import HTMLResponse, PlainTextResponse
 from fastapi.templating import Jinja2Templates
@@ -9,7 +11,7 @@ import uvicorn
 import pytz
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
 # specify the folder with static files
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
@@ -30,18 +32,48 @@ async def metrics_middleware(request: Request, call_next):
     REQUEST_LATENCY.labels(method=request.method, path=request.url.path).observe(process_time.total_seconds())
     return response
 
+COUNTER_FILE = "visits"
+counter_lock = threading.Lock()
+persistent_counter = 0
+
+def load_counter():
+    global persistent_counter
+    try:
+        with open(COUNTER_FILE, "r") as f:
+            persistent_counter = int(f.read())
+    except Exception:
+        persistent_counter = 0
+
+def save_counter():
+    with open(COUNTER_FILE, "w") as f:
+        f.write(str(persistent_counter))
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    load_counter()
+    yield
+
 @REQUEST_LATENCY.time()
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
     '''Displaying Moscow time'''
     timezone = pytz.timezone('Europe/Moscow') # Selecting a time zone
     time = datetime.now(timezone).strftime("%d-%m-%Y %H:%M:%S")
-    return templates.TemplateResponse(request, "index.html", {"msc_time": time})
+    global persistent_counter
+    with counter_lock:
+        persistent_counter += 1
+        save_counter()
+    return templates.TemplateResponse("index.html", {"request": request, "msc_time": time})
 
 @app.get("/metrics")
 async def metrics():
     '''Endpoint Prometheus metrics'''
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+
+@app.get("/visits", response_class=PlainTextResponse)
+async def get_visits():
+    '''Number of visits'''
+    return f"Visits №{persistent_counter}"
 
 if __name__ == "__main__":
     # ip address and port to run the web application

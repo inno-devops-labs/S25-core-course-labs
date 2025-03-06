@@ -47,6 +47,9 @@ spec:
                 name: credentials
                 key: password
           {{- include "golang-web-app.env" . | nindent 10 }}
+          envFrom:
+          - configMapRef:
+              name: golang-web-app-config
           ports:
             - name: http
               containerPort: 8000

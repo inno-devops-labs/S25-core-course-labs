@@ -129,3 +129,27 @@ Settings for workflows:
 1.  Navigate to the repository settings: Settings → Secrets → Actions
 2.  Create two secrets: `DOCKER_USERNAME` - your Docker login, `DOCKER_PASSWORD` - your Docker login password and `SNYK_TOKEN` - your Snyk api token
 
+## Lab 12
+Updated the python web application to the requirement of 12 lab work and added an endpoint that counts the number of visits. 
+
+Also updated monitoring/docker-compose.yaml and added a volume to store a file with the number of visits to the site. 
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ curl 127.0.0.1:8000
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./static/css/main.css">
+    <title>Moscow</title>
+</head>
+<body>
+    <div class="time">
+        <h1 id='main_text'>MSC Time</h1>
+        <h1 id='msc-time'>03-03-2025 22:00:41</h1>
+    </div>
+</body>
+</html>
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ curl 127.0.0.1:8000/visits
+Visits №1
+```

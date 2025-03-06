@@ -47,6 +47,10 @@ spec:
                 name: credentials
                 key: password
           {{- include "web-apps.env" . | nindent 10 }}
+          envFrom:
+          - configMapRef:
+              name: web-apps-config
+          ports:
             - name: http
               containerPort: 8000
               protocol: TCP

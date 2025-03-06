@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ include "web-apps.fullname" . }}
   labels:
-    {{- include "mylibchart.labels" . | nindent 4 }}
+    {{- include "web-apps.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:

@@ -103,6 +103,8 @@ services:
       driver: "json-file"
       options:
         tag: "{{.ImageName}}|{{.Name}}"
+    volumes:
+      - ./visits:/app/visits
     healthcheck:
       test:
         [
@@ -126,6 +128,8 @@ services:
       driver: "json-file"
       options:
         tag: "{{.ImageName}}|{{.Name}}"
+    volumes:
+      - ./visits:/app/visits.txt
     healthcheck:
       test:
         [
