@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from datetime import datetime
 from prometheus_flask_exporter import PrometheusMetrics
 
+import os
 import pytz
 
 
@@ -15,6 +16,42 @@ TIMEZONE = "Europe/Moscow"
 
 HOST = '0.0.0.0'
 PORT = 5000
+
+VISITS_FILE = "visits"
+
+
+def get_visits():
+    try:
+        with open(VISITS_FILE, "r") as f:
+            data = f.read()
+            return int(data)
+    except Exception as e:
+        print("Error while getting visits: ", e)
+        return -1
+
+
+def set_visits(visits):
+    try:
+        with open(VISITS_FILE, "w") as f:
+            f.write(str(visits))
+    except Exception as e:
+        print("Error while setting visits: ", e)
+
+
+def visit_page():
+    if not os.path.isfile(VISITS_FILE):
+        print(f"File {VISITS_FILE} doesn't exist, creating it with value 0")
+        f = open(VISITS_FILE, "w")
+        f.write("0")
+        f.close()
+    
+
+    visits = get_visits()
+    if visits >= 0:
+        set_visits(visits + 1)
+    else:
+        print("Cannot get visits")
+        set_visits(visits)
 
 
 # function for returning date and time in the given timezone
@@ -36,6 +73,7 @@ def set_new_timezone(new_tz):
 @app.route('/')
 @metrics.counter('homepage_requests', 'Requests to homepage')
 def home():
+    visit_page()
     localized_time = get_current_time(TIMEZONE)
     if localized_time is None:
         return "Invalid given timezone", 400
@@ -48,6 +86,12 @@ def home():
 @app.route('/health')
 def health():
     return "OK", 200
+
+
+@app.route('/visits')
+def retrieve_visits():
+    page_content = f"Number of page visits: {get_visits()}"
+    return page_content, 200
 
 
 if __name__ == '__main__':

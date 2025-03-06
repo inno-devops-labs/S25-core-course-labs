@@ -2,7 +2,8 @@ import unittest
 import pytz
 import time
 
-from app_python.app import app, get_current_time, TIMEZONE, set_new_timezone
+from app_python.app import app, get_current_time, TIMEZONE, \
+    set_new_timezone, get_visits, set_visits
 from datetime import datetime
 
 
@@ -10,11 +11,22 @@ STATUS_OK = 200
 STATUS_FAILED = 400
 INVALID_TIMEZONE = "Unexists/notcity"
 
+# the number of .get('/') requests
+PAGE_VISITS = 4
+
 
 class Testing(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.client = app.test_client()
+
+    def test_get_visits(self):
+        visits = 10
+        set_visits(visits)
+        self.assertEqual(get_visits(), visits)
+        
+        set_visits(0)
+        self.assertEqual(get_visits(), 0)
 
     def test_valid_get_cur_t(self):
         # testing function that returns cur time with valid TZ
@@ -61,6 +73,19 @@ class Testing(unittest.TestCase):
         self.assertIn('timezone', response.text)
 
         set_new_timezone(TIMEZONE)
+
+    def test_healthcheck(self):
+        health = self.client.get('/health') # not visiting main page
+        self.assertEqual(health.status_code, STATUS_OK)
+
+    def test_visits(self):
+        visits_page = self.client.get('/visits')
+
+        self.assertEqual(visits_page.status_code, STATUS_OK)
+        page_data = visits_page.text
+        self.assertIn(str(PAGE_VISITS), page_data)
+
+        set_visits(0)
 
 
 if __name__ == '__main__':

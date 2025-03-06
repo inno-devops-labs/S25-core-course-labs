@@ -81,3 +81,10 @@ actions.
 
 ### Workflow Budge
 [![Python CI with Docker](https://github.com/Nickolaus-899/S25-core-course-labs/actions/workflows/py.yml/badge.svg)](https://github.com/Nickolaus-899/S25-core-course-labs/actions/workflows/py.yml)
+
+
+# Health check
+Application supports health checking with `/health` endpoint
+
+# Persistence (number of visits)
+Application counts number of visits to it and then returns it in the `/visits` endpoint
