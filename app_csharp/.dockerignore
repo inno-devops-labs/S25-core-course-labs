@@ -1,0 +1,7 @@
+**/.git
+**/bin
+**/obj
+**/.vs
+**/.env
+**/*.md
+Dockerfile
