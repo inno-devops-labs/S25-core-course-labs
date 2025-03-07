@@ -33,7 +33,18 @@ serviceAccount:
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-podAnnotations: {}
+podAnnotations:
+  vault.hashicorp.com/agent-inject: 'true'
+  vault.hashicorp.com/agent-inject-status: 'update'
+  vault.hashicorp.com/role: 'internal-app'
+  vault.hashicorp.com/agent-inject-secret-database-config.txt: 'internal/data/database/config'
+  vault.hashicorp.com/agent-inject-template-database-config.txt: |
+    {{- with secret "internal/data/database/config" -}}
+    Lab 11: Vault Agent Injector DB secret
+    The username is: {{ .Data.data.username }} and the Password is:{{ .Data.data.password }}
+    {{- end -}}
+
+
 # This is for setting Kubernetes Labels to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
@@ -121,3 +132,5 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+serviceAccountName: internal-app
