@@ -1,0 +1,29 @@
+# templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-demo
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-demo
+    spec:
+      containers:
+      - name: demo-container
+        image: nginx
+        env:
+        - name: LOGIN
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-secret
+              key: LOGIN
+        - name: PASS
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-secret
+              key: PASS
