@@ -47,6 +47,9 @@ spec:
                   name: credentials
                   key: password
               {{ include "common.env" . | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: pyapp-configmap
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

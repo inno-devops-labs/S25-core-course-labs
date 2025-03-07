@@ -4,4 +4,4 @@ metadata:
   name: pyapp-configmap
 data:
   config.json: |-
-  {{ .Files.Get "files/config.json" | nindent 4 }}
+  {{ .Files.Get .Values.configPath | nindent 4 }}

@@ -118,3 +118,5 @@ affinity: {}
 env:
   HELLO: world
   COURSE: devops
+
+configPath: "files/config.json"
