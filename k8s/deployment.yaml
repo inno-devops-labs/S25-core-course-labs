@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -12,6 +13,7 @@ spec:
       labels:
         app: app-python
     spec:
+      serviceAccountName: internal-app
       containers:
         - name: app-python
           image: mangocandle/app_python
