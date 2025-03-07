@@ -36,3 +36,55 @@ docker run -d -p 8000:8000 dsaee/lab2:v1.0
 2. Next, we run `linter` job which checks files using `flake8` checker, this step requires `test` job to finish successfully
 3. We run `snyk` job in order to identify and address vulnerabilities in my project. This job requires both `test` and `linter` jobs to finish successfully
 4. Finally we run `docker` job which do login, build and push steps. It's the very last step which requires all the previous steps to be done: `test`, `linter` and `snyk` successfully
+
+## Visits
+
+```bash
+$ curl http://localhost:8000/
+
+  <html>
+      <head>
+          <title>Текущее Московское время</title>
+      </head>
+      <body style="display: flex; justify-content: center; background: #222">
+          <div style="display: inline-flex; justify-content: center;">
+            <p style="font-size: 154px; color: #fbcb40; margin: 0;">
+              15:05
+            </p>
+            <p style="color: white; font-size: 72px; margin: 15px 0 0 0;">
+              53
+            </p>
+          </div>
+      </body>
+  </html>
+```
+
+```bash
+$ curl http://localhost:8000/visits
+"Total Visits: 1"
+```
+
+```bash
+$ curl http://localhost:8000/
+
+  <html>
+      <head>
+          <title>Текущее Московское время</title>
+      </head>
+      <body style="display: flex; justify-content: center; background: #222">
+          <div style="display: inline-flex; justify-content: center;">
+            <p style="font-size: 154px; color: #fbcb40; margin: 0;">
+              15:05
+            </p>
+            <p style="color: white; font-size: 72px; margin: 15px 0 0 0;">
+              53
+            </p>
+          </div>
+      </body>
+  </html>
+```
+
+```bash
+$ curl http://localhost:8000/visits
+"Total Visits: 2"
+```

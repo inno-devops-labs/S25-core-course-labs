@@ -98,6 +98,8 @@ readinessProbe:
     path: /
     port: http
 
+password: test
+
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
   enabled: false
@@ -107,17 +109,17 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+volumes:
+  - name: app-python-config
+    configMap:
+      name: app-python-config
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts:
+  - name: app-python-config
+    subPath: "config.json"
+    mountPath: "/app/data/config.json"
+    readOnly: true
 
 nodeSelector: {}
 

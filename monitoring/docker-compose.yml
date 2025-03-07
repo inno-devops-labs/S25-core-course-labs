@@ -16,6 +16,8 @@ services:
         max-file: "10"
         compress: 1
         tag: "{{.ImageName}}|{{.Name}}"
+    volumes:
+      - ./visits:/app
 
   loki:
     image: grafana/loki:latest
