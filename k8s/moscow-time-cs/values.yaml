@@ -11,7 +11,7 @@ image:
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: distroless
+  tag: latest
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -104,17 +104,17 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+volumes:
+  - name: config-volume
+    configMap:
+      name: cs-app-config
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts:
+  - name: config-volume
+    mountPath: "/data/config.json"
+    subPath: "config.json"
+    readOnly: true
 
 nodeSelector: {}
 
@@ -124,3 +124,6 @@ affinity: {}
 
 env:
   MY_VAR: salfetka
+
+config:
+  path: "files/config.json"
