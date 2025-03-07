@@ -1,0 +1,111 @@
+version: '3'
+
+services:
+  flask-app:
+    image: pr0ventu5/moscow-time-app
+    container_name: flask-app
+    ports:
+      - "5000:8080"
+    labels:
+      log_collect: "true"
+      app_logs: "true"
+    networks:
+      - logging-network
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 512M
+    cpus: '0.5'
+
+  alloy:
+    image: grafana/alloy:latest
+    volumes:
+      - ./alloy/config.alloy:/etc/alloy/config.alloy
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - logging-network
+    depends_on:
+      - loki
+    labels:
+      app_logs: "true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 512M
+    cpus: '0.5'
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - logging-network
+    labels:
+      app_logs: "true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 512M
+    cpus: '0.5'
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - logging-network
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - loki
+    labels:
+      app_logs: "true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 512M
+    cpus: '0.5'
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - logging-network
+    depends_on:
+      - flask-app
+      - alloy
+      - loki
+      - grafana
+    labels:
+      app_logs: "true"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    mem_limit: 512M
+    cpus: '0.5'
+
+networks:
+  logging-network:
+    driver: bridge
+
+volumes:
+  grafana-storage:

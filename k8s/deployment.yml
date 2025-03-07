@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: timeapp-deployment
+  labels:
+    app: timeapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: timeapp
+  template:
+    metadata:
+      labels:
+        app: timeapp
+    spec:
+      containers:
+      - name: timeapp
+        image: pr0ventu5/moscow-time-app
+        ports:
+        - containerPort: 8080
