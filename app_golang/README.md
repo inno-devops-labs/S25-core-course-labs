@@ -123,3 +123,14 @@ The project has github actions configured to automatically deploy the web-app ap
 Settings for workflows:
 1.  Navigate to the repository settings: Settings → Secrets → Actions
 2.  Create two secrets: `DOCKER_USERNAME` - your Docker login, `DOCKER_PASSWORD` - your Docker login password and `SNYK_TOKEN` - your Snyk api token
+
+
+## Lab 12 update
+![alt text](img/image.png)      
+сайт работает, теперь я обновлю его главную страницу несколько раз и зайду по энпдоинту /visits:
+
+![alt text](img/image-1.png)
+
+У нас так же создался файл visits.txt, который хранит в себе число посещений. 
+
+![alt text](img/image-2.png)
