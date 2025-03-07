@@ -16,6 +16,8 @@ spec:
       {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/agent-inject-secret-myapp: "secret/myapp"
       {{- end }}
       labels:
         {{- include "app-python.labels" . | nindent 8 }}
@@ -44,6 +46,12 @@ spec:
             - name: http
               containerPort: 4000
               protocol: TCP
+          env:
+            - name: MY_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: MY_PASS
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
