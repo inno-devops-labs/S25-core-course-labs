@@ -4,6 +4,11 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 WORKDIR /app
 
+# Create data directory with proper permissions
+RUN mkdir /data && \
+    chown -R appuser:appgroup /data && \
+    chmod 755 /data
+
 COPY requirements.txt .
 COPY app.py .
 COPY templates/ templates/

@@ -61,10 +61,13 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+            - name: config-volume
+              mountPath: /app/config.json
+              subPath: config.json
+            {{- if .Values.volumeMounts }}
+            {{- toYaml .Values.volumeMounts | nindent 12 }}
+            {{- end }}
           env:
             - name: APP_SECRET
               valueFrom:
@@ -76,9 +79,12 @@ spec:
                 secretKeyRef:
                   name: {{ include "python-app.fullname" . }}-secret
                   key: APP_ENV
-      {{- with .Values.volumes }}
       volumes:
-        {{- toYaml . | nindent 8 }}
+        - name: config-volume
+          configMap:
+            name: {{ include "python-app.fullname" . }}-config
+      {{- if .Values.volumes }}
+        {{- toYaml .Values.volumes | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

@@ -5,6 +5,7 @@ This is a simple Python web application built using the Flask framework. It disp
 ## Features
 - Displays Moscow Time accurately.
 - Local time updates every second using JavaScript.
+- Tracks and displays visit counts.
 - Lightweight and efficient, with minimal server-side logic.
 
 ## Installation
@@ -35,18 +36,27 @@ This is a simple Python web application built using the Flask framework. It disp
 
 2. Open your browser and visit:
    ```
-   http://127.0.0.1:5000/
+   http://127.0.0.1:5000/     # Main page with Moscow time
+   http://127.0.0.1:5000/visits  # View total visit count
    ```
+
+## API Endpoints
+
+- `/` - Main page displaying Moscow time
+- `/visits` - Returns JSON with total visit count
+- `/metrics` - Prometheus metrics endpoint
 
 ## File Structure
 - **app.py**: Main application file containing the Flask routes.
 - **templates/**: Contains the HTML templates for the application.
 - **static/**: Includes static assets like CSS and JavaScript files.
+- **/data/visits.txt**: Stores the visit counter (when running in Docker)
 
 ## How It Works
 - The server fetches Moscow Time using Python's `datetime` and `pytz` libraries.
 - The initial time is rendered into the HTML template.
 - JavaScript updates the time locally every second to ensure smooth performance.
+- Visit counts are persisted to a file and survive container restarts.
 
 ## Testing
 - Verified that the time is correct on page load.
@@ -114,8 +124,29 @@ This project uses GitHub Actions for CI/CD pipeline. The workflow includes:
    - Makes deployment available
 
 # Docker
-## How to build?
-In case you copied this repo and want to build your own docker image
+
+## Using Docker Compose (Recommended)
+The easiest way to run the application is using Docker Compose:
+
+1. Start the application:
+```bash
+docker-compose up
+```
+
+2. For rebuilding after changes:
+```bash
+docker-compose up --build
+```
+
+3. To stop the application:
+```bash
+docker-compose down
+```
+
+## Manual Docker Commands
+Alternatively, you can use Docker directly:
+
+### How to build?
 ```sh
    docker build -t your-user-name/app-name .
 ```
@@ -128,7 +159,22 @@ In case you just want to download ready docker image from docker-hub
 ## How to run?
 After you pulled the image or built it you can run it
 ```sh
-   docker run -p 5000:5000 forygg/moscow-never-sleeps:v1.0 
+   docker run -p 5000:5000 -v $(pwd)/data:/data forygg/moscow-never-sleeps:v1.0 
    ## replace with your image name if needed
 ```
-Now you will be able to access it in browser using http://localhost:5000
+
+## Application Screenshots
+
+### Main Page
+![Main Page](screenshots/main_page.png)
+Shows the current Moscow time and visit counter.
+
+### Visits Endpoint
+![Visits API](screenshots/visits_api.png)
+JSON response from the /visits endpoint showing total visits.
+
+### Data Persistence
+![Data Persistence](screenshots/data_persistence.png)
+The visits.txt file in the data directory showing persisted visit count.
+
+Note: The `-v $(pwd)/data:/data` flag creates a volume to persist the visit counter between container restarts.
