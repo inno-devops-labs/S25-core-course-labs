@@ -5,13 +5,14 @@
 ## Overview
 
 This is a simple python web application that shows current Moscow time.
+Also supports `/visits` endpoint returning `{"visits": N}` JSON.
 
 ## Installation and running
 
 - Clone this repository and go to the project directory:
 
 ```bash
-git clone https://github.com/mihdenis85/S25-core-course-labs.git -b lab1
+git clone https://github.com/mihdenis85/S25-core-course-labs.git
 cd S25-core-course-labs/app_python
 ```
 
@@ -28,6 +29,7 @@ pip install -r requirements.txt
 ```bash
 python -m gunicorn --bind 0.0.0.0:8080 app:app
 curl localhost:8080
+curl localhost:8080/visits
 ```
 
 ## Docker
@@ -36,7 +38,10 @@ curl localhost:8080
 
 ```bash
 cd S25-core-course-labs/app_python
-docker build --tag docker_username/app_python:v1.0 .
+docker build \
+   --tag $(whoami)/app_python:v1.1 \
+   --build-arg UID=10001 \
+   --build-arg GID=10001 .
 ```
 
 Instead of docker username, use your own one.
@@ -44,8 +49,8 @@ Instead of docker username, use your own one.
 ### Pull and Run
 
 ```bash
-docker pull mihdenis85/app_python:v1.0
-docker run -p 8080:8080 mihdenis85/app_python:v1.0
+docker pull mihdenis85/app_python:latest
+docker run -p 8080:8080 mihdenis85/app_python:latest
 ```
 
 ## Unit Tests

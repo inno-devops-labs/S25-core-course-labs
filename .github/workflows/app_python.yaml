@@ -78,6 +78,9 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
+          build-args: |
+            UID=10001
+            GID=10001
           tags: "${{ secrets.DOCKER_USERNAME }}/app_python:latest"
           context: "{{defaultContext}}:app_python"
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/app_python:latest

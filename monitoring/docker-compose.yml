@@ -22,10 +22,13 @@ services:
     image: mihdenis85/app_python:latest
     ports:
       - "8080:8080"
+    user: "10001:10001"
     networks:
       - loki
     logging: *default-logging
     deploy: *default-deploy
+    volumes:
+      - ./app-python-data:/app_python/app/data
     healthcheck:
       test: ["CMD-SHELL", "curl --fail http://localhost:8080 || exit 1"]
       interval: 10s
