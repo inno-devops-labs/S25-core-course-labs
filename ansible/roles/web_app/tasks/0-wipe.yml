@@ -1,0 +1,18 @@
+---
+- name: Wipe Web App Container and Related Files
+  block:
+    - name: Stop and remove the web app container
+      docker_container:
+        name: "{{ web_app_name }}"
+        state: absent
+
+    - name: Remove Docker image
+      docker_image:
+        name: "{{ docker_image }}"
+        tag: "{{ docker_image_tag }}"
+        state: absent
+
+    - name: Remove application data directory
+      file:
+        path: "{{ web_app_dir }}"
+        state: absent

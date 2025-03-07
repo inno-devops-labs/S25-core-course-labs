@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-python-deployment
+spec:
+  replicas: 3 
+  selector:
+    matchLabels:
+      app: app-python
+  template:
+    metadata:
+      labels:
+        app: app-python
+    spec:
+      serviceAccountName: app-python
+      containers:
+        - name: app-python
+          image: ilsiia/app-python:latest
+          ports:
+            - containerPort: 5000
+
