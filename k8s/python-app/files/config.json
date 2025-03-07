@@ -1,0 +1,13 @@
+{
+  "app_name": "python-app",
+  "version": "1.0.0",
+  "data_path": "/data",
+  "metrics": {
+    "enabled": true,
+    "port": 8000
+  },
+  "logging": {
+    "level": "INFO",
+    "format": "json"
+  }
+}

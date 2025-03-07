@@ -1,0 +1,18 @@
+---
+# Wipe configuration
+web_app_full_wipe: false
+
+# Docker image configuration
+web_app_image: "forygg/moscow-never-sleeps:latest"
+web_app_container_name: "moscow-time-app"
+
+# Application configuration
+web_app_port: 5000
+web_app_host_port: 80  # The port on the host machine
+
+# Container configuration
+web_app_restart_policy: "unless-stopped"
+
+# Resource limits (optional)
+web_app_memory: "256m"
+web_app_cpus: "0.5"
