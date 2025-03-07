@@ -99,13 +99,15 @@ services:
       resources: *default-resources
   
   app:
-    image: ilsiia/app_python:latest
+    image: ilsiia/app-python:latest
     container_name: app_python_1
     ports:
       - "5001:5000"
     networks:
       - monitoring
     restart: always
+    volumes:
+      - ./app-python-data:/app_python/data
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000"]
       interval: 10s
@@ -123,6 +125,8 @@ services:
     networks:
       - monitoring
     restart: always
+    volumes:
+      - ./app-nodejs-data:/nodejs/data
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3001"]
       interval: 10s

@@ -12,6 +12,8 @@ RUN npm install --only=production
 
 COPY --chown=nonrootuser:nonrootuser public/ ./public/
 
+RUN mkdir -p ./data
+
 EXPOSE 3000
 
 CMD ["node", "app.js"]

@@ -12,6 +12,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY --chown=app_python_user:app_python_user templates/ ./templates/
 
+RUN mkdir -p ./data
+
 EXPOSE 5000
 
 CMD ["python3", "app.py"]

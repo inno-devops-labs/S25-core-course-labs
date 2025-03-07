@@ -40,6 +40,9 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: app-config-nodejs
           env:
             {{ include "common.env" . | nindent 12 }}
           ports:

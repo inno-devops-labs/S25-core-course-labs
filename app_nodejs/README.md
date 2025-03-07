@@ -4,7 +4,7 @@
 
 ## Overview
 
-This web application displays the current time in Abu Dabi. It is built using Node.js and Express, with a client-side HTML page that dynamically fetches the time.
+This web application displays the current time in Abu Dabi. It is built using Node.js and Express, with a client-side HTML page that dynamically fetches the time. Also in the latest image `/visits` subdirectory is introduced, which shows the number of times the app is accessed.
 
 ## Installation
 

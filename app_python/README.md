@@ -4,7 +4,7 @@
 
 ## Overview
 
-This web application displays the current time in Moscow. The app is written in Python and built using Flask .
+This web application displays the current time in Moscow. The app is written in Python and built using Flask. Also in the latest image `/visits` subdirectory is introduced, which shows the number of times the app is accessed.
 
 ## Installation
 
