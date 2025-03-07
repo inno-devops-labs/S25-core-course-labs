@@ -121,6 +121,9 @@ volumeMounts:
     mountPath: "/app/data/config.json"
     readOnly: true
 
+env:
+  ENVIRONMENT: prod
+
 nodeSelector: {}
 
 tolerations: []
