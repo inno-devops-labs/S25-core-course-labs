@@ -10,6 +10,8 @@ metrics = PrometheusMetrics(app)
 
 VISITS_FILE = "visits"
 
+def some_function(x):
+    return x * x
 
 def get_visits():
     if not os.path.exists(VISITS_FILE):
