@@ -1,0 +1,19 @@
+replicaCount: 3
+
+image:
+  repository: pr0ventu5/moscow-time-app
+  tag: latest
+
+appName: "timeapp"
+
+service:
+  type: ClusterIP
+  port: 8080
+
+hooks:
+  preInstall:
+    image: alpine
+    command: ["/bin/sh", "-c", "sleep 20"]
+  postInstall:
+    image: alpine
+    command: ["/bin/sh", "-c", "sleep 20"]

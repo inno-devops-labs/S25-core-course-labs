@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Release.Name }}-post-install
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "5"
+    "helm.sh/hook-delete-policy": before-creation
+spec:
+  containers:
+  - name: post-install
+    image: {{ .Values.hooks.postInstall.image }}
+    command: {{ toYaml .Values.hooks.postInstall.command | nindent 6 }}
+  restartPolicy: Never
