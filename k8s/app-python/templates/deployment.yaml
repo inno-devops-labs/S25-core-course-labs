@@ -56,12 +56,11 @@ spec:
                 secretKeyRef:
                   name: my-helm-secret
                   key: password
-            # Injecting Vault secret environment variables
             - name: MY_VAULT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: my-secret
-                  key: myapp-secret-key  # Replace with the actual key in your Vault secret
+                  key: myapp-secret-key
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
@@ -78,10 +77,17 @@ spec:
             - name: vault-secrets
               mountPath: /vault/secrets
               readOnly: true
+            - name: visits-storage
+              mountPath: /app_python/data  
+
       volumes:
         - name: vault-secrets
           secret:
-            secretName: my-secret  # Replace with your Vault secret name
+            secretName: my-secret
+        - name: visits-storage
+          persistentVolumeClaim:
+            claimName: visits-pvc  
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

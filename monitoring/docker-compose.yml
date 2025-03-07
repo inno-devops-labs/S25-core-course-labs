@@ -1,6 +1,13 @@
 version: '3.8'
 
 services:
+  app:
+    image: vika123vika/app-python
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../app-python/data:/app/data
+
   grafana:
     image: grafana/grafana:latest
     ports:

@@ -77,3 +77,18 @@ This project uses GitHub Actions for automated testing and Docker deployment.
 
 The workflow runs automatically on every `push` and `pull request`.
 
+# Flask App with Visit Counter
+
+## Features
+- Displays the current Moscow time on the home page (`/`).
+- Implements a visit counter that tracks how many times the homepage has been accessed.
+- Saves the visit count in a `visits` file for persistence.
+- Exposes a `/visits` endpoint to display the recorded number of visits.
+
+## How to Run
+```sh
+docker-compose up --build
+```
+- Open http://localhost:5000/ to view the Moscow time.
+- Refresh the page multiple times.
+- Check http://localhost:5000/visits to see the visit count.
