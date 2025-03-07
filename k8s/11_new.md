@@ -1,0 +1,508 @@
+# Lab 11: Kubernetes Secrets and Hashicorp Vault | Mametov Eldar
+
+Below you will see all the steps I followed to successfully complete the main and bonus assignment. 
+
+## Task 1: Kubernetes Secrets and Resource Management
+I followed the guide listed in the labaratorium and created secrets from it. 
+
+### Task 1.2
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ kubectl create secret generic my-secret --from-literal=login=admin --from-literal=password='example-password'
+secret/my-secret created
+```
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ kubectl get secrets
+NAME                                       TYPE                 DATA   AGE
+my-secret                                  Opaque               2      35s
+sh.helm.release.v1.helm-hooks-release.v1   helm.sh/release.v1   1      6d5h
+```
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ kubectl get secret my-secret -o yaml
+apiVersion: v1
+data:
+  login: YWRtaW4=
+  password: ZXhhbXBsZS1wYXNzd29yZA==
+kind: Secret
+metadata:
+  creationTimestamp: "2025-03-02T16:39:01Z"
+  name: my-secret
+  namespace: default
+  resourceVersion: "35403"
+  uid: 0294a119-d19a-4255-ac4c-a1f7e1c4899a
+type: Opaque
+```
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ kubectl get secret my-secret -o jsonpath='{.data.password}' | base64 --decode
+example-password
+
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ kubectl get secret my-secret -o jsonpath='{.data.login}' | base64 --decode
+admin
+```
+
+### Task 1.3
+Installed helm secrets.
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ helm plugin install https://github.com/zendesk/helm-secrets
+
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ helm secrets help
+GnuPG secrets encryption in Helm Charts
+
+This plugin provides ability to encrypt/decrypt secrets files
+to store in less secure places, before they are installed using
+Helm.
+
+To decrypt/encrypt/edit you need to initialize/first encrypt secrets with
+sops - https://github.com/mozilla/sops
+
+Available Commands:
+  enc           Encrypt secrets file
+  dec           Decrypt secrets file
+  view          Print secrets decrypted
+  edit          Edit secrets file and encrypt afterwards
+  clean         Remove all decrypted files in specified directory (recursively)
+  install       wrapper that decrypts secrets[.*].yaml files before running helm install
+  template      wrapper that decrypts secrets[.*].yaml files before running helm template
+  upgrade       wrapper that decrypts secrets[.*].yaml files before running helm upgrade
+  lint          wrapper that decrypts secrets[.*].yaml files before running helm lint
+  diff          wrapper that decrypts secrets[.*].yaml files before running helm diff
+                  (diff is a helm plugin)
+```
+
+Let's create a gpg key pair as in the tutorial:
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ gpg --gen-key
+gpg (GnuPG) 2.2.27; Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+gpg: directory '/home/lekski/.gnupg' created
+gpg: keybox '/home/lekski/.gnupg/pubring.kbx' created
+Note: Use "gpg --full-generate-key" for a full featured key generation dialog.
+
+GnuPG needs to construct a user ID to identify your key.
+
+Real name: Eldar
+Email address: e.mametov@innopolis.university
+You selected this USER-ID:
+    "Eldar <e.mametov@innopolis.university>"
+
+Change (N)ame, (E)mail, or (O)kay/(Q)uit? O
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+gpg: /home/lekski/.gnupg/trustdb.gpg: trustdb created
+gpg: key 79C3D0634394C00C marked as ultimately trusted
+gpg: directory '/home/lekski/.gnupg/openpgp-revocs.d' created
+gpg: revocation certificate stored as '/home/lekski/.gnupg/openpgp-revocs.d/CA98B4508B4127DBE3DDAD0B79C3D0634394C00C.rev'
+public and secret key created and signed.
+
+pub   rsa3072 2025-03-03 [SC] [expires: 2027-03-03]
+      CA98B4508B4127DBE3DDAD0B79C3D0634394C00C
+uid                      Eldar <e.mametov@innopolis.university>
+sub   rsa3072 2025-03-03 [E] [expires: 2027-03-03]
+```
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs$ gpg --list-keys
+gpg: checking the trustdb
+gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
+gpg: next trustdb check due at 2027-03-03
+/home/lekski/.gnupg/pubring.kbx
+-------------------------------
+pub   rsa3072 2025-03-03 [SC] [expires: 2027-03-03]
+      CA98B4508B4127DBE3DDAD0B79C3D0634394C00C
+uid           [ultimate] Eldar <e.mametov@innopolis.university>
+sub   rsa3072 2025-03-03 [E] [expires: 2027-03-03]
+```
+
+Now we need to create secrets.yaml using sops.
+Before that we installed sops: 
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ wget https://github.com/mozilla/sops/releases/download/v3.7.3/sops-v3.7.3.linux
+--2025-03-03 11:43:07--  https://github.com/mozilla/sops/releases/download/v3.7.3/sops-v3.7.3.linux
+Resolving github.com (github.com)... 140.82.121.3
+Connecting to github.com (github.com)|140.82.121.3|:443... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://github.com/getsops/sops/releases/download/v3.7.3/sops-v3.7.3.linux [following]
+--2025-03-03 11:43:08--  https://github.com/getsops/sops/releases/download/v3.7.3/sops-v3.7.3.linux
+Reusing existing connection to github.com:443.
+HTTP request sent, awaiting response... 302 Found
+Location: https://objects.githubusercontent.com/github-production-release-asset-2e65be/40684033/86f60c95-1704-4407-926c-b80b290cc6c0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=releaseassetproduction%2F20250303%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250303T084308Z&X-Amz-Expires=300&X-Amz-Signature=d466c03f60fde5a1b59f2ebebcb3a4f17dd41194caafc25b9398d2019145bd88&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dsops-v3.7.3.linux&response-content-type=application%2Foctet-stream [following]
+--2025-03-03 11:43:08--  https://objects.githubusercontent.com/github-production-release-asset-2e65be/40684033/86f60c95-1704-4407-926c-b80b290cc6c0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=releaseassetproduction%2F20250303%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250303T084308Z&X-Amz-Expires=300&X-Amz-Signature=d466c03f60fde5a1b59f2ebebcb3a4f17dd41194caafc25b9398d2019145bd88&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3Dsops-v3.7.3.linux&response-content-type=application%2Foctet-stream
+Resolving objects.githubusercontent.com (objects.githubusercontent.com)... 185.199.109.133, 185.199.110.133, 185.199.111.133, ...
+Connecting to objects.githubusercontent.com (objects.githubusercontent.com)|185.199.109.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 29052413 (28M) [application/octet-stream]
+Saving to: ‘sops-v3.7.3.linux’
+
+sops-v3.7.3.linux                                   100%[=================================================================================================================>]  27.71M  1.69MB/s    in 17s     
+
+2025-03-03 11:43:26 (1.59 MB/s) - ‘sops-v3.7.3.linux’ saved [29052413/29052413]
+
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ sudo mv sops-v3.7.3.linux /usr/local/bin/sops
+[sudo] password for lekski: 
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ sudo chmod +x /usr/local/bin/sops
+```
+
+I created a secret with the key value `password: eldarlek`. 
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ sops -p CA98B4508B4127DBE3DDAD0B79C3D0634394C00C secrets.yaml
+[PGP]    WARN[0000] Deprecation Warning: GPG key fetching from a keyserver within sops will be removed in a future version of sops. See https://github.com/mozilla/sops/issues/727 for more information. 
+
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ helm secrets view secrets.yaml
+password: eldarlek
+```
+
+Then we made secrets.yaml in templates/ of our projects, and also updated deployment.yaml to connect the secrets. Now we will deploy the secrets: 
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ helm secrets install secret-web-apps web-apps/ -n default -f secrets.yaml
+NAME: secret-web-apps
+LAST DEPLOYED: Mon Mar  3 12:14:43 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get the application URL by running these commands:
+  http://python-web-app.local/
+removed 'secrets.yaml.dec'
+```
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ helm secrets install secret-golang-web-app golang-web-app/ -n default -f secrets.yaml
+NAME: secret-golang-web-app
+LAST DEPLOYED: Mon Mar  3 12:18:03 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get the application URL by running these commands:
+  http://golang-web-app.local/
+removed 'secrets.yaml.dec'
+```
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl get po
+NAME                                     READY   STATUS      RESTARTS   AGE
+postinstall-hook                         0/1     Completed   0          4m13s
+preinstall-hook                          0/1     Completed   0          4m39s
+secret-golang-web-app-69fd74bd97-b8mxx   1/1     Running     0          80s
+secret-web-apps-5dd664d65-nqwr8          1/1     Running     0          4m14s
+web-apps-b6b4bb55d-nwqj7                 1/1     Running     0          10m
+```
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl exec secret-golang-web-app-69fd74bd97-b8mxx -- env | grep MY_PASSWORD
+MY_PASSWORD=eldarlek
+```
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl exec secret-web-apps-5dd664d65-nqwr8 -- env | grep MY_PASSWORD        
+MY_PASSWORD=eldarlek
+```
+
+## Task 2: Vault Secret Management System
+To complete this assignment I also followed the guide that is provided in the assignment, there all the steps are well laid out and explained. 
+
+### Task 2.1
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ helm repo add hashicorp https://helm.releases.hashicorp.com
+"hashicorp" has been added to your repositories
+```
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ helm repo update
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "hashicorp" chart repository
+Update Complete. ⎈Happy Helming!⎈
+```
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ helm install vault hashicorp/vault --set "server.dev.enabled=true"
+NAME: vault
+LAST DEPLOYED: Mon Mar  3 12:37:23 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+Thank you for installing HashiCorp Vault!
+
+Now that you have deployed Vault, you should look over the docs on using
+Vault with Kubernetes available here:
+
+https://developer.hashicorp.com/vault/docs
+
+
+Your release is named vault. To learn more about the release, try:
+
+  $ helm status vault
+  $ helm get manifest vault
+```
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl get pods
+NAME                                     READY   STATUS              RESTARTS   AGE
+postinstall-hook                         0/1     Completed           0          23m
+preinstall-hook                          0/1     Completed           0          24m
+secret-golang-web-app-69fd74bd97-b8mxx   1/1     Running             0          20m
+secret-web-apps-5dd664d65-nqwr8          1/1     Running             0          23m
+vault-0                                  0/1     ContainerCreating   0          84s
+vault-agent-injector-66f45b5fd5-t9x62    1/1     Running             0          85s
+web-apps-b6b4bb55d-nwqj7                 1/1     Running             0          30m
+```
+
+### Task 2.2 and 2.3
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl exec -it vault-0 -- /bin/sh
+/ $ vault secrets enable -path=internal kv-v2
+Success! Enabled the kv-v2 secrets engine at: internal/
+/ $ vault kv put internal/database/config username="db-readonly-username" password="db-secret-password"
+======== Secret Path ========
+internal/data/database/config
+
+======= Metadata =======
+Key                Value
+---                -----
+created_time       2025-03-03T09:54:24.672182786Z
+custom_metadata    <nil>
+deletion_time      n/a
+destroyed          false
+version            1
+/ $ vault kv get internal/database/config
+======== Secret Path ========
+internal/data/database/config
+
+======= Metadata =======
+Key                Value
+---                -----
+created_time       2025-03-03T09:54:24.672182786Z
+custom_metadata    <nil>
+deletion_time      n/a
+destroyed          false
+version            1
+
+====== Data ======
+Key         Value
+---         -----
+password    db-secret-password
+username    db-readonly-username
+/ $ exit
+```
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl exec -it vault-0 -- /bin/sh
+/ $ vault auth enable kubernetes
+Success! Enabled kubernetes auth method at: kubernetes/
+/ $ vault write auth/kubernetes/config \
+>       kubernetes_host="https://$KUBERNETES_PORT_443_TCP_ADDR:443"
+Success! Data written to: auth/kubernetes/config
+/ $ vault policy write internal-app - <<EOF
+> path "internal/data/database/config" {
+>    capabilities = ["read"]
+> }
+> EOF
+Success! Uploaded policy: internal-app # here I accidentally entered an example from the guide site, it is not used hereafter 
+/ $ vault policy write web-apps - <<EOF
+> path "internal/data/database/config" {
+>    capabilities = ["read"]
+> }
+> EOF
+Success! Uploaded policy: web-apps
+/ $ vault policy write golang-web-app - <<EOF
+> path "internal/data/database/config" {
+>    capabilities = ["read"]
+> }
+> EOF
+Success! Uploaded policy: golang-web-app
+/ $ vault write auth/kubernetes/role/web-apps \
+>       bound_service_account_names=web-apps \
+>       bound_service_account_namespaces=default \
+>       policies=web-apps \
+>       ttl=24h
+Success! Data written to: auth/kubernetes/role/web-apps
+/ $ vault write auth/kubernetes/role/golang-web-app \
+>       bound_service_account_names=golang-web-app \
+>       bound_service_account_namespaces=default \
+>       policies=golang-web-app \
+>       ttl=24h
+Success! Data written to: auth/kubernetes/role/golang-web-app
+/ $ exit
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl get serviceaccounts
+NAME                          SECRETS   AGE
+default                       0         7d17h
+helm-hooks-release-web-apps   0         6d22h
+secret-golang-web-app         0         44m
+secret-web-apps               0         47m
+vault                         0         25m
+vault-agent-injector          0         25m
+web-apps                      0         53m
+```
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ helm uninstall secret-web-apps secret-golang-web-app
+release "secret-web-apps" uninstalled
+release "secret-golang-web-app" uninstalled
+```
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ helm secrets install web-apps web-apps/ -n default -f secrets.yaml     
+NAME: web-apps
+LAST DEPLOYED: Mon Mar  3 13:22:36 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get the application URL by running these commands:
+  http://python-web-app.local/
+removed 'secrets.yaml.dec'
+
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ helm secrets install golang-web-app golang-web-app/ -n default -f secrets.yaml
+NAME: golang-web-app
+LAST DEPLOYED: Mon Mar  3 13:25:04 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get the application URL by running these commands:
+  http://golang-web-app.local/
+removed 'secrets.yaml.dec'
+```
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl get po
+NAME                                    READY   STATUS      RESTARTS   AGE
+golang-web-app-6c76477d69-472mw         2/2     Running     0          8s
+postinstall-hook                        0/1     Completed   0          3m13s
+preinstall-hook                         0/1     Completed   0          3m38s
+vault-0                                 1/1     Running     0          58m
+vault-agent-injector-66f45b5fd5-t9x62   1/1     Running     0          58m
+web-apps-998f9d6b7-rqpzf                2/2     Running     0          3m14s
+```
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl exec -it web-apps-998f9d6b7-rqpzf -- /bin/sh
+Defaulted container "web-apps" out of: web-apps, vault-agent, vault-agent-init (init)
+/app_python $ 
+/app_python $ cat /vault/secrets/database-config.txt
+postgresql://db-readonly-username:db-secret-password@postgres:5432/wizard/app_python $ kubectl exec -it app-python-6575f74bc9-6v7f5 -- /bin/sh
+/bin/sh: kubectl: not found
+/app_python $ df -h
+Filesystem                Size      Used Available Use% Mounted on
+overlay                1006.9G     11.0G    944.7G   1% /
+tmpfs                    64.0M         0     64.0M   0% /dev
+tmpfs                     1.7G         0      1.7G   0% /sys/fs/cgroup
+shm                      64.0M         0     64.0M   0% /dev/shm
+/dev/sdc               1006.9G     11.0G    944.7G   1% /dev/termination-log
+tmpfs                     3.4G      4.0K      3.4G   0% /vault/secrets
+/dev/sdc               1006.9G     11.0G    944.7G   1% /etc/resolv.conf
+/dev/sdc               1006.9G     11.0G    944.7G   1% /etc/hostname
+/dev/sdc               1006.9G     11.0G    944.7G   1% /etc/hosts
+tmpfs                     3.4G     12.0K      3.4G   0% /run/secrets/kubernetes.io/serviceaccount
+tmpfs                     1.7G         0      1.7G   0% /proc/acpi
+tmpfs                    64.0M         0     64.0M   0% /proc/kcore
+tmpfs                    64.0M         0     64.0M   0% /proc/keys
+tmpfs                    64.0M         0     64.0M   0% /proc/timer_list
+tmpfs                     1.7G         0      1.7G   0% /sys/firmware
+/app_python $
+```
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl exec -it golang-web-app-6c76477d69-472mw -- /bin/sh
+Defaulted container "golang-web-app" out of: golang-web-app, vault-agent, vault-agent-init (init)
+/app_go $ df -h
+Filesystem                Size      Used Available Use% Mounted on
+overlay                1006.9G     11.0G    944.7G   1% /
+tmpfs                    64.0M         0     64.0M   0% /dev
+tmpfs                     1.7G         0      1.7G   0% /sys/fs/cgroup
+shm                      64.0M         0     64.0M   0% /dev/shm
+/dev/sdc               1006.9G     11.0G    944.7G   1% /dev/termination-log
+tmpfs                     3.4G      4.0K      3.4G   0% /vault/secrets
+/dev/sdc               1006.9G     11.0G    944.7G   1% /etc/resolv.conf
+/dev/sdc               1006.9G     11.0G    944.7G   1% /etc/hostname
+/dev/sdc               1006.9G     11.0G    944.7G   1% /etc/hosts
+tmpfs                     3.4G     12.0K      3.4G   0% /run/secrets/kubernetes.io/serviceaccount
+tmpfs                     1.7G         0      1.7G   0% /proc/acpi
+tmpfs                    64.0M         0     64.0M   0% /proc/kcore
+tmpfs                    64.0M         0     64.0M   0% /proc/keys
+tmpfs                    64.0M         0     64.0M   0% /proc/timer_list
+tmpfs                     1.7G         0      1.7G   0% /sys/firmware
+/app_go $ cat /vault/secrets/database-config.txt
+postgresql://db-readonly-username:db-secret-password@postgres:5432/wizard/app_go $ exit
+```
+
+## Bonus Task 
+I made all the changes related to resource limit for kubernetes and added env and updated charts.
+
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ helm upgrade --install golang-web-app ./golang-web-app -n default
+Release "golang-web-app" has been upgraded. Happy Helming!
+NAME: golang-web-app
+LAST DEPLOYED: Mon Mar  3 15:38:28 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 2
+NOTES:
+1. Get the application URL by running these commands:
+  http://golang-web-app.local/
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ helm upgrade --install web-apps ./web-apps -n default
+Release "web-apps" has been upgraded. Happy Helming!
+NAME: web-apps
+LAST DEPLOYED: Mon Mar  3 15:38:39 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 2
+NOTES:
+1. Get the application URL by running these commands:
+  http://python-web-app.local/
+```
+
+Successful completion of env: 
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl exec golang-web-app-7bd8f89588-mx5hs -- env | grep STUDENT
+Defaulted container "golang-web-app" out of: golang-web-app, vault-agent, vault-agent-init (init)
+STUDENT=Eldar Mametov
+```
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl exec web-apps-7b9754b9c4-rlbbs -- env | grep STUDENT
+Defaulted container "web-apps" out of: web-apps, vault-agent, vault-agent-init (init)
+STUDENT=Eldar Mametov
+```
+
+Successful completion of a task with resources: 
+
+```
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl describe deployments.apps web-apps | grep -A 10 Containers
+  Containers:
+   web-apps:
+    Image:      lekski/python-web-app:latest
+    Port:       8000/TCP
+    Host Port:  0/TCP
+    Limits:
+      cpu:     100m
+      memory:  128Mi
+    Requests:
+      cpu:      100m
+      memory:   128Mi
+lekski@LAPTOP-EA8M0FT5:/mnt/c/Users/Honor/Desktop/S25-core-course-labs/k8s$ kubectl describe deployments.apps golang-web-app | grep -A 10 Containers      
+  Containers:
+   golang-web-app:
+    Image:      lekski/golang-web-app:latest
+    Port:       8000/TCP
+    Host Port:  0/TCP
+    Limits:
+      cpu:     100m
+      memory:  128Mi
+    Requests:
+      cpu:      100m
+      memory:   128Mi
+```
