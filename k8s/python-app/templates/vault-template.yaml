@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "python-app.fullname" . }}-vault-template
+data:
+  config.tmpl: |
+    {{ printf "{{- with secret \"secret/data/python-app/config\" -}}" }}
+    export APP_SECRET={{ printf "{{ .Data.data.app_secret }}" }}
+    export APP_ENV={{ printf "{{ .Data.data.app_env }}" }}
+    {{ printf "{{- end -}}" }} 

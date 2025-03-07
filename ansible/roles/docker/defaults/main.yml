@@ -1,0 +1,24 @@
+---
+# Force Ubuntu distribution for Docker repository
+docker_ubuntu_release: "ubuntu"
+docker_ubuntu_version: "jammy"
+
+# Docker version configuration
+docker_version: "latest"
+docker_compose_version: "v2.24.5"
+
+# Docker daemon configuration
+docker_daemon_options: {}
+
+# User configuration
+docker_users: []
+
+# System configuration
+docker_apt_repository: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/{{ docker_ubuntu_release }} {{ docker_ubuntu_version }} stable"
+docker_apt_gpg_key: "https://download.docker.com/linux/{{ docker_ubuntu_release }}/gpg"
+
+# Required packages for Ubuntu - minimized to essential ones
+docker_required_packages:
+  - ca-certificates
+  - curl
+  - gnupg
