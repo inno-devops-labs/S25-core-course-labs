@@ -1,0 +1,5 @@
+- name: Install and Configure Docker, Run the Web App
+  hosts: all
+  become: true
+  roles:
+    - web_app
