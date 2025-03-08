@@ -4,7 +4,7 @@ from prometheus_flask_exporter import PrometheusMetrics
 import pytz
 import os
 
-PATH_VISITS = '/data/visits.txt'
+PATH_VISITS = 'visits.txt'
 
 app = Flask(__name__)
 metrics = PrometheusMetrics(app)

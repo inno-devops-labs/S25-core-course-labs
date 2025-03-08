@@ -164,7 +164,7 @@ services:
       - monitoring
     volumes:
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - ./data:/data
+      - ./visits.txt:/visits.txt
     logging:
       driver: "json-file"
       options:
