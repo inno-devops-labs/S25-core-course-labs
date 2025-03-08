@@ -24,8 +24,9 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "python-app.serviceAccountName" . }}
-      {{- with .Values.podSecurityContext }}
+      serviceAccountName: internal-app
+      # serviceAccountName: {{ include "python-app.serviceAccountName" . }}
+      # {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -49,14 +50,31 @@ spec:
           readinessProbe:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.resources }}
           resources:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+            requests:
+              cpu: "{{ .Values.env.cpuRequest }}"
+              memory: "{{ .Values.env.memoryRequest }}"
+            limits:
+              cpu: "{{ .Values.env.cpuLimit }}"
+              memory: "{{ .Values.env.memoryLimit }}"
           {{- with .Values.volumeMounts }}
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          env:
+            - name: CPU_REQUEST
+              value: "{{ .Values.env.cpuRequest }}"
+            - name: CPU_LIMIT
+              value: "{{ .Values.env.cpuLimit }}"
+            - name: MEMORY_REQUEST
+              value: "{{ .Values.env.memoryRequest }}"
+            - name: MEMORY_LIMIT
+              value: "{{ .Values.env.memoryLimit }}"
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-secrets
+                  key: SECRET
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}

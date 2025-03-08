@@ -60,3 +60,13 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "python-app.resources" -}}
+resources:
+  requests:
+    memory: "{{ .Values.resources.requests.memory }}"
+    cpu: "{{ .Values.resources.requests.cpu }}"
+  limits:
+    memory: "{{ .Values.resources.limits.memory }}"
+    cpu: "{{ .Values.resources.limits.cpu }}"
+{{- end }}
