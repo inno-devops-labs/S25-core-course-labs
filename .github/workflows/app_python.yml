@@ -42,7 +42,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Create /data directory
-        run: mkdir -p /data && chmod 777 /data
+        run: mkdir -p /data && sudo chmod 777 /data
 
       - name: Test with pytest
         run: |
