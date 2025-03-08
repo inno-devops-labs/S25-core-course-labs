@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-flutter-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-flutter
+  template:
+    metadata:
+      labels:
+        app: app-flutter
+    spec:
+      containers:
+      - name: app-flutter
+        image: paranid5/app_flutter:latest
+        ports:
+        - containerPort: 80

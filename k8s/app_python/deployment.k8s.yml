@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-piton
+  labels:
+    app: app-piton
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-piton
+  template:
+    metadata:
+      labels:
+        app: app-piton
+    spec:
+      serviceAccountName: internal-app
+      containers:
+      - name: app-piton
+        image: paranid5/app_piton:latest
+        ports:
+        - containerPort: 8080

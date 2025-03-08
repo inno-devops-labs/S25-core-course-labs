@@ -1,0 +1,181 @@
+networks:
+  monitoring:
+    driver: bridge
+
+volumes:
+  loki-data: {}
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus-config.yml:/etc/prometheus/prometheus.yml
+    restart: unless-stopped
+    command: --config.file=/etc/prometheus/prometheus.yml
+    networks:
+      - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+    depends_on:
+      loki:
+        condition: service_started
+      app_piton:
+        condition: service_started
+    healthcheck:
+      test: [ "CMD", "pgrep", "prometheus" ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - loki-data:/loki
+    networks:
+      - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "2"
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+    healthcheck:
+      test: [ "CMD", "pgrep", "loki" ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/log:/var/log
+      - ./promtail-config.yml:/etc/promtail/config.yaml
+    command: -config.file=/etc/promtail/config.yaml
+    restart: unless-stopped
+    networks:
+      - monitoring
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+    healthcheck:
+      disable: true
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_FEATURE_TOGGLES_ENABLE=alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode
+    restart: unless-stopped
+    networks:
+    - monitoring
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 0
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy 
+          orgId: 0
+          url: http://loki:3100
+          basicAuth: false
+          isDefault: true
+          version: 0
+          editable: false
+        EOF
+        /run.sh
+    depends_on:
+      loki:
+        condition: service_started
+      promtail:
+        condition: service_started
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://0.0.0.0:3000/login" ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+
+  app_flutter:
+    image: paranid5/app_flutter:latest 
+    ports:
+      - "8081:80"
+    networks:
+      - monitoring
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    healthcheck:
+      test: "curl http://localhost/ || exit 1"
+      timeout: 30s
+      retries: 5
+      start_period: 10s
+
+  app_piton:
+    image: paranid5/app_piton:latest 
+    ports:
+      - "8082:8080"
+    networks:
+      - monitoring
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./visits.txt:/visits.txt
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    healthcheck:
+      test: "curl http://localhost:8080/ || exit 1"
+      timeout: 30s
+      retries: 5
+      start_period: 10s
