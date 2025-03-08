@@ -46,6 +46,9 @@ spec:
           env:
             {{- include "app_python_chart.envName" . | nindent 12 }}
             {{- include "app_python_chart.envEmail" . | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: flask-config
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
