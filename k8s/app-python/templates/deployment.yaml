@@ -45,11 +45,11 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           env:
-            - name: MY_PASS
+            - name: MY_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: my-secret
-                  key: MY_PASS
+                  name: credentials
+                  key: password
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
