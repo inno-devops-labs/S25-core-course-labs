@@ -1,0 +1,5 @@
+{
+  "app_name": "python-app",
+  "log_level": "info",
+  "port": 5000
+}

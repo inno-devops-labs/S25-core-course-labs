@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app-moscow-time
+  labels:
+    app: python-app-moscow-time
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: python-app-moscow-time
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: python-app-moscow-time
+      labels:
+        app: python-app-moscow-time
+    spec:
+      containers:
+        - name: python-app-moscow-time
+          image: vladis7love/app_python:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+      restartPolicy: Always

@@ -1,0 +1,40 @@
+- name: Install Docker dependencies
+  become: true
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+    state: present
+    update_cache: yes
+
+- name: Create keyrings directory
+  become: true
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Add Docker's official GPG key
+  become: true
+  get_url:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0644'
+
+- name: Set up the Docker repository
+  become: true
+  apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release | lower }} stable"
+    state: present
+
+- name: Install Docker using official installation script
+  become: true
+  shell: |
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sh get-docker.sh
+  args:
+    creates: /usr/bin/docker
+

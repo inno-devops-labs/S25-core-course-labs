@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: main-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: python-app-moscow-time.example
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: python-app-moscow-time-service
+            port:
+              number: 5000
+  - host: js-app-cnt.example
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: js-app-cnt-service
+            port:
+              number: 8080
