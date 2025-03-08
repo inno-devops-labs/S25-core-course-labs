@@ -47,11 +47,6 @@ spec:
             - configMapRef:
                 name: app-golang-config
           env:
-            - name: MY_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: credentials
-                  key: password
             {{- include "app-golang.envDate" . | nindent 12 }}
             {{- include "app-golang.envTaskName" . | nindent 12 }}
           ports:
