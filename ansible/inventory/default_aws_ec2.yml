@@ -1,0 +1,7 @@
+all:
+  hosts:
+    cloud_vm:
+      ansible_host: 51.250.46.30
+      ansible_user: wellnotwell
+      ansible_ssh_private_key_file: ~/.ssh/cloud
+      ansible_python_interpreter: /usr/bin/python3
