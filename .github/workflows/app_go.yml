@@ -1,4 +1,4 @@
-name: CI Pipeline for Go Web Appplication
+name: CI Pipeline for Go Web Application
 
 on:
   pull_request:

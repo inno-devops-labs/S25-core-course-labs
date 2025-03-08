@@ -48,12 +48,12 @@ async def index(request: Request):
     formatted_time = curr_time.strftime(settings.DATETIME_FORMAT)
 
     try:
-        with open(settings.VISITS_FILE_PATH, "r") as fp:
+        with open(settings.VISITS_FILE_PATH, mode="r", encoding="utf-8") as fp:
             count = int(fp.read().strip())
     except FileNotFoundError:
         count = 0
     count += 1
-    with open(settings.VISITS_FILE_PATH, "w") as fp:
+    with open(settings.VISITS_FILE_PATH, mode="w", encoding="utf-8") as fp:
         fp.write(str(count))
 
     return templates.TemplateResponse(
@@ -75,5 +75,5 @@ async def metrics():
 
 @router.get("/visits")
 async def visits():
-    with open(settings.VISITS_FILE_PATH, "r") as fp:
+    with open(settings.VISITS_FILE_PATH, mode="r", encoding="utf-8") as fp:
         return {"visits": int(fp.read().strip())}

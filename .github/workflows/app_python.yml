@@ -1,4 +1,4 @@
-name: CI Pipeline for Python Web Appplication
+name: CI Pipeline for Python Web Application
 
 on:
   pull_request:
