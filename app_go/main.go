@@ -8,6 +8,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"os"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -17,6 +18,7 @@ var (
 	linuxReleaseDate = time.Date(1991, time.October, 5, 0, 0, 0, 0, time.UTC)
 	sharedValue      = "None"
 	mutex            sync.RWMutex
+	visitsFile  = "/data/visits.txt"
 
 	// Prometheus metric: Tracks number of commits
 	commitCounter = prometheus.NewGauge(prometheus.GaugeOpts{
@@ -106,6 +108,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	mutex.RLock()
 	numberOfCommits := sharedValue
 	mutex.RUnlock()
+	incrementVisitCount()
 
 	years, months, days := timePassedSince(linuxReleaseDate)
 
@@ -136,6 +139,60 @@ func initMetrics() {
 	prometheus.MustRegister(commitCounter)
 }
 
+func getVisitCount() int {
+	if _, err := os.Stat(visitsFile); os.IsNotExist(err) {
+		return 0
+	}
+
+	data, err := os.ReadFile(visitsFile)
+	if err != nil {
+		fmt.Println("Error reading visit count:", err)
+		return 0
+	}
+
+	count, err := strconv.Atoi(strings.TrimSpace(string(data)))
+	if err != nil {
+		fmt.Println("Error parsing visit count:", err)
+		return 0
+	}
+
+
+	return count
+}
+
+func incrementVisitCount() int {
+	count := getVisitCount() + 1
+	if err := os.WriteFile(visitsFile, []byte(strconv.Itoa(count)), 0644); err != nil {
+		fmt.Println("Error writing visit count:", err)
+	}
+	return count
+}
+
+func visitHandler(w http.ResponseWriter, r *http.Request) {
+	count := incrementVisitCount()
+
+	html := fmt.Sprintf(`
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<title>Visit Counter</title>
+	</head>
+	<body>
+		<h1>Number of Visits</h1>
+		<p><strong>Visits:</strong> %d</p>
+	</body>
+	</html>
+	`, count)
+
+	w.Header().Set("Content-Type", "text/html")
+	w.WriteHeader(http.StatusOK)
+	_, err := w.Write([]byte(html))
+	if err != nil {
+		fmt.Println("Error writing response:", err)
+	}
+}
+
+
 func main() {
 	// Register Prometheus metrics
 	initMetrics()
@@ -146,6 +203,8 @@ func main() {
 	// HTTP handlers
 	http.HandleFunc("/", handler)
 	http.Handle("/metrics", promhttp.Handler()) // Prometheus endpoint
+
+	http.HandleFunc("/visit", visitHandler)
 
 	fmt.Println("Server running on http://localhost:8080")
 	fmt.Println("Metrics available on http://localhost:8080/metrics")

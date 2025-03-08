@@ -1,4 +1,3 @@
-
 # Overview
 
 This service lets you monitor some data about linux kernel code repository, like
@@ -15,8 +14,11 @@ go run ./
 With docker, you may try simple build:
 
 ```bash
-docker build -t go_serv .
-docker run go_serv
+docker build \
+   --tag $(whoami)/app_go:v1.1 \
+   --build-arg UID=10001 \
+   --build-arg GID=10001 .
+docker run app_go
 ```
 
 or distroless build:
@@ -26,7 +28,9 @@ docker build -f distroless.dockerfile -t go_serv_dless .
 docker run go_serv_dless
 ```
 
-# Unit testing
+it also shows number of visits by `/visit` endpoint!
+
+## Unit testing
 
 The following functionality was covered with unit-tests:
 

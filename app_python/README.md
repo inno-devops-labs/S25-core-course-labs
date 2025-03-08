@@ -1,5 +1,10 @@
+# Overview
 
-# Service deployment
+This is a small python service that displays time !
+
+And gives number of visits of the main page, on `/visit` endpoint
+
+## Service deployment
 
 ![workflow](https://github.com/Processor228/S25-core-course-labs/actions/workflows/app_python.yml/badge.svg)
 
@@ -30,13 +35,16 @@ python3 -m uvicorn main:app
 To build the image:
 
 ```bash
-docker build -t time_service .
+docker build \
+   --tag $(whoami)/app_python:v1.1 \
+   --build-arg UID=10001 \
+   --build-arg GID=10001 .
 ```
 
 To pull the image:
 
 ```bash
-docker pull elonmaxx/time_service
+docker pull elonmaxx/time_service:latest
 ```
 
 To run image:

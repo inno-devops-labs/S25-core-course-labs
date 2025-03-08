@@ -1,15 +1,21 @@
-FROM python:3-alpine3.15
+FROM python:3-slim-bookworm
 
-RUN adduser --system --shell=/bin/false service
+ARG UID=10001
+ARG GID=10001
+
+RUN groupadd -g -l "${GID}" user \
+    && useradd -u -l "${UID}" -g "${GID}" user
 
 WORKDIR /service
 
-COPY --chown=service:service service ./
+COPY --chown=user:user service ./
 COPY requirements.txt ./
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-USER service
+RUN mkdir -p /data && chown -R user:user /service && chown -R user:user /data
+
+USER user
 
 EXPOSE 8080
 

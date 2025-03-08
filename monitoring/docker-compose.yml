@@ -5,6 +5,8 @@ networks:
 
 volumes:
   loki_data:
+  app_py_data:
+  app_go_data:
 
 x-logging:
   &default-logging
@@ -120,8 +122,11 @@ services:
       retries: 5
     logging: *default-logging
     deploy: *default-deploy
+    volumes:
+      - app_py_data:/data
     networks:
       - loki
+    user: "10001:10001"
 
   app_go:
     container_name: app_go
@@ -136,5 +141,8 @@ services:
       retries: 5
     logging: *default-logging
     deploy: *default-deploy
+    volumes:
+      - app_go_data:/data
     networks:
       - loki
+    user: "10001:10001"
