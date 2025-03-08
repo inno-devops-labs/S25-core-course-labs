@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: post-install-hook
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  template:
+    spec:
+      containers:
+        - name: post-install-hook
+          image: busybox
+          command: ["sh", "-c", "echo Post-Install Hook && sleep 20"]
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 5

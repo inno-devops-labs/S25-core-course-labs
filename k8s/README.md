@@ -1,154 +1,62 @@
-## Task 1
-### Step 3
-- Created a **Deployment** in Minikube using:
-```sh
-kubectl create deployment fastapi-mt --image=iucd/fastapi-mt:latest --port=8000
-```
-- Exposed the deployment using: 
-```sh
-kubectl expose deployment fastapi-mt --type=NodePort --port=8000
-```
-- Forwarded ports for easier access:
-```sh
-kubectl port-forward service/fastapi-mt 8000:8000
-```
-1. ![alt text](images/image.png)
+## Task 1.3-1.4:
+- ![alt text](images/image.png)
 
-### Step 5:
-- Checked k8s resources status:
-```sh
-kubectl get pods,svc
-```
-```text
-NAME                             READY   STATUS    RESTARTS   AGE
-pod/fastapi-mt-b6d999f75-8x82v   1/1     Running   0          3m45s
+## Task 1.5:
+- Screenshot:
+    - ![alt text](images/image-1.png)
+- Text format:
+    - ```bash
+      kubectl get pods,svc
+      ```
+    - ```text
+      NAME                             READY   STATUS    RESTARTS   AGE
+      pod/fastapi-mt-b6d999f75-8x82v   1/1     Running   0          3m45s
+  
+      NAME                 TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE  
+      service/fastapi-mt   NodePort    10.104.63.29   <none>        8000:30352/TCP   3m42s
+      service/kubernetes   ClusterIP   10.96.0.1      <none>        443/TCP          11m
+      ```
 
-NAME                 TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE  
-service/fastapi-mt   NodePort    10.104.63.29   <none>        8000:30352/TCP   3m42s
-service/kubernetes   ClusterIP   10.96.0.1      <none>        443/TCP          11m
-```
-1. ![alt text](images/image-1.png)
+## Task 1.6:
+- Screenshot:
+    - ![alt text](images/image-2.png)
 
-### Step 6:
-- Cleanup made:
-```sh
-kubectl delete deployment fastapi-mt
-kubectl delete service fastapi-mt
-```
-1. ![alt text](images/image-2.png)
+## Task 2.3
+- Used `deployment.yml` and `service.yml` with kubectl apply -f `{{path}}`.
+- Screenshot for bullet point 2:
+    - ![alt text](images/image-3.png)
+- Text format:
+    - ```bash
+      kubectl get pods,svc
+      ```
+    - ```text
+      NAME                                        READY   STATUS    RESTARTS   AGE
+      pod/fastapi-mt-deployment-b6d999f75-fvdzr   1/1     Running   0          23s
+      pod/fastapi-mt-deployment-b6d999f75-l2r6f   1/1     Running   0          23s
+      pod/fastapi-mt-deployment-b6d999f75-zh5s6   1/1     Running   0          23s  
+      NAME                         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+      service/fastapi-mt-service   NodePort    10.107.110.143   <none>        8000:30000/TCP   19s
+      service/kubernetes           ClusterIP   10.96.0.1        <none>        443/TCP          30m
+      ```
+- Screenshot for bullet point 3:
+    - ```bash
+      minikube service --all
+      ```
+      ![alt text](images/image-4.png)
 
-## Task 2
-### Step 1
-- Created `deployment.yml`:
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: fastapi-mt-deployment
-  labels:
-    app: fastapi-mt
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: fastapi-mt
-  template:
-    metadata:
-      labels:
-        app: fastapi-mt
-    spec:
-      containers:
-      - name: fastapi-mt
-        image: iucd/fastapi-mt:latest
-        ports:
-        - containerPort: 8000
-```
-### Step 2
-- Created `service.yml`:
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: fastapi-mt-service
-spec:
-  type: NodePort
-  selector:
-    app: fastapi-mt
-  ports:
-    - protocol: TCP
-      port: 8000
-      targetPort: 8000
-      nodePort: 30000
-```
-### Step 3
-- Applied `deployment.yml` and `service.yml`.
-- Checked k8s status
-```text
-NAME                                        READY   STATUS    RESTARTS   AGE
-pod/fastapi-mt-deployment-b6d999f75-fvdzr   1/1     Running   0          23s
-pod/fastapi-mt-deployment-b6d999f75-l2r6f   1/1     Running   0          23s
-pod/fastapi-mt-deployment-b6d999f75-zh5s6   1/1     Running   0          23s  
-NAME                         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-service/fastapi-mt-service   NodePort    10.107.110.143   <none>        8000:30000/TCP   19s
-service/kubernetes           ClusterIP   10.96.0.1        <none>        443/TCP          30m
-```
-1. ![alt text](images/image-3.png)
+## Bonus Task 1
+- `gin-deployment.yml` and `gin-service.yml` are created for additional application.
 
-- Checked minikube service:
-```bash
-minikube service --all
-```
-1. ![alt text](images/image-4.png)
+## Bonus Task 2
+- `ingress.yml` created as an ingress manifests for applications.
 
-## Bonus Task
-### Step 1
-- Created `gin-deployment.yml` & `gin-service.yml` for an additional application.
+## Bonus Task 3
+- Applying ingress ![alt text](images/image-5.png)
+- Application availability check:
+    - ![alt text](images/image-6.png) 
+    - ![alt text](images/image-7.png)
 
-### Step 2
-- Created `ingress.yml` for **fastapi-mt** and **gin-mt**:
-```yaml
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: lab9-bonus-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  ingressClassName: nginx
-  rules:
-  - host: lab9.bonus
-    http:
-      paths:
-      - path: /fastapi
-        pathType: Prefix
-        backend:
-          service:
-            name: fastapi-mt-service
-            port:
-              number: 8000
-      - path: /gin
-        pathType: Prefix
-        backend:
-          service:
-            name: gin-mt-service
-            port:
-              number: 8080
-```
-- Applied ingress:
-![alt text](images/image-5.png)
-
-- Added **minikube ip | lab9.bonus** to /etc/hosts 
-
-### Step 3
-- Checked availability using:
-```sh
-curl -i http://lab9.bonus/fastapi
-curl -i http://lab9.bonus/gin
-```
-1. ![alt text](images/image-6.png) 
-2. ![alt text](images/image-7.png)
-
-### Steps to reproduce bonus task:
+## Steps to reproduce:
 1. ```bash
    git clone https://github.com/creepydanunity/S25-core-course-labs.git
    cd S25-core-course-labs
