@@ -14,7 +14,11 @@ to ensure the accuracy of the results, regardless of network conditions.
 
 ### Preview
 
+* Home page
 ![preview.png](res/preview.png)
+
+* Home page visits
+![counter.png](res/counter.png)
 
 ### Setup
 
@@ -44,6 +48,9 @@ Build application with Docker (base image):
 3. Access web page:
    > curl http://127.0.0.1:<YOUR_PORT>
 
+   Access counter web page (saved via Docker volumes):
+   > curl http://127.0.0.1:<YOUR_PORT>/visits
+
 4. Optional: build image with Dockerfile:
    > docker build -t app_piton
 
@@ -59,6 +66,9 @@ Build application with minimized Docker image:
 
 3. Access web page:
    > curl http://127.0.0.1:<YOUR_PORT>
+
+   Access counter web page (saved via Docker volumes):
+   > curl http://127.0.0.1:<YOUR_PORT>/visits
 
 4. Optional: build image with Dockerfile:
    > docker build -t app_piton_dist -f distroless.Dockerfile .
