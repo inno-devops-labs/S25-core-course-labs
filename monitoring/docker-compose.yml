@@ -130,7 +130,7 @@ services:
       - ./visits:/app/visits
 
   app_go:
-    image: magicwinnie/simple-go-web-app-distroless:latest
+    image: magicwinnie/simple-go-web-app:latest
     ports:
       - "8889:8080"
     networks:
@@ -146,6 +146,8 @@ services:
           memory: "512m"
     healthcheck:
       disable: true
+    volumes:
+      - ./visits_go:/app/visits
 
   prometheus:
     image: prom/prometheus:latest

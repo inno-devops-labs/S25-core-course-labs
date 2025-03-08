@@ -26,6 +26,8 @@ Each time the root endpoint of the application is accessed, the application read
 
 `docker-compose.yml` file mounts a host directory to persist the `visits.txt` file.
 
+---
+
 ## 💻 Local Installation
 
 ### Prerequisites

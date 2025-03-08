@@ -18,6 +18,16 @@ You can view workflow runs [here](https://github.com/MagicWinnie/S25-core-course
 
 ---
 
+## 🗺️ Visits Counter
+
+An endpoint `/visits` has been added that maintains a counter of how many times the application was accessed.
+
+Each time the root endpoint of the application is accessed, the application reads the current count from a file `visits/visits.txt`, increments it, and writes the new value back.
+
+`docker-compose.yml` file mounts a host directory to persist the `visits.txt` file.
+
+---
+
 ## 💻 Local Installation
 
 ### Prerequisites

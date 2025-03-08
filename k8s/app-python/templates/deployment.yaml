@@ -50,6 +50,9 @@ spec:
                 name: lab11-secret
                 key: API_KEY
           {{- include "app-python.environmentVars" . | nindent 10 }}
+          envFrom:
+            - configMapRef:
+                name: app-python-config
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

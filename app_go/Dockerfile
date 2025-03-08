@@ -21,6 +21,7 @@ WORKDIR /app
 COPY --from=build /app/build/main .
 COPY internal/templates/ internal/templates/
 COPY static/ static/
+COPY visits/ visits/
 
 # using nonroot user
 RUN addgroup --system user && \

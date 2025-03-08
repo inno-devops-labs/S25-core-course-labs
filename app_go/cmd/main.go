@@ -17,6 +17,7 @@ func main() {
 	// routes
 	router.GET("/", handlers.RenderIndex)
 	router.GET("/calculate-age", handlers.CalculateAge)
+	router.GET("/visits", handlers.GetVisits)
 
 	err := router.Run(PORT)
 	if err != nil {
