@@ -1,0 +1,25 @@
+docker_version: "latest"
+docker_compose_version: "1.29.2"
+ansible_user: ubuntu
+
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+
+required_packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - software-properties-common
+
+docker_gpg_key: "https://download.docker.com/linux/ubuntu/gpg"
+docker_repo: "deb https://download.docker.com/linux/ubuntu jammy stable"
+
+docker_compose_url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-linux-x86_64"
+docker_compose_dest: "/usr/local/bin/docker-compose"
+
+docker_daemon_config:
+  no-new-privileges: true
+  userns-remap: "default"
+

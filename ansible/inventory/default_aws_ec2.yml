@@ -1,0 +1,8 @@
+virtual_machines:
+  hosts:
+    vm:
+      ansible_host: 158.160.58.46
+  vars:
+    ansible_user: ubuntu
+    ansible_ssh_private_key_file: ~/.ssh/id_ed25519
+
