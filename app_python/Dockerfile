@@ -4,8 +4,8 @@ ARG USERUID=10001
 ARG USERGID=10001
 
 # Create user and group
-RUN addgroup -g "${USERGID}" user && \
-    adduser -D -u "${USERUID}" -G user user
+RUN addgroup --gid "${USERGID}" user && \
+    adduser --disabled-password --uid "${USERUID}" --gid "${USERGID}" --gecos "" user
 
 WORKDIR /service
 
