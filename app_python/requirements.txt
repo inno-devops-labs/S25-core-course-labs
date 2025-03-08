@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+pytest
+prometheus-fastapi-instrumentator
+
+# need this for client in testing.
+httpx
+beautifulsoup4
