@@ -13,6 +13,17 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v1"
 
+# Secret values for the application
+secrets:
+  dbUsername: "moscow-admin"
+  dbPassword: "strongpassword123"
+
+# Vault configuration
+vaultEnabled: true
+vaultAgent:
+  enabled: true
+  role: "moscow-time"
+
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
 # This is to override the chart name.
@@ -33,7 +44,16 @@ serviceAccount:
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-podAnnotations: {}
+podAnnotations:
+  vault.hashicorp.com/agent-inject: "true"
+  vault.hashicorp.com/role: "moscow-time"
+  vault.hashicorp.com/agent-inject-secret-config: "secret/data/moscow-time/config"
+  vault.hashicorp.com/agent-inject-template-config: |
+    {{- with secret "secret/data/moscow-time/config" -}}
+    VAULT_DB_USERNAME={{ .Data.data.username }}
+    VAULT_DB_PASSWORD={{ .Data.data.password }}
+    {{- end -}}
+
 # This is for setting Kubernetes Labels to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
