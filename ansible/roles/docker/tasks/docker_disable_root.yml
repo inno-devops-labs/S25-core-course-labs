@@ -1,0 +1,15 @@
+- name: Modify daemon to disable root access
+  copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "userns-remap": "default"
+      }
+    owner: root
+    group: root
+    mode: "644"
+
+- name: Restart docker.service to apply changes
+  service:
+    name: docker
+    state: restarted

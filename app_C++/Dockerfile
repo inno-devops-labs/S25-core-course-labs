@@ -1,0 +1,10 @@
+FROM alpine:3.19
+WORKDIR /app
+COPY app.cpp ./
+RUN apk add --no-cache wget g++
+RUN mkdir -p /usr/local/include && wget https://raw.githubusercontent.com/yhirose/cpp-httplib/master/httplib.h -O /usr/local/include/httplib.h
+RUN g++ app.cpp -o app
+RUN adduser app_user || $(chown -R app_user:app_user /app && true)
+USER app_user
+EXPOSE 8080
+CMD ["./app"]
