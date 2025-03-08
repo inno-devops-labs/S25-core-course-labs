@@ -10,6 +10,6 @@ spec:
   - name: pre-install-container
     image: busybox
     imagePullPolicy: IfNotPresent
-    command: ['sh', '-c', 'echo "The pre-install hook is running" && sleep 20' ]
+    command: ['sh', '-c', 'echo "The pre-install hook is running" && sleep 1' ]
   restartPolicy: Never
   terminationGracePeriodSeconds: 0
