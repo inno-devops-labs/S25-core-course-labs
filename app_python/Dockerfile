@@ -35,6 +35,8 @@ USER appuser
 
 COPY --chown=appuser:appuser app.py .
 
+COPY --chown=appuser:appuser visits/ ./visits/
+
 COPY --chown=appuser:appuser templates/ ./templates/
 
 EXPOSE 5000

@@ -7,6 +7,8 @@ services:
       - "5000:5000"
     networks:
       - loki
+    volumes:
+      - ./visits:/app/visits
     logging:
       driver: "json-file"
       options:

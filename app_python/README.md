@@ -10,6 +10,7 @@ Simple Flask web application for displaying the exact current time in Moscow.
 - [x] Dockerize application
 - [x] Code Testing
 - [x] CI workflows
+- [x] Visits counter
 
 ## 🐋 Docker
 
@@ -71,6 +72,10 @@ docker run -it -p 5000:5000 innoenjoyer/moscow-time-app
     ```shell
     pip install -r requirements.txt
     ```
+
+## 👁️ Visits page
+
+Track the number of visits to homepage on `/visits`
 
 ## 🚀 Run
 
