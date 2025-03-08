@@ -43,9 +43,6 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          envFrom:
-            - configMapRef:
-                name: app-golang-config
           env:
             {{- include "app-golang.envDate" . | nindent 12 }}
             {{- include "app-golang.envTaskName" . | nindent 12 }}
