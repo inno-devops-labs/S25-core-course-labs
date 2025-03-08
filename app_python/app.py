@@ -9,7 +9,8 @@ PATH_VISITS = '/data/visits.txt'
 app = Flask(__name__)
 metrics = PrometheusMetrics(app)
 
-@app.route('/home')
+
+@app.route('/')
 def home():
     """
     Home page of the web app.
