@@ -94,4 +94,11 @@ You can pull the image using the following command:
 docker pull mangocandle/app_python:latest
 ```
 
+Updates:
+
+- The application now implements a visit counter.
+- A new endpoint `/visits` that can be accessed via "curl http://localhost:5001/visits" command displays the stored count.
+- When you access the root endpoint (`/`), the application adds 1 to the counter and writes the result to the `visits` file.
+- When using Docker or docker-compose, a volume is used to persist the `visits` file.
+
 [CI Best Practices](./CI.md)
