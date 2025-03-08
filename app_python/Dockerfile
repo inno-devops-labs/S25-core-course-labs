@@ -1,10 +1,11 @@
 FROM python:3-slim-bookworm
 
-ARG UID=10001
-ARG GID=10001
+ARG USERUID=10001
+ARG USERGID=10001
 
-RUN groupadd -g -l "${GID}" user \
-    && useradd -u -l "${UID}" -g "${GID}" user
+# Create user and group
+RUN addgroup -g "${USERGID}" user && \
+    adduser -D -u "${USERUID}" -G user user
 
 WORKDIR /service
 
