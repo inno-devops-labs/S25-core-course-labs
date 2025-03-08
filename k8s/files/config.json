@@ -1,0 +1,25 @@
+{
+  "app": {
+    "name": "Moscow Time App",
+    "version": "1.0.0",
+    "description": "A simple web application displaying current Moscow time"
+  },
+  "settings": {
+    "timeFormat": "HH:MM:SS",
+    "timezone": "Europe/Moscow",
+    "refreshRate": 1000,
+    "showVisitCounter": true,
+    "maxVisitsToStore": 1000000
+  },
+  "api": {
+    "endpoints": {
+      "time": "/time",
+      "visits": "/visits"
+    }
+  },
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "file": "/logs/app.log"
+  }
+}

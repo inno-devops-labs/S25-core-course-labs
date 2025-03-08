@@ -91,3 +91,11 @@ pytest
 # Run with verbose output
 pytest -v
 ```
+
+## Persistence
+
+The application tracks and persists the number of visits:
+
+- Visit counts are stored in a file within the visits directory
+- Data persists between container restarts when using the volume mount
+- Current visit count is visible on the main page and available via the `/visits` endpoint

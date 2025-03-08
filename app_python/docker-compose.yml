@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  python-app:
+    image: moscow-time-app:latest
+    container_name: moscow-time-app
+    user: "1000:1000"
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app/app
+      - PYTHONUNBUFFERED=1
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--log-level", "info", "--reload"]
+    working_dir: /app/app
+    volumes:
+      - ./app:/app/app
+      - ./visits_data:/app/app/visits
+    restart: unless-stopped

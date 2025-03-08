@@ -6,6 +6,7 @@
         body {
             font-family: Arial, sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -18,6 +19,7 @@
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
         .time {
             font-size: 4rem;
@@ -29,12 +31,30 @@
             color: #5f6368;
             margin-top: 1rem;
         }
+        h1 {
+            margin: 0 0 1rem 0;
+            color: #333;
+        }
+        #moscow-time {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .visit-counter {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #7f8c8d;
+        }
     </style>
 </head>
 <body>
     <div class="time-container">
-        <div class="time" id="moscow-time">{{ moscow_time }}</div>
-        <div class="label">Moscow Time</div>
+        <h1>Moscow Time</h1>
+        <div id="moscow-time">{{ moscow_time }}</div>
+        
+        <div class="visit-counter">
+            Total visits: <span id="visit-count">{{ visit_count }}</span>
+        </div>
     </div>
 
     <script>
@@ -46,6 +66,7 @@
                 });
         }
         
+        // Update time every second
         setInterval(updateTime, 1000);
     </script>
 </body>

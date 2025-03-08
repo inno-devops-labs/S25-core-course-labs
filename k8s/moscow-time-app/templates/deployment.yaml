@@ -62,6 +62,11 @@ spec:
           workingDir: /app/app
           command: ["uvicorn"]
           args: ["main:app", "--host", "0.0.0.0", "--port", "8000"]
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+            - name: visits-volume
+              mountPath: /app/app/visits
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
@@ -74,13 +79,19 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
+          {{- if .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
+            {{- toYaml .Values.volumeMounts | nindent 12 }}
           {{- end }}
-      {{- with .Values.volumes }}
       volumes:
-        {{- toYaml . | nindent 8 }}
+        - name: config-volume
+          configMap:
+            name: {{ include "moscow-time-app.fullname" . }}-config
+        - name: visits-volume
+          emptyDir: {}
+      {{- if .Values.volumes }}
+      volumes:
+        {{- toYaml .Values.volumes | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
