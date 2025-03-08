@@ -1,0 +1,8 @@
+---
+- name: Deploy App
+  ansible.builtin.include_tasks: deploy.yml
+
+- name: Wipe
+  ansible.builtin.import_tasks: 0-wipe.yml
+  when: web_app_full_wipe | bool
+  tags: [wipe]
