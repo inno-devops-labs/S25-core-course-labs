@@ -8,7 +8,7 @@ A simple Flask-based web application that displays the current time in Moscow.
 
 ## Overview
 
-This application uses the Flask framework to create a web server. When accessed, it displays the current time in Moscow in the format `HH:MM`. The time is fetched using the `pytz` library to handle time zones.
+This application uses the Flask framework to create a web server. When accessed, it displays the current time in Moscow in the format `HH:MM` and it shows the number of times it got accessed. The time is fetched using the `pytz` library to handle time zones.
 
 ---
 
@@ -17,6 +17,7 @@ This application uses the Flask framework to create a web server. When accessed,
 - Displays the current time in Moscow.
 - Lightweight and easy to deploy.
 - Uses Flask for the web server and `pytz` for time zone handling.
+- Show the number of time it got accessed by visiting `/visits`
 
 ---
 

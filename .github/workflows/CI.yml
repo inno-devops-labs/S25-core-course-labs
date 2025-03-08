@@ -6,6 +6,7 @@ on:
       - main
       - lab3
       - lab8
+      - lab12
 
 jobs:
 

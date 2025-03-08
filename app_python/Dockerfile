@@ -12,6 +12,7 @@ WORKDIR /app_python
 COPY --chown=app:app requirements.txt .
 COPY --chown=app:app main.py .
 COPY --chown=app:app templates templates
+COPY --chown=app:app visits .
 
 # Install the application dependencies preventing unnecessary cache
 RUN pip install --no-cache-dir -r requirements.txt

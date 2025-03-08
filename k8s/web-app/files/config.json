@@ -1,0 +1,6 @@
+{
+    "Lab12":{
+        "name": "Lab12",
+        "description": "This is a JSON file that was mounted as a ConfigMap"
+    }
+}
