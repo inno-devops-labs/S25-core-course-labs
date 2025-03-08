@@ -6,6 +6,9 @@ services:
 
   app_python:
     image: "hayderuni/moscow-time-flask"
+    volumes:
+        # Make sure to give the file in the local directory read/write permissions (chmod 666 visits)
+      - ./visits:/app_python/visits
     ports:
       - "5000:5000"
       - "8000:8000"
