@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moscow-time-app
+  labels:
+    app: moscow-time-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: moscow-time-app
+  template:
+    metadata:
+      labels:
+        app: moscow-time-app
+    spec:
+      containers:
+      - name: moscow-time-app
+        image: dexnight/moscow-time-app:latest
+        env:
+        - name: PYTHONPATH
+          value: "/app"
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        workingDir: /app/app
+        command: ["uvicorn"]
+        args: ["main:app", "--host", "0.0.0.0", "--port", "8000"]
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8000
+          initialDelaySeconds: 15
+          periodSeconds: 20

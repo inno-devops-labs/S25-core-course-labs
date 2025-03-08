@@ -1,0 +1,7 @@
+- hosts: all
+  become: true
+  roles:
+    - web_app
+  vars:
+    docker_image: "dexnight/moscow-time-app:latest"
+    app_port: 8000
