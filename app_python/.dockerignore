@@ -1,0 +1,11 @@
+*.git
+.git*
+
+.venv
+__pycache__
+
+.pylintrc
+pyproject.toml
+
+*.md
+*.png
