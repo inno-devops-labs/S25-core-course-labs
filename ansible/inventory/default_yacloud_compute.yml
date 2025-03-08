@@ -1,0 +1,6 @@
+---
+plugin: yacloud_compute
+yacloud_clouds: cloud-milanasirozhova
+yacloud_folders: default
+yacloud_token_file: inventory/yc_token
+ansible_python_interpreter: "/Users/m.sirozhova/S25-core-course-labs/app_python/venv/bin/python3"
