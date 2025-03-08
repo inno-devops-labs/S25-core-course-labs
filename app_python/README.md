@@ -107,3 +107,8 @@ This project uses GitHub Actions for Continuous Integration.
 - **Linter:** Runs `flake8` to check code quality
 - **Tests:** Runs `pytest` to ensure functionality
 - **Docker Integration:** Logs into Docker Hub, builds and pushes a Docker image to Docker Hub
+
+## /visits endpoint
+
+The /visits endpoint returns the number of times the site has been accessed. Each time a user visits the site, the counter reads the current number from file visits/visits.txt, then increments it and saves in a file. The stored count persists across restarts.
+The docker-compose.yml file maps a directory on the host machine to store the visits.txt file, ensuring visit counts persist across container restarts.

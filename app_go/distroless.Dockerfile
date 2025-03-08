@@ -22,6 +22,8 @@ WORKDIR /
 # Copy the compiled application from the builder stage
 COPY --from=builder /app/main.out .
 
+COPY visits/ visits/
+
 # Switch to non-root user
 USER nonroot:nonroot
 

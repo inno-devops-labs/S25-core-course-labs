@@ -120,3 +120,7 @@ To run tests
 
 8. **Security Scan**  
    - Uses **Snyk** to scan for vulnerabilities in dependencies.
+
+### Visit Counter
+
+The application now tracks the number of times it has been accessed. Each visit is recorded in a visits.txt file stored in the visits directory. A new /visits endpoint has been introduced, allowing users to check the total visit count. To persist visit counts across container restarts, update your docker-compose.yml to mount a volume for the visits directory.

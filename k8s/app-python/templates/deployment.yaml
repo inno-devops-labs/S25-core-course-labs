@@ -50,6 +50,9 @@ spec:
                 name: secret
                 key: PASSWORD
           {{- include "python-time-service.environmentVars" . | nindent 10 }}
+          envFrom:
+            - configMapRef:
+                name: app-python-config
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
