@@ -20,7 +20,7 @@
 
 ## Overview
 
-The application displays the current time in the Moscow timezone (`Europe/Moscow`). It is built using Flask, a lightweight Python web framework, and uses `pytz` for timezone handling.
+The application displays the current time in the Moscow timezone (Europe/Moscow). It is built using Flask, a lightweight Python web framework, and uses pytz for timezone handling. Additionally, the application now includes a counter to track the number of times it has been accessed. The counter is stored in a visits file and can be viewed via the /visits endpoint.
 
 ---
 
@@ -118,6 +118,10 @@ pip3 install -r requirements.txt
 4. Open your browser and navigate to `http://127.0.0.1:5000/`.
 
    > **Note**: The application will start a development server on `http://127.0.0.1:5000/`. You can stop the server by pressing `Ctrl+C` in the terminal.
+
+5. Open your browser and navigate to `http://127.0.0.1:5000/visits` to see the visits counter.
+
+![Visits counter](screenshots/visits_counter.png)
 
 ---
 
