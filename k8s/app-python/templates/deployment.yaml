@@ -15,6 +15,11 @@ spec:
     metadata:
       {{- with .Values.podAnnotations }}
       annotations:
+        {{- if .Values.vault.enabled }}
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: "{{ .Values.vault.role }}"
+        vault.hashicorp.com/agent-inject-secret-{{ .Values.vault.agentInjectSecret }}: "{{ .Values.vault.secretPath }}"
+        {{- end }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -40,12 +45,6 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            - name: MY_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: credentials
-                  key: password
           ports:
             - name: http
               containerPort: 5001
@@ -64,12 +63,19 @@ spec:
           {{- end }}
           {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
+            - name: config-volume
+              mountPath: /config
           {{- end }}
-      {{- with .Values.volumes }}
+          env:
+            - name: MY_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: credentials
+                  key: password
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: config-volume
+          configMap:
+            name: config
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
