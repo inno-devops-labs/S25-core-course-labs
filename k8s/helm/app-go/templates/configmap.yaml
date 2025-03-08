@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: go-config
+data:
+  config.json: |-
+{{ .Files.Get  .Values.config.path | indent 4 }}
