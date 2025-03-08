@@ -5,6 +5,10 @@ image:
   pullPolicy: IfNotPresent
   tag: "latest"
 
+secrets:
+  username: "admin"
+  password: "securepassword123"
+
 serviceAccount:
   create: true
   automount: true
@@ -54,10 +58,20 @@ readinessProbe:
   initialDelaySeconds: 5
   periodSeconds: 10
 
+podAnnotations:
+  vault.hashicorp.com/agent-inject: "true"
+  vault.hashicorp.com/role: "moscow-time-app"
+  vault.hashicorp.com/agent-inject-secret-database-config.txt: "internal/data/database/config"
+  vault.hashicorp.com/agent-inject-template-database-config.txt: |
+    {{- with secret "internal/data/database/config" -}}
+    database:
+      username: {{ .Data.data.username }}
+      password: {{ .Data.data.password }}
+    {{- end -}}
+
 nodeSelector: {}
 tolerations: []
 affinity: {}
-podAnnotations: {}
 podLabels: {}
 podSecurityContext: {}
 securityContext: {}

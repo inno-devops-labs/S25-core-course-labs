@@ -49,6 +49,16 @@ spec:
               value: "/app"
             - name: PYTHONUNBUFFERED
               value: "1"
+            - name: MY_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "moscow-time-app.fullname" . }}-credentials
+                  key: MY_USERNAME
+            - name: MY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "moscow-time-app.fullname" . }}-credentials
+                  key: MY_PASSWORD
           workingDir: /app/app
           command: ["uvicorn"]
           args: ["main:app", "--host", "0.0.0.0", "--port", "8000"]
