@@ -1,0 +1,7 @@
+“Programs must be written for people to read, and only incidentally for machines to execute.” – Harold Abelson
+“Any fool can write code that a computer can understand. Good programmers write code that humans can understand.” – Martin Fowler
+“First, solve the problem. Then, write the code.” – John Johnson
+“Experience is the name everyone gives to their mistakes.” – Oscar Wilde
+“Java is to JavaScript what car is to Carpet.” – Chris Heilmann
+“Knowledge is power.” – Francis Bacon
+"Your body is like a piece of dynamite. You can tap it with a pencil all day, but you'll never make it explode. You hit it once with a hammer: Bang! Get serious. Do 40 hard minutes, not an hour and half of nonsense. It's so much more rewarding. - Jason Statham"
