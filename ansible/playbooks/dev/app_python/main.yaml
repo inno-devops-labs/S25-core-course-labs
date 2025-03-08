@@ -1,0 +1,13 @@
+- name: Simple Python Web App
+  hosts: all
+  become: yes
+  roles:
+    - name: web_app
+      vars:
+        web_app_dir: "/app"
+        docker_image: "innoenjoyer/moscow-time-app:latest"
+        docker_container: "moscow-time-app"
+        docker_compose_filename: "docker-compose.yml"
+        internal_port: 5000
+        external_port: 5000
+        web_app_full_wipe: true

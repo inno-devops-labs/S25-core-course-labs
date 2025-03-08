@@ -1,0 +1,25 @@
+- name: Simple Python Web App
+  block:
+    - name: Wipe
+      import_tasks: 0-wipe.yml
+      when: web_app_full_wipe | default(false)
+      tags: wipe
+
+    - name: Create App Directory
+      file:
+        path: "{{ web_app_dir }}"
+        state: directory
+        mode: 0755
+      tags: deploy
+
+    - name: Copy Docker Compose file
+      template:
+        src: docker-compose.yml.j2
+        dest: "{{ web_app_dir }}/{{ docker_compose_filename }}"
+      tags: deploy
+
+    - name: Run Application
+      command: docker-compose up -d
+      args:
+        chdir: "{{ web_app_dir }}"
+      tags: deploy
