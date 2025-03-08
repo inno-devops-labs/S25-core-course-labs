@@ -167,4 +167,54 @@ helm uninstall helm-node-app
 ```
 
 
+## Step 8: Library Chart Integration (Bonus)
+
+**4.1 Generate the Library Chart**  
+In the `k8s/` directory, create a Helm library chart to centralize shared templates:
+```bash
+cd k8s
+helm create lib-chart
+```
+*This command builds the basic structure for a library chart (see screenshot below).*
+
+![Library Chart Structure](./screenshots/lib-chart.png)
+
+**4.2 Define Shared Labels Template**  
+Within `lib-chart/templates/_helpers.tpl`, add the following snippet to standardize labels across charts:
+```yaml
+{{- define "lib-chart.labels" -}}
+app.kubernetes.io/name: {{ include "lib-chart.name" . }}
+helm.sh/chart: {{ include "lib-chart.chart" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end -}}
+```
+*This template ensures both the Python and Node.js charts automatically inherit these labels.*
+
+
+**4.3 Reference the Library Chart in Application Charts**  
+Update the `Chart.yaml` files of your applications to depend on your library chart. For example, in `k8s/python-app/Chart.yaml`:
+```yaml
+dependencies:
+  - name: lib-chart
+    version: "1.0.0"
+    repository: "file://../my-library-chart"
+```
+Do the same for `k8s/node-app/Chart.yaml`.
+
+
+**4.4 Update Dependencies and Deploy**  
+Run the following commands to update dependencies and deploy:
+```bash
+helm dependency update ./k8s/python-app
+helm dependency update ./k8s/node-app
+helm upgrade --install my-python-app ./k8s/python-app
+helm upgrade --install my-node-app ./k8s/node-app
+```
+Finally, verify the shared labels with:
+```bash
+kubectl get pods --show-labels
+```
+![Labels Verification](./screenshots/dep-upd-py.png)
+![Labels Verification](./screenshots/dep-upd-node.png)
 
