@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"regexp"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
-	"os"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -18,7 +18,7 @@ var (
 	linuxReleaseDate = time.Date(1991, time.October, 5, 0, 0, 0, 0, time.UTC)
 	sharedValue      = "None"
 	mutex            sync.RWMutex
-	visitsFile  = "/data/visits.txt"
+	visitsFile       = "/data/visits.txt"
 
 	// Prometheus metric: Tracks number of commits
 	commitCounter = prometheus.NewGauge(prometheus.GaugeOpts{
@@ -156,7 +156,6 @@ func getVisitCount() int {
 		return 0
 	}
 
-
 	return count
 }
 
@@ -191,7 +190,6 @@ func visitHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Error writing response:", err)
 	}
 }
-
 
 func main() {
 	// Register Prometheus metrics
