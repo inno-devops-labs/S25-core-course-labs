@@ -110,14 +110,21 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
+volumes: 
+  - name: go-volume
+    configMap:
+      name: go-config
 # - name: foo
 #   secret:
 #     secretName: mysecret
 #     optional: false
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
+volumeMounts: 
+  - name: go-volume
+    mountPath: "/config/config.json"
+    subPath: "config.json"
+    readOnly: true
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
@@ -127,3 +134,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+config:
+  path: "files/config.json"
