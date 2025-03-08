@@ -14,6 +14,7 @@ spec:
       labels:
         app: python-msk
     spec:
+      serviceAccountName: internal-app
       containers:
       - name: python-msk
         image: mirgasimovk/python-msk:latest

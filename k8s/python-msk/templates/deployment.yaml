@@ -1,29 +1,29 @@
-# templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-demo
+  name: secrets-lab
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-demo
+      app: secrets-lab
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-demo
+        app: secrets-lab
     spec:
+      serviceAccountName: internal-app
       containers:
-      - name: demo-container
-        image: nginx
-        env:
-        - name: LOGIN
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Release.Name }}-secret
-              key: LOGIN
-        - name: PASS
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Release.Name }}-secret
-              key: PASS
+        - name: demo-container
+          image: nginx
+          env:
+            - name: LOGIN
+              valueFrom:
+                secretKeyRef:
+                  name: secrets-lab-secret
+                  key: LOGIN
+            - name: PASS
+              valueFrom:
+                secretKeyRef:
+                  name: secrets-lab-secret
+                  key: PASS
