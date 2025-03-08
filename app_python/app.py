@@ -1,4 +1,5 @@
 from datetime import datetime
+
 import pytz
 from flask import Flask, Response
 from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
@@ -10,7 +11,6 @@ REQUEST_COUNT = Counter(
     'Total number of HTTP requests',
     ['method', 'endpoint']
 )
-
 
 VISITS_FILE = "visits/visits.txt"
 
@@ -29,6 +29,7 @@ def update_visits():
         f.write(str(visits))
     return visits
 
+
 @app.route("/")
 def current_time():
     REQUEST_COUNT.labels(method='GET', endpoint='/').inc()
@@ -41,6 +42,7 @@ def current_time():
 @app.route("/metrics")
 def metrics():
     return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
+
 
 @app.route("/visits")
 def visits():
