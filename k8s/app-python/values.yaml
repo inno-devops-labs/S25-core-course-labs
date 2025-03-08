@@ -136,3 +136,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+env:
+  ENV: default
