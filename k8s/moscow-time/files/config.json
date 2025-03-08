@@ -1,0 +1,18 @@
+{
+  "app_name": "Moscow Time API",
+  "version": "1.2.0",
+  "description": "API that shows the current time in Moscow with visit tracking",
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  },
+  "features": {
+    "visits_tracking": true,
+    "metrics_enabled": true,
+    "response_time_tracking": true
+  },
+  "timeouts": {
+    "read_timeout": 5,
+    "connect_timeout": 3
+  }
+} 
