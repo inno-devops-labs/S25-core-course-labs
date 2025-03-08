@@ -30,7 +30,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "python-app.serviceAccountName" . }}
+      serviceAccountName: "internal-app"
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -43,6 +43,13 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: gpt_key
+              valueFrom:
+                secretKeyRef:
+                  name: credentials
+                  key: CHATGPT_KEY
+            {{- include "python-app.environmentVariables" . | nindent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

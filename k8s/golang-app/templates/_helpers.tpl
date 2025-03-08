@@ -60,3 +60,13 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "golang-app.environmentVariables" -}}
+- name: my-pass
+  value: {{ .Values.environment.MY_PASS | quote }}
+- name: api-key
+  value: {{ .Values.environment.API_KEY | quote }}
+- name: flight
+  value: {{ .Values.environment.FLIGHT | quote }}
+{{- end -}}
+
