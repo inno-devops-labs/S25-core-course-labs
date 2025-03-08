@@ -126,6 +126,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    volumes:
+      - ./visits:/app/visits
 
   app_go:
     image: magicwinnie/simple-go-web-app-distroless:latest

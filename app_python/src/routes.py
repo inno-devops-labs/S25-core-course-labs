@@ -47,6 +47,15 @@ async def index(request: Request):
     curr_time = datetime.now(pytz.timezone(settings.TIMEZONE))
     formatted_time = curr_time.strftime(settings.DATETIME_FORMAT)
 
+    try:
+        with open(settings.VISITS_FILE_PATH, "r") as fp:
+            count = int(fp.read().strip())
+    except FileNotFoundError:
+        count = 0
+    count += 1
+    with open(settings.VISITS_FILE_PATH, "w") as fp:
+        fp.write(str(count))
+
     return templates.TemplateResponse(
         request,
         "index.html",
@@ -62,3 +71,9 @@ async def metrics():
     return Response(
         content=prometheus_client.generate_latest(), media_type="text/plain"
     )
+
+
+@router.get("/visits")
+async def visits():
+    with open(settings.VISITS_FILE_PATH, "r") as fp:
+        return {"visits": int(fp.read().strip())}

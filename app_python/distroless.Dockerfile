@@ -6,6 +6,9 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --target=/app/lib --no-cache-dir -r requirements.txt
 
+# copy visits file
+COPY visits/ visits/
+
 # copy app
 COPY src/ src/
 
@@ -16,6 +19,7 @@ WORKDIR /app
 # copy from build
 COPY --from=build /app/lib /app/lib
 COPY --from=build /app/src /app/src
+COPY --from=build /app/visits /app/visits
 
 # use installed libraries
 ENV PYTHONPATH=/app/lib

@@ -8,5 +8,7 @@ class Settings(BaseSettings):
     TIMEZONE: str = "Europe/Moscow"
     DATETIME_FORMAT: str = "%d/%m/%Y %H:%M:%S"
 
+    VISITS_FILE_PATH: str = "visits/visits.txt"
+
 
 settings = Settings()
