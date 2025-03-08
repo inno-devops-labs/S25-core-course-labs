@@ -6,7 +6,7 @@ networks:
 services:
 
   app_python:
-    image: "oshaheen1882051/app_python:app_python-distroless-prod-ci-1.0.0"
+    build: ../app_python
     ports:
       - "5000:5000"
       - "5001:5001"
@@ -17,6 +17,8 @@ services:
         max-file: "10"
         tag: "{{.ImageName}}|{{.Name}}"
     mem_limit: "512m"  # Limit memory to 512MB
+    volumes:
+      - ./visits:/visits
     healthcheck:
       test: ["CMD", "python3", "-c", "import http.client; conn = http.client.HTTPConnection('localhost', 5000); conn.request('GET', '/'); response = conn.getresponse(); exit(0) if response.status == 200 else exit(1)"]
       interval: 10s
