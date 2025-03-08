@@ -48,7 +48,7 @@ def visits():
     with open(PATH_VISITS, 'r') as f:
         visits_count = int(f.read())
 
-    return render_template('visits.html', isits=visits_count)
+    return render_template('visits.html', visits=visits_count)
 
 
 if __name__ == '__main__':
