@@ -1,0 +1,3 @@
+docker_image: "your-docker-image:latest"
+app_port: 80
+web_app_full_wipe: false
