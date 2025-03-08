@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-pre-install-job"
+  labels:
+    app: moscow-time-app
+    role: pre-install-hook
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      labels:
+        app: moscow-time-app
+        role: pre-install-hook
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: pre-install-hook
+        image: busybox
+        command: ['sh', '-c', 'echo Pre-install hook running; sleep 60; echo Pre-install hook completed']

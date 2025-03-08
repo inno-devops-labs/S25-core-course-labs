@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-post-install-job"
+  labels:
+    app: moscow-time-app
+    role: post-install-hook
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      labels:
+        app: moscow-time-app
+        role: post-install-hook
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: post-install-hook
+        image: busybox
+        command: ['sh', '-c', 'echo Post-install hook running; sleep 60; echo Post-install hook completed']
