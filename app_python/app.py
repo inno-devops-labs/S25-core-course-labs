@@ -23,7 +23,7 @@ def home():
 
     with open(PATH_VISITS, 'r') as f:
         visits_count = int(f.read())
-    
+
     visits_count += 1
 
     with open(PATH_VISITS, 'w') as f:
