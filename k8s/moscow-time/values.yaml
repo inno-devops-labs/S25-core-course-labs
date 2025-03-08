@@ -24,6 +24,12 @@ vaultAgent:
   enabled: true
   role: "moscow-time"
 
+# Persistence configuration for visit counting
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 1Gi
+
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
 # This is to override the chart name.

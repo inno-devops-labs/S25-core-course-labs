@@ -67,14 +67,29 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
+            {{- if .Values.persistence.enabled }}
+            - name: visits-data
+              mountPath: /app/visits
+              subPath: visits
+            {{- end }}
+            - name: config-volume
+              mountPath: /app/config
+            {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
+            {{- end }}
       volumes:
+        {{- if .Values.persistence.enabled }}
+        - name: visits-data
+          persistentVolumeClaim:
+            claimName: {{ include "moscow-time.fullname" . }}-visits-pvc
+        {{- end }}
+        - name: config-volume
+          configMap:
+            name: {{ include "moscow-time.fullname" . }}-config
+        {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

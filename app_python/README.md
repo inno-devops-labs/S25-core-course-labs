@@ -4,14 +4,16 @@
 
 ## Overview
 
-A simple web application built with FastAPI that displays the current time in Moscow. The application updates the time on each page refresh, providing real-time Moscow time information.
+A simple web application built with FastAPI that displays the current time in Moscow. The application updates the time on each page refresh, providing real-time Moscow time information. It also tracks the number of visits to the time endpoint.
 
 ## Features
 
 - RESTful API endpoint
 - Returns current Moscow time
+- Tracks and displays visit count
 - Timezone handling using pytz
 - Comprehensive test suite
+- Visit persistence through file storage
 
 ## Prerequisites
 
@@ -75,7 +77,25 @@ The API will be available at <http://localhost:8000>
 
 ### API endpoints
 
-- `GET /`: Returns the current time in Moscow
+- `GET /time`: Returns the current time in Moscow
+- `GET /visits`: Returns the number of times the time endpoint has been accessed
+
+### Docker Compose
+
+The application can be run using Docker Compose, which sets up volume mapping for visit count persistence:
+
+```bash
+# Start the application with Docker Compose
+docker-compose up -d
+
+# Check the logs
+docker-compose logs -f
+
+# Stop the application
+docker-compose down
+```
+
+The visits counter is stored in a file that is mounted as a volume, ensuring persistence across container restarts.
 
 ### Features
 
