@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-moscow-time
+spec:
+  selector:
+    app: node-moscow-time
+  ports:
+  - port: 3001
+    targetPort: 3001
+  type: NodePort
