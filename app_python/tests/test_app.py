@@ -1,12 +1,19 @@
 import unittest
+import tempfile
+import os
 from app import app
 
 
 class FlaskTestCase(unittest.TestCase):
 
     def setUp(self):
+        self.temp_dir = tempfile.TemporaryDirectory()
+        os.environ["DATA_DIR"] = self.temp_dir.name
         self.app = app.test_client()
         self.app.testing = True
+
+    def tearDown(self):
+        self.temp_dir.cleanup()
 
     def test_index(self):
         response = self.app.get("/")
