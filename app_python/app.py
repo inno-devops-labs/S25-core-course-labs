@@ -77,7 +77,7 @@ def visits():
 
     with open(VISITS_FILE, "w") as visits_file:
         visits_file.write(str(VISITS))
-     
+
     return f"Number of visits is: {VISITS}"
 
 
