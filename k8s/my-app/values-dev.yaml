@@ -6,4 +6,6 @@ service:
   type: ClusterIP
   port: 80
 env: "dev"
+orgchart:
+  enabled: false
 
