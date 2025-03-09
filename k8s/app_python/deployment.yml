@@ -15,5 +15,12 @@ spec:
       containers:
       - name: app-python
         image: shelma13/app_python:latest
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config
         ports:
         - containerPort: 5000
+      volumes:
+      - name: config-volume
+        configMap:
+          name: config

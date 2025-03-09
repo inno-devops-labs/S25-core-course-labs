@@ -4,14 +4,12 @@ WORKDIR /app
 
 COPY requirements.txt .
 
+RUN mkdir -p /app/data && chmod -R 777 /app/data
+
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
-
-# Use a non-root user for security
-RUN useradd -m appuser
-USER appuser
 
 EXPOSE 5000
 CMD ["python", "app.py"]

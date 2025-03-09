@@ -6,6 +6,11 @@
 
 This is a simple web application built with Python and Flask to display the current time in Moscow. The time updates whenever the page is refreshed.
 
+## Endpoints
+
+- `/`: Displays the current time in Moscow and the number of visits.
+- `/visits`: Displays the number of visits
+
 ### Instructions
 
 1. Clone this repository:
@@ -85,7 +90,7 @@ docker push shelma13/app_python:latest
 
 ```bash
 docker pull shelma13/app_python:latest
-docker run -p 5000:5000 shelma13/app_python:latest
+docker compose up --build
 ```
 ### Requirements
 

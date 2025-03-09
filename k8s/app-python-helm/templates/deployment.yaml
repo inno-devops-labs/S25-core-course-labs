@@ -32,6 +32,13 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      initContainers:
+      - name: init-permissions
+        image: busybox
+        command: ['sh', '-c', 'mkdir -p /app/data && chmod -R 777 /app/data']
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/data
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.securityContext }}
@@ -60,6 +67,10 @@ spec:
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+      volumes:
+      - name: config-volume
+        configMap:
+          name: config
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
@@ -76,19 +87,3 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-env:
-  - name: USERNAME
-    valueFrom:
-      secretKeyRef:
-        name: my-secret
-        key: username
-  - name: PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: my-secret
-        key: password
-annotations:
-  vault.hashicorp.com/agent-inject: "true"
-  vault.hashicorp.com/role: "myapp"
-  vault.hashicorp.com/agent-inject-secret-myapp: "secret/data/myapp"
-
