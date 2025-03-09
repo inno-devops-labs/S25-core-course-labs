@@ -37,18 +37,23 @@ spec:
               containerPort: 5000
               protocol: TCP
           
-      env:
-        - name: MY_USER
-          valueFrom:
-            secretKeyRef:
-              name: my-secret
-              key: MY_USER
-        - name: MY_PASS
-          valueFrom:
-            secretKeyRef:
-              name: my-secret
-              key: MY_PASS
+          env:
+            - name: MY_USER
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: MY_USER
+            - name: MY_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: MY_PASS
 
+          # ✅ Mount ConfigMap as a volume
+          volumeMounts:
+            - name: config-volume
+              mountPath: "/config"
+              readOnly: true
 
           {{- with .Values.livenessProbe }}
           livenessProbe:
@@ -62,14 +67,13 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
+
+      # ✅ Define volumes section
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: config-volume
+          configMap:
+            name: python-app-config  
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -82,4 +86,3 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-

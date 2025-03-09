@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: python-app-config
+data:
+  config.json: |
+    {
+      "app_name": "PythonApp",
+      "version": "1.0.0",
+      "environment": "production"
+    }
