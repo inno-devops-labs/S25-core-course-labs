@@ -72,6 +72,7 @@ jobs:
       run: |
         cd app_python
         snyk test
+        snyk fix
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       
