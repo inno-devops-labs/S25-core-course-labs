@@ -108,17 +108,24 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
+volumes:
 # - name: foo
 #   secret:
 #     secretName: mysecret
 #     optional: false
+  - name: config-volume
+    configMap:
+      name: py-app-config
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
+volumeMounts:
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
+  - name: config-volume
+    mountPath: "/data/config.json"
+    subPath: "config.json"
+    readOnly: true
 
 nodeSelector: {}
 
@@ -128,3 +135,6 @@ affinity: {}
 
 env:
   MY_VAR: po4ki
+
+config:
+  path: "files/config.json"

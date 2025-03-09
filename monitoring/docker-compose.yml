@@ -164,6 +164,8 @@ services:
       retries: 3
       start_period: 5s
       timeout: 5s
+    volumes:
+      - ./python_visits_data:/app/data
 
   go_app:
     image: netpo4ki/go-web:latest
@@ -185,3 +187,5 @@ services:
       retries: 3
       timeout: 5s
       start_period: 5s
+    volumes:
+      - ./go_visits_data:/app/data
