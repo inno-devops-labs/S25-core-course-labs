@@ -40,6 +40,17 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: MY_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "js-app.fullname" . }}-secret
+                  key: MY_USERNAME
+            - name: MY_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "js-app.fullname" . }}-secret
+                  key: MY_PASS
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
