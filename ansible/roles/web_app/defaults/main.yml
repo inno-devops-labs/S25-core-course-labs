@@ -1,0 +1,6 @@
+---
+docker_image: "friji/moscow-time-app:latest"
+
+app_port: 8080
+
+web_app_full_wipe: false
