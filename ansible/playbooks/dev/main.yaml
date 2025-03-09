@@ -1,0 +1,9 @@
+- name: Deploy docker on Cloud VM
+  hosts: all
+  become: true
+  vars:
+    web_app_full_wipe: true
+  roles:
+#    - geerlingguy.docker
+#    - docker
+    - web_app

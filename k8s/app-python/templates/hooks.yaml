@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pre-install-hook
+  annotations:
+    "helm.sh/hook": pre-install
+spec:
+  template:
+    spec:
+      containers:
+        - name: pre-install-hook
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          command: ["sh", "-c", "echo 'Pre-install hook running...'; sleep 20"]
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 0
+
+---
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-post-install-hook"
+  labels:
+    {{- include "app-python.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    spec:
+      containers:
+        - name: post-install
+          image: "busybox"
+          command: ['sh', '-c', 'echo Post-install hook running...']
+      restartPolicy: Never
+  backoffLimit: 0

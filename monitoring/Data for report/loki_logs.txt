@@ -1,0 +1,70 @@
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.225136568Z caller=main.go:126 msg="Starting Loki" version="(version=3.4.2, branch=release-3.4.x, revision=4fa045d3)"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.225168832Z caller=main.go:127 msg="Loading configuration file" filename=/etc/loki/local-config.yaml
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.225941546Z caller=server.go:351 msg="server listening on addresses" http=[::]:3100 grpc=[::]:9095
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.227655104Z caller=table_manager.go:300 index-store=tsdb-2020-10-24 msg="query readiness setup completed" duration=1.063µs distinct_users_len=0 distinct_users=
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.2276797Z caller=shipper.go:165 index-store=tsdb-2020-10-24 msg="starting index shipper in RW mode"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.227881021Z caller=head_manager.go:308 index-store=tsdb-2020-10-24 component=tsdb-head-manager msg="loaded wals by period" groups=0
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.227901058Z caller=manager.go:86 index-store=tsdb-2020-10-24 component=tsdb-manager msg="loaded leftover local indices" err=null successful=true buckets=0 indices=0 failures=0
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.227912557Z caller=head_manager.go:308 index-store=tsdb-2020-10-24 component=tsdb-head-manager msg="loaded wals by period" groups=0
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.228223312Z caller=table_manager.go:136 index-store=tsdb-2020-10-24 msg="uploading tables"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.230957829Z caller=mapper.go:47 msg="cleaning up mapped rules directory" path=/loki/rules-temp
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.232629289Z caller=worker.go:130 component=querier msg="Starting querier worker using query-scheduler and scheduler ring for addresses"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.23446595Z caller=module_service.go:82 msg=starting module=cache-generation-loader
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.234463505Z caller=module_service.go:82 msg=starting module=server
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.234653909Z caller=module_service.go:82 msg=starting module=memberlist-kv
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.234676084Z caller=module_service.go:82 msg=starting module=query-frontend-tripperware
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.234686478Z caller=module_service.go:82 msg=starting module=query-scheduler-ring
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.23476588Z caller=ring.go:316 msg="ring doesn't exist in KV store yet"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.234820201Z caller=module_service.go:82 msg=starting module=ring
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.23484165Z caller=ring.go:316 msg="ring doesn't exist in KV store yet"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.234860837Z caller=module_service.go:82 msg=starting module=store
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.23487707Z caller=module_service.go:82 msg=starting module=ingester-querier
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.234905552Z caller=module_service.go:82 msg=starting module=analytics
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.23492712Z caller=basic_lifecycler.go:299 msg="instance not found in the ring" instance=528571c5bf3b ring=scheduler
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.234933783Z caller=basic_lifecycler_delegates.go:63 msg="not loading tokens from file, tokens file path is empty"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235042333Z caller=ringmanager.go:186 msg="waiting until scheduler is JOINING in the ring"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235053361Z caller=ringmanager.go:190 msg="scheduler is JOINING in the ring"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235088256Z caller=ringmanager.go:199 msg="waiting until scheduler is ACTIVE in the ring"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235185076Z caller=module_service.go:82 msg=starting module=rule-evaluator
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235201895Z caller=module_service.go:82 msg=starting module=distributor
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235203659Z caller=module_service.go:82 msg=starting module=ingester
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.2352152Z caller=ingester.go:559 component=ingester msg="recovering from checkpoint"
+monitoring-loki-1  | level=error ts=2025-02-19T16:07:34.235232454Z caller=ratestore.go:109 msg="error getting ingester clients" err="empty ring"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235255953Z caller=module_service.go:82 msg=starting module=compactor
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235261085Z caller=recovery.go:41 component=ingester msg="no checkpoint found, treating as no-op"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235291653Z caller=ring.go:316 msg="ring doesn't exist in KV store yet"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235304009Z caller=module_service.go:82 msg=starting module=ruler
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235316542Z caller=ruler.go:533 msg="ruler up and running"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235350683Z caller=basic_lifecycler.go:299 component=distributor msg="instance not found in the ring" instance=528571c5bf3b ring=distributor
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235496958Z caller=basic_lifecycler.go:299 msg="instance not found in the ring" instance=528571c5bf3b ring=compactor
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.23550265Z caller=basic_lifecycler_delegates.go:63 msg="not loading tokens from file, tokens file path is empty"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235793481Z caller=ingester.go:575 component=ingester msg="recovered WAL checkpoint recovery finished" elapsed=579.661µs errors=false
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235806638Z caller=ingester.go:581 component=ingester msg="recovering from WAL"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235785306Z caller=compactor.go:414 msg="waiting until compactor is JOINING in the ring"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235817654Z caller=compactor.go:418 msg="compactor is JOINING in the ring"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235898911Z caller=compactor.go:428 msg="waiting until compactor is ACTIVE in the ring"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235940864Z caller=ingester.go:597 component=ingester msg="WAL segment recovery finished" elapsed=724.518µs errors=false
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.23594944Z caller=ingester.go:545 component=ingester msg="closing recoverer"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.23595518Z caller=ingester.go:553 component=ingester msg="WAL recovery finished" time=741.497µs
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.235968906Z caller=wal.go:157 msg=started component=wal
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.236013126Z caller=lifecycler.go:675 component=ingester msg="not loading tokens from file, tokens file path is empty"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.236020821Z caller=ingester.go:766 component=ingester msg="sleeping for initial delay before starting periodic flushing" delay=8.857084325s
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.236045466Z caller=lifecycler.go:702 component=ingester msg="instance not found in ring, adding with no tokens" ring=ingester
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.236090988Z caller=lifecycler.go:544 component=ingester msg="auto-joining cluster after timeout" ring=ingester
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.338306941Z caller=compactor.go:432 msg="compactor is ACTIVE in the ring"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.419486857Z caller=ringmanager.go:203 msg="scheduler is ACTIVE in the ring"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.419535814Z caller=module_service.go:82 msg=starting module=query-scheduler
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.419622206Z caller=module_service.go:82 msg=starting module=querier
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.419642422Z caller=module_service.go:82 msg=starting module=query-frontend
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:34.419697978Z caller=loki.go:545 msg="Loki started" startup_time=202.76308ms
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:37.420008621Z caller=worker.go:231 component=querier msg="adding connection" addr=127.0.0.1:9095
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:37.420007895Z caller=scheduler.go:653 msg="this scheduler is in the ReplicationSet, will now accept requests."
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:39.339205967Z caller=compactor.go:493 msg="this instance has been chosen to run the compactor, starting compactor"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:39.339288522Z caller=compactor.go:522 msg="waiting 10m0s for ring to stay stable and previous compactions to finish before starting compactor"
+monitoring-loki-1  | level=info ts=2025-02-19T16:07:44.419844346Z caller=frontend_scheduler_worker.go:106 msg="adding connection to scheduler" addr=127.0.0.1:9095
+monitoring-loki-1  | level=info ts=2025-02-19T16:08:04.236546708Z caller=recalculate_owned_streams.go:49 msg="starting recalculate owned streams job"
+monitoring-loki-1  | level=info ts=2025-02-19T16:08:04.236597817Z caller=recalculate_owned_streams.go:63 msg="detected ring changes, re-evaluating streams ownership"
+monitoring-loki-1  | level=info ts=2025-02-19T16:08:04.236617026Z caller=recalculate_owned_streams.go:52 msg="completed recalculate owned streams job"
+monitoring-loki-1  | level=info ts=2025-02-19T16:08:34.228470371Z caller=table_manager.go:136 index-store=tsdb-2020-10-24 msg="uploading tables"
+monitoring-loki-1  | level=info ts=2025-02-19T16:08:34.236172246Z caller=recalculate_owned_streams.go:49 msg="starting recalculate owned streams job"
+monitoring-loki-1  | level=info ts=2025-02-19T16:08:34.236253788Z caller=recalculate_owned_streams.go:52 msg="completed recalculate owned streams job"
