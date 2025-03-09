@@ -59,6 +59,13 @@ timezone**
    docker pull dew1769/application-real-time:v1
    docker run -p 5000:5000 dew1769/application-real-time:v1
 
+## Counter
+
+The updated file `app.py` now contains counter, we can run it using these commands:
+   ```sh
+   docker-compose build
+   docker-compose up
+
 ## Unit Tests
 The file 'test_cases.py' contains simple unit tests to check the correctness:
 1. Page loading with HTTP code 200

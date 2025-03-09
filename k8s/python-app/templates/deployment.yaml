@@ -50,6 +50,10 @@ spec:
                 secretKeyRef:
                   name: my-secret
                   key: MY_PASS
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+              readOnly: true
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
@@ -65,14 +69,13 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: visits-volume
+          persistentVolumeClaim:
+            claimName: visits-pvc
+        - name: config-volume
+          configMap:
+            name: python-app-config
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
