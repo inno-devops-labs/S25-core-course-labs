@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-vault-template
+data:
+  vault-template.sh: |
+    #!/bin/sh
+    source /vault/secrets/config.txt
+    echo "Данные из Vault: $VAULT_USERNAME/$VAULT_PASSWORD"
