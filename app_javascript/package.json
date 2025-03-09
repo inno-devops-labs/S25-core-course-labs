@@ -1,0 +1,17 @@
+{
+  "name": "year-and-ads-api",
+  "version": "1.0.0",
+  "description": "An Express.js API that returns current year and random funny advertisements",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "prom-client": "^14.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+} 
