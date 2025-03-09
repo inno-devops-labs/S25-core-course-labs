@@ -1,0 +1,12 @@
+.git
+.venv
+.gitignore
+.dockerignore
+.pytest_cache
+__pycache__
+pyproject.toml
+PYTHON.md
+README.md
+DOCKER.md
+Dockerfile
+visits
