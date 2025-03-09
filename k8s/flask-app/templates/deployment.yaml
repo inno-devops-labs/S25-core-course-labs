@@ -9,6 +9,10 @@ spec:
       app: {{ .Release.Name }}-app
   template:
     metadata:
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: "myapp"
+        vault.hashicorp.com/agent-inject-secret-myapp: "secret/myapp"
       labels:
         app: {{ .Release.Name }}-app
     spec:
@@ -19,3 +23,14 @@ spec:
             - containerPort: 5000
           args:
             - pip install flask pytz && python /app/app.py
+          env:
+            - name: USER
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: USER
+            - name: PASS
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: PASS
