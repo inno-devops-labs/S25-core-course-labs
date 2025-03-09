@@ -15,7 +15,12 @@ serviceAccount:
   annotations: {}
   name: ""
 
-podAnnotations: {}
+podAnnotations:
+   git: keep
+   vault.hashicorp.com/agent-inject: 'true'
+   vault.hashicorp.com/role: 'internal-app'
+   vault.hashicorp.com/agent-inject-secret-server-config.txt: 'internal/data/server/config'
+
 podLabels: {}
 
 podSecurityContext: {}
