@@ -6,11 +6,13 @@ import os
 app = Flask(__name__)
 VISITS_FILE = "visits"
 
+
 def get_visit_count():
     if os.path.exists(VISITS_FILE):
         with open(VISITS_FILE, "r") as file:
             return int(file.read().strip())
     return 0
+
 
 def increment_visit_count():
     count = get_visit_count() + 1
@@ -34,6 +36,7 @@ def get_moscow_time():
     """
     return html_content
 
+
 @app.route("/visits")
 def get_visits():
     """Returns the number of visits"""
@@ -47,6 +50,7 @@ def get_visits():
     </html>
     """
     return html_content
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
