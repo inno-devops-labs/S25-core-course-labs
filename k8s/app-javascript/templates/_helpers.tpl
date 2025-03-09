@@ -60,3 +60,12 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "app-javascript.environmentVars" -}}
+- name: FOURTH_ENV_VAR
+  value: {{ .Values.environment.env_var_4 | quote }}
+- name: FIFTH_ENV_VAR
+  value: {{ .Values.environment.env_var_5 | quote }}
+- name: SIXTH_ENV_VAR
+  value: {{ .Values.environment.env_var_6 | quote }}
+{{- end -}}

@@ -40,6 +40,7 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env: {{- include "app-javascript.environmentVars" . | nindent 10 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

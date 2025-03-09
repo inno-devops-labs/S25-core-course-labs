@@ -40,6 +40,13 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: MY_PASSWORD
+              valueFrom: 
+                secretKeyRef:
+                  name: credentials
+                  key: password
+          {{- include "app-python.environmentVars" . | nindent 10 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
