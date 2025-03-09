@@ -6,6 +6,11 @@ service:
   type: ClusterIP
   port: 80
 env: "dev"
+
 orgchart:
-  enabled: false
+  enabled: true
+  image:
+    repository: jweissig/app
+    tag: latest
+  replicas: 1
 

@@ -6,6 +6,11 @@ service:
   type: LoadBalancer
   port: 80
 env: "prod"
+
 orgchart:
-  enabled: false
+  enabled: true
+  image:
+    repository: jweissig/app
+    tag: latest
+  replicas: 1
 
