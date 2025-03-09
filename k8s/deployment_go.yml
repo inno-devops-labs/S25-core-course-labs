@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crypto-price-tracker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: crypto-price-tracker
+  template:
+    metadata:
+      labels:
+        app: crypto-price-tracker
+    spec:
+      containers:
+      - name: app-go
+        image: nshlyakhtin/devops:lab8-app-go-amd64
+        ports:
+        - containerPort: 8080
