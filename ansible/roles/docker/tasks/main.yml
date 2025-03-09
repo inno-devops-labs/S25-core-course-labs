@@ -1,0 +1,24 @@
+- name: install 
+  import_tasks: install_docker.yml
+
+- name: install docker-compose
+  import_tasks: install_compose.yml
+
+- name: Add current user to the docker group for Docker commands
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
+
+- name: Configure Docker daemon options
+  copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "no-new-privileges": true,
+        "userns-remap": "default"
+      }
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Docker

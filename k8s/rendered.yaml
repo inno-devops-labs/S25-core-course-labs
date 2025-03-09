@@ -1,0 +1,115 @@
+---
+# Source: app-python/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: app-python
+  labels:
+    helm.sh/chart: app-python-0.1.0
+    app.kubernetes.io/name: app-python
+    app.kubernetes.io/instance: app-python
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+automountServiceAccountToken: true
+---
+# Source: app-python/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-python
+  labels:
+    helm.sh/chart: app-python-0.1.0
+    app.kubernetes.io/name: app-python
+    app.kubernetes.io/instance: app-python
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5000
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: app-python
+    app.kubernetes.io/instance: app-python
+---
+# Source: app-python/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-python
+  labels:
+    helm.sh/chart: app-python-0.1.0
+    app.kubernetes.io/name: app-python
+    app.kubernetes.io/instance: app-python
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: app-python
+      app.kubernetes.io/instance: app-python
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: app-python-0.1.0
+        app.kubernetes.io/name: app-python
+        app.kubernetes.io/instance: app-python
+        app.kubernetes.io/version: "1.16.0"
+        app.kubernetes.io/managed-by: Helm
+    spec:
+      serviceAccountName: app-python
+      containers:
+        - name: app-python
+          image: "suleimankrimeddin/app_python:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 5000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+---
+# Source: app-python/templates/post-install.yml
+apiVersion: v1
+kind: Pod
+metadata:
+   name: postinstall-hook
+   annotations:
+       "helm.sh/hook": "post-install"
+       "helm.sh/hook-delete-policy": hook-succeeded
+       
+spec:
+  containers:
+  - name: post-install-container
+    image: busybox
+    imagePullPolicy: Always
+    command: ['sh', '-c', 'echo The post-install hook is running && sleep 15' ]
+  restartPolicy: Never
+  terminationGracePeriodSeconds: 0
+---
+# Source: app-python/templates/pre-install.yml
+apiVersion: v1
+kind: Pod
+metadata:
+   name: preinstall-hook
+   annotations:
+       "helm.sh/hook": "pre-install"
+       "helm.sh/hook-delete-policy": hook-succeeded
+
+spec:
+  containers:
+  - name: pre-install-container
+    image: busybox
+    imagePullPolicy: IfNotPresent
+    command: ['sh', '-c', 'echo The pre-install hook is running && sleep 20' ]
+  restartPolicy: Never
+  terminationGracePeriodSeconds: 0

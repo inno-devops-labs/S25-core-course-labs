@@ -1,0 +1,5 @@
+docker_image: suleimankrimeddin/app_python
+docker_image_tag: latest
+docker_container_name: web_app
+docker_container_port: 80
+docker_host_port: 3000
