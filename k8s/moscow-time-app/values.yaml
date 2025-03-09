@@ -119,6 +119,10 @@ volumeMounts: []
 #   mountPath: "/etc/foo"
 #   readOnly: true
 
+secrets:
+  my_secret: "the_anushervon"
+
+
 nodeSelector: {}
 
 tolerations: []
