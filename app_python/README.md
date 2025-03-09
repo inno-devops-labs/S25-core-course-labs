@@ -2,7 +2,7 @@
 
 ## Overview
 
-A simple web application built with FastAPI that displays the current time in Moscow. The application updates the time when the page is refreshed and features a clean, minimalist interface.
+A simple web application built with FastAPI that displays the current time in Moscow and tracks visitor counts. The application updates the time when the page is refreshed, features a clean minimalist interface, and maintains a persistent visitor counter.
 
 ## CI Status
 
@@ -14,6 +14,8 @@ A simple web application built with FastAPI that displays the current time in Mo
 - Automatic time zone handling using pytz
 - Clean and responsive UI
 - Error handling for robustness
+- Visitor counter tracking with persistent storage
+- `/visits` endpoint to display total visit count
 
 ## Prerequisites
 
@@ -37,10 +39,12 @@ OR
 2. Run the container:
 
     ```bash
-    docker run -p 8000:8000 -t haidarjbeily/moscow-time-app
+    docker run -p 8000:8000 -v ./visits:/app/visits -t haidarjbeily/moscow-time-app
     # or
-    docker run -p 8000:8000 -t haidarjbeily/distroless-moscow-time-app:latest
+    docker run -p 8000:8000 -v ./visits:/app/visits -t haidarjbeily/distroless-moscow-time-app:latest
     ```
+
+Note: The volume mount `-v ./visits:/app/visits` ensures the visit counter persists between container restarts.
 
 ### Manual Installation
 
@@ -76,20 +80,22 @@ If you want to build the Docker image yourself:
 3. Run the container (regular):
 
     ```bash
-    docker run -p 8000:8000 -t moscow-time-app
+    docker run -p 8000:8000 -v ./visits:/app/visits -t moscow-time-app
     ```
 
    Or run the distroless container:
 
     ```bash
-    docker run -p 8000:8000 -t moscow-time-app-distroless
+    docker run -p 8000:8000 -v ./visits:/app/visits -t moscow-time-app-distroless
     ```
 
 ## Usage
 
-- Open your web browser and navigate to `http://localhost:8000`.
-- The application displays the current time in Moscow.
-- The time is updated automatically when the page is refreshed.
+- Open your web browser and navigate to `http://localhost:8000`
+- The application displays the current time in Moscow
+- The time is updated automatically when the page is refreshed
+- Visit `http://localhost:8000/visits` to see the total number of visits
+- The visit counter persists between application restarts via the visits file
 
 ![Moscow Time App](usage.png)
 
@@ -104,6 +110,8 @@ The application includes comprehensive unit tests to ensure reliability and func
 - Time zone validation
 - Template rendering verification
 - Error handling scenarios
+- Visit counter persistence testing
+- Volume mount verification
 
 ### Running Tests
 

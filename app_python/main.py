@@ -18,7 +18,7 @@ TIME_REQUESTS = Counter('time_requests_total', 'Total time endpoint requests')
 metrics_app = make_asgi_app()
 app.mount("/metrics", metrics_app)
 
-VISITS_FILE = os.getenv("VISITS_FILE", "visits")
+VISITS_FILE = os.getenv("VISITS_FILE", "visits.txt")
 
 def increment_visit_counter():
     try:
