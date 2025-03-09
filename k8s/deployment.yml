@@ -12,9 +12,23 @@ spec:
       labels:
         app: app
     spec:
+      serviceAccountName: moscow-time-sa
       containers:
       - name: moscow-time
         image: ezzysoft/moscow-time:latest
-
         ports:
         - containerPort: 5000
+        env:
+          - name: MY_PASS
+            valueFrom:
+              secretKeyRef:
+                name: moscow-time-secret
+                key: MY_PASS
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+
