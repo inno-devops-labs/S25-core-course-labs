@@ -19,6 +19,9 @@ WORKDIR /app
 # Copy only built files from builder stage
 COPY --from=builder /app .
 
+# Create visits directory and set permissions
+RUN mkdir -p /app && touch /app/visits && chmod 777 /app/visits
+
 # Run as non-root user
 USER node
 

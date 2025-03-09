@@ -1,0 +1,8 @@
+version: '3'
+services:
+  moscow-time:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./visits:/app/visits
