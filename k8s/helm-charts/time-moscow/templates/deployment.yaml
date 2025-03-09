@@ -13,10 +13,12 @@ spec:
       {{- include "common-lib.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        vault.hashicorp.com/agent-inject: 'true'
+        vault.hashicorp.com/role: 'internal-app'
+        vault.hashicorp.com/agent-inject-secret-database-config.txt: 'internal/data/user-pass/config'
+        vault.hashicorp.com/auth-path: 'auth/kubernetes'
+        vault.hashicorp.com/namespace: 'default'
       labels:
         {{- include "common-lib.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
@@ -44,6 +46,8 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          env:
+          {{- include "time-moscow.env" . | nindent 12 }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
