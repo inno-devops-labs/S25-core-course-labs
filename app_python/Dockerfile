@@ -13,7 +13,6 @@ RUN pip install --user --no-warn-script-location -r requirements.txt
 
 COPY --chown=appuser:appuser . .
 
-
 ENV PATH="/home/appuser/.local/bin:${PATH}"
 ENV PYTHONPATH=/app
 

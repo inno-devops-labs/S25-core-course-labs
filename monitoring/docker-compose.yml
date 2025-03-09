@@ -113,6 +113,8 @@ services:
     image: "gendiro/moscow-time-app:latest" 
     ports:
       - "8000:8000"
+    volumes:
+      - ./data:/app/data
     networks:
       - loki
     logging:
@@ -135,6 +137,8 @@ services:
     image: "gendiro/js-app-distroless:latest" 
     ports:
       - "3001:3000"
+    volumes:
+      - ./data:/app/data
     networks:
       - loki
     logging:
