@@ -125,3 +125,6 @@ affinity: {}
 env:
   - name: USER 
     value: "sweetie"
+
+config:
+  configFile: "config.json"

@@ -1,8 +1,50 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:shelf/shelf.dart';
+import 'package:shelf/shelf_io.dart';
+import 'package:shelf_router/shelf_router.dart' as shelf_router;
+
+
+final visitsFile = File('visits.txt');
+
+int incrementVisits() {
+  int visits = 0;
+
+  if (visitsFile.existsSync()) {
+    visits = int.parse(visitsFile.readAsStringSync());
+  }
+
+  visits++;
+
+  visitsFile.writeAsStringSync(visits.toString());
+
+  return visits;
+}
+
+Response rootHandler(Request request) {
+  final visits = incrementVisits();
+  return Response.ok('Welcome! You are visitor number $visits.');
+}
+
+Response visitsHandler(Request request) {
+  final visits = visitsFile.existsSync() ? visitsFile.readAsStringSync() : '0';
+  return Response.ok('Total visits: $visits');
+}
+
+void startServer() async {
+  final router = shelf_router.Router()
+    ..get('/', rootHandler)
+    ..get('/visits', visitsHandler);
+
+  final server = await serve(router, '0.0.0.0', 8080);
+  print('Server running on http://${server.address.host}:${server.port}');
+}
 
 void main() {
+  startServer();
+
   runApp(const NorthernLightsApp());
 }
 
@@ -28,7 +70,6 @@ class NorthernLightsWidget extends StatefulWidget {
   const NorthernLightsWidget({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _NorthernLightsWidgetState createState() => _NorthernLightsWidgetState();
 }
 
@@ -42,7 +83,7 @@ class _NorthernLightsWidgetState extends State<NorthernLightsWidget>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 10),
-    )..repeat(); // Continuous flowing animation
+    )..repeat();
   }
 
   @override
@@ -57,7 +98,7 @@ class _NorthernLightsWidgetState extends State<NorthernLightsWidget>
       animation: _controller,
       builder: (context, child) {
         return CustomPaint(
-          size: const Size(double.infinity, double.infinity), // Full screen
+          size: const Size(double.infinity, double.infinity),
           painter: NorthernLightsPainter(_controller.value),
         );
       },
@@ -76,10 +117,10 @@ class NorthernLightsPainter extends CustomPainter {
         colors: [
           const Color.fromARGB(255, 3, 194, 102).withOpacity(0.5),
           const Color.fromARGB(255, 27, 255, 217).withOpacity(0.5),
-          const Color.fromARGB(255, 0, 255, 255).withOpacity(0.4),   
-          const Color.fromARGB(255, 255, 0, 157).withOpacity(0.4),  
-          const Color.fromARGB(255, 255, 255, 255).withOpacity(0.3), 
-          const Color.fromARGB(255, 217, 0, 255).withOpacity(0.4), 
+          const Color.fromARGB(255, 0, 255, 255).withOpacity(0.4),
+          const Color.fromARGB(255, 255, 0, 157).withOpacity(0.4),
+          const Color.fromARGB(255, 255, 255, 255).withOpacity(0.3),
+          const Color.fromARGB(255, 217, 0, 255).withOpacity(0.4),
         ],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
@@ -120,6 +161,6 @@ class NorthernLightsPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(NorthernLightsPainter oldDelegate) {
-    return true; 
+    return true;
   }
 }
