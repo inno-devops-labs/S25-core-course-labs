@@ -1,9 +1,15 @@
-
+{{/*
+Expand the name of the chart.
+*/}}
 {{- define "app-python.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-
+{{/*
+Create a default fully qualified app name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+If release name contains chart name it will be used as a full name.
+*/}}
 {{- define "app-python.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
@@ -61,6 +67,6 @@ Environment variables
 {{- define "app-python.env" -}}
 - name: APP_TIMEZONE
   value: "Europe/Paris"
-- name: SOME_OTHER
-  value: "value"
+- name: VISITS_FILE
+  value: "/app/data/visits.txt"
 {{- end }}
