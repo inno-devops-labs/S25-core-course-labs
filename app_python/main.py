@@ -1,4 +1,5 @@
 import json
+import os
 import sys
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
@@ -8,6 +9,8 @@ from datetime import datetime
 import pytz
 import logging
 
+
+VISITS_FILE = "/app_data/visits.txt"
 
 log_formatter = logging.Formatter(json.dumps({
     "level": "%(levelname)s",
@@ -39,6 +42,9 @@ async def health_check():
 
 @app.get("/", response_class=HTMLResponse)
 def get_moscow_time():
+    visit_count = read_visits() + 1
+    write_visits(visit_count)
+    
     moscow_time = datetime.now(MOSCOW_TZ).strftime("%d.%m.%Y %H:%M:%S")
     logger.info(f"Moscow Time API called, current time: {moscow_time}")
 
@@ -70,3 +76,26 @@ def get_moscow_time():
     </html>
     """
     return html_content
+
+
+def read_visits():
+    """Read the visit count from the file."""
+    if not os.path.exists(VISITS_FILE):
+        return 0
+    try:
+        with open(VISITS_FILE, "r") as f:
+            return int(f.read().strip())
+    except ValueError:
+        return 0
+
+def write_visits(count):
+    """Write the updated visit count to the file."""
+    with open(VISITS_FILE, "w") as f:
+        f.write(str(count))
+
+
+@app.get("/visits")
+def get_visits():
+    """Endpoint to retrieve the visit count."""
+    visit_count = read_visits()
+    return {"visits": visit_count}

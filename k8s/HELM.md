@@ -11,14 +11,14 @@
       helm install fastapi-mt ./fastapi-mt
       ```
 - Verified deployment:
-    1. ![alt text](images/image-8.png)
-    2. ![alt text](images/image-9.png)
+    1. ![alt text](assets/images/image-8.png)
+    2. ![alt text](assets/images/image-9.png)
 ### Step 5
 - Confirmed service accessibility:
-    1. ![alt text](images/image-10.png)
+    1. ![alt text](assets/images/image-10.png)
 ### Step 6
 - Output of `kubectl get pods,svc`
-    1. ![alt text](images/image-11.png)
+    1. ![alt text](assets/images/image-11.png)
 
 ## Task 2
 ### Step 2
@@ -32,7 +32,7 @@
       ```
 ### Step 4
 - Verified hook execution:
-    1. ![alt text](images/image-12.png)
+    1. ![alt text](assets/images/image-12.png)
     2. Preinstall hook: 
     ```bash
     Name:             pre-install-hook-4hgzh
@@ -166,7 +166,7 @@
     Normal  Started    3m36s  kubelet            Started container post-install-hook
     ```
 - Checked status of the helm deployment after hooks:
-    1. ![alt text](images/image-13.png)
+    1. ![alt text](assets/images/image-13.png)
 
 ## Bonus Task
 ### Step 1
@@ -209,7 +209,7 @@ helm dependency update gin-mt
 helm dependency list fastapi-mt
 helm dependency list gin-mt
 ```
-1. ![alt text](images/image16.png)
+1. ![alt text](assets/images/image16.png)
 ### Step 4
 - Installed fastapi-mt and gin-mt:
 ```bash
@@ -220,4 +220,4 @@ helm install gin-mt ./gin-mt
 ```bash
 helm template fastapi-mt ./fastapi-mt
 ```
-1. ![alt text](images/image14.png)
+1. ![alt text](assets/images/image14.png)

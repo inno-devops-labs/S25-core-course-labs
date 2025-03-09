@@ -1,0 +1,12 @@
+{
+    "app": {
+      "name": "Moscow Time App",
+      "version": "1.0.0",
+      "description": "FastAPI-based web application displaying current Moscow time"
+    },
+    "logging": {
+      "level": "info",
+      "format": "json",
+      "file": "/var/log/app_logs/python_app.log"
+    }
+}

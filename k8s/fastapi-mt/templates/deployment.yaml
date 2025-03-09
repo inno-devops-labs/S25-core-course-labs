@@ -45,6 +45,14 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config.json
+              subPath: config.json
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{- with .Values.livenessProbe }}
           #livenessProbe:
           #  {{- toYaml . | nindent 12 }}
@@ -57,10 +65,10 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: test-config
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}

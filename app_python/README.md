@@ -101,3 +101,23 @@ The project includes a GitHub Actions CI workflow to automate testing and Docker
    - Logs in to Docker Hub using GitHub Secrets.
    - Builds the Docker image.
    - Pushes the images (original and distroless) to Docker Hub.!
+
+## Application Upgrade for Persistence
+### Visits
+- Done:
+   1. Implemented a counter logic to keep track of the number of times `/` (main) page is accessed
+   2. Counter number is being saved into `app_data/visits.txt` file which is mounted on the host machine to `app_python/app_data/visits.txt`
+   3. `docker-compose.yml` created to include a new volume with `visits` file
+   4. Endpoint `/visits` introduced to check the current number of counted visits
+- How to run:
+   1. Clone the repository, switch to branch `lab12` and move to the app folder:
+   ```bash
+   git clone https://github.com/creepydanunity/S25-core-course-labs.git
+   git checkout lab12
+   cd app_python
+   ```
+   2. Run docker-compose:
+   ```bash
+   docker-compose up --build -d
+   ```
+   3. Access web app and check `app_python/app_data/visits.txt` for counting number of visits.
