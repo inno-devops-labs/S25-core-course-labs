@@ -10,13 +10,13 @@ metrics = PrometheusMetrics(app, group_by="endpoint")
 
 @app.route("/")
 def index():
-    visits_file = '/data/access_count.txt'
+    visits_file = "/data/access_count.txt"
     count = 0
     if os.path.exists(visits_file):
-        with open(visits_file, 'r') as f:
+        with open(visits_file, "r") as f:
             count = int(f.read().strip())
     count += 1
-    with open(visits_file, 'w') as f:
+    with open(visits_file, "w") as f:
         f.write(str(count))
     return render_template("index.html")
 
@@ -28,12 +28,12 @@ def get_time():
     return jsonify({"time": moscow_time})
 
 
-@app.route('/visits')
+@app.route("/visits")
 def track_visits():
-    visits_file = '/data/access_count.txt'
+    visits_file = "/data/access_count.txt"
     count = 0
     if os.path.exists(visits_file):
-        with open(visits_file, 'r') as f:
+        with open(visits_file, "r") as f:
             count = int(f.read().strip())
     return f"Total visits: {count}"
 
