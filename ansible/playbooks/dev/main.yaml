@@ -1,0 +1,7 @@
+---
+- name: Deploy Docker and web_app on Yandex Cloud VM
+  hosts: all
+  become: true
+  roles:
+    - role: ../../roles/docker
+    - role: ../../roles/web_app 
