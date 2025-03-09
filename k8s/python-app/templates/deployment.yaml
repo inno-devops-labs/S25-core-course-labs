@@ -33,17 +33,27 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-      env:
-        - name: APP_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: {{ include "python-app.fullname" . }}-secret
-              key: username
-        - name: APP_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ include "python-app.fullname" . }}-secret
-              key: password
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/config.json
+              subPath: config.json
+            - name: visits-volume
+              mountPath: /app/visits
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "app.fullname" . }}-config
+        - name: visits-volume
+          emptyDir: {}
         - name: {{ .Chart.Name }}
           {{- with .Values.securityContext }}
           securityContext:
