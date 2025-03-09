@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "js-app.fullname" . }}-config
+  labels:
+    {{- include "js-app.labels" . | nindent 4 }}
+data:
+  config.json: |
+{{ .Files.Get "files/config.json" | indent 4 }} 

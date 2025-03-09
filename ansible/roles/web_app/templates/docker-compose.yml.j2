@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    {% if docker_registry %}
+    image: {{ docker_registry }}/{{ docker_image_name }}:{{ docker_image_tag }}
+    {% else %}
+    image: {{ docker_image_name }}:{{ docker_image_tag }}
+    {% endif %}
+    container_name: {{ docker_compose_project_name }}_web
+    restart: unless-stopped
+    ports:
+      - "{{ app_port }}:{{ app_port }}"
+    environment:
+      - ENVIRONMENT={{ app_environment }}
+      {% for key, value in app_env_vars.items() %}
+      - {{ key }}={{ value }}
+      {% endfor %}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:{{ app_port }}{{ health_check_endpoint }}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge 

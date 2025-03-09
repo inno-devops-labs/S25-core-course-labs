@@ -1,0 +1,13 @@
+plugin: aws_ec2
+regions:
+  - us-west-2  # Adjust this to your AWS region
+filters:
+  instance-state-name: running
+  tag:Environment: dev
+keyed_groups:
+  - key: tags.Environment
+    prefix: env
+  - key: tags.Role
+    prefix: role
+compose:
+  ansible_host: public_ip_address 
