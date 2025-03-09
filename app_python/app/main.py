@@ -22,7 +22,7 @@ if not visits_file.exists() and os.access(visits_file.parent, os.W_OK):
     visits_file.write_text("0")
 elif not os.access(visits_file.parent, os.W_OK):
     print(
-        f"Warning: No write permission for {visits_file.parent}. Visits will not persist.")
+        f"Warning: No write permission for {visits_file.parent}.")
 
 
 def get_visits_count() -> int:
