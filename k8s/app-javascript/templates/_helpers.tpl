@@ -64,9 +64,9 @@ Create the name of the service account to use
 {{/*
 Common environment variables
 */}}
-{{- define "app-javascript.env" -}}
+{{- define "app-javascript.environmentVariables" -}}
 - name: APP_NAME
-  value: {{ .Values.env.appname | quote }}
+  value: {{ .Values.environment.appname | quote }}
 - name: MY_NAME
-  value: {{ .Values.env.myname | quote }}
+  value: {{ .Values.environment.myname | quote }}
 {{- end -}}
