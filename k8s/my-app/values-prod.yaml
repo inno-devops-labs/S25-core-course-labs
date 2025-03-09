@@ -5,13 +5,6 @@ image:
 service:
   type: NodePort
   port: 8000
-  targetPort:8000
+  targetPort: 8000
 env: "prod"
-
-orgchart:
-  enabled: true
-  image:
-    repository: jweissig/app
-    tag: latest
-  replicas: 1
 
