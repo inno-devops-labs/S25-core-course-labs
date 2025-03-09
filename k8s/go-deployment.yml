@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-go-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-go-app
+  template:
+    metadata:
+      labels:
+        app: my-go-app
+    spec:
+      containers:
+        - name: my-go-app
+          image: kaaxd/my-go-app:latest
+          ports:
+            - containerPort: 5001

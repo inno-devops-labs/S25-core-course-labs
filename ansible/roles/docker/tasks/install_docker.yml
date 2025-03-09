@@ -1,0 +1,51 @@
+---
+- name: Installing required system packages
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - python3-pip
+      - virtualenv
+      - python3-setuptools
+      - docker.io
+    state: present
+    update_cache: yes
+
+- name: Add Docker GPG apt Key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Retrieve Ubuntu release version
+  command: lsb_release -sc
+  register: ubuntu_version
+  changed_when: no
+
+- name: Configure Docker Repository
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ubuntu_version.stdout }} stable"
+    state: present
+    update_cache: true
+
+- name: Install Docker and related packages
+  apt:
+    pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: latest
+    update_cache: yes
+
+- name: Start and enable Docker service
+  service:
+    name: docker
+    state: running
+    enabled: true
+
+- name: Add current user to Docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
