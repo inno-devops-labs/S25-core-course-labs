@@ -5,6 +5,10 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
+	"strconv"
+	"strings"
+	"sync"
 	"time"
 )
 
@@ -20,7 +24,41 @@ const (
 
 	// HTML file with the web page
 	HTMLFileName = "index.html"
+
+	// File with the number of visits
+	visitsFileName = "visits-go.txt"
 )
+
+var mu sync.Mutex
+
+func incrementVisits() (int, error) {
+	mu.Lock()
+	defer mu.Unlock()
+
+	var count int
+
+	data, err := os.ReadFile(visitsFileName)
+	if err != nil {
+		if os.IsNotExist(err) {
+			count = 1
+		} else {
+			return 0, err
+		}
+	} else {
+		count, err = strconv.Atoi(strings.TrimSpace(string(data)))
+		if err != nil {
+			return 0, err
+		}
+		count++
+	}
+
+	err = os.WriteFile(visitsFileName, []byte(strconv.Itoa(count)), 0666)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
 
 // Response model with a date field
 type DateResponse struct {
@@ -32,6 +70,12 @@ type DateResponse struct {
 func getCurrentDateHTML(w http.ResponseWriter, r *http.Request) {
 	// Log the incoming request
 	log.Printf("Handling HTML page request: %s from %s", r.URL.Path, r.RemoteAddr)
+
+	_, err := incrementVisits()
+	if err != nil {
+        // Even if the incrementing of visits fails, we still return the HTML page
+		log.Printf("Error adding visits: %v", err)
+	}
 
 	htmlContent, err := ioutil.ReadFile(HTMLFileName)
 	if err != nil {
@@ -49,6 +93,12 @@ func getCurrentDate(w http.ResponseWriter, r *http.Request) {
 	// Log the incoming request
 	log.Printf("Handling API date request: %s from %s", r.URL.Path, r.RemoteAddr)
 
+	_, err := incrementVisits()
+	if err != nil {
+	    // Even if the incrementing of visits fails, we still return the date
+		log.Printf("Error adding visits: %v", err)
+	}
+
 	location, err := time.LoadLocation(timezone)
 	if err != nil {
 		log.Printf("Error loading timezone %s: %v", timezone, err)
@@ -64,9 +114,26 @@ func getCurrentDate(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Get the number of visits to the page
+func getVisits(w http.ResponseWriter, r *http.Request) {
+	// Log the incoming request
+	log.Printf("Handling visits request: %s from %s", r.URL.Path, r.RemoteAddr)
+
+	visits, err := incrementVisits()
+	if err != nil {
+		log.Printf("Error adding visits: %v", err)
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "text/plain")
+	w.Write([]byte("Visits: " + strconv.Itoa(visits)))
+}
+
 func main() {
 	http.HandleFunc("/", getCurrentDateHTML)
 	http.HandleFunc("/api/date", getCurrentDate)
+	http.HandleFunc("/visits", getVisits)
 
 	log.Printf("Starting server on port %s", appPort)
 	if err := http.ListenAndServe(appPort, nil); err != nil {

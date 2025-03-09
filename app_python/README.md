@@ -76,6 +76,20 @@ docker run -p 8001:8001 azamatbayramov/s25-devops-py-dl
 
 3. Open your web browser and navigate to `http://0.0.0.0:8001/` to view the current time in Moscow.
 
+### Using monitoring `docker-compose.yml`
+
+1. Change permissions for `visits-py.txt` using the following command in `monitoring` directory:
+
+```bash
+chmod 666 visits-py.txt
+```
+
+2. Run the application using the following command in `monitoring` directory:
+
+```bash
+docker compose up -d
+```
+
 ## Unit Tests
 
 1. Install the required dependencies using the following command:
@@ -112,3 +126,4 @@ It consists of the following steps:
 - `/` - Displays the current time in Moscow as an HTML response using `/api/time` endpoint.
 - `/api/time` - Returns the current time in Moscow as a JSON response.
 - `/docs` - Interactive OpenAPI documentation.
+- `/visits` - Count of visits to any endpoint(including `/visits`). Every request to any endpoint increments the counter in `visits-py.txt`.

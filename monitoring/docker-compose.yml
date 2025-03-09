@@ -13,6 +13,8 @@ services:
       - "8001:8001"
     networks:
       - monitoring
+    volumes:
+      - ./visits-py.txt:/app/visits-py.txt
     logging:
       driver: "json-file"
       options:
@@ -36,6 +38,8 @@ services:
       - "8002:8002"
     networks:
       - monitoring
+    volumes:
+      - ./visits-go.txt:/app/visits-go.txt
     logging:
       driver: "json-file"
       options:

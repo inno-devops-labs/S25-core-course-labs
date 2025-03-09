@@ -100,17 +100,16 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+volumes:
+  - name: app-go-helm-config-volume
+    configMap:
+      name: app-go-helm-config
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts:
+  - name: app-go-helm-config-volume
+    mountPath: /app/config.json
+    subPath: config.json
 
 nodeSelector: {}
 

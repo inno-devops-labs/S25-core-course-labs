@@ -64,6 +64,20 @@ docker run -p 8002:8002 azamatbayramov/s25-devops-go-dl
 
 3. Open your web browser and navigate to `http://0.0.0.0:8002/` to view the current date in Moscow.
 
+### Using monitoring `docker-compose.yml`
+
+1. Change permissions for `visits-go.txt` using the following command in `monitoring` directory:
+
+```bash
+chmod 666 visits-go.txt
+```
+
+2. Run the application using the following command in `monitoring` directory:
+
+```bash
+docker compose up -d
+```
+
 ## Unit Tests
 
 1. Run the unit tests using the following command:
@@ -91,3 +105,4 @@ It consists of the following steps:
 
 - `/` - Displays the current date in Moscow as an HTML response using `/api/date` endpoint.
 - `/api/date` - Returns the current date in Moscow as a JSON response.
+- `/visits` - Count of visits to any endpoint(including `/visits`). Every request to any endpoint increments the counter in `visits-go.txt`.

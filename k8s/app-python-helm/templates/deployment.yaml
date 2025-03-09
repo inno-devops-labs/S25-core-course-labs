@@ -50,6 +50,9 @@ spec:
                   name: credentials
                   key: PASSWORD
             {{- include "app-python.env" . | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: app-python-helm-config
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
