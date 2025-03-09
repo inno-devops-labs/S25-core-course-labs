@@ -1,4 +1,5 @@
-import pytz, os
+import pytz
+import os
 from flask import Flask, Response
 from datetime import datetime
 from prometheus_client import Counter, Gauge, generate_latest
@@ -76,7 +77,7 @@ def visits():
 
     with open(VISITS_FILE, "w") as visits_file:
         visits_file.write(str(VISITS))
-        
+     
     return f"Number of visits is: {VISITS}"
 
 
