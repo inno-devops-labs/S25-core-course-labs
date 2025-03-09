@@ -1,4 +1,4 @@
-import pytz
+import pytz, os
 from flask import Flask, Response
 from datetime import datetime
 from prometheus_client import Counter, Gauge, generate_latest
@@ -8,6 +8,8 @@ app = Flask(__name__)
 # Global variable with timezone
 TIME_ZONE = ""
 CONFIG_FILE = "config.txt"
+VISITS_FILE = "visits"
+VISITS = 0
 
 # Prometheus metrics
 REQUEST_COUNT = Counter('app_request_count', 'Total number of requests')
@@ -37,6 +39,12 @@ def current_time() -> str:
     Returns the current time in timezone formatted as HH:MM:SS.
     """
     global TIME_ZONE
+    global VISITS
+
+    VISITS += 1
+
+    with open(VISITS_FILE, "w") as visits_file:
+        visits_file.write(str(VISITS))
 
     # Start tracking request time
     start_time = datetime.now()
@@ -61,5 +69,28 @@ def metrics() -> Response:
     return Response(generate_latest(), mimetype="text/plain")
 
 
+@app.route("/visits")
+def visits():
+    global VISITS
+    VISITS += 1
+
+    with open(VISITS_FILE, "w") as visits_file:
+        visits_file.write(str(VISITS))
+        
+    return f"Number of visits is: {VISITS}"
+
+
 if __name__ == "__main__":
+    try:
+        with open(VISITS_FILE, "r") as visits_file:
+            VISITS = int(visits_file.read())
+    except Exception:
+        if os.path.exists(VISITS_FILE):
+            os.remove(VISITS_FILE)
+
+            VISITS = 0
+
+        with open(VISITS_FILE, "w") as visits_file:
+            visits_file.write(str(VISITS))
+
     app.run(host="0.0.0.0", port=5000, debug=True)
