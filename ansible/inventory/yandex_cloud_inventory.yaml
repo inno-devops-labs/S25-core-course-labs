@@ -1,0 +1,6 @@
+all:
+  hosts:
+    yandex_vm_1:
+      ansible_host: 158.160.58.35
+      ansible_user: nickky
+      ansible_ssh_private_key_file: ~/.ssh/id_rsa.pub

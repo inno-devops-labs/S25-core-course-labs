@@ -1,0 +1,16 @@
+---
+- name: Copy secure Docker daemon configuration
+  copy:
+    content: |
+      {
+          "userns-remap": "default"
+      }
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart docker
+
+- name: Validate Docker daemon configuration JSON syntax
+  command: python3 -m json.tool /etc/docker/daemon.json
+  changed_when: false
