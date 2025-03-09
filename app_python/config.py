@@ -1,1 +1,4 @@
-config = {"TIMEZONE_NAME": "Europe/Moscow"}
+config = {
+    "TIMEZONE_NAME": "Europe/Moscow",
+    "VISITS_FILE": "/data/visits.txt"
+}

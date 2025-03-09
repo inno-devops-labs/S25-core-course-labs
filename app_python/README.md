@@ -26,14 +26,16 @@ This Flask-based web application displays the current time in Moscow.
    python app.py
    ```
 5. **Access the Web App:**
-   Open `http://127.0.0.1:5000/` in your browser.
+   - Main page: `http://127.0.0.1:5000/`
+   - Visit counter: `http://127.0.0.1:5000/visits`
+   - Prometheus metrics: `http://127.0.0.1:5000/metrics`
 
 ### File Structure
 - `app.py` - Main entry point of the application.
 - `services/get_time_service.py` - Service class handling time retrieval.
 - `config.py` - Stores configuration settings (timezone).
 - `templates/current_time.html` - HTML template for displaying time.
-
+- `data/visits.txt` - Persistent storage for visit counter.
 
 ### Docker Support
 
@@ -52,6 +54,9 @@ docker run -p 5000:5000 moscow-time-app
 docker pull whatislav/moscow-time-app:1.0
 docker run -p 5000:5000 whatislav/moscow-time-app:1.0
 ```
+
+### Persistence
+The application maintains a visit counter that persists across container restarts using a volume mount. The counter is stored in `/data/visits.txt` inside the container, which is mapped to `./data/visits.txt` on the host.
 
 ### Unit Tests
 

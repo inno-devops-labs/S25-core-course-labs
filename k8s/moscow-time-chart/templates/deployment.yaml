@@ -18,10 +18,18 @@ spec:
         app: moscow-time-app
         release: {{ .Release.Name }}
     spec:
+      volumes:
+      - name: app-config-volume
+        configMap:
+          name: {{ .Release.Name }}-app-config
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        volumeMounts:
+        - name: app-config-volume
+          mountPath: /etc/app-config
+          readOnly: true
         env:
           - name: MY_USERNAME
             valueFrom:

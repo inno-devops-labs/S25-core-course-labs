@@ -5,12 +5,15 @@ networks:
 
 volumes:
   loki-data:
+  app-data:
 
 services:
   app_python:
     image: whatislav/moscow-time-app:latest
     ports:
       - "5000:5000"
+    volumes:
+      - app-data:/data
     networks:
       - loki
     depends_on:
