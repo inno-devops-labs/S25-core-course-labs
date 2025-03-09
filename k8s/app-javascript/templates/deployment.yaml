@@ -39,6 +39,8 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          env: {{- include "app-javascript.env" . | nindent 12 }}
+
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http

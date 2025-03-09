@@ -60,3 +60,13 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Common environment variables
+*/}}
+{{- define "app-javascript.env" -}}
+- name: APP_NAME
+  value: {{ .Values.env.appname | quote }}
+- name: MY_NAME
+  value: {{ .Values.env.myname | quote }}
+{{- end -}}
