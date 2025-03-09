@@ -192,8 +192,8 @@ Controlled By:  ReplicaSet/app-kotlin-55c9755fff
 Containers:
   app-kotlin:
     Container ID:   docker://69e6780e2351288bc4b076407333c6f95bf6e19ae8a0b17d07feab86631dca8b
-    Image:          dyllasdek/app_kotlin:latest
-    Image ID:       docker-pullable://dyllasdek/app_kotlin@sha256:8818fe4076611494d2685f71a347f60bbb164ff1942e19f5a4a1a4c441ea3cdc
+    Image:          emapfff/app_kotlin:latest
+    Image ID:       docker-pullable://emapfff/app_kotlin@sha256:8818fe4076611494d2685f71a347f60bbb164ff1942e19f5a4a1a4c441ea3cdc
     Port:           8080/TCP
     Host Port:      0/TCP
     State:          Running
@@ -226,7 +226,7 @@ Events:
   Type     Reason     Age   From               Message
   ----     ------     ----  ----               -------
   Normal   Scheduled  4s    default-scheduler  Successfully assigned default/app-kotlin-55c9755fff-5vqz5 to minikube
-  Normal   Pulled     3s    kubelet            Container image "dyllasdek/app_kotlin:latest" already present on machine
+  Normal   Pulled     3s    kubelet            Container image "emapfff/app_kotlin:latest" already present on machine
   Normal   Created    3s    kubelet            Created container app-kotlin
   Normal   Started    3s    kubelet            Started container app-kotlin
   Warning  Unhealthy  2s    kubelet            Readiness probe failed: Get "http://10.244.0.13:8080/": dial tcp 10.244.0.13:8080: connect: connection refused
