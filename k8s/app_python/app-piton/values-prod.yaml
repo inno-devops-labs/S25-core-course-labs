@@ -55,6 +55,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-config:
-  path: "files/config.json"
