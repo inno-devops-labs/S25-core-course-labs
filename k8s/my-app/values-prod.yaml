@@ -1,4 +1,4 @@
-replicaCount: 3
+replicaCount: 2
 image:
   repository: nikachek/moscow-time-api
   tag: latest
