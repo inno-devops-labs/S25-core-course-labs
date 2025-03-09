@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vault-config
+data:
+  config.hcl: |
+    exit_after_auth = false
+    pid_file = "/home/vault/pidfile"
+    
+    vault {
+      address = "http://vault.default:8200"
+    }
+    
+    auto_auth {
+      method "kubernetes" {
+        mount_path = "auth/kubernetes"
+        config = {
+          role = "my-app-role"
+        }
+      }
+    }
+    
+    template {
+      destination = "/vault/secrets/database-config.txt"
+      contents = <<EOH
+      {{- with secret "secret/database-config" }}
+      username={{ .Data.data.username }}
+      password={{ .Data.data.password }}
+      {{- end }}
+      EOH
+    }

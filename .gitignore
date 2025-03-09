@@ -1,0 +1,10 @@
+app_python/a.txt
+app_python/venv/
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate
+*.tfstate.*
+docker-compose.override.yml
+
