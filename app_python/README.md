@@ -1,6 +1,10 @@
 ## Overview
 A simple web application that displays the current time in Moscow.
 
+## Endpoints
+- `/` - Shows the current time in Moscow.
+- `/visits` - Displays the number of times the app has been accessed.
+
 ## Installation
 Installing of dependencies:
 `pip install -r requirements.txt`
