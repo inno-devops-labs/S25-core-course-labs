@@ -4,15 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moscow Time</title>
-    <script>
-        function refreshTime() {
-            location.reload();
-        }
-        setInterval(refreshTime, 1000);
-    </script>
 </head>
 <body>
-    <h1>Current Time in Moscow: {{ time }}</h1>
+    <h1>Current Moscow Time: {{ time }}</h1>
+    <h2>Site Visits: {{ visit_count }}</h2>
 </body>
 </html>
-
