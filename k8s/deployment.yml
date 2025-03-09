@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-python-deployment
+  labels:
+    app: app-python
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-python
+  template:
+    metadata:
+      labels:
+        app: app-python
+    spec:
+      serviceAccountName: internal-app
+      containers:
+      - name: app-python
+        image: achulakov/lab2
+        ports:
+        - containerPort: 8080
