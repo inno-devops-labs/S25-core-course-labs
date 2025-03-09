@@ -27,3 +27,19 @@ To run the container use: `docker run -p 5000:5000 mishablin/devops-labs`
 ## Unit tests
 
 To run unit tests run: `pytest`
+
+## Visits counter
+
+The application stores the number of visits.
+
+To access the number of visits - visit the `/visits` endpoint.
+
+```bash
+docker exec -it monitoring-app_python-1 bash
+
+nonroot@6712670824c7:/src$ ls
+main.py  requirements.txt  static  templates  visits.txt
+
+nonroot@6712670824c7:/src$ cat visits.txt
+2
+```

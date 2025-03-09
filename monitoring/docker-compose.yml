@@ -93,6 +93,8 @@ services:
       - "5000:5000"
     networks:
       - monitor
+    volumes:
+      - ./visits.txt:/app/visits.txt
     logging: *default-logging
     deploy: *default-deploy
 
