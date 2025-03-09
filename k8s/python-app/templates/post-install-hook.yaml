@@ -10,6 +10,6 @@ spec:
   - name: post-install-container
     image: busybox
     imagePullPolicy: Always
-    command: ['sh', '-c', 'echo The post-install hook is running && sleep 15' ]
+    command: ['sh', '-c', 'echo The post-install hook is running && sleep 5' ]
   restartPolicy: Never
   terminationGracePeriodSeconds: 0
