@@ -34,6 +34,12 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
+          env:
+          - name: MY_PASS
+            valueFrom:
+              secretKeyRef:
+                name: credentials
+                key: password
           {{- with .Values.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}

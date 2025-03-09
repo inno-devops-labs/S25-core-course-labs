@@ -29,11 +29,14 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: ""
+  name: "internal-app"
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-podAnnotations: {}
+podAnnotations: {'vault.hashicorp.com/agent-inject': 'true',
+         'vault.hashicorp.com/role': 'internal-app',
+         'vault.hashicorp.com/agent-inject-secret-credentialsraw.txt': 'internal/data/database/config',
+         'vault.hashicorp.com/agent-inject-template-credentials.txt': '{{- with secret "internal/data/database/config" -}}password:{{ .Data.data.password }}{{- end -}}'}
 # This is for setting Kubernetes Labels to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
@@ -121,3 +124,5 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+PASSWORD: password123
