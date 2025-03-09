@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: multi-app-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: app-python.local
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: app-python-service
+              port:
+                number: 80
+    - host: app-nodejs.local
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: app-nodejs-service
+              port:
+                number: 80
+
