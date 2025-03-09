@@ -1,0 +1,6 @@
+apiVersion: v2
+name: helm-chart
+description: A Helm chart for Kubernetes Lab 11
+type: application
+version: 0.1.0
+appVersion: "1.0.0" 

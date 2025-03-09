@@ -1,0 +1,37 @@
+{{- if .Values.vault.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "helm-chart.fullname" . }}-vault-config
+  labels:
+    {{- include "helm-chart.labels" . | nindent 4 }}
+data:
+  vault-agent-config.hcl: |
+    exit_after_auth = true
+    pid_file = "/home/vault/pidfile"
+
+    auto_auth {
+      method "kubernetes" {
+        mount_path = "auth/kubernetes"
+        config = {
+          role = "{{ .Values.vault.role }}"
+        }
+      }
+
+      sink "file" {
+        config = {
+          path = "/home/vault/.vault-token"
+        }
+      }
+    }
+
+    template {
+      destination = "/vault/secrets/config.txt"
+      contents = <<EOH
+        {{ "{{" }} with secret "{{ .Values.vault.secretPath }}" {{ "}}" }}
+        database_username={{ "{{" }} .Data.data.username {{ "}}" }}
+        database_password={{ "{{" }} .Data.data.password {{ "}}" }}
+        {{ "{{" }} end {{ "}}" }}
+      EOH
+    }
+{{- end }} 
