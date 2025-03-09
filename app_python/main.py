@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Region Time API", version="0.0.1")
 link = "https://kudamoscow.ru/uploads/9151b31fb2ef1543969b65e6bc111bea.png"
-VISITS_FILE = "visits.txt"
+VISITS_FILE = "/app/data/visits.txt"
 
 if os.path.exists(VISITS_FILE):
     with open(VISITS_FILE, "r") as f:

@@ -1,6 +1,7 @@
 package com.random.color.picker.controller;
 
 import com.random.color.picker.service.RandomColorPicker;
+import com.random.color.picker.service.impl.VisitService;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RandomHexController {
 
     private final RandomColorPicker randomColorPicker;
-
     private final MeterRegistry meterRegistry;
+    private final VisitService visitService;
 
     private Counter colorRequestCounter;
 
@@ -28,8 +29,9 @@ public class RandomHexController {
                     .description("Total number of requests to the /hex/color endpoint")
                     .register(meterRegistry);
         }
-
         colorRequestCounter.increment();
+
+        visitService.incrementAndGet();
 
         thymeLeafEnt.addAttribute("color", randomColorPicker.pickRandomColor());
         return "random-color";
