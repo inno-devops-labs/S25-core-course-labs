@@ -45,8 +45,8 @@ def current_time() -> str:
 
     VISITS += 1
 
-    with open(os.path.join(VISITS_DIRECTORY, VISITS_FILE), "w") as visits_file:
-        visits_file.write(str(VISITS))
+    with open(os.path.join(VISITS_DIRECTORY, VISITS_FILE), "w") as vf:
+        vf.write(str(VISITS))
 
     # Start tracking request time
     start_time = datetime.now()
@@ -77,16 +77,16 @@ def visits():
     global VISITS
     VISITS += 1
 
-    with open(os.path.join(VISITS_DIRECTORY, VISITS_FILE), "w") as visits_file:
-        visits_file.write(str(VISITS))
+    with open(os.path.join(VISITS_DIRECTORY, VISITS_FILE), "w") as vf:
+        vf.write(str(VISITS))
 
     return f"Number of visits is: {VISITS}"
 
 
 if __name__ == "__main__":
     try:
-        with open(os.path.join(VISITS_DIRECTORY, VISITS_FILE), "r") as visits_file:
-            VISITS = int(visits_file.read())
+        with open(os.path.join(VISITS_DIRECTORY, VISITS_FILE), "r") as vf:
+            VISITS = int(vf.read())
     except Exception:
         if os.path.exists(os.path.join(VISITS_DIRECTORY, VISITS_FILE)):
             os.remove(os.path.join(VISITS_DIRECTORY, VISITS_FILE))
@@ -95,7 +95,7 @@ if __name__ == "__main__":
 
             VISITS = 0
 
-        with open(os.path.join(VISITS_DIRECTORY, VISITS_FILE), "w") as visits_file:
-            visits_file.write(str(VISITS))
+        with open(os.path.join(VISITS_DIRECTORY, VISITS_FILE), "w") as vf:
+            vf.write(str(VISITS))
 
     app.run(host="0.0.0.0", port=5000, debug=True)
