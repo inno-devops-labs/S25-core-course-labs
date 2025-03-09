@@ -2,4 +2,3 @@
 .pytest_cache
 __pycache__
 pyproject.toml
-visits
