@@ -22,6 +22,7 @@ current_time_gauge = Gauge(
 # File path for persisting the visit counter
 VISITS_FILE = 'visits'
 
+
 def get_visits():
     """Read the current visit count from the persistent file."""
     if os.path.exists(VISITS_FILE):
@@ -32,12 +33,14 @@ def get_visits():
             return 0
     return 0
 
+
 def update_visits():
     """Increment the visit count and save it to the file."""
     count = get_visits() + 1
     with open(VISITS_FILE, 'w') as f:
         f.write(str(count))
     return count
+
 
 @app.route('/')
 def show_moscow_time():
@@ -54,17 +57,20 @@ def show_moscow_time():
         f"<h1>Current Time in Moscow: {current_time_str} MSK</h1>"
     )
 
+
 @app.route('/visits')
 def visits():
     """Return the current number of visits."""
     count = get_visits()
     return f"<h2>Number of visits: {count}</h2>"
 
+
 @app.route('/metrics')
 def metrics():
     # Expose Prometheus metrics
     data = generate_latest(registry)
     return Response(data, mimetype=CONTENT_TYPE_LATEST)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
