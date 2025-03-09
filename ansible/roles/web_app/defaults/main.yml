@@ -1,0 +1,8 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for roles/web_app
+# roles/web_app/defaults/main.yml
+docker_image: denisnesterov/app:latest
+container_name: app
+container_port: 8080
+host_port: 8080
