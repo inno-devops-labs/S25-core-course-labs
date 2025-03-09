@@ -1,0 +1,68 @@
+- name: Install required dependencies
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+      - gnupg
+    state: present
+    update_cache: yes
+
+- name: Ensure /etc/apt/keyrings directory exists
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: 0755
+
+- name: Add Docker GPG key
+  ansible.builtin.shell: |
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
+  args:
+    executable: /bin/bash
+
+- name: Add Docker repository
+  ansible.builtin.shell: |
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  args:
+    executable: /bin/bash
+
+- name: Update package cache
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Install Docker packages
+  ansible.builtin.package:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+  notify: restart docker
+
+- name: Ensure /etc/docker/ directory exists
+  ansible.builtin.file:
+    path: /etc/docker
+    state: directory
+    mode: 0755
+
+- name: Configure Docker daemon options (if any)
+  ansible.builtin.copy:
+    content: "{{ docker_daemon_options | to_nice_json }}"
+    dest: /etc/docker/daemon.json
+    mode: 0644
+  when: docker_daemon_options.keys() | length > 0
+  notify: restart docker
+
+- name: Ensure Docker is started and enabled at boot
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Flush handlers to restart Docker immediately
+  meta: flush_handlers
+
+- include_tasks: install_compose.yml
+  when: docker_install_compose | bool
