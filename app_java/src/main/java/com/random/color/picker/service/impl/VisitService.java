@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class VisitService {
 
     private AtomicInteger visitCounter = new AtomicInteger(0);
-    private static final Path VISITS_FILE = Path.of("visits.txt");
+    private static final Path VISITS_FILE = Path.of("/app/data/visits.txt");
 
     @PostConstruct
     public void init() {
