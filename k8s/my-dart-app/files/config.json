@@ -1,0 +1,12 @@
+{
+    "database": {
+      "host": "postgres",
+      "port": 5432,
+      "username": "admin",
+      "password": "password"
+    },
+    "logging": {
+      "level": "info",
+      "file": "/var/log/app.log"
+    }
+  }

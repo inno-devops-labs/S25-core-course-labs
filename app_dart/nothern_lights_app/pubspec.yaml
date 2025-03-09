@@ -36,6 +36,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   sparkline: ^1.0.0
+  shelf: ^1.4.0
+  shelf_router: ^1.1.0
 
 dev_dependencies:
   flutter_test:

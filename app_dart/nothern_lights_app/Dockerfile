@@ -17,6 +17,7 @@ WORKDIR /usr/share/nginx/html
 
 COPY --from=build /app_dart/nothern_lights_app/build/web .
 
+
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]

@@ -1,5 +1,3 @@
-version: "3.3"
-
 networks:
   loki:
 
@@ -109,7 +107,7 @@ services:
       timeout: 5s
 
   app_python:
-    image: g1l1a/my-django-app:v2.3
+    image: g1l1a/my-django-app:v2.6
     restart: always
     ports:
       - "8000:8000"
@@ -132,6 +130,35 @@ services:
     depends_on:
       loki:
         condition: service_healthy
+    volumes:
+      - ./visits.txt:/app_python/visits.txt
+    
+  app_dart:
+    image: g1l1a/my-dart-app:latest
+    restart: always
+    ports:
+      - "8080:80"
+    networks:
+      - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 15s
+      retries: 5
+      timeout: 5s
+    depends_on:
+      loki:
+        condition: service_healthy
+    volumes:
+      - ./visits.txt:/app_dart/visits.txt
 
   prometheus:
     image: prom/prometheus:latest

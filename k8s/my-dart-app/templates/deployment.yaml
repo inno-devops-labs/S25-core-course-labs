@@ -9,7 +9,6 @@ spec:
   selector:
     matchLabels:
       {{- include "my-dart-app.selectorLabels" . | nindent 6 }}
-      {{- include "my-library-chart.labels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
