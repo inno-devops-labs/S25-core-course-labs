@@ -1,0 +1,6 @@
+# playbook for task 1
+- name: Deploy app_python
+  hosts: all
+  become: yes
+  roles:
+    - web_app
