@@ -73,3 +73,15 @@ Refresh the page to see the displayed time update.
   - Docker  
     - Runs after build, linter, test, and SNYK  
     - Logs into Docker, builds the image, and pushes it to the registry
+
+## Visits Counter
+
+The number of application accesses is persistently stored in `visits` file.
+You can access the visits counter using `GET /visits` endpoint.
+
+Proof of persistent visits storage with Docker Volumes:
+
+![visit_proof_1.jpg](visit_proof_1.jpg)
+![visit_proof_2.jpg](visit_proof_2.jpg)
+
+

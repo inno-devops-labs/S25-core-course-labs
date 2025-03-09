@@ -2,21 +2,29 @@ FROM python:3.9-slim-bullseye
 
 WORKDIR /app
 
-# Install python dependencies (no caching)
+# Устанавливаем явные UID/GID (совпадают с вашим пользователем на хосте)
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+
+# Создаем группу и пользователя с фиксированными UID/GID
+RUN groupadd --gid $GROUP_ID appgroup && \
+    useradd --uid $USER_ID --gid appgroup appuser
+
+# Создаем директорию /data и даем права
+RUN mkdir -p /data && \
+    chown -R appuser:appgroup /data && \
+    chmod 777 /data  # Разрешаем запись всем
+
+# Копируем зависимости и устанавливаем
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# create system group and usr to launch app without root
-RUN groupadd --system appgroup && \
-    useradd --system --gid appgroup appuser
-
-# Copy app code into workdir
+# Копируем код приложения
 COPY . .
 
-# Change owner of files to created group and usr
+# Меняем владельца файлов приложения
 RUN chown -R appuser:appgroup /app
 
-# Select created usr
 USER appuser
 
 EXPOSE 5000
