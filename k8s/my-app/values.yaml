@@ -81,6 +81,13 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
+resources:
+  limits:
+    cpu: "500m"
+    memory: "256Mi"
+  requests:
+    cpu: "250m"
+    memory: "128Mi"
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
@@ -106,6 +113,9 @@ volumes: []
 #   secret:
 #     secretName: mysecret
 #     optional: false
+secret:
+  username: "myUser"
+  password: "myPassword"
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: []
