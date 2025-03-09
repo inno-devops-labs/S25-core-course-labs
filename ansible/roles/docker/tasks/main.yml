@@ -1,0 +1,30 @@
+---
+
+- name: Install packages
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - gnupg
+    state: present
+    update_cache: yes
+
+
+- name: Add Docker GPG key
+  get_url:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    dest: /etc/apt/keyrings/docker.asc
+
+- name: Add Docker repository
+  apt_repository:
+    # Not works with Kali, need to replace ansible_distribution_release with "jammy"
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    state: present
+
+- name: Install Docker
+  include_tasks: install_docker.yml
+
+- name: Install Docker Compose
+  include_tasks: install_compose.yml
