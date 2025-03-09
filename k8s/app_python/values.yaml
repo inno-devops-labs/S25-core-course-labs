@@ -8,7 +8,7 @@ image:
   repository: kurkune/app_python
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: latest
 
 imagePullSecrets: []
 nameOverride: ""
@@ -23,9 +23,17 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: ""
+  name: "internal-app"
 
-podAnnotations: {}
+podAnnotations:
+  vault.hashicorp.com/agent-inject: 'true'
+  vault.hashicorp.com/role: 'internal-app'
+  vault.hashicorp.com/agent-inject-secret-database-config.txt: 'internal/data/database/config'
+  vault.hashicorp.com/agent-inject-status: 'update'
+  vault.hashicorp.com/agent-inject-template-database-config.txt: |
+    {{- with secret "internal/data/database/config" -}}
+    postgresql://{{ .Data.data.username }}:{{ .Data.data.password }}@postgres:5432/wizard
+    {{- end -}}
 podLabels: {}
 
 podSecurityContext: {}
@@ -41,7 +49,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 5000
+  port: 8080
 
 ingress:
   enabled: false
@@ -59,17 +67,13 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+resources:
+  limits:
+    cpu: 1
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 30Mi
 
 livenessProbe:
   httpGet:
