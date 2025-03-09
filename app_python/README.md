@@ -43,6 +43,7 @@ python app.py
 4. **Follow the browser link:**
     
 The link will be in the terminal, or simply go to ``http://127.0.0.1:5000/`` to view the application.
+You may also go to ``http://127.0.0.1:5000/visits`` to check the number of visits (it counts the visits to the visits page, too)
 
 # Dedicated Docker section
 

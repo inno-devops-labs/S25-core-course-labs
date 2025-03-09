@@ -1,3 +1,4 @@
 *.md
 .gitignore
 __pycache__/
+visits.txt

@@ -109,6 +109,8 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
+    volumes:
+      - ./moscowtimeimagepython/tmp:/tmp
 
   app_php:
     image: magel0n/moscowtimeimagephp:latest

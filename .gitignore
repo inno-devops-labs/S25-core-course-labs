@@ -13,3 +13,4 @@ terraform/YandexCloud/.terraform.lock.hcl
 terraform/YandexCloud/terraform.tfstate*
 
 ansible/yacloud_token
+/app_python/visits.txt
