@@ -71,12 +71,14 @@ services:
       - loki
 
   bakina_devops_webapp:
-#    build:
-#      context: ../app_python
-    image: bakinasa/moscow-time-app
+    build:
+      context: ../app_python
+#    image: bakinasa/moscow-time-app
     container_name: moscow-time-app
     volumes:
-      - app-logs:/logs
+      - visits_data:/app/visits
+#    volumes:
+#      - app-logs:/logs
     ports:
       - "5000:5000"
     restart: unless-stopped
@@ -90,3 +92,4 @@ volumes:
   grafana_data:
   app-logs:
   prometheus_data:
+  visits_data:

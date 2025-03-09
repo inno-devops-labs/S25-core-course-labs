@@ -12,6 +12,7 @@ COPY --from=builder /usr/local/bin/ /usr/local/bin/
 COPY . .
 
 RUN mkdir -p /app_python/logs && chown -R appuser:appuser /app_python/logs
+RUN mkdir -p /app/visits && chown appuser:appuser /app/visits
 
 USER appuser
 EXPOSE 5000
