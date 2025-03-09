@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: 1.16.0
+description: Library chart for labels
+name: library-chart
+type: library
+version: 1.0.3
