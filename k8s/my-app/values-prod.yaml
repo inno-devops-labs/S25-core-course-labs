@@ -1,0 +1,9 @@
+replicaCount: 2
+image:
+  repository: nikachek/moscow-time-api
+  tag: latest
+service:
+  type: LoadBalancer
+  port: 80
+env: "prod"
+
