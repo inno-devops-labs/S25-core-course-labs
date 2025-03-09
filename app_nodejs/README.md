@@ -6,6 +6,8 @@
 
 ## Overview
 This is a simple Node.js web application built using Express. It displays the current time in Moscow and updates on each page refresh.
+There is an opportunity to track number of visits of main page via `/visits` endpoint.
+
 
 ## Local Installation
 1. Clone the repository:

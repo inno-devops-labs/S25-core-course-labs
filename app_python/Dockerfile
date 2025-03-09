@@ -16,6 +16,7 @@ RUN addgroup -S user && \
     adduser -S -G user user && \
     chown -R user:user /app
 USER user
+RUN mkdir -p /app/data && chown -R user:user /app/data && chmod -R 777 /app/data
 
 # Expose the port the app runs on
 EXPOSE 8000
