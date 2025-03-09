@@ -7,7 +7,7 @@
 
 
 ## Overview
-This Flask-based Python web application displays the current time in Moscow (MSK). When you access the homepage, it will show you the current date and time in a well-formatted string.
+This Flask-based Python web application displays the current time in Moscow (MSK). When you access the homepage, it will show you the current date and time in a well-formatted string with trcking the number of visits to the endpoint.
 
 ---
 
@@ -82,6 +82,12 @@ This will start the server on port `4000`.
    ```
 
 ---
+
+### API endpoints
+      
+   - `GET /`: Returns the current time in Moscow
+   - `GET /metrics`: Returns Prometheus metrics
+   - `GET /visits`: Returns the number of times the time endpoint has been accessed
 
 ## Testing
 

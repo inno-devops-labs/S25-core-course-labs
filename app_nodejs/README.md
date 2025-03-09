@@ -3,7 +3,7 @@
 ![Node CI](https://github.com/Sedoxxx/S25-core-course-labs/actions/workflows/node_ci.yml/badge.svg)
 
 ## Overview
-This is a simple Node.js + Express application that displays the current time in Moscow (MSK). When you access the homepage, it will show you the current date and time in a well-formatted string .
+This is a simple Node.js + Express application that displays the current time in Moscow (MSK). When you access the homepage, it will show you the current date and time in a well-formatted string with trcking the number of visits to the endpoint.
 
 ---
 
@@ -67,6 +67,13 @@ This will start the server on port `4000`.
    nodemon app.js
    ```
 ---
+
+### API endpoints
+      
+   - `GET /`: Returns the current time in Moscow
+   - `GET /metrics`: Returns Prometheus metrics
+   - `GET /visits`: Returns the number of times the time endpoint has been accessed
+   
 ## Testing
 
 To test the application, simply visit the homepage (`http://localhost:3000`) and verify that the current time in Moscow is displayed correctly.

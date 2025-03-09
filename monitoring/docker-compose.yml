@@ -129,6 +129,8 @@ services:
     container_name: app_python
     ports:
       - "8004:5000"
+    volumes:
+      - ./python_visits:/app/visits
     environment:
       - ENV=production
     networks:
@@ -154,6 +156,8 @@ services:
     container_name: app_nodejs
     ports:
       - "8005:3000"
+    volumes:
+      - ./node_visits:/app/visits
     environment:
       - ENV=production
     networks:
