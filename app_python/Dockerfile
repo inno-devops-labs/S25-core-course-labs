@@ -27,5 +27,8 @@ COPY --from=builder /app .
 # Set Python path to include dependencies
 ENV PYTHONPATH=/app/deps
 
-# Run the application
+# Create a persistent volume mount for the visits file
+VOLUME ["/app/data"]
+ENV VISITS_FILE="/app/data/visits"
+
 CMD ["python", "app.py"]
