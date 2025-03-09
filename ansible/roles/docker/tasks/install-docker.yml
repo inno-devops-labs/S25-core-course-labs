@@ -1,0 +1,33 @@
+- name: install dependencies
+  apt:
+    name: "{{item}}"
+    state: present
+    update_cache: yes
+  loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg-agent
+    - software-properties-common
+- name: add GPG key
+  apt_key:
+    url: "{{ gpg_key }}"
+    state: present
+- name: add docker repository to apt
+  apt_repository:
+    repo: "{{ repo_url }}"
+    state: present
+- name: install docker
+  apt:
+    name: "{{item}}"
+    state: latest
+    update_cache: yes
+  loop:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+- name: adding ubuntu to docker group
+  user:
+    name: ubuntu
+    groups: docker
+    append: yes

@@ -1,0 +1,16 @@
+- name: Deploy
+  block:
+    - name: Creating directory
+      ansible.builtin.file:
+        path: "{{ web_app_dir }}"
+        state: directory
+
+    - name: Docker compose template copy
+      ansible.builtin.template:
+        src: docker-compose.yml.j2
+        dest: "{{ web_app_dir }}/docker-compose.yml"
+
+    - name: Start containers
+      community.docker.docker_compose_v2:
+        project_src: "{{ web_app_dir }}"
+        state: present
