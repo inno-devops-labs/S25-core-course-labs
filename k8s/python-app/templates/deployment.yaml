@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "python-app.fullname" . }}
   labels:
-    {{- include "custom.labels" . | nindent 4 }}
+    {{- include "python-app.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -44,6 +44,13 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          env:
+            - name: MY_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "python-app.fullname" . }}-secret
+                  key: MY_PASS
+            {{- include "python-app.envVars" . | nindent 12 }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}

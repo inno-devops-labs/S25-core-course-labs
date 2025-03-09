@@ -11,6 +11,10 @@ image:
   pullPolicy: IfNotPresent
   tag: "latest"
 
+# Secrets for the application
+secret:
+  myPass: "MySuperSecretPassword"
+
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -32,7 +36,18 @@ serviceAccount:
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-podAnnotations: {}
+
+podAnnotations:
+  vault.hashicorp.com/agent-inject: "true"
+  vault.hashicorp.com/role: "python-app"
+  vault.hashicorp.com/agent-inject-secret-database-config.txt: "internal/data/database/config"
+  vault.hashicorp.com/agent-inject-template-database-config.txt: |
+    {{- with secret "internal/data/database/config" -}}
+    export DB_USERNAME="{{ .Data.data.username }}"
+    export DB_PASSWORD="{{ .Data.data.password }}"
+    {{- end -}}
+
+
 # This is for setting Kubernetes Labels to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
@@ -71,7 +86,14 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources: {}
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "250m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m" 
+
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -118,4 +140,4 @@ nodeSelector: {}
 
 tolerations: []
 
-affinity: {}
+affinity: {}    
