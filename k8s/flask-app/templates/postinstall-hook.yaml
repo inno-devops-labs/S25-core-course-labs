@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postinstall-hook
+  annotations:
+    "helm.sh/hook": "post-install"
+    "helm.sh/hook-delete-policy": "hook-succeeded"
+
+spec:
+  template:
+    spec:
+      containers:
+      - name: postinstall-hook
+        image: busybox
+        command: ["sleep", "20"]
+      restartPolicy: Never
