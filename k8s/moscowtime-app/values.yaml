@@ -11,13 +11,21 @@ nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
-  create: true
+  create: false
   automount: true
   annotations: {}
-  name: "moscowtime-app"
+  name: "internal-app"
 
 
-podAnnotations: {}
+podAnnotations:
+  vault.hashicorp.com/agent-inject: 'true'
+  vault.hashicorp.com/role: 'internal-app'
+  vault.hashicorp.com/agent-inject-secret-config: 'internal/database/config'
+  vault.hashicorp.com/agent-inject-template-config: |
+    {{- with secret "internal/database/config" -}}
+    export MY_PASS="{{ .Data.data.password }}"
+    {{- end -}}
+
 podLabels: {}
 
 podSecurityContext: {}
