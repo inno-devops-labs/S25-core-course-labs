@@ -1,81 +1,110 @@
-# Python Web Application
-
-This is a simple Python web application developed using Flask that displays the current time in Moscow.
-
-## Table of Contents
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Testing](#testing)
-- [Docker](#docker)
-- [Contributing](#contributing)
-
-## Installation
-
-1. Clone the repository:
-
-   > `git clone https://github.com/emapfff/S25-core-course-labs.git`
-
-2. Navigate to the app_python folder:
-
-   > `cd app_python`
-
-3. Create a virtual environment (recommended):
-
-   > `python -m venv venv`
-
-4. Activate the virtual environment:
-
-- On Windows:
-  > `venv\Scripts\activate`
-- On macOS and Linux:
-  > `source venv/bin/activate`
-
-5. Install the required dependencies:
-   > `pip install -r requirements.txt`
-
-## Usage
-
-Start the Flask application:
-
-> `python app.py`
-
-Open your web browser and go to http://127.0.0.1:5000/ to view the current time in Moscow. Refresh the page to see the time update.
-
-## Testing
-
-To test the application you should run:
-
-> `python -m unittest test_app`
-
-## Docker
-
-### How to build
-
-Run command
+# Lab 12
 
 ```
-docker build -t app_python:latest
+emildavlityarov@emapfff S25-core-course-labs k8s\helm\app-kotlin % kubectl get po
+NAME                          READY   STATUS    RESTARTS       AGE
+app-kotlin-66f5556f7c-8gjdw   1/1     Running   0              79s
+app-python-6b5b74fc76-hvxjg   1/1     Running   0              116s
 ```
 
-### How to Pull
-
-You can pull the Docker image from Docker Hub using(current version 1.0.2):
-
 ```
-docker pull emapfff/app_python:1.0.2
-```
-
-### How to Run
-
-To run the Docker container, use the following command:
-
-```
-docker run -p 5000:5000 app_python:<version_of_container>
+emildavlityarov@emapfff S25-core-course-labs k8s\helm\app-kotlin % kubectl exec app-python-6b5b74fc76-hvxjg   -- cat /config.json
+{
+    "Test1":"Test1",
+    "Check12":"Check12"
+}
 ```
 
-Make sure you have Docker installed and running on your system before executing these commands.
+```
+emildavlityarov@emapfff S25-core-course-labs k8s\helm\app-kotlin % kubectl describe po app-python-6b5b74fc76-hvxjg
+Name:             app-python-6b5b74fc76-hvxjg
+Namespace:        default
+Priority:         0
+Service Account:  app-python
+Node:             minikube/192.168.49.2
+Start Time:       Wed, 22 Nov 2023 01:55:40 +0300
+Labels:           TEST=check-custom-label
+                  app.kubernetes.io/instance=app-python
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=app-python
+                  app.kubernetes.io/version=1.16.0
+                  helm.sh/chart=app-python-0.1.0
+                  pod-template-hash=6b5b74fc76
+Annotations:      vault.hashicorp.com/agent-inject: true
+                  vault.hashicorp.com/agent-inject-secret-database-config.txt: internal/data/database/config
+                  vault.hashicorp.com/agent-inject-status: update
+                  vault.hashicorp.com/agent-inject-template-database-config.txt:
+                    {{- with secret "internal/data/database/config" -}}token_secret:{{ .Data.data.token }}{{- end -}}
+                  vault.hashicorp.com/role: app-python
+Status:           Running
+IP:               10.244.0.33
+IPs:
+  IP:           10.244.0.33
+Controlled By:  ReplicaSet/app-python-6b5b74fc76
+Containers:
+  app-python:
+    Container ID:   docker://e3bfd2d5b4c34a35516aa34bac3b74dda564031103ddf30f52a6b7db68523ec3
+    Image:          emapfff/app_python:latest
+    Image ID:       docker-pullable://emapfff/app_python@sha256:3d0c04a9c9a912b93224edb4b21399f3cc16cae25add3a73f4cf9b5a149dbb64
+    Port:           5000/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Wed, 22 Nov 2023 01:55:49 +0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     100m
+      memory:  128Mi
+    Requests:
+      cpu:      100m
+      memory:   128Mi
+    Liveness:   http-get http://:5000/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Readiness:  http-get http://:5000/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      CUSTOM_SECRET:     SECRET-ONE
+      SECRET:            <set to the key 'token' in secret 'real-secret'>           Optional: false
+      SPECIAL_TYPE_KEY:  <set to the key 'test' of config map 'config-map-python'>  Optional: false
+    Mounts:
+      /config.json from config-python (rw,path="config.json")
+      /data from counter-python (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-gbjzf (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  config-python:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      config-map-python
+    Optional:  false
+  counter-python:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:
+    SizeLimit:  500Mi
+  kube-api-access-gbjzf:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Guaranteed
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                    From               Message
+  Normal   Created    5m46s                  kubelet            Created container app-python
+  Normal   Started    5m46s                  kubelet            Started container app-python
+```
 
-## Contributing
+```
+emildavlityarov@emapfff S25-core-course-labs k8s\helm\app-python % kubectl exec app-python-6b5b74fc76-hvxjg -- env | grep SPECIAL
+SPECIAL_TYPE_KEY=test
+```
 
-Contributions are welcome! If you'd like to improve this project or report issues, please open an issue or submit a pull request.
+```
+emildavlityarov@emapfff S25-core-course-labs k8s\helm\app-kotlin % kubectl exec app-kotlin-66f5556f7c-8gjdw -- env | grep SPECIAL
+SPECIAL_TYPE_KEY=test
+```
