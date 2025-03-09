@@ -1,0 +1,66 @@
+---
+- name: Ensure apt key is not present in trusted.gpg.d
+  ansible.builtin.file:  # Use the fully qualified module name
+    path: /etc/apt/trusted.gpg.d/docker.asc
+    state: absent
+  tags: setup  # Add a tag for selective execution
+
+- name: Ensure old apt source list is not present in /etc/apt/sources.list.d
+  ansible.builtin.file:  # Use the fully qualified module name
+    path: "/etc/apt/sources.list.d/download_docker_com_linux_{{ docker_apt_ansible_distribution }}.list"
+    state: absent
+  tags: setup  # Add a tag for selective execution
+
+- name: Ensure the repo referencing the previous trusted.gpg.d key is not present
+  ansible.builtin.apt_repository:  # Use the fully qualified module name
+    repo: "deb [arch={{ docker_apt_arch }} signed-by=/etc/apt/trusted.gpg.d/docker.asc]
+     {{ docker_repo_url }}/{{ docker_apt_ansible_distribution | lower }} {{ ansible_distribution_release }}
+     {{ docker_apt_release_channel }}"
+    state: absent
+    filename: "{{ docker_apt_filename }}"
+    update_cache: true
+  when: docker_add_repo | bool
+  tags: setup
+
+- name: Ensure old versions of Docker are not installed
+  ansible.builtin.package:
+    name: "{{ docker_obsolete_packages }}"
+    state: absent
+  tags: setup
+
+- name: Ensure dependencies are installed
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+    state: present
+  when: docker_add_repo | bool
+  tags: setup
+
+- name: Ensure directory exists for /etc/apt/keyrings
+  ansible.builtin.file:  # Use the fully qualified module name
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+  tags: setup  # Add a tag for selective execution
+
+- name: Add Docker apt key
+  ansible.builtin.get_url:  # Use the fully qualified module name
+    url: "{{ docker_apt_gpg_key }}"
+    dest: /etc/apt/keyrings/docker.asc
+    mode: "0644"
+    force: false
+    checksum: "{{ docker_apt_gpg_key_checksum | default(omit) }}"
+  register: add_repository_key
+  ignore_errors: "{{ docker_apt_ignore_key_error }}"  # Ignore errors if specified
+  when: docker_add_repo | bool  # Only run if adding the Docker repository is enabled
+  tags: setup  # Add a tag for selective execution
+
+- name: Add Docker repository
+  ansible.builtin.apt_repository:  # Use the fully qualified module name
+    repo: "{{ docker_apt_repository }}"
+    state: present
+    filename: "{{ docker_apt_filename }}"
+    update_cache: true
+  when: docker_add_repo | bool  # Only run if adding the Docker repository is enabled
+  tags: setup  # Add a tag for selective execution
