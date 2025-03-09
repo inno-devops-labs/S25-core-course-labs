@@ -43,3 +43,30 @@ This project utilizes GitHub Actions for CI, which includes:
 - Unit tests (pytest)
 - Security scanning (Snyk)
 - Docker build & push
+
+# Moscow Time Web Application
+
+A simple web application that displays the current time in Moscow and tracks visitor counts.
+
+## Features
+
+- Displays the current time in Moscow
+- Tracks and displays the number of visits
+- Persists visit count data using a volume
+
+## Endpoints
+
+- `/` - Home page showing Moscow time
+- `/visits` - Shows the number of times the application has been visited
+
+## Running with Docker Compose
+
+```bash
+docker-compose up
+```
+
+The application will be available at http://localhost:8000
+
+## Persistence
+
+The application maintains a visit counter that persists between container restarts using a volume mount. The counter is stored in a file named `visits` in the mounted volume.

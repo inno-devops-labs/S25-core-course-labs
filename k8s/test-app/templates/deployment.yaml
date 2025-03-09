@@ -28,6 +28,12 @@ spec:
         {{- include "test-app.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "test-app.serviceAccountName" . }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "test-app.fullname" . }}-config
+        - name: data-volume
+          emptyDir: {}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -41,3 +47,14 @@ spec:
           env:
             - name: CONFIG_FILE
               value: /vault/secrets/config.json
+            - name: VISITS_FILE
+              value: /data/visits
+          envFrom:
+            - configMapRef:
+                name: {{ include "test-app.fullname" . }}-env-config
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config.json
+              subPath: config.json
+            - name: data-volume
+              mountPath: /data
