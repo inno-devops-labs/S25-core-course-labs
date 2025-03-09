@@ -53,3 +53,8 @@ You can find distroless image in this [link](https://hub.docker.com/repository/d
 ## Unit Tests
 
 Unit tests are implemented using the `unittest` framework for the Python application.
+
+## Endpoints
+`/`: Returns the current time in Moscow.
+
+`/visits`: Returns the number of visits to the application.

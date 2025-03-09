@@ -1,6 +1,9 @@
 networks:
   loki:
 
+volumes:
+  visits-data:
+
 services:
   loki:
     container_name: loki
@@ -65,6 +68,8 @@ services:
       - 5000:5000
     networks:
       - loki
+    volumes:
+      - visits-data:/app
 
   go_moscow_time:
     container_name: go_app
