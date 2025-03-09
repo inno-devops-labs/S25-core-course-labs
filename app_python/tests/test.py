@@ -3,7 +3,7 @@ import pytz
 import time
 
 from app_python.app import app, get_current_time, TIMEZONE, \
-    set_new_timezone, get_visits, set_visits, VISITS_FILE
+    set_new_timezone, get_visits, set_visits
 from datetime import datetime
 
 
