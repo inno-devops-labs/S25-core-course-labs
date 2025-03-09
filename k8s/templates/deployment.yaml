@@ -18,27 +18,29 @@ spec:
     metadata:
       labels:
         app: {{ .Release.Name }}
-      annotations:
-        vault.hashicorp.com/agent-inject: "true"
-        vault.hashicorp.com/agent-inject-secret-config: "secret/data/myapp/config"
-        vault.hashicorp.com/role: "myapp"
     spec:
-      serviceAccountName: {{ .Release.Name }}-sa
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         ports:
         - containerPort: {{ .Values.service.port }}
-        env:
-        - name: VAULT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Release.Name }}-secret
-              key: password
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config.json
+          subPath: config.json
+        - name: data-volume
+          mountPath: /data
         resources:
           limits:
             cpu: 500m
             memory: 512Mi
           requests:
             cpu: 200m
-            memory: 256Mi 
+            memory: 256Mi
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ .Release.Name }}-config
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-pvc

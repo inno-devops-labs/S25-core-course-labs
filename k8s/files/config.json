@@ -1,0 +1,7 @@
+{
+  "app_name": "Flask Time App",
+  "version": "1.0.0",
+  "data_path": "/data",
+  "visits_file": "visits.txt",
+  "port": 8000
+} 
