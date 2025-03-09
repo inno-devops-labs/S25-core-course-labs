@@ -6,6 +6,8 @@
 2. run command **python app.py**
 3. follow **<http://127.0.0.1:5000>** on your web browser
 
+## This application supports counter of number of visits. Please enter endpoint /visits to see it while app is running
+
 # Docker Section
 
 ## Steps for running app using docker

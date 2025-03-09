@@ -1,36 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-app
+  name: flask-app
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: 3
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-app
+      app: flask-app
   template:
     metadata:
-      annotations:
-        vault.hashicorp.com/agent-inject: "true"
-        vault.hashicorp.com/role: "myapp"
-        vault.hashicorp.com/agent-inject-secret-myapp: "secret/myapp"
       labels:
-        app: {{ .Release.Name }}-app
+        app: flask-app
     spec:
       containers:
         - name: flask-container
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: matveyplat/flask-app:latest
           ports:
             - containerPort: 5000
-          args:
-            - pip install flask pytz && python /app/app.py
-          env:
-            - name: USER
-              valueFrom:
-                secretKeyRef:
-                  name: my-secret
-                  key: USER
-            - name: PASS
-              valueFrom:
-                secretKeyRef:
-                  name: my-secret
-                  key: PASS
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/config
+              subPath: config.json
+      volumes:
+        - name: config-volume
+          configMap:
+            name: flask-app-config

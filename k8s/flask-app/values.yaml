@@ -135,9 +135,3 @@ nodePort: 30007
 
 replicaCount: 1 
 
-vault:
-  enabled: true
-  address: http://vault.default.svc.cluster.local:8200
-  authMethod: kubernetes
-  role: myapp
-  secretPath: internal/data/database/config
