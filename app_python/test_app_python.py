@@ -1,6 +1,6 @@
 import pytz
 import re
-from app_python import create_time_string, create_response
+from app_python import create_time_string, create_time_response
 
 
 def test_create_time_string():
@@ -11,7 +11,7 @@ def test_create_time_string():
 
 
 def _check_response(time_string: str) -> bool:
-    resp = create_response(time_string)
+    resp = create_time_response(time_string)
     content = str(resp.body)
     if time_string not in content:
         return False
