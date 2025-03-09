@@ -1,0 +1,24 @@
+---
+- name: Ensure /etc/docker directory exists
+  ansible.builtin.file:
+    path: /etc/docker
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: Ensure Docker daemon.json exists with secure configuration
+  ansible.builtin.copy:  # Use the fully qualified module name
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "userns-remap": "default",  
+        "icc": false,  
+        "userland-proxy": false,  
+        "no-new-privileges": true 
+      }
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart docker  # Notify the handler to restart Docker
+  tags: security  # Add a tag for selective execution
