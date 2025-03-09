@@ -1,0 +1,6 @@
+plugin: yacloud_compute
+yacloud_token_file: "./inventory/token"
+yacloud_clouds:
+  - "cloud-mishagladyschev"
+yacloud_folders:
+  - "default"
