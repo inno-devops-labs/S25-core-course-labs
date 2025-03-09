@@ -60,3 +60,15 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+ Common environment variables
+ */}}
+{{- define "java-app.environmentVars" -}}
+- name: APP_AUTHOR
+  value: {{ .Values.environment.author | quote }}
+- name: APP_DEBUG
+  value: {{ .Values.environment.debug | quote }}
+- name: APP_COURSE
+  value: {{ .Values.environment.course | quote }}
+{{- end -}}

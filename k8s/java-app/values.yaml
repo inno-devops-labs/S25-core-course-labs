@@ -54,3 +54,8 @@ ingress:
   enabled: false
 autoscaling:
   enabled: false
+
+environment:
+   debug: false
+   author: Nikoali01
+   course: devops
