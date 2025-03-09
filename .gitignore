@@ -1,0 +1,25 @@
+# IDE/OS stuff
+.vscode
+.idea
+.DS_Store
+
+# Python stuff
+__pycache__
+.pytest_cache
+.venv
+
+# Typescript stuff
+dist
+node_modules
+
+# Terraform stuff
+.terraform
+terraform.tfstate
+*.backup
+
+ansible/roles/geerlingguy.*
+
+# my own infrastructure folder that I decided to put alongside the labs
+hetzner
+**/charts/*.tgz
+monitoring/app_python/visits
