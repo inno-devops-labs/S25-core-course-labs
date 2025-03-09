@@ -2,8 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-python
+  labels:
+    app: app-python
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: app-python
@@ -12,6 +14,7 @@ spec:
       labels:
         app: app-python
     spec:
+      serviceAccountName: internal-app
       containers:
       - name: app-python
         image: raydenoir/app_python:distroless
