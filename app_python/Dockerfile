@@ -4,7 +4,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 RUN adduser -D appuser && \
-    mkdir -p /app/templates /app/logs && \
+    mkdir -p /app/templates /app/data && \
     chown -R appuser:appuser /app
 WORKDIR /app
 COPY --chown=appuser:appuser requirements.txt app.py /app/

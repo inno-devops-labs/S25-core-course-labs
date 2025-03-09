@@ -21,7 +21,10 @@ services:
     build: ../app_python
     ports:
       - "8080:8080"
+    user: "10001:10001"
     logging: *default-logging
+    volumes:
+      - ./python-data:/app/data
     deploy: *default-deploy
 
   loki:

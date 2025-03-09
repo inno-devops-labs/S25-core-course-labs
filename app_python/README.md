@@ -10,6 +10,9 @@ This Python web application displays the current time in Moscow. It updates ever
 
 - Displays current date and time in Moscow timezone.
 - Simple application using Flask.
+- Increments a visit counter on each root (/) request.
+- Persists the visit counter data to a local file mounted via Docker volume.
+- Provides a /visits endpoint to see the total visit count.
 
 ## Prerequisites
 
@@ -49,6 +52,10 @@ This Python web application displays the current time in Moscow. It updates ever
 2. **Access in Browser:**
 
    - Navigate to `http://localhost:8080/`
+
+3. **Check number of visits:**
+
+   - You can check number of visits on `http://127.0.0.1:8080/visits`
 
 ## Unit Tests
 
@@ -100,7 +107,7 @@ This section provides instructions on how to containerize the application using 
 
 `docker build -t achulakov/app_python:v1.0 .`
 
-### 5.3.  How to pull?
+### 5.3. How to pull?
 
 `docker pull achulakov/app_python:v1.0`
 

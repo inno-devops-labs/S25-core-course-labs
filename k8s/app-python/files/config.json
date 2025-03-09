@@ -1,0 +1,4 @@
+{
+  "customMessage": "Hello from ConfigMap",
+  "version": "1.2.3"
+}
