@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/dinaraparanid/paranid5-devops-devops.git
     targetRevision: lab13
-    path: k8s/app_python
+    path: k8s/app_python/app-piton
     helm:
       valueFiles:
         - values.yaml
