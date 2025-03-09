@@ -60,3 +60,8 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "app-kotlin.envVars" -}}
+- name: "KOTLIN_ENV"
+  value: "SECRET-TWO"
+{{- end }}

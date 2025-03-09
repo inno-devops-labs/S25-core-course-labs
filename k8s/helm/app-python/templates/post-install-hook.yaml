@@ -4,7 +4,7 @@ metadata:
   name: postinstall-python-hook
   annotations:
     "helm.sh/hook": "post-install"
-       "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   containers:
     - name: post-install-container

@@ -53,6 +53,13 @@ spec:
               port: 5000
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            {{- include "app-python.envVars" . | nindent 12 }}
+            - name: "SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: real-secret
+                  key: token
           {{- with .Values.volumeMounts }}
           volumeMounts:
             {{- toYaml . | nindent 12 }}

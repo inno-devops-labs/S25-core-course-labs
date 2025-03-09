@@ -60,3 +60,8 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "app-python.envVars" -}}
+- name: "CUSTOM_SECRET"
+  value: "SECRET-ONE"
+{{- end }}
