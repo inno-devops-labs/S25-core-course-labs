@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/yeaphm/S25-core-course-labs.git
-    targetRevision: feature/lab13
+    targetRevision: lab13
     path: k8s/moscow-time-cs
     helm:
       valueFiles:
