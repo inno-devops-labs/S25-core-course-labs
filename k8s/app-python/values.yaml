@@ -19,6 +19,13 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+secretUsername: "myuser"
+secretPassword: "mypassword"
+
+vault:
+  roleName: "internal-app"
+  secretPath: "secret/data/myapp/config"
+
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
   # Specifies whether a service account should be created
