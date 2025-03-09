@@ -21,9 +21,6 @@ class Testing(unittest.TestCase):
         cls.client = app.test_client()
 
     def test_get_visits(self):
-        global VISITS_FILE
-        VISITS_FILE = "visits"
-        
         visits = 10
         set_visits(visits)
         self.assertEqual(get_visits(), visits)
