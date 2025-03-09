@@ -22,3 +22,4 @@ ansible/roles/geerlingguy.*
 # my own infrastructure folder that I decided to put alongside the labs
 hetzner
 **/charts/*.tgz
+monitoring/app_python/visits

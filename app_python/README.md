@@ -2,7 +2,7 @@
 
 ![test workflow](https://github.com/FallenChromium/s25-core-course-labs/actions/workflows/app_python.yaml/badge.svg)
 
-This project is a simple Python web application that displays a static page with the current time in Moscow (at the moment of the response generation). If pinged by curl or other non-browser user agent, it will return a JSON response with the current time in Moscow timezone.
+This project is a simple Python web application that displays a static page with the current time in Moscow (at the moment of the response generation) and counts visits which are saved in a file and are publicly accessible through the `/visits` endpoint. If pinged by curl or other non-browser user agent, it will return a JSON response with the current time in Moscow timezone.
 
 ## Installation
 
@@ -31,6 +31,7 @@ uvicorn app:app --port 8000 --reload
 
 ```bash
 curl http://localhost:8000 # or open this url in the browser
+curl http://localhost:8000/visits # to get the number of visits
 ```
 
 ## Unit tests
