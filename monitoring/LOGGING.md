@@ -18,9 +18,9 @@ To add logging to my application, I created `logging_config.py` with settings fo
 The log format is `%(asctime)s - %(name)s - %(levelname)s - %(message)s`, where the messages in my case are `Received request: {request.method} {request.url}`.
 
 ## Screenshots 
-[screenshots/img1.png]
-[screenshots/img2.png]
-[screenshots/img3.png]
+![Screenshot 1](screenshots/img1.png)
+![Screenshot 2](screenshots/img2.png)
+![Screenshot 3](screenshots/img3.png)
 
 ## Improve points 
 
