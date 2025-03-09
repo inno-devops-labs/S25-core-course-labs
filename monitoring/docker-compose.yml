@@ -56,6 +56,8 @@ services:
       - "8081:8081"
     networks:
       - loki
+    volumes:
+      - ./app_python_data:/usr/src/app/data
     logging: *my-logging
     deploy: *my-deploy
     healthcheck:
@@ -75,6 +77,8 @@ services:
       - "8080:8080"
     networks:
       - loki
+    volumes:
+      - ./app_go_data:/usr/src/app/data
     logging: *my-logging
     deploy: *my-deploy
     healthcheck:

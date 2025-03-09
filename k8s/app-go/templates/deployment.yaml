@@ -42,6 +42,9 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           {{- include "app-go.env" . | nindent 10 }}
+          envFrom:
+          - configMapRef:
+              name: app-go-config
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
