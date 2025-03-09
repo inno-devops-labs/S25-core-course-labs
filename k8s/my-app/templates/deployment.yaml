@@ -5,6 +5,7 @@ metadata:
   labels:
     app: my-app
 spec:
+  serviceAccountName: internal-app
   replicas: 2
   selector:
     matchLabels:
@@ -35,7 +36,7 @@ spec:
                 secretKeyRef:
                   name: my-helm-secret
                   key: password
-          annotations:
+          labels:
               vault.hashicorp.com/agent-inject: "true"
               vault.hashicorp.com/role: "myapp"
               vault.hashicorp.com/agent-inject-secret-myapp: "secret/data/myapp"

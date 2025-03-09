@@ -12,6 +12,7 @@ spec:
       labels:
         app: my-app
     spec:
+      serviceAccountName: internal-app
       containers:
       - name: my-app
         image: leha0704/morozov_devops_webapp:latest

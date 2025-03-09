@@ -1,0 +1,24 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
+name: Setup common testing tools
+description: Install bats and python-yq
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+      with:
+        node-version: '20'
+    - run: sudo npm install -g bats@${BATS_VERSION}
+      shell: bash
+      env:
+        BATS_VERSION: '1.11.0'
+    - run: bats -v
+      shell: bash
+    - uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+      with:
+        python-version: '3.12'
+    - run: pip install yq
+      shell: bash
+permissions:
+  contents: read
