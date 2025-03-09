@@ -110,9 +110,9 @@ autoscaling:
 
 # Additional volumes on the output Deployment definition.
 volumes:
-- name: config
+- name: config-volume
   configMap:
-    name: app-config
+    name: config
 # - name: foo
 #   secret:
 #     secretName: mysecret
@@ -120,7 +120,7 @@ volumes:
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-- name: config
+- name: config-volume
   mountPath: "/config"
 
 nodeSelector: {}
