@@ -44,6 +44,9 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: app-python-config
           env:
             - name: MY_USERNAME
               valueFrom:
@@ -69,13 +72,13 @@ spec:
           {{- end }}
           {{- with .Values.volumeMounts }}
           volumeMounts:
-            - mountPath: /vault/secrets
-              name: vault-secrets
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
       volumes:
-        - name: vault-secrets
-          secret:
-            secretName: vault-secrets
-      { { - with .Values.nodeSelector } }
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}

@@ -60,6 +60,8 @@ services:
     image: ksenon9/lab2:latest
     ports:
       - "5000:5000"
+    volumes:
+      - ./data:/app/data
     depends_on:
       - loki
     deploy:

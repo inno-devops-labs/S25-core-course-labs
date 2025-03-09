@@ -75,3 +75,16 @@ For the Docker Hub login step, you need to set up the following GitHub secrets:
 
 # Badge
 [![Python CI](https://github.com/Akvadevka/S25-core-course-labs/actions/workflows/python-ci.yml/badge.svg)](https://github.com/Akvadevka/S25-core-course-labs/actions/workflows/python-ci.yml)
+
+## Visits Counter
+
+The application now tracks the number of visits to the main page.  
+Each time the counter increases and the number is saved in the `visits` file.  
+
+### Endpoint:
+- **`/visits`** — Shows the total number of visits.
+
+### Data Storage
+
+The visit count is stored in the file `/app/data/visits`.  
+Every time the main page (`/`) is visited, the count is updated in this file.
