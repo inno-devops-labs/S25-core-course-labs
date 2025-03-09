@@ -25,6 +25,7 @@ templates = Jinja2Templates(directory="templates")
 
 VISITS_FILE = "visits"
 
+
 def get_visit_count():
     try:
         with open(VISITS_FILE, "r") as f:
@@ -32,9 +33,11 @@ def get_visit_count():
     except (FileNotFoundError, ValueError):
         return 0
 
+
 def save_visit_count(count):
     with open(VISITS_FILE, "w") as f:
         f.write(str(count))
+
 
 # Custom exception handler
 @app.exception_handler(HTTPException)
@@ -55,11 +58,11 @@ async def root(request: Request):
         moscow_timezone = pytz.timezone("Europe/Moscow")
         current_time = datetime.now(moscow_timezone).strftime("%Y-%m-%d %H:%M:%S")
         logging.info(f"Displaying current time in Moscow: {current_time}")
-        
+
         # Update visit counter
         count = get_visit_count() + 1
         save_visit_count(count)
-        
+
         return templates.TemplateResponse(
             "index.html", {"request": request, "time": current_time}
         )
