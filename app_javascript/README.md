@@ -136,3 +136,9 @@ This project integrates a GitHub Actions CI pipeline to automate testing, lintin
 6. **Lint Code**: Checks for code style and errors using ESLint.
 7. **Snyk Vulnerability Scan**: Analyzes dependencies for security vulnerabilities.
 8. **Docker Login, Build & Push**: Builds a Docker image using a distroless base and pushes it to Docker Hub.
+
+## Upgrade Application for Persistence
+
+This update enhances the application by implementing a persistent counter that tracks the number of times it has been accessed. The counter is stored in a visits.txt file, ensuring data persists even after container restarts. A new /visits endpoint displays the recorded visit count. The docker-compose.yml file has been updated to mount a volume for persistent storage. To use the feature, run the application with docker-compose up --build and access http://localhost:3001/visits to see the visit count.
+
+![visits](visits.png)

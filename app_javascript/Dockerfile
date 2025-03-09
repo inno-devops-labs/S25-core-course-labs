@@ -13,6 +13,7 @@ RUN npm install
 
 # Copy the rest of the application files
 COPY public/ ./public
+COPY data/ data/
 COPY server.js .
 
 # Stage 2: Production Stage
@@ -23,13 +24,13 @@ FROM node:16-alpine
 WORKDIR /app
 
 # Create a non-root user for security
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+# RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # Change ownership of the application folder to the new user
-RUN chown -R appuser:appgroup /app
+# RUN chown -R appuser:appgroup /app
 
 # Switch to the non-root user
-USER appuser
+# USER appuser
 
 # Copy the installed dependencies and application code from the build stage
 COPY --from=build /app /app

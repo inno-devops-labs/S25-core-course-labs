@@ -3,6 +3,7 @@ networks:
 
 volumes:
   python-data:
+  javascript-data:
 
 services:
   loki:
@@ -128,6 +129,8 @@ services:
     networks:
       - loki
     mem_limit: 512m
+    volumes:
+      - ./javascript-data:/app/data
     logging:
       driver: "json-file"
       options:
