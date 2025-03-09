@@ -1,0 +1,97 @@
+---
+# Main tasks for the web_app role
+
+- name: Include wipe tasks
+  include_tasks: 0-wipe.yml
+  when: web_app_full_wipe | default(false) | bool
+  tags: wipe
+
+- name: Ensure system configuration
+  block:
+    - name: Ensure appgroup exists
+      group:
+        name: "{{ app_group }}"
+        state: present
+        system: yes
+      tags: system
+
+    - name: Ensure appuser exists
+      user:
+        name: "{{ app_user }}"
+        group: "{{ app_group }}"
+        state: present
+        create_home: no
+        system: yes
+      tags: system
+
+    - name: Ensure application directory exists
+      file:
+        path: "{{ app_dir }}"
+        state: directory
+        owner: "{{ app_user }}"
+        group: "{{ app_group }}"
+        mode: '0755'
+      tags: system
+  tags: system
+
+- name: Deploy application files
+  block:
+    - name: Copy application files to the server (excluding venv)
+      synchronize:
+        src: "{{ app_src_dir }}/"
+        dest: "{{ app_dir }}"
+        rsync_opts:
+          - "--exclude=venv"  # Exclude the venv directory
+        owner: yes
+        group: yes
+        perms: yes
+      tags: deploy
+
+    - name: Ensure Docker Compose file is present
+      template:
+        src: "docker-compose.yml.j2"
+        dest: "{{ docker_compose_file }}"
+        owner: "{{ app_user }}"
+        group: "{{ app_group }}"
+        mode: '0644'
+      tags: deploy
+  tags: deploy
+
+- name: Set up Docker environment
+  block:
+    - name: Ensure Docker Python SDK is installed
+      pip:
+        name: docker
+        state: present
+        executable: pip3
+        extra_args: --break-system-packages
+      tags: docker
+
+    - name: Download Docker Compose binary
+      get_url:
+        url: https://github.com/docker/compose/releases/download/v2.23.0/docker-compose-linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: '0755'
+      tags: docker
+
+    - name: Ensure Docker Compose is executable
+      file:
+        path: /usr/local/bin/docker-compose
+        mode: '0755'
+      tags: docker
+  tags: docker
+
+- name: Start Docker containers
+  block:
+    - name: Ensure Docker containers are running
+      command:
+        cmd: docker-compose -f "{{ docker_compose_file }}" up -d
+        chdir: "{{ app_dir }}"
+      tags: start
+
+    - name: Ensure Docker containers are started
+      command:
+        cmd: docker-compose -f "{{ docker_compose_file }}" start
+        chdir: "{{ app_dir }}"
+      tags: start
+  tags: start
