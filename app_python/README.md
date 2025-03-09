@@ -240,3 +240,66 @@ This app is **ready for deployment** on:
 - **Mohammad Jaafar**
 - 📧 [m.jaafar@innopolis.university](mailto:m.jaafar@innopolis.university)
 - 👉 [GitHub Profile](https://github.com/MoeJaafar)
+
+
+
+## **Application Upgrade: Visit Counter and Persistent Storage**
+
+### **Overview**
+In this upgrade, we enhanced the application by introducing a **visit counter** that tracks the number of times the application has been accessed. The counter is stored persistently in a **visits.txt** file, ensuring that visit data is retained even after container restarts.
+
+---
+
+### **Key Enhancements**
+1. **Implemented a Visit Counter:**
+   - Each time the root (`/`) endpoint is accessed, the visit count increases.
+   - The count is stored in a file instead of memory to persist across restarts.
+
+2. **Introduced a New `/visits` Endpoint:**
+   - Displays the total number of visits recorded in the file.
+
+3. **Ensured Persistent Storage with Docker Volume:**
+   - Mounted a persistent **`/data`** directory in the container.
+   - The visit count is stored in `/data/visits.txt` to maintain data across deployments.
+
+4. **Updated `docker-compose.yml`:**
+   - Added a volume mapping `./data:/data` to persist the visits file outside the container.
+
+---
+
+### **How It Works**
+1. The application initializes by checking if `visits.txt` exists inside `/data`.  
+   - If not, it creates the file and starts the counter at **0**.
+   
+2. When a user accesses the main page (`http://localhost:5000/`):  
+   - The visit counter increases.
+   - The latest count is saved in `/data/visits.txt`.
+
+3. Users can check the total visits at:  
+   ```
+   http://localhost:5000/visits
+   ```
+
+   ![visits](./visits.png)
+   - This returns the current visit count.
+
+4. The container uses a volume to ensure the visit data is **not lost** when restarted.
+
+---
+
+### **Testing the Changes**
+To verify that persistence works correctly:
+```bash
+# Stop and remove all containers
+docker-compose down
+
+# Start the container again
+docker-compose up -d
+
+# Check the visits count
+curl http://localhost:5000/visits
+```
+- The count should **persist** across restarts.
+
+---
+

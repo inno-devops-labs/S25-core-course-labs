@@ -1,13 +1,14 @@
-version: "3.3"
-
 networks:
   loki:
 
 services:
+
   python-app:
     image: "em1999jay/python-app:latest"
     ports:
       - "5000:5000"
+    volumes:
+      - ./data:/data  # ✅ Ensure this path exists on the host
     logging:
       driver: "json-file"
       options:
@@ -23,13 +24,11 @@ services:
       retries: 3
       start_period: 10s
     deploy:
-          resources:
-            limits:
-              memory: 512M
-            reservations:
-              memory: 256M
-
-
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
 
   node-app:
     image: "em1999jay/node-moscow-time:latest"
@@ -50,11 +49,11 @@ services:
       retries: 3
       start_period: 10s
     deploy:
-          resources:
-            limits:
-              memory: 512M
-            reservations:
-              memory: 256M
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
 
   loki:
     image: grafana/loki:latest
@@ -70,11 +69,11 @@ services:
         max-file: "10"
         tag: "{{.ImageName}}|{{.Name}}"
     deploy:
-          resources:
-            limits:
-              memory: 512M
-            reservations:
-              memory: 256M
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
 
   promtail:
     image: grafana/promtail:latest
@@ -92,11 +91,11 @@ services:
         max-file: "10"
         tag: "{{.ImageName}}|{{.Name}}"
     deploy:
-          resources:
-            limits:
-              memory: 512M
-            reservations:
-              memory: 256M
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
 
   grafana:
     environment:
@@ -135,11 +134,11 @@ services:
         max-file: "10"
         tag: "{{.ImageName}}|{{.Name}}"
     deploy:
-          resources:
-            limits:
-              memory: 512M
-            reservations:
-              memory: 256M
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
 
   prometheus:
     image: prom/prometheus:latest
@@ -155,8 +154,8 @@ services:
         max-size: "100m"
         max-file: "10"
     deploy:
-          resources:
-            limits:
-              memory: 512M
-            reservations:
-              memory: 256M
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
