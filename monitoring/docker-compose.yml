@@ -1,0 +1,198 @@
+version: "3.3"
+
+networks:
+  logging:
+
+services:
+  app_python:
+    container_name: app_python
+    image: dnworks/app_python:latest
+    volumes:
+      - ./visits:/app_python/visits
+    ports:
+      - "80:80"
+    networks:
+      - logging
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "15m"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    healthcheck:
+      test: "curl -s -f http://localhost/ || exit 1"
+      interval: 30s
+      timeout: 3s
+
+  app_golang:
+    container_name: app_golang
+    image: dnworks/app_golang:latest
+    volumes:
+      - ./visits_go:/app_golang/visits
+    ports:
+      - "81:80"
+    networks:
+      - logging
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "15m"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    healthcheck:
+      test: "curl -s -f http://localhost/ || exit 1"
+      interval: 30s
+      timeout: 3s
+
+  loki:
+    container_name: loki
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - logging
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "15m"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    healthcheck:
+      test: "wget --quiet --tries=1 --output-document=- http://127.0.0.1:3100/ready | grep -q -w ready || exit 1"
+      interval: 30s
+      timeout: 3s
+
+  promtail:
+    container_name: promtail
+    image: grafana/promtail:latest
+    volumes:
+      - ./promtail.yml:/etc/promtail/config.yml
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: -config.file=/etc/promtail/config.yml
+    ports:
+      - "9080:9080"
+    networks:
+      - logging
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "15m"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    healthcheck:
+      test: "pgrep promtail || exit 1"
+      interval: 30s
+      timeout: 3s
+
+  grafana:
+    container_name: grafana
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_FEATURE_TOGGLES_ENABLE=alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode
+      - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/var/lib/grafana/dashboards/loki.json
+      - DS_THEMIS=prometheusds
+      - DS_PROMETHEUS=prometheusds
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy 
+          orgId: 1
+          url: http://loki:3100
+          basicAuth: false
+          isDefault: true
+          version: 1
+          editable: false
+          uid: lokids
+        - name: Prometheus
+          type: prometheus
+          access: proxy
+          orgId: 1
+          url: http://prometheus:9090
+          basicAuth: false
+          isDefault: false
+          version: 1
+          editable: false
+          uid: prometheusds
+        EOF
+        mkdir -p /etc/grafana/provisioning/dashboards
+        cat <<EOF > /etc/grafana/provisioning/dashboards/all.yml
+        - name: 'default'
+          org_id: 1
+          folder: ''
+          type: 'file'
+          options:
+            folder: '/var/lib/grafana/dashboards'
+        EOF
+        /run.sh
+    image: grafana/grafana:latest
+    volumes:
+      - ./grafana_dashboards:/var/lib/grafana/dashboards:ro
+    ports:
+      - "3000:3000"
+    networks:
+      - logging
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "15m"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    healthcheck:
+      test: "curl -s -f http://127.0.0.1:3000/api/health | grep -q -w ok || exit 1"
+      interval: 30s
+      timeout: 3s
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+      - "--web.enable-lifecycle"
+    ports:
+      - "9090:9090"
+    networks:
+      - logging
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "15m"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    healthcheck:
+      test: "wget --quiet --tries=1 --output-document=- http://127.0.0.1:9090/-/healthy | grep -q -w Healthy || exit 1"
+      interval: 30s
+      timeout: 3s
