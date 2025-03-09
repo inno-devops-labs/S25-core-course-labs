@@ -9,6 +9,7 @@ app = Flask(__name__)
 # Global variable with timezone
 TIME_ZONE = ""
 CONFIG_FILE = "config.txt"
+VISITS_DIRECTORY = "visits"
 VISITS_FILE = "visits"
 VISITS = 0
 
@@ -44,7 +45,7 @@ def current_time() -> str:
 
     VISITS += 1
 
-    with open(VISITS_FILE, "w") as visits_file:
+    with open(os.path.join(VISITS_DIRECTORY, VISITS_FILE), "w") as visits_file:
         visits_file.write(str(VISITS))
 
     # Start tracking request time
@@ -72,10 +73,11 @@ def metrics() -> Response:
 
 @app.route("/visits")
 def visits():
+    # Here visits also counts, since it is also access to the application
     global VISITS
     VISITS += 1
 
-    with open(VISITS_FILE, "w") as visits_file:
+    with open(os.path.join(VISITS_DIRECTORY, VISITS_FILE), "w") as visits_file:
         visits_file.write(str(VISITS))
 
     return f"Number of visits is: {VISITS}"
@@ -83,15 +85,17 @@ def visits():
 
 if __name__ == "__main__":
     try:
-        with open(VISITS_FILE, "r") as visits_file:
+        with open(os.path.join(VISITS_DIRECTORY, VISITS_FILE), "r") as visits_file:
             VISITS = int(visits_file.read())
     except Exception:
-        if os.path.exists(VISITS_FILE):
-            os.remove(VISITS_FILE)
+        if os.path.exists(os.path.join(VISITS_DIRECTORY, VISITS_FILE)):
+            os.remove(os.path.join(VISITS_DIRECTORY, VISITS_FILE))
+        elif not os.path.exists(VISITS_DIRECTORY):
+            os.makedirs(VISITS_DIRECTORY)
 
             VISITS = 0
 
-        with open(VISITS_FILE, "w") as visits_file:
+        with open(os.path.join(VISITS_DIRECTORY, VISITS_FILE), "w") as visits_file:
             visits_file.write(str(VISITS))
 
     app.run(host="0.0.0.0", port=5000, debug=True)
