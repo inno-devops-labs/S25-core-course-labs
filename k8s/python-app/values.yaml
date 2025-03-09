@@ -121,3 +121,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+secrets:
+  MY_PASS: supersecret
