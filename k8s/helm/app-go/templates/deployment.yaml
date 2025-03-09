@@ -46,6 +46,9 @@ spec:
           env:
             {{- include "app-go.envName" . | nindent 12 }}
             {{- include "app-go.envEmail" . | nindent 12 }}
+            envFrom:
+            - configMapRef:
+                name: go-config
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
