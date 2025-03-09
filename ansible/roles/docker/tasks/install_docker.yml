@@ -1,0 +1,98 @@
+---
+# System preparation
+- name: Install required system packages
+  apt:
+    pkg: "{{ docker_required_packages }}"
+    state: present
+    update_cache: true
+  register: apt_result
+  retries: 3
+  delay: 5
+  until: apt_result is success
+
+# Repository setup
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: "{{ docker_apt_gpg_key }}"
+    state: present
+  register: apt_key_result
+  retries: 3
+  delay: 5
+  until: apt_key_result is success
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: "{{ docker_apt_repository }}"
+    state: present
+    update_cache: true
+  register: apt_repo_result
+  retries: 3
+  delay: 5
+  until: apt_repo_result is success
+
+# Docker installation
+- name: Install Docker
+  apt:
+    name: "{{ docker_package }}"
+    state: "{{ docker_package_state }}"
+    update_cache: true
+  notify: restart docker
+  register: docker_install_result
+  retries: 3
+  delay: 5
+  until: docker_install_result is success
+
+# System configuration
+- name: Create docker group if it doesn't exist
+  group:
+    name: docker
+    state: present
+
+- name: Set correct permissions for Docker socket
+  file:
+    path: /var/run/docker.sock
+    mode: '0666'
+  when: docker_install_result.changed
+
+- name: Configure Docker daemon directory
+  file:
+    path: /etc/docker
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+# Service configuration
+- name: Enable Docker service on boot
+  systemd:
+    name: docker
+    enabled: true
+    daemon_reload: true
+  notify: restart docker
+
+- name: Ensure Docker daemon configuration directory exists
+  file:
+    path: /etc/docker
+    state: directory
+    mode: '0755'
+
+- name: Configure Docker daemon options
+  copy:
+    content: "{{ docker_daemon_options | to_nice_json }}"
+    dest: /etc/docker/daemon.json
+    mode: '0644'
+  notify: restart docker
+
+- name: Ensure Docker service is started and enabled
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Ensure Docker users are added to Docker group
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: true
+  with_items: "{{ docker_users }}"
+  when: docker_users | length > 0 

@@ -1,0 +1,21 @@
+{
+  "app": {
+    "name": "moscow-time-app",
+    "version": "1.0.0",
+    "environment": "production",
+    "timezone": "Europe/Moscow"
+  },
+  "server": {
+    "port": 5000,
+    "maxConnections": 100,
+    "timeout": 30
+  },
+  "features": {
+    "visitCounter": true,
+    "metrics": true,
+    "logging": {
+      "enabled": true,
+      "level": "info"
+    }
+  }
+} 

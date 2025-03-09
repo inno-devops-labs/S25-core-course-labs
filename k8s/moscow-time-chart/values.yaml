@@ -1,0 +1,42 @@
+replicaCount: 3
+
+image:
+  repository: whatislav/moscow-time-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 5000
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+livenessProbe:
+  enabled: false
+
+readinessProbe:
+  enabled: false
+
+secret:
+  username: admin
+  password: supersecret
+# Vault integration
+vault:
+  enabled: true
+  annotations:
+    vault.hashicorp.com/agent-inject: "true"
+    vault.hashicorp.com/agent-inject-status: "update"
+    vault.hashicorp.com/role: "moscow-time-app"
+    vault.hashicorp.com/agent-inject-secret-config.txt: "kv/data/moscow-time-app/config"
+    vault.hashicorp.com/agent-inject-template-config.txt: |
+      {{- with secret "kv/data/moscow-time-app/config" -}}
+      export VAULT_USERNAME="{{ .Data.data.username }}"
+      export VAULT_PASSWORD="{{ .Data.data.password }}"
+      {{- end -}}
