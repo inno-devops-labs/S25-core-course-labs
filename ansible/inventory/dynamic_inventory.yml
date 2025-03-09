@@ -1,0 +1,11 @@
+plugin: amazon.aws.aws_ec2
+regions:
+  - us-east-1
+filters:
+  tag:Name: "ExampleAppServerInstance"
+  instance-state-name: running
+hostnames:
+  - tag:Name
+  - public-ip-address
+compose:
+  ansible_host: public-ip-address

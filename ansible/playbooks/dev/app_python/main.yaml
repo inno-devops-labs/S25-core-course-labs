@@ -1,0 +1,9 @@
+- name: Setup Docker and Deploy Python Application
+  hosts: all
+  become: true
+  roles:
+    - docker
+    - web_app
+  vars:
+    docker_image: "{{ docker_image_python }}"
+    app_port: "{{ app_python_port }}"
