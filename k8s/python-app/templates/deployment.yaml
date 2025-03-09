@@ -17,6 +17,10 @@ spec:
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.vault.enabled }}
+      annotations:
+        {{- toYaml .Values.vault.annotations | nindent 8 }}
+      {{- end }}
       labels:
         {{- include "python-app.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
@@ -27,7 +31,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "python-app.serviceAccountName" . }}
+      serviceAccountName: {{ .Release.Name }}-internal-app
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -60,6 +64,17 @@ spec:
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          env:
+            - name: USER
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: USER
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: PASSWORD
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
