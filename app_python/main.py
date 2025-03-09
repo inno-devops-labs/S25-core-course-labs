@@ -149,9 +149,7 @@ async def get_visits(request: Request):
     try:
         return PlainTextResponse(f"Visits: {request.state.visits}")
     except AttributeError:
-        raise HTTPException(
-            status_code=500, detail="Visits counter is not available"
-        )
+        raise HTTPException(status_code=500, detail="Visits counter is not available")
 
 
 if __name__ == "__main__":
