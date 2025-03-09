@@ -2,6 +2,8 @@ const express = require('express');
 const moment = require('moment-timezone');
 const winston = require('winston');
 const promClient = require('prom-client');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 const port = 3000;
@@ -51,7 +53,38 @@ app.use((req, res, next) => {
     next();
 });
 
+// Functions for visit counter persistence
+function getVisitCount() {
+    const visitsFile = path.join(__dirname, 'visits');
+    try {
+        if (fs.existsSync(visitsFile)) {
+            const count = fs.readFileSync(visitsFile, 'utf8').trim();
+            return count ? parseInt(count, 10) : 0;
+        }
+        return 0;
+    } catch (err) {
+        logger.error('Error reading visit count', { error: err.message });
+        return 0;
+    }
+}
+
+function incrementVisitCounter() {
+    const visitsFile = path.join(__dirname, 'visits');
+    try {
+        const count = getVisitCount() + 1;
+        fs.writeFileSync(visitsFile, count.toString());
+        logger.info('Visit counter incremented', { count });
+        return count;
+    } catch (err) {
+        logger.error('Error incrementing visit count', { error: err.message });
+        return 0;
+    }
+}
+
 app.get('/', (req, res) => {
+    // Increment visit counter
+    incrementVisitCounter();
+    
     const moscowTime = moment().tz('Europe/Moscow');
     logger.info('Generating Moscow time', {
         time: moscowTime.format('HH:mm:ss'),
@@ -107,6 +140,13 @@ app.get('/', (req, res) => {
 app.get('/health', (req, res) => {
     logger.info('Health check requested');
     res.status(200).json({ status: 'healthy' });
+});
+
+// Visits endpoint
+app.get('/visits', (req, res) => {
+    const visitCount = getVisitCount();
+    logger.info('Visits endpoint called', { count: visitCount });
+    res.status(200).json({ visits: visitCount });
 });
 
 // Metrics endpoint

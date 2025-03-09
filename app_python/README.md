@@ -7,6 +7,8 @@ A simple web application built with Flask that displays the current time in Mosc
 - Displays current Moscow time and date
 - Clean and responsive user interface
 - Automatic time updates on page refresh
+- Visit counter with persistence
+- `/visits` endpoint to display the number of visits
 
 ## Local Installation
 
@@ -43,7 +45,7 @@ docker pull your-dockerhub-username/moscow-time-python:latest
 
 #### Running the Container
 ```bash
-docker run -d -p 5000:5000 your-dockerhub-username/moscow-time-python:latest
+docker run -d -p 5000:5000 -v $(pwd)/visits:/app/visits your-dockerhub-username/moscow-time-python:latest
 ```
 
 ### Distroless Image Version
@@ -62,7 +64,7 @@ docker pull your-dockerhub-username/moscow-time-python:distroless
 
 #### Running the Distroless Container
 ```bash
-docker run -d -p 5000:5000 your-dockerhub-username/moscow-time-python:distroless
+docker run -d -p 5000:5000 -v $(pwd)/visits:/app/visits your-dockerhub-username/moscow-time-python:distroless
 ```
 
 ### Image Comparison
@@ -81,6 +83,7 @@ Choose the distroless version for production deployments where security is a pri
 - Python 3.x
 - Flask - lightweight web framework
 - pytz - timezone handling library
+- File-based persistence for visit counter
 
 ## Best Practices Applied
 - Clean code structure with proper separation of concerns

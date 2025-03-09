@@ -1,0 +1,17 @@
+{
+  "app": {
+    "name": "python-app",
+    "version": "1.0.0",
+    "environment": "development"
+  },
+  "features": {
+    "logging": true,
+    "metrics": true,
+    "persistence": true
+  },
+  "settings": {
+    "timezone": "Europe/Moscow",
+    "maxVisits": 10000,
+    "refreshInterval": 60
+  }
+}

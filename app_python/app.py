@@ -79,6 +79,9 @@ def log_response(response):
 def index():
     REQUEST_COUNT.labels(endpoint='/').inc()
     with REQUEST_LATENCY.labels(endpoint='/').time():
+        # Increment visit counter
+        increment_visit_counter()
+        
         moscow_tz = pytz.timezone('Europe/Moscow')
         moscow_time = datetime.now(moscow_tz)
 
@@ -95,6 +98,42 @@ def health():
     with REQUEST_LATENCY.labels(endpoint='/health').time():
         logger.info("Health check endpoint called")
         return jsonify({"status": "healthy", "timestamp": datetime.now().isoformat()})
+
+
+@app.route('/visits')
+def visits():
+    REQUEST_COUNT.labels(endpoint='/visits').inc()
+    with REQUEST_LATENCY.labels(endpoint='/visits').time():
+        visit_count = get_visit_count()
+        logger.info(f"Visits endpoint called, current count: {visit_count}")
+        return jsonify({"visits": visit_count})
+
+
+# Functions for visit counter persistence
+def get_visit_count():
+    visits_file = os.path.join(os.path.dirname(__file__), 'visits')
+    try:
+        if os.path.exists(visits_file):
+            with open(visits_file, 'r') as f:
+                count = f.read().strip()
+                return int(count) if count else 0
+        return 0
+    except Exception as e:
+        logger.error(f"Error reading visit count: {e}")
+        return 0
+
+
+def increment_visit_counter():
+    visits_file = os.path.join(os.path.dirname(__file__), 'visits')
+    try:
+        count = get_visit_count() + 1
+        with open(visits_file, 'w') as f:
+            f.write(str(count))
+        logger.info(f"Visit counter incremented to {count}")
+        return count
+    except Exception as e:
+        logger.error(f"Error incrementing visit count: {e}")
+        return 0
 
 
 # Add prometheus wsgi middleware
