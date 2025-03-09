@@ -50,6 +50,9 @@ spec:
                   name: credentials
                   key: CHATGPT_KEY
             {{- include "python-app.environmentVariables" . | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: python-app-config
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

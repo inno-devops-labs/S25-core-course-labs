@@ -1,4 +1,5 @@
 import logging
+import os
 import sys
 
 from flask import Flask, render_template, request, Response
@@ -11,6 +12,7 @@ import pytz
 app = Flask(__name__)
 setup_metrics(app)
 
+VISITS_FILE = "/app/data/visits"
 handler = logging.StreamHandler(sys.stdout)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
@@ -25,6 +27,14 @@ def log_request_info():
 
 @app.route('/')
 def show_moscow_time():
+    # increment visits
+    count = 0
+    if os.path.exists(VISITS_FILE):
+        with open(VISITS_FILE, 'r') as f:
+            count = int(f.read())
+    count += 1
+    with open(VISITS_FILE, 'w') as f:
+        f.write(str(count))
     # Set timezone to Europe/Moscow
     moscow_timezone = pytz.timezone('Europe/Moscow')
     current_time_moscow = datetime.now(moscow_timezone).strftime('%Y-%m-%d %H:%M:%S')
@@ -33,9 +43,19 @@ def show_moscow_time():
     return render_template('index.html', current_time=current_time_moscow)
 
 
+@app.route('/visits')
+def visits():
+    if os.path.exists(VISITS_FILE):
+        with open(VISITS_FILE, 'r') as f:
+            return f"Visits: {f.read()}"
+    else:
+        return "No visits recorded yet."
+
+
 @app.route('/metrics')
 def metrics():
     return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
+
 
 @app.route('/health')
 def health():

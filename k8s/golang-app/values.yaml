@@ -100,17 +100,20 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+volumes:
+  - name: config
+    configMap:
+      name: golang-app-config
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
+
+volumeMounts:
+  - name: config
+    mountPath: /config.json
+    subPath: config.json
 
 nodeSelector: {}
 

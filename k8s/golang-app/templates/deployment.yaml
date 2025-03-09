@@ -45,6 +45,9 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
              {{- include "golang-app.environmentVariables" . | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: golang-app-config
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

@@ -123,6 +123,8 @@ services:
     container_name: app_python
     ports:
       - "5001:5001"
+    volumes:
+      - ./data:/app/data
     logging: *default-logging
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
@@ -141,6 +143,8 @@ services:
     container_name: app_golang
     ports:
       - "8080:8080"
+    volumes:
+      - ./data_go:/app/data
     logging: *default-logging
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]

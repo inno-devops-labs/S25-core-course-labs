@@ -58,6 +58,20 @@ Here’s how the page will look:
 ----------------------------------------
 ```
 
+## 🫶 `/visits` Endpoint
+
+We've introduced a **persistent visit counter** that increments each time the main page (`/`) is accessed. You can view the total count at:
+
+
+### How It Works
+- **Local Persistence**:  
+  We updated our Docker Compose configuration to **mount a local folder** (e.g., `./data`) to the container’s `data/` directory. This ensures the visit count is stored in a `visits` file on your host, preserving data across container restarts.
+- **Increment on Root**:  
+  Each request to `main page` reads the current count from the `visits` file, increments it by one, and writes the new total back to the file.
+- **View the Total**:  
+  Navigating to `/visits` displays the current count in a simple text format.
+  !["Python-visits](static/python_visits.png "Python-visits")
+
 ## 🐳 Distroless Image Version
 
 I implemented a **Distroless-based** image for the Python Moscow Time web application to enhance security and optimize performance.
