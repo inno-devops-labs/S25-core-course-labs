@@ -4,13 +4,12 @@ metadata:
   name: {{ include "my-django-app.fullname" . }}
   labels:
     {{- include "my-django-app.labels" . | nindent 4 }}
+    {{- include "my-library-chart.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "my-django-app.selectorLabels" . | nindent 6 }}
+      {{- include "my-library-chart.labels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -40,6 +39,15 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            requests:
+              cpu: "{{ .Values.resources.requests.cpu }}"
+              memory: "{{ .Values.resources.requests.memory }}"
+            limits:
+              cpu: "{{ .Values.resources.limits.cpu }}"
+              memory: "{{ .Values.resources.limits.memory }}"
+          env: 
+          {{- include "my-django-app.envFromSecrets" . | nindent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

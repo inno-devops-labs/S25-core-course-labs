@@ -4,13 +4,12 @@ metadata:
   name: {{ include "my-dart-app.fullname" . }}
   labels:
     {{- include "my-dart-app.labels" . | nindent 4 }}
+    {{- include "my-library-chart.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "my-dart-app.selectorLabels" . | nindent 6 }}
+      {{- include "my-library-chart.labels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -40,6 +39,8 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env: 
+          {{- include "my-dart-app.envVars" . | nindent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
