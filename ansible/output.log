@@ -1,0 +1,54 @@
+
+PLAY [all] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [host1]
+
+TASK [Run Docker Role] *********************************************************
+included: docker for host1
+
+TASK [docker : Apt update] *****************************************************
+changed: [host1]
+
+TASK [docker : Installation of python3 and pip3] *******************************
+ok: [host1]
+
+TASK [docker : Install docker] *************************************************
+ok: [host1]
+
+TASK [docker : Install docker compose] *****************************************
+ok: [host1]
+
+TASK [Run web_app Role] ********************************************************
+included: web_app for host1
+
+TASK [docker : Apt update] *****************************************************
+changed: [host1]
+
+TASK [docker : Installation of python3 and pip3] *******************************
+ok: [host1]
+
+TASK [docker : Install docker] *************************************************
+ok: [host1]
+
+TASK [docker : Install docker compose] *****************************************
+ok: [host1]
+
+TASK [web_app : Ensure Docker Installed] ***************************************
+ok: [host1]
+
+TASK [web_app : Apt Update Cache] **********************************************
+changed: [host1]
+
+TASK [web_app : Install Docker‑Image] ******************************************
+ok: [host1]
+
+TASK [web_app : Launch App Container] ******************************************
+ok: [host1]
+
+TASK [web_app : Deploy Docker-Compose] *****************************************
+ok: [host1]
+
+PLAY RECAP *********************************************************************
+host1                      : ok=16   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

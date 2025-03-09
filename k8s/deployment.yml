@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lab9
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: lab9
+  template:
+    metadata:
+      labels:
+        app: lab9
+    spec:
+      containers:
+        - name: lab9
+          image: g3nd4/python-web:latest
+          ports:
+            - containerPort: 5000
+
