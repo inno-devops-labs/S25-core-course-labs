@@ -40,8 +40,6 @@ ingress:
   tls: []
 
 
-myPassword: 'supersecret123'
-
 resources:
   limits:
     cpu: '200m'
