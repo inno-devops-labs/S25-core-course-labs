@@ -4,7 +4,11 @@ on:
   push:
     paths:
       - "app_nodejs/**"
+      - ".github/workflows/nodejs-ci.yml"
   pull_request:
+    paths:
+      - "app_nodejs/**"
+      - ".github/workflows/nodejs-ci.yml"
 
 jobs:
   build-and-test-node:
