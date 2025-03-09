@@ -59,3 +59,8 @@ pytest .
 - **Testing**: Runs tests using `pytest` to ensure the project is functioning correctly.
 - **Docker**: Builds and pushes a Docker image to Docker Hub.
 - **Security**: Checks for vulnerabilities using Snyk.
+
+## API Endpoints
+
+- **GET /** - Main page with current Moscow time.
+- **GET /visits** - Persistent visits counter.
