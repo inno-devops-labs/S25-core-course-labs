@@ -30,10 +30,12 @@ services:
       retries: 3
     logging: *default-logging
     deploy: *default-deploy
+    volumes:
+      - ./app_data:/app_python/data
     networks:
       - loki
 
-  app_flutter:
+  app_js:
     image: dehopen/app_js:latest_metrics
     ports:
       - "80:8080"
