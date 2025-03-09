@@ -40,6 +40,12 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: MY_PASS
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: MY_PASS
           ports:
             - name: http
               containerPort: 5000
@@ -76,3 +82,4 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
