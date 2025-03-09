@@ -54,6 +54,14 @@ spec:
                 secretKeyRef:
                   name: {{ include "python-app.fullname" . }}-secret
                   key: MY_PASS
+{{ include "python-app.env" . | indent 12 }}
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}

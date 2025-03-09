@@ -60,3 +60,16 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Define common environment variables for containers.
+*/}}
+{{- define "python-app.env" -}}
+- name: ENV_VAR1
+  value: "value1"
+- name: ENV_VAR2
+  value: "value2"
+- name: ENV_VAR3
+  value: "value3"
+{{- end -}}
+
