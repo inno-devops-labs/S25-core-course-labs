@@ -120,7 +120,9 @@ volumes: []
 #     optional: false
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
+volumeMounts:
+  - name: app-python-vct
+    mountPath: /app_python/visits
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
@@ -133,3 +135,9 @@ affinity: {}
 
 env:
   ENV: default
+
+volumeClaimTemplates:
+  name: app-python-vct
+  storage: 512Mi
+
+podManagementPolicy: Parallel
