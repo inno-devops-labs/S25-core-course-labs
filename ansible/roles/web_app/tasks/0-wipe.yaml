@@ -1,0 +1,15 @@
+- name: wipe
+  tags: wipe
+  when: web_app_full_wipe
+  block:
+    - name: remove app container
+      community.docker.docker_compose_v2:
+        project_src: "{{ app_directory }}"
+        state: absent
+        remove_images: all
+        remove_volumes: all
+
+    - name: remove directory
+      ansible.builtin.file:
+        name: "{{ app_directory }}"
+        state: absent
