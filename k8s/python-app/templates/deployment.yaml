@@ -33,6 +33,17 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
+      env:
+        - name: APP_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "python-app.fullname" . }}-secret
+              key: username
+        - name: APP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "python-app.fullname" . }}-secret
+              key: password
         - name: {{ .Chart.Name }}
           {{- with .Values.securityContext }}
           securityContext:
