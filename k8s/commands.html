@@ -1,0 +1,1771 @@
+<pre><font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl delete 
+error: You must provide one or more resources by argument or filename.
+Example resource specifications include:
+   &apos;-f rsrc.yaml&apos;
+   &apos;--filename=rsrc.json&apos;
+   &apos;&lt;resource&gt; &lt;name&gt;&apos;
+   &apos;&lt;resource&gt;&apos;
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ minikube delete &amp;&amp; minikube start
+🔥  Deleting &quot;minikube&quot; in docker ...
+🔥  Deleting container &quot;minikube&quot; ...
+🔥  Removing /home/yehia/.minikube/machines/minikube ...
+💀  Removed all traces of the &quot;minikube&quot; cluster.
+😄  minikube v1.35.0 on Ubuntu 22.04
+✨  Automatically selected the docker driver
+📌  Using Docker driver with root privileges
+👍  Starting &quot;minikube&quot; primary control-plane node in &quot;minikube&quot; cluster
+🚜  Pulling base image v0.0.46 ...
+🔥  Creating docker container (CPUs=2, Memory=2200MB) ...
+🐳  Preparing Kubernetes v1.32.0 on Docker 27.4.1 ...
+    ▪ Generating certificates and keys ...
+    ▪ Booting up control plane ...
+    ▪ Configuring RBAC rules ...
+🔗  Configuring bridge CNI (Container Networking Interface) ...
+🔎  Verifying Kubernetes components...
+    ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+🌟  Enabled addons: storage-provisioner, default-storageclass
+🏄  Done! kubectl is now configured to use &quot;minikube&quot; cluster and &quot;default&quot; namespace by default
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl create secret generic app-secret \
+  --from-literal=MY_PASS=admin123 \
+  --namespace=default
+secret/app-secret created
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl get secret app-secret -o yaml
+apiVersion: v1
+data:
+  MY_PASS: YWRtaW4xMjM=
+kind: Secret
+metadata:
+  creationTimestamp: &quot;2025-03-09T15:57:04Z&quot;
+  name: app-secret
+  namespace: default
+  resourceVersion: &quot;405&quot;
+  uid: 71f916bc-7ab3-406e-b6fb-f8b911c3d8aa
+type: Opaque
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ echo &quot;YWRtaW4xMjM=&quot; | base64 -d
+admin123<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ helm create mychart
+Creating mychart
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ cd mychart/templates
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart/templates</b></font>$ rm -rf hpa.yaml ingress.yaml service.yaml serviceaccount.yaml tests/ NOTES.txt
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart/templates</b></font>$ cd ..
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ gedit values.yaml 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ cat values.yaml 
+# Default values for mychart.
+replicaCount: 1
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  tag: &quot;&quot;
+
+# ===== ADDED SECRETS SECTION =====
+secrets:
+  password: &quot;admin123&quot;  # Plaintext password for lab secret
+
+# ===== ADDED ENVIRONMENT VARIABLES =====
+env:
+  mode: &quot;development&quot;   # Example environment variable
+  version: &quot;1.0&quot;        # Example version variable
+
+imagePullSecrets: []
+nameOverride: &quot;&quot;
+fullnameOverride: &quot;&quot;
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: &quot;&quot;
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: &quot;&quot;
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+# ===== UPDATED RESOURCES SECTION =====
+resources:
+  limits:
+    cpu: 500m
+    memory: 256Mi
+  requests:
+    cpu: 250m
+    memory: 128Mi
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+volumes: []
+volumeMounts: []
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ gedit templates/deployment.yaml
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ cat templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include &quot;mychart.fullname&quot; . }}
+  labels:
+    {{- include &quot;mychart.labels&quot; . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include &quot;mychart.selectorLabels&quot; . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include &quot;mychart.labels&quot; . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include &quot;mychart.serviceAccountName&quot; . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: &quot;{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}&quot;
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # ADDED ENVIRONMENT VARIABLES SECTION
+          env:
+            - name: MY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-secret
+                  key: MY_PASS
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          {{- with .Values.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ touch templates/secrets.yaml
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ gedit templates/secrets.yaml
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ cat templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Release.Name }}-secret
+  labels:
+    app: {{ .Release.Name }}
+type: Opaque
+data:
+  MY_PASS: {{ .Values.secrets.password | b64enc }}
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ helm install demo ./mychart
+Error: INSTALLATION FAILED: path &quot;./mychart&quot; not found
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ cd ..
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ helm install demo ./mychart
+NAME: demo
+LAST DEPLOYED: Sun Mar  9 19:05:28 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl get pods -l app.kubernetes.io/instance=demo
+No resources found in default namespace.
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl get secret demo-secret -o yaml
+apiVersion: v1
+data:
+  MY_PASS: YWRtaW4xMjM=
+kind: Secret
+metadata:
+  annotations:
+    meta.helm.sh/release-name: demo
+    meta.helm.sh/release-namespace: default
+  creationTimestamp: &quot;2025-03-09T16:05:28Z&quot;
+  labels:
+    app: demo
+    app.kubernetes.io/managed-by: Helm
+  name: demo-secret
+  namespace: default
+  resourceVersion: &quot;812&quot;
+  uid: c4a15915-b243-4a89-a1bb-3289808fcd9c
+type: Opaque
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl exec &lt;POD_NAME&gt; -- printenv | grep MY_PASSWORD
+bash: POD_NAME: No such file or directory
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl get pods -l app=demo
+No resources found in default namespace.
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ ^C
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ cat mychart/templates/_helpers.tpl 
+{{/*
+Expand the name of the chart.
+*/}}
+{{- define &quot;mychart.name&quot; -}}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix &quot;-&quot; }}
+{{- end }}
+
+{{/*
+Create a default fully qualified app name.
+*/}}
+{{- define &quot;mychart.fullname&quot; -}}
+{{- if .Values.fullnameOverride }}
+{{- .Values.fullnameOverride | trunc 63 | trimSuffix &quot;-&quot; }}
+{{- else }}
+{{- $name := default .Chart.Name .Values.nameOverride }}
+{{- if contains $name .Release.Name }}
+{{- .Release.Name | trunc 63 | trimSuffix &quot;-&quot; }}
+{{- else }}
+{{- printf &quot;%s-%s&quot; .Release.Name $name | trunc 63 | trimSuffix &quot;-&quot; }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create chart name and version as used by the chart label.
+*/}}
+{{- define &quot;mychart.chart&quot; -}}
+{{- printf &quot;%s-%s&quot; .Chart.Name .Chart.Version | replace &quot;+&quot; &quot;_&quot; | trunc 63 | trimSuffix &quot;-&quot; }}
+{{- end }}
+
+{{/*
+Common labels - MODIFIED FOR LAB REQUIREMENTS
+*/}}
+{{- define &quot;mychart.labels&quot; -}}
+helm.sh/chart: {{ include &quot;mychart.chart&quot; . }}
+{{ include &quot;mychart.selectorLabels&quot; . }}
+app: {{ .Release.Name }}  {{/* Critical fix for lab requirements */}}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
+Selector labels - MODIFIED FOR LAB REQUIREMENTS
+*/}}
+{{- define &quot;mychart.selectorLabels&quot; -}}
+app: {{ .Release.Name }}  {{/* Changed to match pod template labels */}}
+release: {{ .Release.Name }}  {{/* Added for better selection */}}
+{{- end }}
+
+{{/*
+Create the name of the service account to use - UPDATED
+*/}}
+{{- define &quot;mychart.serviceAccountName&quot; -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include &quot;mychart.fullname&quot; .) .Values.serviceAccount.name }}
+{{- else }}
+{{- default &quot;default&quot; .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ helm uninstall demo
+release &quot;demo&quot; uninstalled
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ helm install demo ./mychart
+NAME: demo
+LAST DEPLOYED: Sun Mar  9 19:18:16 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl get pods -l app=demo
+No resources found in default namespace.
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ cd mychart/
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ helm install demo .
+Error: INSTALLATION FAILED: cannot re-use a name that is still in use
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ helm uninstall demo .
+release &quot;demo&quot; uninstalled
+Error: uninstall: Release name is invalid: .
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ helm install demo .
+NAME: demo
+LAST DEPLOYED: Sun Mar  9 19:19:35 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ helm upgrade demo .
+Release &quot;demo&quot; has been upgraded. Happy Helming!
+NAME: demo
+LAST DEPLOYED: Sun Mar  9 19:19:46 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 2
+TEST SUITE: None
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ helm list -n default
+NAME	NAMESPACE	REVISION	UPDATED                                	STATUS  	CHART        	APP VERSION
+demo	default  	2       	2025-03-09 19:19:46.347144584 +0300 MSK	deployed	mychart-0.1.0	1.16.0     
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ kubectl get all -l app=demo
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/demo-mychart   0/1     0            0           40s
+
+NAME                                      DESIRED   CURRENT   READY   AGE
+replicaset.apps/demo-mychart-6c6cc94977   1         0         0       40s
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ POD_NAME=$(kubectl get pods -l app=demo -o jsonpath=&apos;{.items[0].metadata.name}&apos;)
+error: error executing jsonpath &quot;{.items[0].metadata.name}&quot;: Error executing template: array index out of bounds: index 0, length 0. Printing more information for debugging the template:
+	template was:
+		{.items[0].metadata.name}
+	object given to jsonpath engine was:
+		map[string]interface {}{&quot;apiVersion&quot;:&quot;v1&quot;, &quot;items&quot;:[]interface {}{}, &quot;kind&quot;:&quot;List&quot;, &quot;metadata&quot;:map[string]interface {}{&quot;resourceVersion&quot;:&quot;&quot;}}
+
+
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ kubectl get deployments -l app=demo
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+demo-mychart   0/1     0            0           2m24s
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ kubectl exec $POD_NAME -- printenv | grep MY_PASSWORD
+error: pod, type/name or --filename must be specified
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ kubectl describe deployment demo-mychart
+Name:                   demo-mychart
+Namespace:              default
+CreationTimestamp:      Sun, 09 Mar 2025 19:19:36 +0300
+Labels:                 app=demo
+                        app.kubernetes.io/managed-by=Helm
+                        app.kubernetes.io/version=1.16.0
+                        helm.sh/chart=mychart-0.1.0
+                        release=demo
+Annotations:            deployment.kubernetes.io/revision: 1
+                        meta.helm.sh/release-name: demo
+                        meta.helm.sh/release-namespace: default
+Selector:               app=demo,release=demo
+Replicas:               1 desired | 0 updated | 0 total | 0 available | 1 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:           app=demo
+                    app.kubernetes.io/managed-by=Helm
+                    app.kubernetes.io/version=1.16.0
+                    helm.sh/chart=mychart-0.1.0
+                    release=demo
+  Service Account:  demo-mychart
+  Containers:
+   mychart:
+    Image:      nginx:1.16.0
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Limits:
+      cpu:     500m
+      memory:  256Mi
+    Requests:
+      cpu:      250m
+      memory:   128Mi
+    Liveness:   http-get http://:http/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Readiness:  http-get http://:http/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      MY_PASSWORD:  &lt;set to the key &apos;MY_PASS&apos; in secret &apos;demo-secret&apos;&gt;  Optional: false
+    Mounts:         &lt;none&gt;
+  Volumes:          &lt;none&gt;
+  Node-Selectors:   &lt;none&gt;
+  Tolerations:      &lt;none&gt;
+Conditions:
+  Type             Status  Reason
+  ----             ------  ------
+  Progressing      True    NewReplicaSetCreated
+  Available        False   MinimumReplicasUnavailable
+  ReplicaFailure   True    FailedCreate
+OldReplicaSets:    &lt;none&gt;
+NewReplicaSet:     demo-mychart-6c6cc94977 (0/1 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  5m6s  deployment-controller  Scaled up replica set demo-mychart-6c6cc94977 from 0 to 1
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ kubectl exec demo-mychart -- printenv | grep MY_PASSWORD
+Error from server (NotFound): pods &quot;demo-mychart&quot; not found
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ helm upgrade demo ./mychart --force
+Error: path &quot;./mychart&quot; not found
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ cd ..
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ helm upgrade demo ./mychart --force
+Release &quot;demo&quot; has been upgraded. Happy Helming!
+NAME: demo
+LAST DEPLOYED: Sun Mar  9 19:28:07 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 3
+TEST SUITE: None
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl get pods -l app=demo
+No resources found in default namespace.
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ cd mychart
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ kubectl get pods -l app=demo
+No resources found in default namespace.
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ cd ..
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ POD_NAME=$(kubectl get pods -l app=demo -o jsonpath=&apos;{.items[0].metadata.name}&apos;)
+kubectl exec $POD_NAME -- printenv | grep MY_PASSWORD
+error: error executing jsonpath &quot;{.items[0].metadata.name}&quot;: Error executing template: array index out of bounds: index 0, length 0. Printing more information for debugging the template:
+	template was:
+		{.items[0].metadata.name}
+	object given to jsonpath engine was:
+		map[string]interface {}{&quot;apiVersion&quot;:&quot;v1&quot;, &quot;items&quot;:[]interface {}{}, &quot;kind&quot;:&quot;List&quot;, &quot;metadata&quot;:map[string]interface {}{&quot;resourceVersion&quot;:&quot;&quot;}}
+
+
+error: pod, type/name or --filename must be specified
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl describe replicaset -l app=demo
+Name:           demo-mychart-546f696f78
+Namespace:      default
+Selector:       app=demo,pod-template-hash=546f696f78,release=demo
+Labels:         app=demo
+                app.kubernetes.io/managed-by=Helm
+                app.kubernetes.io/version=1.16.0
+                helm.sh/chart=mychart-0.1.0
+                pod-template-hash=546f696f78
+                release=demo
+Annotations:    deployment.kubernetes.io/desired-replicas: 1
+                deployment.kubernetes.io/max-replicas: 2
+                deployment.kubernetes.io/revision: 2
+                meta.helm.sh/release-name: demo
+                meta.helm.sh/release-namespace: default
+Controlled By:  Deployment/demo-mychart
+Replicas:       0 current / 1 desired
+Pods Status:    0 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:           app=demo
+                    app.kubernetes.io/managed-by=Helm
+                    app.kubernetes.io/version=1.16.0
+                    helm.sh/chart=mychart-0.1.0
+                    pod-template-hash=546f696f78
+                    release=demo
+  Service Account:  demo-mychart
+  Containers:
+   mychart:
+    Image:      nginx:latest
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Liveness:   http-get http://:http/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Readiness:  http-get http://:http/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      MY_PASSWORD:  &lt;set to the key &apos;MY_PASS&apos; in secret &apos;demo-secret&apos;&gt;  Optional: false
+    Mounts:         &lt;none&gt;
+  Volumes:          &lt;none&gt;
+  Node-Selectors:   &lt;none&gt;
+  Tolerations:      &lt;none&gt;
+Conditions:
+  Type             Status  Reason
+  ----             ------  ------
+  ReplicaFailure   True    FailedCreate
+Events:
+  Type     Reason        Age                 From                   Message
+  ----     ------        ----                ----                   -------
+  Warning  FailedCreate  27s (x14 over 68s)  replicaset-controller  Error creating: pods &quot;demo-mychart-546f696f78-&quot; is forbidden: error looking up service account default/demo-mychart: serviceaccount &quot;demo-mychart&quot; not found
+
+
+Name:           demo-mychart-6c6cc94977
+Namespace:      default
+Selector:       app=demo,pod-template-hash=6c6cc94977,release=demo
+Labels:         app=demo
+                app.kubernetes.io/managed-by=Helm
+                app.kubernetes.io/version=1.16.0
+                helm.sh/chart=mychart-0.1.0
+                pod-template-hash=6c6cc94977
+                release=demo
+Annotations:    deployment.kubernetes.io/desired-replicas: 1
+                deployment.kubernetes.io/max-replicas: 2
+                deployment.kubernetes.io/revision: 1
+                meta.helm.sh/release-name: demo
+                meta.helm.sh/release-namespace: default
+Controlled By:  Deployment/demo-mychart
+Replicas:       0 current / 1 desired
+Pods Status:    0 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:           app=demo
+                    app.kubernetes.io/managed-by=Helm
+                    app.kubernetes.io/version=1.16.0
+                    helm.sh/chart=mychart-0.1.0
+                    pod-template-hash=6c6cc94977
+                    release=demo
+  Service Account:  demo-mychart
+  Containers:
+   mychart:
+    Image:      nginx:1.16.0
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Limits:
+      cpu:     500m
+      memory:  256Mi
+    Requests:
+      cpu:      250m
+      memory:   128Mi
+    Liveness:   http-get http://:http/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Readiness:  http-get http://:http/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      MY_PASSWORD:  &lt;set to the key &apos;MY_PASS&apos; in secret &apos;demo-secret&apos;&gt;  Optional: false
+    Mounts:         &lt;none&gt;
+  Volumes:          &lt;none&gt;
+  Node-Selectors:   &lt;none&gt;
+  Tolerations:      &lt;none&gt;
+Conditions:
+  Type             Status  Reason
+  ----             ------  ------
+  ReplicaFailure   True    FailedCreate
+Events:
+  Type     Reason        Age                     From                   Message
+  ----     ------        ----                    ----                   -------
+  Warning  FailedCreate  4m12s (x17 over 9m39s)  replicaset-controller  Error creating: pods &quot;demo-mychart-6c6cc94977-&quot; is forbidden: error looking up service account default/demo-mychart: serviceaccount &quot;demo-mychart&quot; not found
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ helm upgrade demo ./mychart --force
+Release &quot;demo&quot; has been upgraded. Happy Helming!
+NAME: demo
+LAST DEPLOYED: Sun Mar  9 19:31:34 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 4
+TEST SUITE: None
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl get pods -l app=demo
+No resources found in default namespace.
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ helm upgrade demo ./mychart --force
+Release &quot;demo&quot; has been upgraded. Happy Helming!
+NAME: demo
+LAST DEPLOYED: Sun Mar  9 19:33:51 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 5
+TEST SUITE: None
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl get pods -l app=demo
+No resources found in default namespace.
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl get serviceaccount -l app=demo
+No resources found in default namespace.
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl describe replicaset -l app=demo
+Name:           demo-mychart-546f696f78
+Namespace:      default
+Selector:       app=demo,pod-template-hash=546f696f78,release=demo
+Labels:         app=demo
+                app.kubernetes.io/managed-by=Helm
+                app.kubernetes.io/version=1.16.0
+                helm.sh/chart=mychart-0.1.0
+                pod-template-hash=546f696f78
+                release=demo
+Annotations:    deployment.kubernetes.io/desired-replicas: 1
+                deployment.kubernetes.io/max-replicas: 2
+                deployment.kubernetes.io/revision: 2
+                meta.helm.sh/release-name: demo
+                meta.helm.sh/release-namespace: default
+Controlled By:  Deployment/demo-mychart
+Replicas:       0 current / 1 desired
+Pods Status:    0 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:           app=demo
+                    app.kubernetes.io/managed-by=Helm
+                    app.kubernetes.io/version=1.16.0
+                    helm.sh/chart=mychart-0.1.0
+                    pod-template-hash=546f696f78
+                    release=demo
+  Service Account:  demo-mychart
+  Containers:
+   mychart:
+    Image:      nginx:latest
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Liveness:   http-get http://:http/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Readiness:  http-get http://:http/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      MY_PASSWORD:  &lt;set to the key &apos;MY_PASS&apos; in secret &apos;demo-secret&apos;&gt;  Optional: false
+    Mounts:         &lt;none&gt;
+  Volumes:          &lt;none&gt;
+  Node-Selectors:   &lt;none&gt;
+  Tolerations:      &lt;none&gt;
+Conditions:
+  Type             Status  Reason
+  ----             ------  ------
+  ReplicaFailure   True    FailedCreate
+Events:
+  Type     Reason        Age                   From                   Message
+  ----     ------        ----                  ----                   -------
+  Warning  FailedCreate  68s (x17 over 6m36s)  replicaset-controller  Error creating: pods &quot;demo-mychart-546f696f78-&quot; is forbidden: error looking up service account default/demo-mychart: serviceaccount &quot;demo-mychart&quot; not found
+
+
+Name:           demo-mychart-64f9b689b
+Namespace:      default
+Selector:       app=demo,pod-template-hash=64f9b689b,release=demo
+Labels:         app=demo
+                app.kubernetes.io/managed-by=Helm
+                app.kubernetes.io/version=1.16.0
+                helm.sh/chart=mychart-0.1.0
+                pod-template-hash=64f9b689b
+                release=demo
+Annotations:    deployment.kubernetes.io/desired-replicas: 1
+                deployment.kubernetes.io/max-replicas: 2
+                deployment.kubernetes.io/revision: 3
+                meta.helm.sh/release-name: demo
+                meta.helm.sh/release-namespace: default
+Controlled By:  Deployment/demo-mychart
+Replicas:       0 current / 1 desired
+Pods Status:    0 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:           app=demo
+                    app.kubernetes.io/managed-by=Helm
+                    app.kubernetes.io/version=1.16.0
+                    helm.sh/chart=mychart-0.1.0
+                    pod-template-hash=64f9b689b
+                    release=demo
+  Service Account:  demo-sa
+  Containers:
+   mychart:
+    Image:      nginx:latest
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Liveness:   http-get http://:http/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Readiness:  http-get http://:http/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      MY_PASSWORD:  &lt;set to the key &apos;MY_PASS&apos; in secret &apos;demo-secret&apos;&gt;  Optional: false
+    Mounts:         &lt;none&gt;
+  Volumes:          &lt;none&gt;
+  Node-Selectors:   &lt;none&gt;
+  Tolerations:      &lt;none&gt;
+Conditions:
+  Type             Status  Reason
+  ----             ------  ------
+  ReplicaFailure   True    FailedCreate
+Events:
+  Type     Reason        Age                 From                   Message
+  ----     ------        ----                ----                   -------
+  Warning  FailedCreate  11s (x14 over 52s)  replicaset-controller  Error creating: pods &quot;demo-mychart-64f9b689b-&quot; is forbidden: error looking up service account default/demo-sa: serviceaccount &quot;demo-sa&quot; not found
+
+
+Name:           demo-mychart-6c6cc94977
+Namespace:      default
+Selector:       app=demo,pod-template-hash=6c6cc94977,release=demo
+Labels:         app=demo
+                app.kubernetes.io/managed-by=Helm
+                app.kubernetes.io/version=1.16.0
+                helm.sh/chart=mychart-0.1.0
+                pod-template-hash=6c6cc94977
+                release=demo
+Annotations:    deployment.kubernetes.io/desired-replicas: 1
+                deployment.kubernetes.io/max-replicas: 2
+                deployment.kubernetes.io/revision: 1
+                meta.helm.sh/release-name: demo
+                meta.helm.sh/release-namespace: default
+Controlled By:  Deployment/demo-mychart
+Replicas:       0 current / 0 desired
+Pods Status:    0 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:           app=demo
+                    app.kubernetes.io/managed-by=Helm
+                    app.kubernetes.io/version=1.16.0
+                    helm.sh/chart=mychart-0.1.0
+                    pod-template-hash=6c6cc94977
+                    release=demo
+  Service Account:  demo-mychart
+  Containers:
+   mychart:
+    Image:      nginx:1.16.0
+    Port:       80/TCP
+    Host Port:  0/TCP
+    Limits:
+      cpu:     500m
+      memory:  256Mi
+    Requests:
+      cpu:      250m
+      memory:   128Mi
+    Liveness:   http-get http://:http/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Readiness:  http-get http://:http/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      MY_PASSWORD:  &lt;set to the key &apos;MY_PASS&apos; in secret &apos;demo-secret&apos;&gt;  Optional: false
+    Mounts:         &lt;none&gt;
+  Volumes:          &lt;none&gt;
+  Node-Selectors:   &lt;none&gt;
+  Tolerations:      &lt;none&gt;
+Events:
+  Type     Reason        Age                   From                   Message
+  ----     ------        ----                  ----                   -------
+  Warning  FailedCreate  4m12s (x18 over 15m)  replicaset-controller  Error creating: pods &quot;demo-mychart-6c6cc94977-&quot; is forbidden: error looking up service account default/demo-mychart: serviceaccount &quot;demo-mychart&quot; not found
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ touch mychart/templates/serviceaccount.yaml
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ touc mychart/templates/serviceaccount.yaml
+Command &apos;touc&apos; not found, did you mean:
+  command &apos;touch&apos; from deb coreutils (8.32-4.1ubuntu1.2)
+Try: sudo apt install &lt;deb name&gt;
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ gedit mychart/templates/serviceaccount.yaml
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ cd mychart/
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ helm uninstall demo
+release &quot;demo&quot; uninstalled
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ kubectl delete replicaset -l app=demo --force
+<font color="#A2734C"><b>Warning:</b></font> Immediate deletion does not wait for confirmation that the running resource has been terminated. The resource may continue to run on the cluster indefinitely.
+No resources found
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ helm install demo ./mychart --debug
+install.go:225: 2025-03-09 19:38:57.910360067 +0300 MSK m=+0.024699202 [debug] Original chart version: &quot;&quot;
+Error: INSTALLATION FAILED: path &quot;./mychart&quot; not found
+helm.go:86: 2025-03-09 19:38:57.91047443 +0300 MSK m=+0.024813561 [debug] path &quot;./mychart&quot; not found
+helm.sh/helm/v3/pkg/action.(*ChartPathOptions).LocateChart
+	helm.sh/helm/v3/pkg/action/install.go:761
+main.runInstall
+	helm.sh/helm/v3/cmd/helm/install.go:237
+main.newInstallCmd.func2
+	helm.sh/helm/v3/cmd/helm/install.go:156
+github.com/spf13/cobra.(*Command).execute
+	github.com/spf13/cobra@v1.8.1/command.go:985
+github.com/spf13/cobra.(*Command).ExecuteC
+	github.com/spf13/cobra@v1.8.1/command.go:1117
+github.com/spf13/cobra.(*Command).Execute
+	github.com/spf13/cobra@v1.8.1/command.go:1041
+main.main
+	helm.sh/helm/v3/cmd/helm/helm.go:85
+runtime.main
+	runtime/proc.go:272
+runtime.goexit
+	runtime/asm_amd64.s:1700
+INSTALLATION FAILED
+main.newInstallCmd.func2
+	helm.sh/helm/v3/cmd/helm/install.go:158
+github.com/spf13/cobra.(*Command).execute
+	github.com/spf13/cobra@v1.8.1/command.go:985
+github.com/spf13/cobra.(*Command).ExecuteC
+	github.com/spf13/cobra@v1.8.1/command.go:1117
+github.com/spf13/cobra.(*Command).Execute
+	github.com/spf13/cobra@v1.8.1/command.go:1041
+main.main
+	helm.sh/helm/v3/cmd/helm/helm.go:85
+runtime.main
+	runtime/proc.go:272
+runtime.goexit
+	runtime/asm_amd64.s:1700
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ kubectl get serviceaccount -l app=demo
+No resources found in default namespace.
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ helm install demo . --debug
+install.go:225: 2025-03-09 19:40:55.717772167 +0300 MSK m=+0.024499911 [debug] Original chart version: &quot;&quot;
+install.go:242: 2025-03-09 19:40:55.717821054 +0300 MSK m=+0.024548798 [debug] CHART PATH: /home/yehia/My station/DevOps/lab11/k8s/mychart
+
+client.go:142: 2025-03-09 19:40:55.815712127 +0300 MSK m=+0.122439878 [debug] creating 3 resource(s)
+NAME: demo
+LAST DEPLOYED: Sun Mar  9 19:40:55 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+USER-SUPPLIED VALUES:
+{}
+
+COMPUTED VALUES:
+affinity: {}
+autoscaling:
+  enabled: false
+  maxReplicas: 100
+  minReplicas: 1
+  targetCPUUtilizationPercentage: 80
+env:
+  mode: development
+  version: &quot;1.0&quot;
+fullnameOverride: &quot;&quot;
+image:
+  pullPolicy: IfNotPresent
+  repository: nginx
+  tag: latest
+imagePullSecrets: []
+ingress:
+  annotations: {}
+  className: &quot;&quot;
+  enabled: false
+  hosts:
+  - host: chart-example.local
+    paths:
+    - path: /
+      pathType: ImplementationSpecific
+  tls: []
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+nameOverride: &quot;&quot;
+nodeSelector: {}
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+replicaCount: 1
+resources: null
+secrets:
+  password: admin123
+securityContext: {}
+service:
+  port: 80
+  type: ClusterIP
+serviceAccount:
+  annotations: {}
+  automount: true
+  create: true
+  name: demo-sa
+tolerations: []
+volumeMounts: []
+volumes: []
+
+HOOKS:
+MANIFEST:
+---
+# Source: mychart/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: demo-sa
+  labels:
+    helm.sh/chart: mychart-0.1.0
+    app: demo  
+    release: demo  
+    app: demo  
+    app.kubernetes.io/version: &quot;1.16.0&quot;
+    app.kubernetes.io/managed-by: Helm
+automountServiceAccountToken: true
+---
+# Source: mychart/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: demo-secret
+  labels:
+    app: demo
+type: Opaque
+data:
+  MY_PASS: YWRtaW4xMjM=
+---
+# Source: mychart/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-mychart
+  labels:
+    helm.sh/chart: mychart-0.1.0
+    app: demo  
+    release: demo  
+    app: demo  
+    app.kubernetes.io/version: &quot;1.16.0&quot;
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo  
+      release: demo  
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: mychart-0.1.0
+        app: demo  
+        release: demo  
+        app: demo  
+        app.kubernetes.io/version: &quot;1.16.0&quot;
+        app.kubernetes.io/managed-by: Helm
+    spec:
+      serviceAccountName: demo-sa
+      containers:
+        - name: mychart
+          image: &quot;nginx:latest&quot;
+          imagePullPolicy: IfNotPresent
+          # ADDED ENVIRONMENT VARIABLES SECTION
+          env:
+            - name: MY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: demo-secret
+                  key: MY_PASS
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ kubectl get serviceaccount -l app=demo
+NAME      SECRETS   AGE
+demo-sa   0         21s
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ kubectl get pods -l app=demo
+NAME                           READY   STATUS    RESTARTS   AGE
+demo-mychart-64f9b689b-x8684   1/1     Running   0          34s
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ kubectl exec demo-mychart-64f9b689b-x8684 -- printenv | grep MY_PASSWORD
+<font color="#C01C28"><b>MY_PASSWORD</b></font>=admin123
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ echo &quot;the second task&quot;
+the second task
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ ls
+<font color="#12488B"><b>charts</b></font>  Chart.yaml  <font color="#12488B"><b>templates</b></font>  values.yaml
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ cat values.yaml 
+# Default values for mychart.
+replicaCount: 1
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  tag: &quot;latest&quot;
+
+# ===== ADDED SECRETS SECTION =====
+secrets:
+  password: &quot;admin123&quot;  # Plaintext password for lab secret
+
+# ===== ADDED ENVIRONMENT VARIABLES =====
+env:
+  mode: &quot;development&quot;   # Example environment variable
+  version: &quot;1.0&quot;        # Example version variable
+
+imagePullSecrets: []
+nameOverride: &quot;&quot;
+fullnameOverride: &quot;&quot;
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: &quot;demo-sa&quot;
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: &quot;&quot;
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+# ===== UPDATED RESOURCES SECTION =====
+resources:
+    # limits:
+    #   cpu: 500m
+    #   memory: 256Mi
+    # requests:
+    #   cpu: 250m
+    #   memory: 128Mi
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+volumes: []
+volumeMounts: []
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ cd templates/
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart/templates</b></font>$ ls
+deployment.yaml  _helpers.tpl  secrets.yaml  serviceaccount.yaml
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart/templates</b></font>$ cat _helpers.tpl 
+{{/*
+Expand the name of the chart.
+*/}}
+{{- define &quot;mychart.name&quot; -}}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix &quot;-&quot; }}
+{{- end }}
+
+{{/*
+Create a default fully qualified app name.
+*/}}
+{{- define &quot;mychart.fullname&quot; -}}
+{{- if .Values.fullnameOverride }}
+{{- .Values.fullnameOverride | trunc 63 | trimSuffix &quot;-&quot; }}
+{{- else }}
+{{- $name := default .Chart.Name .Values.nameOverride }}
+{{- if contains $name .Release.Name }}
+{{- .Release.Name | trunc 63 | trimSuffix &quot;-&quot; }}
+{{- else }}
+{{- printf &quot;%s-%s&quot; .Release.Name $name | trunc 63 | trimSuffix &quot;-&quot; }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create chart name and version as used by the chart label.
+*/}}
+{{- define &quot;mychart.chart&quot; -}}
+{{- printf &quot;%s-%s&quot; .Chart.Name .Chart.Version | replace &quot;+&quot; &quot;_&quot; | trunc 63 | trimSuffix &quot;-&quot; }}
+{{- end }}
+
+{{/*
+Common labels - MODIFIED FOR LAB REQUIREMENTS
+*/}}
+{{- define &quot;mychart.labels&quot; -}}
+helm.sh/chart: {{ include &quot;mychart.chart&quot; . }}
+{{ include &quot;mychart.selectorLabels&quot; . }}
+app: {{ .Release.Name }}  {{/* Critical fix for lab requirements */}}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
+Selector labels - MODIFIED FOR LAB REQUIREMENTS
+*/}}
+{{- define &quot;mychart.selectorLabels&quot; -}}
+app: {{ .Release.Name }}  {{/* Changed to match pod template labels */}}
+release: {{ .Release.Name }}  {{/* Added for better selection */}}
+{{- end }}
+
+{{/*
+Create the name of the service account to use - UPDATED
+*/}}
+{{- define &quot;mychart.serviceAccountName&quot; -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include &quot;mychart.fullname&quot; .) .Values.serviceAccount.name }}
+{{- else }}
+{{- default &quot;default&quot; .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart/templates</b></font>$ cd ..
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ echo &quot;the second task start from here &quot;
+the second task start from here 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ helm repo add hashicorp https://helm.releases.hashicorp.com
+helm repo update
+Error: looks like &quot;https://helm.releases.hashicorp.com&quot; is not a valid chart repository or cannot be reached: failed to fetch https://helm.releases.hashicorp.com/index.yaml : 403 Forbidden
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the &quot;stable&quot; chart repository
+Update Complete. ⎈Happy Helming!⎈
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ helm install vault hashicorp/vault \
+  --set server.dev.enabled=true \
+  --set server.dev.devRootToken=root
+Error: INSTALLATION FAILED: repo hashicorp not found
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ helm repo add hashicorp https://helm.releases.hashicorp.com
+helm repo update
+&quot;hashicorp&quot; has been added to your repositories
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the &quot;hashicorp&quot; chart repository
+
+^C
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ helm repo update
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the &quot;hashicorp&quot; chart repository
+...Successfully got an update from the &quot;stable&quot; chart repository
+Update Complete. ⎈Happy Helming!⎈
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ helm install vault hashicorp/vault \
+  --set server.dev.enabled=true \
+  --set server.dev.devRootToken=root
+NAME: vault
+LAST DEPLOYED: Sun Mar  9 20:01:12 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+Thank you for installing HashiCorp Vault!
+
+Now that you have deployed Vault, you should look over the docs on using
+Vault with Kubernetes available here:
+
+https://developer.hashicorp.com/vault/docs
+
+
+Your release is named vault. To learn more about the release, try:
+
+  $ helm status vault
+  $ helm get manifest vault
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ kubectl get pods -l app.kubernetes.io/name=vault
+NAME      READY   STATUS              RESTARTS   AGE
+vault-0   0/1     ContainerCreating   0          58s
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ kubectl exec -it vault-0 -- /bin/sh
+error: Internal error occurred: unable to upgrade connection: container not found (&quot;vault&quot;)
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ kubectl exec -it vault-0 -- /bin/sh
+/ $ vault secrets enable -path=secret kv-v2
+<font color="#F66151">Error enabling: Error making API request.</font>
+
+<font color="#F66151">URL: POST http://127.0.0.1:8200/v1/sys/mounts/secret</font>
+<font color="#F66151">Code: 400. Errors:</font>
+
+<font color="#F66151">* path is already in use at secret/</font>
+/ $ ^C
+
+/ $ 
+command terminated with exit code 130
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ kubectl describe pod vault-0
+Name:             vault-0
+Namespace:        default
+Priority:         0
+Service Account:  vault
+Node:             minikube/192.168.49.2
+Start Time:       Sun, 09 Mar 2025 20:01:12 +0300
+Labels:           app.kubernetes.io/instance=vault
+                  app.kubernetes.io/name=vault
+                  apps.kubernetes.io/pod-index=0
+                  component=server
+                  controller-revision-hash=vault-b75cdb86b
+                  helm.sh/chart=vault-0.29.1
+                  statefulset.kubernetes.io/pod-name=vault-0
+Annotations:      &lt;none&gt;
+Status:           Running
+IP:               10.244.0.5
+IPs:
+  IP:           10.244.0.5
+Controlled By:  StatefulSet/vault
+Containers:
+  vault:
+    Container ID:  docker://8e47b14fd6068f4220e5e9aa962da3194acb978b32c6a3bd985ff80769c9ef34
+    Image:         hashicorp/vault:1.18.1
+    Image ID:      docker-pullable://hashicorp/vault@sha256:3580fa352195aa7e76449cb8fadeef6d2f90a454c38982d30cf094e9013be786
+    Ports:         8200/TCP, 8201/TCP, 8202/TCP
+    Host Ports:    0/TCP, 0/TCP, 0/TCP
+    Command:
+      /bin/sh
+      -ec
+    Args:
+      /usr/local/bin/docker-entrypoint.sh vault server -dev 
+      
+    State:          Running
+      Started:      Sun, 09 Mar 2025 20:15:43 +0300
+    Ready:          True
+    Restart Count:  0
+    Readiness:      exec [/bin/sh -ec vault status -tls-skip-verify] delay=5s timeout=3s period=5s #success=1 #failure=2
+    Environment:
+      HOST_IP:                    (v1:status.hostIP)
+      POD_IP:                     (v1:status.podIP)
+      VAULT_K8S_POD_NAME:        vault-0 (v1:metadata.name)
+      VAULT_K8S_NAMESPACE:       default (v1:metadata.namespace)
+      VAULT_ADDR:                http://127.0.0.1:8200
+      VAULT_API_ADDR:            http://$(POD_IP):8200
+      SKIP_CHOWN:                true
+      SKIP_SETCAP:               true
+      HOSTNAME:                  vault-0 (v1:metadata.name)
+      VAULT_CLUSTER_ADDR:        https://$(HOSTNAME).vault-internal:8201
+      HOME:                      /home/vault
+      VAULT_DEV_ROOT_TOKEN_ID:   root
+      VAULT_DEV_LISTEN_ADDRESS:  [::]:8200
+    Mounts:
+      /home/vault from home (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-pwcnk (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  home:
+    Type:       EmptyDir (a temporary directory that shares a pod&apos;s lifetime)
+    Medium:     
+    SizeLimit:  &lt;unset&gt;
+  kube-api-access-pwcnk:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       &lt;nil&gt;
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              &lt;none&gt;
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason   Age   From     Message
+  ----    ------   ----  ----     -------
+  Normal  Pulled   57m   kubelet  Successfully pulled image &quot;hashicorp/vault:1.18.1&quot; in 13m12.795s (14m30.332s including waiting). Image size: 466386752 bytes.
+  Normal  Created  57m   kubelet  Created container: vault
+  Normal  Started  57m   kubelet  Started container vault
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ kubectl get pods -l app.kubernetes.io/name=vault
+NAME      READY   STATUS    RESTARTS   AGE
+vault-0   1/1     Running   0          72m
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ kubectl exec -it vault-0 -- /bin/sh
+/ $ vault secrets list
+Path          Type         Accessor              Description
+----          ----         --------              -----------
+cubbyhole/    cubbyhole    cubbyhole_6b94a861    per-token private secret storage
+identity/     identity     identity_f9c95df7     identity store
+secret/       kv           kv_e0cbf9c6           key/value secret storage
+sys/          system       system_7f60de56       system endpoints used for control, policy and debugging
+/ $ vault kv put secret/demo-secret password=&quot;vaultpassword123&quot;
+===== Secret Path =====
+secret/data/demo-secret
+
+======= Metadata =======
+Key                Value
+---                -----
+created_time       2025-03-09T18:14:34.130550416Z
+custom_metadata    &lt;nil&gt;
+deletion_time      n/a
+destroyed          false
+version            1
+/ $ vault secrets list
+Path          Type         Accessor              Description
+----          ----         --------              -----------
+cubbyhole/    cubbyhole    cubbyhole_6b94a861    per-token private secret storage
+identity/     identity     identity_f9c95df7     identity store
+secret/       kv           kv_e0cbf9c6           key/value secret storage
+sys/          system       system_7f60de56       system endpoints used for control, policy and debugging
+/ $ vault auth enable kubernetes
+Success! Enabled kubernetes auth method at: kubernetes/
+/ $ vault write auth/kubernetes/config \
+&gt;   kubernetes_host=&quot;https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT&quot;
+Success! Data written to: auth/kubernetes/config
+/ $ vault policy write demo-policy - &lt;&lt;EOF
+&gt; path &quot;secret/data/demo-secret&quot; {
+&gt;   capabilities = [&quot;read&quot;]
+&gt; }
+&gt; EOF
+Success! Uploaded policy: demo-policy
+/ $ 
+/ $ vault write auth/kubernetes/role/demo-role \
+&gt;   bound_service_account_names=demo-sa \
+&gt;   bound_service_account_namespaces=default \
+&gt;   policies=demo-policy \
+&gt;   ttl=24h
+Success! Data written to: auth/kubernetes/role/demo-role
+/ $ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s/mychart</b></font>$ cd ..
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ helm upgrade demo ./mychart
+Error: UPGRADE FAILED: parse error at (mychart/templates/deployment.yaml:25): function &quot;secret&quot; not defined
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ helm upgrade demo ./mychart
+Release &quot;demo&quot; has been upgraded. Happy Helming!
+NAME: demo
+LAST DEPLOYED: Sun Mar  9 21:21:51 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 2
+TEST SUITE: None
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl describe pod -l app=demo | grep vault.hashicorp.com
+Annotations:      <font color="#C01C28"><b>vault.hashicorp.com</b></font>/agent-inject: true
+                  <font color="#C01C28"><b>vault.hashicorp.com</b></font>/agent-inject-secret-db-secret: secret/data/demo-secret
+                  <font color="#C01C28"><b>vault.hashicorp.com</b></font>/agent-inject-status: injected
+                  <font color="#C01C28"><b>vault.hashicorp.com</b></font>/agent-inject-template-db-secret:
+                  <font color="#C01C28"><b>vault.hashicorp.com</b></font>/role: demo-role
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl get pods -l app.kubernetes.io/name=vault
+NAME      READY   STATUS    RESTARTS   AGE
+vault-0   1/1     Running   0          81m
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl exec vault-0 -- cat /vault/secrets/db-secret
+cat: can&apos;t open &apos;/vault/secrets/db-secret&apos;: No such file or directory
+command terminated with exit code 1
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl get pods -l app=demo
+NAME                            READY   STATUS    RESTARTS   AGE
+demo-mychart-5f9768cbb5-mj59g   2/2     Running   0          4m44s
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl exec demo-mychart-5f9768cbb5-mj59g  -- cat /vault/secrets/db-secret
+Defaulted container &quot;mychart&quot; out of: mychart, vault-agent, vault-agent-init (init)
+vaultpassword123
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl exec demo-mychart-5f9768cbb5-mj59g -- df -h | grep vault
+Defaulted container &quot;mychart&quot; out of: mychart, vault-agent, vault-agent-init (init)
+tmpfs           7.6G  4.0K  7.6G   1% /<font color="#C01C28"><b>vault</b></font>/secrets
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ echo &quot;bonus &quot;
+bonus 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl describe pod -l app=demo | grep -A 5 Resources
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ helm upgrade demo ./mychart
+Error: path &quot;./mychart&quot; not found
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ ls
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ cd
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~</b></font>$ cd My\ station/DevOps/lab11/k8s/
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ ls
+deployment-app2.yml  deployment.yml  <font color="#12488B"><b>helm</b></font>  ingress.yml  <font color="#12488B"><b>mychart</b></font>  notes.md  README.md  <font color="#12488B"><b>screnshoots</b></font>  service-app2.yml  service.yml
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ helm upgrade demo ./mychart
+Release &quot;demo&quot; has been upgraded. Happy Helming!
+NAME: demo
+LAST DEPLOYED: Sun Mar  9 21:55:48 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 3
+TEST SUITE: None
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl describe pod -l app=demo | grep -A 5 &quot;Resources&quot;
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl describe pod -l app=demo
+Name:             demo-mychart-5dff7f57f-wdgv7
+Namespace:        default
+Priority:         0
+Service Account:  demo-sa
+Node:             minikube/192.168.49.2
+Start Time:       Sun, 09 Mar 2025 21:55:49 +0300
+Labels:           app=demo
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/version=1.16.0
+                  helm.sh/chart=mychart-0.1.0
+                  pod-template-hash=5dff7f57f
+                  release=demo
+Annotations:      vault.hashicorp.com/agent-inject: true
+                  vault.hashicorp.com/agent-inject-secret-db-secret: secret/data/demo-secret
+                  vault.hashicorp.com/agent-inject-status: injected
+                  vault.hashicorp.com/agent-inject-template-db-secret:
+                    {{- with secret &quot;secret/data/demo-secret&quot; -}}
+                    {{ .Data.data.password }}
+                    {{- end }}
+                  vault.hashicorp.com/role: demo-role
+Status:           Running
+IP:               10.244.0.7
+IPs:
+  IP:           10.244.0.7
+Controlled By:  ReplicaSet/demo-mychart-5dff7f57f
+Init Containers:
+  vault-agent-init:
+    Container ID:  docker://3a860f0e1125a3f29c52d496340e4a4a4506f1ba7c3fe4bac51cf949edc4f18a
+    Image:         hashicorp/vault:1.18.1
+    Image ID:      docker-pullable://hashicorp/vault@sha256:3580fa352195aa7e76449cb8fadeef6d2f90a454c38982d30cf094e9013be786
+    Port:          &lt;none&gt;
+    Host Port:     &lt;none&gt;
+    Command:
+      /bin/sh
+      -ec
+    Args:
+      echo ${VAULT_CONFIG?} | base64 -d &gt; /home/vault/config.json &amp;&amp; vault agent -config=/home/vault/config.json
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sun, 09 Mar 2025 21:55:49 +0300
+      Finished:     Sun, 09 Mar 2025 21:55:49 +0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     500m
+      memory:  128Mi
+    Requests:
+      cpu:     250m
+      memory:  64Mi
+    Environment:
+      NAMESPACE:         default (v1:metadata.namespace)
+      HOST_IP:            (v1:status.hostIP)
+      POD_IP:             (v1:status.podIP)
+      VAULT_LOG_LEVEL:   info
+      VAULT_LOG_FORMAT:  standard
+      VAULT_CONFIG:      eyJhdXRvX2F1dGgiOnsibWV0aG9kIjp7InR5cGUiOiJrdWJlcm5ldGVzIiwibW91bnRfcGF0aCI6ImF1dGgva3ViZXJuZXRlcyIsImNvbmZpZyI6eyJyb2xlIjoiZGVtby1yb2xlIiwidG9rZW5fcGF0aCI6Ii92YXIvcnVuL3NlY3JldHMva3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC90b2tlbiJ9fSwic2luayI6W3sidHlwZSI6ImZpbGUiLCJjb25maWciOnsicGF0aCI6Ii9ob21lL3ZhdWx0Ly52YXVsdC10b2tlbiJ9fV19LCJleGl0X2FmdGVyX2F1dGgiOnRydWUsInBpZF9maWxlIjoiL2hvbWUvdmF1bHQvLnBpZCIsInZhdWx0Ijp7ImFkZHJlc3MiOiJodHRwOi8vdmF1bHQuZGVmYXVsdC5zdmM6ODIwMCJ9LCJ0ZW1wbGF0ZSI6W3siZGVzdGluYXRpb24iOiIvdmF1bHQvc2VjcmV0cy9kYi1zZWNyZXQiLCJjb250ZW50cyI6Int7LSB3aXRoIHNlY3JldCBcInNlY3JldC9kYXRhL2RlbW8tc2VjcmV0XCIgLX19XG57eyAuRGF0YS5kYXRhLnBhc3N3b3JkIH19XG57ey0gZW5kIH19XG4iLCJsZWZ0X2RlbGltaXRlciI6Int7IiwicmlnaHRfZGVsaW1pdGVyIjoifX0ifV0sInRlbXBsYXRlX2NvbmZpZyI6eyJleGl0X29uX3JldHJ5X2ZhaWx1cmUiOnRydWV9fQ==
+    Mounts:
+      /home/vault from home-init (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-x52mp (ro)
+      /vault/secrets from vault-secrets (rw)
+Containers:
+  mychart:
+    Container ID:   docker://f9dc537fd6c79e4ee10060b6ef020e6cfd4dee33e7896712bb23f7db197a118a
+    Image:          nginx:latest
+    Image ID:       docker-pullable://nginx@sha256:9d6b58feebd2dbd3c56ab5853333d627cc6e281011cfd6050fa4bcf2072c9496
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sun, 09 Mar 2025 21:55:50 +0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     500m
+      memory:  256Mi
+    Requests:
+      cpu:      250m
+      memory:   128Mi
+    Liveness:   http-get http://:http/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Readiness:  http-get http://:http/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      MY_PASSWORD:  &lt;set to the key &apos;MY_PASS&apos; in secret &apos;demo-secret&apos;&gt;  Optional: false
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-x52mp (ro)
+      /vault/secrets from vault-secrets (rw)
+  vault-agent:
+    Container ID:  docker://1cc3c9a3e24486fc9a177e18f174b0a8c252027526d8d90a76d1d287ed4aa6e8
+    Image:         hashicorp/vault:1.18.1
+    Image ID:      docker-pullable://hashicorp/vault@sha256:3580fa352195aa7e76449cb8fadeef6d2f90a454c38982d30cf094e9013be786
+    Port:          &lt;none&gt;
+    Host Port:     &lt;none&gt;
+    Command:
+      /bin/sh
+      -ec
+    Args:
+      echo ${VAULT_CONFIG?} | base64 -d &gt; /home/vault/config.json &amp;&amp; vault agent -config=/home/vault/config.json
+    State:          Running
+      Started:      Sun, 09 Mar 2025 21:55:50 +0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     500m
+      memory:  128Mi
+    Requests:
+      cpu:     250m
+      memory:  64Mi
+    Environment:
+      NAMESPACE:         default (v1:metadata.namespace)
+      HOST_IP:            (v1:status.hostIP)
+      POD_IP:             (v1:status.podIP)
+      VAULT_LOG_LEVEL:   info
+      VAULT_LOG_FORMAT:  standard
+      VAULT_CONFIG:      eyJhdXRvX2F1dGgiOnsibWV0aG9kIjp7InR5cGUiOiJrdWJlcm5ldGVzIiwibW91bnRfcGF0aCI6ImF1dGgva3ViZXJuZXRlcyIsImNvbmZpZyI6eyJyb2xlIjoiZGVtby1yb2xlIiwidG9rZW5fcGF0aCI6Ii92YXIvcnVuL3NlY3JldHMva3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC90b2tlbiJ9fSwic2luayI6W3sidHlwZSI6ImZpbGUiLCJjb25maWciOnsicGF0aCI6Ii9ob21lL3ZhdWx0Ly52YXVsdC10b2tlbiJ9fV19LCJleGl0X2FmdGVyX2F1dGgiOmZhbHNlLCJwaWRfZmlsZSI6Ii9ob21lL3ZhdWx0Ly5waWQiLCJ2YXVsdCI6eyJhZGRyZXNzIjoiaHR0cDovL3ZhdWx0LmRlZmF1bHQuc3ZjOjgyMDAifSwidGVtcGxhdGUiOlt7ImRlc3RpbmF0aW9uIjoiL3ZhdWx0L3NlY3JldHMvZGItc2VjcmV0IiwiY29udGVudHMiOiJ7ey0gd2l0aCBzZWNyZXQgXCJzZWNyZXQvZGF0YS9kZW1vLXNlY3JldFwiIC19fVxue3sgLkRhdGEuZGF0YS5wYXNzd29yZCB9fVxue3stIGVuZCB9fVxuIiwibGVmdF9kZWxpbWl0ZXIiOiJ7eyIsInJpZ2h0X2RlbGltaXRlciI6In19In1dLCJ0ZW1wbGF0ZV9jb25maWciOnsiZXhpdF9vbl9yZXRyeV9mYWlsdXJlIjp0cnVlfX0=
+    Mounts:
+      /home/vault from home-sidecar (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-x52mp (ro)
+      /vault/secrets from vault-secrets (rw)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-x52mp:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       &lt;nil&gt;
+    DownwardAPI:             true
+  home-init:
+    Type:       EmptyDir (a temporary directory that shares a pod&apos;s lifetime)
+    Medium:     Memory
+    SizeLimit:  &lt;unset&gt;
+  home-sidecar:
+    Type:       EmptyDir (a temporary directory that shares a pod&apos;s lifetime)
+    Medium:     Memory
+    SizeLimit:  &lt;unset&gt;
+  vault-secrets:
+    Type:        EmptyDir (a temporary directory that shares a pod&apos;s lifetime)
+    Medium:      Memory
+    SizeLimit:   &lt;unset&gt;
+QoS Class:       Burstable
+Node-Selectors:  &lt;none&gt;
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  101s  default-scheduler  Successfully assigned default/demo-mychart-5dff7f57f-wdgv7 to minikube
+  Normal  Pulled     101s  kubelet            Container image &quot;hashicorp/vault:1.18.1&quot; already present on machine
+  Normal  Created    101s  kubelet            Created container: vault-agent-init
+  Normal  Started    101s  kubelet            Started container vault-agent-init
+  Normal  Pulled     100s  kubelet            Container image &quot;nginx:latest&quot; already present on machine
+  Normal  Created    100s  kubelet            Created container: mychart
+  Normal  Started    100s  kubelet            Started container mychart
+  Normal  Pulled     100s  kubelet            Container image &quot;hashicorp/vault:1.18.1&quot; already present on machine
+  Normal  Created    100s  kubelet            Created container: vault-agent
+  Normal  Started    100s  kubelet            Started container vault-agent
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ helm upgrade demo ./mychart
+Release &quot;demo&quot; has been upgraded. Happy Helming!
+NAME: demo
+LAST DEPLOYED: Sun Mar  9 22:01:19 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 4
+TEST SUITE: None
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl describe pod -l app=demo | grep -A 5 &quot;Resources&quot;
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ helm upgrade demo ./mychart
+Release &quot;demo&quot; has been upgraded. Happy Helming!
+NAME: demo
+LAST DEPLOYED: Sun Mar  9 22:01:30 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 5
+TEST SUITE: None
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl describe pod -l app=demo | grep -A 5 &quot;Resources&quot;
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ cd ..
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11</b></font>$ cd k8s/
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ helm upgrade demo ./mychart
+Release &quot;demo&quot; has been upgraded. Happy Helming!
+NAME: demo
+LAST DEPLOYED: Sun Mar  9 22:04:16 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 6
+TEST SUITE: None
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl describe pod -l app=demo | grep -A 5 &quot;Resources&quot;
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl describe pod -l app=demo
+Name:             demo-mychart-9758c7b7c-zbsg2
+Namespace:        default
+Priority:         0
+Service Account:  demo-sa
+Node:             minikube/192.168.49.2
+Start Time:       Sun, 09 Mar 2025 22:01:19 +0300
+Labels:           app=demo
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/version=1.16.0
+                  helm.sh/chart=mychart-0.1.0
+                  pod-template-hash=9758c7b7c
+                  release=demo
+Annotations:      vault.hashicorp.com/agent-inject: true
+                  vault.hashicorp.com/agent-inject-secret-db-secret: secret/data/demo-secret
+                  vault.hashicorp.com/agent-inject-status: injected
+                  vault.hashicorp.com/agent-inject-template-db-secret:
+                    {{- with secret &quot;secret/data/demo-secret&quot; -}}
+                    {{ .Data.data.password }}
+                    {{- end }}
+                  vault.hashicorp.com/role: demo-role
+Status:           Running
+IP:               10.244.0.8
+IPs:
+  IP:           10.244.0.8
+Controlled By:  ReplicaSet/demo-mychart-9758c7b7c
+Init Containers:
+  vault-agent-init:
+    Container ID:  docker://4183adaf8b416d80e110182cd57da18532b6ec9ad532ef6ed51defb2b0e116dd
+    Image:         hashicorp/vault:1.18.1
+    Image ID:      docker-pullable://hashicorp/vault@sha256:3580fa352195aa7e76449cb8fadeef6d2f90a454c38982d30cf094e9013be786
+    Port:          &lt;none&gt;
+    Host Port:     &lt;none&gt;
+    Command:
+      /bin/sh
+      -ec
+    Args:
+      echo ${VAULT_CONFIG?} | base64 -d &gt; /home/vault/config.json &amp;&amp; vault agent -config=/home/vault/config.json
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sun, 09 Mar 2025 22:01:20 +0300
+      Finished:     Sun, 09 Mar 2025 22:01:20 +0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     500m
+      memory:  128Mi
+    Requests:
+      cpu:     250m
+      memory:  64Mi
+    Environment:
+      NAMESPACE:         default (v1:metadata.namespace)
+      HOST_IP:            (v1:status.hostIP)
+      POD_IP:             (v1:status.podIP)
+      VAULT_LOG_LEVEL:   info
+      VAULT_LOG_FORMAT:  standard
+      VAULT_CONFIG:      eyJhdXRvX2F1dGgiOnsibWV0aG9kIjp7InR5cGUiOiJrdWJlcm5ldGVzIiwibW91bnRfcGF0aCI6ImF1dGgva3ViZXJuZXRlcyIsImNvbmZpZyI6eyJyb2xlIjoiZGVtby1yb2xlIiwidG9rZW5fcGF0aCI6Ii92YXIvcnVuL3NlY3JldHMva3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC90b2tlbiJ9fSwic2luayI6W3sidHlwZSI6ImZpbGUiLCJjb25maWciOnsicGF0aCI6Ii9ob21lL3ZhdWx0Ly52YXVsdC10b2tlbiJ9fV19LCJleGl0X2FmdGVyX2F1dGgiOnRydWUsInBpZF9maWxlIjoiL2hvbWUvdmF1bHQvLnBpZCIsInZhdWx0Ijp7ImFkZHJlc3MiOiJodHRwOi8vdmF1bHQuZGVmYXVsdC5zdmM6ODIwMCJ9LCJ0ZW1wbGF0ZSI6W3siZGVzdGluYXRpb24iOiIvdmF1bHQvc2VjcmV0cy9kYi1zZWNyZXQiLCJjb250ZW50cyI6Int7LSB3aXRoIHNlY3JldCBcInNlY3JldC9kYXRhL2RlbW8tc2VjcmV0XCIgLX19XG57eyAuRGF0YS5kYXRhLnBhc3N3b3JkIH19XG57ey0gZW5kIH19XG4iLCJsZWZ0X2RlbGltaXRlciI6Int7IiwicmlnaHRfZGVsaW1pdGVyIjoifX0ifV0sInRlbXBsYXRlX2NvbmZpZyI6eyJleGl0X29uX3JldHJ5X2ZhaWx1cmUiOnRydWV9fQ==
+    Mounts:
+      /home/vault from home-init (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-4pgpz (ro)
+      /vault/secrets from vault-secrets (rw)
+Containers:
+  mychart:
+    Container ID:   docker://86f35069eff3f6a2129a2a682ed55bc874c2057ea40c107d03fb020287ad902e
+    Image:          nginx:latest
+    Image ID:       docker-pullable://nginx@sha256:9d6b58feebd2dbd3c56ab5853333d627cc6e281011cfd6050fa4bcf2072c9496
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sun, 09 Mar 2025 22:01:21 +0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     500m
+      memory:  256Mi
+    Requests:
+      cpu:      250m
+      memory:   128Mi
+    Liveness:   http-get http://:http/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Readiness:  http-get http://:http/ delay=0s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      ENV_MODE:     production
+      APP_VERSION:  2.0
+      MY_PASSWORD:  &lt;set to the key &apos;MY_PASS&apos; in secret &apos;demo-secret&apos;&gt;  Optional: false
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-4pgpz (ro)
+      /vault/secrets from vault-secrets (rw)
+  vault-agent:
+    Container ID:  docker://8519fdfcd80ea7ff891492dacb6effdef693e23c00b71d788115270be18f16e3
+    Image:         hashicorp/vault:1.18.1
+    Image ID:      docker-pullable://hashicorp/vault@sha256:3580fa352195aa7e76449cb8fadeef6d2f90a454c38982d30cf094e9013be786
+    Port:          &lt;none&gt;
+    Host Port:     &lt;none&gt;
+    Command:
+      /bin/sh
+      -ec
+    Args:
+      echo ${VAULT_CONFIG?} | base64 -d &gt; /home/vault/config.json &amp;&amp; vault agent -config=/home/vault/config.json
+    State:          Running
+      Started:      Sun, 09 Mar 2025 22:01:21 +0300
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     500m
+      memory:  128Mi
+    Requests:
+      cpu:     250m
+      memory:  64Mi
+    Environment:
+      NAMESPACE:         default (v1:metadata.namespace)
+      HOST_IP:            (v1:status.hostIP)
+      POD_IP:             (v1:status.podIP)
+      VAULT_LOG_LEVEL:   info
+      VAULT_LOG_FORMAT:  standard
+      VAULT_CONFIG:      eyJhdXRvX2F1dGgiOnsibWV0aG9kIjp7InR5cGUiOiJrdWJlcm5ldGVzIiwibW91bnRfcGF0aCI6ImF1dGgva3ViZXJuZXRlcyIsImNvbmZpZyI6eyJyb2xlIjoiZGVtby1yb2xlIiwidG9rZW5fcGF0aCI6Ii92YXIvcnVuL3NlY3JldHMva3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC90b2tlbiJ9fSwic2luayI6W3sidHlwZSI6ImZpbGUiLCJjb25maWciOnsicGF0aCI6Ii9ob21lL3ZhdWx0Ly52YXVsdC10b2tlbiJ9fV19LCJleGl0X2FmdGVyX2F1dGgiOmZhbHNlLCJwaWRfZmlsZSI6Ii9ob21lL3ZhdWx0Ly5waWQiLCJ2YXVsdCI6eyJhZGRyZXNzIjoiaHR0cDovL3ZhdWx0LmRlZmF1bHQuc3ZjOjgyMDAifSwidGVtcGxhdGUiOlt7ImRlc3RpbmF0aW9uIjoiL3ZhdWx0L3NlY3JldHMvZGItc2VjcmV0IiwiY29udGVudHMiOiJ7ey0gd2l0aCBzZWNyZXQgXCJzZWNyZXQvZGF0YS9kZW1vLXNlY3JldFwiIC19fVxue3sgLkRhdGEuZGF0YS5wYXNzd29yZCB9fVxue3stIGVuZCB9fVxuIiwibGVmdF9kZWxpbWl0ZXIiOiJ7eyIsInJpZ2h0X2RlbGltaXRlciI6In19In1dLCJ0ZW1wbGF0ZV9jb25maWciOnsiZXhpdF9vbl9yZXRyeV9mYWlsdXJlIjp0cnVlfX0=
+    Mounts:
+      /home/vault from home-sidecar (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-4pgpz (ro)
+      /vault/secrets from vault-secrets (rw)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-4pgpz:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       &lt;nil&gt;
+    DownwardAPI:             true
+  home-init:
+    Type:       EmptyDir (a temporary directory that shares a pod&apos;s lifetime)
+    Medium:     Memory
+    SizeLimit:  &lt;unset&gt;
+  home-sidecar:
+    Type:       EmptyDir (a temporary directory that shares a pod&apos;s lifetime)
+    Medium:     Memory
+    SizeLimit:  &lt;unset&gt;
+  vault-secrets:
+    Type:        EmptyDir (a temporary directory that shares a pod&apos;s lifetime)
+    Medium:      Memory
+    SizeLimit:   &lt;unset&gt;
+QoS Class:       Burstable
+Node-Selectors:  &lt;none&gt;
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age    From               Message
+  ----    ------     ----   ----               -------
+  Normal  Scheduled  3m58s  default-scheduler  Successfully assigned default/demo-mychart-9758c7b7c-zbsg2 to minikube
+  Normal  Pulled     3m57s  kubelet            Container image &quot;hashicorp/vault:1.18.1&quot; already present on machine
+  Normal  Created    3m57s  kubelet            Created container: vault-agent-init
+  Normal  Started    3m57s  kubelet            Started container vault-agent-init
+  Normal  Pulled     3m56s  kubelet            Container image &quot;nginx:latest&quot; already present on machine
+  Normal  Created    3m56s  kubelet            Created container: mychart
+  Normal  Started    3m56s  kubelet            Started container mychart
+  Normal  Pulled     3m56s  kubelet            Container image &quot;hashicorp/vault:1.18.1&quot; already present on machine
+  Normal  Created    3m56s  kubelet            Created container: vault-agent
+  Normal  Started    3m56s  kubelet            Started container vault-agent
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl get pod -l app=demo -o jsonpath=&apos;{.items[*].spec.containers[?(@.name==&quot;mychart&quot;)].resources}&apos;
+{&quot;limits&quot;:{&quot;cpu&quot;:&quot;500m&quot;,&quot;memory&quot;:&quot;256Mi&quot;},&quot;requests&quot;:{&quot;cpu&quot;:&quot;250m&quot;,&quot;memory&quot;:&quot;128Mi&quot;}}<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl get pods -l app=demo
+NAME                           READY   STATUS    RESTARTS   AGE
+demo-mychart-9758c7b7c-zbsg2   2/2     Running   0          6m35s
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl exec demo-mychart-9758c7b7c-zbsg2 -- printenv ENV_MODE APP_VERSION MY_PASSWORD
+Defaulted container &quot;mychart&quot; out of: mychart, vault-agent, vault-agent-init (init)
+production
+2.0
+admin123
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ kubectl exec demo-mychart-9758c7b7c-zbsg2 -- cat /vault/secrets/db-secret
+Defaulted container &quot;mychart&quot; out of: mychart, vault-agent, vault-agent-init (init)
+vaultpassword123
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab11/k8s</b></font>$ 
+</pre>

@@ -29,12 +29,12 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels - MODIFIED FOR LAB REQUIREMENTS
+Common labels
 */}}
 {{- define "mychart.labels" -}}
 helm.sh/chart: {{ include "mychart.chart" . }}
 {{ include "mychart.selectorLabels" . }}
-app: {{ .Release.Name }}  {{/* Critical fix for lab requirements */}}
+app: {{ .Release.Name }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -42,15 +42,15 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
-Selector labels - MODIFIED FOR LAB REQUIREMENTS
+Selector labels
 */}}
 {{- define "mychart.selectorLabels" -}}
-app: {{ .Release.Name }}  {{/* Changed to match pod template labels */}}
-release: {{ .Release.Name }}  {{/* Added for better selection */}}
+app: {{ .Release.Name }}
+release: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use - UPDATED
+Service Account Name
 */}}
 {{- define "mychart.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
@@ -59,3 +59,11 @@ Create the name of the service account to use - UPDATED
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/* Environment Variables Template (Bonus) */}}
+{{- define "app.env.vars" -}}
+- name: ENV_MODE
+  value: {{ .Values.env.mode | quote }}
+- name: APP_VERSION
+  value: {{ .Values.env.version | quote }}
+{{- end -}}

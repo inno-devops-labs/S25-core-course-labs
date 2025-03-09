@@ -6,14 +6,14 @@ image:
   pullPolicy: IfNotPresent
   tag: "latest"
 
-# ===== ADDED SECRETS SECTION =====
+# Secrets
 secrets:
-  password: "admin123"  # Plaintext password for lab secret
+  password: "admin123"
 
-# ===== ADDED ENVIRONMENT VARIABLES =====
+# Environment Variables (Bonus)
 env:
-  mode: "development"   # Example environment variable
-  version: "1.0"        # Example version variable
+  mode: "production"
+  version: "2.0"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -29,15 +29,8 @@ podAnnotations: {}
 podLabels: {}
 
 podSecurityContext: {}
-  # fsGroup: 2000
 
 securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
 
 service:
   type: ClusterIP
@@ -54,14 +47,14 @@ ingress:
           pathType: ImplementationSpecific
   tls: []
 
-# ===== UPDATED RESOURCES SECTION =====
+# Resource Management (Bonus)
 resources:
-    # limits:
-    #   cpu: 500m
-    #   memory: 256Mi
-    # requests:
-    #   cpu: 250m
-    #   memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
+  requests:
+    cpu: 250m
+    memory: 128Mi
 
 livenessProbe:
   httpGet:
