@@ -5,7 +5,8 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN echo "0" > visits
+RUN mkdir data
+RUN echo "0" > data/visits
 
 # special tool that I've added to handle properly SIGINT (Ctrl + C) signal
 RUN apt-get update && apt-get install -y tini && apt-get clean && rm -rf /var/lib/apt/lists/*

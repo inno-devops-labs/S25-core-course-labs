@@ -17,7 +17,7 @@ TIMEZONE = "Europe/Moscow"
 HOST = '0.0.0.0'
 PORT = 5000
 
-VISITS_FILE = "visits"
+VISITS_FILE = "data/visits"
 
 
 def get_visits():

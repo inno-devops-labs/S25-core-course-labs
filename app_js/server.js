@@ -10,7 +10,7 @@ dotenv.config()
 const app = express()
 const PORT = 3000
 
-const VISITS_FILE = path.join(__dirname, 'visits')
+const VISITS_FILE = path.join(__dirname, 'data', 'visits')
 
 const register = new client.Registry()
 client.collectDefaultMetrics({ register })

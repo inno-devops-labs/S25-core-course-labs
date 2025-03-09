@@ -7,7 +7,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # visits check
-RUN echo "0" > visits
+RUN mkdir data
+RUN echo "0" > data/visits
 
 # for health checking
 RUN apt-get update && apt-get install -y curl

@@ -98,6 +98,8 @@ services:
       interval: 20s
       timeout: 5s
       retries: 3
+    volumes:
+      - ./data/py:/data
 
   app_js:
     image: nickolaus899/js-cities-dist:latest
@@ -110,6 +112,8 @@ services:
       interval: 20s
       timeout: 5s
       retries: 3
+    volumes:
+      - ./data/js:/data
 
 volumes:
   grafana-storage: {}

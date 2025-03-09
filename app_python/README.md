@@ -89,3 +89,9 @@ Application supports health checking with `/health` endpoint
 # Persistence (number of visits)
 Application counts number of visits to it and then returns it in the `/visits` endpoint.
 Moreover, I have added unittests for this endpoint.
+
+Updated `docker-compose.yml` to use volumes
+```
+volumes:
+    - ./data/py:/data
+```
