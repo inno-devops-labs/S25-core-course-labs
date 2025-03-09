@@ -1,0 +1,11 @@
+- name: Disable root access
+  ansible.builtin.copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "userns-remap": "default"
+      }
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart Docker
