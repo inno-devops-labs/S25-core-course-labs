@@ -1,6 +1,5 @@
 replicaCount: 3
 
-
 image:
   repository: haidarjbeily/distroless-moscow-time-app
   pullPolicy: IfNotPresent
@@ -15,7 +14,6 @@ serviceAccount:
   automount: true
   annotations: {}
   name: "internal-app"
-
 
 podAnnotations:
   vault.hashicorp.com/agent-inject: 'true'
@@ -47,7 +45,6 @@ ingress:
           pathType: ImplementationSpecific
   tls: []
 
-
 resources:
   limits:
     cpu: '200m'
@@ -71,9 +68,18 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
 
-volumes: []
+volumeMounts:
+  - name: config-volume
+    mountPath: /app/config.json
+    subPath: config.json
 
-volumeMounts: []
+volumes:
+  - name: config-volume
+    configMap:
+      name: app-config
+      items:
+        - key: config.json
+          path: config.json
 
 nodeSelector: {}
 

@@ -1,0 +1,6 @@
+{
+  "appName": "Moscow Time App",
+  "version": "1.0.0",
+  "timezone": "Europe/Moscow",
+  "refreshInterval": 1000
+}
