@@ -1,2 +1,13 @@
 .venv
 .idea
+k8s/argocd.exe
+k8s/flask-app/secrets.yaml
+k8s/flask-app/values.sops.yaml
+k8s/iii.txt
+k8s/minikube-installer.exe
+k8s/minikube-linux-amd64
+k8s/secrets.yaml
+monitoring/ktor_visits/
+monitoring/python_visits/
+app_python/__pycache__
+app_python/tests/__pycache__
