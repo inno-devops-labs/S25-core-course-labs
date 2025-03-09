@@ -1,0 +1,16 @@
+- hosts: all
+  become_method: sudo
+  become: true
+  vars:
+    ansible_ssh_private_key_file: "/home/adel/Desktop/ssh/id_rsa"
+  tasks:
+    - name: Execute roles using a block
+      block:
+        - name: Run Docker Role
+          include_role:
+            name: docker
+
+        - name: Run web_app Role
+          include_role:
+            name: web_app
+

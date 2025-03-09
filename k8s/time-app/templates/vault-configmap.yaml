@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "time-app.fullname" . }}-vault-agent-config
+  labels:
+    {{- include "time-app.labels" . | nindent 4 }}
+data:
+  config.hcl: |
+    auto_auth {
+      method "kubernetes" {
+        mount_path = "auth/kubernetes"
+        config = {
+          role = "{{ .Values.vault.role }}" 
+        }
+      }
+    }
+
+    template {
+      destination = "/vault/secrets/database-config.txt"
+      contents = <<EOF
+      {{`{{- with secret "internal/data/database/config" -}}`}}
+      username: {{`{{ .Data.data.username }}`}}
+      password: {{`{{ .Data.data.password }}`}}
+      {{`{{- end }}`}}
+      EOF
+    }
