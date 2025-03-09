@@ -15,13 +15,8 @@ spec:
     metadata:
       {{- with .Values.podAnnotations }}
       annotations:
-        vault.hashicorp.com/agent-inject: "true"
-        vault.hashicorp.com/role: "app-role"
-        vault.hashicorp.com/agent-inject-secret-db-password: "secret/app-secret"
-        vault.hashicorp.com/agent-inject-template-db-password: |
-          {{- with secret "secret/app-secret" -}}
-          {{ .Data.data.db_password }}
-          {{- end }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       labels:
         {{- include "python-app.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
@@ -49,6 +44,13 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/config.json
+              subPath: config.json
+            {{- with .Values.volumeMounts }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
@@ -61,14 +63,13 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: config-volume
+          configMap:
+            name: {{ include "python-app.fullname" . }}-config
+        {{- with .Values.volumes }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
