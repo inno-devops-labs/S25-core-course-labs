@@ -10,11 +10,12 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the app code
+COPY data/ data/
 COPY main.py .
 
 # Create and switch to a non-root user
 RUN useradd --system appuser
-USER appuser
+# USER appuser
 
 # Expose the port the app will run on
 EXPOSE 5000

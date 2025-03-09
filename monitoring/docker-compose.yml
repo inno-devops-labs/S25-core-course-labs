@@ -1,6 +1,9 @@
 networks:
   loki:
 
+volumes:
+  python-data:
+
 services:
   loki:
     image: grafana/loki:latest
@@ -102,6 +105,8 @@ services:
       - "5000:5000"
     networks:
       - loki
+    volumes:
+      - ./python-data:/app/data
     mem_limit: 512m
     logging:
       driver: "json-file"
