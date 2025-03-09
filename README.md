@@ -1,62 +1,69 @@
-# DevOps Engineering Labs
+# Kubernetes ConfigMaps and Persistence - Lab 12 Report
 
-## Introduction
+## ConfigMap
 
-Welcome to the DevOps Engineering course labs! These hands-on labs are designed to guide you through various aspects of DevOps practices and principles. As you progress through the labs, you'll gain practical experience in application development, containerization, testing, infrastructure setup, CI/CD processes, and more.
+I have created a `config.json` file inside the `files` folder and mounted it into the application using settings defined in `values.yaml` of my Helm chart.
 
-## Architecture
+**Command Output:**
 
-This repository has a master branch containing an introduction. Each new lab assignment will be added as a markdown file with a lab number.
+```bash
+$ kubectl get po
+NAME                              READY   STATUS    RESTARTS        AGE
+my-app-release-5c69f76b77-2njmx   1/1     Running   2 (4h32m ago)   18h
+my-app-release-5c69f76b77-5b9wf   1/1     Running   2 (4h32m ago)   18h
+my-app-release-5c69f76b77-z6tfl   1/1     Running   2 (4h32m ago)   18h
+```
 
-## Rules
+```bash
+$ kubectl exec my-app-release-5c69f76b77-2njmx -- cat /config.json
+{
+  "env": "development",
+  "logLevel": "INFO",
+  "featureToggle": true
+}
+```
 
-To successfully complete the labs and pass the course, follow these rules:
+And as a screenshot:
 
-1. **Lab Dependency:** Complete the labs in order; each lab builds upon the previous one.
-2. **Submission and Grading:** Submit your solutions as pull requests (PRs) to the master branch of this repository. You need at least 6/10 points for each lab to pass.
-3. **Fork Repository:** Fork this repository to your workspace to create your own version for solving the labs.
-4. **Recommended Workflow:** Build your solutions incrementally. Complete lab N based on lab N-1.
-5. **PR Creation:** Create a PR from your fork to the master branch of this repository and from your fork's branch to your fork's master branch.
-6. **Wait for Grade:** Once your PR is created, wait for your lab to be reviewed and graded.
+![ConfigMap Screenshot](./media/configmap/config.png)
 
-### Example for the first lab
+---
 
-1. Fork this repository.
-2. Checkout to the lab1 branch.
-3. Complete the lab1 tasks.
-4. Push the code to your repository.
-5. Create a PR to the master branch of this repository from your fork's lab1 branch.
-6. Create a PR to the master branch of your repository from your lab1 branch.
-7. Wait for your grade.
+## Bonus Task Steps (ConfigMap via Environment Variables)
 
-## Grading and Grades Distribution
+I have used the `envFrom` property in the deployment manifest of my bonus application to load configuration values from a ConfigMap into environment variables.
 
-Your final grade will be determined based on labs and a final exam:
+**Command Output:**
 
-- Labs: 70% of your final grade.
-- Final Exam: 30% of your final grade.
+```bash
+$ kubectl get po
+NAME                                 READY   STATUS    RESTARTS        AGE
+extra-app-release-5f78b95975-9nbvw   1/1     Running   0               65s
+extra-app-release-5f78b95975-lbfsj   1/1     Running   0               65s
+```
 
-Grade ranges:
+```bash
+$ kubectl exec extra-app-release-5f78b95975-9nbvw -- env | grep EXTRA_
+    "EXTRA_ENV": "bonus",
+    "EXTRA_FEATURE": "enabled"
+EXTRA_APP_RELEASE_SERVICE_HOST=10.103.192.3
+EXTRA_APP_RELEASE_SERVICE_PORT=3001
+EXTRA_APP_RELEASE_SERVICE_PORT_HTTP=3001
+EXTRA_APP_RELEASE_PORT_3001_TCP_PROTO=tcp
+EXTRA_APP_RELEASE_PORT=tcp://10.103.192.3:3001
+EXTRA_APP_RELEASE_PORT_3001_TCP=tcp://10.103.192.3:3001
+EXTRA_APP_RELEASE_PORT_3001_TCP_PORT=3001
+EXTRA_APP_RELEASE_PORT_3001_TCP_ADDR=10.103.192.3
+```
 
-- [90-100] - A
-- [75-90) - B
-- [60-75) - C
-- [0-60) - D
+As you can see, the environment variables from the ConfigMap are available inside the container.
+![Extra Env Screenshot](./media/configmap/extraenv.png)
+---
 
-### Labs Grading
 
-Each lab is worth 10 points. Completing main tasks correctly earns you 10 points. Completing bonus tasks correctly adds 2.5 points. You can earn a maximum of 12.5 points per lab by completing all main and bonus tasks.
+## Summary
 
-Finishing all bonus tasks lets you skip the exam and grants you 5 extra points. Incomplete bonus tasks require you to take the exam, which could save you from failing it.
-
->The labs account for 70% of your final grade. With 14 labs in total, each lab contributes 5% to your final grade. Completing all main tasks in a lab earns you the maximum 10 points, which corresponds to 5% of your final grade.
->If you successfully complete all bonus tasks, you'll earn an additional 2.5 points, totaling 12.5 points for that lab, or 6.25% of your final grade. Over the course of all 14 labs, the cumulative points from bonus tasks add up to 87.5% of your final grade.
->Additionally, a 5% bonus is granted for successfully finishing all bonus tasks, ensuring that if you successfully complete everything, your final grade will be 92.5%, which corresponds to an A grade.
-
-## Deadlines and Labs Distribution
-
-Each week, two new labs will be available. You'll have one week to submit your solutions. Refer to Moodle for presentation slides and deadlines.
-
-## Submission Policy
-
-Submitting your lab results on time is crucial for your grading. Late submissions receive a maximum score of 6 points for the corresponding lab. Remember, completing all labs is necessary to successfully pass the course.
+- **ConfigMap Mounting:** The `config.json` file was successfully mounted into the main application via a ConfigMap, allowing the app to access configuration data from `/config.json`.
+- **Persistent Storage:** The application was upgraded to persist a visit counter in a file (`/data/visits.txt`), ensuring data persistence across pod restarts.
+- **Bonus (envFrom):** In the extra application, configuration data is loaded as environment variables using `envFrom`. The output of the `printenv` command confirms that the variables `EXTRA_ENV` and `EXTRA_FEATURE` are set.
+- All steps have been documented and verified with the respective command outputs.

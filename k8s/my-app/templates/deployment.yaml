@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "my-app.fullname" . }}
+  labels:
+    {{- include "libchart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "my-app.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "my-app.name" . }}
+    spec:
+      serviceAccountName: {{ include "my-app.serviceAccountName" . }}
+      containers:
+      - name: {{ .Chart.Name | replace "_" "-" | lower }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+          - containerPort: {{ .Values.service.port }}
+        volumeMounts:
+          - name: persistence-volume
+            mountPath: {{ .Values.persistence.mountPath }}
+          - name: config-volume
+            mountPath: /config.json
+            subPath: config.json
+        {{- with .Values.livenessProbe }}
+        livenessProbe:
+{{ toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.readinessProbe }}
+        readinessProbe:
+{{ toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.resources }}
+        resources:
+{{ toYaml . | nindent 10 }}
+        {{- end }}
+      volumes:
+        - name: persistence-volume
+          persistentVolumeClaim:
+            claimName: my-app-pvc
+        - name: config-volume
+          configMap:
+            name: {{ include "my-app.fullname" . }}-config

@@ -1,0 +1,41 @@
+replicaCount: 3
+
+image:
+  repository: twentythree3/flask-app2
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: NodePort
+  port: 5001
+
+persistence:
+  enabled: true
+  mountPath: /data
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+ingress:
+  enabled: false
+  annotations: {}
+  className: ""
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+
+livenessProbe: {}
+readinessProbe: {}
+resources: {}

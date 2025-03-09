@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  python_app:
+    build: .
+    container_name: flask_app
+    volumes:
+      - app_data:/data
+    ports:
+      - "5001:5001"
+    restart: unless-stopped
+
+volumes:
+  app_data:
+    driver: local
