@@ -1,0 +1,9 @@
+version: '3'
+services:
+  {{ container_name }}:
+  image: "{{ app_image }}:{{ image_tag }}"
+  ports:
+      {% for port in app_ports %}
+    - "{{ port }}"
+      {% endfor %}
+  restart: {{ restart_policy }}
