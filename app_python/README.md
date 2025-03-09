@@ -62,3 +62,21 @@ this repository uses GitHub Actions for CI. the CI workflow performs:
 
 ##How to trigger the workflow
 the workflow runs automatically on pushes and pull requests
+
+## Persistence Enhancement
+
+This application now tracks the number of times the `/visits` endpoint is accessed. The visit count is persisted in a file that is mounted from the host.
+
+### `/visits` Endpoint
+
+Each time the `/visits` endpoint is called, the application:
+- Reads the current count from the `visits` file.
+- Increments the count.
+- Writes the updated count back to the file.
+- Returns the current number of visits.
+
+**Test the Endpoint:**
+
+You can test this functionality by executing:
+```bash
+curl http://localhost:5000/visits
