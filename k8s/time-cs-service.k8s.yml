@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: moscow-time-cs-service
+  namespace: default
+  labels:
+    app: moscow-time-cs
+spec:
+  selector:
+    app: moscow-time-cs
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 80
+  type: NodePort
