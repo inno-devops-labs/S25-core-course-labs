@@ -30,12 +30,12 @@ readinessProbe:
 
 # Resource requests and limits
 resources:
-  requests:
-    memory: "512Mi"
-    cpu: "500m"
-  limits:
-    memory: "1Gi"
-    cpu: "1"
+   limits:
+     cpu: 300m
+     memory: 256Mi
+   requests:
+     cpu: 100m
+     memory: 256Mi
 
 # Service Account Configuration
 serviceAccount:

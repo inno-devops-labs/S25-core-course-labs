@@ -43,6 +43,13 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: MY_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: devops-secret
+                  key: MY_SECRET
+           {{- include "python-app.environmentVars" . | nindent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

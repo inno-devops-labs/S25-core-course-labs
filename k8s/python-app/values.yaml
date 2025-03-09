@@ -5,7 +5,7 @@ replicaCount: 1
 image:
   repository: nickwidbestie/region-time-api
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   containerPort: 80
 
 # Service configuration
@@ -30,12 +30,12 @@ readinessProbe:
 
 # Resource requests and limits
 resources:
-  requests:
-    memory: "512Mi"
-    cpu: "500m"
-  limits:
-    memory: "1Gi"
-    cpu: "1"
+   limits:
+     cpu: 400m
+     memory: 256Mi
+   requests:
+     cpu: 100m
+     memory: 256Mi
 
 # Service Account Configuration
 serviceAccount:
@@ -54,3 +54,8 @@ ingress:
   enabled: false
 autoscaling:
   enabled: false
+
+environment:
+   debug: false
+   author: Nikoali01
+   course: devops
