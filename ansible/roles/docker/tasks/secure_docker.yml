@@ -1,0 +1,16 @@
+
+- name: Ensure Docker daemon.json exists with secure configuration
+  ansible.builtin.copy: 
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "userns-remap": "default",  
+        "icc": false,  
+        "userland-proxy": false,  
+        "no-new-privileges": true  
+      }
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart docker 
+  tags: security  
