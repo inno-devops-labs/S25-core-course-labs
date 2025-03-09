@@ -44,6 +44,17 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          env:
+            - name: MY_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: MY_USERNAME
+            - name: MY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: MY_PASSWORD
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
@@ -58,13 +69,13 @@ spec:
           {{- end }}
           {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
+            - mountPath: /vault/secrets
+              name: vault-secrets
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.nodeSelector }}
+        - name: vault-secrets
+          secret:
+            secretName: vault-secrets
+      { { - with .Values.nodeSelector } }
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}

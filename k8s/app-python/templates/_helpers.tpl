@@ -60,3 +60,14 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Define Vault template for config.txt
+*/}}
+{{- define "app-python.vault-template" -}}
+vault.hashicorp.com/agent-inject-template-config.txt: |
+  {{`{{- with secret "internal/data/database/config" -}}
+  username: {{ .Data.data.username }}
+  password: {{ .Data.data.password }}
+  {{- end -}}`}}
+{{- end }}
