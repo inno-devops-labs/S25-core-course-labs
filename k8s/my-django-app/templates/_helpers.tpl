@@ -60,3 +60,16 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "my-django-app.envFromSecrets" -}}
+- name: SECRET_USER
+  valueFrom:
+    secretKeyRef:
+      name: mysecrets
+      key: user
+- name: SECRET_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: mysecrets
+      key: password
+{{- end }}}
