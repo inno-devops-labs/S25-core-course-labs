@@ -46,9 +46,6 @@ spec:
                   name: {{ .Release.Name }}-secret
                   key: password
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          envFrom:
-            - configMapRef:
-                name: flask-app-config
           ports:
             - name: http
               containerPort: {{ .Values.ports.containerPort }}
