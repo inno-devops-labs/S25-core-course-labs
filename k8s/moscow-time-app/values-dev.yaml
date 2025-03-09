@@ -1,6 +1,6 @@
 image:
   repository: nshlyakhtin/devops
-  tag: lab8-app-python-amd64
+  tag: lab14-app-python-amd64
   pullPolicy: IfNotPresent
 
 service:
@@ -14,3 +14,6 @@ replicaCount: 2
 
 secrets:
   my_secret: "lab13-dev"
+
+statefulSet:
+  serviceName: "moscow-time-app-headless-service"

@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, jsonify, Response
 from datetime import datetime
 import pytz
@@ -40,22 +42,24 @@ def visits():
 
 
 def increment_visits():
+    file_path = os.getenv("VISITS_FILE_PATH", "data/visits.txt")
     try:
-        with open("visits.txt", "r") as f:
+        with open(file_path, "r") as f:
             count = int(f.read().strip() or 0)
     except FileNotFoundError:
-        print("visits files not found")
+        print("visits file not found")
         count = 0
 
     count += 1
 
-    with open("visits.txt", "w") as f:
+    with open(file_path, "w") as f:
         f.write(str(count))
 
 
 def read_visits():
+    file_path = os.getenv("VISITS_FILE_PATH", "data/visits.txt")
     try:
-        with open("visits.txt", "r") as f:
+        with open(file_path, "r") as f:
             count = int(f.read().strip() or 0)
     except FileNotFoundError:
         print("visits files not found")

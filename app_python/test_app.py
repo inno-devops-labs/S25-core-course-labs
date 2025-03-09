@@ -1,3 +1,5 @@
+import os
+
 import pytest
 import re
 from app import app
@@ -11,6 +13,8 @@ def client():
 
 
 def test_moscow_time(client):
+    os.environ["VISITS_FILE_PATH"] = "app_python/data/visits.txt"
+
     response = client.get("/")
     assert response.status_code == 200
 

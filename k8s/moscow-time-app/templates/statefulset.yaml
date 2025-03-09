@@ -1,10 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "moscow-time-app.fullname" . }}
   labels:
     {{- include "moscow-time-app.labels" . | nindent 4 }}
 spec:
+  podManagementPolicy: Parallel
+  serviceName: {{ .Values.statefulSet.serviceName }}
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
@@ -29,7 +31,29 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /app/config
+            - name: data-volume
+              mountPath: /app/data
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.containerPort }}
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.containerPort }}
+            initialDelaySeconds: 5
+            periodSeconds: 5
       volumes:
         - name: config-volume
           configMap:
             name: {{ .Release.Name }}-config
+  volumeClaimTemplates:
+    - metadata:
+        name: data-volume
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Mi

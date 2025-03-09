@@ -4,7 +4,7 @@ services:
   app:
     image: nshlyakhtin/devops:lab12-app-python-arm64
     volumes:
-      - visits_data:/app
+      - visits_data:/app/data
     ports:
       - "5000:5000"
 
