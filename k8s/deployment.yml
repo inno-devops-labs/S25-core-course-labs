@@ -17,3 +17,9 @@ spec:
           image: demakoder/app_python:latest
           ports:
             - containerPort: 5000
+          env:
+            - name: MY_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: my-app-secret
+                  key: MY_PASS
