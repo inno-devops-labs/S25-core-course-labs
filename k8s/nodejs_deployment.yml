@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-moscow-deployment
+  namespace: default
+  labels:
+    app: nodejs
+spec:
+  selector:
+    matchLabels:
+      app: nodejs
+  replicas: 3
+  strategy:
+    rollingUpdate:
+      maxSurge: 40%
+      maxUnavailable: 40%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: nodejs
+      labels:
+        app: nodejs
+    spec:
+      containers:
+        - name: nodejs-container
+          image: zerohalf/app_nodejs:nonroot
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 200m
+              memory: 200Mi
+          ports:
+            - containerPort: 3000
+              name: nodejs-port
+      restartPolicy: Always

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-service
+  namespace: default
+spec:
+  selector:
+    app: nodejs  # Должно совпадать с Deployment
+  type: NodePort
+  ports:
+    - name: nodejs-service
+      protocol: TCP
+      port: 80
+      targetPort: 3000  # Node.js обычно слушает 3000 порт
+      nodePort: 30002  # Можно изменить, если этот порт уже занят
