@@ -1,0 +1,17 @@
+- name: Install Docker
+  import_tasks: install_docker.yml
+
+- name: Install Docker Compose
+  import_tasks: install_compose.yml
+
+- name: Enable and start Docker service
+  systemd:
+    name: docker
+    enabled: yes
+    state: started
+
+- name: Add current user to docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
