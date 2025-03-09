@@ -104,17 +104,19 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes:
-  - name: config-volume
-    configMap:
-      name: cs-app-config
+volumes: []
+# volumes:
+#   - name: config-volume
+#     configMap:
+#       name: cs-app-config
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts:
-  - name: config-volume
-    mountPath: "/data/config.json"
-    subPath: "config.json"
-    readOnly: true
+volumeMounts: []
+# volumeMounts:
+#   - name: config-volume
+#     mountPath: "/data/config.json"
+#     subPath: "config.json"
+#     readOnly: true
 
 nodeSelector: {}
 
@@ -124,6 +126,7 @@ affinity: {}
 
 env:
   MY_VAR: salfetka
+  ENV: default
 
 config:
   path: "files/config.json"
