@@ -4,6 +4,8 @@
 
 This web application displays the current UTC time and updates it every second. It uses Ktor web framework and follows the best Kotlin web practices.
 
+The application is able to return number of visits of the main app page on `/visits` endpoint.
+
 ## Tools
 
 `Ktor`: Chosen for its lightweight nature, ideal for small web applications like this UTC-time showing.

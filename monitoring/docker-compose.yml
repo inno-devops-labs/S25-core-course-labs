@@ -118,6 +118,8 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    volumes:
+      - ./python_visits:/data
     networks:
       - monitoring
     deploy:
@@ -139,6 +141,8 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    volumes:
+      - ./ktor_visits:/data
     networks:
       - monitoring
     deploy:

@@ -4,6 +4,8 @@
 
 This web application displays the current time in Moscow and updates it every second. It uses Flask web framework and follows the best Python web practices.
 
+The application is able to return number of visits of the main app page on `/visits` endpoint.
+
 ## Tools
 
 `Flask`: Chosen for its lightweight, ideal for small web applications like Moscow-time showing.
