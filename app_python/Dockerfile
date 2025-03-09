@@ -15,6 +15,11 @@ RUN addgroup -S app_group && adduser -S app_user -G app_group
 
 WORKDIR /app
 
+RUN useradd -m app && \
+    mkdir -p /app_python/data && \
+    chown app:app /app/data && \
+    chmod 755 /app_python/data
+
 # Requiments is copied first to cache installation of dependencies
 COPY requirements.txt /app/app_python/requirements.txt
 

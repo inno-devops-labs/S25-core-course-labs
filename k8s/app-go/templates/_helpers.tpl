@@ -60,3 +60,13 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Environment variables
+*/}}
+{{- define "app-go.env" -}}
+- name: APP_TIMEZONE
+  value: "Europe/Paris"
+- name: VISITS_FILE
+  value: "/app/data/visits.txt"
+{{- end }}

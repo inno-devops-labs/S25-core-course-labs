@@ -136,3 +136,8 @@ The CI workflow contains 3 jobs. Each job has a specific set of tasks to perform
 - Build: This job lints and tests the application
 - Security: This job checks code vulnerability using SNYK
 - Docker: This job builds and pushes the docker image to the Docker Hub. The job is carried out only if the previous jobs are successful.
+
+## vist
+- I set up a /visits endpoint in my Python application to track user accesses. Each time a user visits the application, the visit counter stored in data/visits is incremented. When accessing the /visits endpoint, the application reads and displays the current visit count. To ensure persistence, I mounted the data folder containing the visits file on the host using docker-compose.yml.
+
+- ![](img/visits.png)

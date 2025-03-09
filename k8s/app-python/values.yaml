@@ -92,10 +92,12 @@ livenessProbe:
   httpGet:
     path: /
     port: http
+  initialDelaySeconds: 60
 readinessProbe:
   httpGet:
     path: /
     port: http
+  initialDelaySeconds: 60
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
@@ -105,19 +107,17 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-# Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+volumes:
+- name: config-volume
+  configMap:
+    name: app-python-configmap
 
-# Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
 
+volumeMounts:
+- name: config-volume
+  mountPath: /config.json
+  subPath: config.json
+  
 nodeSelector: {}
 
 tolerations: []

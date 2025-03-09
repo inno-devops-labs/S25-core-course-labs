@@ -82,3 +82,10 @@ docker pull saleemasekrea/distroless_go_app:latest
 ```bash
 docker run -p 8002:8002 saleemasekrea/distroless_go_app 
 ```
+
+## visits 
+-  Each time a user accesses the application (/ endpoint), the visit counter is incremented.
+The total visit count can be viewed by accessing the /visits endpoint.
+The count is stored in the data/visits file, ensuring persistence across restarts.
+
+- ![](img/visits_go.png)
