@@ -4,7 +4,7 @@ FROM python:3.9-alpine3.15
 WORKDIR /app
 
 # Copy only files allowed in dockerignore
-COPY . .
+COPY /app_python .
 
 # install reqs and create user
 RUN pip install --no-cache-dir -r requirements.txt && adduser -D webapp
