@@ -47,26 +47,31 @@ This Python web application displays the current time in Moscow. It uses the Fla
 
 2. Open a browser and visit `http://127.0.0.1:5000/`.
 
+## Endpoints
+
+- `/` - Shows current Moscow time
+- `/visits` - Shows total visits
+
 ## Docker
 
 ### How to build?
 
-   ```bash
-   cd app_python
-   docker build -t <app-name> .
-   ```
+```bash
+cd app_python
+docker build -t <app-name> .
+```
 
 ### How to pull?
 
-   ```bash
-   docker pull yoqubdavlatov/app_python:latest
-   ```
+```bash
+docker pull yoqubdavlatov/app_python:latest
+```
 
 ### How to run?
 
-   ```bash
-   docker run -p 5000:5000 yoqubdavlatov/app_python:latest
-   ```
+```bash
+docker run -p 5000:5000 yoqubdavlatov/app_python:latest
+```
 
 ## Development
 
@@ -84,5 +89,5 @@ This Python web application displays the current time in Moscow. It uses the Fla
 - To run unit tests run:
 
 ```bash
-   pytest 
-   ```
+   pytest
+```
