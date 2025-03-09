@@ -26,16 +26,15 @@ object MoscowTimeApp extends App {
   visitsDir.mkdirs()
   val visitsFile = new File(visitsDir, "visits")
 
-  def getVisits(): Int = {
-    try {
+  def getVisits(): Int =
+    try
       Source.fromFile(visitsFile).mkString.trim.toInt
-    } catch {
+    catch {
       case _: Exception => 0
     }
-  }
 
   def incrementVisits(): Int = {
-    val count = getVisits() + 1
+    val count  = getVisits() + 1
     val writer = new PrintWriter(visitsFile)
     writer.write(count.toString)
     writer.close()
@@ -96,16 +95,16 @@ object MoscowTimeApp extends App {
         )
       }
     } ~
-    path("visits") {
-      get {
-        complete(
-          akka.http.scaladsl.model.HttpEntity(
-            ContentTypes.`text/plain(UTF-8)`,
-            s"Total visits: ${getVisits()}"
+      path("visits") {
+        get {
+          complete(
+            akka.http.scaladsl.model.HttpEntity(
+              ContentTypes.`text/plain(UTF-8)`,
+              s"Total visits: ${getVisits()}"
+            )
           )
-        )
+        }
       }
-    }
 
   // Start the server
   val bindingFuture = Http().newServerAt("0.0.0.0", 9090).bind(route)
