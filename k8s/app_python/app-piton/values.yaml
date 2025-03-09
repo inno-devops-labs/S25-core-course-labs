@@ -46,9 +46,16 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
 
-volumes: []
+volumes:
+  - name: config-volume
+    configMap:
+      name: app-config
 
-volumeMounts: []
+volumeMounts:
+  - name: config-volume
+    mountPath: "/data/config.json"
+    subPath: "config.json"
+    readOnly: true
 
 nodeSelector: {}
 
@@ -56,5 +63,5 @@ tolerations: []
 
 affinity: {}
 
-env:
-  ENV: default
+config:
+  path: "files/config.json"
