@@ -1,0 +1,9 @@
+- name: Kotlin app playbook
+  hosts: all
+  become: true
+  vars:
+    docker_image: "nai1ka/time-service-kotlin:latest"
+    app_port: 8080 
+    web_app_full_wipe: false
+  roles:
+    - web_app

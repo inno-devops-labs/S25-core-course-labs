@@ -1,0 +1,6 @@
+plugin: yacloud_compute
+yacloud_token_file:  /Users/nai1ka/oauth.json 
+yacloud_clouds:
+  - cloud-nail-minnemullin
+yacloud_folders:
+  - default
