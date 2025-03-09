@@ -4,9 +4,13 @@ networks:
 
 services:
   app_python:
-    image: fallenchromium/moscow-timezone-app
+    image: fallenchromium/moscow-timezone-app:latest
     ports:
-      - "8000:8000"
+      - "8003:8000"
+    volumes:
+      - type: bind
+        source: ./app_python/visits
+        target: /app/visits
     logging:
       options:
         max-size: 10m
