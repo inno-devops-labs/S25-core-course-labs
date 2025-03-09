@@ -5,7 +5,6 @@ metadata:
   labels:
     app: my-app
 spec:
-  serviceAccountName: internal-app
   replicas: 2
   selector:
     matchLabels:
@@ -14,7 +13,12 @@ spec:
     metadata:
       labels:
         app: my-app
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: "myapp"
+      annotations:
+        vault.hashicorp.com/agent-inject-secret-myapp: "secret/data/myapp"
     spec:
+      serviceAccountName: internal-app
       containers:
         - name: my-container
           image: leha0704/morozov_devops_webapp:latest
@@ -36,7 +40,14 @@ spec:
                 secretKeyRef:
                   name: my-helm-secret
                   key: password
-          labels:
-              vault.hashicorp.com/agent-inject: "true"
-              vault.hashicorp.com/role: "myapp"
-              vault.hashicorp.com/agent-inject-secret-myapp: "secret/data/myapp"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+            - name: visits-volume
+              mountPath: /data
+      volumes:
+        - name: config-volume
+          configMap:
+            name: app-config
+        - name: visits-volume
+          emptyDir: {}

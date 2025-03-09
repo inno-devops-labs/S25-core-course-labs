@@ -69,7 +69,7 @@ services:
         max-file: "3"
 
   morozov_devops_webapp:
-    image: leha0704/morozov_devops_webapp
+    image: leha0704/morozov_devops_webapp:latest
     container_name: morozov_devops_webapp
     volumes:
       - app-logs:/app
