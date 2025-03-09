@@ -44,6 +44,12 @@ spec:
             - name: http
               containerPort: 5000
               protocol: TCP
+          env:
+            - name: MY_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: my-app-secret
+                  key: MY_PASS
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
