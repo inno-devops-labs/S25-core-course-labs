@@ -50,6 +50,13 @@ spec:
                 secretKeyRef:
                   name: my-helm-secret
                   key: MY_PASS
+          volumes:
+            - name: config-volume
+              configMap:
+                name: my-config
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
@@ -68,6 +75,9 @@ spec:
           {{- end }}
       {{- with .Values.volumes }}
       volumes:
+        - name: config-volume
+          configMap:
+            name: my-config
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
