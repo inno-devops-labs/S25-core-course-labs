@@ -36,6 +36,13 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "python-app.fullname" . }}-config
+        {{- with .Values.volumes }}
+        {{ toYaml . | nindent 8 }}
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.securityContext }}
@@ -54,7 +61,14 @@ spec:
                 secretKeyRef:
                   name: {{ include "python-app.fullname" . }}-secret
                   key: MY_PASS
-{{ include "python-app.env" . | indent 12 }}
+{{ include "python-app.env" . | nindent 12 }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config.json
+              subPath: config.json
+            {{- with .Values.volumeMounts }}
+            {{ toYaml . | nindent 12 }}
+            {{- end }}
           resources:
             requests:
               cpu: "100m"
@@ -70,18 +84,6 @@ spec:
           readinessProbe:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.resources }}
-          resources:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
-      volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
