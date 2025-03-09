@@ -62,4 +62,7 @@ ingress:
   hosts:
     - host: chart-example.local   
       paths: [/]                  
-  tls: []                       
+  tls: []    
+
+secret:
+  password: "secret123"                   

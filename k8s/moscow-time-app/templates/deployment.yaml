@@ -18,6 +18,12 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: MY_PASS
+              valueFrom:  # ← Добавьте отступ (2 пробела)
+                secretKeyRef:
+                  name: {{ .Release.Name }}-secret 
+                  key: MY_PASS
           ports:
             - name: http
               containerPort: {{ .Values.service.targetPort }}
