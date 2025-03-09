@@ -8,6 +8,9 @@ WORKDIR /app_python
 COPY requirements.txt .
 COPY app.py .
 
+# Create data directory in builder stage
+RUN mkdir -p /app_python/data && chmod 777 /app_python/data
+
 # Install dependencies into a specific target directory
 RUN pip install --no-cache-dir -r requirements.txt -t /python_app/lib
 
@@ -18,6 +21,9 @@ FROM gcr.io/distroless/python3:nonroot
 WORKDIR /app_python
 
 # Non-root user is already set in the distroless image
+
+# Copy data directory with proper permissions
+COPY --chown=nonroot:nonroot --from=builder /app_python/data ./data
 
 # Copy the installed dependencies from the builder stage
 COPY --chown=nonroot:nonroot --from=builder /python_app/lib /usr/local/lib/python3.12/site-packages

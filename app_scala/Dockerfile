@@ -24,6 +24,10 @@ RUN echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | tee /etc/ap
 
 # Create a non-root user
 RUN useradd -m scala_user
+# RUN useradd -m scala_user && \
+#     mkdir -p /app_scala/data && \
+#     chown scala_user:scala_user /app_scala/data && \
+#     chmod 755 /app_scala/data
 
 # Copy project files
 COPY time_application_project/build.sbt ./

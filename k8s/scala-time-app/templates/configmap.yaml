@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-scala-configmap
+data:
+  config.json: |-
+  {{ .Files.Get "files/config.json" | nindent 4 }}

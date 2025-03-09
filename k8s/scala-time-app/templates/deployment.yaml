@@ -45,6 +45,9 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           {{- include "scala-time-app.environmentVars" . | nindent 10 }}
+          envFrom:
+            - configMapRef:
+                name: app-scala-configmap
           ports:
             - name: http
               containerPort: 9090

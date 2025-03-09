@@ -12,6 +12,8 @@ import scala.concurrent.Future
 import scala.util.{Success, Failure}
 import scala.concurrent.Await
 import scala.concurrent.duration._
+import java.io.{File, PrintWriter}
+import scala.io.Source
 
 // Main object
 object MoscowTimeApp extends App {
@@ -19,10 +21,32 @@ object MoscowTimeApp extends App {
   implicit val system = ActorSystem("MoscowTimeSystem")
   import system.dispatcher
 
+  // File handling for visits
+  val visitsDir = new File("./data")
+  visitsDir.mkdirs()
+  val visitsFile = new File(visitsDir, "visits")
+
+  def getVisits(): Int = {
+    try {
+      Source.fromFile(visitsFile).mkString.trim.toInt
+    } catch {
+      case _: Exception => 0
+    }
+  }
+
+  def incrementVisits(): Int = {
+    val count = getVisits() + 1
+    val writer = new PrintWriter(visitsFile)
+    writer.write(count.toString)
+    writer.close()
+    count
+  }
+
   // Route to handle GET requests
   val route =
     path("") {
       get {
+        incrementVisits()
 
         // Current time in Moscow
         val moscowTime = ZonedDateTime
@@ -68,6 +92,16 @@ object MoscowTimeApp extends App {
                 </body>
             </html>
             """
+          )
+        )
+      }
+    } ~
+    path("visits") {
+      get {
+        complete(
+          akka.http.scaladsl.model.HttpEntity(
+            ContentTypes.`text/plain(UTF-8)`,
+            s"Total visits: ${getVisits()}"
           )
         )
       }

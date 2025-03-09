@@ -168,3 +168,9 @@ For this project the CI is configured using GitHub actions. CI Workflow consists
 - Build and Push Docker Distroless Image
 
 -----
+
+### Visits Endpoint
+
+I setted up an endpoint `/visits` for Scala application on which you can see the number of accesses from the users to this application. Each time user accesses the application, it increments visits counter in `data/visits` file, and reads from it while user accesses `/visits` endpoint. Using `docker-compose.yml` I mounts `data` folder with `visits` file on the host to persist `visits` counter.
+
+-----

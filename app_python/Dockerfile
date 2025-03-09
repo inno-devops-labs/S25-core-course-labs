@@ -5,7 +5,10 @@ FROM python:3.12-slim
 WORKDIR /app_python
 
 # Non-root user
-RUN useradd -m python_user
+RUN useradd -m python_user && \
+    mkdir -p /app_python/data && \
+    chown python_user:python_user /app_python/data && \
+    chmod 755 /app_python/data
 USER python_user
 
 # Copy only the necessary files

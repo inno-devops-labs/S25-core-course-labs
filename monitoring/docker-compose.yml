@@ -76,13 +76,14 @@ services:
       retries: 5
 
   app_python:
-    image: bugay/python-msk-time-app-distroless:latest
+    image: bugay/python-msk-time-app:1.0
     ports:
       - "5000:5000" 
     networks:
       - loki
     volumes:
       - ./logs/python-app:/var/log/python-app
+      - ./../app_python/data:/app_python/data
     healthcheck:
       test: ["CMD", "pgrep", "python"]
       interval: 30s
@@ -99,13 +100,14 @@ services:
           memory: 512M
 
   app_scala:
-    image: bugay/scala-msk-time-app-distroless:latest
+    image: bugay/scala-msk-time-app:1.0
     ports:
       - "9090:9090"
     networks:
       - loki
     volumes:
       - ./logs/scala-app:/var/log/scala-app
+      - ./../app_scala/data:/app_scala/data
     logging:
       driver: "json-file"
       options:

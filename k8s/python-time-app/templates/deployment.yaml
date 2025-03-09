@@ -50,6 +50,9 @@ spec:
                 name: app-secret-1
                 key: MY_PASS
           {{- include "python-time-app.environmentVars" . | nindent 10 }}
+          envFrom:
+            - configMapRef:
+                name: app-python-configmap
 
           ports:
             - name: http
