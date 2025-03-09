@@ -5,6 +5,7 @@ Main file for the web application. It includes two endpoints:
 - `/time` - returns current time in Moscow in JSON format
 """
 
+import os
 from pathlib import Path
 from fastapi import FastAPI, Request, status
 from fastapi.templating import Jinja2Templates
@@ -33,11 +34,35 @@ time_json_visits = Counter(
 )
 
 COUNTER = 0
+INITIALIZED = False
+
+
+def init_counter():
+    """Inits counter if not initialized already."""
+    global COUNTER, INITIALIZED
+
+    if not os.path.isfile("visits/visits"):
+        COUNTER = 0
+    else:
+        with open("visits/visits", "r", encoding="utf-8") as visits:
+            number = visits.read()
+            print(number, number.isdigit())
+            if number.isdigit():
+                COUNTER = int(number)
+            else:
+                COUNTER = 0
+    INITIALIZED = True
+
+    return COUNTER
 
 
 def increment_counter():
     """Increments visits counter."""
-    global COUNTER
+    global COUNTER, INITIALIZED
+
+    if not INITIALIZED:
+        COUNTER = init_counter()
+
     COUNTER += 1
     Path("visits").mkdir(parents=True, exist_ok=True)
     with open("visits/visits", "w", encoding="utf-8") as visits:
