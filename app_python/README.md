@@ -38,6 +38,7 @@ python app.py
 
 > *Note*: Ensure your system's timezone settings are correct to display the accurate Moscow time.
 
+
 ## Unit Tests
 
 Unit tests have been implemented using the `unittest` framework to ensure the reliability of the application. The following tests are included:
@@ -86,7 +87,6 @@ docker push shelma13/app_python:latest
 docker pull shelma13/app_python:latest
 docker run -p 5000:5000 shelma13/app_python:latest
 ```
-
 ### Requirements
 
 - Python 3
