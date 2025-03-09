@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Release.Name }}-pre-install-hook
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  containers:
+  - name: pre-install-job
+    image: busybox
+    command: ['sh', '-c', 'echo Pre-install hook for Python application is running && sleep 20']
+  restartPolicy: Never 

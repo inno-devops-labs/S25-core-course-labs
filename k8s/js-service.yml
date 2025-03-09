@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: js-app
+  labels:
+    app: js-app
+spec:
+  type: NodePort
+  ports:
+  - port: 3000
+    targetPort: 3000
+    protocol: TCP
+    name: http
+  selector:
+    app: js-app 

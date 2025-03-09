@@ -1,0 +1,10 @@
+---
+- name: Deploy Docker and Web Application to EC2 instances
+  hosts: all
+  become: true
+  
+  roles:
+    - role: docker
+      tags: ['docker']
+    - role: web_app
+      tags: ['web_app'] 

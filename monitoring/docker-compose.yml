@@ -1,0 +1,154 @@
+version: '3'
+
+services:
+  # Loki is responsible for storing and querying logs
+  loki:
+    image: grafana/loki:2.9.2
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+      - loki-data:/tmp/loki
+      - loki-wal:/wal
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - monitoring-network
+    restart: unless-stopped
+    user: "0"  # Run as root to avoid permission issues
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  # Promtail is the agent responsible for gathering logs and forwarding them to Loki
+  promtail:
+    image: grafana/promtail:2.9.2
+    volumes:
+      - ./promtail-config.yaml:/etc/promtail/config.yaml
+      - /var/log:/var/log
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    command: -config.file=/etc/promtail/config.yaml
+    networks:
+      - monitoring-network
+    depends_on:
+      - loki
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  # Prometheus is responsible for collecting and storing metrics
+  prometheus:
+    image: prom/prometheus:v2.48.1
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    networks:
+      - monitoring-network
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  # Grafana is the visualization platform
+  grafana:
+    image: grafana/grafana:10.2.2
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - monitoring-network
+    depends_on:
+      - loki
+      - prometheus
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  # Python application
+  python-app:
+    build:
+      context: ../app_python
+      dockerfile: Dockerfile
+    ports:
+      - "5000:8000"
+    networks:
+      - monitoring-network
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  # JavaScript application
+  node-app:
+    build:
+      context: ../app_javascript
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+    networks:
+      - monitoring-network
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+networks:
+  monitoring-network:
+    driver: bridge
+
+volumes:
+  grafana-storage:
+  loki-data:
+  loki-wal:
+  prometheus-data: 
