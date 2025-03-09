@@ -8,7 +8,7 @@ COPY . .
 
 # install reqs and create user
 RUN pip install --no-cache-dir -r requirements.txt && adduser -D webapp
-
+RUN touch /app/app.log && chmod 777 /app/app.log
 USER webapp
 
 EXPOSE 5000
