@@ -6,6 +6,8 @@
 
 This is a simple python web application that has a functionality of showing current Moscow time.
 
+It also contains functionality of checking number of visits at `/visits` endpoint.
+
 ## Installation
 
 - Clone the repository.
