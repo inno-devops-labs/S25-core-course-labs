@@ -60,3 +60,13 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "custom.env" -}}
+- name: APP_ENV
+  value: "production"
+- name: DEBUG_MODE
+  value: "false"
+- name: API_URL
+  value: "{{ .Values.api.url | default "https://default.example.com" }}"
+{{- end -}}
+

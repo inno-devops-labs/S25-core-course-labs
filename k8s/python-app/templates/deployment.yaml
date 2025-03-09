@@ -13,20 +13,12 @@ spec:
       {{- include "python-app.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       labels:
         {{- include "python-app.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       serviceAccountName: {{ include "python-app.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
       securityContext:
@@ -44,6 +36,20 @@ spec:
             - name: http
               containerPort: 5000
               protocol: TCP
+          
+      env:
+        - name: MY_USER
+          valueFrom:
+            secretKeyRef:
+              name: my-secret
+              key: MY_USER
+        - name: MY_PASS
+          valueFrom:
+            secretKeyRef:
+              name: my-secret
+              key: MY_PASS
+
+
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
@@ -76,3 +82,4 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
