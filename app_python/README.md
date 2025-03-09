@@ -63,7 +63,7 @@ docker build -t app_python:latest
 You can pull the Docker image from Docker Hub using(current version 1.0.2):
 
 ```
-docker pull dyllasdek/app_python:1.0.2
+docker pull emapfff/app_python:1.0.2
 ```
 
 ### How to Run

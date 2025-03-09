@@ -55,14 +55,24 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
             {{- include "app-kotlin.envVars" . | nindent 12 }}
-          {{- with .Values.volumeMounts }}
+            - name: SPECIAL_TYPE_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map-kotlin
+                  key: test
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
+            - name: config-volume-kotlin
+              mountPath: "/config.json"
+              subPath: config.json
+            - name: counter-kotlin
+              mountPath: /data
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      - name: config-volume-kotlin
+        configMap:
+          name: config-volume-kotlin
+      - name: counter-kotlin
+        emptyDir:
+          sizeLimit: 500Mi
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

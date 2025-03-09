@@ -28,6 +28,8 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.ktor:ktor-server-html-builder:$ktor_version")
     implementation("io.kotest.extensions:kotest-assertions-ktor:2.0.0")
+    // https://mavenlibs.com/maven/dependency/com.squareup.okio/okio
+    implementation("com.squareup.okio:okio:3.5.0")
 
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("io.kotest:kotest-runner-junit5:5.5.5")

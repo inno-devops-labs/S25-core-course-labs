@@ -60,14 +60,24 @@ spec:
                 secretKeyRef:
                   name: real-secret
                   key: token
-          {{- with .Values.volumeMounts }}
+            - name: SPECIAL_TYPE_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: config-map-python
+                  key: test
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
+            - name: config-python
+              mountPath: "/config.json"
+              subPath: config.json
+            - name: counter-python
+              mountPath: /data
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: config-python
+          configMap:
+            name: config-map-python
+        - name: counter-python
+          emptyDir:
+            sizeLimit: 500Mi
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

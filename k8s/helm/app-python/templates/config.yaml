@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-map-python
+  namespace: default
+data:
+  test: test
+  config.json: |-
+{{ .Files.Get "files/config.json" | indent 4 }}
