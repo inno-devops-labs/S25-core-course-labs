@@ -42,6 +42,11 @@
         .refresh-btn:hover {
             background-color: #1557b0;
         }
+        .visits {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            color: #666;
+        }
     </style>
 </head>
 <body>
@@ -49,6 +54,7 @@
         <h1>Current Time in Moscow, Russia</h1>
         <div class="time">{{ moscow_time }}</div>
         <button class="refresh-btn" onclick="refreshTime()">Refresh Time</button>
+        <div id="visit-counter" class="visits">Loading visit count...</div>
     </div>
 
     <script>
@@ -60,6 +66,16 @@
                 })
                 .catch(error => console.error('Error:', error));
         }
+
+        // Get the visit count when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/visits')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('visit-counter').textContent = `Page Visits: ${data.visits}`;
+                })
+                .catch(error => console.error('Error:', error));
+        });
     </script>
 </body>
 </html>

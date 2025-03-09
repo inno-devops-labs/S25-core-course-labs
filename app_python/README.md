@@ -6,6 +6,7 @@ A modern web application that displays the current time in Moscow, Russia, built
 
 - Real-time display of Moscow time
 - RESTful API endpoints
+- Visit counter with persistence
 - Type-safe implementation
 - Comprehensive error handling
 - Containerized deployment with Docker

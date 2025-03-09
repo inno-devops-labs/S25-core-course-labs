@@ -51,6 +51,8 @@ spec:
                 secretKeyRef:
                   name: {{ include "js-app.fullname" . }}-secret
                   key: MY_PASS
+            - name: VISITS_FILE_PATH
+              value: /app/visits/visits
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

@@ -10,6 +10,7 @@ from config import settings
 from prometheus_client import Counter, Histogram, make_asgi_app
 import time
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 # Initialize FastAPI app
 app = FastAPI(title=settings.APP_TITLE)
@@ -26,6 +27,28 @@ app.add_middleware(
 # Create templates directory and initialize templates
 settings.TEMPLATES_DIR.mkdir(exist_ok=True)
 templates = Jinja2Templates(directory=str(settings.TEMPLATES_DIR))
+
+# Function to read visit count
+def read_visit_count() -> int:
+    try:
+        visits_file_path = os.environ.get('VISITS_FILE_PATH', 'visits')
+        if Path(visits_file_path).exists():
+            with open(visits_file_path, 'r') as f:
+                count = f.read().strip()
+                return int(count) if count else 0
+        return 0
+    except Exception as e:
+        app.logger.error(f"Error reading visit count: {str(e)}")
+        return 0
+
+# Function to write visit count
+def write_visit_count(count: int) -> None:
+    try:
+        visits_file_path = os.environ.get('VISITS_FILE_PATH', 'visits')
+        with open(visits_file_path, 'w') as f:
+            f.write(str(count))
+    except Exception as e:
+        app.logger.error(f"Error writing visit count: {str(e)}")
 
 # Add prometheus metrics
 REQUEST_COUNT = Counter(
@@ -90,6 +113,19 @@ async def get_time() -> Dict[str, str]:
         Dict[str, str]: Dictionary containing formatted moscow_time and current_time
     """
     return get_formatted_times()
+
+@app.get("/visits")
+async def get_visits() -> Dict[str, int]:
+    """
+    API endpoint to get and increment the visit count.
+    
+    Returns:
+        Dict[str, int]: Dictionary containing the visit count
+    """
+    count = read_visit_count()
+    count += 1
+    write_visit_count(count)
+    return {"visits": count}
 
 if __name__ == "__main__":
     uvicorn.run(

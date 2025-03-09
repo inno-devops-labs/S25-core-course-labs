@@ -116,17 +116,23 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+volumes:
+- name: config-volume
+  configMap:
+    name: js-app-config
+    items:
+    - key: config.json
+      path: config.json
+- name: visits-volume
+  emptyDir: {}
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts:
+- name: config-volume
+  mountPath: "/app/config"
+  readOnly: true
+- name: visits-volume
+  mountPath: "/app/visits"
 
 nodeSelector: {}
 

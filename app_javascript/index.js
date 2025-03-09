@@ -2,6 +2,34 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const promClient = require('prom-client');
+const fs = require('fs');
+const path = require('path');
+
+// Define path for visits file
+const visitsFilePath = process.env.VISITS_FILE_PATH || path.join(__dirname, 'visits');
+
+// Function to read visit count
+const readVisitCount = () => {
+  try {
+    if (fs.existsSync(visitsFilePath)) {
+      const count = parseInt(fs.readFileSync(visitsFilePath, 'utf8').trim(), 10);
+      return isNaN(count) ? 0 : count;
+    }
+    return 0;
+  } catch (error) {
+    console.error('Error reading visit count:', error);
+    return 0;
+  }
+};
+
+// Function to write visit count
+const writeVisitCount = (count) => {
+  try {
+    fs.writeFileSync(visitsFilePath, count.toString());
+  } catch (error) {
+    console.error('Error writing visit count:', error);
+  }
+};
 
 // Create a Registry to register the metrics
 const register = new promClient.Registry();
@@ -81,6 +109,14 @@ app.get('/year-and-ad', (req, res) => {
         year: currentYear,
         advertisement: funnyAds[randomIndex]
     });
+});
+
+// New endpoint to get and increment visit count
+app.get('/visits', (req, res) => {
+  let count = readVisitCount();
+  count++;
+  writeVisitCount(count);
+  res.json({ visits: count });
 });
 
 // Expose metrics endpoint

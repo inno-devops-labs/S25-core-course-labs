@@ -4,6 +4,7 @@
 - Get current year
 - Fetch random funny advertisements
 - Combined endpoint for both year and ad
+- Visit counter with persistence
 - RESTful API design
 - JSON responses
 - Error handling
@@ -75,6 +76,20 @@ Response:
     "advertisement": "Our mattresses are so comfortable, counting sheep will file for unemployment."
 }
 ```
+
+### Get Visit Count
+```http
+GET /visits
+```
+
+Response:
+```json
+{
+    "visits": 42
+}
+```
+
+The visit count is incremented on each request and persisted to disk.
 
 ## 🛠 Development
 

@@ -112,6 +112,10 @@ services:
       - "5000:8000"
     networks:
       - monitoring-network
+    volumes:
+      - ./python_visits:/app/visits
+    environment:
+      - VISITS_FILE_PATH=/app/visits
     restart: unless-stopped
     logging:
       driver: "json-file"
@@ -132,6 +136,10 @@ services:
       - "3001:3000"
     networks:
       - monitoring-network
+    volumes:
+      - ./node_visits:/app/visits
+    environment:
+      - VISITS_FILE_PATH=/app/visits
     restart: unless-stopped
     logging:
       driver: "json-file"
