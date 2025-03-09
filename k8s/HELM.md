@@ -30,4 +30,4 @@ service/kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP   121m
 service/web-app      ClusterIP   10.100.145.185   <none>        80/TCP    74m
 ````
 
-![db](../monitoring/screenshots/db.k)
+![db](../monitoring/screenshots/db.k.png)
