@@ -1,0 +1,12 @@
+version: '3.8'
+ 
+services:
+  app:
+    image: voronm1522/devops:python-app
+    volumes:
+      - visits:/app
+    ports:
+      - "5000:5000"
+volumes:
+  visits_data:
+    driver: local
