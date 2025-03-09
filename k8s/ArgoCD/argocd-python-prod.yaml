@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: moscow-time-py
+  name: moscow-time-py-prod
   namespace: argocd
 spec:
   project: default
