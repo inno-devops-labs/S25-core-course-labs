@@ -1,0 +1,4 @@
+---
+- name: Dummy task for web_app role
+  debug:
+    msg: "Deploying web app..."
