@@ -299,6 +299,8 @@ docker-compose up -d
 # Check the visits count
 curl http://localhost:5000/visits
 ```
+   ![visits](./total.png)
+
 - The count should **persist** across restarts.
 
 ---
