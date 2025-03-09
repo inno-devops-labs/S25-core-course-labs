@@ -1,0 +1,49 @@
+---
+- name: Docker configuration
+  block:
+  - name: Login to DockerHub
+    docker_login:
+      username: "{{ dockerhub_username }}"
+      password: "{{ dockerhub_password }}"
+  tags:
+  - one-time
+  - hub
+
+- name: Deploy with Docker
+  block:
+  - name: Pull and run container
+    docker_container:
+      name: webapp
+      state: started
+      image: "{{ docker_image }}"
+      pull: true
+      ports:
+        - "8000:8000"
+  when: deploy_type == "docker"
+  tags:
+  - docker
+  - run
+  
+- name: Deploy with Docker compose
+  block:
+  - name: Render docker-compose.yml
+    template:
+      src: docker-compose.yml.j2
+      dest: /docker-compose.yml
+  - name: Run docker-compose
+    community.docker.docker_compose_v2:
+      project_src: /
+      files:
+      - /docker-compose.yml
+      state: present
+  when: deploy_type == "compose"
+  tags:
+  - compose
+  - run
+
+
+- name: Delete image and container
+  when: web_app_full_wipe
+  ansible.builtin.include_tasks: 0-wipe.yml
+  tags:
+  - wipe
