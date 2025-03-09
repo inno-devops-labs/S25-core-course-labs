@@ -1,7 +1,7 @@
 # Task 1
 
 ```
-emildavlityarov@emapfff k8s % minikube service app-python
+emildavlityarov@emapfff k8s\helm\app-python % minikube service app-python
 W1108 00:34:35.943831 24264 main.go:291] Unable to resolve the current Docker CLI context "default": context "default": context not found: open C:\Users\MSI-PC\.docker\contexts\meta\37a8eec1ce19687d132fe29051dca629d164e2c4958ba141d5f4133a33f0688f\meta.json: The system cannot find the path specified.
 |-----------|------------|-------------|---------------------------|
 | NAMESPACE | NAME | TARGET PORT | URL |
@@ -20,7 +20,7 @@ W1108 00:34:35.943831 24264 main.go:291] Unable to resolve the current Docker CL
 ```
 
 ```
-emildavlityarov@emapfff k8s % kubectl get pods,svc
+emildavlityarov@emapfff k8s\helm\app-python % kubectl get pods,svc
 NAME                             READY   STATUS    RESTARTS   AGE
 pod/app-python-9d57c4d94-4cpwj   1/1     Running   0          5m37s
 pod/app-python-9d57c4d94-68db5   1/1     Running   0          5m37s
@@ -33,7 +33,7 @@ service/kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP          
 # Task 2
 
 ```
-emildavlityarov@emapfff k8s % kubectl describe po postinstall-python-hook
+emildavlityarov@emapfff k8s\helm\app-python % kubectl describe po postinstall-python-hook
 Name:             postinstall-python-hook
 Namespace:        default
 Priority:         0
@@ -94,7 +94,7 @@ Events:
 ```
 
 ```
-emildavlityarov@emapfff k8s % kubectl describe po preinstall-python-hook
+emildavlityarov@emapfff k8s\helm\app-python % kubectl describe po preinstall-python-hook
 Name:             preinstall-python-hook
 Namespace:        default
 Priority:         0
@@ -155,7 +155,7 @@ Events:
 ```
 
 ```
-emildavlityarov@emapfff k8s % kubectl get pods,svc
+emildavlityarov@emapfff k8s\helm\app-python % kubectl get pods,svc
 NAME                             READY   STATUS      RESTARTS   AGE
 pod/app-python-9d57c4d94-ct7zf   1/1     Running     0          3m48s
 pod/postinstall-python-hook      0/1     Completed   0          3m48s
@@ -169,7 +169,7 @@ service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP          6m1
 # Bonus task
 
 ```
-emildavlityarov@emapfff k8s %  kubectl describe po app-kotlin
+emildavlityarov@emapfff k8s\helm\app-kotlin %  kubectl describe po app-kotlin
 Name:             app-kotlin-55c9755fff-5vqz5
 Namespace:        default
 Priority:         0
