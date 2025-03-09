@@ -44,6 +44,17 @@ spec:
             - name: http
               containerPort: 8000
               protocol: TCP
+          env:
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: helm-secret
+                  key: username
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: helm-secret
+                  key: password
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
