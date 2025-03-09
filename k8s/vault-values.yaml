@@ -1,0 +1,15 @@
+# vault-values.yaml
+server:
+  enabled: true
+  standalone:
+    enabled: true
+  dataStorage:
+    enabled: true
+    size: 1Gi
+  resources:
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+ui:
+  enabled: true
+

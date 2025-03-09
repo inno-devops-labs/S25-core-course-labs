@@ -23,11 +23,26 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
+      initContainers:
+        - name: vault-agent-init
+          image: hashicorp/vault:1.18.1
+          command: ["/bin/sh", "-c", "vault agent -config=/vault/config/config.hcl"]
+          volumeMounts:
+            - name: vault-config
+              mountPath: /vault/config
+            - name: vault-secrets
+              mountPath: /vault/secrets
+      volumes:
+        - name: vault-config
+          configMap:
+            name: vault-agent-config
+        - name: vault-secrets
+          emptyDir: {}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "time-app.serviceAccountName" . }}
+      serviceAccountName: internal-app
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -44,6 +59,12 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          env:
+            - name: lab11_secret
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name  }}-secrets
+                  key: lab11_secret
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
