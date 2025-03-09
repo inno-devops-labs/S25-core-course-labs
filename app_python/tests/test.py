@@ -3,7 +3,7 @@ import pytz
 import time
 
 from app_python.app import app, get_current_time, TIMEZONE, \
-    set_new_timezone, get_visits, set_visits
+    set_new_timezone, get_visits, set_visits, VISITS_FILE
 from datetime import datetime
 
 
@@ -21,6 +21,9 @@ class Testing(unittest.TestCase):
         cls.client = app.test_client()
 
     def test_get_visits(self):
+        global VISITS_FILE
+        VISITS_FILE = "visits"
+        
         visits = 10
         set_visits(visits)
         self.assertEqual(get_visits(), visits)

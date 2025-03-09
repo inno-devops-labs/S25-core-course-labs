@@ -17,6 +17,7 @@ TIMEZONE = "Europe/Moscow"
 HOST = '0.0.0.0'
 PORT = 5000
 
+VISITS_DIR = "data"
 VISITS_FILE = "data/visits"
 
 
@@ -32,6 +33,8 @@ def get_visits():
 
 def set_visits(visits):
     try:
+        if VISITS_DIR is not None:
+            os.makedirs(VISITS_DIR, exist_ok=True)
         with open(VISITS_FILE, "w") as f:
             f.write(str(visits))
     except Exception as e:
