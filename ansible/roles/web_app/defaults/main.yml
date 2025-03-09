@@ -1,0 +1,9 @@
+# Default settings for web application deployment
+app_image: "jlfkajlkifj/app_python"
+app_container_name: "py-webapp"
+compose_filename: "docker-compose.yml"
+
+app_base_dir: "/webapp"
+host_app_port: "8000"
+container_app_port: "8000"
+remove_app: true

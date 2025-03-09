@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "test-app.fullname" . }}
+  labels:
+    {{- include "test-app.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "test-app.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: "myapp"
+        vault.hashicorp.com/agent-inject-secret-config.json: "secret/data/myapp/config"
+        vault.hashicorp.com/agent-inject-template-config.json: |
+          {{`{{- with secret "secret/data/myapp/config" -}}
+          {
+            "username": "{{.Data.data.username}}",
+            "password": "{{.Data.data.password}}"
+          }
+          {{- end -}}`}}
+      labels:
+        {{- include "test-app.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "test-app.serviceAccountName" . }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "test-app.fullname" . }}-config
+        - name: data-volume
+          emptyDir: {}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          env:
+            - name: CONFIG_FILE
+              value: /vault/secrets/config.json
+            - name: VISITS_FILE
+              value: /data/visits
+          envFrom:
+            - configMapRef:
+                name: {{ include "test-app.fullname" . }}-env-config
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config.json
+              subPath: config.json
+            - name: data-volume
+              mountPath: /data
