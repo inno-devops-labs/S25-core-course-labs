@@ -40,7 +40,7 @@ In this lab, you will learn how to manage sensitive data, such as passwords, tok
    - Adapt the tutorial to work with your Helm chart, including the following steps:
      - [Set a Secret in Vault](https://developer.hashicorp.com/vault/tutorials/kubernetes/kubernetes-sidecar#set-a-secret-in-vault)
      - [Configure Kubernetes Authentication](https://developer.hashicorp.com/vault/tutorials/kubernetes/kubernetes-sidecar#configure-kubernetes-authentication)
-     - Be cautious with the service account. If you used `helm create ...`, it will be created automatically. In the guide, they create it manually.
+     - Be cautious with the servickubectl exec -it vault-0 -- /bin/she account. If you used `helm create ...`, it will be created automatically. In the guide, they create it manually.
        - [Manually Define a Kubernetes Service Account](https://developer.hashicorp.com/vault/tutorials/kubernetes/kubernetes-sidecar#define-a-kubernetes-service-account)
 
 3. Implement Vault Secrets in Your Helm Chart:
