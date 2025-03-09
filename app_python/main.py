@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from datetime import datetime
@@ -5,23 +6,30 @@ import pytz
 import logging
 from prometheus_fastapi_instrumentator import Instrumentator
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
-
-# Create a logger instance
 logger = logging.getLogger(__name__)
 
-app = FastAPI(
-    title="Region Time API",
-    version="0.0.1"
-)
-
+app = FastAPI(title="Region Time API", version="0.0.1")
 link = "https://kudamoscow.ru/uploads/9151b31fb2ef1543969b65e6bc111bea.png"
+VISITS_FILE = "visits.txt"
 
-Instrumentator().instrument(app).expose(app)
+if os.path.exists(VISITS_FILE):
+    with open(VISITS_FILE, "r") as f:
+        try:
+            visits_counter = int(f.read().strip())
+        except ValueError:
+            visits_counter = 0
+else:
+    visits_counter = 0
+
+
+def write_counter():
+    with open(VISITS_FILE, "w") as f:
+        f.write(str(visits_counter))
+
 
 def get_location_time(region):
     """
@@ -30,14 +38,18 @@ def get_location_time(region):
     try:
         return datetime.now(pytz.timezone(region))
     except pytz.UnknownTimeZoneError as e:
-        logger.error(f"Invalid timezone: {region}")  # Log the error
+        logger.error(f"Invalid timezone: {region}")
         raise ValueError(f"Invalid timezone: {region}")
+
+
+Instrumentator().instrument(app).expose(app)
+
 
 @app.get("/time/moscow", response_class=HTMLResponse)
 async def getTime():
-    """
-    Endpoint function for getting the current Moscow time with HTML design.
-    """
+    global visits_counter
+    visits_counter += 1
+    write_counter()
     logger.info("Accessing /time/moscow endpoint")
 
     try:
@@ -68,9 +80,14 @@ async def getTime():
         </body>
         </html>
         """
-        logger.info("Successfully generated response for /time/moscow")  # Log success
+        logger.info("Successfully generated response for /time/moscow")
         return HTMLResponse(content=html_content)
 
     except Exception as e:
-        logger.error(f"Error occurred while processing /time/moscow: {e}")  # Log errors
+        logger.error(f"Error occurred while processing /time/moscow: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
+
+
+@app.get("/visits")
+async def get_visits():
+    return {"visits": visits_counter}
