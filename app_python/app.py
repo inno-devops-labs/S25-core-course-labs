@@ -90,8 +90,6 @@ if __name__ == "__main__":
     except Exception:
         if os.path.exists(os.path.join(VISITS_DIRECTORY, VISITS_FILE)):
             os.remove(os.path.join(VISITS_DIRECTORY, VISITS_FILE))
-        elif not os.path.exists(VISITS_DIRECTORY):
-            os.makedirs(VISITS_DIRECTORY)
 
             VISITS = 0
 
