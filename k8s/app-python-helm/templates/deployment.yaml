@@ -76,3 +76,19 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+env:
+  - name: USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: my-secret
+        key: username
+  - name: PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: my-secret
+        key: password
+annotations:
+  vault.hashicorp.com/agent-inject: "true"
+  vault.hashicorp.com/role: "myapp"
+  vault.hashicorp.com/agent-inject-secret-myapp: "secret/data/myapp"
+
