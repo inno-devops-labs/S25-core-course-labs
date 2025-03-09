@@ -32,17 +32,16 @@ if not os.path.exists(visits_file_path):
 def home():
     try:
         with open(visits_file_path, 'r+') as f:
-            content = f.read().strip()  # Читаем содержимое и удаляем пробелы
-            if content.isdigit():  # Проверяем, что содержимое — это число
+            content = f.read().strip()
+            if content.isdigit():
                 visits = int(content)
             else:
-                visits = 0  # Если файл пустой или содержит некорректные данные, начинаем с 0
+                visits = 0
             visits += 1
             f.seek(0)
             f.write(str(visits))
             f.truncate()
     except FileNotFoundError:
-        # Если файл не существует, создаем его и начинаем с 1
         with open(visits_file_path, 'w') as f:
             visits = 1
             f.write(str(visits))
