@@ -10,6 +10,7 @@ It is a lightweight service intended to demonstrate a simple time-based web appl
 - **Timezone Awareness**: Automatically fetches the time in `Europe/Moscow`.
 - **Easy Setup**: Minimal configuration required; just install dependencies and run.
 - **Refresh for Updated Time**: On each page refresh, you get the latest Moscow time.
+- **Visits Count**: Check the number of times application is accessed in `visits.txt` file or at `/visits` endpoint.
 
 ## Prerequisites
 
@@ -23,21 +24,18 @@ It is a lightweight service intended to demonstrate a simple time-based web appl
 
    ```bash
    git clone https://github.com/anyarylova/S25-core-course-labs
-
    ```
 
 2. **Navigate to the `app_python` Folder**
 
    ```bash
    cd app_python
-
    ```
 
 3. **Install Dependencies**
 
    ```bash
    pip install -r requirements.txt
-
    ```
 
    This will install
@@ -48,11 +46,11 @@ It is a lightweight service intended to demonstrate a simple time-based web appl
 
    ```bash
    python app.py
-
    ```
 
 5. **Open Your Browser**
    - Visit <http://localhost:5000> to see the current Moscow time.
+   - Visit <http://localhost:5000/visits> to see the number of times application is accessed.
 
 ## Docker
 
@@ -98,21 +96,18 @@ Python’s built-in `unittest` framework is used for the project. Unit tests cov
 
    ```bash
    pip install -r requirements.txt
-
    ```
 
 2. **Run the Application**
 
    ```bash
    python app.py
-
    ```
 
 3. **Run Tests Locally**
 
    ```bash
    python -m unittest test_app.py
-
    ```
 
 ## CI Workflow
