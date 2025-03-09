@@ -130,6 +130,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    volumes:
+      - visits_data:/data
 
   nodejs_app:
     image: zerohalf/app_nodejs:nonroot
@@ -152,3 +154,5 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    volumes:
+      - visits_data:/data

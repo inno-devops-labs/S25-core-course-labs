@@ -2,11 +2,9 @@ name: Node.js CI Pipeline
 
 on:
   push:
-    branches:
-      - lab3
+    paths:
+      - "app_nodejs/**"
   pull_request:
-    branches:
-      - lab3
 
 jobs:
   build-and-test-node:
