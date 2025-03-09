@@ -43,6 +43,9 @@ def current_time() -> str:
     global TIME_ZONE
     global VISITS
 
+    if not os.path.exists(VISITS_DIRECTORY):
+        os.makedirs(VISITS_DIRECTORY)
+
     VISITS += 1
 
     with open(os.path.join(VISITS_DIRECTORY, VISITS_FILE), "w") as vf:
@@ -76,6 +79,9 @@ def visits():
     # Here visits also counts, since it is also access to the application
     global VISITS
     VISITS += 1
+
+    if not os.path.exists(VISITS_DIRECTORY):
+        os.makedirs(VISITS_DIRECTORY)
 
     with open(os.path.join(VISITS_DIRECTORY, VISITS_FILE), "w") as vf:
         vf.write(str(VISITS))
