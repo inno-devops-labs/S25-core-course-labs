@@ -111,16 +111,9 @@ autoscaling:
 
 # Additional volumes on the output Deployment definition.
 volumes:
-  - name: config-volume
-    configMap:
-      name: flask-app-config
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-  - name: config-volume
-    mountPath: "/data/config.json"
-    subPath: "config.json"
-    readOnly: true
 
 nodeSelector: {}
 
