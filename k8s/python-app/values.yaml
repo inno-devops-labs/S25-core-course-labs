@@ -59,3 +59,13 @@ environment:
    debug: false
    author: Nikoali01
    course: devops
+
+volumes:
+   - name: config
+     configMap:
+       name: python-app-config
+
+volumeMounts:
+   - name: config
+     mountPath: /config.json
+     subPath: config.json

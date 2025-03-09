@@ -50,6 +50,9 @@ spec:
                   name: devops-secret
                   key: MY_SECRET
            {{- include "python-app.environmentVars" . | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: python-app-config
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

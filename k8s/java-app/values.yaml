@@ -54,3 +54,13 @@ ingress:
   enabled: false
 autoscaling:
   enabled: false
+
+volumes:
+   - name: config
+     configMap:
+       name: java-app-config
+
+volumeMounts:
+   - name: config
+     mountPath: /config.json
+     subPath: config.json
