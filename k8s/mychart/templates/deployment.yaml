@@ -2,49 +2,26 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "mychart.fullname" . }}
-  labels:
-    {{- include "mychart.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
-      {{- include "mychart.selectorLabels" . | nindent 6 }}
+      app: {{ include "mychart.name" . }}
   template:
     metadata:
-      annotations:
-        # Vault annotations (escaped templating)
-        vault.hashicorp.com/agent-inject: "true"
-        vault.hashicorp.com/role: "demo-role"
-        vault.hashicorp.com/agent-inject-secret-db-secret: "secret/data/demo-secret"
-        vault.hashicorp.com/agent-inject-template-db-secret: |
-          {{ "{{- with secret \"secret/data/demo-secret\" -}}" }}
-          {{ "{{ .Data.data.password }}" }}
-          {{ "{{- end }}" }}
       labels:
-        {{- include "mychart.labels" . | nindent 8 }}
+        app: {{ include "mychart.name" . }}
     spec:
-      serviceAccountName: {{ .Values.serviceAccount.name }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          # Environment Variables (Bonus)
-          env:
-            {{- include "app.env.vars" . | nindent 12 }}
-            - name: MY_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-secret
-                  key: MY_PASS
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-          # Resource Management (Bonus)
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          livenessProbe:
-            {{- toYaml .Values.livenessProbe | nindent 12 }}
-          readinessProbe:
-            {{- toYaml .Values.readinessProbe | nindent 12 }}
+            - containerPort: 5000
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/config.json
+              subPath: config.json
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "mychart.fullname" . }}-config
