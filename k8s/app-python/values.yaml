@@ -56,6 +56,15 @@ service:
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 5000
 
+secret:
+  myPass: "1221"
+
+vault:
+  enabled: true
+  address: "http://vault.default.svc.cluster.local:8200"
+  role: "myapp-role"
+  secretPath: "secret/myapp"
+
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
   enabled: false

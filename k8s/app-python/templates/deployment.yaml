@@ -44,6 +44,17 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          env:
+           - name: MY_PASS
+             valueFrom:
+               secretKeyRef:
+                 name: {{ include "app-python.fullname" . }}-secret
+                 key: MY_PASS
+           - name: MY_VAULT_PASS
+             valueFrom:
+               secretKeyRef:
+                 name: {{ include "app-python.fullname" . }}-vault-secret
+                 key: MY_VAULT_PASS
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
