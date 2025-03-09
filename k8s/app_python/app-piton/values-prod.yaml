@@ -57,4 +57,4 @@ tolerations: []
 affinity: {}
 
 env:
-  ENV: default
+  ENV: prod
