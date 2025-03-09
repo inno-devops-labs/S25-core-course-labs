@@ -1,0 +1,3 @@
+mkdir k8s
+cd k8s
+touch deployment.yml service.yml README.md 

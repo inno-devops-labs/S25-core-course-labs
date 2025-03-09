@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault
+  labels:
+    app: vault
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vault
+  template:
+    metadata:
+      labels:
+        app: vault
+    spec:
+      containers:
+      - name: vault
+        image: vault:1.13.3
+        ports:
+        - containerPort: 8200
+          name: vault
+        env:
+        - name: VAULT_DEV_ROOT_TOKEN_ID
+          value: "root"
+        - name: VAULT_DEV_LISTEN_ADDRESS
+          value: "0.0.0.0:8200"
+        - name: VAULT_ADDR
+          value: "http://127.0.0.1:8200"
+        - name: VAULT_API_ADDR
+          value: "http://0.0.0.0:8200"
+        volumeMounts:
+        - name: vault-data
+          mountPath: /vault/data
+        securityContext:
+          capabilities:
+            add: ["IPC_LOCK"]
+      volumes:
+      - name: vault-data
+        persistentVolumeClaim:
+          claimName: vault-pvc 
