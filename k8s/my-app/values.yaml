@@ -130,3 +130,11 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+orgchart:
+  enabled: true
+  image:
+    repository: jweissig/app
+    tag: latest
+  replicas: 1
+
