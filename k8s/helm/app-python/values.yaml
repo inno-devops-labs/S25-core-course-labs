@@ -139,3 +139,6 @@ affinity: {}
 
 config:
   path: "files/config.json"
+
+env:
+  ENV: "default"
