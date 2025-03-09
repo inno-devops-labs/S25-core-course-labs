@@ -21,7 +21,9 @@ if not visits_file.exists() and os.access(visits_file.parent, os.W_OK):
     visits_file.parent.mkdir(parents=True, exist_ok=True)
     visits_file.write_text("0")
 elif not os.access(visits_file.parent, os.W_OK):
-    print(f"Warning: No write permission for {visits_file.parent}. Visits will not persist.")
+    print(
+        f"Warning: No write permission for {visits_file.parent}. Visits will not persist.")
+
 
 def get_visits_count() -> int:
     if not visits_file.exists():
@@ -32,12 +34,14 @@ def get_visits_count() -> int:
     except (ValueError, FileNotFoundError):
         return 0
 
+
 def increment_visits_count():
     count = get_visits_count() + 1
     if os.access(visits_file.parent, os.W_OK):
         with visits_file.open("w+") as f:
             f.write(str(count))
     return count
+
 
 class TimeData(BaseModel):
     time: str
@@ -62,6 +66,7 @@ async def read_root(request: Request) -> HTMLResponse:
         "index.html",
         {"current_time": current_time}
     )
+
 
 @app.get("/visits", response_class=HTMLResponse)
 async def get_visits(request: Request) -> HTMLResponse:
