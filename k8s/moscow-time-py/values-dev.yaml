@@ -130,7 +130,7 @@ affinity: {}
 
 env:
   MY_VAR: salfetka
-  ENV: default
+  ENV: dev
 
 config:
   path: "files/config.json"
