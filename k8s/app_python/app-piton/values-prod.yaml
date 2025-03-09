@@ -1,4 +1,4 @@
-replicaCount: 2
+replicaCount: 4
 
 image:
   repository: paranid5/app_piton
