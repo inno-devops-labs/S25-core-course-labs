@@ -15,8 +15,13 @@ spec:
     metadata:
       {{- with .Values.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: "app-role"
+        vault.hashicorp.com/agent-inject-secret-db-password: "secret/app-secret"
+        vault.hashicorp.com/agent-inject-template-db-password: |
+          {{- with secret "secret/app-secret" -}}
+          {{ .Data.data.db_password }}
+          {{- end }}
       labels:
         {{- include "python-app.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
