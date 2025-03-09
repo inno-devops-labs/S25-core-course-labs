@@ -86,7 +86,7 @@ def visits():
 if __name__ == "__main__":
     if not os.path.exists(VISITS_DIRECTORY):
         os.makedirs(VISITS_DIRECTORY)
-        
+   
     try:
         with open(os.path.join(VISITS_DIRECTORY, VISITS_FILE), "r") as vf:
             VISITS = int(vf.read())
