@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-vault-config
+data:
+  config.hcl: |
+    path "secret/*" {
+      capabilities = ["create", "read", "update", "delete", "list"]
+    } 
