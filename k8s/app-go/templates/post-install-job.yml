@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Chart.Name }}-postinstall
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    spec:
+      containers:
+        - name: postinstall
+          image: busybox
+          command: ["/bin/sh", "-c", "sleep 20; echo Post-install hook completed"]
+      restartPolicy: Never

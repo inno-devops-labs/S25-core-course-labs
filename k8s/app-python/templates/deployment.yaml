@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+    app-python/special-label: "app-python"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        {{- include "common.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: vault-auth
+      volumes:
+        - name: config-volume
+          configMap:
+            name: python-config
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config.json
+              subPath: config.json
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          env:
+          - name: MY_USER
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: MY_USER
+          - name: MY_PASS
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: MY_PASS
+          {{- include "app-python.environmentVars" . | nindent 10 }}
+
