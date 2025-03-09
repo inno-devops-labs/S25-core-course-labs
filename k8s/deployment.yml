@@ -14,6 +14,7 @@ spec:
       labels:
         app: app-python
     spec:
+      serviceAccountName: internal-app
       containers:
       - name: app-python
         image: achulakov/lab2
