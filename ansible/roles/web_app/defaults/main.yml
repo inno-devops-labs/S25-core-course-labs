@@ -1,0 +1,3 @@
+web_app_full_wipe: true
+docker_image: "vika123vika/app-python:latest"
+app_port: 8080
