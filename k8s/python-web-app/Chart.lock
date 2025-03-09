@@ -2,5 +2,5 @@ dependencies:
 - name: mylibchart
   repository: file://../mylibchart
   version: 0.1.0
-digest: sha256:3bb54c9044ce1ac7f22ce2cea1e15c28e6f07a58c688621d4851ea14445ffb4a
-generated: "2025-02-27T20:17:53.6539454+03:00"
+digest: sha256:ce0517087811863381bbb9cf481276a33e67a1b3d0f13fd78c8b107e0a3f9cc2
+generated: "2025-03-09T18:07:31.657635+03:00"
