@@ -12,10 +12,10 @@ ENV PYTHONUNBUFFERED=1
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # Устанавливаем рабочую директорию
-WORKDIR /app
+WORKDIR /app_python
 
 # Копируем файлы с правами для непривилегированного пользователя
-COPY --chown=appuser:appgroup . /app
+COPY --chown=appuser:appgroup . /app_python
 
 # Устанавливаем зависимости с фиксированными версиями
 RUN apk add --no-cache --virtual .build-deps \
