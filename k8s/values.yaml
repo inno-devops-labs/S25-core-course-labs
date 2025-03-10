@@ -16,4 +16,11 @@ resources:
     memory: 256Mi
 
 service:
-  port: 8000 
+  port: 8000
+
+storage:
+  size: 1Gi
+  accessModes:
+    - ReadWriteOnce
+
+podManagementPolicy: Parallel  # Для параллельного запуска подов 
