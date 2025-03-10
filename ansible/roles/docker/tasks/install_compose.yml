@@ -1,0 +1,10 @@
+---
+- name: Install docker-compose plugin
+  ansible.builtin.package:  # Use the fully qualified module name
+    name: "{{ docker_compose_package }}"
+    state: "{{ docker_compose_package_state }}"
+  notify: restart docker  # Notify the handler to restart Docker
+  ignore_errors: "{{ ansible_check_mode }}"  # Ignore errors in check mode
+  when:  # Only run if Docker Compose installation is enabled and conditions are met
+    - docker_install_compose_plugin | bool
+  tags: docker-compose  # Add a tag for selective execution
