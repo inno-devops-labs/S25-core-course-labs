@@ -1,0 +1,18 @@
+replicaCount: 2
+
+image:
+  repository: dexnight/moscow-time-app
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 64Mi
+  requests:
+    cpu: 50m
+    memory: 32Mi
+
+service:
+  type: ClusterIP
+  port: 8000
