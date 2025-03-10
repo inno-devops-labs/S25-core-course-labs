@@ -137,3 +137,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+
+password: "my-secret-password"

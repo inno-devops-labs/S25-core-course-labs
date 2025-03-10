@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/lekski1/S25-core-course-labs
+    repoURL: https://github.com/lekski1/S25-core-course-labs.git
     targetRevision: lab13
-    path: <k8s/web-apps>
+    path: k8s/web-apps
     helm:
       valueFiles:
         - values.yaml
