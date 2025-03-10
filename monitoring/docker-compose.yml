@@ -1,0 +1,112 @@
+version: "3.9"
+
+networks:
+  default:
+    name: loki
+
+services:
+  app_python:
+    image: billyboone/python-moscow-time:latest
+    container_name: app_python
+    ports:
+      - "8080:5000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        tag: app_python
+        max-size: "10m"
+        max-file: "10"
+    mem_limit: 256m
+
+  loki:
+    image: grafana/loki:2.9.2
+    container_name: loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki-config.yml:/etc/loki/local-config.yaml:ro
+    logging:
+      driver: json-file
+      options:
+        tag: loki
+        max-size: "10m"
+        max-file: "10"
+    mem_limit: 256m
+
+  promtail:
+    image: grafana/promtail:2.9.2
+    container_name: promtail
+    volumes:
+      - ./promtail.yml:/etc/promtail/config.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki
+    logging:
+      driver: json-file
+      options:
+        tag: promtail
+        max-size: "10m"
+        max-file: "10"
+    mem_limit: 256m
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy
+          orgId: 1
+          url: http://loki:3100
+          basicAuth: false
+          isDefault: true
+          version: 1
+          editable: false
+        EOF
+        /run.sh
+    ports:
+      - "3000:3000"
+    depends_on:
+      - loki
+    logging:
+      driver: json-file
+      options:
+        tag: grafana
+        max-size: "10m"
+        max-file: "10"
+    mem_limit: 256m
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    logging:
+      driver: json-file
+      options:
+        tag: prometheus
+        max-size: "10m"
+        max-file: "10"
+    mem_limit: 256m
+    depends_on:
+      - loki
