@@ -1,4 +1,23 @@
-ports:
-  - name: http
-    containerPort: { { .Values.containerPort } }
-    protocol: TCP
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: { { include \"your-app.fullname\" . } }
+spec:
+  replicas: { { .Values.replicaCount } }
+  selector:
+    matchLabels:
+      app: { { include \"your-app.name\" . } }
+  template:
+    metadata:
+      labels:
+        app: { { include \"your-app.name\" . } }
+    spec:
+      containers:
+        - name: { { .Chart.Name } }
+          image: \"{{ .Values.image.repository }}:{{ .Values.image.tag }}\"
+          env:
+            - name: MY_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: python-app-secret
+                  key: MY_PASS
