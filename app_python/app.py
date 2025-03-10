@@ -10,6 +10,9 @@ from fastapi.staticfiles import StaticFiles
 import uvicorn
 import pytz
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
+import logging  # Import logging
+
+logging.basicConfig(level=logging.INFO)  # Configure basic logging
 
 app = FastAPI(lifespan=lifespan)
 STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
@@ -38,11 +41,16 @@ persistent_counter = 0
 
 def load_counter():
     global persistent_counter
+    logging.info("load_counter() called - STARTUP LOGGING") # Add startup logging
+    logging.info(f"Environment variables: {os.environ}") # Log environment variables
     try:
         with open(COUNTER_FILE, "r") as f:
             persistent_counter = int(f.read())
-    except Exception:
+    except Exception as e:
+        logging.error(f"Error loading counter: {e}") # Log error if loading counter fails
         persistent_counter = 0
+    logging.info("load_counter() finished - STARTUP LOGGING") # Add startup logging
+
 
 def save_counter():
     with open(COUNTER_FILE, "w") as f:
@@ -50,13 +58,16 @@ def save_counter():
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    logging.info("lifespan event - STARTUP BEGIN") # Add lifespan startup logging
     load_counter()
     yield
+    logging.info("lifespan event - SHUTDOWN") # Add lifespan shutdown logging
 
 @REQUEST_LATENCY.time()
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
     '''Displaying Moscow time'''
+    logging.info("read_root() called - Request received") # Log when root path is accessed
     timezone = pytz.timezone('Europe/Moscow') # Selecting a time zone
     time = datetime.now(timezone).strftime("%d-%m-%Y %H:%M:%S")
     global persistent_counter
@@ -77,4 +88,4 @@ async def get_visits():
 
 if __name__ == "__main__":
     # ip address and port to run the web application
-    uvicorn.run(app, host="127.0.0.1", port=int(8000))
+    uvicorn.run(app, host="0.0.0.0", port=int(8000))
