@@ -1,0 +1,11 @@
+image:
+  repository: billyboone/python-moscow-time
+  tag: latest
+  pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
