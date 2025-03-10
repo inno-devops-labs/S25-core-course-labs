@@ -10,8 +10,20 @@ spec:
     targetRevision: lab-13
     path: k8s
     helm:
-      valueFiles:
-        - values-dev.yaml
+      values: |
+        replicaCount: 1
+        image:
+          repository: marketer7/flask-time
+          tag: latest
+        resources:
+          limits:
+            cpu: 200m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        service:
+          port: 8000
   destination:
     server: https://kubernetes.default.svc
     namespace: dev
