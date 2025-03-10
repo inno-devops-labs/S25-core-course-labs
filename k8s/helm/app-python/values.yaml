@@ -9,7 +9,7 @@ replicaCount: 3
 image:
   repository: oshaheen1882051/app_python
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "app_python-prod-1.0.0"
 
@@ -142,3 +142,9 @@ config:
 
 env:
   ENV: "default"
+
+podManagementPolicy: Parallel
+
+volumeClaimTemplates:
+  name: app-python-pvc
+  storage: 512Mi
