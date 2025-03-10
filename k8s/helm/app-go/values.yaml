@@ -9,7 +9,7 @@ replicaCount: 1
 image:
   repository: oshaheen1882051/app_go
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "app_go-prod-1.0.0"
 
@@ -137,3 +137,9 @@ affinity: {}
 
 config:
   path: "files/config.json"
+
+podManagementPolicy: Parallel
+
+volumeClaimTemplates:
+  name: app-go-pvc
+  storage: 512Mi
