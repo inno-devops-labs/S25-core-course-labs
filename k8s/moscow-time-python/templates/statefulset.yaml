@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    {{ include "my-library.labels" . | nindent 4 }}
+spec:
+  serviceName: "{{ .Release.Name }}-headless"
+  replicas: {{ .Values.replicaCount | default 1 }}
+  selector:
+    matchLabels:
+      {{ include "my-library.labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{ include "my-library.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccountName | default "internal-app" }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.service.port | default 8000 }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config/config.json
+              subPath: config.json
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-config
+        - name: vault-agent
+          image: {{ .Values.vaultAgent.image | default "hashicorp/vault:1.14.0" }}
+          volumeMounts:
+            - name: vault-secret
+              mountPath: /vault/secrets
+      volumes:
+        - name: vault-secret
+          emptyDir: {}
+        - name: config-volume
+          configMap:
+            name: {{ .Release.Name }}-config
