@@ -71,7 +71,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: python-web-app.local
+    - host: new-python-web-app.local
       paths:
         - path: /
           pathType: Prefix
