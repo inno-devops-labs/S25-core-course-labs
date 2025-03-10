@@ -55,6 +55,15 @@ resources:
     cpu: 100m
     memory: 128Mi
 
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
 autoscaling:
   enabled: false
   minReplicas: 1
@@ -74,8 +83,5 @@ vault:
   role: "internal-app"
   secretPath: secret/my-secret
 
-# # Environment Variables for the application
-# env:
-#   ENVIRONMENT: "production"
-#   LOG_LEVEL: "info"
-#   API_URL: "https://api.example.com"
+vaultAgent:
+  image: "hashicorp/vault:1.14.0"
