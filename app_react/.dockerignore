@@ -1,0 +1,58 @@
+# Ignore Git-related files and directories
+.git
+**/.git
+**/.gitignore
+
+# Ignore editor and IDE-specific files
+**/.vscode
+**/.idea
+
+# Ignore Python cache and virtual environment files (not needed for a React app)
+venv
+**/venv
+**/env
+
+# Ignore environment-specific files
+**/.env
+**/.env.*
+**/.aws
+**/.ssh
+
+# Ignore documentation and metadata files
+*.md
+README.md
+
+# Ignore Docker-related files (if not needed in the image)
+Dockerfile
+docker-compose.yml
+
+# Ignore macOS-specific files
+**/.DS_Store
+
+# Ignore test coverage directories
+**/coverage
+
+# Ignore Node.js and npm files
+node_modules
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Ignore Vite cache and build directories
+**/dist
+**/build
+**/.vite
+**/cache
+
+# Ignore TypeScript build output (if using TypeScript)
+**/*.tsbuildinfo
+
+# Ignore local development files
+**/.local
+**/.temp
+**/.cache
+
+# Ignore logs
+*.log
+logs

@@ -1,0 +1,39 @@
+---
+# Main task file for the web_app role
+
+- name: Deploy app_go Docker image
+  block:
+    - name: Pull app_go image from DockerHub
+      community.docker.docker_image:
+        name: "{{ docker_image_name }}"
+        tag: "{{ docker_image_tag }}"
+        source: pull
+      tags:
+        - docker_pull
+
+    - name: Create and start app_go container
+      community.docker.docker_container:
+        name: "{{ docker_container_name }}"
+        image: "{{ docker_image_name }}:{{ docker_image_tag }}"
+        state: started
+        restart_policy: always
+        published_ports: "{{ docker_container_published_ports }}"
+        volumes:
+          - "/var/lib/{{ docker_container_name }}"
+      tags:
+        - docker_container_start
+  tags:
+    - deploy_app_python
+
+- name: Deliver Docker Compose file
+  ansible.builtin.template:
+    src: "{{ docker_compose_src }}"
+    dest: "{{ docker_compose_dest }}"
+  tags:
+    - deliver_docker_compose
+
+- name: Execute wipe logic if enabled
+  ansible.builtin.include_tasks: "0-wipe.yml"
+  when: web_app_full_wipe | bool
+  tags:
+    - wipe
