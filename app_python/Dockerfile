@@ -30,6 +30,12 @@ COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/pytho
 # Copy application source code
 COPY main.py .
 
+# Create a persistent storage directory and set permissions
+RUN mkdir -p /app/data && chown -R appuser:appgroup /app/data
+
+# Set persistent storage for visits file
+VOLUME [ "/app/data" ]
+
 # Ensure the app runs with the correct user
 USER appuser
 
