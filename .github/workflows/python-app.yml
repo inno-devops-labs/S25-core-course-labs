@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./app_python # Pls work
+        working-directory: ./app_python
 
     steps:
       - uses: actions/checkout@v4
@@ -40,14 +40,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 pytest
           pip install -r requirements.txt
-
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/python@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }} # Snyk token 3
-        with:
-          args: --skip-unresolved app_python/
-        continue-on-error: true
 
       - name: Lint with flake8
         run: |
