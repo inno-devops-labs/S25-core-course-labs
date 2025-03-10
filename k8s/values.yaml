@@ -1,0 +1,26 @@
+image:
+  repository: marketer7/flask-time
+  tag: latest
+
+replicaCount: 3
+
+secretData:
+  myPassword: "my-secure-password"
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+
+service:
+  port: 8000
+
+storage:
+  size: 1Gi
+  accessModes:
+    - ReadWriteOnce
+
+podManagementPolicy: Parallel  # Для параллельного запуска подов 
