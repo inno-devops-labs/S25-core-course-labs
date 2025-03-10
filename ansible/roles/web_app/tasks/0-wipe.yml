@@ -1,0 +1,27 @@
+- name: Remove Container
+  docker_container:
+    name: "{{ container_name }}"
+    state: absent
+    force_kill: yes
+  when: web_app_full_wipe | bool
+  tags:
+    - wipe
+
+- name: Remove Image
+  docker_image:
+    name: "{{ app_image }}:{{ image_tag }}"
+    state: absent
+  when: web_app_full_wipe | bool
+  tags:
+    - wipe
+
+- name: Clean Files
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "/opt/{{ container_name }}"
+    - "/var/log/{{ container_name }}"
+  when: web_app_full_wipe | bool
+  tags:
+    - wipe

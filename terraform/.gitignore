@@ -1,0 +1,5 @@
+.terraform/
+terraform.*
+*.terraform.*
+key.json
+yandex/id_rsa.pub
