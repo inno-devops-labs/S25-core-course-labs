@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 
 # Where we'll store our persistent visits count
-VISITS_FILE = "/app/data/visits"
+VISITS_FILE = "data/visits"
 
 
 def read_visits():
