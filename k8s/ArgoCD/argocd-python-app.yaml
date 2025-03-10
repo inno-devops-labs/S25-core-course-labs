@@ -1,3 +1,4 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -8,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/mngcndl/S25-core-course-labs.git
     targetRevision: lab13
-    path: <k8s/app-python>
+    path: k8s/app-python
     helm:
       valueFiles:
         - values.yaml
