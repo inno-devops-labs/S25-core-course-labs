@@ -11,13 +11,14 @@ image:
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.1"
+  tag: "v1.2"
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
 # This is to override the chart name.
 nameOverride: ""
 fullnameOverride: ""
+name: "helm-python-app"
 
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
@@ -57,6 +58,8 @@ service:
   type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 8080
+  externalIPs:
+    - 192.168.1.100
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
@@ -120,6 +123,9 @@ volumeMounts:
     subPath: "config.json"
     readOnly: true
 
+  - name: visits
+    mountPath: /app_python/visits
+
 secret: { token: "token_value" }
 
 nodeSelector: {}
@@ -128,5 +134,4 @@ tolerations: []
 
 affinity: {}
 
-vaultAgent:
-  image: "hashicorp/vault:1.14.0"
+podManagementPolicy: Parallel
