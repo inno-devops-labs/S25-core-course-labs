@@ -3,8 +3,6 @@
    metadata:
      name: python-app-dev
      namespace: argocd
-     annotations:
-       argocd.argoproj.io/compare-options: IgnoreExtraneous
    spec:
      project: default
      source:
