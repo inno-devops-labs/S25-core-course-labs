@@ -2,6 +2,7 @@ name: Python CI Workflow
 
 on:
   push:
+    - Lab3
   pull_request:
     branches:
       - main
