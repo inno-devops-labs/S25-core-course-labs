@@ -1,0 +1,29 @@
+replicaCount: 1
+
+image:
+  repository: my-docker-registry/python-app
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 5000
+
+env:
+  - name: ENV
+    value: "development"
+  - name: DEBUG
+    value: "true"
+  - name: DATABASE_URL
+    value: "postgres://dev_user:dev_pass@dev-db:5432/dev_db"
+
+resources:
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+  requests:
+    cpu: "250m"
+    memory: "256Mi"
+
+autoscaling:
+  enabled: false

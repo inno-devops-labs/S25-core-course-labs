@@ -1,0 +1,32 @@
+replicaCount: 3
+
+image:
+  repository: my-docker-registry/python-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+
+env:
+  - name: ENV
+    value: "production"
+  - name: DEBUG
+    value: "false"
+  - name: DATABASE_URL
+    value: "postgres://prod_user:prod_pass@prod-db:5432/prod_db"
+
+resources:
+  limits:
+    cpu: "1000m"
+    memory: "1024Mi"
+  requests:
+    cpu: "500m"
+    memory: "512Mi"
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
