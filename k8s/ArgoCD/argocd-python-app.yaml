@@ -11,6 +11,7 @@ spec:
     targetRevision: lab13
     path: k8s/app-python
     helm:
+      version: v3
       valueFiles:
         - values.yaml
   destination:

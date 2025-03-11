@@ -125,3 +125,5 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+password: password
