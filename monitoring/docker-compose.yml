@@ -1,0 +1,102 @@
+version: '3.8'
+
+services:
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - monitoring
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+      
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/config.yml
+    networks:
+      - monitoring
+    volumes:
+      - ./loki-config.yml:/etc/loki/config.yml
+      - /tmp/loki:/loki  
+    user: "10001:10001"  
+    environment:
+      - LOKI_STORAGE_DIR=/loki 
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - ./promtail-config.yml:/etc/promtail/config.yml
+      - /var/log:/var/log
+    networks:
+      - monitoring
+    deploy:
+      resources:
+        limits:
+          memory: 200M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  python_app:
+    image: pupolina7/moscow-time-app  
+    ports:
+      - "8000:8000"
+    networks:
+      - monitoring
+    depends_on:
+      - loki  
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      - ./visits:/app/visits
+
+  prometheus:
+    image: prom/prometheus:v2.41.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - monitoring
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  monitoring:
+    driver: bridge

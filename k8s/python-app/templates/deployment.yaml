@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "python-app.fullname" . }}
+  labels:
+    app: {{ include "python-app.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount | default 3 }}
+  selector:
+    matchLabels:
+      app: {{ include "python-app.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "python-app.name" . }}
+    spec:
+      serviceAccountName: myapp-sa
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.containerPort }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config.json
+              subPath: config.json
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "python-app.fullname" . }}-config

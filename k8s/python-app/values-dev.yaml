@@ -1,0 +1,10 @@
+replicaCount: 3
+
+image:
+  repository: pupolina7/moscow-time-app
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8000
