@@ -9,7 +9,7 @@ replicaCount: 3
 image:
   repository: mishablin/devops-labs
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
@@ -88,11 +88,11 @@ resources: {}
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
   httpGet:
-    path: /
+    path: /health
     port: http
 readinessProbe:
   httpGet:
-    path: /
+    path: /health
     port: http
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/

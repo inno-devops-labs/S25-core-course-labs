@@ -3,10 +3,13 @@ from flask import Flask, render_template
 import pytz
 import os
 
-VISITS_FILE = "visits.txt"
+VISITS_DIR = "data"
+VISITS_FILE = os.path.join(VISITS_DIR, "visits.txt")
 
 
 def increment_counter():
+    if not os.path.exists(VISITS_DIR):
+        os.makedirs(VISITS_DIR)
     if not os.path.exists(VISITS_FILE):
         with open(VISITS_FILE, 'w') as f:
             f.write("0")
@@ -44,6 +47,10 @@ def create_app():
             return f"Total visits: {count}"
         except Exception as e:
             return str(e), 500
+
+    @app.route("/health")
+    def healthz():
+        return "OK", 200
 
     return app
 

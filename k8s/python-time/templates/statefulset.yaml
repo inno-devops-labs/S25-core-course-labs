@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "python-time.fullname" . }}
   labels:
@@ -8,6 +8,7 @@ spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
+  podManagementPolicy: Parallel
   selector:
     matchLabels:
       {{- include "python-time.selectorLabels" . | nindent 6 }}
@@ -60,6 +61,8 @@ spec:
             - name: config-volume
               mountPath: /src/config.json
               subPath: config.json
+            - name: visits-data
+              mountPath: /src/data
       volumes:
         - name: config-volume
           configMap:
@@ -76,3 +79,11 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: visits-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 10Mi
