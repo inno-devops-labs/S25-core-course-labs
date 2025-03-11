@@ -1,0 +1,13 @@
+replicaCount: 1
+
+env:
+  - name: ENVIRONMENT
+    value: "dev"
+
+resources:
+  limits:
+    cpu: "300m"
+    memory: "128Mi"
+  requests:
+    cpu: "150m"
+    memory: "64Mi"
