@@ -1,0 +1,5 @@
+docker_image: "my-flask-app:latest"
+
+app_port: 8080
+
+web_app_full_wipe: false
