@@ -127,3 +127,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+vaultAgent:
+  image: "hashicorp/vault:1.14.0"
