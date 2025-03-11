@@ -23,8 +23,9 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      {{- if not .Values.autoscaling.enabled }}
-      replicas: {{ .Values.replicaCount }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       serviceAccountName: {{ include "app-python.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
@@ -43,14 +44,6 @@ spec:
             - name: http
               containerPort: 4000
               protocol: TCP
-          env:
-            { { include "common.env" . | nindent 12 } }
-          volumeMounts:
-            - name: config-volume
-              mountPath: /app/config.json
-              subPath: config.json
-            - name: visits-volume
-              mountPath: /app/visits
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
@@ -63,13 +56,14 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
       volumes:
-        - name: config-volume
-          configMap:
-            name: app-config
-        - name: visits-volume
-          persistentVolumeClaim:
-            claimName: visits-pvc
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
