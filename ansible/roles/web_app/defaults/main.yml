@@ -1,0 +1,5 @@
+docker_image: "mirgasimovk/python-msk:latest"
+docker_container_name: app
+app_port: 5000
+web_app_full_wipe: true
+deploy_dir: /tmp

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secrets-lab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: secrets-lab
+  template:
+    metadata:
+      labels:
+        app: secrets-lab
+    spec:
+      serviceAccountName: internal-app
+      containers:
+        - name: demo-container
+          image: nginx
+          env:
+            - name: LOGIN
+              valueFrom:
+                secretKeyRef:
+                  name: secrets-lab-secret
+                  key: LOGIN
+            - name: PASS
+              valueFrom:
+                secretKeyRef:
+                  name: secrets-lab-secret
+                  key: PASS
