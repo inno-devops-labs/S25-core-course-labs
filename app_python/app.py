@@ -5,25 +5,19 @@ import os
 
 app = Flask(__name__)
 
+# Файл для хранения счетчика
 VISITS_FILE = "/data/visits"
 
-if os.path.exists(VISITS_FILE):
-    os.chmod(VISITS_FILE, 0o777)
+if not os.path.exists(VISITS_FILE):
     with open(VISITS_FILE, "w") as f:
         f.write("0")
-else:
-    fd = os.open(VISITS_FILE, os.O_CREAT, 0o777)
-    os.close(fd)
-    os.chmod(VISITS_FILE, 0o777)
-    with open(VISITS_FILE, "w") as f:
-        f.write("0")
-
 
 @app.route("/")
 def home():
     moscow_time = datetime.now(pytz.timezone("Europe/Moscow")).strftime(
         "%Y-%m-%d %H:%M:%S"
     )
+    # Увеличиваем счетчик
     with open(VISITS_FILE, "r+") as f:
         count = int(f.read() or 0)
         count += 1
@@ -31,7 +25,6 @@ def home():
         f.write(str(count))
         f.truncate()
     return f"Current time in Moscow: {moscow_time}"
-
 
 @app.route("/visits")
 def visits():
