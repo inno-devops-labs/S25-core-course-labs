@@ -1,0 +1,39 @@
+---
+- include_tasks: setup_debian.yml
+- include_tasks: install_docker.yml
+- include_tasks: install_compose.yml
+- include_tasks: secure_docker.yml
+
+- name: Ensure Docker daemon is running
+  ansible.builtin.systemd:
+    name: docker
+    state: started
+    enabled: yes
+  tags: service
+
+- name: Verify Docker is running
+  ansible.builtin.command: docker info
+  register: docker_info
+  changed_when: false
+  failed_when: docker_info.rc != 0
+
+- name: Ensure handlers are notified now to avoid firewall conflicts
+  meta: flush_handlers
+
+- name: Get docker group info using getent
+  ansible.builtin.getent:
+    database: group
+    key: docker
+    split: ':'
+  when: docker_users | length > 0
+
+- name: Check if there are any users to add to the docker group
+  ansible.builtin.set_fact:
+    at_least_one_user_to_modify: true
+  when:
+    - docker_users | length > 0
+    - item not in ansible_facts.getent_group["docker"][2]
+  loop: "{{ docker_users }}"
+
+- include_tasks: docker_users.yml
+  when: at_least_one_user_to_modify is defined
