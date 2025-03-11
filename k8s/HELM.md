@@ -1,15 +1,22 @@
+<h1>HELM.md</h1>
+The outputs of the HELM commands
+
+
+`kubectl get pods,svc`
+```
 NAME                                         READY   STATUS    RESTARTS        AGE
 pod/python-msk-789787bb98-5nfh7              1/1     Running   0               5m19s
 pod/python-msk-deployment-868c89fdfd-csrf2   1/1     Running   1 (8m21s ago)   8m49s
 pod/python-msk-deployment-868c89fdfd-kmpkj   1/1     Running   1 (8m21s ago)   8m49s
 pod/python-msk-deployment-868c89fdfd-srrmn   1/1     Running   1 (8m21s ago)   8m49s
-
 NAME                         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
 service/kubernetes           ClusterIP   10.96.0.1        <none>        443/TCP        4d7h
 service/python-msk           ClusterIP   10.97.171.40     <none>        80/TCP         5m19s
 service/python-msk-service   NodePort    10.103.189.134   <none>        80:31551/TCP   2d14h
+```
 
-kubectl get po (2 task)
+`kubectl get po`
+```
 NAME                                     READY   STATUS      RESTARTS      AGE
 nginx-statefulset-0                      1/1     Running     0             78s
 postinstall-hook                         0/1     Completed   0             78s
@@ -17,6 +24,10 @@ preinstall-hook                          0/1     Completed   0             103s
 python-msk-deployment-868c89fdfd-csrf2   1/1     Running     2 (16m ago)   2d17h
 python-msk-deployment-868c89fdfd-kmpkj   1/1     Running     2 (16m ago)   2d17h
 python-msk-deployment-868c89fdfd-srrmn   1/1     Running     2 (16m ago)   2d17h
+```
+
+Pre-install Hook Pod (preinstall-hook)
+```
 Name:             preinstall-hook
 Namespace:        default
 Priority:         0
@@ -75,6 +86,10 @@ Events:
   Normal  Pulled     2m15s  kubelet            Container image "busybox" already present on machine
   Normal  Created    2m14s  kubelet            Created container: pre-install-container
   Normal  Started    2m14s  kubelet            Started container pre-install-container
+```
+
+Post-install Hook Pod (postinstall-hook)
+```
 Name:             postinstall-hook
 Namespace:        default
 Priority:         0
@@ -134,3 +149,4 @@ Events:
   Normal  Pulled     113s  kubelet            Successfully pulled image "busybox" in 3.565s (3.566s including waiting). Image size: 4269694 bytes.
   Normal  Created    113s  kubelet            Created container: post-install-container
   Normal  Started    113s  kubelet            Started container post-install-container
+```
