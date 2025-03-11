@@ -12,6 +12,7 @@ if not os.path.exists(VISITS_FILE):
     with open(VISITS_FILE, "w") as f:
         f.write("0")
 
+
 @app.route("/")
 def home():
     moscow_time = datetime.now(pytz.timezone("Europe/Moscow")).strftime(
@@ -25,6 +26,7 @@ def home():
         f.write(str(count))
         f.truncate()
     return f"Current time in Moscow: {moscow_time}"
+
 
 @app.route("/visits")
 def visits():
