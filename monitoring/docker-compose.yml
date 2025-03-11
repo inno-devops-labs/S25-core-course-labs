@@ -111,6 +111,8 @@ services:
       - "5000:5000"
     environment:
       - ENV=production
+    volumes:
+      - ./visits.txt:/app/visits.txt
     networks:
       - monitoring
     restart: unless-stopped
@@ -123,7 +125,6 @@ services:
       resources:
         limits:
           memory: 300M
-
 
 volumes:
   grafana_data:
