@@ -1,7 +1,7 @@
 replicaCount: 3
 
 image:
-  repository: my-docker-registry/python-app
+  repository: ramilevna/app_python
   tag: latest
   pullPolicy: IfNotPresent
 

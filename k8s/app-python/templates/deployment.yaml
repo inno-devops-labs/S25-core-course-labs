@@ -16,8 +16,6 @@ spec:
       {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
-        vault.hashicorp.com/agent-inject: "true"
-        vault.hashicorp.com/agent-inject-secret-myapp: "secret/myapp"
       {{- end }}
       labels:
         {{- include "app-python.labels" . | nindent 8 }}
@@ -25,9 +23,8 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+      {{- if not .Values.autoscaling.enabled }}
+      replicas: {{ .Values.replicaCount }}
       {{- end }}
       serviceAccountName: {{ include "app-python.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
@@ -47,11 +44,7 @@ spec:
               containerPort: 4000
               protocol: TCP
           env:
-            - name: MY_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: my-secret
-                  key: MY_PASS
+            { { include "common.env" . | nindent 12 } }
           volumeMounts:
             - name: config-volume
               mountPath: /app/config.json

@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: my-docker-registry/python-app
+  repository: ramilevna/app_python
   tag: latest
   pullPolicy: Always
 
