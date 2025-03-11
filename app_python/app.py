@@ -12,7 +12,7 @@ if os.path.exists(VISITS_FILE):
     with open(VISITS_FILE, "w") as f:
         f.write("0")
 else:
-    fd = os.open(VISITS_FILE, os.O_CREAT | os.O_WRONLY, 0o777)
+    fd = os.open(VISITS_FILE, os.O_CREAT, 0o777)
     os.close(fd)
     os.chmod(VISITS_FILE, 0o777)
     with open(VISITS_FILE, "w") as f:
