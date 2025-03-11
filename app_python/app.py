@@ -7,7 +7,11 @@ app = Flask(__name__)
 
 VISITS_FILE = "/data/visits"
 
-if not os.path.exists(VISITS_FILE):
+if os.path.exists(VISITS_FILE):
+    os.chmod(VISITS_FILE, 0o777)
+    with open(VISITS_FILE, "w") as f:
+        f.write("0")
+else:
     with open(VISITS_FILE, "w") as f:
         f.write("0")
     os.chmod(VISITS_FILE, 0o777)
