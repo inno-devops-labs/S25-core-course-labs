@@ -66,3 +66,23 @@ The CI workflow consists of the following jobs:
 
 
 Workflow status check in CI.md
+
+---
+
+### Visit Counter
+The application now includes a visit counter that tracks the number of times the application is accessed. The counter is persisted in a file (visits) to ensure continuity across restarts.
+
+#### Key Features:
+**Persistence:** The visit count is saved in a file (*/data/visits*) and persists even after the application is restarted.
+**Endpoint:** A new endpoint */visits* has been added to display the recorded visits.
+#### How It Works:
+Each time the root endpoint (/) is accessed, the application increments the visit counter and saves it to the visits file.
+The */visits* endpoint returns the current value of the visit counter.
+**Local Setup:**
+To enable persistence locally:
+
+1. Create a directory named data in the project root
+2. Ensure the directory has appropriate permissions for the application to write to it:
+
+**Docker Deployment:**
+When running the application with Docker, the data directory is mounted as a volume to persist the visit counter.
