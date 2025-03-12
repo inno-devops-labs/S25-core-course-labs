@@ -123,10 +123,9 @@ volumes: []
 #     optional: false
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts:
+  - name: visits-data
+    mountPath: /app/visits
 
 nodeSelector: {}
 
@@ -136,3 +135,9 @@ affinity: {}
 
 secrets:
   api_token: "helloworld"
+
+volumeClaimTemplates:
+  name: visits-data
+  storage: 512Mi
+
+podManagementPolicy: Parallel
