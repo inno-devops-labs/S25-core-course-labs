@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: python-app-dev
+  namespace: dev
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Processor228/S25-core-course-labs.git
+    targetRevision: lab-13
+    path: k8s/chart-app-python
+    helm:
+      valueFiles:
+        - values-dev.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated: {}
