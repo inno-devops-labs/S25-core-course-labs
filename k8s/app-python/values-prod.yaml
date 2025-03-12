@@ -1,0 +1,10 @@
+replicaCount: 2
+image:
+  tag: "prod-latest"
+resources:
+  limits:
+    cpu: "1"
+    memory: "1024Mi"
+  requests:
+    cpu: "0.5"
+    memory: "512Mi"
