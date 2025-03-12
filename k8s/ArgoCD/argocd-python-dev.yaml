@@ -7,11 +7,11 @@ spec:
   project: default
   source:
     repoURL: https://github.com/mngcndl/S25-core-course-labs.git
-    targetRevision: lab13
     path: k8s/app-python
+    targetRevision: lab13
     helm:
       valueFiles:
-        - ../values-dev.yaml
+        - values-dev.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: dev
@@ -19,5 +19,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
