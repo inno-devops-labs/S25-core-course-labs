@@ -39,6 +39,12 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          env:
+            - name: MY_PASS
+              valueFrom:
+                secretKeyRef:  # Fixed indentation
+                  name: my-secret
+                  key: MY_PASS
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
