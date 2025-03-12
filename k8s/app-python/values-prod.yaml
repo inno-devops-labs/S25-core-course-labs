@@ -29,7 +29,7 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: app-python
+  name: "app-python"
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
@@ -116,17 +116,10 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes:
- - name: volume-config
-   configMap:
-     name: app-config
+volumes: []
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: 
- - name: volume-config
-   mountPath: "/data/config.json"
-   subPath: "config.json"
-   readOnly: true
+volumeMounts: []
 
 nodeSelector: {}
 
@@ -135,7 +128,7 @@ tolerations: []
 affinity: {}
 
 env:
-  MY_VAR: ilsiia
+  MY_VAR: argocd-prod
 
 config:
   path: "files/config.json"
