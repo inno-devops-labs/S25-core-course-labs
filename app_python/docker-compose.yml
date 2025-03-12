@@ -1,0 +1,13 @@
+services:
+  python-app:
+    image: 2imt/app_python:latest
+    container_name: app_python
+    user: "1000:1000"
+    ports:
+      - "8000:8000"
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./visits:/app/visits
+    restart: unless-stopped
