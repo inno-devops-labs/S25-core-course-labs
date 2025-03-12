@@ -33,13 +33,13 @@ serviceAccount:
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-podAnnotations:
-  vault.hashicorp.com/agent-inject: "true"
-  vault.hashicorp.com/role: "app-python"
-  vault.hashicorp.com/agent-inject-template-database-config.txt: |
-    {{- with secret "internal/data/database/config" -}}
-    postgresql://{{ .Data.data.username }}:{{ .Data.data.password }}@postgres:5432/wizard
-    {{- end -}}
+# podAnnotations:
+#   vault.hashicorp.com/agent-inject: "true"
+#   vault.hashicorp.com/role: "app-python"
+#   vault.hashicorp.com/agent-inject-template-database-config.txt: |
+#     {{- with secret "internal/data/database/config" -}}
+#     postgresql://{{ .Data.data.username }}:{{ .Data.data.password }}@postgres:5432/wizard
+#     {{- end -}}
 # This is for setting Kubernetes Labels to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
