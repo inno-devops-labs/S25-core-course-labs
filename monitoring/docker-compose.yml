@@ -1,13 +1,32 @@
+networks:
+  monitoring:
+
 services:
+
 
   app_python:
     image: "hayderuni/moscow-time-flask"
     ports:
       - "5000:5000"
+      - "8000:8000"
     logging:
       driver: "json-file"
-      options:
+      options: # https://docs.docker.com/engine/logging/configure/
+        max-size: 10m
+        max-file: 3
         tag: "{{.ImageName}}|{{.Name}}"
+    deploy:
+      resources:
+        limits: # https://docs.docker.com/reference/compose-file/deploy/#resources
+          memory: 150m
+    healthcheck: # https://docs.docker.com/reference/compose-file/services/#healthcheck
+      test: wget --spider -S 'http://localhost:5000' 2>&1 | grep 'HTTP/' | awk '{print $2}'
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - monitoring
 
   loki:
     image: grafana/loki:latest
@@ -17,7 +36,21 @@ services:
     logging:
       driver: "json-file"
       options:
+        max-size: 10m
+        max-file: 3
         tag: "{{.ImageName}}|{{.Name}}"
+    deploy:
+      resources:
+        limits:
+          memory: 150m
+    healthcheck:
+      test: wget --spider -q http://localhost:3100/ready
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - monitoring
 
 
   promtail:
@@ -30,7 +63,21 @@ services:
     logging:
       driver: "json-file"
       options:
+        max-size: 10m
+        max-file: 3
         tag: "{{.ImageName}}|{{.Name}}"
+    deploy:
+      resources:
+        limits:
+          memory: 150m
+    healthcheck:
+      test: pgrep -f promtail
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - monitoring
 
   grafana:
     environment:
@@ -45,4 +92,45 @@ services:
     logging:
       driver: "json-file"
       options:
+        max-size: 10m
+        max-file: 3
         tag: "{{.ImageName}}|{{.Name}}"
+    deploy:
+      resources:
+        limits:
+          memory: 150m
+    healthcheck:
+      test: curl -f http://localhost:3000
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus:latest
+    restart: unless-stopped
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command: '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - "9090:9090"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 10m
+        max-file: 3
+        tag: "{{.ImageName}}|{{.Name}}"
+    deploy:
+      resources:
+        limits:
+          memory: 150m
+    healthcheck:
+      test: wget -O - http://localhost:9090
+      interval: 10s
+      timeout: 15s
+      retries: 10
+      start_period: 40s
+    networks:
+      - monitoring

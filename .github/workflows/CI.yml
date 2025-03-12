@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - lab3
+      - lab8
 
 jobs:
 
