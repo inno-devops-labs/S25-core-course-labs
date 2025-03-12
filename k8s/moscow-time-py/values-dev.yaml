@@ -115,12 +115,9 @@ volumes: []
 #       name: py-app-config
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# volumeMounts:
-#   - name: config-volume
-#     mountPath: "/data/config.json"
-#     subPath: "config.json"
-#     readOnly: true
+volumeMounts:
+  - name: py-visits-data-dev
+    mountPath: /app/data
 
 nodeSelector: {}
 
@@ -134,3 +131,9 @@ env:
 
 config:
   path: "files/config.json"
+
+volumeClaimTemplates:
+  name: py-visits-data-dev
+  storage: 512Mi
+
+podManagementPolicy: Parallel
