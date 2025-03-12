@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-py-app
+data:
+  config.json: |-
+    {{ .Files.Get .Values.configPath }}
