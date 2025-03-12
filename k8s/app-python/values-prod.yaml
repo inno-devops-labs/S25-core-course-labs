@@ -8,3 +8,19 @@ resources:
   requests:
     cpu: "0.5"
     memory: "512Mi"
+
+probes:
+  liveness:
+    path: /
+    port: http
+    initialDelaySeconds: 10
+    timeoutSeconds: 5
+    periodSeconds: 10
+    failureThreshold: 3
+  readiness:
+    path: /
+    port: http
+    initialDelaySeconds: 10
+    timeoutSeconds: 5
+    periodSeconds: 10
+    failureThreshold: 3
