@@ -1,6 +1,8 @@
 replicaCount: 1
 image:
-  tag: "dev-latest"
+  repository: mangocandle/app_python
+  tag: latest
+  pullPolicy: IfNotPresent
 resources:
   limits:
     cpu: "0.5"
