@@ -115,17 +115,10 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes:
-  - name: config-volume
-    configMap:
-      name: python-app-config
+volumes: {}
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts:
-  - name: config-volume
-    mountPath: "/data/config.json"
-    subPath: "config.json"
-    readOnly: true
+volumeMounts: {}
 
 nodeSelector: {}
 
@@ -134,6 +127,3 @@ tolerations: []
 affinity: {}
 
 
-
-config:
-  path: "files/config.json"
