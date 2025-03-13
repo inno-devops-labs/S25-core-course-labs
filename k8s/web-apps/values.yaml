@@ -48,8 +48,7 @@ podLabels: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
-securityContext: 
-  runAsUser: 0 
+securityContext: {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -67,7 +66,7 @@ service:
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
   enabled: true
-  className: "nginx"
+  className: ""
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
@@ -75,7 +74,7 @@ ingress:
     - host: new-python-web-app.local
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -103,12 +102,17 @@ resources:
 livenessProbe:
   httpGet:
     path: /
-    port: http 
+    port: http
+  initialDelaySeconds: 60
+  periodSeconds: 5         
+  failureThreshold: 3     
 
 readinessProbe:
   httpGet:
     path: /
     port: http
+  initialDelaySeconds: 60
+  periodSeconds: 5
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
