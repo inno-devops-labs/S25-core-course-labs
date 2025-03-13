@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/<your-repo>/S25-core-course-labs.git
+    repoURL: https://github.com/Milanaaaa/S25-core-course-labs.git
     targetRevision: lab13
     path: k8s/app-python
     helm:
