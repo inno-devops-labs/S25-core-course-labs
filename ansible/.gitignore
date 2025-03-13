@@ -1,0 +1,4 @@
+key.json
+fact_cache
+inventory/yandex-cloud-token
+plugins/inventory/__pycache__/
