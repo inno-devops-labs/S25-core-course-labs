@@ -121,7 +121,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-secrets:
-  username: ahmetovaa
-  password: qwerty
