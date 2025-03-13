@@ -107,7 +107,7 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: {}
+volumes: []
   # - name: config-volume
   #   configMap:
   #     name: app-python-config
