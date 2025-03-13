@@ -131,8 +131,7 @@ tolerations: []
 
 affinity: {}
 
-env:
-  ENVIRONMENT: stage
+
 
 config:
   path: "files/config.json"
