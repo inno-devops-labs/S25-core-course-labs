@@ -27,3 +27,13 @@ spec:
                 secretKeyRef:
                   name: secrets-lab-secret
                   key: PASS
+        - name: python-msk
+          image: python-msk:latest
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config.json
+              subPath: config.json
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "python-msk.fullname" . }}-config

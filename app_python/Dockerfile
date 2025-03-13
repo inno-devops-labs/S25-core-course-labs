@@ -8,7 +8,7 @@ RUN adduser --disabled-password docker-user
 WORKDIR app
 COPY main.py .
 COPY templates/ ./templates/
-COPY visits.txt .
+RUN touch visits.txt && chmod 777 visits.txt
 ENTRYPOINT [ "python" ]
 
 USER docker-user

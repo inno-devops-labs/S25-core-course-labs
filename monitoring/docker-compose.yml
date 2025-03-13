@@ -1,5 +1,3 @@
-version: "3.8"
-
 networks:
   monitoring:
 
@@ -111,8 +109,6 @@ services:
       - "5000:5000"
     environment:
       - ENV=production
-    volumes:
-      - ./visits.txt:/app/visits.txt
     networks:
       - monitoring
     restart: unless-stopped
