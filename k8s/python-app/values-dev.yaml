@@ -1,7 +1,0 @@
-replicaCount: 1
-image:
-  tag: "dev"
-resources:
-  limits:
-    cpu: "500m"
-    memory: "256Mi"
