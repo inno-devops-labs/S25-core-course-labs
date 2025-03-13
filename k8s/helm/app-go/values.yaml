@@ -1,9 +1,9 @@
-# Default values for app-python.
+# Default values for app-go.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
-replicaCount: 1
+replicaCount: 4
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
@@ -11,7 +11,7 @@ image:
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "v2.0.0"  # Update to match your Docker image tag
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -88,12 +88,21 @@ resources: {}
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
   httpGet:
-    path: /
+    path: /visits
     port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 7
+
 readinessProbe:
   httpGet:
-    path: /
+    path: /visits
     port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 7
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
@@ -104,20 +113,29 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+volumes:
+  - name: data-volume
+    hostPath:
+      path: /data  # Replace with the absolute path to your local data directory
+      type: Directory
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts:
+  - name: data-volume
+    mountPath: /data  # Mount the volume to /data inside the container
 
 nodeSelector: {}
 
 tolerations: []
 
 affinity: {}
+
+podManagementPolicy: Parallel
+
+volumeClaimTemplates:
+  storage: 512Mi
+
+updateStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    partition: 1

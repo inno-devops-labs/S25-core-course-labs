@@ -1,15 +1,6 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "app-python.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
-{{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-If release name contains chart name it will be used as a full name.
-*/}}
 {{- define "app-python.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
@@ -21,6 +12,14 @@ If release name contains chart name it will be used as a full name.
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 {{- end }}
+{{- end }}
+
+
+{{/*
+Create a name for the application.
+*/}}
+{{- define "app-python.name" -}}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
@@ -46,7 +45,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "app-python.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "app-python.name" . }}
+app.kubernetes.io/name: {{ include "app-python.fullname" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
