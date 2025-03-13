@@ -33,7 +33,7 @@ serviceAccount:
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-podAnnotations: {}
+podAnnotations:
   vault.hashicorp.com/agent-inject: "true"
   vault.hashicorp.com/role: "web-apps"
   vault.hashicorp.com/agent-inject-secret-database-config.txt: 'internal/data/database/config'
