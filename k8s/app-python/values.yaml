@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
-replicaCount: 1
+replicaCount: 2
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
@@ -18,6 +18,7 @@ imagePullSecrets: []
 # This is to override the chart name.
 nameOverride: ""
 fullnameOverride: ""
+name: "app-python"
 
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
@@ -58,6 +59,8 @@ securityContext: {}
 service:
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
   type: ClusterIP
+  selector:
+    app: app-python
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 5000
 
@@ -119,11 +122,18 @@ autoscaling:
 volumes: []
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
+volumeMounts: 
+ - name: app-python-pvc
+   mountPath: /data
+
 
 nodeSelector: {}
 
 tolerations: []
+
+volumeClaimTemplate:
+  name: "app-python-pvc"
+  requestStorage: "90Mi"
 
 affinity: {}
 
@@ -132,3 +142,5 @@ env:
 
 config:
   path: "files/config.json"
+
+podManagementPolicy: Parallel

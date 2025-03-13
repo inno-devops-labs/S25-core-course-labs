@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
-replicaCount: 1
+replicaCount: 2
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
@@ -18,6 +18,7 @@ imagePullSecrets: []
 # This is to override the chart name.
 nameOverride: ""
 fullnameOverride: ""
+name: "app-nodejs"
 
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
@@ -29,7 +30,7 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: ""
+  name: app-nodejs
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
@@ -111,21 +112,20 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes:
- - name: volume-config
-   configMap:
-     name: app-config-nodejs
+volumes: []
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: 
- - name: volume-config
-   mountPath: "/data/config.json"
-   subPath: "config.json"
-   readOnly: true
+ - name: app-nodejs-pvc
+   mountPath: /data
 
 nodeSelector: {}
 
 tolerations: []
+
+volumeClaimTemplate:
+  name: "app-nodejs-pvc"
+  requestStorage: "90Mi"
 
 affinity: {}
 
@@ -134,3 +134,5 @@ env:
 
 config:
   path: "files/config.json"
+
+podManagementPolicy: Parallel

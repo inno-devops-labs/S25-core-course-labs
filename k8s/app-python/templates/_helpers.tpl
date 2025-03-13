@@ -34,6 +34,7 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "app-python.labels" -}}
+app: {{ include "app-python.name" . }}
 helm.sh/chart: {{ include "app-python.chart" . }}
 {{ include "app-python.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
@@ -46,6 +47,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "app-python.selectorLabels" -}}
+app: {{ include "app-python.name" . }}
 app.kubernetes.io/name: {{ include "app-python.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}

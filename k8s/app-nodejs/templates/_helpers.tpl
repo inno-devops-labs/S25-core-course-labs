@@ -34,6 +34,7 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "app-nodejs.labels" -}}
+app: {{ include "app-nodejs.name" . }}
 helm.sh/chart: {{ include "app-nodejs.chart" . }}
 {{ include "app-nodejs.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
@@ -46,6 +47,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "app-nodejs.selectorLabels" -}}
+app: {{ include "app-nodejs.name" . }}
 app.kubernetes.io/name: {{ include "app-nodejs.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
