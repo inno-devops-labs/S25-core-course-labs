@@ -1,0 +1,3 @@
+replicaCount: 5
+image:
+  tag: "stable"
