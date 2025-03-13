@@ -1,0 +1,12 @@
+# all:
+#   hosts:
+#     localhost:
+#       ansible_connection: local
+
+all:
+  hosts:
+    localhost:
+      ansible_connection: local
+      ansible_python_interpreter: /usr/bin/python3
+      ansible_distribution_release: jammy
+      ansible_user: kira

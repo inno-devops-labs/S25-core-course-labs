@@ -1,0 +1,81 @@
+name: JavaScript CI
+
+on:
+  push:
+    paths:
+      - ".github/workflows/**"
+      - "app_javascript/**"
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+      - "app_javascript/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      # Cache npm dependencies to speed up subsequent builds
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('app_javascript/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          cd app_javascript
+          npm install
+
+      # Run tests (ensure you have defined tests in package.json)
+      - name: Run tests
+        run: |
+          cd app_javascript
+          npm test
+
+      # Lint code (ensure you have a lint script defined in package.json, e.g., "lint": "eslint .")
+      - name: Lint code
+        run: |
+          cd app_javascript
+          npm run lint
+
+      # Install Snyk CLI explicitly
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      # Run Snyk vulnerability scan on package.json
+      - name: Run Snyk Vulnerability Scan
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          cd app_javascript
+          snyk test --file=package.json --severity-threshold=high
+
+      # Docker Hub Login
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_NAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      # Build the Docker image using the distroless Dockerfile
+      - name: Build Docker image
+        run: |
+          docker build -f app_javascript/distroless.Dockerfile -t ${{ secrets.DOCKER_HUB_NAME }}/app_javascript-distroless:latest ./app_javascript
+
+      # Push the Docker image to Docker Hub
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_HUB_NAME }}/app_javascript-distroless:latest
