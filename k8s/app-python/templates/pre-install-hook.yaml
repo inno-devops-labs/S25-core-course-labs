@@ -1,22 +1,22 @@
-# apiVersion: v1
-# kind: Pod
-# metadata:
-#   name: preinstall-hook
-#   annotations:
-#     "helm.sh/hook": "pre-install"
-#     "helm.sh/hook-delete-policy": "hook-succeeded"
-# spec:
-#   containers:
-#     - name: pre-install-container
-#       image: busybox
-#       imagePullPolicy: IfNotPresent
-#       command: ["sh", "-c", "echo The pre-install hook is running && sleep 20"]
-#       resources:
-#         requests:
-#           cpu: 100m
-#           memory: 128Mi
-#         limits:
-#           cpu: 300m
-#           memory: 512Mi
-#   restartPolicy: Never
-#   terminationGracePeriodSeconds: 0
+apiVersion: v1
+kind: Pod
+metadata:
+  name: preinstall-hook
+  annotations:
+    "helm.sh/hook": "pre-install"
+    "helm.sh/hook-delete-policy": "hook-succeeded"
+spec:
+  containers:
+    - name: pre-install-container
+      image: busybox
+      imagePullPolicy: IfNotPresent
+      command: ["sh", "-c", "echo The pre-install hook is running && sleep 20"]
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 300m
+          memory: 512Mi
+  restartPolicy: Never
+  terminationGracePeriodSeconds: 0
