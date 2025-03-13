@@ -13,3 +13,4 @@ venv
 authorized_key.json
 kubectl 
 minikube-linux-amd64
+visits
