@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "app-python.labels" . | nindent 4 }}
 spec:
+
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
@@ -40,6 +41,8 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- toYaml .Values.env | nindent 12 }}
           ports:
             - name: http
               containerPort: 4000

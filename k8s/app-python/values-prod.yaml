@@ -10,12 +10,10 @@ service:
   port: 80
 
 env:
-  - name: ENV
-    value: "production"
-  - name: DEBUG
-    value: "false"
-  - name: DATABASE_URL
-    value: "postgres://prod_user:prod_pass@prod-db:5432/prod_db"
+  - name: ENV_VAR_1
+    value: "some_value"
+  - name: ENV_VAR_2
+    value: "another_value"
 
 resources:
   limits:
