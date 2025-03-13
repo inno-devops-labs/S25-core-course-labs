@@ -125,6 +125,6 @@ tolerations: []
 affinity: {}
 
 environment:
-  spongebobAddress: "300 Prod Avenue"
-  patrickAddress: "400 Prod Street"
-  squidwardAddress: "500 Prod Blvd"
+  spongebobAddress: "200 Prod Avenue"
+  patrickAddress: "300 Prod Street"
+  squidwardAddress: "400 Prod Blvd"
