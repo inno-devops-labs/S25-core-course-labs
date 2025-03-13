@@ -1,0 +1,6 @@
+---
+- name: Deploy my Python MSK time application
+  hosts: all
+  become: true
+  roles:
+    - web_app
