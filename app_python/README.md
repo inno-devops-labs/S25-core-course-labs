@@ -2,8 +2,12 @@
 
 [![Test and build python app](https://github.com/ortieom/S25-DevOps-labs/actions/workflows/main.yml/badge.svg)](https://github.com/ortieom/S25-DevOps-labs/actions/workflows/main.yml)
 
-This web application is built using the Flask to display current time in Moscow.
+This web application is built using the Flask to display current time in Moscow and count visits.
 
+## Site map
+
+- Display current time in Moscow (`/`)
+- Count and display number of visits (`/visits`)
 
 ## Running application locally
 
@@ -43,8 +47,8 @@ docker pull jodak628286/python_app:rootless
 ```
 ### How to run
 
-Use `docker run -p 80:8080 -t <image_tag>`, where image tag is on of `python_app` (for local image), `jodak628286/python_app:python_app` (for version from task 1), or `jodak628286/python_app:rootless` (for version with best practices).
-Your app will be available at port `80`.
+Use `docker compose up -d` to run the application.
+Your app will be available at port `8080`.
 
 
 ## Unit Tests
