@@ -1,19 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: python-app
+  name: python-app-dev
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/Dyddxd/S25-core-course-labs.git
-    targetRevision: lab13
+    targetRevision: lab-13
     path: k8s/python-app
     helm:
       valueFiles:
-        - values.yaml
+        - values-dev.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: dev
   syncPolicy:
     automated: {}
