@@ -47,7 +47,7 @@ docker pull jodak628286/python_app:rootless
 ```
 ### How to run
 
-Use `docker compose up -d` to run the application.
+Use `docker compose up -d` inside the `app_python` directory to run the application.
 Your app will be available at port `8080`.
 
 
