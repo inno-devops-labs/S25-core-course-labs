@@ -67,7 +67,7 @@ service:
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
   enabled: true
-  className: ""
+  className: "nginx"
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
@@ -75,7 +75,7 @@ ingress:
     - host: new-python-web-app.local
       paths:
         - path: /
-          pathType: Prefix
+          pathType: ImplementationSpecific
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -103,17 +103,12 @@ resources:
 livenessProbe:
   httpGet:
     path: /
-    port: http
-  initialDelaySeconds: 60
-  periodSeconds: 5         
-  failureThreshold: 3     
+    port: http 
 
 readinessProbe:
   httpGet:
     path: /
     port: http
-  initialDelaySeconds: 60
-  periodSeconds: 5
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
