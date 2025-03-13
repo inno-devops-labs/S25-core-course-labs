@@ -11,6 +11,6 @@ spec:
       containers:
       - name: pre-install
         image: busybox
-        command: ["sleep", "15"]
+        command: ["sleep", "5"]
       restartPolicy: Never
   backoffLimit: 4
