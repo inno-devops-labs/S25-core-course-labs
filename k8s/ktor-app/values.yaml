@@ -7,7 +7,7 @@ replicaCount: 2
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: rwkals/app_kotlin_distroless
+  repository: rwkals/app_kotlin
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
@@ -41,16 +41,13 @@ podAnnotations: {}
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
 
-podSecurityContext: {}
-  # fsGroup: 2000
+podSecurityContext:
+  fsGroup: 1000
 
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  readOnlyRootFilesystem: false
 
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
 service:
@@ -108,19 +105,25 @@ autoscaling:
 
 # Additional volumes on the output Deployment definition.
 volumes:
-  - name: config-volume
-    configMap:
-      name: ktor-app-config
+
+volumeClaimTemplates:
+  name: ktor-app-volt
+  storage: 1Gi
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: standard
+
+podManagementPolicy: Parallel
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-  - name: config-volume
-    mountPath: "/data/config.json"
-    subPath: "config.json"
-    readOnly: true
+  - name: ktor-app-volt
+    mountPath: /data
 
 nodeSelector: {}
 
 tolerations: []
 
 affinity: {}
+
+env:
+  ENVIRONMENT: stage

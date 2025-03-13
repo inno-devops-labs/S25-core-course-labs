@@ -9,5 +9,6 @@ k8s/minikube-linux-amd64
 k8s/secrets.yaml
 monitoring/ktor_visits/
 monitoring/python_visits/
-app_python/__pycache__
-app_python/tests/__pycache__
+app_python/__pycache__/*
+app_python/tests/__pycache__/*
+patch.json

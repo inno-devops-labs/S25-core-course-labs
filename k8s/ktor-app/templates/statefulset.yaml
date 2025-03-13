@@ -1,16 +1,30 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: {{ include "flask-app.fullname" . }}
+  name: {{ include "ktor-app.fullname" . }}
   labels:
     {{- include "common.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ include "ktor-app.fullname" . }}
+  podManagementPolicy: {{ .Values.podManagementPolicy }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "flask-app.selectorLabels" . | nindent 6 }}
+      {{- include "common.labels" . | nindent 6 }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Values.volumeClaimTemplates.name }}
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: {{ .Values.volumeClaimTemplates.storage }}
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 1
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -27,7 +41,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "flask-app.serviceAccountName" . }}
+      serviceAccountName: {{ include "ktor-app.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -39,12 +53,6 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          env:
-            - name: PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-secret
-                  key: password
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http

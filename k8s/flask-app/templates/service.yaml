@@ -3,13 +3,12 @@ kind: Service
 metadata:
   name: {{ include "flask-app.fullname" . }}
   labels:
-    {{- include "common.labels" . | nindent 4 }}
+    {{- include "flask-app.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - name: http
+      port: {{ int .Values.service.port }}
       protocol: TCP
-      name: http
+      targetPort: http
   selector:
-    {{- include "common.labels" . | nindent 4 }}
+    {{- include "flask-app.selectorLabels" . | nindent 4 }}
