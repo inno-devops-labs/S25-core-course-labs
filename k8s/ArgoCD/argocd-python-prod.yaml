@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/Dyddxd/S25-core-course-labs.git
-    targetRevision: lab-13
+    targetRevision: lab13
     path: k8s/python-app
     helm:
       valueFiles:
