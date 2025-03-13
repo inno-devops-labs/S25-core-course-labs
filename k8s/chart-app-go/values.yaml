@@ -116,15 +116,15 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes:
-- name: app-go-config-volume
-  configMap:
-    name: app-go-config
+# volumes:
+# - name: app-go-config-volume
+#   configMap:
+#     name: app-go-config
 
-volumeMounts:
-- name: app-go-config-volume
-  mountPath: "/app/data/config.json"
-  subPath: "config.json"
+# volumeMounts:
+# - name: app-go-config-volume
+#   mountPath: "/app/data/config.json"
+#   subPath: "config.json"
 
 nodeSelector: {}
 
