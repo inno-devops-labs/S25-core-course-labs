@@ -33,3 +33,19 @@ spec:
         resources:
           requests:
             storage: {{ .Values.storageSize }}
+
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 8000
+  initialDelaySeconds: 30
+  periodSeconds: 10
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 8000
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+spec:
+  podManagementPolicy: Parallel
