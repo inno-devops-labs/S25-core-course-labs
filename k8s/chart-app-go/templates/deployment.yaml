@@ -39,10 +39,10 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: CRED_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: credentials-go
-                key: password
+            # valueFrom:
+            #   secretKeyRef:
+            #     name: credentials-go
+            #     key: password
           {{- include "app-go.env" . | nindent 10 }}
           # envFrom:
           # - configMapRef:
