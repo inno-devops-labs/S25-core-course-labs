@@ -1,11 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "python-app.fullname" . }}
   labels:
     app: {{ include "python-app.name" . }}
 spec:
-  replicas: {{ .Values.replicaCount | default 3 }}
+  serviceName: "{{ include "python-app.fullname" . }}-headless"
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: {{ include "python-app.name" . }}
@@ -14,7 +15,6 @@ spec:
       labels:
         app: {{ include "python-app.name" . }}
     spec:
-      serviceAccountName: myapp-sa
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -22,10 +22,14 @@ spec:
           ports:
             - containerPort: {{ .Values.containerPort }}
           volumeMounts:
-            - name: config-volume
-              mountPath: /config.json
-              subPath: config.json
-      volumes:
-        - name: config-volume
-          configMap:
-            name: {{ include "python-app.fullname" . }}-config
+            - name: data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: {{ .Values.storageClass | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.storageSize }}
