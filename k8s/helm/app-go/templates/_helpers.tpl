@@ -50,23 +50,3 @@ app.kubernetes.io/name: {{ include "app-go.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "app-go.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "app-go.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
-
-{{/*
-Define environment variables for the app.
-*/}}
-{{- define "app-python.envVars" -}}
-{{- range $key, $value := .Values.env }}
-- name: {{ $key }}
-  value: {{ $value | quote }}
-{{- end }}
-{{- end }}
