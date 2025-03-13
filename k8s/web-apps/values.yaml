@@ -48,7 +48,9 @@ podLabels: {}
 podSecurityContext:
   fsGroup: 2000
 
-securityContext: {}
+securityContext:
+  runAsUser: 0  # Запуск от имени root (временно для тестирования)
+  fsGroup: 2000
   # capabilities:
   #   drop:
   #   - ALL
