@@ -29,7 +29,7 @@ async def metrics_middleware(request: Request, call_next): # Оставляем 
     REQUEST_LATENCY.labels(method=request.method, path=request.url.path).observe(process_time.total_seconds())
     return response
 
-COUNTER_FILE = "/tmp/visits"
+COUNTER_FILE = "visits"
 counter_lock = threading.Lock()
 persistent_counter = 0
 
