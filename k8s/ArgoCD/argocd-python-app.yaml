@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/Damncaf-goin-crazy/S25-core-course-labs.git
     targetRevision: hw13
-    path: <k8s/app-python>
+    path: k8s/your-app
     helm:
       valueFiles:
         - values.yaml
