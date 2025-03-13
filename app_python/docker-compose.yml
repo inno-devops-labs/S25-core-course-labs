@@ -1,0 +1,8 @@
+services:
+  python-app:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./visits:/app/visits
+      - ./templates:/app/templates:ro

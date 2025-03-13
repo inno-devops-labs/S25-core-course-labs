@@ -1,0 +1,7 @@
+services:
+  {{ container_name }}:
+    image: {{ image_name }}:{{ image_tag }}
+    container_name: {{ container_name }}
+    restart: {{ restart_policy }}
+    ports:
+      - "{{ exposed_port }}:{{ app_port }}"
