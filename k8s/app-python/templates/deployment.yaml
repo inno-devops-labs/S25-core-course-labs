@@ -44,11 +44,11 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-          - name: PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: secret
-                key: PASSWORD
+#          - name: PASSWORD
+#            valueFrom:
+#              secretKeyRef:
+#                name: secret
+#                key: PASSWORD
           {{- include "python-time-service.environmentVars" . | nindent 10 }}
           envFrom:
             - configMapRef:
