@@ -1,0 +1,5 @@
+{
+  "port": 4567,
+  "isProd": false,
+  "mode": "test",
+}
