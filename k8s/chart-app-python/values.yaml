@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
-replicaCount: 3
+replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
@@ -119,10 +119,20 @@ autoscaling:
 #   configMap:
 #     name: app-python-config
 
-# volumeMounts:
-# - name: app-python-config-volume
-#   mountPath: "/app/data/config.json"
-#   subPath: "config.json"
+volumeMounts:
+- name: app-python-data
+  mountPath: "/data"
+
+volumeClaimTemplates:
+- metadata:
+    name: app-python-data
+  spec:
+    accessModes: ["ReadWriteOnce"]
+    resources:
+       requests:
+        storage: 10M
+
+
 
 nodeSelector: {}
 
