@@ -36,6 +36,7 @@ I chose the **net/http** package for this web application because it is the stan
 
 To ensure the application works correctly, the following steps were taken:
 
+
 ### **1. Static Code Analysis**
 
 ```bash
