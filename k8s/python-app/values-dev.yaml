@@ -23,13 +23,13 @@ fullnameOverride: "python-app-dev"
 
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
-  name: "python-app-dev-acc"
+  name: "python-app-acc"
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 podAnnotations: {
   "vault.hashicorp.com/agent-inject": "true",
-  "vault.hashicorp.com/role": "python-app-dev",
+  "vault.hashicorp.com/role": "python-app",
   "vault.hashicorp.com/agent-inject-secret-database-config.txt": "internal/data/database/config"
 }
 
