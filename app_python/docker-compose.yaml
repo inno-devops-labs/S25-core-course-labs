@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  app:
+    image: synavtora/flask-app:latest
+    build: .
+    volumes:
+      - visits_data:/data
+    ports:
+      - "5000:5000"
+
+volumes:
+  visits_data:
+    driver: local
