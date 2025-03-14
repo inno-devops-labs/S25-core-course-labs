@@ -100,3 +100,14 @@ The CI pipeline includes the following steps:
 7. Run Snyk test to check for vulnerabilities in dependencies.
 8. Log in to Docker Hub.
 9. Build and Push the Docker image to Docker Hub.
+
+
+## Visits Counter
+
+The `/visits` endpoint tracks the number of site visits. Each time a user accesses the site, the application:
+1. Reads the current visit count from `visits/visits.txt`.
+2. Increments the count.
+3. Saves the updated count back to the file.
+
+The visit count persists across container restarts. This is achieved by mapping a host directory in `docker-compose.yml` 
+to store `visits.txt`, ensuring data is not lost when the container stops or restarts.

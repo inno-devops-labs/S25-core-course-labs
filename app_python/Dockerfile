@@ -11,6 +11,8 @@ COPY --chown=user:user requirements.txt app.py /app/
 RUN mkdir /app/templates && chown -R user /app/templates
 COPY --chown=user:user templates/ /app/templates/
 
+COPY --chown=user:user visits/ /app/visits/
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 5000

@@ -20,6 +20,9 @@ REQUEST_LATENCY = Histogram(
     ["endpoint"]
 )
 
+# File path for tracking the number of visits
+VISITS_FILE = "visits/visits.txt"
+
 
 def get_moscow_time():
     """
@@ -35,11 +38,32 @@ def format_time(time):
     return time.strftime('%Y-%m-%d %H:%M:%S')
 
 
+def get_visits():
+    """
+        Retrieve the total number of visits from the file.
+    """
+    try:
+        with open(VISITS_FILE, "r") as f:
+            return int(f.read().strip())
+    except (FileNotFoundError, ValueError):
+        return 0
+
+
+def update_visits():
+    """
+        Increment the visit count and update the file.
+    """
+    visits = get_visits() + 1
+    with open(VISITS_FILE, "w") as f:
+        f.write(str(visits))
+
+
 @app.route('/')
 def show_time():
     """
         Route handler for the root URL.
     """
+    update_visits()
     start_time = time.time()
     moscow_time = get_moscow_time()
     formatted_moscow_time = format_time(moscow_time)
@@ -67,6 +91,14 @@ def metrics():
         Expose Prometheus metrics.
     """
     return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
+
+
+@app.route("/visits")
+def visits():
+    """
+        Route to display the total number of visits.
+    """
+    return f"<h1>Total Visits: {get_visits()}</h1>"
 
 
 # Run the application
