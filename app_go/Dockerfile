@@ -24,6 +24,6 @@ RUN go build -o ./bin/url-shortener ./cmd/url-shortener
 
 EXPOSE 8080
 
-USER appuser
+# USER appuser
 
 CMD ["./bin/url-shortener"]

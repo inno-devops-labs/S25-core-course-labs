@@ -135,3 +135,7 @@ This repository uses a GitHub Actions workflow that runs on every push and pull 
 4. **Build & Deploy:** Builds and pushes a Docker image to DockerHub.
 
 Each stage only runs if the previous one succeeds.
+
+## Visits
+
+From now on, there is a `/visits` endpoint that displays the activity stats for the service. They may also be found in the `data/visists.txt` or a corresponding volume
