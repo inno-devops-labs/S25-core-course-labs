@@ -29,14 +29,22 @@ func showCurrentTimeMoscow() string {
 	return currentTime.Format("15:04:05") // Format as HH:MM:SS
 }
 
-// home handles requests to the root URL ("/") and renders the HTML template with the current time.
-func home(w http.ResponseWriter, r *http.Request) {
-	// Prepare the data to be passed to the template
+// Home handles requests to the root URL ("/") and renders the HTML template with the current time.
+func Home(w http.ResponseWriter, r *http.Request) {
+	if templates == nil {
+		var err error
+		templates, err = template.ParseFiles("templates/index.html")
+		if err != nil {
+			http.Error(w, "Error loading template", http.StatusInternalServerError)
+			log.Println("Template loading error:", err)
+			return
+		}
+	}
+
 	data := PageData{
 		CurrentTime: showCurrentTimeMoscow(),
 	}
 
-	// Execute the template and pass the data
 	err := templates.ExecuteTemplate(w, "index.html", data)
 	if err != nil {
 		http.Error(w, "Error rendering template", http.StatusInternalServerError)
@@ -49,7 +57,7 @@ func main() {
 	templates = template.Must(template.ParseFiles("templates/index.html"))
 
 	// Register the home handler for the root path
-	http.HandleFunc("/", home)
+	http.HandleFunc("/", Home)
 
 	// Start the HTTP server on port 3000
 	log.Println("Starting server on :3000...")
