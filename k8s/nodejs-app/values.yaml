@@ -49,6 +49,27 @@ securityContext:
   #   - ALL
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
+
+# StatefulSet specific configurations
+statefulset:
+  # Pod management policy: OrderedReady or Parallel
+  podManagementPolicy: Parallel
+  # Update strategy: RollingUpdate or OnDelete
+  updateStrategy: RollingUpdate
+  # Partition for RollingUpdate strategy
+  rollingUpdatePartition: 2
+  # Persistent volume configuration
+  persistentVolume:
+    enabled: true
+    # Storage class name, empty string for default storage class
+    storageClass: ""
+    # Access modes
+    accessModes:
+      - ReadWriteOnce
+    # Size of the persistent volume
+    size: 1Gi
+    # Annotations for the persistent volume claim
+    annotations: {}
   # runAsUser: 1000
 
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
@@ -57,6 +78,8 @@ service:
   type: NodePort
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 3000
+  # NodePort to expose the service on
+  nodePort: 30013
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:

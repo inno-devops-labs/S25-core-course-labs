@@ -4,6 +4,9 @@ RUN adduser -D appuser
 
 WORKDIR /app
 
+# Create data directory and set permissions
+RUN mkdir -p /data && chown -R appuser:appuser /data && chmod 755 /data
+
 COPY --chown=appuser:appuser package*.json ./
 
 RUN npm install --production

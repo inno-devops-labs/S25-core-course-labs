@@ -55,7 +55,10 @@ app.use((req, res, next) => {
 
 // Functions for visit counter persistence
 function getVisitCount() {
-    const visitsFile = path.join(__dirname, 'visits');
+    // Use /data directory for persistent storage in StatefulSet
+    const dataDir = fs.existsSync('/data') ? '/data' : __dirname;
+    const visitsFile = path.join(dataDir, 'visits');
+    
     try {
         if (fs.existsSync(visitsFile)) {
             const count = fs.readFileSync(visitsFile, 'utf8').trim();
@@ -69,14 +72,17 @@ function getVisitCount() {
 }
 
 function incrementVisitCounter() {
-    const visitsFile = path.join(__dirname, 'visits');
+    // Use /data directory for persistent storage in StatefulSet
+    const dataDir = fs.existsSync('/data') ? '/data' : __dirname;
+    const visitsFile = path.join(dataDir, 'visits');
+    
     try {
         const count = getVisitCount() + 1;
         fs.writeFileSync(visitsFile, count.toString());
-        logger.info('Visit counter incremented', { count });
+        logger.info('Visit counter incremented', { count, filePath: visitsFile });
         return count;
     } catch (err) {
-        logger.error('Error incrementing visit count', { error: err.message });
+        logger.error('Error incrementing visit count', { error: err.message, filePath: visitsFile });
         return 0;
     }
 }
@@ -161,7 +167,7 @@ app.get('/metrics', async (req, res) => {
 
 if (require.main === module) {
     app.listen(port, () => {
-        logger.info(`Server started`, { port });
+        logger.info('Server started', { port });
     });
 }
 
