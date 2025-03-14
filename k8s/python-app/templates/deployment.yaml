@@ -44,11 +44,11 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: gpt_key
-              valueFrom:
-                secretKeyRef:
-                  name: credentials
-                  key: CHATGPT_KEY
+{{/*            - name: gpt_key*/}}
+{{/*              valueFrom:*/}}
+{{/*                secretKeyRef:*/}}
+{{/*                  name: credentials*/}}
+{{/*                  key: CHATGPT_KEY*/}}
             {{- include "python-app.environmentVariables" . | nindent 12 }}
           envFrom:
             - configMapRef:
