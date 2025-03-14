@@ -17,6 +17,9 @@ spec:
     server: https://kubernetes.default.svc
     namespace: dev
   syncPolicy:
+    syncOptions:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#create-namespace
+    - CreateNameSpace=true
     automated:
       selfHeal: true
       prune: true
