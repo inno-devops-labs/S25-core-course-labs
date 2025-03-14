@@ -17,9 +17,26 @@ REQUEST_LATENCY = Histogram(
     "HTTP request latency", ["endpoint"]
 )
 
+VISITS_FILE = "visits/visits.txt"
+
+
+def get_users_count():
+    try:
+        with open(VISITS_FILE, "r") as f:
+            return int(f.read().strip())
+    except (FileNotFoundError, ValueError):
+        return 0
+
+
+def update_users_count():
+    visits = get_users_count() + 1
+    with open(VISITS_FILE, "w") as f:
+        f.write(str(visits))
+
 
 @app.route("/")
 def index():
+    update_users_count()
     start_time = time.time()
     moscow_time_zone = pytz.timezone("Europe/Moscow")
     moscow_time = datetime.now(moscow_time_zone).strftime("%Y-%m-%d %H:%M:%S")
@@ -36,6 +53,11 @@ def index():
 def metrics():
     return Response(prometheus_client.generate_latest(),
                     mimetype=CONTENT_TYPE_LATEST)
+
+
+@app.route("/visits")
+def visits():
+    return f"<h1>Total visits: {get_users_count()}</h1>"
 
 
 if __name__ == "__main__":

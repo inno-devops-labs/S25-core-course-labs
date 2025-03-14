@@ -126,6 +126,8 @@ services:
       interval: 10s
       timeout: 10s
       retries: 3
+    volumes:
+      - ./volume:/app/visits
 
   prometheus:
     image: prom/prometheus:latest

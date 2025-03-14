@@ -85,3 +85,10 @@ docker run -p 5000:5000 angelika2707/lab2
 - Set up Docker Buildx
 - Login to Docker Hub
 - Build and push Docker image
+
+## Site Visits Count
+
+The `/visits` endpoint tracks the number of times the site has been visited. 
+On each visit, the application reads the current count from `visits/visits.txt`, increments it by one, and updates the file.
+
+To **persist the visit count across container restarts**, a host directory is mounted in `docker-compose.yml`, so `visits.txt` remains unchanged even if the container stops or restarts.

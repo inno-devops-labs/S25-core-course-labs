@@ -21,6 +21,10 @@ RUN mkdir /app/templates && \
 # and set the ownership to the 'angelika2707' user
 COPY --chown=angelika2707:angelika2707 templates/ /app/templates/
 
+# Copy /visits into /app/visits/
+# and set the ownership to the 'angelika2707' user
+COPY --chown=angelika2707:angelika2707 visits/ /app/visits/
+
 # Install python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
