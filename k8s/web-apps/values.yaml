@@ -3,19 +3,20 @@
 # Declare variables to be passed into your templates.
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
-replicaCount: 1
+replicaCount: 2
 useStatefulSet: true
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
   repository: lekski/python-web-app
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
+imagePullPolicy: Always
 # This is to override the chart name.
 nameOverride: ""
 fullnameOverride: ""
@@ -42,8 +43,8 @@ podAnnotations:
     {{- with secret "internal/data/database/config" -}}
     postgresql://{{ .Data.data.username }}:{{ .Data.data.password }}@postgres:5432/wizard
     {{- end -}}
-# This is for setting Kubernetes Labels to a Pod.
-# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+This is for setting Kubernetes Labels to a Pod.
+For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
 
 podSecurityContext: {}
@@ -148,4 +149,4 @@ tolerations: []
 affinity: {}
 
 
-password: "my-secret-password"
+# password: "my-secret-password"

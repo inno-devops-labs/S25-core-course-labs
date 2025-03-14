@@ -1,14 +1,13 @@
 {{- if .Values.useStatefulSet }}
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "golang-web-app.fullname" . }}
   labels:
     {{- include "mylibchart.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
+  serviceName: {{ include "golang-web-app.fullname" . }}-headless
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "golang-web-app.selectorLabels" . | nindent 6 }}
@@ -24,6 +23,10 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
+      updateStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          partition: 1  
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -69,7 +72,9 @@ spec:
           {{- end }}
           {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
+            volumeMounts:
+            - name: data
+              mountPath: /
           {{- end }}
       {{- with .Values.volumes }}
       volumes:
@@ -87,4 +92,12 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
 {{- end }}
