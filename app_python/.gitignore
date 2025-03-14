@@ -29,4 +29,3 @@ venv/
 **/terraform.tfstate.backup
 yandex/key.json
 **/terraform.tfstate.*.backup
-
