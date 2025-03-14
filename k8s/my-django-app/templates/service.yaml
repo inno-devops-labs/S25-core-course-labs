@@ -6,6 +6,7 @@ metadata:
     {{- include "my-django-app.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
+  clusterIP: None
   ports:
     - port: {{ .Values.service.port }}
       targetPort: http

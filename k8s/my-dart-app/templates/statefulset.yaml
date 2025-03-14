@@ -1,15 +1,31 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: {{ include "my-django-app.fullname" . }}
+  name: {{ include "my-dart-app.fullname" . }}
   labels:
-    {{- include "my-django-app.labels" . | nindent 4 }}
+    {{- include "my-dart-app.labels" . | nindent 4 }}
     {{- include "my-library-chart.labels" . | nindent 4 }}
 spec:
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 1
+  podManagementPolicy: Parallel
+  serviceName:  {{ include "my-dart-app.fullname" . }}
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
-      {{- include "my-django-app.selectorLabels" . | nindent 6 }}
-      {{- include "my-library-chart.labels" . | nindent 6 }}
+      {{- include "my-dart-app.selectorLabels" . | nindent 6 }}
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Values.volumeClaimTemplate.name }}
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: {{ .Values.volumeClaimTemplate.requestStorage }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -17,7 +33,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "my-django-app.labels" . | nindent 8 }}
+        {{- include "my-dart-app.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -26,7 +42,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "my-django-app.serviceAccountName" . }}
+      serviceAccountName: {{ include "my-dart-app.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -39,15 +55,8 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          resources:
-            requests:
-              cpu: "{{ .Values.resources.requests.cpu }}"
-              memory: "{{ .Values.resources.requests.memory }}"
-            limits:
-              cpu: "{{ .Values.resources.limits.cpu }}"
-              memory: "{{ .Values.resources.limits.memory }}"
           env: 
-          {{- include "my-django-app.envFromSecrets" . | nindent 12 }}
+          {{- include "my-dart-app.envVars" . | nindent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
@@ -70,7 +79,7 @@ spec:
           {{- end }}
       {{- with .Values.volumes }}
       volumes:
-          {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
