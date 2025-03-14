@@ -73,10 +73,12 @@ services:
       - lab7
 
   web_app:
-    image: petrel312/flask_app:latest
+    image: petrel312/flask_app:flask_app
     ports:
       - "5000:5000"
     restart: always
+    volumes:
+      - ./visits.txt:/app_python/visits.txt
     deploy:
       resources:
         limits:

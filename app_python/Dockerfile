@@ -1,7 +1,9 @@
 FROM python:3.9-alpine3.15
 WORKDIR /app_python
 RUN adduser -D flask_app_user
+RUN chown -R flask_app_user:flask_app_user /app_python
 USER flask_app_user
+RUN mkdir -p /app_python && touch /app_python/visits.txt
 COPY requirements.txt /app_python/
 RUN pip install --no-cache-dir -r requirements.txt
 COPY web.py /app_python/
