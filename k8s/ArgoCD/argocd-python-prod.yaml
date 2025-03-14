@@ -20,6 +20,6 @@ spec:
     syncOptions:
     # https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#create-namespace
     - CreateNamespace=true
-    automated:
-      selfHeal: true
-      prune: true
+    automated: {}
+      # selfHeal: true
+      # prune: true
