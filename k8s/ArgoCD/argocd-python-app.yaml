@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/TheAnushervon/S25-core-course-labs.git
     targetRevision: lab13
-    path: <k8s/app-python>
+    path: k8s/moscow-time-app
     helm:
       valueFiles:
         - values.yaml
