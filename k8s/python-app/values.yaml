@@ -82,8 +82,22 @@ resources: {}
   #   memory: 128Mi
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-livenessProbe: {}
-readinessProbe: {}
+livenessProbe:
+  httpGet:
+    path: /health
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+readinessProbe:
+  httpGet:
+    path: /health
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
@@ -111,3 +125,24 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# StatefulSet specific configurations
+statefulset:
+  # Pod management policy: OrderedReady or Parallel
+  podManagementPolicy: Parallel
+  # Update strategy: RollingUpdate or OnDelete
+  updateStrategy: RollingUpdate
+  # Partition for RollingUpdate strategy
+  rollingUpdatePartition: 0
+  # Persistent volume configuration
+  persistentVolume:
+    enabled: true
+    # Storage class for the persistent volume
+    storageClass: ""
+    # Access modes for the persistent volume
+    accessModes:
+      - ReadWriteOnce
+    # Size of the persistent volume
+    size: 1Gi
+    # Annotations for the persistent volume
+    annotations: {}

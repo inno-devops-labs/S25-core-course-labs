@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "python-app.fullname" . }}
   labels:
@@ -8,6 +8,8 @@ spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
+  serviceName: {{ include "python-app.fullname" . }}
+  podManagementPolicy: {{ .Values.statefulset.podManagementPolicy }}
   selector:
     matchLabels:
       {{- include "python-app.selectorLabels" . | nindent 6 }}
@@ -54,6 +56,8 @@ spec:
             - name: config-volume
               mountPath: /app/config.json
               subPath: config.json
+            - name: data
+              mountPath: /data
             {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -67,10 +71,6 @@ spec:
           {{- end }}
           {{- with .Values.resources }}
           resources:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
       volumes:
@@ -92,3 +92,27 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  {{- if .Values.statefulset.persistentVolume.enabled }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+        {{- with .Values.statefulset.persistentVolume.annotations }}
+        annotations:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+      spec:
+        accessModes:
+          {{- range .Values.statefulset.persistentVolume.accessModes }}
+          - {{ . | quote }}
+          {{- end }}
+        storageClassName: {{ .Values.statefulset.persistentVolume.storageClass }}
+        resources:
+          requests:
+            storage: {{ .Values.statefulset.persistentVolume.size }}
+  {{- end }}
+  updateStrategy:
+    type: {{ .Values.statefulset.updateStrategy }}
+    {{- if eq .Values.statefulset.updateStrategy "RollingUpdate" }}
+    rollingUpdate:
+      partition: {{ .Values.statefulset.rollingUpdatePartition }}
+    {{- end }}

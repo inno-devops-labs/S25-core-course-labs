@@ -111,7 +111,13 @@ def visits():
 
 # Functions for visit counter persistence
 def get_visit_count():
-    visits_file = os.path.join(os.path.dirname(__file__), 'visits')
+    # Use /data directory for persistent storage in StatefulSet
+    data_dir = '/data'
+    # Fallback to current directory if /data is not available (for local development)
+    if not os.path.exists(data_dir):
+        data_dir = os.path.dirname(__file__)
+    
+    visits_file = os.path.join(data_dir, 'visits')
     try:
         if os.path.exists(visits_file):
             with open(visits_file, 'r') as f:
@@ -124,7 +130,13 @@ def get_visit_count():
 
 
 def increment_visit_counter():
-    visits_file = os.path.join(os.path.dirname(__file__), 'visits')
+    # Use /data directory for persistent storage in StatefulSet
+    data_dir = '/data'
+    # Fallback to current directory if /data is not available (for local development)
+    if not os.path.exists(data_dir):
+        data_dir = os.path.dirname(__file__)
+        
+    visits_file = os.path.join(data_dir, 'visits')
     try:
         count = get_visit_count() + 1
         with open(visits_file, 'w') as f:
