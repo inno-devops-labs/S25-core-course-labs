@@ -17,8 +17,8 @@ spec:
     server: https://kubernetes.default.svc
     namespace: default
   syncPolicy:
-    automated:
-      # Make git the source of truth
-      selfHeal: true
-      # Remove resources that are not in git
-      prune: true
+    automated: {}
+      # # Make git the source of truth
+      # selfHeal: true
+      # # Remove resources that are not in git
+      # prune: true
