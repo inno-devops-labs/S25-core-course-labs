@@ -1,7 +1,8 @@
-'''python web-app program -  максимально упрощенная синхронная версия без lifespan'''
+'''python web-app program'''
 import os
 import threading
 from datetime import datetime
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import HTMLResponse, PlainTextResponse
 from fastapi.templating import Jinja2Templates
@@ -10,18 +11,20 @@ import uvicorn
 import pytz
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
-app = FastAPI() # Убрали lifespan
+app = FastAPI(lifespan=lifespan)
 STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
+# specify the folder with static files
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), "templates")
-templates = Jinja2Templates(directory=TEMPLATES_DIR)
+templates = Jinja2Templates(directory=TEMPLATES_DIR) # html template folder
 
 REQUEST_COUNT = Counter('http_requests_total', 'Total number of HTTP requests', ['method', 'path'])
 REQUEST_LATENCY = Histogram('http_request_duration_seconds', 'HTTP request latency in seconds', ['method', 'path'])
 
 @app.middleware("http")
-async def metrics_middleware(request: Request, call_next): # Оставляем middleware асинхронным, так как это middleware FastAPI
+async def metrics_middleware(request: Request, call_next):
+    '''Middleware to collect request metrics'''
     start_time = datetime.now()
     response = await call_next(request)
     process_time = datetime.now() - start_time
@@ -33,7 +36,7 @@ COUNTER_FILE = "visits"
 counter_lock = threading.Lock()
 persistent_counter = 0
 
-def load_counter(): # Синхронная функция
+def load_counter():
     global persistent_counter
     try:
         with open(COUNTER_FILE, "r") as f:
@@ -41,15 +44,18 @@ def load_counter(): # Синхронная функция
     except Exception:
         persistent_counter = 0
 
-def save_counter(): # Синхронная функция
+def save_counter():
     with open(COUNTER_FILE, "w") as f:
         f.write(str(persistent_counter))
 
-load_counter() # Загружаем счетчик сразу при запуске модуля, вне lifespan
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    load_counter()
+    yield
 
 @REQUEST_LATENCY.time()
 @app.get("/", response_class=HTMLResponse)
-def read_root(request: Request): # Синхронная функция - убрали async
+async def read_root(request: Request):
     '''Displaying Moscow time'''
     timezone = pytz.timezone('Europe/Moscow') # Selecting a time zone
     time = datetime.now(timezone).strftime("%d-%m-%Y %H:%M:%S")
@@ -60,12 +66,12 @@ def read_root(request: Request): # Синхронная функция - убр�
     return templates.TemplateResponse("index.html", {"request": request, "msc_time": time})
 
 @app.get("/metrics")
-async def metrics(): # Оставляем metrics endpoint асинхронным, так как это рекомендуется для Prometheus client
+async def metrics():
     '''Endpoint Prometheus metrics'''
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
 @app.get("/visits", response_class=PlainTextResponse)
-def get_visits(): # Синхронная функция - убрали async
+async def get_visits():
     '''Number of visits'''
     return f"Visits №{persistent_counter}"
 

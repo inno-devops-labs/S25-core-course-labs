@@ -1,14 +1,13 @@
-{{- if not .Values.useStatefulSet }}
-  apiVersion: apps/v1
-  kind: Deployment
+{{- if .Values.useStatefulSet }}
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
   name: {{ include "web-apps.fullname" . }}
   labels:
     {{- include "mylibchart.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
+  serviceName: {{ include "web-apps.fullname" . }}-headless
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "web-apps.selectorLabels" . | nindent 6 }}
@@ -67,14 +66,9 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
-      volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+            - name: data
+              mountPath: /visits
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -87,4 +81,12 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
 {{- end }}
