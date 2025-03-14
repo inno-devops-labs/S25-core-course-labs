@@ -1,19 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: app-python-dev
+  name: web-app-dev
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/HayderSarhan/S25-core-course-labs.git
     targetRevision: lab13
-    path: k8s/app-python
+    path: k8s/web-app
     helm:
       valueFiles:
         - values-dev.yaml
+        - secrets.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: dev
   syncPolicy:
-    automated: {}
+    automated:
+      selfHeal: true
+      prune: true

@@ -1,19 +1,24 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: app-python
+  name: web-app
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/HayderSarhan/S25-core-course-labs.git
     targetRevision: lab13
-    path: k8s/app-python
+    path: k8s/web-app
     helm:
       valueFiles:
         - values.yaml
+        - secrets.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: default
   syncPolicy:
-    automated: {}
+    automated: 
+      # Make git the source of truth
+      selfHeal: true
+      # Remove resources that are not in git
+      prune: true
