@@ -1,0 +1,2 @@
+replicaCount: 4
+environment: prod
