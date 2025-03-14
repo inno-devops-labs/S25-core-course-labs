@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/wensiet/S25-core-course-labs.git
     targetRevision: lab-13
-    path: k8s/py-app 
+    path: k8s/py-app
     helm:
       valueFiles:
         - values-dev.yaml
