@@ -133,3 +133,15 @@ tolerations: []
 affinity: {}
 
 serviceAccountName: internal-app
+
+volumeClaimTemplates:
+  - metadata:
+      name: web-app-vol
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+
+# This is for setting up the pod management policy more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
+podManagementPolicy: Parallel

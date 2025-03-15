@@ -82,7 +82,7 @@ $ minikube service --all
 |-----------|-----------------|-------------|---------------------------|
 | NAMESPACE |      NAME       | TARGET PORT |            URL            |
 |-----------|-----------------|-------------|---------------------------|
-| default   | web-app-service |        5000 | http://192.168.49.2:30007 |
+| default   | web-app-service |        5000 | http://<IP>:30007 |
 |-----------|-----------------|-------------|---------------------------|
 ❗  Services [default/kubernetes] have type "ClusterIP" not meant to be exposed, however for local development minikube allows you to access this !
 🎉  Opening service default/web-app-service in default browser...

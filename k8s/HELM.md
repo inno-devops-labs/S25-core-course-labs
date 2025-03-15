@@ -83,7 +83,7 @@ We add them to the `templates` directory.
   Namespace:        default
   Priority:         0
   Service Account:  default
-  Node:             minikube/192.168.49.2
+  Node:             minikube/<IP>
   Start Time:       Tue, 25 Feb 2025 17:14:05 +0300
   Labels:           <none>
   Annotations:      helm.sh/hook: pre-install
@@ -148,7 +148,7 @@ We add them to the `templates` directory.
   Namespace:        default
   Priority:         0
   Service Account:  default
-  Node:             minikube/192.168.49.2
+  Node:             minikube/<IP>
   Start Time:       Tue, 25 Feb 2025 17:14:17 +0300
   Labels:           <none>
   Annotations:      helm.sh/hook: post-install
