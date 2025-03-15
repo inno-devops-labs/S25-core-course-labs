@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-service
+spec:
+  selector:
+    app: python-app
+  type: LoadBalancer
+  ports:
+    - port: 8080
