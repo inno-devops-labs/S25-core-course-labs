@@ -1,0 +1,63 @@
+name: Python CI/CD
+
+on:
+  push:
+    paths:
+      - 'app_python/**'
+    branches: [ master ]
+  pull_request:
+    paths:
+      - 'app_python/**'
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r app_python/requirements.txt
+        pip install pytest pytest-cov
+
+    - name: Run tests with pytest
+      run: |
+        cd app_python/test
+        pytest 
+
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/python@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      continue-on-error: true
+      with:
+        args: --severity-threshold=high --skip-unresolved app_python/
+        command: test
+
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: ./app_python
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/python-moscow-time:latest

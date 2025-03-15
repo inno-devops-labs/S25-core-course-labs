@@ -1,0 +1,15 @@
+{
+    "app_name": "Moscow Time App",
+    "display_timezone": "Europe/Moscow",
+    "show_date": true,
+    "refresh_interval": 1000,
+    "app_version": "1.2.0",
+    "debug_mode": false,
+    "log_level": "info",
+    "default_theme": "light",
+    "available_themes": ["light", "dark", "blue"],
+    "api_endpoints": {
+      "time": "/get_time",
+      "visits": "/visits"
+    }
+  }

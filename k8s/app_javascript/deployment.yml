@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-moscow-time
+  labels:
+    app: node-moscow-time
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: node-moscow-time
+  template:
+    metadata:
+      labels:
+        app: node-moscow-time
+    spec:
+      containers:
+      - name: node-moscow-time
+        image: timurzheksimbaev/moscow-time:latest
+        ports:
+        - containerPort: 3001
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "512Mi"
+          requests:
+            cpu: "0.2"
+            memory: "256Mi"
