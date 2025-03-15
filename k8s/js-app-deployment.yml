@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: js-app-cnt
+  labels:
+    app: js-app-cnt
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: js-app-cnt
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container:  js-app-cnt
+      labels:
+        app: js-app-cnt
+    spec:
+      containers:
+      - name: js-app-cnt
+        image: vladis7love/app_js:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          name: js-app-cnt
+      restartPolicy: Always
