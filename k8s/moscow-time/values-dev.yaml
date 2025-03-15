@@ -1,0 +1,16 @@
+image:
+  repository: yoqub/app_python
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 5000
+  targetPort: 5000
+
+containerPort: 5000
+
+replicaCount: 2
+
+secrets:
+  my_secret: "lab13-dev"
