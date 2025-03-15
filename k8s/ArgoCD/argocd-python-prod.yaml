@@ -11,7 +11,7 @@ spec:
     path: k8s/moscow-time
     helm:
       valueFiles:
-        - values.yaml
+        - values-prod.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: default
