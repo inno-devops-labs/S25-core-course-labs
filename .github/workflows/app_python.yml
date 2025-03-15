@@ -1,0 +1,100 @@
+name: Build app_python
+
+on:
+  push:
+    paths:
+    - 'app_python/**'
+    - '.github/workflows/app_python.yaml'
+  pull_request:
+    paths:
+    - 'app_python/**'
+    - '.github/workflows/app_python.yaml'
+
+jobs:
+  lint:
+    timeout-minutes: 2
+    name: Run flake8 formatter
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: py-actions/flake8@v2
+        with:
+          exclude: "ansible/plugins/inventory/yacloud_compute.py"
+
+
+  test:
+    timeout-minutes: 2
+    defaults:
+      run:
+        working-directory: app_python
+    name: Run pytest and lint
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+          cache: 'pip'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Create /data directory
+        run: mkdir -p /data && sudo chmod 777 /data
+
+      - name: Test with pytest
+        run: |
+          cd service
+          PYTHONPATH=. python3 -m pytest tests/
+
+      - name: Run pylint
+        run: |
+          pip install pylint
+          pylint --output-format=colorized $(git ls-files '*.py')
+
+  snyk_check:
+    needs: [lint, test]
+    timeout-minutes: 5
+
+    name: Run SNYK
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python-3.10@master # just 3.10 exists as of now
+        with:
+          args: --skip-unresolved app_python/
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  build_push:
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: app_python
+    needs: [lint, test, snyk_check]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build and push to the dockerhub
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          build-args: |
+            UID=10001
+            GID=10001
+          tags: "${{ secrets.DOCKER_USERNAME }}/app_python:latest"
+          context: "{{defaultContext}}:app_python"
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/app_python:latest
+          cache-to: type=inline
