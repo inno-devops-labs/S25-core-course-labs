@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nodejs-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Dyddxd/S25-core-course-labs.git
+    targetRevision: lab13
+    path: k8s/nodejs-app
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated: {}
