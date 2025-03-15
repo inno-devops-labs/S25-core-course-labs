@@ -1,0 +1,4 @@
+plugin: yacloud_compute
+yacloud_clouds: cloud-dinaraparanidgmailcom
+yacloud_folders: default
+yacloud_token_file: ./inventory/yacloud_token
