@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: kira354/python-app
-  tag: "dev"
+  tag: "latest"
 resources:
   limits:
     cpu: "500m"
