@@ -48,10 +48,18 @@ autoscaling:
 
 volumes: []
 
-volumeMounts: []
+volumeMounts:
+  - name: app-piton-prod-volume
+    mountPath: /app_python/visits.txt
 
 nodeSelector: {}
 
 tolerations: []
 
 affinity: {}
+
+volumeClaimTemplates:
+  name: app-piton-prod-volume
+  storage: 128Mi
+
+podManagementPolicy: Parallel

@@ -40,6 +40,15 @@ ingress:
 
 resources: {}
 
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
 autoscaling:
   enabled: false
   minReplicas: 1
@@ -48,10 +57,18 @@ autoscaling:
 
 volumes: []
 
-volumeMounts: []
+volumeMounts:
+  - name: app-piton-volume
+    mountPath: /app_python/visits.txt
 
 nodeSelector: {}
 
 tolerations: []
 
 affinity: {}
+
+volumeClaimTemplates:
+  name: app-piton-volume
+  storage: 128Mi
+
+podManagementPolicy: Parallel
