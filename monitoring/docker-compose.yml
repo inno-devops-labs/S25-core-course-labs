@@ -54,6 +54,8 @@ services:
     image: denisnesterov/app:latest
     ports:
       - "8000:8000"
+    volumes:
+      - ./visits.txt:/app/visits.txt
     depends_on:
       - loki
       - promtail 

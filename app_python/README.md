@@ -58,3 +58,6 @@ The CI workflow includes the following steps:
 4. **Docker**: Build and push a Docker image to Docker Hub
 
 To see the entire workflow navofate to `.github/workflows/python-app.yml`
+
+## Visits
+There is an endpoint `/visits` in my application to see the visits of the home page. To see the number of visits open `http://localhost:8000/visits`. Number of visits stores in visits.txt file. 
