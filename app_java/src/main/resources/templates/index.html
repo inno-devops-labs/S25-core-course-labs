@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Magnitogorsk Time</title>
+	<link rel="stylesheet" href="/styles.css">
+	<script>
+		function updateClock() {
+			fetch('/time')
+				.then(response => response.text())
+				.then(time => {
+					document.getElementById('clock').textContent = time;
+				});
+		}
+
+		setInterval(updateClock, 1000);
+		updateClock();
+	</script>
+</head>
+<body>
+<h1>Current Magnitogorsk time</h1>
+<div id="clock" th:text="${currentTime}"></div>
+</body>
+</html>

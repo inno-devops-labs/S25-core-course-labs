@@ -1,0 +1,20 @@
+- name: Remove conflicting packages
+  ansible.builtin.apt:
+    name:
+      - docker.io
+      - containerd
+      - containerd.io
+    state: absent
+  become: true
+
+- name: Update and upgrade system packages
+  ansible.builtin.apt:
+    update_cache: yes
+    upgrade: yes
+  become: true
+
+- name: Install Docker
+  ansible.builtin.apt:
+    name: docker.io
+    state: present
+  become: true
