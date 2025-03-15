@@ -1,0 +1,5 @@
+{
+  "app_name": "js-app",
+  "log_level": "warn",
+  "port": 8080
+}

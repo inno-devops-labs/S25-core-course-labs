@@ -1,0 +1,188 @@
+version: "3.8"
+
+networks:
+  monitoring:
+    driver: bridge
+
+volumes:
+  loki_data:
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+    networks:
+      - monitoring
+    ports:
+      - 9090:9090
+    depends_on:
+      loki:
+        condition: service_started
+      js_app:
+        condition: service_started
+      python_app:
+        condition: service_started
+    deploy:
+      resources:
+        limits:
+          memory: 50M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 2
+    healthcheck:
+      test: ["CMD", "pgrep", "prometheus"]
+      start_period: 5s
+      retries: 3
+      timeout: 5s
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - loki_data:/loki
+    networks:
+      - monitoring
+    deploy:
+      resources:
+        limits:
+          memory: 200M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 2
+    healthcheck:
+      test: ["CMD", "pgrep", "loki"]
+      start_period: 5s
+      retries: 3
+      timeout: 5s
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/log:/var/log
+      - ./promtail-config.yml:/etc/promtail/config.yaml
+    command: -config.file=/etc/promtail/config.yaml
+    networks:
+      - monitoring
+    depends_on:
+      loki:
+        condition: service_started
+    deploy:
+      resources:
+        limits:
+          memory: 50M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 2
+    healthcheck:
+      disable: true
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 0
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy 
+          orgId: 0
+          url: http://loki:3100
+          basicAuth: false
+          isDefault: true
+          version: 0
+          editable: false
+        - name: Prometheus
+          type: prometheus
+          basicAuth: false
+          url: http://prometheus:9090
+          version: 0
+          editable: false
+        EOF
+        /run.sh
+    networks:
+      - monitoring
+    depends_on:
+      loki:
+        condition: service_started
+      promtail:
+        condition: service_started
+    deploy:
+      resources:
+        limits:
+          memory: 200M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 2
+    healthcheck:
+      test: ["CMD", "pgrep", "grafana"]
+      start_period: 5s
+      retries: 3
+      timeout: 5s
+
+  python_app:
+    image: vladis7love/app_python:latest
+    ports:
+      - "8081:5000"
+    networks:
+      - monitoring
+    deploy:
+      resources:
+        limits:
+          memory: 50M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 2
+    healthcheck:
+      test: "curl -f http://localhost:5000 || exit 1"
+      retries: 3
+      start_period: 5s
+      timeout: 5s
+    volumes:
+      - ./python_app_visits_data:/app/data
+
+  js_app:
+    image: vladis7love/app_js:latest
+    ports:
+      - "8082:8080"
+    networks:
+      - monitoring
+    deploy:
+      resources:
+        limits:
+          memory: 50M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 2
+    healthcheck:
+      test: "curl -f http://localhost:8080 || exit 1"
+      retries: 3
+      start_period: 5s
+      timeout: 5s
+    volumes:
+      - ./js_app_visits_data:/usr/share/app/data
