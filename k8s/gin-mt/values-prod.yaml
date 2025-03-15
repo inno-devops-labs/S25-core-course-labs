@@ -1,42 +1,45 @@
-replicaCount: 3
-
+replicaCount: 2
 image:
   repository: iucd/gin-mt
-  pullPolicy: IfNotPresent
   tag: latest
-
-serviceAccount:
-  create: true
-  automount: true
-  annotations: {}
-  name: "internal-app"
-
-podAnnotations:
-  vault.hashicorp.com/agent-inject: "true"
-  vault.hashicorp.com/role: "internal-app"
-  vault.hashicorp.com/agent-inject-secret-database-config.txt: 'internal/data/database/config'
+  pullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
   port: 8080
 
+podAnnotations:
+  vault.hashicorp.com/agent-inject: "true"
+  vault.hashicorp.com/role: "internal-app"
+  vault.hashicorp.com/agent-inject-secret-database-config.txt: 'internal/data/database/config'
+  
 ingress:
   enabled: enable
   className: "nginx"
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
   hosts:
-    - host: lab9.bonus
+    - host: prod.lab9.bonus
       paths:
         - path: /gin
           pathType: Prefix
 
 resources:
   requests:
-    cpu: "250m"
-    memory: "128Mi"
-  limits:
     cpu: "500m"
     memory: "256Mi"
+  limits:
+    cpu: "1000m"
+    memory: "512Mi"
 
+serviceAccount:
+  create: true
+  automount: true
+  name: "test-gin-mt-prod"
+
+podAnnotations:
+  vault.hashicorp.com/agent-inject: "true"
+  vault.hashicorp.com/role: "internal-app"
+  vault.hashicorp.com/agent-inject-secret-database-config.txt: 'internal/data/database/config'
+  
 testSecret: testpassword
