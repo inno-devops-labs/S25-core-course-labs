@@ -118,5 +118,5 @@ tolerations: []
 affinity: {}
 
 environment:
-  pyVar1: "pyVar1 prod value"
+  pyVar1: "pyVar1 prod value changed"
   pyVar2: "pyVar2 prod value"
