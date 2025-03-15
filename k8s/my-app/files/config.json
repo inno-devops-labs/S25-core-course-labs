@@ -1,0 +1,7 @@
+{
+    "app_name": "Moscow Time API",
+    "version": "1.0.0",
+    "timezone": "Europe/Moscow",
+    "log_level": "info"
+}
+
