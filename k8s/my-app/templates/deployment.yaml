@@ -53,8 +53,8 @@ spec:
             - name: MY_PASS
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.secrets.myAppSecret.name }}
-                  key: {{ .Values.secrets.myAppSecret.password }}
+                  name: vault-secret
+                  key: MY_PASS
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
