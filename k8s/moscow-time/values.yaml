@@ -14,9 +14,8 @@ image:
   tag: "v1"
 
 # Secret values for the application
-secrets:
-  dbUsername: "moscow-admin"
-  dbPassword: "strongpassword123"
+dbUsername: "moscow-admin"
+dbPassword: "strongpassword123"
 
 # Vault configuration
 vaultEnabled: true
@@ -28,7 +27,41 @@ vaultAgent:
 persistence:
   enabled: true
   accessMode: ReadWriteOnce
-  size: 1Gi
+  storageClassName: "standard"
+  size: "1Gi"
+
+# StatefulSet configuration
+parallelPodManagement: true
+
+# Update strategy configuration
+updateStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    partition: 0
+
+# Probes configuration
+probes:
+  enabled: true
+  livenessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  readinessProbe:
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+# ConfigMap configuration
+configMap:
+  enabled: false
+  mountPath: "/config"
+
+# Secrets configuration
+secrets:
+  enabled: false
+  mountPath: "/secrets"
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -107,17 +140,6 @@ resources:
     cpu: 200m
     memory: 256Mi
 
-# This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-# Commenting out probes as they might need adjustment for the time endpoint
-livenessProbe:
-  httpGet:
-    path: /time
-    port: http
-readinessProbe:
-  httpGet:
-    path: /time
-    port: http
-
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
   enabled: false
@@ -144,3 +166,8 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# Environment variables
+env:
+  - name: APP_MODE
+    value: "production"
