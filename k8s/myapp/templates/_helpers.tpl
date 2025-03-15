@@ -7,8 +7,8 @@ Expand the name of the chart.
 
 {{/*
 Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-If release name contains chart name it will be used as a full name.
+Truncate at 63 chars because Kubernetes name fields follow the DNS naming spec.
+If the release name contains the chart name, it will be used as a full name.
 */}}
 {{- define "myapp.fullname" -}}
 {{- if .Values.fullnameOverride }}
@@ -24,14 +24,14 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
-Create chart name and version as used by the chart label.
+Create chart name and version for the chart label.
 */}}
 {{- define "myapp.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
-Common labels
+Common labels for app resources.
 */}}
 {{- define "myapp.labels" -}}
 helm.sh/chart: {{ include "myapp.chart" . }}
@@ -43,7 +43,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
-Selector labels
+Selector labels for deployments and services.
 */}}
 {{- define "myapp.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "myapp.name" . }}
@@ -51,22 +51,12 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+Create the name of the service account to use.
 */}}
 {{- define "myapp.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
 {{- default (include "myapp.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
-
-{{/*
-Generate environment variables dynamically from values.yaml
-*/}}
-{{- define "myapp.envVars" -}}
-{{- range .Values.env }}
-- name: {{ .name }}
-  value: "{{ .value }}"
 {{- end }}
 {{- end }}
