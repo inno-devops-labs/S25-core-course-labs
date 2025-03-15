@@ -114,9 +114,11 @@ volumes:
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-  - name: config-volume
-    mountPath: /config.json
-    subPath: config.json
+  - name: app-go-data
+    mountPath: /app/visits
+  # - name: config-volume
+  #   mountPath: /config.json
+  #   subPath: config.json
 
 nodeSelector: {}
 
@@ -128,3 +130,9 @@ environment:
   spongebobAddress: "124 Conch Street"
   patrickAddress: "120 Conch Street"
   squidwardAddress: "122 Conch Street"
+
+podManagementPolicy: Parallel
+
+persistence:
+  name: app-go-data
+  size: 1Gi

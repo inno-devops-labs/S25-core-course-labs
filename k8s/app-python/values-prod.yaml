@@ -89,14 +89,14 @@ resources:
     memory: 128Mi
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-# livenessProbe:
-#   httpGet:
-#     path: /
-#     port: http
-# readinessProbe:
-#   httpGet:
-#     path: /
-#     port: http
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
@@ -113,7 +113,9 @@ volumes: []
   #     name: app-python-config
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: {}
+volumeMounts:
+  - name: app-python-data
+    mountPath: /app/visits
   # - name: config-volume
   #   mountPath: /config.json
   #   subPath: config.json
@@ -128,3 +130,9 @@ environment:
   spongebobAddress: "200 Prod Avenue"
   patrickAddress: "300 Prod Street"
   squidwardAddress: "400 Prod Blvd"
+
+podManagementPolicy: Parallel
+
+persistence:
+  name: app-python-data
+  size: 1Gi
