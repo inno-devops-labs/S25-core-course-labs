@@ -14,7 +14,7 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
   hosts:
-    - host: dev.lab9.bonus
+    - host: prod.lab9.bonus
       paths:
         - path: /fastapi
           pathType: Prefix
