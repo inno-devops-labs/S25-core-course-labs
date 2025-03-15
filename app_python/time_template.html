@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Time</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f9;
+        }
+
+        .time-container {
+            text-align: center;
+        }
+
+        .time-container h1 {
+            margin: 0;
+            font-size: 5rem;
+            color: #db1919;
+        }
+
+        .time-container p {
+            margin-top: 10px;
+            font-size: 3rem;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="time-container">
+        <h1>Current Time in Moscow</h1>
+        <p>{{ current_time }}</p>
+    </div>
+</body>
+</html>
