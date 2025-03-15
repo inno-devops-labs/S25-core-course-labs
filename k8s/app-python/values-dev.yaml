@@ -1,6 +1,8 @@
 replicaCount: 1
 image:
-  tag: "dev-latest"
+  repository: wellnotwell/lab2
+  pullPolicy: IfNotPresent
+  tag: "latest"
 resources:
   limits:
     cpu: "500m"
