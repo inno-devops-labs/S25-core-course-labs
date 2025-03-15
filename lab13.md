@@ -91,7 +91,7 @@ In this lab, you will implement ArgoCD to automate Kubernetes application deploy
      spec:
        project: default
        source:
-         repoURL: https://github.com/<your-repo>/S25-core-course-labs.git
+         repoURL: https://github.com/Processor228/S25-core-course-labs.git
          targetRevision: lab13
          path: <k8s/app-python>
          helm:
