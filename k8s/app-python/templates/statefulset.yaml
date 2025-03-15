@@ -1,16 +1,22 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: {{ include "app-go.fullname" . }}
+  name: {{ include "app-python.fullname" . }}
   labels:
-    {{- include "app-go.labels" . | nindent 4 }}
+    {{- include "app-python.labels" . | nindent 4 }}
 spec:
+  serviceName: app-python
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 1
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
+  podManagementPolicy: "Parallel"
   {{- end }}
   selector:
     matchLabels:
-      {{- include "app-go.selectorLabels" . | nindent 6 }}
+      {{- include "app-python.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +24,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "app-go.labels" . | nindent 8 }}
+        {{- include "app-python.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -27,7 +33,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "app-go.serviceAccountName" . }}
+      serviceAccountName: {{ include "app-python.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -41,10 +47,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-          {{- include "app-go.env" . | nindent 10 }}
-          envFrom:
-          - configMapRef:
-              name: app-go-config
+          {{- include "app-python.env" . | nindent 10 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
@@ -81,3 +84,6 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
+  volumeClaimTemplates:
+    {{- toYaml .Values.volumeClaimTemplates | nindent 4 }}
