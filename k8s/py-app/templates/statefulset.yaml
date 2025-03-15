@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "py-app.fullname" . }}
   labels:
@@ -27,7 +27,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: internal-app 
+      serviceAccountName: internal-app
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -66,3 +66,14 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  serviceName: "py-app-devops-l14"
+  podManagementPolicy: Parallel
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Values.volumeClaims.name }}
+      spec:
+        storageClassName: "my-storage-class"
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: "100Mi"

@@ -5,6 +5,7 @@ image:
   pullPolicy: IfNotPresent
   tag: "release"
 
+serviceName: "py-app-devops-lab14"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -62,7 +63,8 @@ autoscaling:
 
 volumes: []
 volumeMounts: []
-
+volumeClaims:
+  name: py-app-pvc
 nodeSelector: {}
 
 tolerations: []
