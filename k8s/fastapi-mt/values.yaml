@@ -29,15 +29,14 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: "test-fastapi-mt"
+  name: "internal-app"
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 podAnnotations:
   vault.hashicorp.com/agent-inject: "true"
-  vault.hashicorp.com/role: "test-fastapi-mt"
-  vault.hashicorp.com/agent-inject-secret-PASS: "internal/test/config"
-  vault.hashicorp.com/secret-volume-path: "/vault/secrets"
+  vault.hashicorp.com/role: "internal-app"
+  vault.hashicorp.com/agent-inject-secret-database-config.txt: 'internal/data/database/config'
 # This is for setting Kubernetes Labels to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
@@ -62,7 +61,7 @@ service:
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
-  enabled: disable
+  enabled: enable
   className: "nginx"
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /

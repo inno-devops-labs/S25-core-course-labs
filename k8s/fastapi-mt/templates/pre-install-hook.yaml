@@ -11,6 +11,6 @@ spec:
       containers:
         - name: pre-install-hook
           image: busybox
-          command: ["sh", "-c", "echo Pre-Install Hook && sleep 20"]
+          command: ["sh", "-c", "echo Pre-Install Hook && sleep 10"]
       restartPolicy: Never
       terminationGracePeriodSeconds: 5
