@@ -1,0 +1,45 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: containers
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: container_logs
+          __path__: /var/lib/docker/containers/*/*log
+    pipeline_stages:
+      - json:
+          expressions:
+            log: log
+            stream: stream
+            time: time
+            tag: attrs.tag
+            compose_project: attrs."com.docker.compose.project"
+            compose_service: attrs."com.docker.compose.service"
+      - regex:
+          expression: "^/var/lib/docker/containers/(?P<container_id>.{12}).+/.+-json.log$"
+          source: filename
+      - timestamp:
+          format: RFC3339Nano
+          source: time
+      - labels:
+          stream:
+          container_id:
+          tag:
+          # docker compose
+          compose_project:
+          compose_service:
+      - labeldrop:
+          - filename
+          - __path__
+      - output:
+          source: log 

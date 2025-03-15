@@ -1,0 +1,12 @@
+services:
+  app:
+    image: "{{ docker_image }}"
+    ports:
+      - "{{ app_bind_port }}:{{ app_port }}"
+    restart: unless-stopped 
+    {% if app_environment %}
+    environment:
+      {% for key, value in app_environment.items() %}
+      {{ key }}: "{{ value }}"
+      {% endfor %}
+    {% endif %}
