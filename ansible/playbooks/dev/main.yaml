@@ -1,0 +1,8 @@
+- name: Deploy Docker on regcloud and web_app
+  hosts: reg_instance_1
+  vars_files: 
+    - vars/main.yml
+  become: true
+  roles:
+    - docker
+    - web_app
