@@ -1,0 +1,3 @@
+docker_image: "nai1ka/time-service:latest"
+app_port: 8080
+web_app_full_wipe: false
