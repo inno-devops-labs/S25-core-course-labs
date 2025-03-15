@@ -21,7 +21,7 @@ services:
     restart: always
     image: mihdenis85/app_python:latest
     ports:
-      - "8080:8080"
+      - "8081:8081"
     user: "10001:10001"
     networks:
       - loki
@@ -30,7 +30,7 @@ services:
     volumes:
       - ./app-python-data:/app_python/app/data
     healthcheck:
-      test: ["CMD-SHELL", "curl --fail http://localhost:8080 || exit 1"]
+      test: ["CMD-SHELL", "curl --fail http://localhost:8081 || exit 1"]
       interval: 10s
       timeout: 3s
       retries: 5

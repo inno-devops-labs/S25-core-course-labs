@@ -6,7 +6,7 @@ from prometheus_flask_exporter import PrometheusMetrics
 from flask import Flask, render_template
 
 HOST = os.environ.get("HOST", "0.0.0.0")
-PORT = int(os.environ.get("PORT", "8080"))
+PORT = int(os.environ.get("PORT", "8081"))
 VISITS_FILE = os.environ.get("VISITS_FILE", "app/data/visits.txt")
 
 

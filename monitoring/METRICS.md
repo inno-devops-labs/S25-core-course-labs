@@ -50,7 +50,7 @@ Every service is health-checked using the following pattern:
 
 ```yaml
 healthcheck:
-      test: ["CMD-SHELL", "curl --fail http://localhost:8080 || exit 1"]
+      test: ["CMD-SHELL", "curl --fail http://localhost:8081 || exit 1"]
       interval: 10s
       timeout: 3s
       retries: 3

@@ -14,7 +14,7 @@ Objective: Understand and implement an IPFS gateway using Docker, upload a file,
 
      ```sh
      docker pull ipfs/go-ipfs
-     docker run -d --name ipfs_host -v /path/to/folder/with/file:/export -v ipfs_data:/data/ipfs -p 8080:8080 -p 4001:4001 -p 5001:5001 ipfs/go-ipfs
+     docker run -d --name ipfs_host -v /path/to/folder/with/file:/export -v ipfs_data:/data/ipfs -p 8081:8081 -p 4001:4001 -p 5001:5001 ipfs/go-ipfs
      ```
 
    - Verify the IPFS container is running:

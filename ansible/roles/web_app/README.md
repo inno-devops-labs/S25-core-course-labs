@@ -11,7 +11,7 @@ Ansible role that installs simple dockerized web apps.
 | web_app_image          | Represents the complete image name, constructed from the registry, username, and application name                | "{{ docker_registry }}/{{ docker_username }}/{{ web_app_name }}"    |
 | web_app_image_tag      | Specifies the tag of the web application image                                                                   | "latest"                                                         |
 | web_app_internal_port  | The port on which the web application runs inside the container                                                  | 80                                                               |
-| web_app_external_port  | The port through which the web application is accessible from outside the container                              | 8080                                                             |
+| web_app_external_port  | The port through which the web application is accessible from outside the container                              | 8081                                                             |
 
 ## Requirements for hosts
 - Ubuntu 22.04 Jammy;
@@ -27,7 +27,7 @@ Ansible role that installs simple dockerized web apps.
     - web_app
   vars:
     web_app_name: my_web_app
-    web_app_internal_port: 8080
-    web_app_external_port: 8080
+    web_app_internal_port: 8081
+    web_app_external_port: 8081
     web_app_full_wipe: true
 ```

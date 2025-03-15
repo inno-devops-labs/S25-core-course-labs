@@ -13,11 +13,11 @@ variable "python_docker_image" {
 variable "python_internal_port" {
   description = "Internal port"
   type        = number
-  default     = 8080
+  default     = 8081
 }
 
 variable "python_external_port" {
   description = "External port"
   type        = number
-  default     = 8080
+  default     = 8081
 }

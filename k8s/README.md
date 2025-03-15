@@ -27,7 +27,7 @@ Create a deployment and expose:
 PS C:\Users\mixbe\PycharmProjects\S25-core-course-labs> kubectl create deployment app-python --image=mihdenis85/app_python
 deployment.apps/app-python created
 
-PS C:\Users\mixbe\PycharmProjects\S25-core-course-labs> kubectl expose deployment app-python --type=LoadBalancer --port=8080
+PS C:\Users\mixbe\PycharmProjects\S25-core-course-labs> kubectl expose deployment app-python --type=LoadBalancer --port=8081
 service/app-python exposed
 ```
 
@@ -45,14 +45,14 @@ NAME                              READY   STATUS    RESTARTS   AGE
 pod/app-python-7767888484-gj8bz   1/1     Running   0          95s
 
 NAME                 TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-service/app-python   LoadBalancer   10.100.42.225   127.0.0.1     8080:32073/TCP   82s
+service/app-python   LoadBalancer   10.100.42.225   127.0.0.1     8081:32073/TCP   82s
 service/kubernetes   ClusterIP      10.96.0.1       <none>        443/TCP          20m
 ```
 
 Check availability:
 
 ```shell
-PS C:\Users\mixbe\PycharmProjects\S25-core-course-labs> curl 127.0.0.1:8080
+PS C:\Users\mixbe\PycharmProjects\S25-core-course-labs> curl 127.0.0.1:8081
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,7 +86,7 @@ deployment.apps/app-python created
 service/app-python created
 PS C:\Users\mixbe\PycharmProjects\S25-core-course-labs\k8s> kubectl get svc,pods
 NAME                 TYPE           CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
-service/app-python   LoadBalancer   10.100.4.39   127.0.0.1     8080:31186/TCP   13s
+service/app-python   LoadBalancer   10.100.4.39   127.0.0.1     8081:31186/TCP   13s
 service/kubernetes   ClusterIP      10.96.0.1     <none>        443/TCP          23m
 
 NAME                              READY   STATUS    RESTARTS   AGE
@@ -100,7 +100,7 @@ PS C:\Users\mixbe\PycharmProjects\S25-core-course-labs\k8s> minikube service --a
 |-----------|------------|-------------|---------------------------|
 | NAMESPACE |    NAME    | TARGET PORT |            URL            |
 |-----------|------------|-------------|---------------------------|
-| default   | app-python |        8080 | http://192.168.49.2:31186 |
+| default   | app-python |        8081 | http://192.168.49.2:31186 |
 |-----------|------------|-------------|---------------------------|
 |-----------|------------|-------------|--------------|
 | NAMESPACE |    NAME    | TARGET PORT |     URL      |

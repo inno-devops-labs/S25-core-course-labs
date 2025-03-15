@@ -159,11 +159,11 @@ terraform-vm               : ok=17   changed=6    unreachable=0    failed=0    s
 ```bash
 ubuntu@epdbkrfvkblikpr8veg4:~$ sudo docker ps
 CONTAINER ID   IMAGE                       COMMAND                  CREATED              STATUS              PORTS                                       NAMES
-d3ef60a8bbcf   mihdenis85/app_python:latest   "sh -c 'python3 -m g…"   About a minute ago   Up About a minute   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp   app_python-web-1
+d3ef60a8bbcf   mihdenis85/app_python:latest   "sh -c 'python3 -m g…"   About a minute ago   Up About a minute   0.0.0.0:8081->8081/tcp, :::8081->8081/tcp   app_python-web-1
 ```
 ## `curl localhost:port` on remote host
 ```bash
-ubuntu@epdbkrfvkblikpr8veg4:~$ curl localhost:8080
+ubuntu@epdbkrfvkblikpr8veg4:~$ curl localhost:8081
 <!DOCTYPE html>
 <html>
 <head>

@@ -17,6 +17,6 @@ RUN mkdir -p ./app/data/
 RUN chown -R user:user ./app
 
 USER user
-EXPOSE 8080
+EXPOSE 8081
 
-CMD ["sh", "-c", "python3 -m gunicorn --bind 0.0.0.0:8080 app.app:app"]
+CMD ["sh", "-c", "python3 -m gunicorn --bind 0.0.0.0:8081 app.app:app"]

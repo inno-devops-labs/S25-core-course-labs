@@ -48,7 +48,7 @@ securityContext: {}
 
 service:
   type: NodePort
-  port: 8080
+  port: 8081
 
 ingress:
   enabled: false
@@ -90,15 +90,15 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-volumes:
-- name: app-python-config-volume
-  configMap:
-    name: app-python-config
+volumes: []
+#- name: app-python-config-volume
+#  configMap:
+#    name: app-python-config
 
-volumeMounts:
-- name: app-python-config-volume
-  mountPath: "/app/data/config.json"
-  subPath: "config.json"
+volumeMounts: {}
+#- name: app-python-config-volume
+#  mountPath: "/app/data/config.json"
+#  subPath: "config.json"
 
 nodeSelector: {}
 

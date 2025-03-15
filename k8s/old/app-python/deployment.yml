@@ -17,5 +17,5 @@ spec:
         - name: app-python
           image: mihdenis85/app_python:latest
           ports:
-            - containerPort: 8080
+            - containerPort: 8081
   replicas: 3

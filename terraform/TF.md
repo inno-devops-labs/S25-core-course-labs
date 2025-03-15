@@ -28,7 +28,7 @@ resource "docker_container" "custom_container_python" {
     command                                     = [
         "sh",
         "-c",
-        "python3 -m gunicorn --bind 0.0.0.0:8080 app.app:wsgi_app",
+        "python3 -m gunicorn --bind 0.0.0.0:8081 app.app:wsgi_app",
     ]
     container_read_refresh_timeout_milliseconds = 15000
     cpu_set                                     = null
@@ -83,8 +83,8 @@ resource "docker_container" "custom_container_python" {
     working_dir                                 = "/app_python"
 
     ports {
-        external = 8080
-        internal = 8080
+        external = 8081
+        internal = 8081
         ip       = "0.0.0.0"
         protocol = "tcp"
     }
@@ -139,8 +139,8 @@ Terraform will perform the following actions:
       + labels (known after apply)
 
       + ports {
-          + external = 8080
-          + internal = 8080
+          + external = 8081
+          + internal = 8081
           + ip       = "0.0.0.0"
           + protocol = "tcp"
         }
@@ -153,8 +153,8 @@ Plan: 1 to add, 0 to change, 0 to destroy.
   + python_container_name  = "app_python"
   + python_container_port  = [
       + {
-          + external = 8080
-          + internal = 8080
+          + external = 8081
+          + internal = 8081
           + ip       = "0.0.0.0"
           + protocol = "tcp"
         },
@@ -179,8 +179,8 @@ python_container_image = "mihdenis85/app_python"
 python_container_name = "app_python"
 python_container_port = tolist([
   {
-    "external" = 8080
-    "internal" = 8080
+    "external" = 8081
+    "internal" = 8081
     "ip" = "0.0.0.0"
     "protocol" = "tcp"
   },
@@ -195,8 +195,8 @@ python_container_image = "mihdenis85/app_python"
 python_container_name = "app_python"
 python_container_port = tolist([
   {
-    "external" = 8080
-    "internal" = 8080
+    "external" = 8081
+    "internal" = 8081
     "ip" = "0.0.0.0"
     "protocol" = "tcp"
   },

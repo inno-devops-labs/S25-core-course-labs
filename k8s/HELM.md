@@ -21,7 +21,7 @@ NAME                              READY   STATUS    RESTARTS   AGE
 pod/app-python-7478f4d6d4-kp2zx   1/1     Running   0          32s
 
 NAME                 TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
-service/app-python   NodePort    10.99.252.0   <none>        8080:31864/TCP   32s
+service/app-python   NodePort    10.99.252.0   <none>        8081:31864/TCP   32s
 service/kubernetes   ClusterIP   10.96.0.1     <none>        443/TCP          23h
 ```
 
@@ -32,7 +32,7 @@ PS C:\Users\mixbe\PycharmProjects\S25-core-course-labs\k8s> minikube service --a
 |-----------|------------|-------------|---------------------------|
 | NAMESPACE |    NAME    | TARGET PORT |            URL            |
 |-----------|------------|-------------|---------------------------|
-| default   | app-python | http/8080   | http://192.168.49.2:31864 |
+| default   | app-python | http/8081   | http://192.168.49.2:31864 |
 |-----------|------------|-------------|---------------------------|
 |-----------|------------|-------------|--------------|
 | NAMESPACE |    NAME    | TARGET PORT |     URL      |
@@ -139,7 +139,7 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['helm-hooks-app-python:8080']
+      args: ['helm-hooks-app-python:8081']
   restartPolicy: Never
 MANIFEST:
 ---
@@ -170,7 +170,7 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 8080
+    - port: 8081
       targetPort: http
       protocol: TCP
       name: http
@@ -215,7 +215,7 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: 8081
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -386,6 +386,6 @@ NAME                                        READY   STATUS    RESTARTS   AGE
 pod/helm-hooks-app-python-xnn558685-86adk   1/1     Running   0          38s
 
 NAME                            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-service/helm-hooks-app-python   NodePort    10.105.189.219   <none>        8080:32389/TCP   38s
+service/helm-hooks-app-python   NodePort    10.105.189.219   <none>        8081:32389/TCP   38s
 service/kubernetes              ClusterIP   10.96.0.1        <none>        443/TCP          23h
 ```

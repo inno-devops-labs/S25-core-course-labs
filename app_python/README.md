@@ -27,9 +27,9 @@ pip install -r requirements.txt
 - Run the application (via `gunicorn`) and test:
 
 ```bash
-python -m gunicorn --bind 0.0.0.0:8080 app:app
-curl localhost:8080
-curl localhost:8080/visits
+python -m gunicorn --bind 0.0.0.0:8081 app:app
+curl localhost:8081
+curl localhost:8081/visits
 ```
 
 ## Docker
@@ -50,7 +50,7 @@ Instead of docker username, use your own one.
 
 ```bash
 docker pull mihdenis85/app_python:latest
-docker run -p 8080:8080 mihdenis85/app_python:latest
+docker run -p 8081:8081 mihdenis85/app_python:latest
 ```
 
 ## Unit Tests
