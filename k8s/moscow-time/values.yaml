@@ -128,6 +128,9 @@ autoscaling:
 #   mountPath: "/etc/foo"
 #   readOnly: true
 
+secrets:
+  my_secret: "lab13"
+
 nodeSelector: {}
 
 tolerations: []
