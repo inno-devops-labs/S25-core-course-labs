@@ -115,6 +115,8 @@ volumeMounts:
     mountPath: "/config.json"
     subPath: "config.json"
     readOnly: true
+  - name: app-go-data
+    mountPath: /data
 
 nodeSelector: {}
 
@@ -126,3 +128,9 @@ environment:
   debug: false
   author: milana
   course: devops
+
+podManagementPolicy: Parallel
+
+memory:
+  size: 1Gi
+  name: app-go-data

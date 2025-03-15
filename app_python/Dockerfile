@@ -12,6 +12,8 @@ COPY visits/ visits/
 # Copy the application
 COPY app.py .
 
+RUN apt update && apt install -y dnsutils
+
 # Create user
 RUN addgroup --system user && \
     adduser --system --ingroup user user && \

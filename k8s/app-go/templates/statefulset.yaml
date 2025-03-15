@@ -1,14 +1,29 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "app-go.fullname" . }}
   labels:
     {{- include "app-go.labels" . | nindent 4 }}
     {{- include "library.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ include "app-go.fullname" . }}
+  podManagementPolicy: {{ .Values.podManagementPolicy }}
+  spec:
+    updateStrategy:
+      type: RollingUpdate
+      rollingUpdate:
+        partition: 1
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Values.memory.name }}
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: {{ .Values.memory.size }}
   selector:
     matchLabels:
       {{- include "app-go.selectorLabels" . | nindent 6 }}
