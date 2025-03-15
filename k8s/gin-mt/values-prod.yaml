@@ -41,5 +41,11 @@ podAnnotations:
   vault.hashicorp.com/agent-inject: "true"
   vault.hashicorp.com/role: "internal-app"
   vault.hashicorp.com/agent-inject-secret-database-config.txt: 'internal/data/database/config'
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
   
 testSecret: testpassword
