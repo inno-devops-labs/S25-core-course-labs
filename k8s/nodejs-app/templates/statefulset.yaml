@@ -1,16 +1,29 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: {{ include "python-app.fullname" . }}
+  name: {{ include "nodejs-app.fullname" . }}
   labels:
-    {{- include "python-app.labels" . | nindent 4 }}
+    {{- include "nodejs-app.labels" . | nindent 4 }}
 spec:
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 1
+  serviceName: {{ include "nodejs-app.fullname" . }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "python-app.selectorLabels" . | nindent 6 }}
+      {{- include "nodejs-app.selectorLabels" . | nindent 6 }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Values.volumeClaimTemplate.name | default "data" }}
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: {{ .Values.volumeClaimTemplate.requestStorage}}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +31,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "python-app.labels" . | nindent 8 }}
+        {{- include "nodejs-app.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -27,7 +40,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "python-app.serviceAccountName" . }}
+      serviceAccountName: {{ include "nodejs-app.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -40,7 +53,9 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-
+          envFrom:
+            - configMapRef:
+                name: nodejs-app-config
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

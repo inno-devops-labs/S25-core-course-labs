@@ -118,12 +118,18 @@ autoscaling:
 volumes: {}
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: {}
+volumeMounts:
+  - name: python-app-pvc
+    mountPath: /data
 
 nodeSelector: {}
+
+volumeClaimTemplate:
+  name: "python-app-pvc"
+  requestStorage: "100Mi"
 
 tolerations: []
 
 affinity: {}
 
-
+podManagementPolicy: Parallel

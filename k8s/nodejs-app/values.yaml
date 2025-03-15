@@ -120,8 +120,14 @@ volumeMounts:
     mountPath: "/data/config.json"
     subPath: "config.json"
     readOnly: true
+  - name: nodejs-app-pvc
+    mountPath: /data
 
 nodeSelector: {}
+
+volumeClaimTemplate:
+  name: "nodejs-app-pvc"
+  requestStorage: "100Mi"
 
 tolerations: []
 
@@ -132,3 +138,5 @@ env:
 
 config:
   path: "files/config.json"
+
+podManagementPolicy: Parallel
