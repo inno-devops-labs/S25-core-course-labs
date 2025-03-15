@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nginx-statefulset
+spec:
+  selector:
+    matchLabels:
+      name: nginx-statefulset
+  servicename: nginx-statefulset
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: nginx-statefulset
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: nginx-statefulset
+        image: nginx
+        imagePullPolicy: Always
