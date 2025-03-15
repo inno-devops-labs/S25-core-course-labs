@@ -86,3 +86,9 @@ spec:
       {{- end }}
   volumeClaimTemplates:
     {{- toYaml .Values.volumeClaimTemplates | nindent 4 }}
+  updateStrategy:
+    type: {{ .Values.statefulset.updateStrategy }}
+    {{- if eq .Values.statefulset.updateStrategy "RollingUpdate" }}
+    rollingUpdate:
+      partition: {{ .Values.statefulset.rollingUpdatePartition }}
+    {{- end }}

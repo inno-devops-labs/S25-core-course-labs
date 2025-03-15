@@ -139,3 +139,7 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+statefulset:
+  updateStrategy: RollingUpdate
+  rollingUpdatePartition: 2
