@@ -1,0 +1,18 @@
+- name: Create app directory
+  file:
+    path: "/home/{ app_name }}"
+    state: directory
+
+- name: Copy Docker Compose template
+  template:
+    src: "docker-compose.yml.j2"
+    dest: "/home/{{ app_name }}/docker-compose.yml"
+
+- name: Start application using Docker Compose
+  command:
+    cmd: "docker-compose -f /home/{ app_name }}/docker-compose.yml up -d"
+    chdir: "/home/{{ app_name }}"
+
+- name: Wipe Docker environment
+  include_tasks: 0-wipe.yml
+  tags: wipe
