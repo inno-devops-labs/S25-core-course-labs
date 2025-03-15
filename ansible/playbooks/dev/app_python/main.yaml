@@ -1,6 +1,6 @@
 ---
 - name: Ansible and Docker Deployment
-  hosts: aws
+  hosts: aws_ec2
   become: true
   roles:
-    - roles/docker
+    - roles/web_app
