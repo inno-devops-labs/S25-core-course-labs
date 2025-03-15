@@ -1,0 +1,10 @@
+galaxy_info:
+  author: Ismagil Iskakov
+  description: deploying docker web_app
+  license: MIT
+
+  min_ansible_version: 2.9
+
+dependencies:   
+- role: docker
+  tags: docker
