@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/creepydanunity/S25-core-course-labs.git
     targetRevision: lab13
-    path: <k8s/fastapi-mt>
+    path: k8s/fastapi-mt
     helm:
       valueFiles:
         - values.yaml
