@@ -1,0 +1,28 @@
+replicaCount: 3
+
+image:
+  repository: doryshibkova03/myapp
+  tag: "latest"
+
+serviceAccount:
+  create: true
+
+ingress:
+  enabled: true
+  className: ""
+  annotations: {}
+  hosts:
+    - host: "myapp.com"
+      paths:
+        - path: "/"
+          pathType: Prefix
+  tls:
+    - secretName: myapp-tls
+      hosts:
+        - "myapp.com"
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 60
