@@ -1,0 +1,41 @@
+replicaCount: 1
+
+image:
+  repository: timurzheksimbaev/python-moscow-time
+  tag: latest
+  pullPolicy: Always
+
+nameOverride: "python-app"
+fullnameOverride: "python-app-dev"
+
+service:
+  type: NodePort
+  port: 3000
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+env:
+  - name: FLASK_ENV
+    value: development
+  - name: APP_VERSION
+    value: dev
+
+livenessProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  httpGet:
+    path: /
+    port: 3000
+
+readinessProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  httpGet:
+    path: /
+    port: 3000
