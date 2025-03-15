@@ -1,0 +1,10 @@
+replicaCount: 2
+image:
+  repository: nikachek/moscow-time-api
+  tag: latest
+service:
+  type: NodePort
+  port: 8000
+  targetPort: 8000
+env: "prod"
+
