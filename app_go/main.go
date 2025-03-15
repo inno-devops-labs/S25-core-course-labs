@@ -22,7 +22,7 @@ var rng = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 var logger *log.Logger
 
-const guessesFile = "/app_data/guesses.txt"
+const guessesFile = "/data/guesses.txt"
 
 func main() {
 	logFile, err := os.OpenFile("/var/log/app_logs/go_app.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)

@@ -8,8 +8,7 @@ image:
 serviceAccount:
   create: true
   automount: true
-  annotations: {}
-  name: "internal-app"
+  name: "internal-app-gin"
 
 podAnnotations:
   vault.hashicorp.com/agent-inject: "true"
@@ -44,3 +43,11 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
+
+volumeMounts:
+  - name: gin-mt-storage
+    mountPath: /data
+
+storage:
+  size: 5Gi
+  class: standard

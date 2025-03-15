@@ -53,5 +53,11 @@ volumeMounts:
   - name: config-volume
     mountPath: /config.json
     subPath: config.json
+  - name: fastapi-mt-storage
+    mountPath: /data
 
 testSecret: testpassword
+
+storage:
+  size: 5Gi
+  class: standard

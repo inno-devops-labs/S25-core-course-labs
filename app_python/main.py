@@ -10,7 +10,7 @@ import pytz
 import logging
 
 
-VISITS_FILE = "/app_data/visits.txt"
+VISITS_FILE = "/data/visits.txt"
 
 log_formatter = logging.Formatter(json.dumps({
     "level": "%(levelname)s",
