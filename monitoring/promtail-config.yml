@@ -1,0 +1,52 @@
+server:
+  http_listen_port: 9080
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+    headers:
+      X-Scope-OrgID: "1"
+    batchwait: 1s
+    batchsize: 1048576
+    backoff_config:
+      min_period: 500ms
+      max_period: 5s
+      max_retries: 10
+    timeout: 10s
+
+scrape_configs:
+  - job_name: "docker-logs"
+    docker_sd_configs:
+      - host: "unix:///var/run/docker.sock"
+        refresh_interval: 5s
+    relabel_configs:
+      - source_labels: ["__meta_docker_container_name"]
+        target_label: "container"
+      - source_labels: ["__meta_docker_image"]
+        target_label: "image"
+      - source_labels: ["__meta_docker_network_mode"]
+        target_label: "network"
+
+  - job_name: "bakinasa-logs"
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: "moscow-time-app"
+          container: "/moscow-time-app"
+          service_name: "/moscow-time-app"
+          __path__: "/logs/app.log"
+
+    pipeline_stages:
+      - regex:
+          expression: '^(?P<time>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}) - (?P<level>\w+) - (?P<message>.*)$'
+      - timestamp:
+          source: time
+          format: "2006-01-02 15:04:05,000"
+          action: replace
+      - labels:
+          level:
+      - output:
+          source: message
