@@ -1,0 +1,7 @@
+replicaCount: 1
+image:
+  tag: "dev-latest"
+resources:
+  limits:
+    cpu: "500m"
+    memory: "256Mi"
