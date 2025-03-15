@@ -44,11 +44,6 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: credentials
-                  key: PASSWORD
             {{- include "app-python.env" . | nindent 12 }}
           envFrom:
             - configMapRef:
