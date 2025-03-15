@@ -1,0 +1,27 @@
+# Version control
+.git
+.gitignore
+.github
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+
+# Testing
+tests/
+.coverage
+.pytest_cache
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
