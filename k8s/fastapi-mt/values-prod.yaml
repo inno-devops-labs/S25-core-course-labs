@@ -29,6 +29,8 @@ resources:
     memory: "512Mi"
 
 serviceAccount:
+  create: true
+  automount: true
   name: "test-fastapi-mt-prod"
 
 podAnnotations:
