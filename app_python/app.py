@@ -14,7 +14,7 @@ m_requests = Counter("http_requests_total", "Total HTTP Requests")
 # Define the MSK timezone (UTC+3)
 MSK_TIMEZONE = timezone(timedelta(hours=3))
 
-VISITS_FILE = "/app/data/visits"
+VISITS_FILE = "/tmp/visits"
 
 
 def get_visits():
