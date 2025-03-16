@@ -4,6 +4,8 @@ FROM python:3.12-slim
 # Working directory in the container
 WORKDIR /app_python
 
+RUN apt update && apt install -y dnsutils
+
 # Non-root user
 RUN useradd -m python_user && \
     mkdir -p /app_python/data && \

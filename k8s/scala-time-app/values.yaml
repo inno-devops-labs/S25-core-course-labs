@@ -9,7 +9,7 @@ replicaCount: 1
 image:
   repository: bugay/scala-msk-time-app
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "1.0"
 
@@ -104,16 +104,18 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes:
-- name: config-volume
-  configMap:
-    name: app-scala-configmap
+volumes: []
+# - name: config-volume
+#   configMap:
+#     name: app-scala-configmap
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-- name: config-volume
-  mountPath: /config.json
-  subPath: config.json
+  - name: scala-data
+    mountPath: /app_scala/data
+# - name: config-volume
+#   mountPath: /config.json
+#   subPath: config.json
 
 nodeSelector: {}
 
@@ -124,3 +126,9 @@ affinity: {}
 environment:
   course: DevOps-S25
   author: gleb
+
+persistence:
+  name: scala-data
+  size: 1Gi
+
+podManagementPolicy: Parallel

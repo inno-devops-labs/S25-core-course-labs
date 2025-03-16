@@ -1,14 +1,28 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "python-time-app.fullname" . }}
   labels:
     {{- include "python-time-app.labels" . | nindent 4 }}
     {{- include "library-chart.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ include "python-time-app.fullname" . }}
+  podManagementPolicy: {{ .Values.podManagementPolicy }}
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 1
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Values.persistence.name }}
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ .Values.persistence.size }}
   selector:
     matchLabels:
       {{- include "python-time-app.selectorLabels" . | nindent 6 }}
@@ -44,23 +58,11 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-          {{- /*
-          - name: MY_PASS
-            valueFrom:
-              secretKeyRef:
-                name: app-secret-1
-                key: MY_PASS
-          */ -}}
           {{- include "python-time-app.environmentVars" . | nindent 10 }}
-          envFrom:
-            - configMapRef:
-                name: app-python-configmap
-
           ports:
             - name: http
               containerPort: 5000
               protocol: TCP
-          {{- /*
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
@@ -69,7 +71,6 @@ spec:
           readinessProbe:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          */ -}}
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}

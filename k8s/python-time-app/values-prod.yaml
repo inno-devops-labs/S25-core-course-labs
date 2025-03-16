@@ -86,14 +86,14 @@ resources:
     memory: 128Mi
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-# livenessProbe:
-#   httpGet:
-#     path: /
-#     port: http
-# readinessProbe:
-#   httpGet:
-#     path: /
-#     port: http
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
@@ -104,16 +104,18 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes:
-- name: config-volume
-  configMap:
-    name: app-python-configmap
+volumes: []
+# - name: config-volume
+#   configMap:
+#     name: app-python-configmap
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-- name: config-volume
-  mountPath: /config.json
-  subPath: config.json
+  - name: python-data
+    mountPath: /app_python/visits
+# - name: config-volume
+#   mountPath: /config.json
+#   subPath: config.json
 
 nodeSelector: {}
 
@@ -124,3 +126,9 @@ affinity: {}
 environment:
   course: DevOps-S25_prod
   author: gleb_prod
+
+persistence:
+  name: python-data
+  size: 1Gi
+
+podManagementPolicy: Parallel
