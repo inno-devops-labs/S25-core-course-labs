@@ -5,9 +5,11 @@ metadata:
   labels:
     {{- include "library-chart.labels" . | indent 4 }}
 spec:
+  serviceName: {{ include "python-app.fullname" . }}-headless
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
+  podManagementPolicy: Parallel
   selector:
     matchLabels:
       {{- include "library-chart.labels" . | indent 6 }}
