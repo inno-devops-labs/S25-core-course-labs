@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: dpttk/iu-devops-lab2
+  repository: dpttk/devopslabs
   pullPolicy: IfNotPresent
   tag: "latest"
 
