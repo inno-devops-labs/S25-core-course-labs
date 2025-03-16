@@ -1,4 +1,4 @@
-replicaCount: 2
+replicaCount: 1
 
 image:
   repository: zdragonlord1010/app-python:latest
@@ -13,7 +13,7 @@ vaultAgent:
 persistence:
   enabled: true
   accessMode: ReadWriteOnce
-  size: 1Gi
+  size: 512Mi
 
 imagePullSecrets: []
 
@@ -36,8 +36,10 @@ podAnnotations:
     VAULT_DB_USERNAME={{ .Data.data.username }}
     VAULT_DB_PASSWORD={{ .Data.data.password }}
     {{- end -}}
+  environment: "development"
 
-podLabels: {}
+podLabels:
+  environment: "dev"
 
 podSecurityContext: {}
 
@@ -60,11 +62,11 @@ ingress:
 
 resources:
   limits:
-    cpu: 500m
-    memory: 512Mi
-  requests:
-    cpu: 200m
+    cpu: 300m
     memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
 
 livenessProbe:
   httpGet:
@@ -83,7 +85,7 @@ readinessProbe:
 autoscaling:
   enabled: false
   minReplicas: 1
-  maxReplicas: 100
+  maxReplicas: 50
   targetCPUUtilizationPercentage: 80
 
 volumes: []
@@ -99,5 +101,5 @@ affinity: {}
 secrets:
   appSecret: "secret-key"
   appEnv: "production"
-  dbUsername: "python-app"
-  dbPassword: "password123"
+  dbUsername: "python-app-dev"
+  dbPassword: "devpassword123"
