@@ -1,4 +1,4 @@
-replicaCount: 1
+replicaCount: 2
 image:
     repository: angelika2707/lab2
     pullPolicy: IfNotPresent
