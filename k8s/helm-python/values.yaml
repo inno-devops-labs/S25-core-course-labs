@@ -66,7 +66,14 @@ volumes:
 
 volumeClaimTemplates:
 - metadata:
-    name: wesammetadata
+    name: data
+  spec:
+    accessModes: [ "ReadWriteOnce" ]
+    resources:
+      requests:
+        storage: 1Gi
+- metadata:
+    name: static-files
   spec:
     accessModes: [ "ReadWriteOnce" ]
     resources:
@@ -74,8 +81,13 @@ volumeClaimTemplates:
         storage: 1Gi
 
 volumeMounts:
-- name: wesammetadata
-  mountPath: /code/vol
+- name: config-volume
+  mountPath: "/config"
+  readOnly: true
+- name: data
+  mountPath: /app/data
+- name: static-files
+  mountPath: "/static-files"
 
 nodeSelector: {}
 

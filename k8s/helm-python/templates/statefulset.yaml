@@ -3,16 +3,15 @@ kind: StatefulSet
 metadata:
   name: {{ include "helm-python.fullname" . }}
   labels:
-    {{- include "helm-python.labels" . | nindent 4 }}
+    {{- include "simple-library.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
+  podManagementPolicy: "Parallel"
   {{- end }}
-  volumeClaimTemplates:
-  {{- toYaml .Values.volumeClaimTemplates | nindent 4 }}
   selector:
     matchLabels:
-      {{- include "helm-python.selectorLabels" . | nindent 6 }}
+      {{- include "simple-library.labels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -20,18 +19,38 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "helm-python.labels" . | nindent 8 }}
-        {{- with .Values.podLabels }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
+        {{- include "simple-library.labels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: internal-app
+      serviceAccountName: {{ include "helm-python.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: install
+          image: busybox:1.28
+          command:
+          - wget
+          - "-O"
+          - "/static-files/index.html"
+          - http://info.cern.ch
+          volumeMounts:
+            - name: static-files
+              mountPath: "/static-files"
+        - name: queue-1
+          image: busybox:1.28
+          command: ["sh", "-c", "echo hello > /static-files/queue"]
+          volumeMounts:
+            - name: static-files
+              mountPath: "/static-files"
+        - name: queue-2
+          image: busybox:1.28
+          command: ["sh", "-c", "echo world >> /static-files/queue"]
+          volumeMounts:
+            - name: static-files
+              mountPath: "/static-files"
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -39,17 +58,15 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: PASSWORD
+            - name: MY_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: my-secret
+                  name: credentials
                   key: password
-          envFrom:
-            - configMapRef:
-                name: config
+            {{ include "helm-python.envs" . | nindent 12 }}
           ports:
             - name: http
-              containerPort: 5000
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
@@ -77,4 +94,5 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-  podManagementPolicy: "Parallel"
+  volumeClaimTemplates:
+    { { - toYaml .Values.volumeClaimTemplates | nindent 4 } }
