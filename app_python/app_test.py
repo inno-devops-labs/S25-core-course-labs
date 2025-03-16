@@ -73,7 +73,7 @@ class TestAppConfiguration(unittest.TestCase):
     def setUp(self):
         zone = 'Europe/Moscow'
         self.zone = ZoneInfo(zone)
-        self.app = TestApp(create_app(ZonedTimeService(zone), HtmlTemplateService(), FileStatsService()))
+        self.app = TestApp(create_app(ZonedTimeService(zone), HtmlTemplateService(), FileStatsService('test_visits')))
 
     def test_app(self):
         start = datetime.now(self.zone)
