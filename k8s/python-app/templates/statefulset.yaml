@@ -1,18 +1,32 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: {{ include "golang-app.fullname" . }}
+  name: {{ include "python-app.fullname" . }}
   labels:
     {{- include "my-library.labels" . | nindent 4 }}
-    {{- include "golang-app.labels" . | nindent 4 }}
+    {{- include "python-app.labels" . | nindent 4 }}
 spec:
+  podManagementPolicy: {{ .Values.podManagementPolicy }}
+  serviceName: {{ include "python-app.fullname" . }}
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 1
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
       {{- include "my-library.labels" . | nindent 6 }}
-      {{- include "golang-app.selectorLabels" . | nindent 6 }}
+      {{- include "python-app.selectorLabels" . | nindent 6 }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Values.volumeClaimTemplates.name }}
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: {{ .Values.volumeClaimTemplates.storage }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -20,7 +34,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "golang-app.labels" . | nindent 8 }}
+        {{- include "python-app.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -30,7 +44,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "golang-app.serviceAccountName" . }}
+      serviceAccountName: "internal-app"
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -44,22 +58,23 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-             {{- include "golang-app.environmentVariables" . | nindent 12 }}
+{{/*            - name: gpt_key*/}}
+{{/*              valueFrom:*/}}
+{{/*                secretKeyRef:*/}}
+{{/*                  name: credentials*/}}
+{{/*                  key: CHATGPT_KEY*/}}
+            {{- include "python-app.environmentVariables" . | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: golang-app-config
+                name: python-app-config
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          {{- with .Values.livenessProbe }}
           livenessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.readinessProbe }}
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}

@@ -9,7 +9,7 @@ replicaCount: 2
 image:
   repository: azazaki/app_python
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
   containerPort: 5001
@@ -100,6 +100,12 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
+volumeClaimTemplates:
+  name: python-app-data
+  storage: 512Mi
+
+podManagementPolicy: Parallel
+
 # Additional volumes on the output Deployment definition.
 # - name: foo
 #   secret:
@@ -120,6 +126,18 @@ volumeMounts:
   - name: config
     mountPath: /config.json
     subPath: config.json
+  - name: python-app-data
+    mountPath: /app/data
+
+livenessProbe:
+  httpGet:
+    path: /health
+    port: http
+
+readinessProbe:
+  httpGet:
+    path: /health
+    port: http
 
 nodeSelector: {}
 
