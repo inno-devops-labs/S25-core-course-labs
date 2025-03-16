@@ -11,7 +11,7 @@ spec:
     path: k8s/web-app
     helm:
       valueFiles:
-        - values-prod.yaml
+        - values-dev.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: dev
