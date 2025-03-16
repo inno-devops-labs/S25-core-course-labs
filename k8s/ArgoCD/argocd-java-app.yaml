@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: java
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Nikoali01/S25-core-course-labs
+    targetRevision: lab_13
+    path: k8s/java-app
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated: {}
