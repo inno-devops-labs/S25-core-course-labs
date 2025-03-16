@@ -113,19 +113,19 @@ volumes:
 #   secret:
 #     secretName: mysecret
 #     optional: false
-  - name: config-volume
-    configMap:
-      name: py-app-config
+#  - name: config-volume
+#    configMap:
+#      name: py-app-config
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
-  - name: config-volume
-    mountPath: "/data/config.json"
-    subPath: "config.json"
-    readOnly: true
+#  - name: config-volume
+#    mountPath: "/data/config.json"
+#    subPath: "config.json"
+#    readOnly: true
 
 nodeSelector: {}
 
@@ -135,6 +135,7 @@ affinity: {}
 
 env:
   MY_VAR: po4ki
+  ENV: default
 
 config:
   path: "files/config.json"
