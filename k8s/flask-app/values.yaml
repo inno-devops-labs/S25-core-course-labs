@@ -130,8 +130,9 @@ image:
 service:
   type: NodePort
   port: 5000
-
 nodePort: 30007 
 
+storage:
+  size: 1Gi
 replicaCount: 1 
 
