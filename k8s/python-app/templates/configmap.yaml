@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: config
-  namespace: default
-data:
-{{ .Files.Get "files/config.json" | fromJson | toYaml | indent 2}}
