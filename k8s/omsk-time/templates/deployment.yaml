@@ -17,6 +17,9 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          envFrom:
+            - configMapRef:
+                name: {{ include "omsk-time.fullname" . }}-config
           env:
             {{ include "common.env" . | nindent 12 }}
           ports:
