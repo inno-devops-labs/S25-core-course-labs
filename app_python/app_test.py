@@ -7,7 +7,7 @@ from webtest import TestApp
 from datetime import datetime
 
 from app import TimeService, TemplateService, StatsService, create_app
-from app_start import ZonedTimeService, HtmlTemplateService, FileStatsService
+from app_start import ZonedTimeService, HtmlTemplateService
 
 
 class MockTimeService(TimeService):
@@ -73,7 +73,7 @@ class TestAppConfiguration(unittest.TestCase):
     def setUp(self):
         zone = 'Europe/Moscow'
         self.zone = ZoneInfo(zone)
-        self.app = TestApp(create_app(ZonedTimeService(zone), HtmlTemplateService(), FileStatsService('test_visits')))
+        self.app = TestApp(create_app(ZonedTimeService(zone), HtmlTemplateService(), MockStatsService()))
 
     def test_app(self):
         start = datetime.now(self.zone)
