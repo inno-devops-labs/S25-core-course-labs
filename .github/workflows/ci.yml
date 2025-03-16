@@ -1,0 +1,89 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Installing Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: 🔄 Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('app_python/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: 📦 Installing dependencies
+        working-directory: app_python
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🔍 Launching the linter (Flake8)
+        working-directory: app_python
+        run: |
+          pip install flake8
+          flake8 --max-line-length=100 app.py test_app.py
+
+      - name: 🧪 Running tests (pytest)
+        working-directory: app_python
+        run: |
+          pip install pytest
+          pytest --maxfail=1 --disable-warnings --tb=short
+
+      - name: 🐳 Installing Hadolint (for Dockerfile)
+        run: |
+          wget -O /usr/local/bin/hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
+          chmod +x /usr/local/bin/hadolint
+          hadolint --version
+
+  snyk-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    continue-on-error: true
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔒 Snyk Vulnerability Check
+        uses: snyk/actions@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: test --severity-threshold=high --skip-unresolved
+
+  docker:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔑 Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: 🏗️ Building and pushing Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: app_python
+          file: app_python/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/moscow-time-app:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/moscow-time-app:latest
+          cache-to: type=inline

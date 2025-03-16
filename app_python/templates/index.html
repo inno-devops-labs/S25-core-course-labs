@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Time in Moscow</title>
+    <script>
+        let lastKnownTime = null;
+
+        function fetchTime() {
+            fetch('/time')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        document.getElementById('time').textContent = data.time;
+                        lastKnownTime = data.time;
+                    } else {
+                        if (lastKnownTime) {
+                            document.getElementById('time').textContent = lastKnownTime;
+                        } else {
+                            const localTime = new Date().toLocaleTimeString();
+                            document.getElementById('time').textContent = localTime;
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching time:', error);
+                    if (lastKnownTime) {
+                        document.getElementById('time').textContent = lastKnownTime;
+                    } else {
+                        const localTime = new Date().toLocaleTimeString();
+                        document.getElementById('time').textContent = localTime;
+                    }
+                });
+        }
+
+        setInterval(fetchTime, 1000);
+        window.onload = fetchTime;
+    </script>
+</head>
+<body>
+    <h1>Current Time in Moscow: <span id="time"></span></h1>
+</body>
+</html>
