@@ -1,0 +1,21 @@
+# Prod environment values for app-python.
+# This is a YAML-formatted file.
+
+replicaCount: 2
+
+image:
+  repository: kurkune/app_python
+  pullPolicy: IfNotPresent
+  tag: latest
+
+resources:
+  limits:
+    cpu: 1
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 30Mi
+
+service:
+  type: ClusterIP
+  port: 8080 

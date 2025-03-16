@@ -1,0 +1,21 @@
+# Dev environment values for app-python.
+# This is a YAML-formatted file.
+
+replicaCount: 1
+
+image:
+  repository: kurkune/app_python
+  pullPolicy: IfNotPresent
+  tag: latest
+
+resources:
+  limits:
+    cpu: 0.5
+    memory: 64Mi
+  requests:
+    cpu: 50m
+    memory: 20Mi
+
+service:
+  type: ClusterIP
+  port: 8080 

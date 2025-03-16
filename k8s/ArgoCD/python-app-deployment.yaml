@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-app
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      containers:
+      - name: python-app
+        image: kurkune/app_python:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 1
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 30Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-app
+  namespace: default
+spec:
+  selector:
+    app: python-app
+  ports:
+  - port: 8080
+    targetPort: 8080
+  type: ClusterIP 
