@@ -41,12 +41,11 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            {{- include "app-python.env" . | nindent 12 }}
             - name: MY_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: credentials
-                  key: password
+              value: "dummy"
+
+            - name: DUMMY_ENV
+              value: "SOME_DUMMY_ENV"
           envFrom:
             - configMapRef:
                 name: app-python-configmap
