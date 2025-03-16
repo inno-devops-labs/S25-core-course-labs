@@ -59,7 +59,7 @@ service:
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
-  enabled: true
+  enabled: false
   className: nginx
   annotations: 
     nginx.ingress.kubernetes.io/rewrite-target: /
@@ -104,16 +104,16 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: 
-  - name: config-map
-    configMap:
-      name: app-python-confmap
+volumes: []
+  # - name: config-map
+  #   configMap:
+  #     name: app-python-confmap
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: 
-  - name: config-map
-    mountPath: /config.json
-    subPath: config.json
+volumeMounts: {}
+  # - name: config-map
+  #   mountPath: /config.json
+  #   subPath: config.json
 
 nodeSelector: {}
 
