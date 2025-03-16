@@ -1,0 +1,9 @@
+{
+  "app_name": "Python Counter App",
+  "version": "1.0.0",
+  "visits_file_path": "/app/visits",
+  "server": {
+    "host": "0.0.0.0",
+    "port": 8080
+  }
+} 
