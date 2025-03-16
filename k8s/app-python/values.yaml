@@ -52,10 +52,22 @@ securityContext: {}
 
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
 service:
+#  name: web-app-headless
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-  type: NodePort
+  type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 5000
+
+statefulSet:
+  serviceName: web-app-headless
+
+storage:
+  enabled: true
+  accessModes: ["ReadWriteOnce"]
+  size: 1Gi
+  mountPath: /app/data
+  volumeClaimName: storage
+  storageClassName: ""
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:

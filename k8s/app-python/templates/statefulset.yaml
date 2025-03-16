@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web-app
+spec:
+  serviceName: "{{ .Values.statefulSet.serviceName }}"
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: web-app
+  template:
+    metadata:
+      labels:
+        app: web-app
+    spec:
+      containers:
+        - name: web-app
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.image.containerPort }}
+              name: web
+          volumeMounts:
+            - name: {{ .Values.storage.volumeClaimName }}
+              mountPath: {{ .Values.storage.mountPath }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Values.storage.volumeClaimName }}
+      spec:
+        accessModes: {{ .Values.storage.accessModes }}
+        resources:
+          requests:
+            storage: {{ .Values.storage.size }}
+        {{- if .Values.storage.storageClassName }}
+        storageClassName: "{{ .Values.storage.storageClassName }}"
+        {{- end }}
