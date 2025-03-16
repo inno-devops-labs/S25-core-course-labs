@@ -1,0 +1,5 @@
+{
+    "appName": "visits-counter",
+    "environment": "prod",
+    "maxConnections": 100
+  }
