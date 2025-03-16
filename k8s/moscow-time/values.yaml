@@ -1,0 +1,70 @@
+replicaCount: 3
+
+image:
+  repository: ebob/moscow-time
+  tag: "v1.1"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: "internal-app"
+
+podAnnotations: {
+  vault.hashicorp.com/agent-inject: 'true',
+  vault.hashicorp.com/role: 'internal-app',
+  vault.hashicorp.com/agent-inject-secret-database-config.txt: 'internal/data/database/config'
+}
+
+podLabels: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  hosts:
+    - host: moscow-time.local
+      paths:
+        - path: /
+          pathType: Prefix
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 128Mi
+  requests:
+    cpu: 250m
+    memory: 64Mi
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+env:
+  ENVIRONMENT: stage

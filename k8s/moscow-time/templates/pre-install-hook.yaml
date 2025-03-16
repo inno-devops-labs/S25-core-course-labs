@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ include "moscow-time.fullname" . }}-pre-install
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  restartPolicy: Never
+  containers:
+  - name: pre-install-job
+    image: busybox
+    command: ['sh', '-c', 'echo "Starting pre-install hook"; sleep 20; echo "Pre-install hook completed"']
