@@ -7,7 +7,7 @@ import os
 
 app = FastAPI()
 
-VISITS_FILE = "/app/visits.txt"
+VISITS_FILE = "visits/visits.txt"
 
 Instrumentator().instrument(app).expose(app)
 

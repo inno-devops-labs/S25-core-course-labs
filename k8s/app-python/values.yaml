@@ -9,7 +9,7 @@ replicaCount: 3
 image:
   repository: dsaee/app
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
 
@@ -126,3 +126,9 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+podManagementPolicy: Parallel
+
+volumeTemplate:
+  name: app-python-volume
+  size: 1Gi

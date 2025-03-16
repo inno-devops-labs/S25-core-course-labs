@@ -17,7 +17,7 @@ services:
         compress: 1
         tag: "{{.ImageName}}|{{.Name}}"
     volumes:
-      - ./visits:/app
+      - ./visits:/visits
 
   loki:
     image: grafana/loki:latest

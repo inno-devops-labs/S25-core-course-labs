@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "app-python.fullname" . }}
   labels:
@@ -11,6 +11,19 @@ spec:
   selector:
     matchLabels:
       {{- include "app-python.selectorLabels" . | nindent 6 }}
+  podManagementPolicy: {{ .Values.podManagementPolicy }}
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 1
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Values.volumeTemplate.name }}
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: {{ .Values.volumeTemplate.size }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
