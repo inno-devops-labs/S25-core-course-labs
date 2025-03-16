@@ -1,0 +1,5 @@
+{
+  "appName": "MyApp",
+  "message": "Hello from ConfigMap",
+  "featureToggle": true
+}
