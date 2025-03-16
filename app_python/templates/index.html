@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moscow Time</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #1e1e1e;
+            color: white;
+            margin: 0;
+            padding: 50px;
+        }
+        .container {
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        h1 {
+            margin-bottom: 10px;
+        }
+        .time {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        function refreshTime() {
+            fetch('/')
+                .then(response => response.text())
+                .then(html => {
+                    document.body.innerHTML = html;
+                });
+        }
+        setInterval(refreshTime, 1000);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Current Time in Moscow</h1>
+        <p class="time">{{ moscow_time }}</p>
+    </div>
+</body>
+</html>

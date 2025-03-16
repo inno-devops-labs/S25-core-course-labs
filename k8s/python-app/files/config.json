@@ -1,0 +1,5 @@
+{
+    "appName": "Lab12-App",
+    "version": "1.0.0",
+    "description": "A sample application for Kubernetes ConfigMaps"
+  }
