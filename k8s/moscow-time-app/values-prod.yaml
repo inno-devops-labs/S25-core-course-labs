@@ -112,10 +112,10 @@ volumes:
    name: moscow-time-app-config
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts:
-- name: moscow-time-app-config-volume
-  mountPath: "/config.json"
-  subPat: "config.json"
+#volumeMounts:
+#- name: moscow-time-app-config-volume
+#  mountPath: "/config.json"
+#  subPat: "config.json"
 
 nodeSelector: {}
 
