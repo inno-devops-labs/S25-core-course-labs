@@ -36,6 +36,7 @@ securityContext: {}
 
 service:
   type: NodePort
+  name: myapp
   port: 8000
   targetPort: 8000
 
@@ -63,14 +64,14 @@ mySecret: "DoryShibkovaSecret"
 livenessProbe:
   httpGet:
     path: /
-    port: http
+    port: 8000
   initialDelaySeconds: 15
   periodSeconds: 20
 
 readinessProbe:
   httpGet:
     path: /
-    port: http
+    port: 8000
   initialDelaySeconds: 5
   periodSeconds: 10
 
@@ -89,6 +90,12 @@ volumeMounts:
   - mountPath: "/config.json"
     subPath: "config.json"
     name: config-volume
+
+statefulset:
+  replicas: 3
+  storage:
+    size: 1Gi
+    accessMode: ReadWriteOnce
 
 nodeSelector: {}
 
