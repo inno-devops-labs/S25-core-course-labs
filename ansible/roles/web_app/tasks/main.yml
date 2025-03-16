@@ -1,0 +1,62 @@
+---
+- name: Import wipe tasks if needed
+  ansible.builtin.import_tasks: 0-wipe.yml
+  when: web_app_full_wipe | bool
+  tags:
+    - wipe
+
+# Setup application source code
+- name: Setup application source code
+  block:
+    - name: Install Git
+      ansible.builtin.apt:
+        name: git
+        state: present
+        update_cache: yes
+    
+    - name: Create app source directory
+      ansible.builtin.file:
+        path: "{{ app_source_dir }}"
+        state: directory
+        mode: '0755'
+    
+    - name: Clone application repository
+      ansible.builtin.git:
+        repo: "{{ app_repo }}"
+        dest: "{{ app_source_dir }}"
+  tags:
+    - setup
+    - source
+
+# Setup Docker environment
+- name: Setup application environment
+  block:
+    - name: Create Docker Compose directory
+      ansible.builtin.file:
+        path: "{{ docker_compose_dir }}"
+        state: directory
+        mode: '0755'
+      
+    - name: Create Docker Compose file from template
+      ansible.builtin.template:
+        src: docker-compose.yml.j2
+        dest: "{{ docker_compose_file }}"
+        mode: '0644'
+  tags:
+    - setup
+    - docker
+
+# Deploy application
+- name: Deploy application
+  block:
+    - name: Build Docker image
+      ansible.builtin.command:
+        cmd: docker build -t {{ docker_image_name }} {{ app_source_dir }}/app_python
+      
+    - name: Start Docker container with Docker Compose
+      ansible.builtin.command:
+        cmd: docker-compose -f {{ docker_compose_file }} up -d
+        chdir: "{{ docker_compose_dir }}"
+  tags:
+    - deploy
+    - docker
