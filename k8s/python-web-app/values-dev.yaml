@@ -1,13 +1,13 @@
-# Default values for go-web-app.
+# Default values for python-web-app.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
-replicaCount: 1
+replicaCount: 2
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: netpo4ki/go-web
+  repository: netpo4ki/python-web
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
@@ -33,7 +33,11 @@ serviceAccount:
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-podAnnotations: {}
+podAnnotations: {
+  vault.hashicorp.com/agent-inject: 'true',
+  vault.hashicorp.com/role: 'python-web-app',
+  vault.hashicorp.com/agent-inject-secret-database-config.txt: 'internal/data/database/config'
+}
 # This is for setting Kubernetes Labels to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
@@ -54,7 +58,7 @@ service:
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
   type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
-  port: 8080
+  port: 8000
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
@@ -78,12 +82,12 @@ resources:
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  limits:
-    cpu: 500m
-    memory: 768Mi
-  requests:
-    cpu: 200m
-    memory: 600Mi
+   limits:
+     cpu: 100m
+     memory: 128Mi
+   requests:
+     cpu: 100m
+     memory: 128Mi
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
@@ -111,7 +115,7 @@ volumes:
 #     optional: false
 #  - name: config-volume
 #    configMap:
-#      name: go-app-config
+#      name: py-app-config
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
@@ -131,7 +135,7 @@ affinity: {}
 
 env:
   MY_VAR: po4ki
-  ENV: default
+  ENV: dev
 
 config:
   path: "files/config.json"
