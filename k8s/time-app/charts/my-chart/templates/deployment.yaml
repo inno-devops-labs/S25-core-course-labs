@@ -42,15 +42,4 @@ spec:
         - name: vault-config
           configMap:
             name: vault-config
-      initContainers:
-        - name: vault-agent-init
-          image: hashicorp/vault:1.18.1
-          command:
-            - "vault"
-            - "agent"
-            - "-config=/vault/config/config.hcl"   # Updated command here
-          volumeMounts:
-            - mountPath: /vault/config/
-              name: vault-config
-              readOnly: true
 
