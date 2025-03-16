@@ -1,6 +1,6 @@
 replicaCount: 2
 image:
-  repository: nginx
+  repository: mazzz3r/app_python
   tag: stable
   pullPolicy: IfNotPresent
 resources:
