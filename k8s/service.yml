@@ -3,10 +3,11 @@ kind: Service
 metadata:
   name: python-app
 spec:
-  type: NodePort
   selector:
-    app: python-app
+    app: python-app  # Match the correct StatefulSet label
   ports:
-  - port: 80
-    targetPort: 5000
-    nodePort: 30000
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      nodePort: 30007  # Choose a valid port between 30000-32767
+  type: NodePort
