@@ -1,0 +1,39 @@
+---
+- name: Install Docker
+  import_tasks: install_docker.yml
+
+- name: Install Docker Compose
+  import_tasks: install_compose.yml
+
+- name: Ensure Docker service is running
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Add cur user to docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
+
+- name: Make Docker secure
+  import_tasks: secure_docker.yml
+
+- name: Verify Docker installation
+  command: docker --version
+  register: docker_version_output
+  changed_when: false
+
+- name: Print Docker version
+  debug:
+    msg: "{{ docker_version_output.stdout }}"
+
+- name: Verify Docker Compose installation
+  command: docker-compose --version
+  register: compose_version_output
+  changed_when: false
+
+- name: Print Docker Compose version
+  debug:
+    msg: "{{ compose_version_output.stdout }}"
