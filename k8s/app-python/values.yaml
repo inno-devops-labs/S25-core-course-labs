@@ -1,0 +1,82 @@
+labels:
+  special:
+    key: "app-python/special-label"
+    value: "app-python"
+
+persistence:
+  size: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClass: ""
+  volumeClaimTemplate:
+    name: config-volume
+
+serviceAccount:
+  name: vault-auth
+
+config:
+  name: python-config
+  volumeName: config-volume
+  mountPath: /config.json
+  subPath: config.json
+
+service:
+  headlessSuffix: "headless"
+  name: http
+  port: 8000
+  protocol: TCP
+  type: ClusterIP
+
+secrets:
+  mySecret:
+    enabled: true
+    name: my-secret
+    usernameEnvVar: MY_USER
+    usernameKey: MY_USER
+    passwordEnvVar: MY_PASS
+    passwordKey: MY_PASS
+
+image:
+  repository: secretanry/python_app
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+replicaCount: 3
+environment:
+  author: secretanry
+  course: Devops
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+probes:
+  liveness:
+    http:
+      enabled: true
+      path: /health
+  readiness:
+    http:
+      enabled: true
+      path: /health

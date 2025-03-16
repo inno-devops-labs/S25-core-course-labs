@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+    {{- if .Values.labels.special }}
+    {{ .Values.labels.special.key }}: {{ .Values.labels.special.value | quote }}
+    {{- end }}
+spec:
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Values.persistence.volumeClaimTemplate.name }}
+      spec:
+        accessModes: {{ .Values.persistence.accessModes | toJson }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size }}
+        {{- if .Values.persistence.storageClass }}
+        storageClassName: {{ .Values.persistence.storageClass }}
+        {{- end }}
+  serviceName: {{ .Chart.Name }}-{{ .Values.service.headlessSuffix }}
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        {{- include "common.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      volumes:
+        - name: {{ .Values.config.volumeName }}
+          configMap:
+            name: {{ .Values.config.name }}
+      containers:
+        {{- if .Values.probes.enabled }}
+        livenessProbe:
+              {{- if .Values.probes.liveness.http.enabled }}
+          httpGet:
+            path: {{ .Values.probes.liveness.http.path }}
+            port: {{ .Values.service.port }}
+              {{- else }}
+          exec:
+            command: {{ toJson .Values.probes.liveness.command }}
+              {{- end }}
+          initialDelaySeconds: {{ .Values.probes.liveness.initialDelay }}
+          periodSeconds: {{ .Values.probes.liveness.period }}
+          timeoutSeconds: {{ .Values.probes.liveness.timeout }}
+          failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
+
+        readinessProbe:
+              {{- if .Values.probes.readiness.http.enabled }}
+          httpGet:
+            path: {{ .Values.probes.readiness.http.path }}
+            port: {{ .Values.service.port }}
+              {{- else }}
+          exec:
+            command: {{ toJson .Values.probes.readiness.command }}
+              {{- end }}
+          initialDelaySeconds: {{ .Values.probes.readiness.initialDelay }}
+          periodSeconds: {{ .Values.probes.readiness.period }}
+          timeoutSeconds: {{ .Values.probes.readiness.timeout }}
+          failureThreshold: {{ .Values.probes.readiness.failureThreshold }}
+            {{- end }}
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: {{ .Values.config.volumeName }}
+              mountPath: {{ .Values.config.mountPath }}
+              subPath: {{ .Values.config.subPath }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          ports:
+            - name: {{ .Values.service.name }}
+              containerPort: {{ .Values.service.port }}
+              protocol: {{ .Values.service.protocol }}
+          env:
+            {{- if .Values.secrets.mySecret.enabled }}
+            - name: {{ .Values.secrets.mySecret.usernameEnvVar }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secrets.mySecret.name }}
+                  key: {{ .Values.secrets.mySecret.usernameKey }}
+            - name: {{ .Values.secrets.mySecret.passwordEnvVar }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secrets.mySecret.name }}
+                  key: {{ .Values.secrets.mySecret.passwordKey }}
+            {{- end }}
+            {{- include "app-python.environmentVars" . | nindent 12 }}
