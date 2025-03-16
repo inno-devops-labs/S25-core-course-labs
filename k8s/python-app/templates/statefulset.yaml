@@ -1,10 +1,11 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "python-app.fullname" . }}
   labels:
     {{- include "python-app.labels" . | nindent 4 }}
 spec:
+  podManagementPolicy: {{ .Values.podManagementPolicy }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
@@ -76,3 +77,12 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Values.volumeClaimTemplates.name }}
+    spec:
+      accessModes: {{ .Values.volumeClaimTemplates.accessModes }}
+      resources:
+        requests:
+          storage: {{ .Values.volumeClaimTemplates.storage }}
