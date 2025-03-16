@@ -1,0 +1,8 @@
+- name: Deploy JS Application
+  hosts: all
+  become: true
+  vars_files:
+    - ../vars/app_js.yml
+  roles:
+    - docker
+    - web_app
