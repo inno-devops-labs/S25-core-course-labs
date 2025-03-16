@@ -1,3 +1,41 @@
 replicaCount: 3
+
+image:
+  repository: kaaxd/my-python-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+nameOverride: "python-app"
+fullnameOverride: "python-app-prod"
+
 service:
-  port: 80
+  type: ClusterIP
+  port: 5000
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+env:
+  - name: FLASK_ENV
+    value: production
+  - name: APP_VERSION
+    value: prod
+
+livenessProbe:
+  initialDelaySeconds: 10
+  periodSeconds: 20
+  httpGet:
+    path: /
+    port: 5000
+
+readinessProbe:
+  initialDelaySeconds: 10
+  periodSeconds: 20
+  httpGet:
+    path: /
+    port: 5000
