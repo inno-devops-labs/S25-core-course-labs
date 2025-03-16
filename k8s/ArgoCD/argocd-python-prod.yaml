@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/myrepo/python-app.git'
-    targetRevision: HEAD
-    path: helm-chart
+    repoURL: https://github.com/MatvPlaton/S25-core-course-labs.git
+    targetRevision: lab13
+    path: k8s/flask-app
     helm:
       valueFiles:
         - values-prod.yaml
