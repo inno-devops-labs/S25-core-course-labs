@@ -5,7 +5,9 @@ metadata:
   labels:
     {{- include "python-app.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: ClusterIP
+  # This is what makes it a headless service, required for StatefulSet DNS resolution
+  clusterIP: {{ .Values.service.clusterIP | default "None" }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: http
