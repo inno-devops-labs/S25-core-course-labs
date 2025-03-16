@@ -1,0 +1,13 @@
+---
+- name: Deploy Python app
+  hosts: all
+  become: yes
+  roles:
+    - name: web_app
+      vars:
+        docker_image: "nickolaus899/python-msk-time:latest"
+        docker_container: python-msk-time
+
+        internal_port: 5000
+        external_port: 8080
+        web_app_full_wipe: true  
