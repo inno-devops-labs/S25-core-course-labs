@@ -31,8 +31,3 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
-
-{{/*   volumes: */}}
-{{/*        - name: config-volume */}}
-{{/*          configMap: */}}
-{{/*            name: {{ .Release.Name }}-config */ }}
