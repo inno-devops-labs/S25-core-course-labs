@@ -1,0 +1,10 @@
+# Override production-specific settings
+replicaCount: 1
+
+service:
+  type: LoadBalancer
+  port: 80
+
+# Additional prod-specific values
+environment: prod
+logLevel: info
