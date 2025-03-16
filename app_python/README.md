@@ -6,6 +6,9 @@
 
 This is a web app that shows current date and time in Moscow. It is written in Python with Bottle framework.
 
+- Endpoint `/visits` displays the recorded visits.
+- Endpoint `/metrics` displays Prometheus metrics.
+
 ## Requirements
 
 * Python 3.12
@@ -83,20 +86,40 @@ cd devops-labs/app_python
 ```
 
 ```bash
-docker build -t ebob/moscow-time:v1.0 .
+docker build -t ebob/moscow-time:v1.2 .
+```
+
+### Build for multi-arch
+
+```bash
+docker buildx create --use
+```
+
+```bash
+docker buildx build \
+    --push \
+    --platform linux/arm/v7,linux/arm64/v8,linux/amd64 \
+    --tag ebob/moscow-time:v1.2 \
+    .
 ```
 
 ### Pull and Run
 
 ```bash
-docker pull ebob/moscow-time:v1.0
+docker pull ebob/moscow-time:v1.2
 ```
 
 ```bash
-docker run -d --name msk -p 8080:8080 ebob/moscow-time:v1.0
+docker run -d --name msk -p 8080:8080 -v $(pwd)/data:/app/data ebob/moscow-time:v1.2
 ```
 
 Now it is available on `localhost:8080`
+
+## Docker Compose
+
+```bash
+docker compose up --build
+```
 
 ## Distroless Docker Image
 

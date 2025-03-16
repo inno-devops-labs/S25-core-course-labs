@@ -2,6 +2,7 @@
 Author: Evgeny B.
 """
 
+import os
 from datetime import datetime, timedelta, timezone
 
 from bottle import Bottle, response, run
@@ -13,6 +14,28 @@ m_requests = Counter("http_requests_total", "Total HTTP Requests")
 
 # Define the MSK timezone (UTC+3)
 MSK_TIMEZONE = timezone(timedelta(hours=3))
+
+VISITS_FILE = "/app/data/visits"
+
+
+def get_visits():
+    """Read the visits count from file."""
+    if not os.path.exists(VISITS_FILE):
+        return 0
+    with open(VISITS_FILE, "r") as f:
+        try:
+            return int(f.read().strip())
+        except ValueError:
+            return 0
+
+
+def update_visits():
+    """Increment the visits count and save to file."""
+    os.makedirs(os.path.dirname(VISITS_FILE), exist_ok=True)  # Ensure directory exists
+    visits = get_visits() + 1
+    with open(VISITS_FILE, "w") as f:
+        f.write(str(visits))
+    return visits
 
 
 @app.route("/metrics")
@@ -26,6 +49,7 @@ def metrics():
 def show_time():
     """Show the current time and date in Moscow."""
     m_requests.inc()
+    visits = update_visits()
     # Get the current time in Moscow
     now = datetime.now(MSK_TIMEZONE)
     formatted_time = now.strftime("%H:%M:%S")
@@ -38,6 +62,13 @@ def show_time():
         f"<p>Time: {formatted_time}</p>"
         f"<p>Date: {formatted_date}</p></body></html>"
     )
+
+
+@app.route("/visits")
+def visits():
+    """Display the number of visits."""
+    response.content_type = "text/plain; charset=utf-8"
+    return f"Visits: {get_visits()}\n"
 
 
 # Run the Bottle app
