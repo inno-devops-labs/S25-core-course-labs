@@ -1,13 +1,13 @@
 replicaCount: 2  # Higher replicas for production
 
 image:
-  repository: my-python-app
+  repository: matveyplat/flask-app
   tag: latest
   pullPolicy: IfNotPresent
 
 service:
   type: NodePort
   port: 80
-  nodePort: 30007  # Explicit nodePort for external access
+  nodePort: 30008  # Explicit nodePort for external access
 
 env: prod
