@@ -43,4 +43,9 @@ async def homepage(request: Request):
     )
 
 
+@app.get("/health")
+async def health_check(request: Request):
+    return {"status": "ok"}
+
+
 Instrumentator().instrument(app).expose(app)
