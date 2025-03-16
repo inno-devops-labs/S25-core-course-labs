@@ -19,10 +19,16 @@ resources:
     memory: 64Mi
 
 livenessProbe:
-  enabled: false
+  enabled: true
+  path: /
+  initialDelaySeconds: 30
+  periodSeconds: 10
 
 readinessProbe:
-  enabled: false
+  enabled: true
+  path: /
+  initialDelaySeconds: 5
+  periodSeconds: 10
 
 secret:
   username: admin
@@ -40,3 +46,10 @@ vault:
       export VAULT_USERNAME="{{ .Data.data.username }}"
       export VAULT_PASSWORD="{{ .Data.data.password }}"
       {{- end -}}
+
+persistence:
+  enabled: true
+  size: 1Gi
+  storageClass: standard
+
+podManagementPolicy: Parallel
