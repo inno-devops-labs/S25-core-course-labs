@@ -1,5 +1,5 @@
 # Prod environment values
-replicaCount: 3
+replicaCount: 4
 image:
   repository: YehiaSobeh/python-app
   tag: prod-stable
