@@ -1,5 +1,5 @@
 # Development environment configuration
-replicaCount: 1
+replicaCount: 2
 
 resources:
   limits:
@@ -11,4 +11,8 @@ resources:
 
 env:
   appSecret: "dev-secret-key"
-  appEnv: "development" 
+  appEnv: "development"
+
+persistence:
+  enabled: true
+  size: 1Gi

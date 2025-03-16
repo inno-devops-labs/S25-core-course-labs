@@ -11,4 +11,8 @@ resources:
 
 env:
   appSecret: "prod-secret-key"
-  appEnv: "production" 
+  appEnv: "production"
+
+persistence:
+  enabled: true
+  size: 5Gi  # More storage for production

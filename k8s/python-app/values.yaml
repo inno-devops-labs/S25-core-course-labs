@@ -126,3 +126,13 @@ secrets:
 env:
   appSecret: "development-secret-key"
   appEnv: "development"
+
+# Persistence configuration for StatefulSet
+persistence:
+  enabled: true
+  size: 1Gi
+  # storageClass: ""  # Use default StorageClass
+
+# Add this section for the external service
+externalService:
+  type: ClusterIP  # You can use NodePort or LoadBalancer for external access
