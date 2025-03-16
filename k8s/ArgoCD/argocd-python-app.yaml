@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/UFA-MOROZOV/S25-core-course-labs.git
     targetRevision: feature/lab13
-    path: k8s/app-python
+    path: k8s/my-app
     helm:
       valueFiles:
         - values.yaml
