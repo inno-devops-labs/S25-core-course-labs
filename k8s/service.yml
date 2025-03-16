@@ -23,6 +23,7 @@ spec:
   ipFamilies:
   - IPv4
   ipFamilyPolicy: SingleStack
+  nodePort: 30007
   ports:
   - nodePort: 30864
     port: 80
