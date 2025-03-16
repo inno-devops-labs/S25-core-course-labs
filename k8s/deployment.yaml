@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-python
+spec:
+  replicas: 3  # At least 3 replicas as required
+  selector:
+    matchLabels:
+      app: app-python
+  template:
+    metadata:
+      labels:
+        app: app-python
+    spec:
+      containers:
+      - name: app-python
+        image: favelanky/app_python:latest
+        ports:
+        - containerPort: 5000
+        env:
+          - name: MY_PASS
+            valueFrom:
+              secretKeyRef:
+                name: my-secret
+                key: MY_PASS
+        volumeMounts:
+          - name: config-volume
+            mountPath: /config.json
+            subPath: config.json
+      volumes:
+        - name: config-volume
+          configMap:
+            name: my-config
