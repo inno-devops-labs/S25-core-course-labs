@@ -1,0 +1,46 @@
+replicaCount: 2
+
+image:
+  repository: shelma13/app_python
+  tag: "dev"
+
+service:
+  type: ClusterIP
+  port: 5000
+
+resources:
+  limits:
+    cpu: "250m"
+    memory: "128Mi"
+  requests:
+    cpu: "125m"
+    memory: "64Mi"
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70
+
+vault:
+  enabled: true
+  secretPath: "secret/dev-app"
+
+secret:
+  username: "dev-admin"
+  password: "dev-secret"
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

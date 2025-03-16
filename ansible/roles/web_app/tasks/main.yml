@@ -1,0 +1,26 @@
+- name: Wipe
+  when:
+  tags: wipe
+  ansible.builtin.include_tasks:
+    file: "0-wipe.yml"
+    apply:
+      tags: wipe
+
+- name: Ensure Docker is installed
+  include_role:
+    name: docker
+
+- name: Create application directory
+  file:
+    path: /opt/app_js
+    state: directory
+
+- name: Deploy Express.js app using Docker Compose
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/app_js/docker-compose.yml
+
+- name: Start Express.js app
+  command: docker-compose up -d
+  args:
+    chdir: /opt/app_js

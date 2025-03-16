@@ -1,0 +1,5 @@
+- name: Deploy Docker on VM
+  hosts: all
+  roles:
+    - role: docker
+      become: true
