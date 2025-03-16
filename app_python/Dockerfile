@@ -3,7 +3,7 @@ FROM python:3.10-alpine
 
 # Using non-root user for integrity
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-USER appuser
+# USER appuser
 
 # Working directory setting
 WORKDIR /app

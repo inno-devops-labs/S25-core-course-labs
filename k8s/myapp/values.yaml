@@ -12,6 +12,8 @@ image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
+storageClass: standard
+storageSize: 1Gi
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -108,15 +110,19 @@ volumes:
   - name: config-volume
     configMap:
       name: config
-      items:
-        - key: config
-          path: config.json
+      # items:
+      #   - key: config
+      #     path: config.json
+  - name: web-site-volume
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
   - name: config-volume
     mountPath: "/config"
     readOnly: true
+  - name: web-site-volume
+    mountPath: /app/data
+    readOnly: false
 
 nodeSelector: {}
 

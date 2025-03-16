@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "myapp.fullname" . }}-statefulset
+  labels:
+    {{- include "myapp.labels" . | nindent 4 }}
+spec:
+  serviceName: "{{ include "myapp.fullname" . }}-headless"
+  replicas: {{ .Values.replicaCount }}
+  podManagementPolicy: Parallel
+  selector:
+    matchLabels:
+      app: "{{ .Chart.Name }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Chart.Name }}"
+    spec:
+      serviceAccountName: {{ include "myapp.serviceAccountName" . }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: config
+      initContainers:
+        - name: download-file
+          image: busybox:1.36.1
+          command: ['wget']
+          args:
+            - "-O"
+            - "/app/data/web-site.html"
+            - "http://example.com/"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+              readOnly: true
+            - name: web-site-volume
+              mountPath: /app/data
+              readOnly: false
+      containers:
+        - name: myapp
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 5000
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+            - name: web-site-volume
+              mountPath: /app/data
+  volumeClaimTemplates:
+    - metadata:
+        name: web-site-volume
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: {{ .Values.storageClass | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.storageSize }}
