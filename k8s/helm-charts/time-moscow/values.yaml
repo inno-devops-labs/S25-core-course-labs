@@ -37,8 +37,7 @@ serviceAccount:
 podLabels: {}
 
 podSecurityContext:
-  {}
-  # fsGroup: 2000
+  fsGroup: 2000
 
 securityContext:
   {}
@@ -123,4 +122,4 @@ persistence:
   name: "data"
   size: 5Mi
   storageClass: "local-path"
-  mountPath: "/app/visits"
+  mountPath: "/app/data/visits"

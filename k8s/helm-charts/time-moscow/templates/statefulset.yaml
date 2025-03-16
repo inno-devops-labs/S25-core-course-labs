@@ -7,6 +7,7 @@ metadata:
 spec:
   serviceName: {{ include "time-moscow.fullname" . }}
   replicas: {{ .Values.replicaCount }}
+  podManagementPolicy: Parallel
   selector:
     matchLabels:
       {{- include "common-lib.selectorLabels" . | nindent 6 }}
@@ -63,6 +64,7 @@ spec:
           volumeMounts:
             - name: {{ .Values.persistence.name }}
               mountPath: {{ .Values.persistence.mountPath }}
+
             {{- toYaml . | nindent 12 }}
           {{- end }}
       {{- with .Values.volumes }}

@@ -4,12 +4,12 @@ import uvicorn
 from zoneinfo import ZoneInfo
 from datetime import datetime
 from prometheus_fastapi_instrumentator import Instrumentator
-
+import os
 
 app = FastAPI()
 
 # Add visit counter functionality
-VISITS_FILE = "visits"
+VISITS_FILE = "data/visits"
 
 
 def read_visits():
@@ -65,4 +65,6 @@ async def _startup():
 
 
 if __name__ == "__main__":
+    if not os.path.exists("data"):
+        os.mkdir("data")
     uvicorn.run(app, host="0.0.0.0", port=8000)

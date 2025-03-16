@@ -4,6 +4,14 @@ from unittest.mock import patch
 from app import app
 from app import TimeProvider
 from fastapi.testclient import TestClient
+import os
+
+
+@pytest.fixture(scope="session", autouse=True)
+def mock_constant():
+    with patch("app.VISITS_FILE", "test_visits"):
+        yield
+    os.remove("test_visits")
 
 
 @pytest.fixture
