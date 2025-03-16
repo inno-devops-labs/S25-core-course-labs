@@ -1,5 +1,0 @@
-{
-  "env": "development",
-  "logLevel": "INFO",
-  "featureToggle": true
-}
