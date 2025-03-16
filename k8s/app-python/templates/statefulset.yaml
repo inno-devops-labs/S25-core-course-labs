@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: { { include "your-app.fullname" . } }
+  labels:
+    app: { { include "your-app.name" . } }
+spec:
+  serviceName: { { include "your-app.fullname" . } }
+  replicas: { { .Values.replicaCount } }
+  selector:
+    matchLabels:
+      app: { { include "your-app.name" . } }
+  template:
+    metadata:
+      labels:
+        app: { { include "your-app.name" . } }
+    spec:
+      containers:
+        - name: { { .Chart.Name } }
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - name: http
+              containerPort: { { .Values.containerPort } }
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: { { .Values.storageClass | quote } }
+        resources:
+          requests:
+            storage: { { .Values.storageSize | quote } }
