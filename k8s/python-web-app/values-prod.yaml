@@ -126,6 +126,8 @@ volumeMounts:
 #    mountPath: "/data/config.json"
 #    subPath: "config.json"
 #    readOnly: true
+  - name: py-visits-data-prod
+    mountPath: /app/data
 
 nodeSelector: {}
 
@@ -139,3 +141,9 @@ env:
 
 config:
   path: "files/config.json"
+
+volumeClaimTemplates:
+  name: py-visits-data-prod
+  storage: 512Mi
+
+podManagementPolicy: Parallel

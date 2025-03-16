@@ -122,6 +122,8 @@ volumeMounts:
 #    mountPath: "/data/config.json"
 #    subPath: "config.json"
 #    readOnly: true
+  - name: go-visits-data
+    mountPath: /app/data
 
 nodeSelector: {}
 
@@ -135,3 +137,9 @@ env:
 
 config:
   path: "files/config.json"
+
+volumeClaimTemplates:
+  name: go-visits-data
+  storage: 1024Mi
+
+podManagementPolicy: Parallel
