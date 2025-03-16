@@ -8,8 +8,8 @@ spec:
   project: default
   source:
     repoURL: https://github.com/YehiaSobeh/S25-core-course-labs.git
-    targetRevision: lab13
-    path: k8s/app-python  # Path to your Python app's Helm chart
+    targetRevision: lab13  # Ensure this branch exists
+    path: k8s/app-python   # Verify this path exists in the branch
     helm:
       valueFiles:
         - values.yaml
@@ -18,5 +18,5 @@ spec:
     namespace: default
   syncPolicy:
     automated:
-      prune: true     # Delete resources removed from Git
-      selfHeal: true  # Auto-correct drift
+      prune: true
+      selfHeal: true
