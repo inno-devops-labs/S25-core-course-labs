@@ -1,0 +1,9 @@
+replicaCount: 1
+image:
+    repository: angelika2707/lab2
+    pullPolicy: IfNotPresent
+    tag: "latest"
+resources:
+  limits:
+    cpu: "500m"
+    memory: "256Mi"
