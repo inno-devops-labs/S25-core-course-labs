@@ -178,7 +178,7 @@ spec:
     app.kubernetes.io/name: app-python
     app.kubernetes.io/instance: helm-hooks
 ---
-# Source: app-python/templates/deployment.yaml
+# Source: app-python/templates/statefulset.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:

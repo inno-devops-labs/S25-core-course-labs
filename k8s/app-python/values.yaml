@@ -74,14 +74,14 @@ resources:
     cpu: 100m
     memory: 128Mi
 
-#livenessProbe:
-#  httpGet:
-#    path: /
-#    port: http
-#readinessProbe:
-#  httpGet:
-#    path: /
-#    port: http
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
 
 autoscaling:
   enabled: false
@@ -95,7 +95,9 @@ volumes: []
 #  configMap:
 #    name: app-python-config
 
-volumeMounts: {}
+volumeMounts:
+  - name: app-python-data
+    mountPath: /app/visits
 #- name: app-python-config-volume
 #  mountPath: "/app/data/config.json"
 #  subPath: "config.json"
@@ -105,3 +107,9 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+podManagementPolicy: Parallel
+
+persistence:
+  name: app-python-data
+  size: 1Gi
