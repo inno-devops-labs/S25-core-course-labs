@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "mychart.fullname" . }}
+  name: python-app
   labels:
     app.kubernetes.io/name: {{ include "mychart.name" . | quote }}
     app.kubernetes.io/instance: {{ .Release.Name | quote }}
