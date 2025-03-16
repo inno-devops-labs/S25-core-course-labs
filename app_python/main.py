@@ -1,43 +1,39 @@
-from flask import Flask
+from flask import Flask, Response, jsonify
 from datetime import datetime
-import pytz
+from pytz import timezone
+from prometheus_client import generate_latest
+import os
 
 app = Flask(__name__)
 
-
+@app.route("/visits", methods=["GET"])
 def get_visits():
-    try:
-        with open('visits.txt', 'r') as file:
-            visits = int(file.read())
-        return visits
-    except FileNotFoundError:
-        with open('visits.txt', 'w') as file:
-            file.write('0')
-        return 0
+    if not os.path.exists('/app/visits.txt'):
+        with open('/app/visits.txt', 'w') as f:
+            f.write('0')
+    with open('/app/visits.txt', 'r') as f:
+        visit_count = int(f.readline())
+    return jsonify({"visit_count": visit_count})
 
-
-def update_visits(visits):
-    with open('visits.txt', 'w') as file:
-        file.write(str(visits))
-
+def save_visit_count():
+    if not os.path.exists('/app/visits.txt'):
+        with open('/app/visits.txt', 'w') as f:
+            f.write('0')
+    with open('/app/visits.txt', 'r') as f:
+        visit_count = int(f.readline())
+    with open('/app/visits.txt', 'w') as f:
+        f.write(str(visit_count+1))
 
 @app.route('/')
-def index():
-    tz_msk = pytz.timezone('Europe/Moscow')
-    current_time_msk = datetime.now(tz_msk)
+def show_time():
+    save_visit_count()
+    MSK = timezone("Europe/Moscow")
+    moscow_time = datetime.now(MSK).strftime("%Y:%m:%d %H:%M:%S %Z %z")
+    return jsonify({"time": moscow_time})
 
-    formatted_time = current_time_msk.strftime('%Y-%m-%d %H:%M:%S')
-
-    return f'<h1>Current time in Moscow (MSK): {formatted_time}</h1>'
-
-@app.route('/visits')
-def get_visits_route():
-    try:
-        visits = get_visits()
-        return f'The number of visits is: {visits}'
-    except Exception as e:
-        return f'An error occurred: {str(e)}'
-
+@app.route('/metrics')
+def metrics():
+    return Response(generate_latest(), mimetype="text/plain")
 
 if __name__ == '__main__':
     app.run(debug=True)
