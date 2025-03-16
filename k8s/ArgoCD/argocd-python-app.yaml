@@ -1,0 +1,22 @@
+# File: k8s/ArgoCD/argocd-python-app.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: python-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/YehiaSobeh/S25-core-course-labs.git
+    targetRevision: lab13
+    path: k8s/app-python  # Path to your Python app's Helm chart
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true     # Delete resources removed from Git
+      selfHeal: true  # Auto-correct drift
