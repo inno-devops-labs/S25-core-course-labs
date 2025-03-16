@@ -1,10 +1,24 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "app-python.fullname" . }}
   labels:
     {{- include "app-python.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ include "app-python.fullname" . }}
+  podManagementPolicy: {{ .Values.podManagementPolicy }}
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 1
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Values.volumeClaimTemplate.name }}
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ .Values.volumeClaimTemplate.size }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
@@ -44,17 +58,17 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          {{- with .Values.livenessProbe }}
           env:
           - name: APP_HOST
             value: "0.0.0.0"
           - name: APP_PORT
-            value: "{{ $.Values.service.port }}"
+            value: "{{ .Values.service.port }}"
           - name: PASSPHRASE
             valueFrom:
               secretKeyRef:
                 name: mysecret
                 key: passphrase
+          {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
           {{- end }}
