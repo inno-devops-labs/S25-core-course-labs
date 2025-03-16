@@ -1,0 +1,48 @@
+replicaCount: 3
+
+image:
+  repository: twentythree3/flask-app2
+  pullPolicy: Always
+  tag: "latest"
+
+service:
+  type: NodePort
+  port: 5001
+
+serviceName: "my-app-release-headless"
+
+persistence:
+  enabled: true
+  mountPath: /data
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+ingress:
+  enabled: false
+  annotations: {}
+  className: ""
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+volumeClaimTemplates:
+  name: "persistence-volume"
+  storage: 1Gi
+
+
+
+livenessProbe: {}
+readinessProbe: {}
+resources: {}
