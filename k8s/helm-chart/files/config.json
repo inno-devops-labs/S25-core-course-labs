@@ -1,0 +1,16 @@
+{
+  "app": {
+    "name": "python-app",
+    "version": "1.0.0",
+    "description": "A simple Flask application that counts visits",
+    "settings": {
+      "logLevel": "info",
+      "dataPath": "/data",
+      "visitsFile": "visits"
+    }
+  },
+  "server": {
+    "port": 8080,
+    "host": "0.0.0.0"
+  }
+} 

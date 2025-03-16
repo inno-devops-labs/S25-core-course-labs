@@ -1,0 +1,12 @@
+replicaCount: 2
+image:
+  repository: mazzz3r/app_python
+  tag: latest
+  pullPolicy: IfNotPresent
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi 
