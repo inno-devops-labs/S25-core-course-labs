@@ -118,6 +118,8 @@ tolerations: []
 
 affinity: {}
 
+serviceName: "python-app"
+
 podManagementPolicy: Parallel
 
 volumeClaimTemplates:

@@ -16,6 +16,7 @@ spec:
   selector:
     matchLabels:
       {{- include "python-app.selectorLabels" . | nindent 6 }}
+  serviceName: {{ .Values.serviceName }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}

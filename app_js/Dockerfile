@@ -15,6 +15,9 @@ ENTRYPOINT ["/usr/bin/tini", "--"]
 # for health checking
 RUN apt-get update && apt-get install -y curl
 
+# to access pods via DNS
+RUN apt update && apt install -y dnsutils
+
 RUN npm install --only=production
 
 # creating non-root user and give him ownership of the /app dir
