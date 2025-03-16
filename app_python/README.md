@@ -110,7 +110,7 @@ docker pull ebob/moscow-time:v1.2
 ```
 
 ```bash
-docker run -d --name msk -p 8080:8080 -v $(pwd)/data:/app/data ebob/moscow-time:v1.2
+docker run -d --name msk -p 8080:8080 -v $(pwd)/data:/tmp ebob/moscow-time:v1.2
 ```
 
 Now it is available on `localhost:8080`
