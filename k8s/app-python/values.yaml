@@ -124,6 +124,11 @@ tolerations: []
 
 affinity: {}
 
+
+
+env:
+  ENV: "default"
+
 podManagementPolicy: Parallel
 
 volumeClaimTemplates:

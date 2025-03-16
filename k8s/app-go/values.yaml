@@ -9,7 +9,7 @@ replicaCount: 1
 image:
   repository: nginx
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
@@ -73,7 +73,7 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources: {}
+resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -120,3 +120,9 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+podManagementPolicy: Parallel
+
+volumeClaimTemplates:
+  name: app-go-pvc
+  storage: 512Mi
