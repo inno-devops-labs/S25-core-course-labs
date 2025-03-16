@@ -69,16 +69,16 @@ spec:
             {{- toYaml .Values.volumeMounts | nindent 12 }}
             {{- end }}
           env:
-            - name: APP_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "python-app.fullname" . }}-secret
-                  key: APP_SECRET
-            - name: APP_ENV
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "python-app.fullname" . }}-secret
-                  key: APP_ENV
+            # - name: APP_SECRET
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: {{ include "python-app.fullname" . }}-secret
+            #       key: APP_SECRET
+            # - name: APP_ENV
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: {{ include "python-app.fullname" . }}-secret
+            #       key: APP_ENV
       volumes:
         - name: config-volume
           configMap:
