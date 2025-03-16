@@ -1,0 +1,46 @@
+replicaCount: 5
+
+image:
+  repository: shelma13/app_python
+  tag: "prod"
+
+service:
+  type: LoadBalancer
+  port: 5000
+
+resources:
+  limits:
+    cpu: "1"
+    memory: "512Mi"
+  requests:
+    cpu: "500m"
+    memory: "256Mi"
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+
+vault:
+  enabled: true
+  secretPath: "secret/prod-app"
+
+secret:
+  username: "prod-admin"
+  password: "prod-secret"
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
