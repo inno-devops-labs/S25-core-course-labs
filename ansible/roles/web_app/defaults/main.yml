@@ -1,0 +1,16 @@
+---
+# Default variables for the web_app role
+
+# Docker image to deploy (e.g., repository:tag)
+docker_image: "azazaki/app_python:latest"
+
+# Port mapping: host port : container port
+app_port: "8080"
+
+container_port: "5001"
+
+# Flag to control wipe logic; set to true to remove existing deployment before redeploying
+web_app_full_wipe: true
+
+# Directory where the Docker Compose file and related files are deployed
+web_app_deploy_dir: "/opt/web_app"
