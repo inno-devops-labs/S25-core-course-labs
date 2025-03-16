@@ -1,0 +1,74 @@
+# Default values for java-app.
+replicaCount: 1
+
+# Container image details
+image:
+  repository: nickwidbestie/random-color-picker
+  tag: 6d9f319aeb8fe1782ca1a1037371a90ab8867a3f
+  pullPolicy: Always
+  containerPort: 8081  # Ensure this matches the port exposed in the Dockerfile
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 8081  # Ensure this matches the containerPort above
+
+volumeClaimTemplates:
+  name: java-app-data
+  storage: 512Mi
+
+podManagementPolicy: Parallel
+
+# Liveness and readiness probes
+livenessProbe:
+  httpGet:
+    path: /hex/color
+    port: 8081
+  initialDelaySeconds: 10
+  periodSeconds: 20
+
+readinessProbe:
+  httpGet:
+    path: /hex/color
+    port: 8081
+  initialDelaySeconds: 5
+  periodSeconds: 10    # Check every 10 seconds
+
+# Resource requests and limits
+resources:
+   limits:
+     cpu: 300m
+     memory: 256Mi
+   requests:
+     cpu: 100m
+     memory: 256Mi
+
+# Service Account Configuration
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# Additional configurations (optional)
+ingress:
+  enabled: false
+autoscaling:
+  enabled: false
+
+volumes:
+   - name: config
+     configMap:
+       name: java-app-config
+
+volumeMounts:
+   - name: config
+     mountPath: /config.json
+     subPath: config.json
+   - name: java-app-data
+     mountPath: /data

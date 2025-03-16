@@ -1,0 +1,7 @@
+---
+- name: Download Docker Compose
+  get_url:
+    url: "{{ docker_compose_url }}"
+    dest: /usr/local/bin/docker-compose
+    mode: '0755'
+  when: ansible_os_family in ["Debian", "RedHat"]
