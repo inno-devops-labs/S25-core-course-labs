@@ -1,0 +1,10 @@
+plugin: yacloud_compute
+auth:
+  service_account_key_file: ~/yc-key.json
+  cloud_id: YOUR_CLOUD_ID
+  folder_id: YOUR_FOLDER_ID
+filters:
+  - status = RUNNING
+  - name = instance1
+compose:
+  ansible_host: network_interfaces[0].primary_v4_address.one_to_one_nat.address
