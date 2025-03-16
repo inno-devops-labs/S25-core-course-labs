@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from webtest import TestApp
 from datetime import datetime
 
-from app import TimeService, TemplateService, create_app
+from app import TimeService, TemplateService, StatsService, create_app
 from app_start import ZonedTimeService, HtmlTemplateService
 
 
