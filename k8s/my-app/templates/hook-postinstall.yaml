@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "my-app.fullname" . }}-postinstall"
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-delete-policy": hook-succeeded,hook-failed
+spec:
+  activeDeadlineSeconds: 120
+  containers:
+    - name: postinstall
+      image: busybox:latest
+      command: ["sleep", "20"]
+  restartPolicy: Never
