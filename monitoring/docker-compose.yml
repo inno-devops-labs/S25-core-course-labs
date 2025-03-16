@@ -1,0 +1,113 @@
+networks:
+  loki:
+
+services:
+  web_app:
+    build: ../app_python
+    mem_limit: 100m
+    ports:
+      - "8000:8000"
+    networks:
+      - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+        compress: 1
+        tag: "{{.ImageName}}|{{.Name}}"
+    volumes:
+      - ./visits:/visits
+
+  loki:
+    image: grafana/loki:latest
+    mem_limit: 100m
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+        compress: 1
+        tag: "{{.ImageName}}|{{.Name}}"
+
+  promtail:
+    image: grafana/promtail:latest
+    mem_limit: 100m
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers
+      - ./promtail.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+        compress: 1
+        tag: "{{.ImageName}}|{{.Name}}"
+
+  grafana:
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy
+          orgId: 1
+          url: http://loki:3100
+          basicAuth: false
+          isDefault: true
+          version: 1
+          editable: false
+        - name: Prometheus
+          type: prometheus
+          access: proxy
+          orgId: 1
+          url: http://prometheus:9090
+          basicAuth: false
+          isDefault: false
+        EOF
+        /run.sh
+    image: grafana/grafana:latest
+    mem_limit: 100m
+    ports:
+      - "3000:3000"
+    networks:
+      - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+        compress: 1
+        tag: "{{.ImageName}}|{{.Name}}"
+
+  prometheus:
+    image: prom/prometheus:latest
+    mem_limit: 100m
+    ports:
+      - "9090:9090"
+    networks:
+      - loki
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+        compress: 1
+        tag: "{{.ImageName}}|{{.Name}}"
