@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "python-app.fullname" . }}
+  namespace: {{ .Release.Namespace | default "default" }}
+  labels: {{ include "python-app.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "python-app.fullname" . }}
+  replicas: {{ .Values.replicaCount }}
+  podManagementPolicy: {{ .Values.podManagementPolicy | default "OrderedReady" }}
+  selector:
+    matchLabels: {{ include "python-app.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{ include "python-app.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - name: http
+              containerPort: 5000
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size | default "1Gi" }}

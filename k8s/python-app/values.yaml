@@ -1,4 +1,10 @@
-replicaCount: 1
+replicaCount: 3
+podManagementPolicy: "Parallel"
+
+persistence:
+  enabled: true
+  size: 1Gi
+  storageClass: "standard"
 
 image:
   repository: vechkanovvv/app_python
@@ -13,6 +19,11 @@ serviceAccount:
 service:
   type: ClusterIP
   port: 80
+  clusterIP: None
+  ports:
+    - name: http
+      port: 80
+      targetPort: 5000
 
 ingress:
   enabled: false
@@ -28,6 +39,7 @@ ingress:
 secrets:
   mySecret: "default_secret_here"
 
+# Resources
 resources:
   limits:
     cpu: 500m
@@ -41,3 +53,13 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 3
   targetCPUUtilizationPercentage: 80
+
+probes:
+  liveness:
+    path: /
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  readiness:
+    path: /
+    initialDelaySeconds: 2
+    periodSeconds: 5
