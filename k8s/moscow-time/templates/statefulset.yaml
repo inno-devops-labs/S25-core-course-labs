@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "moscow-time.fullname" . }}
   labels:
@@ -11,6 +11,8 @@ spec:
   selector:
     matchLabels:
       {{- include "moscow-time.selectorLabels" . | nindent 6 }}
+  serviceName: {{ .Values.serviceName }}
+  podManagementPolicy: {{ .Values.podManagementPolicy }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -65,6 +67,8 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /app/config
+            - name: visits-data
+              mountPath: /app/data
       volumes:
         - name: config-volume
           configMap:
@@ -81,3 +85,11 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: visits-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 10Mi

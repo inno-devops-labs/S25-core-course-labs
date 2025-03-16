@@ -9,7 +9,7 @@ replicaCount: 2
 image:
   repository: yoqub/app_python
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
 
@@ -124,6 +124,10 @@ volumeMounts: []
 
 secrets:
   my_secret: "lab13"
+
+serviceName: "moscow-time"
+
+podManagementPolicy: Parallel
 
 nodeSelector: {}
 

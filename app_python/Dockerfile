@@ -1,8 +1,14 @@
 # Use a minimal and specific base image for Python
-FROM python:3.9-alpine3.15
+FROM python:3.12.8-alpine3.21
 
 # Set the working directory inside the container to /app
 WORKDIR /app
+
+# for health checking
+RUN apk update && apk add curl
+
+# to access pods via DNS
+RUN apk add --no-cache bind-tools
 
 # Create a non-root user for security purposes
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
