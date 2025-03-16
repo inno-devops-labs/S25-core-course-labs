@@ -1,0 +1,23 @@
+---
+# Application deployment path
+app_deploy_path: "/opt/web_app"
+
+# Docker Compose configuration
+docker_compose_project_name: "web_app"
+docker_compose_file_path: "{{ app_deploy_path }}/docker-compose.yml"
+
+# Application configuration
+app_environment: "development"
+app_port: 8080
+
+# Docker image configuration
+docker_registry: ""  # Default to Docker Hub
+docker_image_name: ""
+docker_image_tag: "latest"
+
+# Environment variables for the application
+app_env_vars: {}
+
+# Health check configuration
+health_check_endpoint: "/health"
+health_check_timeout: 30 

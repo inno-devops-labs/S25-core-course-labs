@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Moscow Time</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .time {
+            font-size: 3rem;
+            color: #1a73e8;
+            margin: 1rem 0;
+        }
+        .refresh {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .refresh-btn {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1rem;
+            transition: background-color 0.2s;
+        }
+        .refresh-btn:hover {
+            background-color: #1557b0;
+        }
+        .visits {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Current Time in Moscow, Russia</h1>
+        <div class="time">{{ moscow_time }}</div>
+        <button class="refresh-btn" onclick="refreshTime()">Refresh Time</button>
+        <div id="visit-counter" class="visits">Loading visit count...</div>
+    </div>
+
+    <script>
+        function refreshTime() {
+            fetch('/get_time')
+                .then(response => response.json())
+                .then(data => {
+                    document.querySelector('.time').textContent = data.moscow_time;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Get the visit count when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/visits')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('visit-counter').textContent = `Page Visits: ${data.visits}`;
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
+    

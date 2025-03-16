@@ -1,0 +1,9 @@
+---
+# Docker version to install (latest by default)
+docker_version: latest
+
+# Docker Compose version to install
+docker_compose_version: "1.29.2"
+
+# Additional users to add to docker group (optional)
+docker_users: [] 
