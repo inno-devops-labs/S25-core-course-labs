@@ -1,7 +1,7 @@
 replicaCount: 2
 image:
   repository: mazzz3r/app_python
-  tag: stable
+  tag: latest
   pullPolicy: IfNotPresent
 resources:
   limits:
