@@ -1,10 +1,15 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "app-javascript.fullname" . }}
   labels:
     {{- include "app-javascript.labels" . | nindent 4 }}
 spec:
+  serviceName: app-js
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 1
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
@@ -81,3 +86,5 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+    {{- toYaml .Values.volumeClaimTemplates | nindent 4 }}
