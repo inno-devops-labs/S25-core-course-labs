@@ -1,10 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "time-app.fullname" . }}
   labels:
     {{- include "time-app.labels" . | nindent 4 }}
 spec:
+  podManagementPolicy: Parallel
+  serviceName: {{ .Values.statefulSet.serviceName }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
