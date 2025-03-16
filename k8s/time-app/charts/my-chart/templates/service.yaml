@@ -5,10 +5,12 @@ metadata:
   labels:
     {{- include "my-chart.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: NodePort
   ports:
     - protocol: TCP
       port: 5000
       targetPort: 5000
+      nodePort: 30000
   selector:
     {{- include "my-chart.selectorLabels" . | nindent 4 }}
+
