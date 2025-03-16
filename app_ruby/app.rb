@@ -5,6 +5,18 @@ require 'tzinfo'
 require 'prometheus/client'
 require 'prometheus/client/formats/text'
 
+VISITS_FILE = '/tmp/visits'
+
+def read_visits
+  File.exist?(VISITS_FILE) ? File.read(VISITS_FILE).to_i : 0
+end
+
+def increment_visits
+  visits = read_visits + 1
+  File.write(VISITS_FILE, visits)
+  visits
+end
+
 # Explicitly set trusted_hosts to allow Prometheus and local connections
 set :protection, except: [:json_csrf]
 set :bind, '0.0.0.0'
@@ -53,6 +65,8 @@ end
 
 get '/' do
   content_type 'text/plain'
+  visits = increment_visits
+
   # Set the timezone to Omsk
   begin
     timezone = TZInfo::Timezone.get('Asia/Omsk')
@@ -60,8 +74,8 @@ get '/' do
     # Get the current time in Omsk timezone
     omsk_time = timezone.now.strftime('%Y-%m-%d %H:%M:%S')
 
-    # Display the time
-    "Current time in Omsk: #{omsk_time}"
+    # Display the time and visit count
+    "Current time in Omsk: #{omsk_time}\nTotal visits: #{visits}"
   rescue TZInfo::InvalidTimezoneIdentifier => e
     timezone_lookup_errors.increment
     "Error: Invalid timezone identifier - #{e.message}"
@@ -69,6 +83,12 @@ get '/' do
     timezone_lookup_errors.increment
     "Error: #{e.message}"
   end
+end
+
+# Endpoint to get visit count
+get '/visits' do
+  content_type 'text/plain'
+  "Total visits: #{read_visits}"
 end
 
 # Prometheus metrics endpoint with explicit host check bypass

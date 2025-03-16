@@ -16,14 +16,6 @@ repos:
 
   - repo: local
     hooks:
-      - id: reek
-        name: Reek
-        entry: reek
-        language: system
-        files: ^app_ruby/
-
-  - repo: local
-    hooks:
       - id: rails_best_practices
         name: Rails Best Practices
         entry: rails_best_practices
