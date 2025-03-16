@@ -85,15 +85,15 @@ resources:
     cpu: 100m
     memory: 128Mi
 
-# # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-# livenessProbe:
-#   httpGet:
-#     path: /
-#     port: http
-# readinessProbe:
-#   httpGet:
-#     path: /
-#     port: http
+# This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
@@ -111,10 +111,12 @@ volumes: []
 #     optional: false
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts:
+  - name: data
+    mountPath: /data
+# - name: config-volume
+#   mountPath: "/config.json"
+#   readOnly: config.json
 
 nodeSelector: {}
 
