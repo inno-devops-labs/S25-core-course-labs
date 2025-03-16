@@ -1,0 +1,10 @@
+---
+- name: Deploy Go Application
+  hosts: all
+  become: yes
+  roles:
+    - web_app
+  vars:
+    docker_image: "justcgh/url-shortener-distroless"
+    app_port: 8080
+    web_app_full_wipe: false  
