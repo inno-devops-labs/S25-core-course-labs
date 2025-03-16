@@ -12,8 +12,9 @@ spec:
     helm:
       valueFiles:
         - values.yaml
+        - values-dev.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: dev
   syncPolicy:
     automated: {}
