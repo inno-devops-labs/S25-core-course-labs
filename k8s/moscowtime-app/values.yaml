@@ -10,10 +10,10 @@ nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
-  create: false
+  create: true
   automount: true
   annotations: {}
-  name: "internal-app"
+  name: "moscowtime-app"
 
 podAnnotations: {}
 podLabels: {}
