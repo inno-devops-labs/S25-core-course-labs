@@ -21,5 +21,7 @@ COPY templates templates
 COPY entrypoint.sh ./
 RUN chmod +x entrypoint.sh
 
+RUN mkdir ./data
+
 # Run the application
 ENTRYPOINT ["./entrypoint.sh"]
