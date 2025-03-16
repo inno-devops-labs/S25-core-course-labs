@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: python-app
+  name: python-app-prod
   namespace: argocd
 spec:
   project: default
@@ -11,9 +11,9 @@ spec:
     path: k8s/python-app
     helm:
       valueFiles:
-        - values.yaml
+        - values-prod.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: prod
   syncPolicy:
     automated: {}
