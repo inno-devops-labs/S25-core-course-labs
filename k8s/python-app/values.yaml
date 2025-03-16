@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
-replicaCount: 4
+replicaCount: 3
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
@@ -52,7 +52,7 @@ securityContext: {}
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
 service:
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-  type: NodePort
+  type: LoadBalancer
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 8080
 
@@ -98,11 +98,17 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
 
-# Additional volumes on the output Deployment definition.
-volumes: []
+volumes:
+  - name: config-volume
+    configMap:
+      name: test-config
 
-# Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
+volumeMounts:
+  - name: data
+    mountPath: /data
+  - name: config-volume
+    mountPath: /config.json
+    subPath: config.json
 
 nodeSelector: {}
 
@@ -126,3 +132,6 @@ vault:
       export DB_USERNAME="{{ .Data.data.username }}"
       export DB_PASSWORD="{{ .Data.data.password }}"
       {{- end -}}
+
+persistence:
+  size: 124Mi
