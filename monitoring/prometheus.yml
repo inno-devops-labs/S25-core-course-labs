@@ -1,0 +1,27 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    honor_timestamps: true
+    metrics_path: /metrics
+    scheme: http
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'loki'
+    static_configs:
+      - targets: ['loki:3100']
+
+  - job_name: 'promtail'
+    static_configs:
+      - targets: ['promtail:9080']
+
+  - job_name: 'webapp'
+    static_configs:
+      - targets: ['webapp:5000']
+  
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana:3000']
