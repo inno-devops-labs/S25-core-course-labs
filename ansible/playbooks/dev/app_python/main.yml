@@ -1,0 +1,8 @@
+- hosts: all
+  become: yes
+  roles:
+    - role: web_app
+      vars:
+        docker_image: "kira354/app_python-distroless"
+        container_name: "app_python"
+        app_port: 5000
