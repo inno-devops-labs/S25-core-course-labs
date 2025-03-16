@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "propositional-logic.fullname" . }}-config
+  labels:
+    {{- include "common-lib.labels" . | nindent 4 }}
+data:
+  UI_VERSION: "simple"
+  config.json: |-
+{{ .Files.Get "files/config.json" | indent 4 }} 
