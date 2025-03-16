@@ -16,7 +16,7 @@ TIMEZONE = 3
 DATE_FORMAT = "%a %b %d %H:%M:%S %Y"
 
 # Log file name
-filename = "/tmp/visits"
+filename = "/data/visits"
 if not exists(filename):
     with open(filename, "w") as f:
         f.write("0")

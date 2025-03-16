@@ -9,7 +9,7 @@ replicaCount: 2
 image:
   repository: registry.hub.docker.com/tedor49/python_msk_time
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
@@ -33,10 +33,7 @@ serviceAccount:
 
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-podAnnotations: {'vault.hashicorp.com/agent-inject': 'true',
-         'vault.hashicorp.com/role': 'internal-app',
-         'vault.hashicorp.com/agent-inject-secret-credentialsraw.txt': 'internal/data/database/config',
-         'vault.hashicorp.com/agent-inject-template-credentials.txt': '{{- with secret "internal/data/database/config" -}}password:{{ .Data.data.password }}{{- end -}}'}
+podAnnotations: {}
 # This is for setting Kubernetes Labels to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
@@ -115,10 +112,17 @@ volumes:
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-  
+  - name: python-msk-time-pvc
+    mountPath: /data
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
+
+volumeClaimTemplate:
+  name: "python-msk-time-pvc"
+  requestStorage: "100Mi"
+  
+podManagementPolicy: Parallel
 
 nodeSelector: {}
 
@@ -126,4 +130,3 @@ tolerations: []
 
 affinity: {}
 
-PASSWORD: password123
