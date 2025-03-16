@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
-  repository: your-docker-username/python-app
+  repository: mazzz3r/python-app
   tag: latest
   pullPolicy: Always
 resources:
