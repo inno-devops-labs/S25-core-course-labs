@@ -43,7 +43,12 @@ jobs:
           pip install pytest flake8
 
       - name: Run tests
-        run: pytest ./app_python/test_app.py -v
+        run: |
+          mkdir -p ./app_python/data
+          chmod 777 ./app_python/data
+          pytest ./app_python/test_app.py -v
+        env:
+          VISITS_FILE: ./app_python/data/visits.txt
 
       - name: Set up Node.js
         uses: actions/setup-node@v3

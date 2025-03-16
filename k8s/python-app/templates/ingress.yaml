@@ -10,8 +10,8 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- with .Values.ingress.className }}
-  ingressClassName: {{ . }}
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className | quote }}
   {{- end }}
   {{- if .Values.ingress.tls }}
   tls:
@@ -20,7 +20,7 @@ spec:
         {{- range .hosts }}
         - {{ . | quote }}
         {{- end }}
-      secretName: {{ .secretName }}
+      secretName: {{ .secretName | quote }}
     {{- end }}
   {{- end }}
   rules:
@@ -29,10 +29,8 @@ spec:
       http:
         paths:
           {{- range .paths }}
-          - path: {{ .path }}
-            {{- with .pathType }}
-            pathType: {{ . }}
-            {{- end }}
+          - path: {{ .path | default "/" }}
+            pathType: {{ .pathType | default "ImplementationSpecific" }}
             backend:
               service:
                 name: {{ include "python-app.fullname" $ }}
