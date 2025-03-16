@@ -1,9 +1,9 @@
-replicaCount: 3
+replicaCount: 2
 
 image:
-  repository: nginx
+  repository: mazzz3r/app_python
   pullPolicy: IfNotPresent
-  tag: "stable"
+  tag: latest
 
 nameOverride: ""
 fullnameOverride: ""
@@ -65,3 +65,22 @@ vault:
   enabled: false
   role: "demo"
   secretPath: "secret/data/database/config" 
+
+livenessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 10
+readinessProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+# StatefulSet specific values
+podManagementPolicy: "Parallel" 
+updateStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    partition: 0
+
+# Persistence configuration
+persistence:
+  storageClassName: "standard"
+  size: "1Gi"

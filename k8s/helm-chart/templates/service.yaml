@@ -5,11 +5,11 @@ metadata:
   labels:
     {{- include "helm-chart.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  clusterIP: None  # This makes it a headless service
   ports:
     - port: {{ .Values.service.port }}
       targetPort: http
       protocol: TCP
       name: http
   selector:
-    {{- include "helm-chart.selectorLabels" . | nindent 4 }} 
+    {{- include "helm-chart.selectorLabels" . | nindent 4 }}
