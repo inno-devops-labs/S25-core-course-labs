@@ -1,0 +1,5 @@
+fastapi==0.110.0
+prometheus-fastapi-instrumentator==7.0.0
+uvicorn==0.29.0
+Jinja2==3.1.2
+pytz==2024.1

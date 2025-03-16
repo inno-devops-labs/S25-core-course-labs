@@ -1,0 +1,87 @@
+networks:
+  default:
+    name: loki
+
+x-logging:
+  &default-logging
+  driver: "json-file"
+  options:
+    max-size: "5m"
+    max-file: "3"
+    tag: "{{.ImageName}}|{{.Name}}"
+
+x-deploy:
+  &default-deploy
+  resources:
+    limits:
+      memory: 100M
+
+services:
+  app-python:
+    build: ../app_python
+    ports:
+      - "8080:8080"
+    user: "10001:10001"
+    logging: *default-logging
+    volumes:
+      - ./python-data:/app/data
+    deploy: *default-deploy
+
+  loki:
+    image: grafana/loki:2.9.2
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    logging: *default-logging
+    deploy: *default-deploy
+
+  promtail:
+    image: grafana/promtail:2.9.2
+    volumes:
+      - ./promtail.yml:/etc/promtail/config.yml
+      - /var/lib/docker/containers:/var/lib/docker/containers
+    command: -config.file=/etc/promtail/config.yml
+    logging: *default-logging
+    deploy: *default-deploy
+
+  prometheus:
+    image: prom/prometheus:v2.30.1
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    logging: *default-logging
+    deploy: *default-deploy
+
+
+  grafana:
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy
+          orgId: 1
+          url: http://loki:3100
+          basicAuth: false
+          isDefault: true
+          version: 1
+          editable: false
+        EOF
+        /run.sh
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    logging: *default-logging
+    deploy: *default-deploy
