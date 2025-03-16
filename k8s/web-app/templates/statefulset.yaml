@@ -1,13 +1,27 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "web-app.fullname" . }}
   labels:
     {{- include "web-app.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ include "web-app.fullname" . }}
+  podManagementPolicy: {{ .Values.podManagementPolicy }}
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 1
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Values.persistence.name }}
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ .Values.persistence.size }}
   selector:
     matchLabels:
       {{- include "web-app.selectorLabels" . | nindent 6 }}
@@ -40,25 +54,6 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            - name: DB_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "web-app.fullname" . }}-secrets
-                  key: DB_USERNAME
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "web-app.fullname" . }}-secrets
-                  key: DB_PASSWORD
-            - name: APP_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "web-app.fullname" . }}-secrets
-                  key: APP_SECRET_KEY
-            {{- with .Values.env }}
-            {{- toYaml . | nindent 12 }}
-            {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

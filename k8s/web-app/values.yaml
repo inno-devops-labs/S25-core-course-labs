@@ -9,7 +9,7 @@ replicaCount: 3
 image:
   repository: dpttk/devopslabs
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
 
@@ -125,7 +125,9 @@ volumes: []
 #     optional: false
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
+volumeMounts:
+  - name: python-data
+    mountPath: /app_python/data
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
@@ -135,3 +137,9 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+persistence:
+  name: python-data
+  size: 1Gi
+
+podManagementPolicy: Parallel

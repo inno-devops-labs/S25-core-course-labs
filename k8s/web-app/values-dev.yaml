@@ -126,6 +126,8 @@ volumes: []
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: []
+  - name: app-data
+    mountPath: /app_python/data/visits
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
@@ -135,3 +137,9 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+persistence:
+  name: python-data
+  size: 1Gi
+
+podManagementPolicy: Parallel

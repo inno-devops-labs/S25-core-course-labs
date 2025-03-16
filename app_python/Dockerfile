@@ -7,6 +7,7 @@ WORKDIR /app
 COPY . .
 
 # install reqs and create user
+RUN apt update && apt install -y dnsutils
 RUN pip install --no-cache-dir -r requirements.txt && adduser -D webapp
 RUN touch /app/app.log && chmod 777 /app/app.log
 USER webapp
