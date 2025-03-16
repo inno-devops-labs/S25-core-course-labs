@@ -1,0 +1,17 @@
+replicaCount: 1
+
+serviceAccount:
+  create: true
+
+service:
+  type: ClusterIP
+
+ingress:
+  enabled: false
+
+secrets:
+  mySecret: "dev_secret_123"
+
+resources:
+  limits:
+    memory: 256Mi

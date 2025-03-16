@@ -1,0 +1,17 @@
+replicaCount: 3
+
+serviceAccount:
+  create: true
+
+service:
+  type: LoadBalancer
+
+ingress:
+  enabled: false
+
+secrets:
+  mySecret: "prod_secret_456"
+
+autoscaling:
+  enabled: true
+  maxReplicas: 5
