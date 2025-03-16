@@ -9,7 +9,7 @@ replicaCount: 1
 image:
   repository: azamatbayramov/s25-devops-go
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
@@ -110,6 +110,14 @@ volumeMounts:
   - name: app-go-helm-config-volume
     mountPath: /app/config.json
     subPath: config.json
+  - name: app-go-visits
+    mountPath: /app/visits
+
+podManagementPolicy: Parallel
+
+persistence:
+  name: app-go-visits
+  size: 2Gi
 
 nodeSelector: {}
 

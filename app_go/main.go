@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"sync"
@@ -25,6 +26,9 @@ const (
 	// HTML file with the web page
 	HTMLFileName = "index.html"
 
+	// Folder to store the number of visits
+	visitsFolderName = "visits"
+
 	// File with the number of visits
 	visitsFileName = "visits-go.txt"
 )
@@ -35,9 +39,15 @@ func incrementVisits() (int, error) {
 	mu.Lock()
 	defer mu.Unlock()
 
+	// Ensure the visits folder exists
+	if err := os.MkdirAll(visitsFolderName, os.ModePerm); err != nil {
+		return 0, err
+	}
+
+	visitsFilePath := filepath.Join(visitsFolderName, visitsFileName)
 	var count int
 
-	data, err := os.ReadFile(visitsFileName)
+	data, err := os.ReadFile(visitsFilePath)
 	if err != nil {
 		if os.IsNotExist(err) {
 			count = 1
@@ -52,7 +62,7 @@ func incrementVisits() (int, error) {
 		count++
 	}
 
-	err = os.WriteFile(visitsFileName, []byte(strconv.Itoa(count)), 0666)
+	err = os.WriteFile(visitsFilePath, []byte(strconv.Itoa(count)), 0666)
 	if err != nil {
 		return 0, err
 	}

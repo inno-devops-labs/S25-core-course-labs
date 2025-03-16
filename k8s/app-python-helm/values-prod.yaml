@@ -110,6 +110,14 @@ volumeMounts:
   - name: app-python-helm-config-volume
     mountPath: /app/config.json
     subPath: config.json
+  - name: app-python-visits
+    mountPath: /app/visits
+
+podManagementPolicy: Parallel
+
+persistence:
+  name: app-python-visits
+  size: 2Gi
 
 nodeSelector: {}
 

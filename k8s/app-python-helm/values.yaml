@@ -9,7 +9,7 @@ replicaCount: 2
 image:
   repository: azamatbayramov/s25-devops-py
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
@@ -110,6 +110,14 @@ volumeMounts:
   - name: app-python-helm-config-volume
     mountPath: /app/config.json
     subPath: config.json
+  - name: app-python-visits
+    mountPath: /app/visits
+
+podManagementPolicy: Parallel
+
+persistence:
+  name: app-python-visits
+  size: 2Gi
 
 nodeSelector: {}
 

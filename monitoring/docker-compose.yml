@@ -14,7 +14,7 @@ services:
     networks:
       - monitoring
     volumes:
-      - ./visits-py.txt:/app/visits-py.txt
+      - ./visits:/app/visits
     logging:
       driver: "json-file"
       options:
@@ -39,7 +39,7 @@ services:
     networks:
       - monitoring
     volumes:
-      - ./visits-go.txt:/app/visits-go.txt
+      - ./visits:/app/visits
     logging:
       driver: "json-file"
       options:

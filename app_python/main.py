@@ -31,7 +31,10 @@ TIMEZONE = "Europe/Moscow"
 HTML_FILENAME = "index.html"
 
 # visits
+VISITS_COUNTER_FOLDER = "visits"
 VISITS_COUNTER_FILE = "visits-py.txt"
+
+VISITS_COUNTER_FILE_PATH = os.path.join(VISITS_COUNTER_FOLDER, VISITS_COUNTER_FILE)
 
 REQUESTS_COUNT = Counter(
     "http_requests_total",
@@ -48,8 +51,11 @@ REQUESTS_LATENCY = Histogram(
 def increment_counter():
     count = 0
 
-    if os.path.exists(VISITS_COUNTER_FILE):
-        with open(VISITS_COUNTER_FILE, "r") as f:
+    if not os.path.exists(VISITS_COUNTER_FOLDER):
+        os.makedirs(VISITS_COUNTER_FOLDER)
+
+    if os.path.exists(VISITS_COUNTER_FILE_PATH):
+        with open(VISITS_COUNTER_FILE_PATH, "r") as f:
             try:
                 count = int(f.read())
             except ValueError:
@@ -57,7 +63,7 @@ def increment_counter():
 
     count += 1
 
-    with open(VISITS_COUNTER_FILE, "w") as f:
+    with open(VISITS_COUNTER_FILE_PATH, "w") as f:
         f.write(str(count))
 
     return count

@@ -66,10 +66,10 @@ docker run -p 8002:8002 azamatbayramov/s25-devops-go-dl
 
 ### Using monitoring `docker-compose.yml`
 
-1. Change permissions for `visits-go.txt` using the following command in `monitoring` directory:
+1. Change permissions for `visits` folder:
 
 ```bash
-chmod 666 visits-go.txt
+chmod 777 visits -R
 ```
 
 2. Run the application using the following command in `monitoring` directory:
