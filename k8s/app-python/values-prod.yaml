@@ -1,7 +1,42 @@
-# Prod environment values
-replicaCount: 4
+# File: k8s/app-python/values-prod.yaml
+
+# Production-specific values
+replicaCount: 3
+
 image:
-  repository: YehiaSobeh/python-app
-  tag: prod-stable
+  repository: nginx  # Replace with your actual image (e.g., DockerHub/ECR URL)
+  tag: latest         # Use a stable tag (avoid "latest" in real-world scenarios)
+  pullPolicy: IfNotPresent
+
 service:
-  port: 5000
+  type: ClusterIP     # Use LoadBalancer/NodePort for external access if needed
+  port: 80            # Port exposed by the service
+
+# Resource limits for production
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+
+# Liveness and readiness probes
+probes:
+  liveness:
+    path: /healthz
+    port: 80
+    initialDelaySeconds: 15
+    periodSeconds: 10
+  readiness:
+    path: /readyz
+    port: 80
+    initialDelaySeconds: 5
+    periodSeconds: 10
+
+# Environment variables (customize as needed)
+env:
+  - name: ENV_MODE
+    value: "prod"
+  - name: LOG_LEVEL
+    value: "info"
