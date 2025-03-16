@@ -1,0 +1,12 @@
+---
+- name: Ensure Docker service is enabled and started on boot
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Add current user to docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
