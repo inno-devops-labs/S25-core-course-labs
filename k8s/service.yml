@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"argocd.argoproj.io/instance":"python-app"},"name":"flask-app","namespace":"default"},"spec":{"nodePort":30007,"ports":[{"port":80,"protocol":"TCP","targetPort":5000}],"selector":{"app":"flask-app-app"},"type":"NodePort"}}
+    meta.helm.sh/release-name: flask-app
+    meta.helm.sh/release-namespace: default
+  creationTimestamp: "2025-03-09T20:07:00Z"
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    argocd.argoproj.io/instance: python-app
+  name: flask-app
+  namespace: default
+  resourceVersion: "84652"
+  uid: bfa97263-a29f-4dd1-b7c6-849061b4ac22
+spec:
+  clusterIP: 10.96.122.31
+  clusterIPs:
+  - 10.96.122.31
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 30864
+    port: 80
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: flask-app-app
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}

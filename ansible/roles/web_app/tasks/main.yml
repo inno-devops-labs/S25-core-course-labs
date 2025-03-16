@@ -1,0 +1,51 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: Setup Docker Environment
+  block:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+      become: true
+
+    - name: Start Docker Service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+      become: true
+  tags:
+    - setup
+
+- name: Pull Docker Image
+  docker_image:
+    name: "{{ docker_image }}"
+    source: pull
+  tags:
+    - docker
+
+- name: Copy Docker Compose Template
+  template:
+    src: docker-compose.yml.j2
+    dest: /home/{{ ansible_user }}/docker-compose.yml
+  tags:
+    - deploy
+
+- name: Run Docker Container
+  command: docker compose up -d
+  args:
+    chdir: /home/{{ ansible_user }}
+  tags:
+    - deploy
+
+- name: Verify Running Containers
+  command: docker ps
+  register: running_containers
+  tags:
+    - verify
+
+- name: Show Running Containers
+  debug:
+    var: running_containers.stdout
+  tags:
+    - verify
