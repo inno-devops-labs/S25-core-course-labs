@@ -63,6 +63,8 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /app/config
+            - name: visits
+              mountPath: /app/visits
           env:
             - name: CPU_REQUEST
               value: "{{ .Values.env.cpuRequest }}"
@@ -81,6 +83,7 @@ spec:
         - name: config-volume
           configMap:
             name: {{ .Release.Name }}-config
+        - name: visits
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -93,3 +96,11 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+  - metadata:
+      name: visits
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Mi
