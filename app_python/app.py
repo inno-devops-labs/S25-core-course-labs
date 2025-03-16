@@ -26,19 +26,19 @@ def time_request():
     return render_template('time_request.html', time=moscow_time)
 
 def visit():
-    if not os.path.exists("/tmp/visits.txt"):
-        os.makedirs("/tmp", exist_ok=True)
-        with open("/tmp/visits.txt", "w") as file:
+    if not os.path.exists("/data/visits.txt"):
+        os.makedirs("/data", exist_ok=True)
+        with open("/data/visits.txt", "w") as file:
             file.write("0")
-    with open("/tmp/visits.txt", "r") as file:
+    with open("/data/visits.txt", "r") as file:
         v = int(file.read())
-    with open("/tmp/visits.txt", "w") as file:
+    with open("/data/visits.txt", "w") as file:
         file.write(str(v + 1))
 
 @app.route('/visits')
 def visits_request():
     visit()
-    with open("/tmp/visits.txt", "r") as file:
+    with open("/data/visits.txt", "r") as file:
         return jsonify(content={"visits": int(file.read())})
 
 

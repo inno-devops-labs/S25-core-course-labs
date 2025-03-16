@@ -18,6 +18,7 @@ imagePullSecrets: []
 # This is to override the chart name.
 nameOverride: ""
 fullnameOverride: ""
+name: "python-app"
 
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
@@ -113,6 +114,18 @@ volumes:
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
+  - name: python-moskov-time-volume-mount
+    mountPath: /data
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+volumeClaimTemplate:
+  name: python-moskov-time-volume-mount
+  requestStorage: "100Mi"
+  
+podManagementPolicy: Parallel
+
 
 nodeSelector: {}
 
@@ -125,3 +138,5 @@ config:
   
 env:
   ENVIRONMENT: stage
+
+podManagementPolicy: Parallel
