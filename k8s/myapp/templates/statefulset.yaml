@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "myapp.fullname" . }}
+  labels:
+    app: {{ include "myapp.fullname" . }}
+spec:
+  serviceName: "{{ .Values.service.name }}"
+  replicas: {{ .Values.statefulset.replicas }}
+  podManagementPolicy: Parallel
+  selector:
+    matchLabels:
+      app: {{ include "myapp.fullname" . }}
+
+  template:
+    metadata:
+      labels:
+        app: {{ include "myapp.fullname" . }}
+    spec:
+      serviceAccountName: {{ include "myapp.serviceAccountName" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          volumeMounts:
+            - name: myapp-storage
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: myapp-storage
+      spec:
+        accessModes:
+          - {{ .Values.statefulset.storage.accessMode }}
+        resources:
+          requests:
+            storage: {{ .Values.statefulset.storage.size }}
