@@ -14,6 +14,7 @@ app.after_request(after_request)
 # Path to the visits file
 VISITS_FILE = '/data/visits'
 
+
 # Function to read the visit count
 def read_visit_count():
     try:
@@ -24,6 +25,7 @@ def read_visit_count():
     except Exception as e:
         logger.error(f"Error reading visit count: {e}")
         return 0
+
 
 # Function to update the visit count
 def update_visit_count():
@@ -37,16 +39,19 @@ def update_visit_count():
         logger.error(f"Error updating visit count: {e}")
         return 0
 
+
 # Add metrics endpoint
 @app.route('/metrics')
 def metrics_endpoint():
     return metrics()
+
 
 # Add visits endpoint
 @app.route('/visits')
 def visits():
     count = read_visit_count()
     return render_template('visits.html', count=count)
+
 
 @app.route('/')
 def current_time():
@@ -61,6 +66,7 @@ def current_time():
     return render_template(
         'index.html', current_time=moscow_time, visit_count=visit_count
     )
+
 
 def log_request():
     logger.info(f"Received request: {request.method} {request.url}")
