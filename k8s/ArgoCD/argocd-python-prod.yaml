@@ -18,3 +18,4 @@ spec:
     namespace: prod
   syncPolicy:
     automated: {}
+
