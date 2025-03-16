@@ -119,7 +119,9 @@ tolerations: []
 affinity: {}
 
 podManagementPolicy: Parallel
+
 volumeClaimTemplates:
   name: python-pvc
-  accessModes: ["ReadWriteOnce"]
   storage: "100Mi"
+
+updateStrategyType: RollingUpdate

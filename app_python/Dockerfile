@@ -13,6 +13,9 @@ RUN echo "0" > data/visits
 # for health checking
 RUN apt-get update && apt-get install -y curl
 
+# to access pods via DNS
+RUN apt update && apt install -y dnsutils
+
 # creating non-root user and give him ownership of the /app dir
 RUN addgroup --system appuser && \
     adduser --system --group appuser && \

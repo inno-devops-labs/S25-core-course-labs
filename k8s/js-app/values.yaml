@@ -120,3 +120,11 @@ env:
   COURSE: devops
 
 configPath: "files/config.json"
+
+podManagementPolicy: Parallel
+
+volumeClaimTemplates:
+  name: js-pvc
+  storage: "100Mi"
+
+updateStrategyType: RollingUpdate
