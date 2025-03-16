@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "app-python.fullname" . }}
   labels:
@@ -8,9 +8,14 @@ spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 1
   selector:
     matchLabels:
       {{- include "app-python.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "app-python.fullname" . }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -76,3 +81,15 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+    {{- with .Values.volumeClaimTemplates }}
+    {{- toYaml . | nindent 4 }}
+    {{- else }}
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: {{ .Values.storageSize | default "1Gi" }}
+    {{- end }}

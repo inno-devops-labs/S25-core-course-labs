@@ -125,3 +125,10 @@ environment:
   env_var_1: "first env variable"
   env_var_2: "second env variable"
   env_var_3: "third env variable"
+
+
+podManagementPolicy: Parallel
+
+persistence:
+  name: persistance
+  size: 1Gi
