@@ -4,7 +4,7 @@ from datetime import datetime, timezone, timedelta
 from flask import Flask, render_template, Response
 
 app = Flask(__name__)
-visits_file = "visits.txt"
+visits_file = "/data/visits"
 
 
 def increment_visit_count():

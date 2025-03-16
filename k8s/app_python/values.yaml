@@ -2,13 +2,16 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+replicaCount: 3
 
 image:
   repository: kurkune/app_python
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
+
+# Secret values
+password: "my-password"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -51,6 +54,23 @@ service:
   type: ClusterIP
   port: 8080
 
+# StatefulSet configuration
+statefulset:
+  # Storage class to use for the persistent volume claims
+  storageClassName: "standard"
+  # Storage size for each persistent volume claim
+  storage: "1Gi"
+  # Pod management policy - can be "OrderedReady" or "Parallel"
+  podManagementPolicy: "Parallel"
+  # Update strategy
+  updateStrategy:
+    # Can be "RollingUpdate" or "OnDelete"
+    type: "RollingUpdate"
+    rollingUpdate:
+      # Partition indicates the ordinal at which the StatefulSet should be partitioned
+      # for updates. Default value is 0.
+      partition: 0
+
 ingress:
   enabled: false
   className: ""
@@ -79,10 +99,21 @@ livenessProbe:
   httpGet:
     path: /
     port: http
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
+
 readinessProbe:
   httpGet:
     path: /
     port: http
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
 
 autoscaling:
   enabled: false

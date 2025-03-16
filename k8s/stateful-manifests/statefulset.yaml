@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: app-stateful
+  namespace: stateful-lab
+  labels:
+    app: app-stateful
+spec:
+  serviceName: app-stateful
+  podManagementPolicy: Parallel
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-stateful
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
+  template:
+    metadata:
+      labels:
+        app: app-stateful
+    spec:
+      containers:
+        - name: app-python
+          image: kurkune/app_python:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 5000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+          resources:
+            limits:
+              cpu: 1
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 30Mi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 1Gi 

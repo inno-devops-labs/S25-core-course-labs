@@ -1,16 +1,24 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "app-python.fullname" . }}
   labels:
-    {{- include "simple-library.labels" . | nindent 4 }}
+    {{- include "app-python.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ include "app-python.fullname" . }}
+  podManagementPolicy: {{ .Values.statefulset.podManagementPolicy | default "OrderedReady" }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "simple-library.labels" . | nindent 6 }}
+      {{- include "app-python.selectorLabels" . | nindent 6 }}
+  updateStrategy:
+    type: {{ .Values.statefulset.updateStrategy.type | default "RollingUpdate" }}
+    {{- if eq .Values.statefulset.updateStrategy.type "RollingUpdate" }}
+    rollingUpdate:
+      partition: {{ .Values.statefulset.updateStrategy.rollingUpdate.partition | default 0 }}
+    {{- end }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +26,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "simple-library.labels" . | nindent 8 }}
+        {{- include "app-python.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -39,7 +47,6 @@ spec:
                 secretKeyRef:
                   name: credentials
                   key: password
-            {{ include "app-python.envs" . | nindent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
@@ -50,14 +57,12 @@ spec:
             {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
+            - name: data
+              mountPath: /data
+            {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
-      volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+            {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -70,3 +75,12 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: {{ .Values.statefulset.storageClassName | default "standard" }}
+        resources:
+          requests:
+            storage: {{ .Values.statefulset.storage | default "1Gi" }} 

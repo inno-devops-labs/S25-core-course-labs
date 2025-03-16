@@ -3,4 +3,7 @@ kind: ConfigMap
 metadata:
   name: config
 data:
-  config.json: |- {{ .Files.Get "files/config.json" | indent 4}}
+  config: |
+    {
+        "password": "HelloWorld!"
+    }
