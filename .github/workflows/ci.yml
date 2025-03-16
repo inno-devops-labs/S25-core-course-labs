@@ -1,0 +1,102 @@
+name: CI/CD Pipeline
+
+on:
+    push:
+      paths:
+        - 'app_python/**'
+        - '.github/workflows/ci.yml'
+      branches:
+        - '**'
+    pull_request:
+      paths:
+        - 'app_python/**'
+        - '.github/workflows/ci.yml'
+
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']  # Test multiple Python versions
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4  # Updated to latest version
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'  # Enable built-in pip caching
+
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/pip
+          **/__pycache__
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install dependencies
+      working-directory: app_python
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Lint with flake8
+      working-directory: app_python
+      run: flake8 . --count --max-complexity=10 --statistics
+
+    - name: Run tests with coverage
+      working-directory: app_python
+      run: |
+        python -m pytest -v
+
+  docker-build:
+    runs-on: ubuntu-latest
+    needs: build-test
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3  # Latest buildx version
+
+    - name: Cache Docker layers
+      uses: actions/cache@v3
+      with:
+        path: /tmp/.buildx-cache
+        key: ${{ runner.os }}-buildx-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-buildx-
+
+    - name: Docker Login
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    - name: Build and Push
+      uses: docker/build-push-action@v6
+      with:
+        context: ./app_python
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/lab2:latest
+
+
+  security-scan:
+    runs-on: ubuntu-latest
+    needs: build-test
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Snyk Security Scan
+      uses: snyk/actions/python@master
+      with:
+        command: monitor
+        args: --severity-threshold=high --skip-unresolved app_python/
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
