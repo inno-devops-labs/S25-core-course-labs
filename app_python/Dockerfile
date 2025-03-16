@@ -13,6 +13,8 @@ WORKDIR $APP_HOME
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN apt update && apt install -y dnsutils
+
 # Copy application files
 COPY src src
 COPY static static
