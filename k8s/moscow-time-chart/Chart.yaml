@@ -1,0 +1,9 @@
+apiVersion: v2
+name: moscow-time-chart
+description: A Helm chart for Moscow Time application
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+maintainers:
+  - name: Vladislav Bolshakov
+    email: v.bolshakov@innopolis.university
