@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: python-app
+spec:
+  serviceName: "python-app"
+  replicas: 3  # Ensure at least 3 replicas
+  selector:
+    matchLabels:
+      app: python-app
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      podManagementPolicy: {{ .Values.podManagementPolicy }}
+      containers:
+        - name: python-app
+          image: em1999jay/python-app:latest
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - name: app-data
+              mountPath: /data
+          livenessProbe:
+              httpGet:
+                path: /
+                port: 5000
+              initialDelaySeconds: 10
+              periodSeconds: 5
+          readinessProbe:
+              httpGet:
+                path: /
+                port: 5000
+              initialDelaySeconds: 5
+              periodSeconds: 3
+
+          env:
+            - name: MY_USER
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: MY_USER
+            - name: MY_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: MY_PASS
+  volumeClaimTemplates:
+    - metadata:
+        name: app-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
