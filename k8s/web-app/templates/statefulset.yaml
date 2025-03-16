@@ -1,13 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "web-app.fullname" . }}
   labels:
     {{- include "web-app.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  serviceName: {{ include "web-app.fullname" . }}  # Название headless service для StatefulSet
+  replicas: 3
   selector:
     matchLabels:
       {{- include "web-app.selectorLabels" . | nindent 6 }}
@@ -85,3 +84,11 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data  # Название PVC
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi  # Объем хранилища для PVC
