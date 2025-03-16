@@ -59,7 +59,7 @@ In this lab, you will implement ArgoCD to automate Kubernetes application deploy
    - Forward the ArgoCD server port:
 
      ```bash
-     kubectl port-forward svc/argocd-server -n argocd 8080:443 &
+     kubectl port-forward svc/argocd-server -n argocd 8081:443 &
      ```
 
    - Log in using the initial admin password:
@@ -69,7 +69,7 @@ In this lab, you will implement ArgoCD to automate Kubernetes application deploy
      kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode
 
      # Log in via CLI:
-     argocd login localhost:8080 --insecure
+     argocd login localhost:8081 --insecure
      argocd account login
      ```
 
