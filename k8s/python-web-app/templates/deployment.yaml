@@ -44,15 +44,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: MY_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: password
-                  key: password
             {{- include "common.env" . | nindent 12 }}
-          envFrom:
-            - configMapRef:
-                name: py-app-config
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
