@@ -61,7 +61,9 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{/*
 {{- define "common.env" }}
 - name: ENVIRONMENT
   value: {{ .Values.env.ENVIRONMENT | quote }}
 {{ end }}
+*/}}
