@@ -1,0 +1,13 @@
+- name: Wipe Web App Deployment
+  block:
+    - name: Stop and Remove Docker Container
+      command: docker rm -f {{ container_name }}
+      ignore_errors: yes
+
+    - name: Remove Docker Compose File
+      file:
+        path: /home/{{ ansible_user }}/docker-compose.yml
+        state: absent
+  when: web_app_full_wipe | default(false) | bool
+  tags:
+    - wipe
