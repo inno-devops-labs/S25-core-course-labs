@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['prometheus:9090']
+
+  - job_name: 'loki'
+    static_configs:
+      - targets: ['loki:3100']
+        
+  - job_name: 'web_app'
+    static_configs:
+      - targets: ['web_app:5000'] 
