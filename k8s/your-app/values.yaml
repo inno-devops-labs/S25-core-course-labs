@@ -53,6 +53,7 @@ securityContext: {}
 service:
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
   type: ClusterIP
+  clusterIP: None  # Makes it a headless service
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 80
 
@@ -129,4 +130,7 @@ vault:
   role: "my-role"
   secretPath: "secret/data/myapp"
   secretKey: "password"
+
+persistence:
+  size: 1Gi
 

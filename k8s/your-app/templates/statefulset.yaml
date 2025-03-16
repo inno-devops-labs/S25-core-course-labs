@@ -1,10 +1,11 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: your-app
+  name: {{ include "your-app.fullname" . }}
   labels:
     {{- include "your-app.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ include "your-app.fullname" . }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
@@ -50,32 +51,21 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
-          # Fixed volumeMounts section
           volumeMounts:
             - name: config-volume
-              mountPath: /app/config.json  # Full file path
-              subPath: config.json         # Mount single file
-          {{- with .Values.resources }}
-          resources:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      # Fixed volumes section (removed with condition)
+              mountPath: /app/config.json
+              subPath: config.json
+            - name: data
+              mountPath: /data
       volumes:
         - name: config-volume
           configMap:
-            name: your-app-config  # Must match ConfigMap name
-            items:
-              - key: config.json     # Key in ConfigMap
-                path: config.json    # File name in volume
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+            name: {{ include "your-app.fullname" . }}-config
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size }} 
