@@ -127,3 +127,15 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+
+statefulset:
+  enabled: true
+  serviceName: "app-python-headless"
+  volumeClaimTemplates:
+    storageClassName: "standard"
+    accessModes: ["ReadWriteOnce"]
+    size: 1Gi
+  persistentVolume:
+    mountPath: "/data"
+    claimName: "data"
