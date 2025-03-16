@@ -7,6 +7,8 @@ This application shows current time in the provided timezone at endpoint `/`.
 Timezone, host and port by default are `Europe/Moscow`, `0.0.0.0` and `8080` respectively, but they can be changed
 with command line arguments.
 
+Also, `/visits` returns number of visits for `/`.
+
 ## Usage
 
 ```shell

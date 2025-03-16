@@ -31,10 +31,21 @@ class MockTemplateService(TemplateService):
         return f'{int(current_time.timestamp())}'
 
 
+class MockStatsService(StatsService):
+    def __init__(self):
+        self.visits = 0
+
+    def get_visits(self) -> int:
+        return self.visits
+    
+    def increment_visits(self):
+        self.visits += 1
+
+
 class TestController(unittest.TestCase):
     def setUp(self):
         self.time_values = [i * 1000000 for i in range(1, 4)]
-        self.app = TestApp(create_app(MockTimeService(self.time_values), MockTemplateService()))
+        self.app = TestApp(create_app(MockTimeService(self.time_values), MockTemplateService(), MockStatsService()))
 
     def test_index(self):
         for value in self.time_values + self.time_values:
