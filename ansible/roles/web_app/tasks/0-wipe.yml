@@ -1,0 +1,26 @@
+---
+- name: Wipe application environment
+  block:
+    - name: Stop and remove Docker container using Docker Compose
+      ansible.builtin.command:
+        cmd: docker-compose -f {{ docker_compose_file }} down
+        chdir: "{{ docker_compose_dir }}"
+      ignore_errors: yes
+    
+    - name: Remove Docker image
+      ansible.builtin.command:
+        cmd: docker rmi {{ docker_image_name }}
+      ignore_errors: yes
+    
+    - name: Remove Docker Compose directory
+      ansible.builtin.file:
+        path: "{{ docker_compose_dir }}"
+        state: absent
+      
+    - name: Remove app source directory
+      ansible.builtin.file:
+        path: "{{ app_source_dir }}"
+        state: absent
+  tags:
+    - wipe
+    - never

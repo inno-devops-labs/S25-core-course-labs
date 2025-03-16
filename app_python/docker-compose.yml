@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  web-app:
+    build: .
+    image: dpttk/devopslabs:latest
+    container_name: web-app
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data:/data
+    restart: unless-stopped 
