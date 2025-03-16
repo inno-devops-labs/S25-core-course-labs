@@ -1,0 +1,27 @@
+---
+- name: Restart web application
+  docker_container:
+    name: "{{ web_app_container_name }}"
+    image: "{{ web_app_image }}"
+    state: started
+    restart: yes
+  listen: "restart web app"
+
+- name: Recreate web application
+  block:
+    - name: Stop and remove container
+      docker_container:
+        name: "{{ web_app_container_name }}"
+        state: absent
+
+    - name: Create and start container
+      docker_container:
+        name: "{{ web_app_container_name }}"
+        image: "{{ web_app_image }}"
+        state: started
+        restart_policy: "{{ web_app_restart_policy }}"
+        ports:
+          - "{{ web_app_host_port }}:{{ web_app_port }}"
+        memory: "{{ web_app_memory }}"
+        cpus: "{{ web_app_cpus }}"
+  listen: "recreate web app"
