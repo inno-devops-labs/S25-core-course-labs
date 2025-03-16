@@ -1,0 +1,10 @@
+replicaCount: 3
+
+image:
+  repository: bakinasa/moscow-time-app
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8000

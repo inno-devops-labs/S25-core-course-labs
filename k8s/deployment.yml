@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moscow-time-app-deployment
+  labels:
+    app: moscow-time-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: moscow-time-app
+  template:
+    metadata:
+      labels:
+        app: moscow-time-app
+    spec:
+      containers:
+        - name: moscow-time-app
+          image: bakinasa/moscow-time-app:latest
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds: 20
