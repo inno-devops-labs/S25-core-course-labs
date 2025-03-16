@@ -1,0 +1,10 @@
+# Override production-specific settings
+replicaCount: 3
+
+service:
+  type: ClusterIP
+  port: 8006
+
+# Additional prod-specific values
+environment: prod
+logLevel: info

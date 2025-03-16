@@ -1,0 +1,7 @@
+services:
+  app:
+    image: raydenoir/app_python:distroless
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data/visits:/app/visits

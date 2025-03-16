@@ -1,0 +1,10 @@
+# Override development-specific settings
+replicaCount: 1
+
+service:
+  type: ClusterIP
+  port: 8000
+
+# Additional dev-specific values
+environment: dev
+logLevel: debug
