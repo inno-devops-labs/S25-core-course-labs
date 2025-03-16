@@ -2,7 +2,7 @@ replicaCount: 3
 
 image:
   repository: twentythree3/flask-app2
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   tag: "latest"
 
 service:
