@@ -1,0 +1,5 @@
+- name: Deploying Web App && Cleanup
+  hosts: all  
+  become: yes
+  roles:
+    - role: web_app
