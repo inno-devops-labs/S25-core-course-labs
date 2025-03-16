@@ -1,3 +1,2 @@
 Flask
 pytz
-prometheus_client

@@ -1,0 +1,22 @@
+replicaCount: 3
+
+image:
+  repository: em1999jay/python-app
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: LoadBalancer
+  port: 5000
+
+env:
+  FLASK_ENV: production
+  DEBUG: "false"
+
+resources:
+  requests:
+    memory: "128Mi"
+    cpu: "500m"
+  limits:
+    memory: "256Mi"
+    cpu: "1"
