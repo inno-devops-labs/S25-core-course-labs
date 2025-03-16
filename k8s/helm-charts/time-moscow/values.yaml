@@ -118,3 +118,9 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+persistence:
+  name: "data"
+  size: 5Mi
+  storageClass: "local-path"
+  mountPath: "/app/visits"
