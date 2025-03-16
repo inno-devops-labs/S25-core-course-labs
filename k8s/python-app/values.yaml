@@ -131,3 +131,6 @@ affinity: {}
 
 config:
   path: "files/config.json"
+  
+env:
+  ENVIRONMENT: stage

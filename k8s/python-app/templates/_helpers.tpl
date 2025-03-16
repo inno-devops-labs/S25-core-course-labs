@@ -67,3 +67,8 @@ Create the name of the service account to use
 - name: DB_HOST
   value: "http://localhost:5432"
 {{- end }}
+
+{{- define "common.env" }}
+- name: ENVIRONMENT
+  value: {{ .Values.env.ENVIRONMENT | quote }}
+{{ end }}
