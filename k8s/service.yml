@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: moscow-time-api
+spec:
+  selector:
+    app: moscow-time-api
+  ports:
+  - name: api
+    port: 8001
+    targetPort: 8001
+  - name: metrics
+    port: 8000
+    targetPort: 8000
+  type: NodePort

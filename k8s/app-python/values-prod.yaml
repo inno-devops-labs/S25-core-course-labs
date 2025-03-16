@@ -1,0 +1,17 @@
+replicaCount: 2
+
+image:
+  repository: python-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+env:
+  NODE_ENV: production
