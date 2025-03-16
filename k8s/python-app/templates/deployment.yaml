@@ -39,13 +39,7 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            - name: TEST
-              valueFrom:
-                secretKeyRef:
-                  name: lab-11111
-                  key: TEST
+          imagePullPolicy: {{ .Values.image.pullPolicy }} 
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
