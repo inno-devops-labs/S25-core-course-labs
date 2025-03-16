@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-moscow-time-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: go-moscow-time
+  template:
+    metadata:
+      labels:
+        app: go-moscow-time
+    spec:
+      containers:
+      - name: go-moscow-time
+        image: azeeeez/go_moscow_time:latest
+        ports:
+        - containerPort: 8080
