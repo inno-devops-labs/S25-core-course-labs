@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: my-app
+  namespace: default
 spec:
   replicas: 2
   selector:
@@ -13,7 +14,13 @@ spec:
         app: my-app
     spec:
       containers:
-      - name: my-app
-        image: nginx
-        ports:
-        - containerPort: 80
+        - name: my-app
+          image: nginx
+          ports:
+            - containerPort: 80
+          env:
+            - name: MY_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: MY_PASS
