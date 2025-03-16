@@ -1,0 +1,7 @@
+# Prod environment values
+replicaCount: 3
+image:
+  repository: YehiaSobeh/python-app
+  tag: prod-stable
+service:
+  port: 5000
