@@ -1,8 +1,9 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: flask-app
 spec:
+  serviceName: "flask-app"
   replicas: 3
   selector:
     matchLabels:
@@ -17,3 +18,11 @@ spec:
         image: anasalatasi/moscow-time-app:latest
         ports:
         - containerPort: 5000
+  volumeClaimTemplates:
+  - metadata:
+      name: flask-app-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
