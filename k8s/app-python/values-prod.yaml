@@ -1,7 +1,7 @@
 replicaCount: 5
 
 image:
-  repository: pupolina7/moscow-time-app
+  repository: bakinasa/moscow-time-app
   tag: "latest"
   pullPolicy: IfNotPresent
 

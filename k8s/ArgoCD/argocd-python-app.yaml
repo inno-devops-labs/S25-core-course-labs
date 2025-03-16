@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/bakinasa/S25-devops-engineering-labs.git
-    targetRevision: lab13
+    targetRevision: feature/lab13
     path: k8s/app-python
     helm:
       valueFiles:
