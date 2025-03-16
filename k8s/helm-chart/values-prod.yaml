@@ -1,0 +1,12 @@
+replicaCount: 2
+image:
+  repository: your-docker-username/python-app
+  tag: stable
+  pullPolicy: IfNotPresent
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi 
