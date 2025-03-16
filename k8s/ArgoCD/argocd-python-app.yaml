@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/macoyshev/S25-core-course-labs.git
+    repoURL: git@github.com:macoyshev/S25-core-course-labs.git
     targetRevision: lab13
     path: k8s/moscow-time
     helm:
