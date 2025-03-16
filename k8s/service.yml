@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: msk-time-service
+  name: {{ .Values.service.name }}-my-chart
 spec:
   selector:
     app: msk-time

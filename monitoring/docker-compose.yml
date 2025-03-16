@@ -46,6 +46,8 @@ services:
     ports:
       - "5000:5000"
     mem_limit: 512m
+    volumes:
+      - ./data/visits:/app/visits
     logging:
       driver: "json-file"
       options:
@@ -53,5 +55,6 @@ services:
         max-file: "3"
 
 volumes:
+  visits_data:
   loki_data:
   grafana_data:
