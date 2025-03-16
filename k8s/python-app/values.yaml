@@ -120,5 +120,9 @@ affinity: {}
 
 # Add this section for secrets
 secrets:
-  appSecret: "my-super-secret-key"
-  appEnv: "production"
+  appSecret: "development-secret-key"
+  appEnv: "development"
+
+env:
+  appSecret: "development-secret-key"
+  appEnv: "development"

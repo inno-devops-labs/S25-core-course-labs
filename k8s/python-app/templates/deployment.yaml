@@ -14,11 +14,15 @@ spec:
   template:
     metadata:
       annotations:
-        vault.hashicorp.com/agent-inject: "true"
-        vault.hashicorp.com/agent-inject-secret-config: "secret/data/python-app/config"
-        vault.hashicorp.com/agent-inject-template-config: |
-          {{ .Files.Get "templates/vault-template.yaml" | nindent 10 }}
-        vault.hashicorp.com/role: "python-app"
+        # You can remove or comment out the Vault annotations if not needed
+        # vault.hashicorp.com/agent-inject: "true"
+        # vault.hashicorp.com/agent-inject-secret-config: "secret/data/python-app/config"
+        # vault.hashicorp.com/agent-inject-template-config: |
+        #   {{`{{- with secret "secret/data/python-app/config" -}}
+        #   data: {{ .Data.data }}
+        #   metadata: {{ .Data.metadata }}
+        #   {{- end }}`}}
+        # vault.hashicorp.com/role: "python-app"
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -68,17 +72,12 @@ spec:
             {{- if .Values.volumeMounts }}
             {{- toYaml .Values.volumeMounts | nindent 12 }}
             {{- end }}
+          # Replace secret references with environment variables from values.yaml
           env:
-            # - name: APP_SECRET
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: {{ include "python-app.fullname" . }}-secret
-            #       key: APP_SECRET
-            # - name: APP_ENV
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: {{ include "python-app.fullname" . }}-secret
-            #       key: APP_ENV
+            - name: APP_SECRET
+              value: {{ .Values.env.appSecret | quote }}
+            - name: APP_ENV
+              value: {{ .Values.env.appEnv | quote }}
       volumes:
         - name: config-volume
           configMap:
