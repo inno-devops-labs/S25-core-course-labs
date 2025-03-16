@@ -1,0 +1,118 @@
+version: '3.8'
+
+services:
+  app:
+    image: vika123vika/app-python
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../app-python/data:/app/data
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - monitoring
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: "512M"
+          cpus: "0.5"
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/config.yml
+    networks:
+      - monitoring
+    volumes:
+      - ./loki-config.yml:/etc/loki/config.yml
+      - /tmp/loki:/loki  
+    user: "10001:10001"  
+    environment:
+      - LOKI_STORAGE_DIR=/loki 
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: "512M"
+          cpus: "0.5"
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - ./promtail-config.yml:/etc/promtail/config.yml
+      - /var/log:/var/log
+    networks:
+      - monitoring
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: "256M"
+          cpus: "0.3"
+
+  python_app:
+    image: vika123vika/app-python  
+    ports:
+      - "5000:5000"
+    networks:
+      - monitoring
+    depends_on:
+      - loki  
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: "512M"
+          cpus: "0.5"
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - loki
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: "512M"
+          cpus: "0.5"
+
+networks:
+  monitoring:
+    driver: bridge
