@@ -22,17 +22,17 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          {{ /* volumeMounts:
-            - name: config-volume
-              mountPath: /app/config
-              readOnly: true
-          env:
-            {{ include "common.env" . | nindent 12 }} */ }}
+{{/*          volumeMounts: */}}
+{{/*            - name: config-volume */}}
+{{/*              mountPath: /app/config */}}
+{{/*              readOnly: true */}}
+{{/*          env: */}}
+{{/*            {{ include "common.env" . | nindent 12 }} */}}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
 
-      {{ /* volumes:
-        - name: config-volume
-          configMap:
-            name: {{ .Release.Name }}-config */ }}
+{{/*   volumes: */}}
+{{/*        - name: config-volume */}}
+{{/*          configMap: */}}
+{{/*            name: {{ .Release.Name }}-config */ }}
