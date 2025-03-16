@@ -1,13 +1,21 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "your-app.fullname" . }}
   labels:
     {{- include "your-app.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
+  serviceName: {{ .Values.service.name }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  podManagementPolicy: {{ .Values.podManagementPolicy }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Values.volumeClaimTemplate.name }}
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: {{ .Values.volumeClaimTemplate.requestStorage }}
   selector:
     matchLabels:
       {{- include "your-app.selectorLabels" . | nindent 6 }}
