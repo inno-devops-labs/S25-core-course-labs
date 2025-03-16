@@ -1,0 +1,43 @@
+name: app-stateful
+
+service:
+  name: app-stateful
+  type: ClusterIP
+  port: 80
+
+replicas: 3
+
+container:
+  name: msk-time-app
+  image: meowal/msk-time-app:latest
+  port: 5000
+
+storage:
+  size: 1Gi
+  accessModes:
+    - ReadWriteOnce
+
+serviceAccount:
+  create: true
+  name: app-service-account
+
+serviceAccount:
+  create: true
+  name: app-service-account
+
+ingress:
+  enabled: false
+  className: "nginx"
+  annotations: {}
+  hosts:
+    - host: app-stateful.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80

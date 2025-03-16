@@ -1,0 +1,34 @@
+[33m78ffe2a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mlab10[m[33m, [m[1;32mlab9-solution[m[33m)[m lab10
+ k8s/HELM.md                                       | 249 [32m++++++++++++++++++++++[m
+ k8s/time-app/.helmignore                          |  23 [32m++[m
+ k8s/time-app/Chart.yaml                           |  24 [32m+++[m
+ k8s/time-app/templates/NOTES.txt                  |  22 [32m++[m
+ k8s/time-app/templates/_helpers.tpl               |  62 [32m++++++[m
+ k8s/time-app/templates/deployment.yaml            |  78 [32m+++++++[m
+ k8s/time-app/templates/hooks.yaml                 |  16 [32m++[m
+ k8s/time-app/templates/hpa.yaml                   |  32 [32m+++[m
+ k8s/time-app/templates/ingress.yaml               |  43 [32m++++[m
+ k8s/time-app/templates/service.yaml               |  15 [32m++[m
+ k8s/time-app/templates/serviceaccount.yaml        |  13 [32m++[m
+ k8s/time-app/templates/tests/test-connection.yaml |  15 [32m++[m
+ k8s/time-app/values.yaml                          | 123 [32m+++++++++++[m
+ 13 files changed, 715 insertions(+)
+[33m074f05f[m[33m ([m[1;31morigin/lab9-solution[m[33m, [m[1;31morigin/lab10-solution[m[33m, [m[1;32mlab10-solution[m[33m)[m Merge branch 'master' into lab9-solution
+[33m3e913ef[m Update README.md
+ k8s/README.md | 18 [32m++++++++++++++++++[m
+ 1 file changed, 18 insertions(+)
+[33mf1739a6[m readmi
+ k8s/README.md | 34 [32m++++++[m[31m----------------------------[m
+ 1 file changed, 6 insertions(+), 28 deletions(-)
+[33m87f817a[m lab9-solution
+ .gitignore         |  2 [32m++[m
+ k8s/README.md      | 49 [32m+++++++++++++++++++++++++++++++[m
+ k8s/deployment.yml | 20 [32m+++++++++++++[m
+ k8s/service.yml    | 13 [32m+++++++++[m
+ lab3.md            | 53 [32m++++++++++++++++++++++++++++++++++[m
+ lab4.md            | 84 [32m++++++++++++++++++++++++++++++++++++++++++++++++++++++[m
+ 6 files changed, 221 insertions(+)
+[33mb319473[m lab11 Vault & lab12 ConfigMap
+ lab11.md | 85 [32m++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++[m
+ lab12.md | 70 [32m++++++++++++++++++++++++++++++++++++++++++++++++++++[m
+ 2 files changed, 155 insertions(+)
