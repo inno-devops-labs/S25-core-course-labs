@@ -5,13 +5,19 @@ replicaCount: 1
 image:
   repository: nickwidbestie/random-color-picker
   tag: 6d9f319aeb8fe1782ca1a1037371a90ab8867a3f
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   containerPort: 8081  # Ensure this matches the port exposed in the Dockerfile
 
 # Service configuration
 service:
   type: ClusterIP
   port: 8081  # Ensure this matches the containerPort above
+
+volumeClaimTemplates:
+  name: java-app-data
+  storage: 512Mi
+
+podManagementPolicy: Parallel
 
 # Liveness and readiness probes
 livenessProbe:
@@ -64,3 +70,5 @@ volumeMounts:
    - name: config
      mountPath: /config.json
      subPath: config.json
+   - name: java-app-data
+     mountPath: /data

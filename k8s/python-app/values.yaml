@@ -21,6 +21,12 @@ livenessProbe:
   initialDelaySeconds: 5
   periodSeconds: 10
 
+volumeClaimTemplates:
+  name: python-app-data
+  storage: 512Mi
+
+podManagementPolicy: Parallel
+
 readinessProbe:
   httpGet:
     path: /time/moscow
@@ -69,3 +75,5 @@ volumeMounts:
    - name: config
      mountPath: /config.json
      subPath: config.json
+   - name: python-app-data
+     mountPath: /app/data

@@ -64,7 +64,7 @@ Create the name of the service account to use
 {{/*
  Common environment variables
  */}}
-{{- define "python-app.environmentVars" -}}
+{{- define "python-app.environmentVariables" -}}
 - name: APP_AUTHOR
   value: {{ .Values.environment.author | quote }}
 - name: APP_DEBUG
