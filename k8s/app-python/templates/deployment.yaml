@@ -41,11 +41,11 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: credentials
-                  key: password
+{{/*            - name: PASSWORD*/}}
+{{/*              valueFrom:*/}}
+{{/*                secretKeyRef:*/}}
+{{/*                  name: credentials*/}}
+{{/*                  key: password*/}}
           envFrom:
             - configMapRef:
                 name: app-python-config
