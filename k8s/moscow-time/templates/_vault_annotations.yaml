@@ -1,0 +1,7 @@
+{{- define "vault.annotations" }}
+vault.hashicorp.com/agent-inject: "true"
+vault.hashicorp.com/role: {{ .Values.vault.role | quote }}
+  {{- range $secret := .Values.vault.secrets }}
+vault.hashicorp.com/agent-inject-secret-{{ $secret.name }}.txt: {{ $secret.path | quote }}
+  {{- end }}
+  {{- end }}
