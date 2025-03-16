@@ -4,7 +4,6 @@ import uvicorn
 from zoneinfo import ZoneInfo
 from datetime import datetime
 from prometheus_fastapi_instrumentator import Instrumentator
-import os
 
 
 app = FastAPI()
@@ -12,15 +11,17 @@ app = FastAPI()
 # Add visit counter functionality
 VISITS_FILE = "visits"
 
+
 def read_visits():
     try:
-        with open(VISITS_FILE, 'r') as f:
-            return int(f.read().strip() or '0')
+        with open(VISITS_FILE, "r") as f:
+            return int(f.read().strip() or "0")
     except (FileNotFoundError, ValueError):
         return 0
 
+
 def save_visits(count):
-    with open(VISITS_FILE, 'w') as f:
+    with open(VISITS_FILE, "w") as f:
         f.write(str(count))
 
 
@@ -37,7 +38,7 @@ def get_msc_time(request: Request):
     # Increment visit counter
     visits = read_visits() + 1
     save_visits(visits)
-    
+
     now = time_provider.get_current_time().strftime("%Y-%m-%d %H:%M:%S")
     if request.headers.get("user-agent") and "Mozilla" in request.headers.get(
         "user-agent", ""
