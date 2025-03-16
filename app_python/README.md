@@ -13,6 +13,7 @@ The application uses the `pytz` library to handle time zones and `datetime` to f
 - The time is updated every time the page is refreshed.
 - Developed using Flask, a lightweight web framework.
 - Built following best practices for coding standards, testing, and project structure.
+- Save number of visits in the local file on the machine (and route in app/visits)
 
 ## Local installation
 
@@ -106,6 +107,13 @@ pip install -r app_python/requirements.txt
    ```bash
    docker run -p 5000:5000 <username>/moscow-time-app:1.0
    ```
+   
+## Docker-compose
 
+1. **Build the Docker Image**:
+   ```bash
+   docker-compose up --build
+   ```
+   
 
 
