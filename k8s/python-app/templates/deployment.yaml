@@ -42,13 +42,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             - configMapRef:
-                name: config 
-          env:
-          - name: MY_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: credentials
-                key: password
+                name: config
           ports:
             - name: http
               containerPort: 5000
