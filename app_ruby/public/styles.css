@@ -1,0 +1,13 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0 auto;
+    max-width: 600px;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  form {
+    margin-bottom: 10px;
+  }

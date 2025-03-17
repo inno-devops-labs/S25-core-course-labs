@@ -1,0 +1,7 @@
+services:
+  app:
+    build: .
+    ports:
+      - "4567:4567"
+    volumes:
+      - ./data:/tmp
