@@ -1,0 +1,16 @@
+---
+- name: Stop and remove application container
+  docker_container:
+    name: web_app
+    state: absent
+  when: web_app_full_wipe
+  tags:
+    - wipe
+
+- name: Remove application image
+  docker_image:
+    name: "{{ docker_image }}"
+    state: absent
+  when: web_app_full_wipe
+  tags:
+    - wipe

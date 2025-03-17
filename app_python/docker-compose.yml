@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  my-python-app:
+    image: kaaxd/my-python-app:latest
+    container_name: my-python-app
+    restart: unless-stopped
+    ports:
+      - "8001:5000"
+    volumes:
+      - visits-data:/data
+
+volumes:
+  visits-data:

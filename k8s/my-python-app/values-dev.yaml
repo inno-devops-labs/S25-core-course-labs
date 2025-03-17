@@ -1,0 +1,41 @@
+replicaCount: 2
+
+image:
+  repository: kaaxd/my-python-app
+  tag: latest
+  pullPolicy: Always
+
+nameOverride: "python-app"
+fullnameOverride: "python-app-dev"
+
+service:
+  type: NodePort
+  port: 5000
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+env:
+  - name: FLASK_ENV
+    value: development
+  - name: APP_VERSION
+    value: dev
+
+livenessProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  httpGet:
+    path: /
+    port: 5000
+
+readinessProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  httpGet:
+    path: /
+    port: 5000
