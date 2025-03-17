@@ -56,7 +56,8 @@ securityContext: {}
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
 service:
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-  type: NodePort
+  type: ClusterIP
+  clusterIP: None
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 8000
 
@@ -126,6 +127,11 @@ volumeMounts:
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
+
+volumeClaimTemplates:
+  name: "persistence-volume"
+  storage: 1Gi
+  accessModes: [ "ReadWriteOnce" ]
 
 nodeSelector: {}
 
