@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
-replicaCount: 1
+replicaCount: 3
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
@@ -52,9 +52,9 @@ securityContext: {}
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
 service:
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-  type: ClusterIP
+  type: NodePort
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
-  port: 80
+  port: 5000
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
@@ -89,11 +89,17 @@ resources: {}
 livenessProbe:
   httpGet:
     path: /
-    port: http
+    port: 5000
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
 readinessProbe:
   httpGet:
     path: /
-    port: http
+    port: 5000
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
@@ -137,3 +143,7 @@ podAnnotations:
     export DB_USER="{{ .data.data.username }}"
     export DB_PASS="{{ .data.data.password }}"
     {{- end -}}
+
+persistence:
+  enabled: true
+  size: 1Gi
