@@ -1,0 +1,5 @@
+replicaCount: 3
+image:
+  repository: mirgasimovk/python-msk
+  tag: stable
+environment: prod
