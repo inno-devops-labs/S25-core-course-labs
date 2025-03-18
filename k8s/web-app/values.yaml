@@ -120,11 +120,17 @@ volumes:
     configMap:
       name: web-app-config
 
+  - name: init-container-vol
+    emptyDir: {}
+
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
   - name: config-map
     mountPath: "/etc/config"
     readOnly: true
+
+  - name: init-container-vol
+    mountPath: "/init-container-vol"
 
 nodeSelector: {}
 
@@ -145,3 +151,12 @@ volumeClaimTemplates:
 
 # This is for setting up the pod management policy more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
 podManagementPolicy: Parallel
+
+# Adding an init container to the pod
+initContainers:
+  - name: init-container
+    image: busybox
+    command: [ "sh", "-c", "wget -O /init-container-vol/index.html https://example.com" ]
+    volumeMounts:
+      - name: init-container-vol
+        mountPath: "/init-container-vol"

@@ -34,6 +34,8 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      initContainers:
+        {{- toYaml .Values.initContainers | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.securityContext }}
