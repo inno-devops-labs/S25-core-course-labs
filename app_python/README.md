@@ -3,8 +3,6 @@ FastAPI-based API to get the current Moscow time.
 Dockerized for easy deployment.
 Automated testing with Pytest.
 CI/CD pipeline using GitHub Actions.
-Keeps a persistent visit counter stored in a file.
-Provides an API endpoint (`/visits`) to check the total number of visits.
 
 
 Unit Tests
