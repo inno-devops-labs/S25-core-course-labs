@@ -105,4 +105,4 @@ if __name__ == "__main__":
         with open(os.path.join(VISITS_DIRECTORY, VISITS_FILE), "w") as vf:
             vf.write(str(VISITS))
 
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=False)
