@@ -1,5 +1,17 @@
 replicaCount: 3
 image:
   repository: mirgasimovk/python-msk
-  tag: stable
+  tag: latest
 environment: prod
+orgchart:
+  enabled: false
+secretsLab:
+  enabled: false
+nginx:
+  enabled: false
+
+hooks:
+  postinstall:
+    enabled: false
+  preinstall:
+    enabled: false
