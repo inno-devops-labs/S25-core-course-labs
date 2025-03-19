@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-msk-deployment
+  labels:
+    app: python-msk
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: python-msk
+  template:
+    metadata:
+      labels:
+        app: python-msk
+    spec:
+      serviceAccountName: internal-app
+      containers:
+      - name: python-msk
+        image: mirgasimovk/python-msk:latest
+        ports:
+        - containerPort: 5000

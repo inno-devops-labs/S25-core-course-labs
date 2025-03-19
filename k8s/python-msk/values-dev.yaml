@@ -1,0 +1,5 @@
+replicaCount: 1
+image:
+  repository: mirgasimovk/python-msk
+  tag: latest
+environment: dev
