@@ -2,3 +2,4 @@
 Dockerfile
 .dockerignore
 unittests.py
+ipfs_and_fleek/ipfs_data/*
