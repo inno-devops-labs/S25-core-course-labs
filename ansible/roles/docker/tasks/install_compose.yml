@@ -1,0 +1,7 @@
+---
+# Docker compose as python module
+- name: Install docker-compose via pip
+  # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/pip_module.html#ansible-collections-ansible-builtin-pip-module
+  ansible.builtin.pip:
+    name: "docker-compose=={{ pip_docker_compose_version}}"
+    state: present
