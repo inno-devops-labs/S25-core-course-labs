@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "python-app.fullname" . }}-monitor  
+  labels:
+    {{- include "python-app.labels" . | nindent 4 }}  
+    release: prometheus-community  
+spec:
+  selector:
+    matchLabels:
+      {{- include "python-app.labels" . | nindent 6 }}  
+  endpoints:
+  - port: http  
+    interval: 10s  
+    path: /metrics
+    

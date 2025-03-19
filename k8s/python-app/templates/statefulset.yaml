@@ -35,6 +35,31 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      initContainers:
+        - name: python-app-init
+          image: busybox
+          volumeMounts:
+            - name: init
+              mountPath: /init
+          command: ["sh", "-c", "wget -O /init/test.html https://example.com/"]
+        - name: python-app-init-one
+          image: busybox
+          volumeMounts:
+            - name: init
+              mountPath: /init
+          command: ["sh", "-c", "echo randomstr1 > /init/test.txt"]
+        - name: python-app-init-two
+          image: busybox
+          volumeMounts:
+            - name: init
+              mountPath: /init
+          command: ["sh", "-c", "echo randomstr2 >> /init/test.txt"]
+        - name: python-app-init-three
+          image: busybox
+          volumeMounts:
+            - name: init
+              mountPath: /init
+          command: ["sh", "-c", "echo randomstr3 >> /init/test.txt"]
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.securityContext }}
@@ -67,6 +92,8 @@ spec:
               mountPath: /app/config
             - name: visits
               mountPath: /app/visits
+            - name: init
+              mountPath: /app/init
           env:
             - name: CPU_REQUEST
               value: "{{ .Values.env.cpuRequest }}"
@@ -86,6 +113,9 @@ spec:
           configMap:
             name: {{ .Release.Name }}-config
         - name: visits
+        - name: init
+          persistentVolumeClaim:
+            claimName: init
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -101,6 +131,13 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: visits
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Mi
+  - metadata:
+      name: init
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
