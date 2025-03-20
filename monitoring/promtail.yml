@@ -1,0 +1,105 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+  log_level: 'warn'
+positions:
+  filename: /var/lib/promtail/positions/positions.yaml
+client:
+  url: http://loki:3100/api/prom/push
+scrape_configs:
+  - job_name: containers
+
+    static_configs:
+      - targets:
+          - localhost:8000
+          - localhost:8080
+        labels:
+          job: docker
+          __path__: /var/lib/docker/containers/*/*-json.log
+
+    pipeline_stages:
+      - json:
+          expressions:
+            stream: stream
+            attrs: attrs
+            tag: attrs.tag
+            time: time
+      - timestamp:
+          source: time
+          format: RFC3339Nano
+      - regex:
+          expression: ^(?P<image_name>([^|]+))\|(?P<container_name>([^|]+))$
+          source: 'tag'
+      - labels:
+          image_name:
+          container_name:
+
+      - match:
+          # drop all logs for all containers that don't have --log-opt: tag: "{{:ImageName}}|{{:Name}}"
+          selector: '{job="docker",container_name="",image_name=""}'
+          action: drop
+
+      - match:
+          selector: '{image_name="nginx.promtail.test"}'
+          stages:
+            - json:
+                expressions:
+                  row: log
+            - regex:
+                # suppress forego colors
+                expression: .+nginx.+\|.+\[0m(?P<virtual_host>[a-z_\.-]+) +(?P<nginx_log_row>.+)
+                source: row
+            - regex:
+                source: nginx_log_row
+                expression: ^(?P<ip>[\w\.]+) - (?P<user>[^ ]*) \[(?P<timestamp>[^ ]+).*\] "(?P<method>[^ ]*) (?P<request_url>[^ ]*) (?P<request_http_protocol>[^ ]*)" (?P<status>[\d]+) (?P<bytes_out>[\d]+) "(?P<http_referer>[^"]*)" "(?P<user_agent>[^"]*)"( "(?P<response_time>[\d\.]+)")?
+            - regex:
+                source: request_url
+                expression: ^.+\.(?P<static_type>jpg|jpeg|gif|png|ico|css|zip|tgz|gz|rar|bz2|pdf|txt|tar|wav|bmp|rtf|js|flv|swf|html|htm)$
+            - regex:
+                source: request_url
+                expression: ^/photo/(?P<photo>[^/\?\.]+).*$
+            - regex:
+                source: request_url
+                expression: ^/api/(?P<api_request>[^/\?\.]+).*$
+            - template:
+                source: request_type
+                template: '{{if .photo}}photo{{else if .static_type}}static{{else if .api_request}}api{{else}}other{{end}}'
+            - labels:
+                api_request:
+                virtual_host:
+                request_type:
+                status:
+            - output:
+                source: nginx_log_row
+      - match:
+          selector: '{request_type="api"}'
+          stages:
+            - metrics:
+                http_nginx_response_time:
+                  type: Histogram
+                  description: 'response time ms'
+                  source: response_time
+                  config:
+                    buckets: [0.010, 0.050, 0.100, 0.200, 0.500, 1.0]
+      - match:
+          selector: '{request_type=~"static|photo"}'
+          stages:
+            - metrics:
+                http_nginx_response_bytes_sum:
+                  type: Counter
+                  description: 'response bytes sum'
+                  source: bytes_out
+                  config:
+                    action: add
+                http_nginx_response_bytes_count:
+                  type: Counter
+                  description: 'response bytes count'
+                  source: bytes_out
+                  config:
+                    action: inc
+      - match:
+          selector: '{image_name="nginx.promtail.test"}'
+          stages:
+            - labels:
+                filename:
+                stream:
