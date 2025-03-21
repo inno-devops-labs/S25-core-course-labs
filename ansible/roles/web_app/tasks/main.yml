@@ -1,0 +1,44 @@
+- name: Ensure Docker Compose is installed
+  apt:
+    name: docker-compose
+    state: present
+  tags:
+    - setup
+
+- name: Create Compose file
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/web_app/docker-compose.yml
+  tags:
+    - docker
+
+- name: Start Docker Compose
+  command: docker-compose up -d
+  args:
+    chdir: /opt/web_app
+  tags:
+    - docker
+
+- name: Pull Docker Image
+  docker_image:
+    name: "{{ docker_image }}"
+    source: pull
+    force_source: yes
+  tags:
+    - docker
+
+- name: Run Container
+  docker_container:
+    name: "{{ docker_container }}"
+    image: "{{ docker_image }}"
+    state: started
+    ports:
+      - "{{ app_port }}:8000"
+  tags:
+    - docker
+
+- name: Wipe Docker
+  block:
+    - include_tasks: 0-wipe.yml
+  tags:
+    - wipe
