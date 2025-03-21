@@ -121,8 +121,30 @@ volumeMounts: []
 #   mountPath: "/etc/foo"
 #   readOnly: true
 
+volumeClaimTemplates:
+  - name: persistence-volume
+    storage: 1Gi             # Default storage size
+    accessModes:
+     - ReadWriteOnce
+    enabled: true
+
+# Persistent Volume configuration
+persistence:
+  enabled: true  # Enable or disable persistent storage
+  size: 1Gi      # Default storage size
+  accessModes:   # Access modes for the volume
+    - ReadWriteOnce
+
 nodeSelector: {}
 
 tolerations: []
 
 affinity: {}
+# Helm hooks configuration
+hooks:
+  preinstall:
+    enabled: false
+  postinstall:
+    enabled: false
+orgchart:
+  enabled: false
