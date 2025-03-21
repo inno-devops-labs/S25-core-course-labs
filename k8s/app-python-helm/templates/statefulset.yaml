@@ -1,13 +1,23 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "app-python-helm.fullname" . }}
   labels:
     {{- include "app-python-helm.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ include "app-python-helm.fullname" . }}
   {{- if not .Values.autoscaling.enabled }}
+  podManagementPolicy: Parallel
   replicas: {{ .Values.replicaCount }}
   {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
   selector:
     matchLabels:
       {{- include "app-python-helm.selectorLabels" . | nindent 6 }}
@@ -60,10 +70,10 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
-            - name: config-volume
-              mountPath: /config.json
-              subPath: config.json
+            
       volumes:
+        - name: data
+          mountPath: /data
         - name: config-volume
           configMap:
             name: {{ include "app-python-helm.fullname" . }}-config

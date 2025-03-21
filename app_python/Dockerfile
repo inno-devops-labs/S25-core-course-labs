@@ -4,6 +4,8 @@ FROM python:3.9-slim
 # Create a non-root user
 RUN useradd --create-home appuser
 
+RUN apt-get update && apt-get install -y dnsutils && rm -rf /var/lib/apt/lists/*
+
 # Create a working directory
 WORKDIR /home/appuser
 

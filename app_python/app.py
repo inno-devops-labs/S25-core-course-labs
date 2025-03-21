@@ -4,7 +4,7 @@ import pytz
 import os
 
 app = Flask(__name__)
-VISITS_FILE = "visits.txt"
+VISITS_FILE = "/data/visits.txt"
 
 def read_visits():
     if os.path.exists(VISITS_FILE):
@@ -16,6 +16,7 @@ def read_visits():
     return 0
 
 def write_visits(count):
+    os.makedirs(os.path.dirname(VISITS_FILE), exist_ok=True)
     with open(VISITS_FILE, "w") as f:
         f.write(str(count))
 
