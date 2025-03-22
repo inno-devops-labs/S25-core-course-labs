@@ -1,0 +1,30 @@
+# https://kubernetes.io/docs/concepts/services-networking/ingress/
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: default-ingress
+  namespace: default
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: moscow-time.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: moscow-time-service
+            port:
+              number: 8081
+  - host: numbers-app.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: numbers-app-service
+            port:
+              number: 8082
+---
