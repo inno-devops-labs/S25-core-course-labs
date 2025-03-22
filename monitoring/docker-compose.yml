@@ -41,6 +41,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    networks:
+      - loki_net
   
   promtail:
     image: grafana/promtail:2.9.3
@@ -104,6 +106,9 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    networks:
+      - loki_net
+
 
   python-web-app: 
     image: haidarjbeily/distroless-moscow-time-app:latest
@@ -138,6 +143,7 @@ services:
       driver: "json-file"
       options:
         tag: "{{.ImageName}}|{{.Name}}"
+
         max-size: "10m"
         max-file: "3"
     mem_limit: 256m
