@@ -1,0 +1,5 @@
+- name: Install Docker Compose.
+  get_url:
+    url: "{{ docker_compose_url }}"
+    dest: "{{ docker_compose_path }}"
+    mode: 0755

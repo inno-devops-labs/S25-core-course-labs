@@ -1,0 +1,21 @@
+- name: Verify Docker is installed
+  command: docker --version
+  register: docker_version
+  changed_when: false
+
+- name: Display Docker version
+  debug:
+    msg: "{{ docker_version.stdout }}"
+
+- name: Pull the Docker image
+  docker_image:
+    name: "{{ docker_image }}"
+    source: pull
+
+- name: Start the Docker container
+  docker_container:
+    name: "{{ container_name }}"
+    image: "{{ docker_image }}"
+    state: started
+    ports:
+      - "{{ host_port }}:{{ container_port }}"
