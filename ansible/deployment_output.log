@@ -1,0 +1,91 @@
+
+PLAY [all] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [62.84.120.225]
+
+TASK [geerlingguy.docker : Load OS-specific vars.] *****************************
+ok: [62.84.120.225]
+
+TASK [geerlingguy.docker : include_tasks] **************************************
+skipping: [62.84.120.225]
+
+TASK [geerlingguy.docker : include_tasks] **************************************
+included: /home/xrvst/study/devops/S25-core-course-labs/ansible/roles/geerlingguy.docker/tasks/setup-Debian.yml for 62.84.120.225
+
+TASK [geerlingguy.docker : Ensure apt key is not present in trusted.gpg.d] *****
+ok: [62.84.120.225]
+
+TASK [geerlingguy.docker : Ensure old apt source list is not present in /etc/apt/sources.list.d] ***
+ok: [62.84.120.225]
+
+TASK [geerlingguy.docker : Ensure the repo referencing the previous trusted.gpg.d key is not present] ***
+ok: [62.84.120.225]
+
+TASK [geerlingguy.docker : Ensure old versions of Docker are not installed.] ***
+ok: [62.84.120.225]
+
+TASK [geerlingguy.docker : Ensure dependencies are installed.] *****************
+ok: [62.84.120.225]
+
+TASK [geerlingguy.docker : Ensure directory exists for /etc/apt/keyrings] ******
+ok: [62.84.120.225]
+
+TASK [geerlingguy.docker : Add Docker apt key.] ********************************
+ok: [62.84.120.225]
+
+TASK [geerlingguy.docker : Ensure curl is present (on older systems without SNI).] ***
+skipping: [62.84.120.225]
+
+TASK [geerlingguy.docker : Add Docker apt key (alternative for older systems without SNI).] ***
+skipping: [62.84.120.225]
+
+TASK [geerlingguy.docker : Add Docker repository.] *****************************
+ok: [62.84.120.225]
+
+TASK [geerlingguy.docker : Install Docker packages.] ***************************
+skipping: [62.84.120.225]
+
+TASK [geerlingguy.docker : Install Docker packages (with downgrade option).] ***
+ok: [62.84.120.225]
+
+TASK [geerlingguy.docker : Install docker-compose plugin.] *********************
+skipping: [62.84.120.225]
+
+TASK [geerlingguy.docker : Install docker-compose-plugin (with downgrade option).] ***
+ok: [62.84.120.225]
+
+TASK [geerlingguy.docker : Ensure /etc/docker/ directory exists.] **************
+skipping: [62.84.120.225]
+
+TASK [geerlingguy.docker : Configure Docker daemon options.] *******************
+skipping: [62.84.120.225]
+
+TASK [geerlingguy.docker : Ensure Docker is started and enabled at boot.] ******
+ok: [62.84.120.225]
+
+TASK [geerlingguy.docker : Ensure handlers are notified now to avoid firewall conflicts.] ***
+
+TASK [geerlingguy.docker : include_tasks] **************************************
+skipping: [62.84.120.225]
+
+TASK [geerlingguy.docker : Get docker group info using getent.] ****************
+skipping: [62.84.120.225]
+
+TASK [geerlingguy.docker : Check if there are any users to add to the docker group.] ***
+skipping: [62.84.120.225]
+
+TASK [geerlingguy.docker : include_tasks] **************************************
+skipping: [62.84.120.225]
+
+TASK [web_app : Ensure Docker is running] **************************************
+ok: [62.84.120.225]
+
+TASK [web_app : Pull the Docker image] *****************************************
+ok: [62.84.120.225]
+
+TASK [web_app : Start the Docker container] ************************************
+changed: [62.84.120.225]
+
+PLAY RECAP *********************************************************************
+62.84.120.225              : ok=17   changed=1    unreachable=0    failed=0    skipped=11   rescued=0    ignored=0   
