@@ -1,11 +1,13 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: app/v1
+kind: StatefulSet
 metadata:
   name: {{ include "app-python.fullname" . }}
   labels:
     {{- include "app-python.labels" . | nindent 4 }}
 spec:
-    {{- if not .Values.autoscaling.enabled }}
+  serviceName: {{ include "app-python.fullname" . }}
+  podManagementPolicy: Parallel
+    {{ - if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
@@ -14,14 +16,9 @@ spec:
   template:
     metadata:
       annotations:
-        vault.hashicorp.com/agent-inject: "true"
-        vault.hashicorp.com/agent-inject-secret-config: "secret/data/app-python/config"
-        vault.hashicorp.com/agent-inject-template-config: |
-          {{ .Files.Get "templates/vault-template.yaml" | nindent 10 }}
-        vault.hashicorp.com/role: "app-python"
-        { { - with .Values.podAnnotations } }
-        { { - toYaml . | nindent 8 } }
-        { { - end } }
+        {{ - with .Values.podAnnotations }}
+          {{ - toYaml . | nindent 8 }}
+        {{ - end }}
       labels:
         {{- include "app-python.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
@@ -47,9 +44,22 @@ spec:
               protocol: TCP
           {{- with .Values.livenessProbe }}
           livenessProbe:
-            {{- toYaml .Values.livenessProbe | nindent 12 }}
-          readinessProbe:
-            {{- toYaml .Values.readinessProbe | nindent 12 }}
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+            readinessProbe:
+              httpGet:
+                path: /
+                port: http
+              initialDelaySeconds: 5
+              periodSeconds: 5
+              timeoutSeconds: 3
+              successThreshold: 1
+              failureThreshold: 3
           resources:
             {{ - toYaml .Values.resources | nindent 12 }}
           {{ - with .Values.volumeMounts }}
@@ -57,6 +67,8 @@ spec:
             - name: config-volume
               mountPath: /app/config.json
               subPath: config.json
+            - name: data
+              mountPath: /data
             {{- if .Values.volumeMounts }}
             {{- toYaml .Values.volumeMounts | nindent 12 }}
             {{- end }}
@@ -90,3 +102,14 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        {{- if .Values.persistence.storageClass }}
+        storageClassName: {{ .Values.persistence.storageClass }}
+        {{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size }}

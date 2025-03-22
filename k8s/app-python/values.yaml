@@ -13,7 +13,19 @@ vaultAgent:
 persistence:
   enabled: true
   accessMode: ReadWriteOnce
-  size: 1Gi
+  storageClassName: "standard"
+  size: "1Gi"
+
+parallelPodManagement: true
+
+updateStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    partition: 0
+
+configMap:
+  enabled: false
+  mountPath: "/config"
 
 imagePullSecrets: []
 
@@ -95,6 +107,10 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+env:
+   - name: APP_MODE
+     value: "production"
 
 secrets:
   appSecret: "secret-key"
