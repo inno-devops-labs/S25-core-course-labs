@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: moscow-time-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: moscow-time-app
+  template:
+    metadata:
+      labels:
+        app: moscow-time-app
+    spec:
+      containers:
+      - name: moscow-time-app
+        image: innoenjoyer/moscow-time-app:latest
+        ports:
+        - containerPort: 5000
