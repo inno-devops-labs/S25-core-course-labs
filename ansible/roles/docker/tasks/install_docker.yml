@@ -1,0 +1,24 @@
+- name: Install prerequisites for Docker
+  apt:
+    name: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common' ]
+    state: present
+  become: yes
+
+- name: Add Docker's official GPG key
+  apt_key:
+    url: "{{ gpg_url }}"
+    state: present
+  become: yes
+
+- name: Set up the Docker repository
+  apt_repository:
+    repo: "{{ docker_repo }}"
+    state: present
+  become: yes
+
+- name: Install Docker CE
+  apt:
+    name: docker-ce
+    state: latest
+  become: yes
+  notify: Restart Docker
