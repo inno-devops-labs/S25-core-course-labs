@@ -1,0 +1,99 @@
+name: CI workflow python app
+
+
+on:
+  push:
+    branches:
+      - main
+      - lab3
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ./app_python/requirements.txt
+
+      - name: Run Linter (flake8)
+        run: |
+          pip install flake8
+          flake8 .
+
+      - name: Run tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}/app_python
+        run: |
+          pip install pytest
+          pytest
+
+  security-scan:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies (Required for Snyk)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r app_python/requirements.txt
+
+      - name: Install Snyk
+        run: |
+          npm install -g snyk
+
+      - name: Run Snyk Security Scan
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          snyk auth $SNYK_TOKEN
+          snyk test --file=app_python/requirements.txt --package-manager=pip --skip-unresolved
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        run: |
+          cd app_python
+          docker build -t app_python:latest .
+
+      - name: Push Docker image
+        run: |
+          docker tag app_python:latest ${{ secrets.DOCKER_USERNAME }}/app_python:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/app_python:latest

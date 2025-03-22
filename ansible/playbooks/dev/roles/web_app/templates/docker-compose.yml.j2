@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  web:
+    image: "{{ app_name }}:latest"
+    build:
+      context: "{{ app_dir }}"
+      dockerfile: Dockerfile
+    ports:
+      - "{{ app_port }}:{{ app_port }}"
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - "{{ app_dir }}:{{ app_dir }}"
+    user: "{{ app_user }}"
+    restart: always

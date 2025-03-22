@@ -1,0 +1,105 @@
+replicaCount: 1
+
+image:
+  repository: zdragonlord1010/app-python:latest
+  pullPolicy: IfNotPresent
+  tag: latest
+
+vaultEnabled: true
+vaultAgent:
+  enabled: true
+  role: "app-python"
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 512Mi
+
+imagePullSecrets: []
+
+nameOverride: ""
+
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
+podAnnotations:
+  vault.hashicorp.com/agent-inject: "true"
+  vault.hashicorp.com/role: "app-python"
+  vault.hashicorp.com/agent-inject-secret-config: "secret/data/app-python/config"
+  vault.hashicorp.com/agent-inject-template-config: |
+    {{- with secret "secret/data/app-python/config" -}}
+    VAULT_DB_USERNAME={{ .Data.data.username }}
+    VAULT_DB_PASSWORD={{ .Data.data.password }}
+    {{- end -}}
+  environment: "development"
+
+podLabels:
+  environment: "dev"
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 5000
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: app-python.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+resources:
+  limits:
+    cpu: 300m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 10
+  periodSeconds: 20
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 50
+  targetCPUUtilizationPercentage: 80
+
+volumes: []
+
+volumeMounts: []
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+secrets:
+  appSecret: "secret-key"
+  appEnv: "production"
+  dbUsername: "python-app-dev"
+  dbPassword: "devpassword123"

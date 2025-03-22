@@ -1,0 +1,5 @@
+# Handlers for the web_app role
+- name: Restart Docker containers
+  docker_compose:
+    project_src: "{{ app_dir }}"
+    state: restarted
