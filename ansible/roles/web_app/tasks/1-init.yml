@@ -1,0 +1,29 @@
+- name: Init application configs to deploy via docker
+  block:
+    - name: Create app dir if not exists
+      file:
+        path: "{{ app_dir }}"
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: "0755"
+
+    - name: Generate docker-compose.yml from template
+      template:
+        src: docker-compose.yml.j2
+        dest: "{{ app_dir }}/docker-compose.yml"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0644'
+
+    - name: Pull docker image
+      docker_image:
+        name: "{{ docker_image }}"
+        tag: "{{ docker_image_tag }}"
+        source: pull
+
+    - name: Ensure docker is active
+      service:
+        name: docker
+        enabled: true
+        state: started
