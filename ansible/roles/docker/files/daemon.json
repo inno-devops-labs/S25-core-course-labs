@@ -1,0 +1,24 @@
+{
+    "log-driver": "json-file",
+    "log-opts": {
+      "max-size": "50m",
+      "max-file": "3"
+    },
+    "storage-driver": "overlay2",
+    "exec-opts": ["native.cgroupdriver=systemd"],
+    "bip": "192.168.1.1/24",
+    "default-address-pools": [
+      {
+        "base": "192.168.100.0/24",
+        "size": 24
+      }
+    ],
+    "dns": ["8.8.8.8", "8.8.4.4"],
+    "live-restore": true,
+    "no-new-privileges": true,
+    "userns-remap": "default",
+    "icc": false,
+    "experimental": false,
+    "metrics-addr": "127.0.0.1:9323",
+    "debug": false
+}

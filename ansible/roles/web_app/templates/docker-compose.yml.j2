@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  web:
+    image: "{{ web_app_image }}:{{ web_app_image_tag }}"
+    ports:
+      - target: "{{ web_app_internal_port }}"
+        published: "{{ web_app_external_port }}"
