@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: init-queue-demo
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: workdir
+      mountPath: /usr/share/nginx/html
+  initContainers:
+  - name: init-1
+    image: busybox:1.28
+    command: ['sh', '-c', 'echo "First init container executed at $(date)" >> /work-dir/queue.log']
+    volumeMounts:
+    - name: workdir
+      mountPath: "/work-dir"
+  - name: init-2
+    image: busybox:1.28
+    command: ['sh', '-c', 'echo "Second init container executed at $(date)" >> /work-dir/queue.log']
+    volumeMounts:
+    - name: workdir
+      mountPath: "/work-dir"
+  - name: init-3
+    image: busybox:1.28
+    command: ['sh', '-c', 'echo "Third init container executed at $(date)" >> /work-dir/queue.log']
+    volumeMounts:
+    - name: workdir
+      mountPath: "/work-dir"
+  volumes:
+  - name: workdir
+    emptyDir: {} 
