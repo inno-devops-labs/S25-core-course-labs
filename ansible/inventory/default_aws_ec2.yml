@@ -1,0 +1,7 @@
+all:
+  hosts:
+    compute-vm-2-2-20-ssd-1739694545649:
+      ansible_host: 158.160.159.61
+      ansible_user: gendiro
+      ansible_ssh_private_key_file: ~/.ssh/ya
+      ansible_python_interpreter: /usr/bin/python3
