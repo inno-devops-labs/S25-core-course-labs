@@ -1,0 +1,90 @@
+- name: Check if Docker is installed
+  command: docker --version
+  register: docker_installed
+  ignore_errors: true
+
+- name: Install required dependencies for Ansible
+  block:
+    - name: Install Python dependencies for package management (Debian/Ubuntu)
+      apt:
+        name: python3-apt
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian" or ansible_distribution == "Ubuntu"
+
+- name: Install required packages for different OS families
+  block:
+    - name: Install packages (Arch Linux)
+      pacman:
+        name: "{{ docker_required_packages_arch }}"
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Archlinux" and docker_installed.rc != 0
+
+    - name: Install packages (Debian/Ubuntu)
+      apt:
+        name: "{{ docker_required_packages }}"
+        state: present
+        update_cache: yes
+      when: (ansible_os_family == "Debian" or ansible_distribution == "Ubuntu") and docker_installed.rc != 0
+
+- name: Add Docker repository and GPG key
+  block:
+    - name: Add Docker GPG key (Debian/Ubuntu)
+      apt_key:
+        url: "{{ docker_apt_gpg_key }}"
+        state: present
+      when: (ansible_os_family == "Debian" or ansible_distribution == "Ubuntu") and docker_installed.rc != 0
+
+    - name: Add Docker repository (Debian/Ubuntu)
+      apt_repository:
+        repo: "{{ docker_apt_repository }}"
+        state: present
+      when: (ansible_os_family == "Debian" or ansible_distribution == "Ubuntu") and docker_installed.rc != 0
+
+- name: Install Docker packages
+  block:
+    - name: Install Docker (Debian/Ubuntu)
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+        update_cache: yes
+      when: ansible_os_family != "Archlinux" and docker_installed.rc != 0
+
+    - name: Install Docker (Arch Linux)
+      pacman:
+        name: docker
+        state: present
+      when: ansible_os_family == "Archlinux" and docker_installed.rc != 0
+
+- name: Ensure Docker service is enabled and started
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Add users to docker group
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: yes
+  with_items: "{{ docker_users }}"
+  when: docker_users | length > 0
+
+- name: Add current user to docker group
+  user:
+    name: "{{ ansible_user_id }}"
+    groups: docker
+    append: yes
+
+- name: Verify Docker Installation
+  command: docker --version
+  register: docker_check
+  changed_when: false
+
+- name: Debug Docker Version
+  debug:
+    msg: "Docker installed successfully: {{ docker_check.stdout }}"
