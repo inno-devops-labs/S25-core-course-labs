@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/DenisNesterovIT/S25-core-course-labs.git
     targetRevision: lab13
-    path: <k8s/app>
+    path: './k8s/app/' 
     helm:
       valueFiles:
         - values.yaml
