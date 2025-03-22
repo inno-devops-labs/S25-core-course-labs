@@ -1,0 +1,10 @@
+- name: Deploy app_ruby
+  hosts: all
+  become: true
+  roles:
+    - web_app
+  vars:
+    web_app_name: omsk-time
+    web_app_internal_port: 4567
+    web_app_external_port: 8081
+    web_app_full_wipe: true
