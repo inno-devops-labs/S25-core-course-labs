@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cpp-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cpp-app
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: cpp-app
+    spec:
+      containers:
+      - name: cpp-app
+        image: voronm1522/devops:cpp-app
+        ports:
+        - containerPort: 8080
