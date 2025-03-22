@@ -1,0 +1,6 @@
+all:
+  hosts:
+    yandex_cloud:
+      ansible_host: 158.160.97.17
+      ansible_user: polilia
+      ansible_ssh_private_key_file: ~/.ssh/id_ed25519

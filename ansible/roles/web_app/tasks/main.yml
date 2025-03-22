@@ -1,0 +1,52 @@
+- name: Setup Docker Environment
+  block:
+    - name: Install Docker (if not already installed)
+      apt:
+        name: docker.io
+        state: present
+      become: yes
+      when: ansible_os_family == "Debian"
+      tags:
+        - setup
+
+    - name: Start Docker Service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+      become: yes
+      tags:
+        - setup
+  tags:
+    - setup
+
+- name: Create deployment directory if it does not exist
+  file:
+    path: "/opt/web_app"
+    state: directory
+    mode: '0755'
+  become: yes
+  tags:
+    - docker
+
+
+- name: Pull Docker image for web_app
+  docker_image:
+    name: "{{ docker_image }}"
+    source: pull
+  tags:
+    - docker
+
+- name: Deliver docker-compose file
+  template:
+    src: docker-compose.yml.j2
+    dest: "/opt/web_app/docker-compose.yml"
+  tags:
+    - docker
+
+- name: Deploy web_app container using docker-compose
+  shell: "docker-compose -f /opt/web_app/docker-compose.yml up -d"
+  args:
+    chdir: "/opt/web_app"
+  tags:
+    - docker
