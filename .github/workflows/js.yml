@@ -1,0 +1,127 @@
+name: Node.js CI with Docker
+
+on:
+  push:
+    paths:
+      - 'app_js/**'
+      - '.github/workflows/js.yml'
+  pull_request:
+    paths:
+      - 'app_js/**'
+      - '.github/workflows/js.yml'
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          cd app_js
+          npm ci
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('app_js/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+  lint:
+    runs-on: ubuntu-latest
+    needs: install
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run linter (Standard)
+        run: |
+          cd app_js
+          npm install --save-dev standard
+          npx standard .
+
+  test:
+    runs-on: ubuntu-latest
+    needs: install
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Set API_KEY in .env
+        run: |
+            cd app_js
+            echo "YANDEX_API_KEY=${{ secrets.YANDEX_API_KEY }}" >> .env
+
+      - name: Install dependencies
+        run: |
+          cd app_js
+          npm ci
+
+      - name: Run unit tests
+        run: |
+          cd app_js
+          npm test
+
+  snyk:
+    runs-on: ubuntu-latest
+    needs: install
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Snyk is applied
+        uses: snyk/actions/node@master
+        with:
+          args: --skip-unresolved app_js/
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  docker:
+    needs: [install, lint, test, snyk]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Set API_KEY in .env
+        run: |
+          echo "YANDEX_API_KEY=${{ secrets.YANDEX_API_KEY }}" >> ./app_js/.env
+
+      - name: Cache Docker
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
+          restore-keys: |
+            ${{ runner.os }}-docker-
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./app_js
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/js-cities-dist:latest
+        

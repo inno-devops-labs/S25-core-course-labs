@@ -1,0 +1,20 @@
+- name: Wipe app
+  tags: [wipe]
+  when: web_app_full_wipe
+  block:
+    - name: Remove the existing container
+      docker_container:
+        name: "{{ docker_container }}"
+        state: absent
+
+    - name: Remove docker-compose file
+      file:
+        path: /opt/web_app/docker-compose.yml
+        state: absent
+
+    - name: Remove Web app directory
+      file:
+        path: "{{ web_app_dir }}"
+        state: absent
+  
+  
