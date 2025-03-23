@@ -1,17 +1,17 @@
-# Default values for moscow-time-app.
+# Default values for app_python_chart.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
-replicaCount: 1
+replicaCount: 3
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: yehiasobeh/moscow-time-app
+  repository: oshaheen1882051/app_python
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: latest
+  tag: "app_python-prod-1.0.0"
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -52,7 +52,7 @@ securityContext: {}
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
 service:
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-  type: NodePort
+  type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 5000
 
@@ -73,7 +73,13 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources: {}
+resources:     
+  limits:
+    cpu: "0.5"
+    memory: "100Mi"
+  requests:
+    cpu: "0.5"
+    memory: "50Mi"
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -87,12 +93,10 @@ resources: {}
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
-  enabled: false
   httpGet:
     path: /
     port: http
 readinessProbe:
-  enabled: false
   httpGet:
     path: /
     port: http
@@ -106,14 +110,23 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
+volumes: 
+  - name: flask-volume
+    configMap:
+      name: flask-config
+
 # - name: foo
 #   secret:
 #     secretName: mysecret
 #     optional: false
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
+volumeMounts: 
+  - name: flask-volume
+    mountPath: "/config/config.json"
+    subPath: "config.json"
+    readOnly: true
+
 # - name: foo
 #   mountPath: "/etc/foo"
 #   readOnly: true
@@ -123,3 +136,15 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+config:
+  path: "files/config.json"
+
+env:
+  ENV: "default"
+
+podManagementPolicy: Parallel
+
+volumeClaimTemplates:
+  name: app-python-pvc
+  storage: 512Mi

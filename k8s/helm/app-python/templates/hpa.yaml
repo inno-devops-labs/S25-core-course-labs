@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "moscow-time-app.fullname" . }}
+  name: {{ include "app_python_chart.fullname" . }}
   labels:
-    {{- include "moscow-time-app.labels" . | nindent 4 }}
+    {{- include "app_python_chart.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "moscow-time-app.fullname" . }}
+    name: {{ include "app_python_chart.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

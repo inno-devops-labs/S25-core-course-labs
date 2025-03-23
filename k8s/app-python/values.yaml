@@ -1,81 +1,15 @@
-# Default values for mychart.
-replicaCount: 1
-
-image:
-  repository: nginx
-  pullPolicy: IfNotPresent
-  tag: "latest"
-
-# Secrets
-secrets:
-  password: "admin123"
-
-# Environment Variables (Bonus)
-env:
-  mode: "production"
-  version: "2.0"
-
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-
-serviceAccount:
-  create: true
-  automount: true
-  annotations: {}
-  name: "demo-sa"
-
-podAnnotations: {}
-podLabels: {}
-
-podSecurityContext: {}
-
-securityContext: {}
-
+app:
+  name: python-app
 service:
-  type: ClusterIP
-  port: 80
-
-ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-  hosts:
-    - host: chart-example.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-
-# Resource Management (Bonus)
-resources:
-  limits:
-    cpu: 500m
-    memory: 256Mi
-  requests:
-    cpu: 250m
-    memory: 128Mi
-
-livenessProbe:
-  httpGet:
-    path: /
-    port: http
-readinessProbe:
-  httpGet:
-    path: /
-    port: http
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-
-volumes: []
-volumeMounts: []
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
+  name: python-headless
+  port: 5000
+image:
+  repository: YehiaSobeh/python-app
+  tag: latest
+replicaCount: 3
+storage:
+  size: 1Gi
+podManagementPolicy: Parallel  # Override to allow parallel scaling
+serviceAccount:
+  create: false  # Set to `true` if you need a ServiceAccount
+  name: ""

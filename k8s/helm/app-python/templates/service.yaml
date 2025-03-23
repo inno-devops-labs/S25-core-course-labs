@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "moscow-time-app.fullname" . }}
+  name: {{ include "app_python_chart.fullname" . }}
   labels:
-    {{- include "moscow-time-app.labels" . | nindent 4 }}
+    {{- include "app_python_chart.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "moscow-time-app.selectorLabels" . | nindent 4 }}
+    {{- include "app_python_chart.selectorLabels" . | nindent 4 }}

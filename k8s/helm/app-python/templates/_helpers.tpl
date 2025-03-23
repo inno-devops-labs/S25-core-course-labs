@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "moscow-time-app.name" -}}
+{{- define "app_python_chart.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "moscow-time-app.fullname" -}}
+{{- define "app_python_chart.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "moscow-time-app.chart" -}}
+{{- define "app_python_chart.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "moscow-time-app.labels" -}}
-helm.sh/chart: {{ include "moscow-time-app.chart" . }}
-{{ include "moscow-time-app.selectorLabels" . }}
+{{- define "app_python_chart.labels" -}}
+helm.sh/chart: {{ include "app_python_chart.chart" . }}
+{{ include "app_python_chart.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,18 +45,30 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "moscow-time-app.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "moscow-time-app.name" . }}
+{{- define "app_python_chart.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "app_python_chart.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "moscow-time-app.serviceAccountName" -}}
+{{- define "app_python_chart.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "moscow-time-app.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "app_python_chart.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
+{{- end }}
+
+{{/*
+Create environment variables 
+*/}}
+{{- define "app_python_chart.envName" -}}
+- name: NAME
+  value: "Mohamad Nour Shahin"
+{{- end }}
+{{- define "app_python_chart.envEmail" -}}
+- name: EMAIL
+  value: "mo.shahin@innopolis.university"
 {{- end }}

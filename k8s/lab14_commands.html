@@ -1,0 +1,369 @@
+<pre><font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs</b></font>$ git status 
+On branch lab14
+Changes not staged for commit:
+  (use &quot;git add/rm &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+	<font color="#C01C28">deleted:    k8s/app-python/templates/serviceaccount.yaml</font>
+	<font color="#C01C28">modified:   k8s/app-python/values.yaml</font>
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+	<font color="#C01C28">k8s/app-python/templates/service.yaml</font>
+	<font color="#C01C28">k8s/app-python/templates/statefulset.yaml</font>
+
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs</b></font>$ git add . 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs</b></font>$ git add . 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs</b></font>$ helm install myapp ./myapp-stateful
+Error: INSTALLATION FAILED: path &quot;./myapp-stateful&quot; not found
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs</b></font>$ helm install app-python ./app-python
+Error: INSTALLATION FAILED: path &quot;./app-python&quot; not found
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs</b></font>$ cls
+Command &apos;cls&apos; not found, but there are 18 similar ones.
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs</b></font>$ ls
+<font color="#12488B"><b>ansible</b></font>     <font color="#12488B"><b>data</b></font>                lab1.md  lab4.md     README.md
+<font color="#12488B"><b>app</b></font>         docker-compose.yml  lab2.md  lab5.md     <font color="#12488B"><b>terraform</b></font>
+<font color="#12488B"><b>app_python</b></font>  <font color="#12488B"><b>k8s</b></font>                 lab3.md  <font color="#12488B"><b>monitoring</b></font>
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs</b></font>$ cd k8s/helm/
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ ls 
+<font color="#12488B"><b>app-python</b></font>
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ helm install app-python ./app-python
+^CRelease app-python has been cancelled.
+Error: INSTALLATION FAILED: context canceled
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ helm install app-python ./app-python
+Error: INSTALLATION FAILED: cannot re-use a name that is still in use
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ helm uninstall app-python ./app-python
+release &quot;app-python&quot; uninstalled
+Error: uninstall: Release name is invalid: ./app-python
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ helm install app-python ./app-python
+^CRelease app-python has been cancelled.
+Error: INSTALLATION FAILED: context canceled
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ helm uninstall app-python ./app-python
+release &quot;app-python&quot; uninstalled
+Error: uninstall: Release name is invalid: ./app-python
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ helm uninstall app-python ./app-python
+Error: uninstall: Release not loaded: app-python: release: not found
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ helm uninstall app-python ./app-python
+Error: uninstall: Release not loaded: app-python: release: not found
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ helm install app-python ./app-python
+Error: INSTALLATION FAILED: failed pre-install: warning: Hook pre-install app-python/templates/pre-install.yml failed: 1 error occurred:
+	* pods &quot;preinstall-hook&quot; already exists
+
+
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl delete pod preinstall-hook
+pod &quot;preinstall-hook&quot; deleted
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ helm install app-python ./app-python
+Error: INSTALLATION FAILED: cannot re-use a name that is still in use
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ helm uninstall app-python 
+release &quot;app-python&quot; uninstalled
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ helm install app-python ./app-python
+Error: INSTALLATION FAILED: failed post-install: warning: Hook post-install app-python/templates/post-install.yml failed: 1 error occurred:
+	* pods &quot;postinstall-hook&quot; already exists
+
+
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl get po,sts,svc,pvc
+NAME                   READY   STATUS      RESTARTS   AGE
+pod/app-python-0       1/1     Running     0          79s
+pod/app-python-1       1/1     Running     0          79s
+pod/app-python-2       1/1     Running     0          79s
+pod/postinstall-hook   0/1     Completed   0          4m2s
+
+NAME                          READY   AGE
+statefulset.apps/app-python   3/3     79s
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/app-python   ClusterIP   10.97.137.179   &lt;none&gt;        5000/TCP   79s
+service/kubernetes   ClusterIP   10.96.0.1       &lt;none&gt;        443/TCP    16m
+
+NAME                                                STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/app-python-pvc-app-python-0   Bound    pvc-8d829ea6-5814-4b26-8ef5-46fe46fc0b68   512Mi      RWO            standard       &lt;unset&gt;                 4m3s
+persistentvolumeclaim/app-python-pvc-app-python-1   Bound    pvc-b3258e50-d945-4524-8ac2-2c7aee53cf23   512Mi      RWO            standard       &lt;unset&gt;                 4m3s
+persistentvolumeclaim/app-python-pvc-app-python-2   Bound    pvc-4205bf8c-b567-4184-aa91-c015f9328dcd   512Mi      RWO            standard       &lt;unset&gt;                 4m3s
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec app-python-0 -- cat visits
+36<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec app-python-1 -- cat visits
+37<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec app-python-2 -- cat visits
+38<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl delete pod app-python-0
+pod &quot;app-python-0&quot; deleted
+
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl get pvc<span style="background-color:#FFFFFF"><font color="#300A24">vc</font></span>
+kubectl exec app-python-0 -- cat visits
+NAME                          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+app-python-pvc-app-python-0   Bound    pvc-8d829ea6-5814-4b26-8ef5-46fe46fc0b68   512Mi      RWO            standard       &lt;unset&gt;                 8m33s
+app-python-pvc-app-python-1   Bound    pvc-b3258e50-d945-4524-8ac2-2c7aee53cf23   512Mi      RWO            standard       &lt;unset&gt;                 8m33s
+app-python-pvc-app-python-2   Bound    pvc-4205bf8c-b567-4184-aa91-c015f9328dcd   512Mi      RWO            standard       &lt;unset&gt;                 8m33s
+66<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl get pvc
+NAME                          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+app-python-pvc-app-python-0   Bound    pvc-8d829ea6-5814-4b26-8ef5-46fe46fc0b68   512Mi      RWO            standard       &lt;unset&gt;                 8m46s
+app-python-pvc-app-python-1   Bound    pvc-b3258e50-d945-4524-8ac2-2c7aee53cf23   512Mi      RWO            standard       &lt;unset&gt;                 8m46s
+app-python-pvc-app-python-2   Bound    pvc-4205bf8c-b567-4184-aa91-c015f9328dcd   512Mi      RWO            standard       &lt;unset&gt;                 8m46s
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec app-python-0 -- cat visits
+2<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec app-python-0 -- cat visits
+11<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl delete pod app-python-0 --force --grace-period=0
+<font color="#A2734C"><b>Warning:</b></font> Immediate deletion does not wait for confirmation that the running resource has been terminated. The resource may continue to run on the cluster indefinitely.
+pod &quot;app-python-0&quot; force deleted
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec app-python-0 -- cat visits
+1<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$kubectl get pods -w<span style="background-color:#FFFFFF"><font color="#300A24">w</font></span>
+NAME               READY   STATUS      RESTARTS   AGE
+app-python-0       1/1     Running     0          28s
+app-python-1       1/1     Running     0          8m29s
+app-python-2       1/1     Running     0          8m29s
+postinstall-hook   0/1     Completed   0          11m
+^C<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl delete pod app-python-0 --force --grace-period=0
+kubectl get pvc
+kubectl exec app-python-0 -- cat visits
+<font color="#A2734C"><b>Warning:</b></font> Immediate deletion does not wait for confirmation that the running resource has been terminated. The resource may continue to run on the cluster indefinitely.
+pod &quot;app-python-0&quot; force deleted
+NAME                          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+app-python-pvc-app-python-0   Bound    pvc-8d829ea6-5814-4b26-8ef5-46fe46fc0b68   512Mi      RWO            standard       &lt;unset&gt;                 13m
+app-python-pvc-app-python-1   Bound    pvc-b3258e50-d945-4524-8ac2-2c7aee53cf23   512Mi      RWO            standard       &lt;unset&gt;                 13m
+app-python-pvc-app-python-2   Bound    pvc-4205bf8c-b567-4184-aa91-c015f9328dcd   512Mi      RWO            standard       &lt;unset&gt;                 13m
+32<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl get pvc
+NAME                          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+app-python-pvc-app-python-0   Bound    pvc-8d829ea6-5814-4b26-8ef5-46fe46fc0b68   512Mi      RWO            standard       &lt;unset&gt;                 13m
+app-python-pvc-app-python-1   Bound    pvc-b3258e50-d945-4524-8ac2-2c7aee53cf23   512Mi      RWO            standard       &lt;unset&gt;                 13m
+app-python-pvc-app-python-2   Bound    pvc-4205bf8c-b567-4184-aa91-c015f9328dcd   512Mi      RWO            standard       &lt;unset&gt;                 13m
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec app-python-0 -- cat visits
+2<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$  kubectl delete pod app-python-0 --force --grace-period=0
+<font color="#A2734C"><b>Warning:</b></font> Immediate deletion does not wait for confirmation that the running resource has been terminated. The resource may continue to run on the cluster indefinitely.
+pod &quot;app-python-0&quot; force deleted
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl scale sts app-python --replicas=2
+statefulset.apps/app-python scaled
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl delete pod app-python-0 --force --grace-period=0
+<font color="#A2734C"><b>Warning:</b></font> Immediate deletion does not wait for confirmation that the running resource has been terminated. The resource may continue to run on the cluster indefinitely.
+pod &quot;app-python-0&quot; force deleted
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl get pods
+NAME               READY   STATUS        RESTARTS   AGE
+app-python-0       1/1     Running       0          8s
+app-python-1       1/1     Running       0          13m
+app-python-2       1/1     Terminating   0          13m
+postinstall-hook   0/1     Completed     0          15m
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl delete pod app-python-0 --force --grace-period=0
+<font color="#A2734C"><b>Warning:</b></font> Immediate deletion does not wait for confirmation that the running resource has been terminated. The resource may continue to run on the cluster indefinitely.
+pod &quot;app-python-0&quot; force deleted
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl get pods
+NAME               READY   STATUS              RESTARTS   AGE
+app-python-0       0/1     ContainerCreating   0          1s
+app-python-1       1/1     Running             0          13m
+app-python-2       1/1     Terminating         0          13m
+postinstall-hook   0/1     Completed           0          15m
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl get pods
+NAME               READY   STATUS        RESTARTS   AGE
+app-python-0       1/1     Running       0          7s
+app-python-1       1/1     Running       0          13m
+app-python-2       1/1     Terminating   0          13m
+postinstall-hook   0/1     Completed     0          16m
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl get pods
+NAME               READY   STATUS      RESTARTS   AGE
+app-python-0       1/1     Running     0          57s
+app-python-1       1/1     Running     0          14m
+postinstall-hook   0/1     Completed   0          16m
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl get pods
+NAME               READY   STATUS      RESTARTS   AGE
+app-python-0       1/1     Running     0          63s
+app-python-1       1/1     Running     0          14m
+postinstall-hook   0/1     Completed   0          16m
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl get pods
+NAME               READY   STATUS      RESTARTS   AGE
+app-python-0       1/1     Running     0          2m49s
+app-python-1       1/1     Running     0          16m
+postinstall-hook   0/1     Completed   0          18m
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl scale sts app-python --replicas=3
+statefulset.apps/app-python scaled
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl get pods
+NAME               READY   STATUS              RESTARTS   AGE
+app-python-0       1/1     Running             0          3m22s
+app-python-1       1/1     Running             0          16m
+app-python-2       0/1     ContainerCreating   0          3s
+postinstall-hook   0/1     Completed           0          19m
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl get pods
+NAME               READY   STATUS      RESTARTS   AGE
+app-python-0       1/1     Running     0          3m25s
+app-python-1       1/1     Running     0          16m
+app-python-2       1/1     Running     0          6s
+postinstall-hook   0/1     Completed   0          19m
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl get pods
+NAME               READY   STATUS      RESTARTS   AGE
+app-python-0       1/1     Running     0          3m27s
+app-python-1       1/1     Running     0          16m
+app-python-2       1/1     Running     0          8s
+postinstall-hook   0/1     Completed   0          19m
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec app-python-0 -- nslookup app-python-1.app-python
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+** server can&apos;t find app-python-1.app-python: NXDOMAIN
+
+** server can&apos;t find app-python-1.app-python: NXDOMAIN
+
+command terminated with exit code 1
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl get pods
+NAME               READY   STATUS      RESTARTS   AGE
+app-python-0       1/1     Running     0          4m8s
+app-python-1       1/1     Running     0          17m
+app-python-2       1/1     Running     0          49s
+postinstall-hook   0/1     Completed   0          20m
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl get svc app-python -o yaml
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: app-python
+    meta.helm.sh/release-namespace: default
+  creationTimestamp: &quot;2025-03-23T20:53:48Z&quot;
+  labels:
+    app.kubernetes.io/instance: app-python
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: app-python
+    app.kubernetes.io/version: 1.16.0
+    helm.sh/chart: app-python-0.1.0
+  name: app-python
+  namespace: default
+  resourceVersion: &quot;7143&quot;
+  uid: ea780333-01aa-4feb-b7d2-6ee1ffbdcabd
+spec:
+  clusterIP: 10.97.137.179
+  clusterIPs:
+  - 10.97.137.179
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: http
+    port: 5000
+    protocol: TCP
+    targetPort: http
+  selector:
+    app.kubernetes.io/instance: app-python
+    app.kubernetes.io/name: app-python
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl describe pod app-python-0 | grep Labels
+<font color="#C01C28"><b>Labels</b></font>:           app.kubernetes.io/instance=app-python
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec -it app-python-0 -- sh
+/app_python $ nslookup app-python-1.app-python.default.svc.cluster.local
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+
+Name:	app-python-1.app-python.default.svc.cluster.local
+Address: 10.244.0.40
+
+/app_python $ cat /etc/resolv.conf
+nameserver 10.96.0.10
+search default.svc.cluster.local svc.cluster.local cluster.local
+options ndots:5
+/app_python $ nslookup app-python-0.app-python.default.svc.cluster.local
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+
+Name:	app-python-0.app-python.default.svc.cluster.local
+Address: 10.244.0.46
+
+/app_python $ nslookup app-python-2.app-python.default.svc.cluster.local
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+
+Name:	app-python-2.app-python.default.svc.cluster.local
+Address: 10.244.0.47
+
+/app_python $ ^C
+
+/app_python $ 
+command terminated with exit code 130
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec app-python-0 -- nslookup app-python-1.app-python
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+** server can&apos;t find app-python-1.app-python: NXDOMAIN
+
+** server can&apos;t find app-python-1.app-python: NXDOMAIN
+
+command terminated with exit code 1
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec app-python-0 -- nslookup app-python-0.app-python
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+** server can&apos;t find app-python-0.app-python: NXDOMAIN
+
+** server can&apos;t find app-python-0.app-python: NXDOMAIN
+
+command terminated with exit code 1
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec -it app-python-0 -- sh
+/app_python $  nslookup app-python-1.app-python.default.svc.cluster.local
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+
+Name:	app-python-1.app-python.default.svc.cluster.local
+Address: 10.244.0.40
+
+/app_python $ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec app-python-0 -- cat /data/visits
+cat: can&apos;t open &apos;/data/visits&apos;: No such file or directory
+command terminated with exit code 1
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec -it app-python-0 -- sh
+/app_python $ cat /data/visits
+cat: can&apos;t open &apos;/data/visits&apos;: No such file or directory
+/app_python $ 
+command terminated with exit code 1
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ cd .. 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s</b></font>$ code . 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s</b></font>$ cd helm/
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec app-python-1 -- cat /data/visits
+cat: can&apos;t open &apos;/data/visits&apos;: No such file or directory
+command terminated with exit code 1
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec app-python-1 -- cat /data/visits
+cat: can&apos;t open &apos;/data/visits&apos;: No such file or directory
+command terminated with exit code 1
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec app-python-1 -- cat /app/visits
+cat: can&apos;t open &apos;/app/visits&apos;: No such file or directory
+command terminated with exit code 1
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec -it app-python-0 -- sh
+/app_python $ ls
+app.py     <font color="#12488B"><b>templates</b></font>  visits
+/app_python $ cat visits 
+/app_python $ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec app-python-1 -- cat /visits
+cat: can&apos;t open &apos;/visits&apos;: No such file or directory
+command terminated with exit code 1
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec -it app-python-0 -- sh
+/app_python $ cat visits 
+/app_python $ cat visits 
+/app_python $ cat visits 
+/app_python $ cat visits 
+392/app_python $ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec -it app-python-0 -- sh cat vistis
+sh: can&apos;t open &apos;cat&apos;: No such file or directory
+command terminated with exit code 2
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec -it app-python-0 -- sh
+/app_python $ cat visits 
+/app_python $ cat visits 
+/app_python $ cat visits 
+497/app_python $ 
+/app_python $ cat visits 
+497/app_python $ 
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/S25-core-course-labs/k8s/helm</b></font>$ kubectl exec -it app-python-0 -- sh
+/app_python $ cat visits 
+545/app_python $ 
+/app_python $ 
+
+</pre>

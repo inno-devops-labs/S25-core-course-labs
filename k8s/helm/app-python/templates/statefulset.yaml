@@ -1,18 +1,29 @@
-# templates/deployment.yaml (fixed)
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: {{ include "moscow-time-app.fullname" . }}
+  name: {{ include "app_python_chart.fullname" . }}
   labels:
-    {{- include "moscow-time-app.labels" . | nindent 4 }}
-    {{- include "common-lib.labels" . | nindent 4 }}
+    {{- include "app_python_chart.labels" . | nindent 4 }}
+    {{- include "library.labels" . | nindent 4 }}
 spec:
+  podManagementPolicy: {{ .Values.podManagementPolicy }}
+  serviceName: {{ include "app_python_chart.fullname" . }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "moscow-time-app.selectorLabels" . | nindent 6 }}
+      {{- include "app_python_chart.selectorLabels" . | nindent 6 }}
+      {{- include "library.labels" . | nindent 6 }}
+
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Values.volumeClaimTemplates.name }}
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ .Values.volumeClaimTemplates.storage }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -20,16 +31,17 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "moscow-time-app.labels" . | nindent 8 }}
+        {{- include "app_python_chart.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
+        {{- include "library.labels" . | indent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "moscow-time-app.serviceAccountName" . }}
+      serviceAccountName: {{ include "app_python_chart.serviceAccountName" . }}
       {{- with .Values.podSecurityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
@@ -42,17 +54,19 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- include "app_python_chart.envName" . | nindent 12 }}
+            {{- include "app_python_chart.envEmail" . | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: flask-config
           ports:
             - name: http
-              containerPort: 5000
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
-          {{- with .Values.livenessProbe.enabled }}
+          {{- with .Values.livenessProbe }}
           livenessProbe:
-            httpGet:
-              path: /
-              port: http
-            initialDelaySeconds: 10
-            periodSeconds: 5
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- with .Values.readinessProbe }}
           readinessProbe:

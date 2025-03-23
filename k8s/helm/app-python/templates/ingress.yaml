@@ -2,9 +2,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "moscow-time-app.fullname" . }}
+  name: {{ include "app_python_chart.fullname" . }}
   labels:
-    {{- include "moscow-time-app.labels" . | nindent 4 }}
+    {{- include "app_python_chart.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -35,7 +35,7 @@ spec:
             {{- end }}
             backend:
               service:
-                name: {{ include "moscow-time-app.fullname" $ }}
+                name: {{ include "app_python_chart.fullname" $ }}
                 port:
                   number: {{ $.Values.service.port }}
           {{- end }}
