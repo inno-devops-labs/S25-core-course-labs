@@ -31,8 +31,11 @@ Link: https://ipfs.io/ipfs/QmWbvbqN826rNpqeNoxL2W9SsLAxjuSfAtgv1738psrKmh
    - A fork of the lab repository was used as the project source.
    - The project settings on Fleek were configured, and the repository was deployed. This deployment ensured that the project was automatically uploaded to IPFS.
 
+![](./lab16_media/fleekimg.jpg)
+![](./lab16_media/fleekipfs.jpg)
 
-
+Hash: bafybeigbakd7cbqaitlix7tg7i5oyykmpxhyjsabhkodk4tp5zv2aiznxy
+Link: https://ipfs.io/ipfs/bafybeigbakd7cbqaitlix7tg7i5oyykmpxhyjsabhkodk4tp5zv2aiznxy
 
 
 3. **Documentation:**
