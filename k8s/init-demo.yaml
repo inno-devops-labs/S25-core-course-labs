@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo
+spec:
+  volumes:
+    - name: shared-data
+      emptyDir: {}
+
+  initContainers:
+    - name: download-html
+      image: busybox
+      command: ['wget', '-O', '/data/test.html', 'https://www.example.com']
+      volumeMounts:
+        - name: shared-data
+          mountPath: /data
+
+  containers:
+    - name: main
+      image: busybox
+      command: ['sleep', '3600']
+      volumeMounts:
+        - name: shared-data
+          mountPath: /data
+
