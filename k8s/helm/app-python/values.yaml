@@ -6,7 +6,7 @@ replicaCount: 2
 podManagementPolicy: Parallel
 
 image:
-  repository: dyllasdek/app_python
+  repository: emapfff/app_python
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
