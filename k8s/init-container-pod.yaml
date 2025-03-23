@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: init-container-demo
+  labels:
+    app: init-container-demo
+spec:
+  volumes:
+    - name: shared-volume
+      emptyDir: {}
+  containers:
+    - name: main-container
+      image: busybox
+      command: ['sh', '-c', 'while true; do echo "Main container is running"; sleep 30; done']
+      volumeMounts:
+        - name: shared-volume
+          mountPath: /data
+  initContainers:
+    - name: init-download
+      image: busybox
+      command: ['wget', '-O', '/data/test.html', 'http://info.cern.ch/hypertext/WWW/TheProject.html']
+      volumeMounts:
+        - name: shared-volume
+          mountPath: /data
