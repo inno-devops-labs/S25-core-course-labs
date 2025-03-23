@@ -102,3 +102,13 @@ get '/metrics' do
   # Marshal the metrics
   Prometheus::Client::Formats::Text.marshal(prometheus)
 end
+
+get '/healthz' do
+  status 200
+  'OK'
+end
+
+get '/ready' do
+  status 200
+  'Ready'
+end

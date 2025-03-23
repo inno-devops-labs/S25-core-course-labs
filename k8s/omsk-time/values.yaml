@@ -2,7 +2,7 @@ replicaCount: 3
 
 image:
   repository: ebob/omsk-time
-  tag: "v1.1"
+  tag: "v1.2"
   pullPolicy: IfNotPresent
 
 nameOverride: ""
@@ -12,6 +12,9 @@ service:
   type: ClusterIP
   port: 80
   targetPort: 4567
+
+updateStrategy:
+  partition: 1
 
 ingress:
   enabled: true
@@ -34,12 +37,20 @@ resources:
 
 livenessProbe:
   httpGet:
-    path: /
-    port: http
+    path: /healthz
+    port: 4567
+  initialDelaySeconds: 15
+  periodSeconds: 10
+  failureThreshold: 5
+
 readinessProbe:
   httpGet:
-    path: /
-    port: http
+    path: /ready
+    port: 4567
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  failureThreshold: 3
+
 
 autoscaling:
   enabled: false
@@ -49,3 +60,7 @@ autoscaling:
 
 env:
   ENVIRONMENT: stage
+
+persistence:
+  enabled: true
+  size:
