@@ -1,0 +1,5 @@
+---
+# Define dependencies for the web_app role
+
+dependencies:
+  - role: docker  # Declare dependency on the Docker role
