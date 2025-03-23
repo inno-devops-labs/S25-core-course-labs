@@ -29,7 +29,30 @@
 Hash: QmZek3hhgLeKUh4CYPVMh2McoxQq4TSZmYLgAFYS9rM6hX
 Link: https://ipfs.io/ipfs/QmZek3hhgLeKUh4CYPVMh2McoxQq4TSZmYLgAFYS9rM6hX
 CloudFlare Link : https://cloudflare-ipfs.com/ipfs/QmZek3hhgLeKUh4CYPVMh2McoxQq4TSZmYLgAFYS9rM6hX
+Dweb Link : https://bafybeificmf5trd3jzkts4u3rfa75oaedo6upjldjqfi4gzajo42vvia2i.ipfs.dweb.link?filename=hello.txt
+
+
+6. **Connected Peers:**
+
 
 ## Task 2: Fleek Project Setup
 
+1. **Setup the Fleek Project:**
+
 ![alt text](screenshots/fleek-setup.png)
+
+2. **Deploy the project:**
+
+![alt text](screenshots/deploy.png)
+
+3. **Verify the Deployment:**
+
+
+![alt text](screenshots/main.png)
+
+![alt text](screenshots/verify.png)
+
+Link : https://dweb.link/ipfs/bafybeib4z2e3wptd6j4mveb2srf5cuypolza62dfgxtanoffk4khll2vpe
+
+Hash : bafybeib4z2e3wptd6j4mveb2srf5cuypolza62dfgxtanoffk4khll2vpe
+
