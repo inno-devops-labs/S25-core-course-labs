@@ -1,0 +1,64 @@
+name: Test and build python app
+
+on:
+  push:
+    branches: [ '*' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository content
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.x 
+      uses: actions/setup-python@v2
+      with:
+          python-version: '3.x'
+
+    - name: Cache
+      uses: actions/cache@v2
+      with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+    - name: Install Dependencies
+      run: |
+          pip install -r app_python/requirements.txt
+
+    - name: flake8 Lint
+      uses: py-actions/flake8@v2
+      with:
+          path: "app_python"
+          plugins: "flake8-black"
+
+    - name: Tests
+      run: |
+          python -m pytest app_python
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+    - name: Docker build and push
+      run: |
+          docker build -f app_python/Dockerfile -t ${{ secrets.DOCKER_HUB_USERNAME }}/python_app:latest app_python
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/python_app:latest
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/python@master
+      env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }} 
+      with:
+        command: monitor
+        args: --file=app_python/requirements.txt --skip-unresolved
+
