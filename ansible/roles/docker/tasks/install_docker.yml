@@ -1,0 +1,38 @@
+---
+- name: Install dependencies
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+    state: present
+    update_cache: yes
+
+- name: Add GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: Install
+  apt:
+    name: docker-ce
+    state: present
+    update_cache: yes
+
+- name: Run
+  service:
+    name: docker
+    enabled: yes
+    state: started
+
+- name: Add user to group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
