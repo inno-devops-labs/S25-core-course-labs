@@ -1,0 +1,25 @@
+prometheus:
+  prometheusSpec:
+    additionalScrapeConfigs:
+      - job_name: app-python
+        scrape_interval: 15s
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names:
+                - default
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_namespace]
+            action: replace
+            target_label: namespace
+          - source_labels: [__meta_kubernetes_pod_name]
+            action: replace
+            target_label: pod
+          - source_labels: [__address__]
+            action: replace
+            regex: ([^:]+)(?::\d+)?
+            replacement: ${1}:5000
+            target_label: __address__
+          - source_labels: [__meta_kubernetes_pod_container_name]
+            action: keep
+            regex: app-python

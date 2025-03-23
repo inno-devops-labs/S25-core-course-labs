@@ -6,7 +6,7 @@ replicaCount: 2
 podManagementPolicy: Parallel
 
 image:
-  repository: dyllasdek/app_kotlin
+  repository: emapfff/app_kotlin
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
