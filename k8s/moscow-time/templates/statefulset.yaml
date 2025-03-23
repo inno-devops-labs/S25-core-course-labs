@@ -7,6 +7,9 @@ metadata:
 spec:
   serviceName: {{ .Release.Name }}-headless
   replicas: {{ .Values.replicaCount }}
+  podManagementPolicy: Parallel
+  updateStrategy:
+    type: RollingUpdate
   selector:
     matchLabels:
       {{- include "common-lib.selectorLabels" . | nindent 6 }}
@@ -26,6 +29,20 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            failureThreshold: 2
           volumeMounts:
             - name: data
               mountPath: /data
