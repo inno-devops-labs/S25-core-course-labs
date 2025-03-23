@@ -90,6 +90,22 @@ This repository includes unit tests to ensure the application works as expected.
 pytest
 ```
 
+## Visit Counter
+
+- The app now counts the number of times the main page (`/`) is visited.
+- The counter is saved to a file called `visits.txt` inside `/app/data`.
+- A Docker volume maps `./data` on the host to `/app/data` inside the container, ensuring the counter persists between container restarts.
+- You can check the current visit count:
+  - By visiting the endpoint: `http://localhost:5000/visits`
+  - By opening the file on the host:
+    ```bash
+    cat ./data/visits.txt
+    ```
+- To reset the counter manually:
+    ```bash
+    echo 0 > ./data/visits.txt
+    ```
+
 ## Continuous Integration (CI)
 
 This project uses GitHub Actions for CI. The workflow is triggered on pushes and pull requests to the `main` branch and includes the following steps:

@@ -67,6 +67,8 @@ services:
     image: app-python
     ports:
       - "5000:5000"
+    volumes:
+      - ./data:/app/data
     networks:
       - monitoring_net
     deploy:
