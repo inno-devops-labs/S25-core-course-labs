@@ -1,0 +1,11 @@
+NAME               READY   STATUS    RESTARTS   AGE
+pod/python-app-0   1/1     Running   0          9m29s
+
+NAME                          READY   AGE
+statefulset.apps/python-app   1/1     9m29s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   39m
+
+NAME                         DATA   AGE
+configmap/kube-root-ca.crt   1      39m

@@ -1,0 +1,56 @@
+NAME                                                         READY   STATUS     RESTARTS   AGE
+pod/alertmanager-monitoring-kube-prometheus-alertmanager-0   0/2     Init:0/1   0          13m
+pod/monitoring-grafana-76fb7b98c6-4lvcd                      3/3     Running    0          22m
+pod/monitoring-kube-prometheus-operator-86bf9bd655-s225t     1/1     Running    0          22m
+pod/monitoring-kube-state-metrics-5fdcf4dd5d-clxwq           1/1     Running    0          22m
+pod/monitoring-prometheus-node-exporter-fjdxt                1/1     Running    0          22m
+pod/prometheus-monitoring-kube-prometheus-prometheus-0       0/2     Init:0/1   0          13m
+
+NAME                                                                    READY   AGE
+statefulset.apps/alertmanager-monitoring-kube-prometheus-alertmanager   0/1     13m
+statefulset.apps/prometheus-monitoring-kube-prometheus-prometheus       0/1     13m
+
+NAME                                              TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                         AGE
+service/alertmanager-operated                     ClusterIP   None             <none>        9093/TCP,9094/TCP,9094/UDP      13m
+service/monitoring-grafana                        NodePort    10.111.196.212   <none>        80:31123/TCP                    22m
+service/monitoring-kube-prometheus-alertmanager   ClusterIP   10.97.205.138    <none>        9093/TCP,8080/TCP               22m
+service/monitoring-kube-prometheus-operator       ClusterIP   10.97.122.120    <none>        443/TCP                         22m
+service/monitoring-kube-prometheus-prometheus     NodePort    10.99.101.252    <none>        9090:30090/TCP,8080:31315/TCP   22m
+service/monitoring-kube-state-metrics             ClusterIP   10.105.45.218    <none>        8080/TCP                        22m
+service/monitoring-prometheus-node-exporter       ClusterIP   10.99.77.49      <none>        9100/TCP                        22m
+service/prometheus-operated                       ClusterIP   None             <none>        9090/TCP                        13m
+
+NAME                                                                     DATA   AGE
+configmap/kube-root-ca.crt                                               1      34m
+configmap/monitoring-grafana                                             1      22m
+configmap/monitoring-grafana-config-dashboards                           1      22m
+configmap/monitoring-kube-prometheus-alertmanager-overview               1      22m
+configmap/monitoring-kube-prometheus-apiserver                           1      22m
+configmap/monitoring-kube-prometheus-cluster-total                       1      22m
+configmap/monitoring-kube-prometheus-controller-manager                  1      22m
+configmap/monitoring-kube-prometheus-etcd                                1      22m
+configmap/monitoring-kube-prometheus-grafana-datasource                  1      22m
+configmap/monitoring-kube-prometheus-grafana-overview                    1      22m
+configmap/monitoring-kube-prometheus-k8s-coredns                         1      22m
+configmap/monitoring-kube-prometheus-k8s-resources-cluster               1      22m
+configmap/monitoring-kube-prometheus-k8s-resources-multicluster          1      22m
+configmap/monitoring-kube-prometheus-k8s-resources-namespace             1      22m
+configmap/monitoring-kube-prometheus-k8s-resources-node                  1      22m
+configmap/monitoring-kube-prometheus-k8s-resources-pod                   1      22m
+configmap/monitoring-kube-prometheus-k8s-resources-workload              1      22m
+configmap/monitoring-kube-prometheus-k8s-resources-workloads-namespace   1      22m
+configmap/monitoring-kube-prometheus-kubelet                             1      22m
+configmap/monitoring-kube-prometheus-namespace-by-pod                    1      22m
+configmap/monitoring-kube-prometheus-namespace-by-workload               1      22m
+configmap/monitoring-kube-prometheus-node-cluster-rsrc-use               1      22m
+configmap/monitoring-kube-prometheus-node-rsrc-use                       1      22m
+configmap/monitoring-kube-prometheus-nodes                               1      22m
+configmap/monitoring-kube-prometheus-nodes-aix                           1      22m
+configmap/monitoring-kube-prometheus-nodes-darwin                        1      22m
+configmap/monitoring-kube-prometheus-persistentvolumesusage              1      22m
+configmap/monitoring-kube-prometheus-pod-total                           1      22m
+configmap/monitoring-kube-prometheus-prometheus                          1      22m
+configmap/monitoring-kube-prometheus-proxy                               1      22m
+configmap/monitoring-kube-prometheus-scheduler                           1      22m
+configmap/monitoring-kube-prometheus-workload-total                      1      22m
+configmap/prometheus-monitoring-kube-prometheus-prometheus-rulefiles-0   35     13m

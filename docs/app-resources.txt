@@ -1,0 +1,14 @@
+NAME                   READY   STATUS              RESTARTS   AGE
+pod/pre-install-hook   0/1     Completed           0          6d23h
+pod/python-app-0       0/1     ContainerCreating   0          22s
+
+NAME                          READY   AGE
+statefulset.apps/python-app   0/1     22s
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP   6d23h
+service/python-app   ClusterIP   10.108.66.194   <none>        80/TCP    15m
+
+NAME                          DATA   AGE
+configmap/kube-root-ca.crt    1      13d
+configmap/python-app-config   1      6d23h
