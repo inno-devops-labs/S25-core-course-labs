@@ -1,46 +1,60 @@
 package com.example
 
-import io.ktor.server.application.Application
-import io.ktor.server.application.call
-import io.ktor.server.engine.embeddedServer
-import io.ktor.server.netty.Netty
-import io.ktor.server.response.respondText
-import io.ktor.server.routing.get
-import io.ktor.server.routing.routing
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.TimeZone
+import io.ktor.server.application.*
+import io.ktor.server.engine.*
 import io.ktor.server.metrics.micrometer.*
+import io.ktor.server.netty.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
+import io.micrometer.core.instrument.binder.jvm.JvmGcMetrics
+import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics
+import io.micrometer.core.instrument.binder.system.ProcessorMetrics
+import io.micrometer.core.instrument.distribution.DistributionStatisticConfig
+import io.micrometer.prometheus.PrometheusConfig
+import io.micrometer.prometheus.PrometheusMeterRegistry
 import okio.FileSystem
 import okio.IOException
 import okio.Path
 import okio.Path.Companion.toPath
+import java.text.SimpleDateFormat
+import java.time.Duration
+import java.util.*
 
-val path = "/data/counter".toPath()
+val path: Path = "/data/counter".toPath()
 
 fun main() {
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module) {
-        install(MicrometerMetrics)
-    }.start(wait = true)
+    embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module).start(wait = true)
 }
 
-fun update() {
-    val temp = FileSystem.SYSTEM.read(path) {readUtf8()}
-    val value = temp.toInt()
-    FileSystem.SYSTEM.write(path) {writeUtf8("${value+1}")}
+fun updateCounter() {
+    try {
+        val temp = FileSystem.SYSTEM.read(path) { readUtf8() }
+        val value = temp.toIntOrNull() ?: 0
+        FileSystem.SYSTEM.write(path) { writeUtf8("${value + 1}") }
+    } catch (e: IOException) {
+        // Если файла нет или ошибка чтения, создаем с нуля
+        FileSystem.SYSTEM.write(path) { writeUtf8("1") }
+    }
 }
 
 fun getMoscowTime(): String {
     val moscowTimeZone = TimeZone.getTimeZone("Europe/Moscow")
     val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     dateFormat.timeZone = moscowTimeZone
-    val currentTime = Date()
-    return dateFormat.format(currentTime)
+    return dateFormat.format(Date())
 }
 
 fun Application.module() {
-    FileSystem.SYSTEM.write(path) {writeUtf8("0")}
+    try {
+        if (!FileSystem.SYSTEM.exists(path)) {
+            FileSystem.SYSTEM.write(path) { writeUtf8("0") }
+        }
+    } catch (e: IOException) {
+        log.error("Ошибка при инициализации счетчика", e)
+    }
+
     val appMicrometerRegistry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
+
     install(MicrometerMetrics) {
         registry = appMicrometerRegistry
         distributionStatisticConfig = DistributionStatisticConfig.Builder()
@@ -57,22 +71,26 @@ fun Application.module() {
             ProcessorMetrics()
         )
     }
-    val counter = 0
+
     routing {
         get("/") {
-            update()
+            updateCounter()
             val moscowTime = getMoscowTime()
-            call.respondText("Current Time in Moscow:$moscowTime")
+            call.respondText("Current Time in Moscow: $moscowTime")
         }
+
         get("/metrics") {
-            update()
             call.respond(appMicrometerRegistry.scrape())
         }
-        get("/visited"){
-            update()
-            val temp = FileSystem.SYSTEM.read(path) {readUtf8()}
-            val value = temp.toInt()
-            call.respondText(value)
+
+        get("/visited") {
+            updateCounter()
+            val count = try {
+                FileSystem.SYSTEM.read(path) { readUtf8() }.toIntOrNull() ?: 0
+            } catch (e: IOException) {
+                0
+            }
+            call.respondText("Visited: $count")
         }
     }
 }
