@@ -84,6 +84,8 @@ services:
         interval: 30s
         timeout: 10s
         retries: 5
+      volumes:
+        - visits_data:/app/visits
       logging:
         driver: "json-file"
         options:
@@ -109,3 +111,26 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    volumes:
+      - /:/rootfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  volumes:
+    grafana_data:
+    app-logs:
+    prometheus_data:
+    visits_data:

@@ -9,7 +9,7 @@ app = Flask(__name__)
 REQUEST_COUNT = Counter(
     "http_requests_total", "Total number of HTTP requests", ["method", "endpoint"]
 )
-
+visit_count = 0
 @app.route("/")
 def show_time():
     REQUEST_COUNT.labels(method="GET", endpoint="/").inc()  # Increment counter
@@ -19,11 +19,11 @@ def show_time():
     
     return f"<h1>Current Time in Moscow: {moscow_time}</h1>"
 
-@app.get("/metrics")
-def metrics():
-    REQUEST_COUNT.labels(method="GET", endpoint="/metrics").inc()  # Increment counter
-    
-    return Response(generate_latest(), content_type=CONTENT_TYPE_LATEST)
+@app.route("/visits")
+def visit_counter():
+    global visit_count
+    visit_count += 1
+    return f"Visit count: {visit_count}"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
