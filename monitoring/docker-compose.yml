@@ -55,7 +55,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./visits.txt:/app/visits.txt
+    - ./data:/data 
     depends_on:
       - loki
       - promtail 

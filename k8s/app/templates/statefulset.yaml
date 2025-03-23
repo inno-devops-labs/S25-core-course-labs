@@ -1,13 +1,13 @@
+# statefulset.yml
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "app.fullname" . }}
   labels:
     {{- include "app.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
+  serviceName: {{ include "app.fullname" . }}-headless
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "app.selectorLabels" . | nindent 6 }}
@@ -44,7 +44,7 @@ spec:
             - name: MY_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: my-secret
+                  name: {{ .Values.secret.MY_SECRET }}
                   key: MY_SECRET
           ports:
             - name: http
@@ -62,14 +62,8 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
-      volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+            {{- toYaml .Values.volumeMounts | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -82,3 +76,11 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: {{ .Values.storage.accessModes | toYaml | nindent 10 }}
+        resources:
+          requests:
+            storage: {{ .Values.storage.size }}

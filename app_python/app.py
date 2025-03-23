@@ -14,11 +14,7 @@ app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
     '/metrics': make_wsgi_app()
 })
 
-VISITS_FILE = "visits.txt"
-
-if not os.path.exists(VISITS_FILE):
-    with open(VISITS_FILE, "w") as f:
-        f.write("0")
+VISITS_FILE = "/data/visits.txt"
 
 @app.route('/')
 def start():
