@@ -3,7 +3,8 @@ import logging
 import os
 import sys
 import pytz
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
 
 # Setup logging
 log_dir = '/home/appuser/logs'
@@ -22,11 +23,16 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
+# Define Prometheus metrics
+PAGE_VIEWS = Counter('page_views_total', 'Number of page views', ['page'])
+HEALTH_CHECKS = Counter('health_checks_total', 'Number of health checks')
+HTTP_REQUEST_DURATION = Histogram('http_request_duration_seconds', 'HTTP request duration in seconds', ['endpoint'])
 
 @app.route("/")
 def index():
     """Display current Moscow time."""
     logger.info("Index page accessed by %s", request.remote_addr)
+    PAGE_VIEWS.labels(page='index').inc()
     moscow_tz = pytz.timezone("Europe/Moscow")
     moscow_time = datetime.now(moscow_tz)
     return render_template("index.html", current_time=moscow_time)
@@ -36,13 +42,22 @@ def index():
 def health():
     """Health check endpoint."""
     logger.info("Health check performed")
+    HEALTH_CHECKS.inc()
     return {"status": "healthy"}, 200
+
+
+@app.route('/metrics')
+def metrics():
+    """Expose Prometheus metrics."""
+    logger.info("Metrics endpoint accessed")
+    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 
 
 @app.errorhandler(404)
 def page_not_found(e):
     """Handle 404 errors."""
     logger.error("404 error: %s - %s", request.path, e)
+    PAGE_VIEWS.labels(page='404').inc()
     return render_template("404.html"), 404
 
 
