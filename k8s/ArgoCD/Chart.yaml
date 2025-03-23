@@ -1,0 +1,11 @@
+apiVersion: v2
+name: python-app-umbrella
+description: Umbrella chart for Python app
+type: application
+version: 0.1.0
+appVersion: 1.0.0
+dependencies:
+  - name: python-app
+    version: 0.1.0
+    repository: file://.
+    condition: python-app.enabled 

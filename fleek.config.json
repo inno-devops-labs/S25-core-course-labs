@@ -1,0 +1,9 @@
+{
+  "sites": [
+    {
+      "slug": "shrilling-pager-fast",
+      "distDir": ".",
+      "buildCommand": ""
+    }
+  ]
+}

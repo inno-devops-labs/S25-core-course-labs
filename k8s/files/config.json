@@ -1,0 +1,20 @@
+{
+  "appName": "JavaScript Year and Ad API",
+  "version": "1.0.0",
+  "environment": "production",
+  "features": {
+    "yearEndpoint": true,
+    "adEndpoint": true,
+    "combinedEndpoint": true,
+    "visitsEndpoint": true
+  },
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "enableConsole": true
+  },
+  "performance": {
+    "caching": true,
+    "cacheTTL": 3600
+  }
+} 

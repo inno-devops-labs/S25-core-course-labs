@@ -1,0 +1,10 @@
+python-app:
+  enabled: true
+  replicaCount: 3
+  image:
+    repository: python-app
+    tag: stable
+    pullPolicy: Always
+  service:
+    type: ClusterIP
+    port: 80 
