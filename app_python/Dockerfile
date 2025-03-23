@@ -7,6 +7,7 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 RUN addgroup -S group && adduser -S user -G group
+RUN chmod 777 visits
 USER user
 
 EXPOSE 5000

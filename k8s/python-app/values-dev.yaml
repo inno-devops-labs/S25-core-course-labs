@@ -111,9 +111,9 @@ volumes: []
 #     optional: false
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
+volumeMounts:
+- name: visits
+  mountPath: "/app/visits"
 #   readOnly: true
 
 nodeSelector: {}
