@@ -1,17 +1,18 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: {{ include "app-kotlin.fullname" . }}
+  name: {{ include "app-python.fullname" . }}
   labels:
-    {{- include "app-kotlin.labels" . | nindent 4 }}
+    {{- include "app-python.labels" . | nindent 4 }}
     {{- include "library-chart.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
+  podManagementPolicy: {{ .Values.podManagementPolicy }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "app-kotlin.selectorLabels" . | nindent 6 }}
+      {{- include "app-python.selectorLabels" . | nindent 6 }}
       {{- include "library-chart.labels" . | indent 6 }}
   template:
     metadata:
@@ -20,7 +21,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "app-kotlin.labels" . | nindent 8 }}
+        {{- include "app-python.labels" . | nindent 8 }}
         {{- include "library-chart.labels" . | indent 8 }}
 	{{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
@@ -30,7 +31,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "app-kotlin.serviceAccountName" . }}
+      serviceAccountName: {{ include "app-python.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -46,33 +47,21 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: 8080
+              port: 5000
           readinessProbe:
             httpGet:
               path: /
-              port: 8080
+              port: 5000
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
-            {{- include "app-kotlin.envVars" . | nindent 12 }}
-            - name: SPECIAL_TYPE_KEY
-              valueFrom:
-                configMapKeyRef:
-                  name: config-map-kotlin
-                  key: test
+            {{- include "app-python.envVars" . | nindent 12 }}
           volumeMounts:
-            - name: config-volume-kotlin
-              mountPath: "/config.json"
-              subPath: config.json
-            - name: counter-kotlin
-              mountPath: /data
+            {{- toYaml .Values.volumeMounts | nindent 12 }}
       volumes:
-      - name: config-volume-kotlin
-        configMap:
-          name: config-volume-kotlin
-      - name: counter-kotlin
-        emptyDir:
-          sizeLimit: 500Mi
+      {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -85,3 +74,5 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  volumeClaimTemplates:
+  {{- toYaml .Values.volumeClaimTemplates | nindent 2 }}

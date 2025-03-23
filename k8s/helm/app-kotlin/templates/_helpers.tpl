@@ -64,4 +64,9 @@ Create the name of the service account to use
 {{- define "app-kotlin.envVars" -}}
 - name: "KOTLIN_ENV"
   value: "SECRET-TWO"
+- name: SPECIAL_TYPE_KEY
+  valueFrom:
+    configMapKeyRef:
+      name: config-map-kotlin
+      key: test
 {{- end }}

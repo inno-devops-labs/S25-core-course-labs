@@ -64,4 +64,14 @@ Create the name of the service account to use
 {{- define "app-python.envVars" -}}
 - name: "CUSTOM_SECRET"
   value: "SECRET-ONE"
+- name: "SECRET"
+  valueFrom:
+    secretKeyRef:
+      name: real-secret
+      key: token
+- name: SPECIAL_TYPE_KEY
+  valueFrom:
+    configMapKeyRef:
+      name: config-map-python
+      key: test
 {{- end }}
