@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: demo
+  namespace: default
+spec:
+  serviceName: "demo"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      volumes:
+        - name: shared-volume
+          emptyDir: {}  # Temporary storage shared between Init Container and main container
+
+      initContainers:
+        - name: init-downloader
+          image: busybox  # Lightweight image with wget
+          command: ["sh", "-c", "wget -O /shared/test.html http://example.com"]
+          volumeMounts:
+            - name: shared-volume
+              mountPath: /shared
+
+      containers:
+        - name: main-container
+          image: nginx  # Web server to validate file presence
+          volumeMounts:
+            - name: shared-volume
+              mountPath: /usr/share/nginx/html
