@@ -1,9 +1,14 @@
+import os
 import pytest
 from app import app
 
 
 @pytest.fixture
-def client():
+def client(tmp_path):
+    test_counter_file = tmp_path / "visits.txt"
+
+    os.environ["COUNTER_FILE"] = str(test_counter_file)
+
     app.config['TESTING'] = True
     with app.test_client() as client:
         yield client
