@@ -1,10 +1,11 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ .Release.Name }}
   labels:
     {{- include "common-lib.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ .Release.Name }}-headless
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
@@ -22,12 +23,17 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-{{/*          volumeMounts: */}}
-{{/*            - name: config-volume */}}
-{{/*              mountPath: /app/config */}}
-{{/*              readOnly: true */}}
-{{/*          env: */}}
-{{/*            {{ include "common.env" . | nindent 12 }} */}}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
+          volumeMounts:
+            - name: data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size }}

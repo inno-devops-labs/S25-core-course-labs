@@ -1,31 +1,19 @@
-replicaCount: 4
+replicaCount: 3
 
 image:
   repository: ebob/moscow-time
-  tag: "v1.1"
+  tag: "v1.2"
   pullPolicy: IfNotPresent
 
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
+persistence:
+  enabled: true
+  size: 1Gi
 
 serviceAccount:
   create: true
   automount: true
   annotations: {}
   name: "internal-app"
-
-# podAnnotations: {
-#   vault.hashicorp.com/agent-inject: 'true',
-#   vault.hashicorp.com/role: 'internal-app',
-#   vault.hashicorp.com/agent-inject-secret-database-config.txt: 'internal/data/database/config'
-# }
-
-# podLabels: {}
-
-# podSecurityContext: {}
-
-# securityContext: {}
 
 service:
   type: ClusterIP
@@ -65,6 +53,3 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-
-# env:
-#   ENVIRONMENT: stage
