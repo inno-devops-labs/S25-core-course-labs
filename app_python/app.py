@@ -10,6 +10,9 @@ counter_file = "/app/data/visits.txt"
 
 @app.route('/')
 def time():
+
+    os.makedirs(os.path.dirname(counter_file), exist_ok=True)
+    
     count = 0
     if os.path.exists(counter_file):
         with open(counter_file, "r") as f:
