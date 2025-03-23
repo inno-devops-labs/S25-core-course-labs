@@ -9,6 +9,7 @@ metadata:
 spec:
   serviceName: {{ .Release.Name }}-headless
   replicas: {{ .Values.replicaCount }}
+  podManagementPolicy: {{ .Values.podManagementPolicy }}
   selector:
     matchLabels:
       app: {{ .Release.Name }}
@@ -17,6 +18,13 @@ spec:
       labels:
         app: {{ .Release.Name }}
     spec:
+      initContainers:
+      - name: init-download
+        image: busybox
+        command: ['wget', '-O', '/init-data/test.html', 'https://kubernetes.io/']
+        volumeMounts:
+        - name: init-data
+          mountPath: /init-data
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -37,8 +45,13 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /data
+        - name: init-data
+          mountPath: /init-data
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+      - name: init-data
+        emptyDir: {}
   volumeClaimTemplates:
   - metadata:
       name: data
