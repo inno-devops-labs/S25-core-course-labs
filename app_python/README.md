@@ -11,6 +11,8 @@ This web application provides real-time Moscow time display with a clean, respon
 - Real-time Moscow timezone display using pytz
 - Clean, minimalist user interface
 - Automatic time updates on page refresh
+- Visit counter tracking with persistence
+- Dedicated `/visits` endpoint to view total visits
 - Comprehensive test coverage with pytest
 - Well-documented codebase following PEP standards
 - Containerized deployment ready
@@ -56,7 +58,7 @@ docker build -t eleanorpi/moscow-time-app .
 docker pull eleanorpi/moscow-time-app
 
 # Run the container
-docker run -d -p 5000:5000 --name moscow-time eleanorpi/moscow-time-app
+docker run -d -p 5000:5000 -v ./data:/home/appuser/data --name moscow-time eleanorpi/moscow-time-app
 
 # Check container health
 docker inspect --format='{{json .State.Health}}' moscow-time
@@ -65,12 +67,30 @@ docker inspect --format='{{json .State.Health}}' moscow-time
 docker logs moscow-time
 ```
 
+### Using Docker Compose
+
+A `docker-compose.yml` file is provided for easy deployment:
+
+```bash
+# Start the application
+docker-compose up -d
+
+# View logs
+docker-compose logs
+
+# Stop the application
+docker-compose down
+```
+
+The docker-compose setup includes volumes for persistent data storage, keeping visit counts between container restarts.
+
 ### Accessing the Application
 
 The application will be available at:
 
 ```text
-http://localhost:5000
+http://localhost:5000      # Moscow Time display
+http://localhost:5000/visits  # Visit counter display
 ```
 
 For detailed information about Docker configuration, best practices, and security measures, see [DOCKER.md](DOCKER.md).

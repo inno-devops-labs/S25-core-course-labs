@@ -80,14 +80,19 @@ spec:
                   name: {{ include "python-app-chart.fullname" . }}-secret
                   key: password
           {{- end }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
+          {{- if .Values.volumeMounts }}
+            {{- toYaml .Values.volumeMounts | nindent 12 }}
           {{- end }}
-      {{- with .Values.volumes }}
+            - name: config-volume
+              mountPath: /app/config
       volumes:
-        {{- toYaml . | nindent 8 }}
+      {{- if .Values.volumes }}
+        {{- toYaml .Values.volumes | nindent 8 }}
       {{- end }}
+        - name: config-volume
+          configMap:
+            name: {{ include "python-app-chart.fullname" . }}-config
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

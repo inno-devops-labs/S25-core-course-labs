@@ -11,6 +11,11 @@ log_dir = '/home/appuser/logs'
 # Create log directory if it doesn't exist (for local development)
 os.makedirs(log_dir, exist_ok=True)
 
+# Create visits directory if it doesn't exist
+visits_dir = '/home/appuser/data'
+os.makedirs(visits_dir, exist_ok=True)
+visits_file = f'{visits_dir}/visits'
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s [%(levelname)s] %(message)s',
@@ -28,15 +33,46 @@ PAGE_VIEWS = Counter('page_views_total', 'Number of page views', ['page'])
 HEALTH_CHECKS = Counter('health_checks_total', 'Number of health checks')
 HTTP_REQUEST_DURATION = Histogram('http_request_duration_seconds', 'HTTP request duration in seconds', ['endpoint'])
 
+def get_visit_count():
+    """Get the current visit count from the file."""
+    try:
+        if os.path.exists(visits_file):
+            with open(visits_file, 'r') as f:
+                return int(f.read().strip())
+        return 0
+    except Exception as e:
+        logger.error("Error reading visit count: %s", e)
+        return 0
+
+def increment_visit_count():
+    """Increment the visit count in the file."""
+    try:
+        count = get_visit_count() + 1
+        with open(visits_file, 'w') as f:
+            f.write(str(count))
+        return count
+    except Exception as e:
+        logger.error("Error incrementing visit count: %s", e)
+        return -1
+
 @app.route("/")
 def index():
     """Display current Moscow time."""
     logger.info("Index page accessed by %s", request.remote_addr)
     PAGE_VIEWS.labels(page='index').inc()
+    visit_count = increment_visit_count()
+    logger.info("Visit count incremented to %s", visit_count)
     moscow_tz = pytz.timezone("Europe/Moscow")
     moscow_time = datetime.now(moscow_tz)
     return render_template("index.html", current_time=moscow_time)
 
+@app.route("/visits")
+def visits():
+    """Display the visit count."""
+    logger.info("Visits page accessed by %s", request.remote_addr)
+    PAGE_VIEWS.labels(page='visits').inc()
+    visit_count = get_visit_count()
+    return render_template("visits.html", visit_count=visit_count)
 
 @app.route("/health")
 def health():
