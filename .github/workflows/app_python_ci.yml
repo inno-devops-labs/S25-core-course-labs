@@ -1,0 +1,86 @@
+name: App Python CI Pipeline
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - app_python/**
+  pull_request:
+    branches:
+      - master
+    paths:
+      - app_python/**
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app_python
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+            path: ~/.cache/pip
+            key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+            restore-keys: |
+              ${{ runner.os }}-pip-
+        
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run linter
+        run: |
+          black --check .
+
+      - name: Run tests
+        run: |
+          pytest
+        
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python@master
+        continue-on-error: true
+        env:
+            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+            command: test
+            args: --command=python3 --skip-unresolved --sarif-file-output=snyk.sarif --severity-threshold=high ./app_python
+    
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+            sarif_file: snyk.sarif
+
+  docker-build-push:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app_python
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+            username: ${{ secrets.DOCKER_HUB_USERNAME }}
+            password: ${{ secrets.DOCKER_HUB_TOKEN }}
+        
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+            context: ./app_python
+            push: true
+            tags: absorian/s25-devops-msk-time:latest
