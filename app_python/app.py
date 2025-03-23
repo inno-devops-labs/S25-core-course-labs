@@ -1,11 +1,11 @@
+import os
 from flask import Flask, render_template, jsonify
 from datetime import datetime
 import pytz
-import os
 
 app = Flask(__name__)
 
-counter_file = "/app/data/visits.txt"
+counter_file = os.getenv("COUNTER_FILE", "/app/data/visits.txt")
 
 
 @app.route('/')
