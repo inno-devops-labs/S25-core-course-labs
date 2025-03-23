@@ -1,7 +1,7 @@
 import os
 import tempfile
 import pytest
-from app import app, counter_file
+from app import app
 
 
 @pytest.fixture
