@@ -17,6 +17,17 @@ spec:
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.vault.enabled }}
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/role: "myapp"
+        vault.hashicorp.com/agent-inject-secret-config.txt: "secret/data/myapp/config"
+        vault.hashicorp.com/agent-inject-template-config.txt: |
+          {{`{{- with secret "secret/data/myapp/config" -}}
+          export DB_USERNAME={{ .Data.data.username }}
+          export DB_PASSWORD={{ .Data.data.password }}
+          {{- end -}}`}}
+      {{- end }}
       labels:
         {{- include "python-app-chart.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
@@ -55,6 +66,19 @@ spec:
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.secrets.enabled }}
+          env:
+            - name: APP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "python-app-chart.fullname" . }}-secret
+                  key: username
+            - name: APP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "python-app-chart.fullname" . }}-secret
+                  key: password
           {{- end }}
           {{- with .Values.volumeMounts }}
           volumeMounts:

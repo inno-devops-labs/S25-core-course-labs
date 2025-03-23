@@ -1,0 +1,169 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault
+  namespace: vault
+  labels:
+    app.kubernetes.io/name: vault
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: vault
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: vault
+    spec:
+      containers:
+      - name: vault
+        image: hashicorp/vault:latest
+        command:
+        - "/bin/sh"
+        - "-c"
+        - |
+          vault server -dev -dev-root-token-id=root &
+          VAULT_PID=$!
+          sleep 5
+          export VAULT_ADDR='http://127.0.0.1:8200'
+          vault auth enable kubernetes
+          vault write auth/kubernetes/config \
+            kubernetes_host="https://$KUBERNETES_PORT_443_TCP_ADDR:443" \
+            token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
+            kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
+            issuer="https://kubernetes.default.svc.cluster.local"
+          vault secrets enable -path=secret kv-v2
+          vault kv put secret/myapp/config username="db-user" password="db-password-123"
+          vault policy write myapp - <<EOF
+          path "secret/data/myapp/config" {
+            capabilities = ["read"]
+          }
+          EOF
+          vault write auth/kubernetes/role/myapp \
+            bound_service_account_names=demo-python-app-chart \
+            bound_service_account_namespaces=default \
+            policies=myapp \
+            ttl=24h
+          wait $VAULT_PID
+        env:
+        - name: SKIP_SETCAP
+          value: "true"
+        - name: VAULT_DEV_ROOT_TOKEN_ID
+          value: "root"
+        - name: VAULT_DEV_LISTEN_ADDRESS
+          value: "0.0.0.0:8200"
+        ports:
+        - containerPort: 8200
+          name: vault-api
+        - containerPort: 8201
+          name: vault-cluster
+        securityContext:
+          capabilities:
+            add: ["IPC_LOCK"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vault
+  namespace: vault
+  labels:
+    app.kubernetes.io/name: vault
+spec:
+  ports:
+  - name: http
+    port: 8200
+    targetPort: 8200
+  selector:
+    app.kubernetes.io/name: vault
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault-agent-injector
+  namespace: vault
+  labels:
+    app.kubernetes.io/name: vault-agent-injector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: vault-agent-injector
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: vault-agent-injector
+    spec:
+      serviceAccountName: vault-agent-injector
+      containers:
+      - name: sidecar-injector
+        image: hashicorp/vault-k8s:latest
+        env:
+        - name: AGENT_INJECT_LISTEN
+          value: ":8080"
+        - name: AGENT_INJECT_LOG_LEVEL
+          value: "info"
+        - name: AGENT_INJECT_VAULT_ADDR
+          value: "http://vault.vault:8200"
+        - name: AGENT_INJECT_VAULT_AUTH_PATH
+          value: "auth/kubernetes"
+        - name: AGENT_INJECT_VAULT_IMAGE
+          value: "hashicorp/vault:latest"
+        - name: AGENT_INJECT_TLS_AUTO
+          value: "true"
+        - name: AGENT_INJECT_TLS_AUTO_HOSTS
+          value: "vault-agent-injector-svc,vault-agent-injector-svc.vault,vault-agent-injector-svc.vault.svc"
+        args:
+        - agent-inject
+        - 2>&1
+        livenessProbe:
+          httpGet:
+            path: /health/ready
+            port: 8080
+            scheme: HTTPS
+          failureThreshold: 2
+          initialDelaySeconds: 5
+          periodSeconds: 2
+          successThreshold: 1
+          timeoutSeconds: 5
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: vault-agent-injector
+  namespace: vault
+---
+kind: MutatingWebhookConfiguration
+apiVersion: admissionregistration.k8s.io/v1
+metadata:
+  name: vault-agent-injector-cfg
+webhooks:
+- name: vault.hashicorp.com
+  admissionReviewVersions:
+  - "v1beta1"
+  - "v1"
+  clientConfig:
+    service:
+      name: vault-agent-injector-svc
+      namespace: vault
+      path: "/mutate"
+  rules:
+  - operations: ["CREATE", "UPDATE"]
+    apiGroups: [""]
+    apiVersions: ["v1"]
+    resources: ["pods"]
+  sideEffects: None
+  failurePolicy: Ignore
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vault-agent-injector-svc
+  namespace: vault
+  labels:
+    app.kubernetes.io/name: vault-agent-injector
+spec:
+  ports:
+  - port: 443
+    targetPort: 8080
+  selector:
+    app.kubernetes.io/name: vault-agent-injector 
