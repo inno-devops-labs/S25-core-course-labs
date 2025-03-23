@@ -1,0 +1,3 @@
+gpg_key: "https://download.docker.com/linux/ubuntu/gpg"
+repo_url: "deb https://download.docker.com/linux/ubuntu bionic stable"
+docker_compose_url: "https://github.com/docker/compose/releases/download/v2.33.0/docker-compose-linux-x86_64"
