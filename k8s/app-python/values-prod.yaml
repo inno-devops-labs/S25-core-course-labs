@@ -1,4 +1,4 @@
-replicaCount: 4
+replicaCount: 3
 image:
   repository: friedox/app-python
   tag: latest
