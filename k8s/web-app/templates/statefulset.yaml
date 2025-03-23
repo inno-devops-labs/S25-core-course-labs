@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "web-app.fullname" . }}
+  labels:
+    {{- include "web-app.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "web-app.fullname" . }}
+  podManagementPolicy: {{ .Values.podManagementPolicy }}
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 1
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  volumeClaimTemplates:
+  - metadata:
+      name: {{ .Values.persistence.name }}
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ .Values.persistence.size }}
+  {{- if .Values.volumeClaimTemplates }}
+  {{- range .Values.volumeClaimTemplates }}
+  - metadata:
+      name: {{ .name }}
+    spec:
+      accessModes:
+        {{- toYaml .accessModes | nindent 8 }}
+      resources:
+        requests:
+          storage: {{ .size }}
+      {{- if .storageClassName }}
+      storageClassName: {{ .storageClassName }}
+      {{- end }}
+  {{- end }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "web-app.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "web-app.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "web-app.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.initContainers }}
+      initContainers:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          {{- with .Values.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.additionalVolumes }}
+      {{- if not $.Values.volumes }}
+      volumes:
+      {{- end }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

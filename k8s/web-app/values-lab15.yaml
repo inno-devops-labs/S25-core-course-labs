@@ -1,0 +1,82 @@
+# Values file for Lab 15
+replicaCount: 3
+
+image:
+  repository: dpttk/devopslabs
+  pullPolicy: Always
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 5000
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 10
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 5
+
+# Main persistence config
+persistence:
+  name: python-data
+  size: 1Gi
+
+# Volume mounts for the main container
+volumeMounts:
+  - name: python-data
+    mountPath: /app_python/data
+  - name: download-data-pvc
+    mountPath: /app/downloaded-files
+
+# Init containers for Lab 15
+initContainers:
+  - name: download-file
+    image: busybox
+    command: ['wget', '-O', '/download-data/test.html', 'https://kubernetes.io/docs/concepts/workloads/pods/init-containers/']
+    volumeMounts:
+      - name: download-data-pvc
+        mountPath: /download-data
+  - name: init-container-1
+    image: busybox
+    command: ['sh', '-c', 'echo "Line 1: Added by the first init container" > /download-data/init-file.txt']
+    volumeMounts:
+      - name: download-data-pvc
+        mountPath: /download-data
+  - name: init-container-2
+    image: busybox
+    command: ['sh', '-c', 'echo "Line 2: Added by the second init container" >> /download-data/init-file.txt']
+    volumeMounts:
+      - name: download-data-pvc
+        mountPath: /download-data
+  - name: init-container-3
+    image: busybox
+    command: ['sh', '-c', 'echo "Line 3: Added by the third init container" >> /download-data/init-file.txt']
+    volumeMounts:
+      - name: download-data-pvc
+        mountPath: /download-data
+
+# Additional persistent volume claims template
+volumeClaimTemplates:
+  - name: download-data-pvc
+    accessModes:
+      - ReadWriteOnce
+    size: 1Gi
+    storageClassName: standard
+
+podManagementPolicy: Parallel 
