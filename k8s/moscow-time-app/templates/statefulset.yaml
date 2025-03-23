@@ -81,6 +81,15 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+
+      initContainers:
+        - name: init-download
+          image: busybox
+          command: ['wget', '-O', '/app/app/visits/test.html', 'http://info.cern.ch/hypertext/WWW/TheProject.html']
+          volumeMounts:
+          - name: data
+            mountPath: /app/app/visits
+
       volumes:
         - name: config-volume
           configMap:
