@@ -1,0 +1,92 @@
+# Python stuff
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# IDE stuff
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment variables
+.env
+
+# Local development
+*.log
+.DS_Store
+
+# Node.js stuff
+# Node modules в любой директории
+**/node_modules/
+dist/
+build/
+
+# npm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage directory
+coverage/
+
+# Production build
+/build
+/dist
+
+# Local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Cache
+.cache/
+.npm/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Dependency directories
+jspm_packages/
+
+# Vite
+.vite/
+
+app_python/terraform/yandex/authorized_key.json
+
+# AWS credentials
+.aws/
+aws.credentials
+
+# Kubernetes and binary files
+minikube-linux-amd64
+**/minikube-linux-amd64
+*.exe
+*.bin
+*.tar.gz
+*.zip
+
+# Kubernetes local files
+.kube/
+.minikube/
+
+# Large binary files
+*.iso
+*.img
+*.vdi
+*.box
+*.ova
+
+# Helm
+charts/
+*.tgz

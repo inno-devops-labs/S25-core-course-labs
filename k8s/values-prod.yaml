@@ -1,0 +1,15 @@
+replicaCount: 3
+image:
+  repository: marketer7/flask-time
+  tag: latest
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+
+service:
+  port: 8000 
