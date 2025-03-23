@@ -51,3 +51,7 @@ This project uses GitHub Actions for CI. The workflow includes:
 - Running a linter (Black).
 - Running unit tests.
 - Building and pushing a Docker image.
+
+## Tracking visits
+
+Number of visits of the main page can be seen via `/visits` route and `./data/visits` file.

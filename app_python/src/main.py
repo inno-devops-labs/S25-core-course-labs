@@ -48,4 +48,9 @@ async def health_check(request: Request):
     return {"status": "ok"}
 
 
+@app.get("/visits")
+async def get_visits(request: Request):
+    return {"visits": vis.visits}
+
+
 Instrumentator().instrument(app).expose(app)
