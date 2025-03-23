@@ -1,0 +1,19 @@
+replicaCount: 2
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+
+volumeMounts:
+  - name: kotlin-data
+    mountPath: /app/data
+
+persistence:
+  size: 1Gi
+  name: kotlin-data
+
+podManagementPolicy: Parallel

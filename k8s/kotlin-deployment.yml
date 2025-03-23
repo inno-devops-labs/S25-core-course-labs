@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kotlin-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kotlin-service
+  template:
+    metadata:
+      labels:
+        app: kotlin-service
+    spec:
+      containers:
+      - name: kotlin-service
+        image: nai1ka/time-service-kotlin:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
