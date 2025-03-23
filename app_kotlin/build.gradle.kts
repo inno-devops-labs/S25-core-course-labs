@@ -35,6 +35,8 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:5.5.5")
     testImplementation("io.kotest:kotest-assertions-core:5.5.5")
     testImplementation("io.kotest:kotest-runner-junit5:$version")
+    implementation("io.ktor:ktor-server-metrics-micrometer:2.3.7")
+    implementation("io.micrometer:micrometer-registry-prometheus:1.11.5")
 }
 
 tasks.withType<Test>().configureEach {
