@@ -34,6 +34,31 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      initContainers:
+        - name: init-download
+          image: busybox
+          command: ['wget', '-O', '/data/test.html', 'http://info.cern.ch/hypertext/WWW/TheProject.html']
+          volumeMounts:
+            - name: data
+              mountPath: /data
+        - name: init-first
+          image: busybox
+          command: ['sh', '-c', 'echo "Line 1: First container was here" > /data/init-file.txt']
+          volumeMounts:
+            - name: data
+              mountPath: /data
+        - name: init-second
+          image: busybox
+          command: ['sh', '-c', 'echo "Line 2: Second container was here" >> /data/init-file.txt']
+          volumeMounts:
+            - name: data
+              mountPath: /data
+        - name: init-third
+          image: busybox
+          command: ['sh', '-c', 'echo "Line 3: Third container was here" >> /data/init-file.txt']
+          volumeMounts:
+            - name: data
+              mountPath: /data
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.securityContext }}
