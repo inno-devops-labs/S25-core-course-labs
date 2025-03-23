@@ -1,0 +1,88 @@
+replicaCount: 3
+
+image:
+  repository: haidarjbeily/distroless-moscow-time-app
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: false
+  automount: true
+  annotations: {}
+  name: "internal-app"
+
+podAnnotations:
+  vault.hashicorp.com/agent-inject: 'true'
+  vault.hashicorp.com/role: 'internal-app'
+  vault.hashicorp.com/agent-inject-secret-config: 'internal/database/config'
+  vault.hashicorp.com/agent-inject-template-config: |
+    {{- with secret "internal/database/config" -}}
+    export MY_PASS="{{ .Data.data.password }}"
+    {{- end -}}
+
+podLabels: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: LoadBalancer
+  port: 8000
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: apps.local
+      paths:
+        - path: /time
+          pathType: ImplementationSpecific
+  tls: []
+
+resources:
+  limits:
+    cpu: '200m'
+    memory: '256Mi'
+  requests:
+    cpu: '100m'
+    memory: '128Mi'
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+volumeMounts:
+  - name: config-volume
+    mountPath: /app/config.json
+    subPath: config.json
+
+volumes:
+  - name: config-volume
+    configMap:
+      name: app-config
+      items:
+        - key: config.json
+          path: config.json
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
