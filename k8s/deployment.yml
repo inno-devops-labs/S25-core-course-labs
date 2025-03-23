@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: time-moscow-deployment
+  labels:
+    app: time-moscow
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: time-moscow
+  template:
+    metadata:
+      labels:
+        app: time-moscow
+    spec:
+      containers:
+      - name: time-moscow
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+        image: fallenchromium/moscow-timezone-app:latest
+        ports:
+        - containerPort: 8000
