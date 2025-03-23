@@ -1,0 +1,21 @@
+{
+  "app": "moscow-time",
+  "version": "1.0.0",
+  "description": "Moscow Time API with persistence",
+  "settings": {
+    "timezone": "UTC+3",
+    "port": 8000,
+    "logLevel": "info",
+    "enableMetrics": true
+  },
+  "features": {
+    "timeDisplay": true,
+    "visitCounter": true,
+    "healthCheck": true
+  },
+  "persistence": {
+    "enabled": true,
+    "file": "visits",
+    "backupEnabled": false
+  }
+}

@@ -1,0 +1,84 @@
+replicaCount: 3
+
+image:
+  repository: python-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 5000
+  headless: true
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+# StatefulSet specific values
+statefulset:
+  podManagementPolicy: Parallel
+  updateStrategy:
+    type: RollingUpdate
+
+# Persistence configuration
+persistence:
+  enabled: true
+  storageClassName: standard
+  size: 1Gi
+
+# Liveness and Readiness Probes
+livenessProbe:
+  enabled: true
+  path: /health
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+
+readinessProbe:
+  enabled: true
+  path: /health
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+
+# Environment-specific values
+env:
+  NODE_ENV: production
+
+# Values for dev environment
+dev:
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 50m
+      memory: 64Mi
+    requests:
+      cpu: 25m
+      memory: 32Mi
+  env:
+    NODE_ENV: development
+
+# Values for prod environment
+prod:
+  replicaCount: 2
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 50m
+      memory: 64Mi
+  env:
+    NODE_ENV: production
