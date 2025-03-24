@@ -1,0 +1,15 @@
+- name: Web applicaton
+  tags: setup
+  block:
+    - name: Wipe
+      tags: wipe
+      ansible.builtin.include_tasks:
+        file: "0-wipe.yml"
+        apply:
+          tags: wipe
+    - name: Deploy
+      tags: deploy
+      ansible.builtin.include_tasks:
+        file: "deploy.yml"
+        apply:
+          tags: deploy

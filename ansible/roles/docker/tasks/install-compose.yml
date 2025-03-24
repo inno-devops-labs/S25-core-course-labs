@@ -1,0 +1,10 @@
+- name: Install docker-compose
+  get_url:
+    url: "{{ docker_compose_url }}"
+    dest: /usr/local/bin/docker-compose
+    mode: "u+x,g+x"
+- name: Change file ownership, group and permissions
+  ansible.builtin.file:
+    path: /usr/local/bin/docker-compose
+    owner: ubuntu
+    group: ubuntu
