@@ -8,7 +8,7 @@ spec:
   clusterIP: None
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: 80
+      targetPort: 5000
       protocol: TCP
       name: http
   selector:
