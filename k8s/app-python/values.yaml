@@ -1,0 +1,14 @@
+replicaCount: 3
+
+image:
+  repository: bakinasa/moscow-time-app@sha256:6ac5191c657f0d49a4af249ee2148ce348ee0fb2d386ec9d4a503922c65d513e
+  tag: ""
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 5000
+
+persistence:
+  accessMode: ReadWriteOnce
+  size: 1Gi
