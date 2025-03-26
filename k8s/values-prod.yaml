@@ -1,0 +1,10 @@
+replicaCount: 5
+
+image:
+  repository: suleimankrimeddin/app_python
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8000
