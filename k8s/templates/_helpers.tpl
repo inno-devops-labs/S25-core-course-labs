@@ -7,19 +7,12 @@ Expand the name of the chart.
 
 {{/*
 Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-If release name contains chart name it will be used as a full name.
 */}}
 {{- define "app-python.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default .Chart.Name .Values.nameOverride }}
-{{- if contains $name .Release.Name }}
-{{- .Release.Name | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
-{{- end }}
+{{- printf "%s-%s" .Release.Name (include "app-python.name" .) | trunc 63 | trimSuffix "-" }}
 {{- end }}
 {{- end }}
 
@@ -35,7 +28,8 @@ Common labels
 */}}
 {{- define "app-python.labels" -}}
 helm.sh/chart: {{ include "app-python.chart" . }}
-{{ include "app-python.selectorLabels" . }}
+app.kubernetes.io/name: {{ include "app-python.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -43,7 +37,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
-Selector labels
+Selector labels (used for matchLabels)
 */}}
 {{- define "app-python.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "app-python.name" . }}
@@ -60,13 +54,4 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
-
-{{/*
-Environment variables
-*/}}
-{{- define "app-python.env" -}}
-- name: APP_TIMEZONE
-  value: "Europe/Paris"
-- name: VISITS_FILE
-  value: "/app/data/visits.txt"
-{{- end }}
+ё
