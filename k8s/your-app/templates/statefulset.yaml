@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "your-app.fullname" . }}
+  labels:
+    {{- include "your-app.labels" . | nindent 4 }}
+spec:
+  serviceName: "{{ .Release.Name }}-flask-app"
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "your-app.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "your-app.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          volumeMounts:
+            - name: flask-app-data
+              mountPath: /data
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10    
+            periodSeconds: 5           
+            failureThreshold: 3       
+
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 5     
+            periodSeconds: 3           
+            failureThreshold: 3        
+  volumeClaimTemplates:
+    - metadata:
+        name: flask-app-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size }}
+        {{- if .Values.persistence.enabled }}
+        storageClassName: {{ .Values.persistence.storageClassName | default "standard" }}
+        {{- end }}
+podManagementPolicy: {{ .Values.podManagementPolicy | default "OrderedReady" }}
