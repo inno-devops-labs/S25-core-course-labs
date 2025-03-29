@@ -1,0 +1,26 @@
+- name: Wipe application
+  
+  when: web_app_full_wipe
+
+  tags:
+    - app
+    - wipe
+
+  block:
+    - name: Remove application container
+      docker_container:
+        name: "{{ container_name }}"
+        state: absent
+
+    - name: Remove Docker image
+      docker_image:
+        state: absent
+        name: "{{ image_name }}:{{ image_tag }}" 
+
+    - name: Remove all application files
+      file:
+        state: absent
+        path: "{{ item }}"
+      loop:
+        - "{{ app_dir }}"
+        - "/var/lib/docker/containers/{{ container_name }}"
