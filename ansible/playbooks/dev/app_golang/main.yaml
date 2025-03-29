@@ -1,0 +1,11 @@
+- name: Deploy Golang App
+  hosts: all
+  become: true
+  roles:
+    - role: web_app
+      vars:
+        web_app_docker_image: "vtecovsky/app_go"
+        web_app_docker_image_tag: "latest"
+        web_app_container_name: app_go
+        web_app_container_port: 8080
+        web_app_port: 8001
