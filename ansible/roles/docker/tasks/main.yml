@@ -1,0 +1,21 @@
+---
+- name: Install Docker
+  ansible.builtin.include_tasks: install_docker.yml
+
+- name: Install Docker Compose
+  ansible.builtin.include_tasks: install_compose.yml
+
+- name: Add user to docker group
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: true
+
+- name: Copy secure daemon.json to /etc/docker/
+  ansible.builtin.copy:
+    src: daemon.json  # File is in roles/docker/files/
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart Docker
