@@ -1,0 +1,8 @@
+---
+- name: Deploy Docker and Web Application
+  hosts: all
+  become: true
+  roles:
+    - role: docker
+    - role: web_app
+      tags: ['web_app']
