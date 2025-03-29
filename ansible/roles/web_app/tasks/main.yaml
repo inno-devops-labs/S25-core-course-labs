@@ -1,0 +1,30 @@
+---
+- import_tasks: 0-wipe.yaml
+
+- name: Create docker-compose.yml
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ time_app_docker_compose_path }}"
+    owner: "{{ docker_user }}"
+    group: "{{ docker_user }}"
+  tags:
+    - docker-compose
+
+- name: Pull Docker image
+  ansible.builtin.docker_image:
+    name: "unileonid/time-app-py"
+    tag: "{{ time_app_version }}"
+    source: pull
+  tags:
+    - docker-run
+
+- name: Run Docker container
+  ansible.builtin.docker_container:
+    name: "{{ time_app_docker_container_name }}"
+    image: "unileonid/time-app-py:{{ time_app_version }}"
+    state: started
+    restart_policy: always
+    ports:
+      - "{{ time_app_external_port }}:8080"
+  tags:
+    - docker-run

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "time-app-py.fullname" . }}-test-connection"
+  labels:
+    {{- include "time-app-py.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "time-app-py.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
