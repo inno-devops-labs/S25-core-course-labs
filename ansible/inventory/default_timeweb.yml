@@ -1,0 +1,5 @@
+all:
+  hosts:
+    witty_amalthea:
+      ansible_host: 212.60.20.87
+      ansible_user: root

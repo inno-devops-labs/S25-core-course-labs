@@ -1,0 +1,8 @@
+#SPDX-License-Identifier: MIT-0
+---
+docker_image: "wensiet/devops-py-app"
+docker_tag: "latest"
+internal_port: 8000
+external_port: 8000
+web_app_full_wipe: false
+deploy_path: /opt/deploy
