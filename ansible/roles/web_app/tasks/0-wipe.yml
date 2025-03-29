@@ -1,0 +1,11 @@
+- name: Remove Docker container
+  docker_container:
+    name: "{{ docker_container }}"
+    state: absent
+  tags: wipe
+
+- name: Remove docker-compose.yml
+  docker_image:
+    name: "{{ web_app_dir }}/{{ docker_compose_filename }}"
+    state: absent
+  tags: wipe
