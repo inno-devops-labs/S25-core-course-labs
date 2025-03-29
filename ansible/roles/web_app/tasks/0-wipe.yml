@@ -1,0 +1,11 @@
+- name: Stop and remove Docker services
+  community.docker.docker_compose:
+    project_src: "{{ app_install_dir }}"
+    state: absent
+  tags: wipe
+
+- name: Remove installation directory
+  file:
+    path: "{{ app_install_dir }}"
+    state: absent
+  tags: wipe

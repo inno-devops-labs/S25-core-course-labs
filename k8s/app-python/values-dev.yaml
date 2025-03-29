@@ -1,0 +1,7 @@
+# Dev environment values
+replicaCount: 1
+image:
+  repository: YehiaSobeh/python-app
+  tag: dev-latest
+service:
+  port: 5000

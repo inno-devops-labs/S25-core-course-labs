@@ -1,0 +1,184 @@
+name: CI Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Debug file structure
+        run: ls -R
+          
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Set up Node.js (for Snyk CLI)
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+
+      - name: Install dependencies
+        # working-directory: lab3/app_python
+        run: |
+          cd app_python
+          pip install -r requirements.txt
+
+      - name: Run linter (flake8)
+        # working-directory: lab3/app_python
+        run: |
+          cd app_python
+          ls
+          
+          flake8 . --count --show-source --statistics 
+      - name: Start Flask App
+        run: |
+          cd app_python
+          python app.py &  # Run in background
+          sleep 5  # Wait for the server to start
+
+
+      - name: Run tests
+        run: |
+          cd app_python
+          pytest -v tests/
+      - name: Run Snyk
+        run: |
+          cd app_python
+          npm install -g snyk
+          snyk auth ${{ secrets.SNYK_TOKEN }}
+          snyk test --severity-threshold=high
+
+      # - name: Snyk Python Scan
+      #   uses: snyk/actions/python-3.9@master
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  # From GitHub Secrets
+      #   with:
+      #     command: test
+      #     args: --severity-threshold=high  # Fail on high-severity issues
+
+
+  docker-publish:
+    needs: lint-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: app_python  # Path to Dockerfile location
+          push: true
+          tags: yehiasobeh/moscow-time-app:latest
+
+
+
+
+
+
+
+
+
+# name: CI/CD Pipeline
+# on: [push, pull_request]
+
+# env:
+#   WORKING_DIR: "app_python"  # Correct path to app_python
+#   PYTHON_VERSION: "3.9"           # Explicit Python version
+#   DOCKER_IMAGE: "yehiasobeh/moscow-time-app"  # Docker image name
+
+# jobs:
+#   lint-and-test:
+#     runs-on: ubuntu-latest
+#     defaults:
+#       run:
+#         working-directory: ${{ env.WORKING_DIR }}  # Set working directory for all steps
+
+#     steps:
+#       # - name: Checkout code
+#       #   uses: actions/checkout@v4
+#       #   with:
+#       #     path: lab3  # Checkout to lab3 subdirectory
+
+#       - name: Debug file structure
+#         run: pwd && ls -R  # Verify directory structure
+
+#       - name: Set up Python ${{ env.PYTHON_VERSION }}
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: ${{ env.PYTHON_VERSION }}
+#           cache: 'pip'  # Enable pip dependency caching
+#           cache-dependency-path: ${{ env.WORKING_DIR }}/requirements.txt
+
+#       - name: Install dependencies
+#         run: pip install -r requirements.txt
+
+#       - name: Run linter (flake8)
+#         run: flake8 . --count --show-source --statistics  # Enforce PEP8 compliance
+
+#       - name: Run tests with coverage
+#         run: pytest -v tests/ --cov=app --cov-report=xml  # Test with coverage
+
+#       - name: Upload coverage report
+#         uses: codecov/codecov-action@v3  # Track test coverage
+
+#       - name: Snyk Python security scan
+#         uses: snyk/actions/python-3.9@master  # Correct Snyk Python action
+#         with:
+#           command: test
+#           args: --severity-threshold=high
+#         env:
+#           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  # Security token
+
+#   docker-publish:
+#     needs: lint-and-test  # Run only if lint-and-test succeeds
+#     runs-on: ubuntu-latest
+#     environment: production
+#     permissions:
+#       contents: read
+#       packages: write
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+#         with:
+#           path: lab3  # Consistent path for Docker context
+
+#       - name: Set up Docker Buildx
+#         uses: docker/setup-buildx-action@v3  # Multi-platform support
+
+#       - name: Login to Docker Hub
+#         uses: docker/login-action@v3
+#         with:
+#           username: ${{ secrets.DOCKERHUB_USERNAME }}  # Docker Hub credentials
+#           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+#       - name: Build and push Docker image
+#         uses: docker/build-push-action@v5
+#         with:
+#           context: ${{ env.WORKING_DIR }}  # Correct Docker context path
+#           push: true
+#           tags: |
+#             ${{ env.DOCKER_IMAGE }}:latest
+#             ${{ env.DOCKER_IMAGE }}:${{ github.sha }}  # Immutable SHA tag
+#           cache-from: type=gha  # Docker layer caching
+#           cache-to: type=gha,mode=max
+
+#       - name: Snyk container scan
+#         uses: snyk/actions/docker@v3  # Correct Snyk Docker action
+#         with:
+#           image: ${{ env.DOCKER_IMAGE }}
+#           args: --severity-threshold=high
+#         env:
+#           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  # Security token

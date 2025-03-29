@@ -1,0 +1,15 @@
+app:
+  name: python-app
+service:
+  name: python-headless
+  port: 5000
+image:
+  repository: YehiaSobeh/python-app
+  tag: latest
+replicaCount: 3
+storage:
+  size: 1Gi
+podManagementPolicy: Parallel  # Override to allow parallel scaling
+serviceAccount:
+  create: false  # Set to `true` if you need a ServiceAccount
+  name: ""

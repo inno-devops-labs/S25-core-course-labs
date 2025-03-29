@@ -1,0 +1,22 @@
+# File: k8s/ArgoCD/argocd-python-prod.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: python-prod
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/YehiaSobeh/S25-core-course-labs.git
+    targetRevision: lab13
+    path: k8s/app-python    # Path to Helm chart
+    helm:
+      valueFiles:
+        - values-prod.yaml  # Prod-specific values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod         # Deploy to `prod` namespace
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
