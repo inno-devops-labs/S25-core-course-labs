@@ -1,0 +1,42 @@
+version: "3"
+
+tasks:
+  reqs-save:
+    desc: (python) save requirements for the project
+    cmds:
+      - pip freeze > app_python/requirements.txt
+
+  reqs-install:
+    desc: (python) install all requirements for project
+    cmds:
+      - pip install -r app_python/requirements.txt
+
+  run:
+    desc: (python) run web application
+    cmds:
+      - uvicorn app_python.main:app --port 8080 --reload
+
+  make-env:
+    dir: ./app_go/
+    desc: (go) create .env file for an application
+    cmds:
+      - cat example.env > .env
+    silent: true
+
+  test:
+    dir: ./app_python/
+    desc: (python) run unit tests
+    cmds:
+      - python -m tests.test
+
+  build:
+    dir: ./app_python/
+    desc: (python) build docker image
+    cmds:
+      - docker build -t muhammaduss/app-python:latest .
+
+  push:
+    dir: ./app_python/
+    desc: (python) push image to dockerhub
+    cmds:
+      - docker push muhammaduss/app-python:latest
