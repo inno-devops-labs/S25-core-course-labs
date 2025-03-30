@@ -1,0 +1,5 @@
+
+- name: reload docker daemon
+  service:
+    name: docker
+    state: restarted
