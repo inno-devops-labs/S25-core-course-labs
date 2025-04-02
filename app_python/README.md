@@ -59,7 +59,7 @@ Refresh the page to see the current time update in real-time.
 
 ---
 
-## 🧪 Testing
+## Testing
 
 I used **manual testing** and **code linting** to ensure quality:
 
@@ -76,6 +76,41 @@ Run these tools to check for linting and code quality:
 ```bash
 flake8 app.py
 python3 -m pylint app.py
+```
+
+---
+## Docker
+
+This application is containerized using Docker.
+
+### How to Build
+
+From the project directory, build the Docker image:
+
+```bash
+docker build -t alimansour000/moscow-time-app:latest .
+```
+
+### How to Pull
+
+To use the image from Docker Hub:
+
+```bash
+docker pull alimansour000/moscow-time-app:latest
+```
+
+### How to Run
+
+Run the Docker container:
+
+```bash
+docker run -p 5000:5000 alimansour000/moscow-time-app:latest
+```
+
+Then open your browser and visit:
+
+```
+http://127.0.0.1:5000
 ```
 
 ---
