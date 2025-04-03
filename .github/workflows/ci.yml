@@ -38,7 +38,7 @@ jobs:
 
       - name: Run tests
         working-directory: app_python
-        run: pytest
+        run: python -m pytest test_app.py
 
   docker:
     name: Build and Push Docker Image
