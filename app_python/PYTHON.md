@@ -45,3 +45,19 @@ python3 -m pylint app.py
 - Verified correct formatting (YYYY-MM-DD HH:MM:SS) for Moscow timezone.
 
 - Checked HTML rendering and ensured no server-side errors occurred.
+
+---
+
+## Unit Tests and Best Practices
+
+###  Unit Tests Written
+
+- `test_home_status_code`: Verifies that the home route (`/`) returns HTTP 200.
+- `test_home_content`: Ensures the page contains the expected heading text.
+- Uses `pytest` and `Flask`’s test client fixture.
+
+### Best Practices Followed
+
+- Test function names are descriptive and readable.
+- `pytest` fixtures used for cleaner setup and teardown.
+- Coverage of both response code and content.

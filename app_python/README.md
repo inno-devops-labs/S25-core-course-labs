@@ -1,3 +1,4 @@
+![CI](https://github.com/alimansour0002/S25-core-course-labs/actions/workflows/ci.yml/badge.svg)
 # Flask Web App: Moscow Time
 
 ## Overview
@@ -114,3 +115,38 @@ http://127.0.0.1:5000
 ```
 
 ---
+
+##  Unit Tests
+
+This project includes unit tests using `pytest` to validate route behavior.
+
+### Run Tests Locally
+
+```bash
+pip install pytest
+pytest
+```
+Tests include:
+
+- Verifying the / route returns a 200 status code
+
+- Confirming the homepage contains "Current Time in Moscow"
+
+
+
+---
+
+## 🛠 Continuous Integration (CI)
+
+This project uses GitHub Actions for CI/CD.
+
+### CI Workflow Steps:
+- Checkout and set up Python 3.12
+- Cache and install dependencies
+- Run linters: `flake8`, `pylint`
+- Run unit tests: `pytest`
+- Build and push Docker image (using Docker Buildx)
+- Scan code and dependencies with **Snyk** for vulnerabilities
+
+### Docker Hub:
+📦 [alimansour000/moscow-time-app](https://hub.docker.com/r/alimansour000/moscow-time-app)
