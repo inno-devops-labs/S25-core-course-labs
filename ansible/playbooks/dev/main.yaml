@@ -1,4 +1,4 @@
 - hosts: aws
   become: true
   roles:
-    - roles/docker
+    - roles/web_app
