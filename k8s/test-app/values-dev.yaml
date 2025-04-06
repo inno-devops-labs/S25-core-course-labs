@@ -121,12 +121,5 @@ secret:
   DB_PASSWORD: "password123"
 
 vault:
-  enabled: true
-  secrets:
-    - path: secret/data/myapp/config
-      type: json
-      template: |
-        {
-          "username": "{{ .username }}",
-          "password": "{{ .password }}"
-        }
+  enabled: false
+  annotations: {}
