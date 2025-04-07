@@ -1,0 +1,6 @@
+---
+docker_image: "nickwidbestie/region-time-api:latest"
+app_port: "8080"
+container_port: "80"
+web_app_full_wipe: true
+web_app_deploy_dir: "/opt/web_app"

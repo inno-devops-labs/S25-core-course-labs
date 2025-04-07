@@ -1,0 +1,5 @@
+fastapi
+uvicorn
+pytz
+pytest
+flake8
