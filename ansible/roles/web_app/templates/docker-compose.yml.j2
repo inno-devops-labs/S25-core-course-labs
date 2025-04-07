@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  app:
+    image: ghcr.io/marketerka/python-app:latest
+    container_name: {{ app_name }}
+    restart: unless-stopped
+    ports:
+      - "{{ app_port }}:8000"
+    environment:
+      PYTHONUNBUFFERED: "1"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
