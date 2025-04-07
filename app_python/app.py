@@ -1,7 +1,13 @@
 """Flask web application that displays the current time in Moscow."""
+from prometheus_client import start_http_server, Summary
 from datetime import datetime
 import pytz
 from flask import Flask, render_template
+
+start_http_server(8000)
+
+REQUEST_TIME = Summary('request_processing_seconds',
+                       'Time spent processing request')
 
 app = Flask(__name__)
 
