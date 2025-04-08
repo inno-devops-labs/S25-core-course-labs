@@ -1,17 +1,17 @@
 # Task 1
-![alt text](image.png)
+![alt text](src/helm/image.png)
 ```bash
 kubectl get pods,svc
 ```
-![alt text](image-1.png)
-![alt text](image-2.png)
+![alt text](src/helm/image-1.png)
+![alt text](src/helm/image-2.png)
 ```bash
 minikube service web-app
 ```
-![alt text](image-3.png)
-![alt text](image-4.png)
+![alt text](src/helm/image-3.png)
+![alt text](src/helm/image-4.png)
 # Task 2
-![alt text](image-5.png)
+![alt text](src/helm/image-5.png)
 
 ```bash
 kubectl describe po preinstall-hook
@@ -144,10 +144,10 @@ Events:
 ```
 ## Adding hook delete policy
 Before adding the delete policy I'll delete the old hooks:
-![alt text](image-6.png)
+![alt text](src/helm/image-6.png)
 
 After adding the hook delete policy we will not see `preinstall-hook` and `postinstall-hook` when we run :
 ```bash
 kubectl get pods,svc
 ```
-![alt text](image-7.png)
+![alt text](src/helm/image-7.png)
