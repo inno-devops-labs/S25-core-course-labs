@@ -1,0 +1,6 @@
+replicaCount: 4
+# Production-level resources
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi

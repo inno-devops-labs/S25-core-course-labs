@@ -1,0 +1,6 @@
+replicaCount: 1
+# Any dev-specific config, e.g. smaller resources
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
