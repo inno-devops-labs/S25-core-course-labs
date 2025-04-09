@@ -3,7 +3,7 @@
 
 ## Overview
 
-This is a simple Python Flask web application that displays the **current time in Moscow**. The time updates every time the user refreshes the page, and is accurately timezone-adjusted using `pytz`.
+This is a simple Python Flask web application that displays the **current time in Moscow**. The time updates every time the user refreshes the page, and is accurately timezone-adjusted using `pytz`, it can also count how many visits it got and save it in the `visit.txt` file. The app also tracks and displays how many times it has been accessed across all visits.
 
 ---
 
@@ -58,8 +58,16 @@ http://127.0.0.1:5000
 
 Refresh the page to see the current time update in real-time.
 
+
 ---
 
+## Endpoints
+- `/` – Displays the current time in Moscow and shows the total visit count.
+- `/visits` – Returns just the raw number of total visits.
+### Persistence
+
+When using Docker Compose, the `visits.txt` file is saved to the host machine using a volume.
+![alt text](src/image.png)
 ## Testing
 
 I used **manual testing** and **code linting** to ensure quality:
