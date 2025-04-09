@@ -5,6 +5,10 @@ services:
     build: ../app_python
     ports:
       - "8000:8000"
+    volumes:
+      - ../app_python/data:/app/data
+    environment:
+      - COUNTER_FILE=data/visits.txt
     # Bonus task: log rotation settings
     logging:
       driver: "json-file"
