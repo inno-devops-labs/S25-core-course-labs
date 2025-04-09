@@ -1,17 +1,37 @@
 const express = require('express');
 const moment = require('moment-timezone');
 const promClient = require('prom-client');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 const port = 3000;
 
-// 1. Create a Registry to register metrics
+const visitsFilePath = process.env.VISITS_FILE_PATH || path.join(__dirname, 'data', 'visits.txt');
+
+function getVisitsCount() {
+  if (fs.existsSync(visitsFilePath)) {
+    const data = fs.readFileSync(visitsFilePath, 'utf8');
+    return parseInt(data, 10) || 0;
+  }
+  return 0;
+}
+
+function incrementVisitsCount() {
+  let count = getVisitsCount();
+  count++;
+  fs.writeFileSync(visitsFilePath, count.toString(), 'utf8');
+  return count;
+}
+// ----------------------------------------------------
+
+// 2. Create a Registry to register metrics
 const register = new promClient.Registry();
 
-// 2. Collect default metrics (CPU, memory, etc.)
+// 3. Collect default metrics (CPU, memory, etc.)
 promClient.collectDefaultMetrics({ register });
 
-// 3. Define a custom counter for HTTP requests
+// 4. Define a custom counter for HTTP requests
 const httpRequestsCounter = new promClient.Counter({
   name: 'http_requests_total',
   help: 'Total number of HTTP requests received',
@@ -21,7 +41,7 @@ const httpRequestsCounter = new promClient.Counter({
 // Register the custom metric
 register.registerMetric(httpRequestsCounter);
 
-// 4. Middleware to update the counter after each request finishes
+// 5. Middleware to update the counter after each request finishes
 app.use((req, res, next) => {
   res.on('finish', () => {
     httpRequestsCounter.inc({
@@ -36,13 +56,21 @@ app.use((req, res, next) => {
 // Use EJS as the view engine
 app.set('view engine', 'ejs');
 
-// 5. Your existing route for the homepage
+// 6. Existing route for the homepage (Moscow time)
 app.get('/', (req, res) => {
   const currentTime = moment().tz("Europe/Moscow").format("YYYY-MM-DD HH:mm:ss");
   res.render('index', { currentTime });
 });
 
-// 6. Expose the /metrics endpoint
+// ----------------------------------------------------
+// 7. New /visits endpoint to increment & return the counter
+// ----------------------------------------------------
+app.get('/visits', (req, res) => {
+  const newCount = incrementVisitsCount();
+  res.send(`Visits Count: ${newCount}`);
+});
+
+// 8. Expose the /metrics endpoint for Prometheus
 app.get('/metrics', async (req, res) => {
   try {
     // Gather all metrics from the registry
@@ -54,12 +82,12 @@ app.get('/metrics', async (req, res) => {
   }
 });
 
-// 7. 404 handling
+// 9. 404 handling
 app.use((req, res) => {
   res.status(404).render('error', { message: 'Page not found' });
 });
 
-// 8. Start the server
+// 10. Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
