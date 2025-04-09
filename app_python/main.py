@@ -1,12 +1,20 @@
+import os
 from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from routers import time_operations_router
-
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 
-
 load_dotenv()  # Load environmental variables
+COUNTER_FILE = os.getenv("COUNTER_FILE", "data/visits.txt")
+
+# 1. Make sure the directory for COUNTER_FILE exists
+os.makedirs(os.path.dirname(COUNTER_FILE), exist_ok=True)
+
+# 2. Ensure the file itself exists
+if not os.path.exists(COUNTER_FILE):
+    with open(COUNTER_FILE, "w") as f:
+        f.write("0")
 
 # Create the backend application
 app = FastAPI()
@@ -21,15 +29,28 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 # Include the routers
 app.include_router(time_operations_router)
 
+# Define the root resource
+@app.get("/")
+def root():
+    # Read the current counter
+    with open(COUNTER_FILE, "r") as f:
+        count = int(f.read().strip())
 
-# Define the root source
-@app.get("/", tags=["Root"], status_code=200)
-async def root():
-    return {"message": "The python application is up!"}
+    # Increment and save
+    count += 1
+    with open(COUNTER_FILE, "w") as f:
+        f.write(str(count))
+
+    return {"message": f"Hello! You are visitor #{count}."}
+
+@app.get("/visits")
+def get_visits():
+    with open(COUNTER_FILE, "r") as f:
+        count = f.read().strip()
+    return {"total_visits": count}
 
 # Define the metrics endpoint
 @app.get("/metrics")

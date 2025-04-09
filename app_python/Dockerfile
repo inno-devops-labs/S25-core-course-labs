@@ -7,6 +7,8 @@ RUN useradd -m appuser
 # Set the working directory
 WORKDIR /app
 
+RUN mkdir -p /app/data && chmod 777 /app/data
+
 # Copy only the necessary files
 COPY requirements.txt requirements.txt
 COPY main.py main.py
