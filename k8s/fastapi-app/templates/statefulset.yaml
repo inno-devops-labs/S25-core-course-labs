@@ -25,23 +25,36 @@ spec:
       {{- end }}
     spec:
       serviceAccountName: {{ include "fastapi-app.fullname" . }}
+      initContainers:
+      - name: init-1
+        image: busybox
+        command: ["/bin/sh", "-c"]
+        args: ["echo 'Line 1' >> /test-volume/test.txt"]
+        volumeMounts:
+          - name: test-volume
+            mountPath: /test-volume
+
+      - name: init-2
+        image: busybox
+        command: ["/bin/sh", "-c"]
+        args: ["echo 'Line 2' >> /test-volume/test.txt"]
+        volumeMounts:
+          - name: test-volume
+            mountPath: /test-volume
+
+      - name: init-3
+        image: busybox
+        command: ["/bin/sh", "-c"]
+        args: ["echo 'Line 3' >> /test-volume/test.txt"]
+        volumeMounts:
+          - name: test-volume
+            mountPath: /test-volume
+
+
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-          initialDelaySeconds: 5
-          periodSeconds: 10
-
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-          initialDelaySeconds: 5
-          periodSeconds: 10
         env:
           - name: MY_PASS
             valueFrom:
@@ -63,6 +76,11 @@ spec:
           - name: config-volume
             mountPath: /config.json
             subPath: config.json
+          - name: test-volume
+            mountPath: /test-volume
+      volumes:
+      - name: test-volume
+        emptyDir: {}
   volumeClaimTemplates:
     - metadata:
         name: config-volume
