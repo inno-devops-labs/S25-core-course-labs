@@ -1,0 +1,47 @@
+template:
+  apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    name: {{ include "web-app.fullname" . }}
+    labels:
+      {{- include "web-app.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "web-app.fullname" . }}
+  podManagementPolicy: {{ .Values.podManagementPolicy | default "OrderedReady" }}
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "web-app.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "web-app.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+              name: http
+              protocol: TCP
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      {{- with .Values.volumeMounts }}
+        {{- toYaml . | nindent 10 }}
+      {{- end }}
+          
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: {{ .Values.storage.size }}
+        storageClassName: {{ .Values.storage.class | quote }}
