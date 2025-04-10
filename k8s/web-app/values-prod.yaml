@@ -2,7 +2,7 @@ replicaCount: 2
 
 image:
   repository: alimansour000/moscow-time-app
-  tag: stable
+  tag: latest
   pullPolicy: IfNotPresent
 
 resources:
