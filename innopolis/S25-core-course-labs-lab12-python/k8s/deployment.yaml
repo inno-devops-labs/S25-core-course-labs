@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+  namespace: default
+  labels:
+    app: my-app
+    environment: production
+spec:
+  replicas: 3
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+        environment: production
+    spec:
+      containers:
+        - name: my-app
+          image: nginx:1.25.4-alpine
+          ports:
+            - containerPort: 80
+          env:
+            - name: MY_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: MY_PASS
+            - name: NGINX_ENV
+              value: "production"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 2000

@@ -1,0 +1,7 @@
+---
+- name: Install Docker via Ansible Galaxy role
+  hosts: all
+  become: yes
+  roles:
+    - geerlingguy.docker
+    - web_app
