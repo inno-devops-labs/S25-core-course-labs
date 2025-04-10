@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: fastapi-servicemonitor
+  labels:
+    release: monitoring  # match your Helm release label
+spec:
+  selector:
+    matchLabels:
+      app: fastapi
+  endpoints:
+    - port: metrics
+      interval: 15s
