@@ -6,13 +6,23 @@ networks:
 
 volumes:
   loki-storage:
+  visits_data:
+  app_data:
 
 services:
-  app_python:
-    image: chr1st1na/app_python:latest
+  app:
+    build: ../app_python
     ports:
       - "5000:5000"
-
+    volumes:
+      - app_data:/app/data
+    environment:
+      - FLASK_ENV=development
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   loki:
     image: grafana/loki:latest
@@ -21,6 +31,8 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     volumes:
       - loki-storage:/loki
+    logging:
+      driver: "none"
 
   promtail:
     image: grafana/promtail:latest
@@ -61,6 +73,8 @@ services:
       - "3000:3000"
     depends_on:
       - loki
+    logging:
+      driver: "none"
 
   prometheus:
     image: prom/prometheus:latest
@@ -73,4 +87,6 @@ services:
     user: root 
     depends_on:
       - loki
+    logging:
+      driver: "none"
 
