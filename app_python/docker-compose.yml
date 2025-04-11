@@ -18,7 +18,7 @@ services:
       retries: 5
 
   backend:
-    image: jmartynova123/dev-lab3-backend:latest
+    image: jmartynova123/dev-lab3-back:latest
     environment:
       DATABASE_URI: postgres://myuser:mypassword@db:5432/times
     ports:
@@ -34,7 +34,7 @@ services:
       retries: 5
 
   frontend:
-    image: jmartynova123/dev-lab3-frontend:latest
+    image: jmartynova123/dev-lab3-front:latest
     ports:
       - "3000:3000"
     depends_on:

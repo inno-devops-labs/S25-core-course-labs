@@ -2,6 +2,7 @@ version: "3.3"
 
 networks:
   loki:
+
 services:
   loki:
     image: grafana/loki:latest
@@ -10,6 +11,15 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     networks:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
   promtail:
     image: grafana/promtail:latest
@@ -20,6 +30,15 @@ services:
     command: -config.file=/etc/promtail/config.yml
     networks:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   grafana:
     environment:
@@ -37,7 +56,7 @@ services:
         datasources:
         - name: Loki
           type: loki
-          access: proxy 
+          access: proxy
           orgId: 1
           url: http://loki:3100
           basicAuth: false
@@ -51,6 +70,39 @@ services:
       - "3001:3000"
     networks:
       - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+    ports:
+      - "9090:9090"
+    networks:
+      - loki
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "pgrep", "prometheus"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   db:
     image: jmartynova123/dev-lab3-db:latest
     environment:
@@ -63,6 +115,15 @@ services:
       - loki
     ports:
       - "5432:5432"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U myuser -d times"]
       interval: 30s
@@ -81,6 +142,15 @@ services:
       db:
         condition: service_healthy
         restart: true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080/times || exit 1"]
       interval: 30s
@@ -91,14 +161,19 @@ services:
     image: jmartynova123/dev-lab3-front:latest
     ports:
       - "3000:3000"
-    networks: 
+    networks:
       - loki
-    # depends_on:
-    #   backend:
-    #     condition: service_healthy
-    #     restart: true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
     healthcheck:
-      test: [ "CMD-SHELL", "curl -f http://localhost:3000 || exit 1" ]
+      test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5

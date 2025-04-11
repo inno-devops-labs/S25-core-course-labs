@@ -6,6 +6,7 @@ import pytz
 from dotenv import load_dotenv
 import os
 import sys
+from prometheus_flask_exporter import PrometheusMetrics
 
 project_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_dir)
@@ -24,11 +25,13 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 # Database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://myuser:mypassword@db:5432/times"#os.getenv('DATABASE_URI')
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://myuser:mypassword@localhost:5432/times"#os.getenv('DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize SQLAlchemy
 db.init_app(app)
+
+# Initialize Prometheus metrics
 
 
 # Route to get all time zones
@@ -51,7 +54,6 @@ def get_time():
         logger.error(f"Error fetching time zones: {e}")
         return jsonify({"err": "Internal server error"}), 500
 
-
 # Route to get the current time for a given city
 @app.route('/times/<string:name>', methods=['GET'])
 def get_current_time(name):
@@ -71,11 +73,12 @@ def get_current_time(name):
         logger.error(f"Error fetching current time for city {name}: {e}")
         return jsonify({"err": "Internal server error"}), 500
 
-
 # Create tables and run the application
 if __name__ == '__main__':
+    metrics = PrometheusMetrics(app,export_defaults=True)
+    metrics.info('app_info', 'Application info', version='1.0.0')
     try:
-        app.run(host='0.0.0.0', port=8080, debug=True)
-        logger.Info("App is running successfully")
+        app.run(host='0.0.0.0', port=8080, debug=False)
+        logger.info("App is running successfully")
     except Exception as e:
         logger.error(f"Error starting the application: {e}")
