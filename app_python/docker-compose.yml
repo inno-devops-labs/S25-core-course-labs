@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   db:
-    image: jmartynova123/dev-lab1-db:latest
+    image: jmartynova123/dev-lab3-db:latest
     environment:
       POSTGRES_DB: times
       POSTGRES_USER: myuser
@@ -18,7 +18,7 @@ services:
       retries: 5
 
   backend:
-    image: jmartynova123/dev-lab1-back:latest
+    image: jmartynova123/dev-lab3-backend:latest
     environment:
       DATABASE_URI: postgres://myuser:mypassword@db:5432/times
     ports:
@@ -34,7 +34,7 @@ services:
       retries: 5
 
   frontend:
-    image: jmartynova123/dev-lab1-frontend:latest
+    image: jmartynova123/dev-lab3-frontend:latest
     ports:
       - "3000:3000"
     depends_on:

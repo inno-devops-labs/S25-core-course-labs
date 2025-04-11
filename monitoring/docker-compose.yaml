@@ -1,0 +1,104 @@
+version: "3.3"
+
+networks:
+  loki:
+services:
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - loki
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - /var/log:/var/log
+      - ./promtail-config.yaml:/etc/promtail/config.yml
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - loki
+
+  grafana:
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_FEATURE_TOGGLES_ENABLE=alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+        - name: Loki
+          type: loki
+          access: proxy 
+          orgId: 1
+          url: http://loki:3100
+          basicAuth: false
+          isDefault: true
+          version: 1
+          editable: false
+        EOF
+        /run.sh
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
+    networks:
+      - loki
+  db:
+    image: jmartynova123/dev-lab3-db:latest
+    environment:
+      POSTGRES_DB: times
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - loki
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d times"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  backend:
+    image: jmartynova123/dev-lab3-back:latest
+    environment:
+      DATABASE_URI: postgresql://myuser:mypassword@db:5432/times
+    ports:
+      - "8080:8080"
+    networks:
+      - loki
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/times || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  frontend:
+    image: jmartynova123/dev-lab3-front:latest
+    ports:
+      - "3000:3000"
+    networks: 
+      - loki
+    # depends_on:
+    #   backend:
+    #     condition: service_healthy
+    #     restart: true
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:3000 || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
