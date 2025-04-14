@@ -1,0 +1,29 @@
+---
+- name: Update apt
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Install prerequisites for key addition
+  become: true
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+    state: present
+
+# apt-key is deprecated
+- name: Add Docker apt repository key.
+  become: true
+  ansible.builtin.get_url:
+    url: "https://download.docker.com/linux/debian/gpg"
+    dest: /etc/apt/trusted.gpg.d/docker.asc
+    mode: '0644'
+    force: true
+
+- name: Add Docker's official apt repository
+  become: true
+  ansible.builtin.apt_repository:
+    repo: deb https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable
+    state: present

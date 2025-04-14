@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "moscow-time-webapp"
+version = "0.1.0"
+description = "A simple web application that displays the current time in Moscow."
+readme = "README.md"
+authors = [
+    { name = "Ruslan Bel'kov", email = "r.belkov@innopolis.university" }
+]
+license = { text = "MIT" }
+keywords = ["python", "web", "http", "moscow", "time"]
+classifiers = [
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+requires-python = ">=3.12"
+dependencies = [
+    "ruff>=0.9.4",
+    "pytest>=8.3.4",
+    "pytest-md>=0.2.0",
+    "pytest-emoji>=0.2.0",
+    "requests>=2.32.3"
+]
+
+[project.urls]
+"Source" = "https://github.com/dantetemplar/fork-S25-core-course-labs/blob/lab1/app_python"
+
+[project.scripts]
+moscow-time-webapp = "app:main"

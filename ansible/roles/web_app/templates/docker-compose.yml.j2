@@ -1,0 +1,13 @@
+version: '3'
+services:
+  app:
+    image: "{{ docker_image }}"
+    container_name: "{{ container_name }}"
+    ports:
+      - "{{ app_port }}:8000"  # Map to the exposed port in Dockerfile
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

@@ -1,0 +1,25 @@
+---
+- name: Check if wipe is enabled
+  debug:
+    msg: "Wipe is enabled, proceeding with cleanup"
+  when: web_app_full_wipe | bool
+
+- name: Stop and remove containers
+  command:
+    cmd: docker-compose -f {{ playbook_dir }}/{{ app_name }}/docker-compose.yml down -v
+  when: web_app_full_wipe | bool
+  ignore_errors: yes
+
+- name: Remove docker-compose file
+  file:
+    path: "{{ playbook_dir }}/{{ app_name }}/docker-compose.yml"
+    state: absent
+  when: web_app_full_wipe | bool
+
+- name: Clean up Docker system
+  docker_prune:
+    containers: yes
+    images: yes
+    networks: yes
+    volumes: yes
+  when: web_app_full_wipe | bool

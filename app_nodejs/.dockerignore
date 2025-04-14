@@ -1,0 +1,10 @@
+# Ignore everything by default
+**
+
+# Allow only necessary files
+!server.js
+!package.json
+!package-lock.json
+!Dockerfile
+!DOCKER.md
+!README.md

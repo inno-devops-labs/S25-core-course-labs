@@ -1,0 +1,57 @@
+---
+# Include wipe tasks if enabled
+- name: Include wipe tasks
+  include_tasks: 0-wipe.yml
+  tags:
+    - wipe
+
+- name: Setup Docker Environment
+  block:
+    - name: Install required packages
+      apt:
+        name: 
+          - docker-compose
+          - python3-docker
+        state: present
+        update_cache: yes
+      
+    - name: Ensure Docker service is running
+      service:
+        name: docker
+        state: started
+        enabled: yes
+  tags:
+    - setup
+    - docker
+
+- name: Deploy Application
+  block:
+    - name: Create application directory
+      file:
+        path: "{{ playbook_dir }}/{{ app_name }}"
+        state: directory
+        mode: '0755'
+
+    - name: Template docker-compose file
+      template:
+        src: docker-compose.yml.j2
+        dest: "{{ playbook_dir }}/{{ app_name }}/docker-compose.yml"
+        mode: '0644'
+
+    - name: Pull Docker image
+      docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+        force_source: yes
+      tags:
+        - docker
+        - pull
+
+    - name: Deploy with docker-compose
+      command:
+        cmd: docker-compose -f {{ playbook_dir }}/{{ app_name }}/docker-compose.yml up -d
+      tags:
+        - deploy
+  tags:
+    - deploy
+    - app

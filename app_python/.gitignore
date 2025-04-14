@@ -1,0 +1,8 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+
+# Build
+build
+moscow_time_webapp.egg-info
