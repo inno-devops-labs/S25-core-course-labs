@@ -1,0 +1,10 @@
+__pycache__/
+
+# Virtual environment folders for python
+*.env/
+venv/
+env/
+
+# Environment variables
+*/.env
+.env
