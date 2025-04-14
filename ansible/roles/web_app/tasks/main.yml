@@ -1,0 +1,46 @@
+---
+- name: Include wipe tasks
+  import_tasks: 0-wipe.yml
+  tags:
+    - wipe
+
+- name: Docker Image Management
+  block:
+    - name: Pull Docker image
+      community.docker.docker_image:
+        name: "{{ docker_image_name }}"
+        tag: "{{ docker_image_tag }}"
+        source: pull
+        force_source: yes
+      register: pulled_image
+  tags:
+    - docker-image
+    - deploy
+
+- name: Prepare Docker Compose Directory
+  block:
+    - name: Create application directory
+      file:
+        path: "/opt/{{ docker_container_name }}"
+        state: directory
+        mode: '0755'
+
+    - name: Template Docker Compose file
+      template:
+        src: docker-compose.yml.j2
+        dest: "/opt/{{ docker_container_name }}/docker-compose.yml"
+        mode: '0644'
+  tags:
+    - config
+    - deploy
+
+- name: Container Management
+  block:
+    - name: Deploy with Docker Compose
+      community.docker.docker_compose:
+        project_src: "/opt/{{ docker_container_name }}"
+        state: present
+        pull: yes
+  tags:
+    - container
+    - deploy 
