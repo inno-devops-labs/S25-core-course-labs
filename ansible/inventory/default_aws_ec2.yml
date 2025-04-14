@@ -1,0 +1,15 @@
+# plugin: aws_ec2
+# regions:
+#   - us-east-1
+# filters:
+#   "tag:Name": "Ansible VM"
+#   instance-state-name: running
+
+all:
+  hosts:
+    aws_instance:
+      ansible_host: ec2-18-209-6-147.compute-1.amazonaws.com
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ~/Downloads/lab5_key.pem
+      ansible_python_interpreter: /usr/bin/python3
+
