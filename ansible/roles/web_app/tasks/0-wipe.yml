@@ -1,0 +1,11 @@
+---
+- name: Stop Docker Compose services (if running)
+  command: docker-compose -f /home/ubuntu/docker-compose.yml down
+  ignore_errors: true
+  tags: [ "wipe" ]
+
+- name: Remove Docker container (if exists)
+  docker_container:
+    name: your_app_container_name
+    state: absent
+  tags: [ "wipe" ]
