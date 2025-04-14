@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+venv
+
+# To not forget about secrets in the future
+.env
+.env*
+
+# Flask specific
+instance/
+.webassets-cache
