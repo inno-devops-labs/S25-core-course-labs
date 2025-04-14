@@ -1,0 +1,13 @@
+# Docker version configuration
+docker_package: "docker-ce"
+docker_compose_version: "v2.24.5"
+
+# Users to be added to docker group
+docker_users: ["{{ ansible_user_id }}"]
+
+# Docker daemon configuration
+docker_daemon_options:
+  log-driver: "json-file"
+  log-opts:
+    max-size: "100m"
+  storage-driver: "overlay2"
