@@ -1,0 +1,9 @@
+services:
+  app:
+    image: "{{ docker_image }}"
+    ports:
+      - "{{ app_port }}:8000"
+    restart: unless-stopped
+    environment:
+      - PYTHONPATH=/app/app
+    working_dir: /app

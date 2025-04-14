@@ -1,0 +1,34 @@
+- name: Install required system packages
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - python3-pip
+    state: present
+    update_cache: true
+
+- name: Install Docker with official script
+  shell: |
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sh get-docker.sh
+  args:
+    creates: /usr/bin/docker
+
+- name: Configure Docker to start on boot
+  systemd:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Create docker group
+  group:
+    name: docker
+    state: present
+
+- name: Add user to docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: true

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Moscow Time</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .time-container {
+            text-align: center;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .time {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #1a73e8;
+        }
+        .label {
+            font-size: 1.2rem;
+            color: #5f6368;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="time-container">
+        <div class="time" id="moscow-time">{{ moscow_time }}</div>
+        <div class="label">Moscow Time</div>
+    </div>
+
+    <script>
+        function updateTime() {
+            fetch('/time')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('moscow-time').textContent = data.time;
+                });
+        }
+        
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>
