@@ -1,0 +1,14 @@
+---
+- name: Stop and remove containers
+  community.docker.docker_compose:
+    project_src: /opt/web_app
+    state: absent
+  when: web_app_wipe
+  tags: [wipe]
+
+- name: Delete app directory
+  file:
+    path: /opt/web_app
+    state: absent
+  when: web_app_wipe
+  tags: [wipe]
