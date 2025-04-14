@@ -1,0 +1,15 @@
+
+.time {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: blanchedalmond;
+}
+
+h2 {
+    font-size: 36px;
+}
+
+h1 {
+    font-size: 44px;
+}
