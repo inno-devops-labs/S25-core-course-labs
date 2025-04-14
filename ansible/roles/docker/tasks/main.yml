@@ -1,0 +1,11 @@
+- name: Install Docker
+  import_tasks: install_docker.yml
+
+- name: Install Docker Compose
+  import_tasks: install_compose.yml
+
+- name: Add current user to the docker group
+  import_tasks: add_user_to_docker.yml
+
+- name: Secure Docker Configuration
+  import_tasks: secure_docker.yml
