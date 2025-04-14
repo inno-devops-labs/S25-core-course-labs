@@ -1,0 +1,32 @@
+---
+- name: Include wipe tasks
+  import_tasks: 0-wipe.yml
+  tags:
+    - wipe
+
+- name: Setup application environment
+  block:
+    - name: Create application directory
+      file:
+        path: "{{ docker_compose_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Deploy docker-compose file
+      template:
+        src: docker-compose.yml.j2
+        dest: "{{ docker_compose_dir }}/{{ docker_compose_file }}"
+        mode: '0644'
+  tags:
+    - setup
+    - deploy
+
+- name: Deploy application
+  block:
+    - name: Pull and start application
+      community.docker.docker_compose_v2:
+        project_src: "{{ docker_compose_dir }}"
+        pull: always
+        state: present
+  tags:
+    - deploy
