@@ -1,0 +1,15 @@
+---
+- name: Stop and remove containers
+  community.docker.docker_compose_v2:
+    project_src: "{{ app_directory }}"
+    state: absent
+  ignore_errors: yes
+  tags:
+    - wipe
+
+- name: Remove application directory
+  file:
+    path: "{{ app_directory }}"
+    state: absent
+  tags:
+    - wipe
