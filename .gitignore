@@ -1,0 +1,12 @@
+.DS_Store/
+.vscode/
+app_java/.mvn
+app_java/target
+app_python/venv
+app_python/__pycache__/
+app_python/tests/__pycache__/
+terraform/.gitignore
+terraform/.terraform.lock.hcl
+terraform/.terraform/
+terraform/null
+terraform/terraform.tfstate.backup
