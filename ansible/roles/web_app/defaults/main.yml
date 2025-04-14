@@ -1,0 +1,4 @@
+---
+docker_image: "dtolmach/python-app:latest"
+app_port: 8080
+web_app_full_wipe: false

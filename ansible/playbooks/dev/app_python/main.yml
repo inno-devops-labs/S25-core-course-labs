@@ -1,0 +1,12 @@
+---
+- name: Deploy Python app
+  hosts: all
+  become: true
+  roles:
+    - role: web_app
+      vars:
+        docker_image: "dtolmach/python-app"
+        docker_image_tag: "latest"
+        container_name: python_webapp
+        container_port: 8000
+        port: 8081
