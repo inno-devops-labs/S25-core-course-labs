@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moscow Time</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Moscow Time</h1>
+        <div class="time">{{ time }}</div>
+        <div class="date">{{ date }}</div>
+        <button class="refresh-btn" onclick="location.reload()">Refresh</button>
+    </div>
+    
+    <script>
+        // Automatic update every second
+        setInterval(() => {
+            location.reload();
+        }, 1000);
+    </script>
+</body>
+</html>
