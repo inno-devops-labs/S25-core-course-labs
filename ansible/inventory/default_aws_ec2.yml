@@ -1,0 +1,7 @@
+---
+plugin: aws_ec2
+regions:
+  - us-east-1
+filters:
+  tag:Name: Ansible VM  # Filter instances by the tag "Name: Ansible VM"
+  instance-state-name: running  # Only include running instances

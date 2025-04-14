@@ -1,0 +1,36 @@
+# Ignore Git-related files and directories
+.git
+**/.git
+**/.gitignore
+
+# Ignore editor and IDE-specific files
+**/.vscode
+**/.idea
+
+# Ignore Python cache and virtual environment files
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+venv
+**/venv
+**/env
+
+# Ignore environment-specific files
+**/.env
+**/.aws
+**/.ssh
+
+# Ignore documentation and metadata files
+*.md
+README.md
+
+# Ignore Docker-related files (if not needed in the image)
+Dockerfile
+docker-compose.yml
+
+# Ignore macOS-specific files
+**/.DS_Store
+
+# Ignore test coverage directories
+**/coverage
