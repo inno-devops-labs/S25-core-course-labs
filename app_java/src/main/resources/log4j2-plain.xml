@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration
+    xmlns="http://logging.apache.org/log4j/2.0/config"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://logging.apache.org/log4j/2.0/config
+    https://raw.githubusercontent.com/apache/logging-log4j2/master/log4j-core/src/main/resources/Log4j-config.xsd"
+    strict="true"
+>
+    <Appenders>
+        <Console name="STDOUT_PLAIN" target="SYSTEM_OUT">
+            <PatternLayout
+                pattern="%d{HH:mm:ss.SSS} %highlight{%-5p} [%-30.30thread] %style{%X} %-25.25logger{20} -- %highlight{%m} %n"
+            />
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.sun" level="WARN"/>
+        <Logger name="com.zaxxer" level="WARN"/>
+        <Logger name="org.apache" level="WARN"/>
+        <Logger name="org.hibernate" level="WARN"/>
+        <Logger name="org.postgresql" level="WARN"/>
+        <Logger name="org.springframework" level="WARN"/>
+        <Logger name="org.springframework.cache" level="WARN"/>
+        <Logger name="org.springframework.security" level="DEBUG"/>
+        <Logger name="org.springframework.web" level="DEBUG"/>
+        <Logger name="sun.rmi" level="WARN"/>
+        <Logger name="sun.rmi.transport" level="WARN"/>
+
+        <!--        <Logger name="org.hibernate" level="info"/>-->
+        <!--        <Logger name="org.hibernate.SQL" level="debug"/>-->
+        <!--        <Logger name="org.hibernate.orm.jdbc.bind" level="trace"/>-->
+        <!--        <Logger name="org.hibernate.stat" level="debug"/>-->
+        <!--        <Logger name="org.hibernate.SQL_SLOW" level="info"/>-->
+        <!--        <Logger name="org.hibernate.cache" level="debug"/>-->
+
+        <Logger name="edu.java" level="TRACE"/>
+
+        <Root level="INFO">
+            <AppenderRef ref="STDOUT_PLAIN"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
