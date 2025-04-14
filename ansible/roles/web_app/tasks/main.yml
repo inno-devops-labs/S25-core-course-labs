@@ -1,0 +1,45 @@
+# SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/web_app
+- name: Deploy Web Application
+  block:
+    # Docker Compose Configuration
+    - name: Create application directory
+      file:
+        path: "{{ app_install_dir }}"
+        state: directory
+      tags:
+        - setup
+        - directories
+
+    - name: Deploy Docker Compose template
+      template:
+        src: docker-compose.yml.j2
+        dest: "{{ app_install_dir }}/docker-compose.yml"
+      tags:
+        - templates
+        - compose
+
+    # Original Docker Operations
+    - name: Ensure Docker image is pulled
+      docker_image:
+        name: "{{ web_app_image }}:{{ web_app_image_tag }}"
+        source: pull
+        force_source: yes
+      tags:
+        - docker
+        - images
+
+    - name: Run Python application container
+      docker_container:
+        name: "{{ web_app_container_name }}"
+        image: "{{ web_app_image }}:{{ web_app_image_tag }}"
+        ports: "{{ web_app_ports }}"
+        restart_policy: "{{ web_app_restart_policy }}"
+        state: started
+      tags:
+        - containers
+        - runtime
+  tags:
+    - deploy
+    - full
