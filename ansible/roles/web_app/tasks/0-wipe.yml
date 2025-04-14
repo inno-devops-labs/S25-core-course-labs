@@ -1,0 +1,17 @@
+- name: Wipe application
+  block:
+    - name: Remove Docker Compose
+      community.docker.docker_compose_v2:
+        project_src: "/{{ docker_container_name }}"
+        state: absent
+        remove_images: all
+        remove_volumes: true
+      tags:
+        - wipe
+
+    - name: Remove application folder
+      ansible.builtin.file:
+        path: "/{{ docker_container_name }}"
+        state: absent
+      tags:
+        - wipe

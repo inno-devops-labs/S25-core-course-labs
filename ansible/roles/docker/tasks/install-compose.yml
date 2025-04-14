@@ -1,0 +1,5 @@
+# Install Docker Compose plugin. It is assumed that Docker is already installed by previous task
+- name: Install Docker Compose
+  ansible.builtin.apt:
+    name: "docker-compose-plugin"
+    state: present

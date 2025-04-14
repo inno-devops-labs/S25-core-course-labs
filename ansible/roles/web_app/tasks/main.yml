@@ -1,0 +1,20 @@
+- name: Deploy web application
+  block:
+    - name: Deliver the Docker Compose template
+      ansible.builtin.include_tasks: deliver-template.yml
+      tags:
+        - docker-compose
+
+    - name: Deploy App
+      ansible.builtin.include_tasks: deploy-app.yml
+      tags:
+        - docker
+        - startup
+        - docker-compose
+        - pull
+
+    - name: Wipe application
+      when: web_app_full_wipe | bool
+      ansible.builtin.include_tasks: 0-wipe.yml
+      tags:
+        - wipe

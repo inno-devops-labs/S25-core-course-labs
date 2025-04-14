@@ -1,0 +1,103 @@
+name: Python app CI
+
+on:
+  push:
+    paths:
+      - ".github/workflows/app_python.yml"
+      - "app_python/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-24.04, windows-2022, macos-14]
+    defaults:
+      run:
+        working-directory: ./app_python
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+          cache: "pip"
+
+      - name: Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Format (Black)
+        uses: psf/black@24.10.0
+        with:
+          options: "--verbose --check"
+
+      - name: Install linter
+        run: pip install pylint
+
+      - name: Linter
+        run: pylint .
+
+      - name: Tests
+        run: pytest src/tests
+
+  snyk:
+    runs-on: ubuntu-24.04
+    environment: ci
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Snyk
+        uses: snyk/actions/python-3.10@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: app_python/ --skip-unresolved
+
+  docker:
+    needs: ci
+    environment: ci
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ vars.DH_USERNAME }}/${{ vars.DH_IMAGE_NAME_PY }}
+          tags: |
+            latest
+            type=semver,pattern={{major}}.{{minor}}
+
+      - name: Login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DH_USERNAME }}
+          password: ${{ secrets.DH_TOKEN }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build & Push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          context: app_python
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ vars.DH_USERNAME }}/${{ vars.DH_IMAGE_NAME_PY }}:latest
+          cache-to: type=inline
