@@ -1,0 +1,35 @@
+- name: Pull application Docker image
+  docker_image:
+    name: "{{ web_app_image }}"
+    source: pull
+    tags:
+      - docker
+
+- name: Run the Docker container
+  docker_container:
+    name: "{{ web_app_container_name }}"
+    image: "{{ web_app_image }}"
+    state: started
+    restart_policy: always
+    published_ports:
+      - "80:{{ web_app_port }}"
+    tags:
+      - docker
+
+- name: Run wipe tasks if enabled
+  include_tasks: 0-wipe.yml
+  when: web_app_full_wipe
+
+- name: Generate docker-compose configuration
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/web_app/docker-compose.yml
+  tags:
+    - docker
+
+- name: Launch application with Docker Compose
+  command: docker-compose up -d
+  args:
+    chdir: /opt/web_app
+  tags:
+    - docker
