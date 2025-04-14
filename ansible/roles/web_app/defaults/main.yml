@@ -1,0 +1,10 @@
+---
+web_app_name: "web_app"
+web_app_dir: "/opt/{{ web_app_name }}/"
+docker_registry: docker.io
+docker_username: mihdenis85
+web_app_full_wipe: false
+web_app_image: "{{ docker_registry }}/{{ docker_username }}/{{ web_app_name }}"
+web_app_image_tag: "latest"
+web_app_internal_port: 80
+web_app_external_port: 8080

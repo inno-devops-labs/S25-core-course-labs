@@ -1,0 +1,6 @@
+.venv
+__pycache__
+yacloud_token
+fact_cache
+ansible/fact_cache
+*.retry

@@ -1,0 +1,5 @@
+---
+plugin: yacloud_compute
+yacloud_clouds: cloud-mihdenis85
+yacloud_folders: default
+yacloud_token_file: yacloud_token
