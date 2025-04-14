@@ -1,0 +1,5 @@
+-r requirements.txt
+ruff
+mypy
+pytest
+freezegun
