@@ -1,0 +1,7 @@
+users:
+  - name: magel0n
+    groups: sudo
+    shell: /bin/bash
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFKG4dbnh8mEi7JWm2csJqNZpZx82NF3xLTugwASMzF magelon@DESKTOP-AI2C2GE
