@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time in Moscow</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Moscow Local Time</h1>
+    </header>
+    <main>
+        <section>
+            <p id="current-time">{{ time }}</p>
+        </section>
+    </main>
+</body>
+</html>
