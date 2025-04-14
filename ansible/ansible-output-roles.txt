@@ -1,0 +1,70 @@
+anas@anas-Legion ~/I/D/S/ansible (lab5) [1]> ansible-playbook playbooks/dev/main.yaml
+
+PLAY [setup docker] ***************************************************************************************************************
+
+TASK [Gathering Facts] ************************************************************************************************************
+[WARNING]: Platform linux on host 3.87.94.28 is using the discovered Python interpreter at /usr/bin/python3.12, but future
+installation of another Python interpreter could change the meaning of that path. See https://docs.ansible.com/ansible-
+core/2.17/reference_appendices/interpreter_discovery.html for more information.
+ok: [3.87.94.28]
+
+TASK [docker : include_tasks] *****************************************************************************************************
+included: /home/anas/Innopolis/DevOps/S25-core-course-labs/ansible/roles/docker/tasks/setup-Debian.yml for 3.87.94.28
+
+TASK [docker : Ensure old versions of Docker are not installed.] ******************************************************************
+ok: [3.87.94.28]
+
+TASK [docker : Ensure dependencies are installed.] ********************************************************************************
+ok: [3.87.94.28]
+
+TASK [docker : Ensure additional dependencies are installed (on Ubuntu < 20.04 and any other systems).] ***************************
+skipping: [3.87.94.28]
+
+TASK [docker : Ensure additional dependencies are installed (on Ubuntu >= 20.04).] ************************************************
+ok: [3.87.94.28]
+
+TASK [docker : Add Docker apt key.] ***********************************************************************************************
+changed: [3.87.94.28]
+
+TASK [docker : Ensure curl is present (on older systems without SNI).] ************************************************************
+skipping: [3.87.94.28]
+
+TASK [docker : Add Docker apt key (alternative for older systems without SNI).] ***************************************************
+skipping: [3.87.94.28]
+
+TASK [docker : Add Docker repository.] ********************************************************************************************
+ok: [3.87.94.28]
+
+TASK [docker : include_tasks] *****************************************************************************************************
+included: /home/anas/Innopolis/DevOps/S25-core-course-labs/ansible/roles/docker/tasks/install_docker.yml for 3.87.94.28
+
+TASK [docker : Install Docker packages.] ******************************************************************************************
+skipping: [3.87.94.28]
+
+TASK [docker : Ensure /etc/docker/ directory exists.] *****************************************************************************
+skipping: [3.87.94.28]
+
+TASK [docker : Configure Docker daemon options.] **********************************************************************************
+skipping: [3.87.94.28]
+
+TASK [docker : Ensure Docker is started and enabled at boot.] *********************************************************************
+ok: [3.87.94.28]
+
+TASK [docker : include_tasks] *****************************************************************************************************
+skipping: [3.87.94.28]
+
+TASK [docker : Ensure handlers are notified now to avoid firewall conflicts.] *****************************************************
+
+TASK [docker : Get docker group info using getent.] *******************************************************************************
+skipping: [3.87.94.28]
+
+TASK [docker : Check if there are any users to add to the docker group.] **********************************************************
+skipping: [3.87.94.28]
+
+TASK [docker : include_tasks] *****************************************************************************************************
+skipping: [3.87.94.28]
+
+PLAY RECAP ************************************************************************************************************************
+3.87.94.28                 : ok=9    changed=1    unreachable=0    failed=0    skipped=10   rescued=0    ignored=0   
+
+

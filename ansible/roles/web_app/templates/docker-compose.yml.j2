@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  {{ web_app_service }}:
+    image: {{ docker.user }}/{{ docker.image_name }}:{{ docker.tag }}
+    container_name: {{ web_app_service }}
+    ports:
+      - "{{ ports.ext }}:{{ ports.int }}"
+    restart: always
