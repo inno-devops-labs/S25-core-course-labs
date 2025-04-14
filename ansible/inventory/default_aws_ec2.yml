@@ -1,0 +1,6 @@
+all:
+  hosts:
+    your-ec2-instance:
+      ansible_host: 158.160.162.136
+      ansible_user: vakzlak
+      ansible_ssh_private_key_file: /home/egor/.ssh/id_rsa
