@@ -1,0 +1,5 @@
+- name: Restart Docker Compose
+  listen: docker_restart_handler
+  command: "docker compose up -d"
+  args:
+        chdir: "{{ web_app_directory }}"

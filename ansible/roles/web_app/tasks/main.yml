@@ -1,0 +1,6 @@
+- name: Web App
+  block:
+    - name: wipe
+      import_tasks: 0-wipe.yml
+    - name: deploy
+      import_tasks: deploy.yml
