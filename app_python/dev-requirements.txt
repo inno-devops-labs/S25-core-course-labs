@@ -1,0 +1,8 @@
+fastapi[standard]
+jinja2
+pytest
+pre-commit
+mypy
+pylint
+black
+isort
