@@ -1,0 +1,16 @@
+{
+    "name": "js-app",
+    "version": "1.0.0",
+    "description": "A simple JavaScript app",
+    "main": "index.html",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "devDependencies": {
+        "webpack": "^5.x",
+        "webpack-cli": "^4.x"
+    },
+    "dependencies": {
+        "express": "^4.21.2"
+    }
+}
