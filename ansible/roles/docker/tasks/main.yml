@@ -1,0 +1,18 @@
+ 
+
+- name: setup debian
+  import_tasks: setup_debian.yml
+
+- name: install docker
+  import_tasks: install_docker.yml
+
+- name: install docker compose
+  import_tasks: install_compose.yml
+
+- name: add user
+  import_tasks: docker_users.yml
+
+- name: secure docker
+  import_tasks: secure_docker.yml
+
+  

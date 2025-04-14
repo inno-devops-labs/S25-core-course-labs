@@ -1,0 +1,13 @@
+
+
+docker_image_name: "saleemasekrea/app_go"
+docker_image_tag: "latest"
+docker_container_name: "app_go"
+app_port: 8002:8002
+
+
+web_app_full_wipe: true
+
+# Paths for the Docker Compose template
+docker_compose_src: "templates/docker-compose.yml.j2"
+docker_compose_dest: "./docker-compose.yml"

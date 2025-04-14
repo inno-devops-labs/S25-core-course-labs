@@ -1,0 +1,5 @@
+- name: Deploying go App && Cleanup
+  hosts: all  
+  become: yes
+  roles:
+    - role: web_go
