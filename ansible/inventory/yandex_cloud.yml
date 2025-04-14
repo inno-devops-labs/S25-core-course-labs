@@ -1,0 +1,6 @@
+all:
+  hosts:
+    host1:
+      ansible_host: 130.193.35.32
+      ansible_user: devops
+
