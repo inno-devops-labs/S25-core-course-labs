@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standard]
+pytest
+
+# need this for client in testing.
+httpx
+beautifulsoup4
