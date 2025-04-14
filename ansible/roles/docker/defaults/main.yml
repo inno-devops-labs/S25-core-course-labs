@@ -1,0 +1,16 @@
+---
+# Docker role defaults for Ubuntu 22.04
+
+docker_users:
+  - "{{ ansible_user }}"
+
+docker_package_state: present
+
+docker_ubuntu_release: "jammy"
+docker_gpg_key_url: "https://download.docker.com/linux/ubuntu/gpg"
+docker_repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ docker_ubuntu_release }} stable"
+docker_package_name: "docker-ce"
+
+docker_version: "latest"
+docker_compose_version: "v2.32.4"
+docker_compose_url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system | lower }}-{{ ansible_architecture }}"

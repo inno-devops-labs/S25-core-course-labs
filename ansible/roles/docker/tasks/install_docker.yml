@@ -1,0 +1,34 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+
+- name: Install dependencies for Docker (Ubuntu)
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Add Docker GPG key for Ubuntu
+  apt_key:
+    url: "{{ docker_gpg_key_url }}"
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Add Docker repository for Ubuntu
+  apt_repository:
+    repo: "{{ docker_repo }}"
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Install Docker CE
+  apt:
+    name: "{{ docker_package_name }}{{ '-' + docker_version if docker_version != 'latest' else '' }}"
+    state: "{{ docker_package_state }}"
+  when: ansible_os_family == "Debian"

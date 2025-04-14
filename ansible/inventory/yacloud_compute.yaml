@@ -1,0 +1,6 @@
+plugin: yacloud_compute
+yacloud_token_file: "./inventory/token"
+yacloud_clouds:
+  - "cloud-jandr21"
+yacloud_folders:
+  - "azaki"

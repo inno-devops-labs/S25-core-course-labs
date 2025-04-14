@@ -1,0 +1,8 @@
+#cloud-config
+users:
+  - name: username
+    groups: sudo
+    shell: /bin/bash
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFDDS0TK8CoC2QWX2akkiDKuYymu37VHneHSV3UH5jzF andrew@Andrews-MacBook-Pro.local
