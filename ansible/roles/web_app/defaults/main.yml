@@ -1,0 +1,9 @@
+docker_image: "azamatbayramov/s25-devops-py-dl:latest"
+docker_container: "py-app"
+docker_compose_file_name: "docker-compose.yml"
+
+internal_port: 8001
+external_port: 80 
+
+app_dir: "/app"
+app_wipe: true
