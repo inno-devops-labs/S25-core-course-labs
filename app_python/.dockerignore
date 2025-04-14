@@ -1,0 +1,9 @@
+.git
+.gitignore
+.pre-commit-config.yaml
+
+__pycache__
+.venv
+.pytest_cache
+
+**.md

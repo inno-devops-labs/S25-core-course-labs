@@ -1,0 +1,22 @@
+---
+
+- name: Restart Docker
+  block: 
+    - name: Detect init_system
+      ansible.builtin.shell: cat /proc/1/comm
+      register: init_system
+      changed_when: false
+
+    - name: Restart Docker (Systemd)
+      ansible.builtin.systemd:
+        name: docker
+        state: restarted
+      become: true
+      when: init_system.stdout == "systemd"
+
+    - name: Restart Docker (Service)
+      ansible.builtin.service:
+        name: docker
+        state: restarted
+      become: true
+      when: init_system.stdout != "systemd"

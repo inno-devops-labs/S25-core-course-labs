@@ -1,0 +1,8 @@
+[project]
+name = "python_web_app"
+version = "0.1.0"
+description = "Small Python web app for DevOps course"
+
+[tool.black]
+target-version = ['py312']
+line-length = 80

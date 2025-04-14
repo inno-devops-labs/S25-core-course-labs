@@ -1,0 +1,9 @@
+flask==3.1.0
+pylint==3.3.3
+mypy==1.14.1
+pytz==2024.2
+pre-commit==4.1.0
+gunicorn==23.0.0
+beautifulsoup4==4.12.3
+pytest==8.3.4
+prometheus_client==0.21.1
