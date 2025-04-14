@@ -1,0 +1,17 @@
+---
+- name: Install Docker Compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/latest/download/docker-compose-{{ ansible_system | lower }}-{{ ansible_architecture }}"
+    dest: "/usr/local/bin/docker-compose"
+    mode: '0755'
+  become: yes
+
+- name: Verify Docker Compose installation
+  command: docker-compose --version
+  register: compose_version
+  changed_when: false
+
+- name: Display installed Docker Compose version
+  debug:
+    msg: "Installed Docker Compose version: {{ compose_version.stdout }}"
+
