@@ -1,0 +1,77 @@
+services:
+  app_python:
+    image: "absorian/s25-devops-msk-time"
+    environment:
+      - APP_HOST=0.0.0.0
+      - APP_PORT=80
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    labels:
+      logging: "promtail"
+      logging_jobname: "app_python"
+    networks:
+      - loki
+
+  app_js:
+    image: "absorian/s25-devops-cryptoclicker"
+    environment:
+      - APP_HOST=0.0.0.0
+      - APP_PORT=80
+    ports:
+      - "8000:80"
+    restart: unless-stopped
+    labels:
+      logging: "promtail"
+      logging_jobname: "app_js"
+    networks:
+      - loki
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki-config.yml:/etc/loki/local-config.yml
+    command: -config.file=/etc/loki/local-config.yml
+    networks:
+      - loki
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - ./promtail-config.yml:/etc/promtail/config.yml
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/log:/var/log
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki
+    networks:
+      - loki
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus-config.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - loki
+
+  grafana:
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_FEATURE_TOGGLES_ENABLE=alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode
+    image: grafana/grafana:latest
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    ports:
+      - "3000:3000"
+    networks:
+      - loki
+
+networks:
+  loki:

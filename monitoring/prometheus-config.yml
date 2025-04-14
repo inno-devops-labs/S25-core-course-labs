@@ -1,0 +1,11 @@
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 15s
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['prometheus:9090']
+  - job_name: 'app_python'
+    metrics_path: /metrics
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['app_python:80']
