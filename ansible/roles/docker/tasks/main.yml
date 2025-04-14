@@ -1,0 +1,23 @@
+---
+- include_tasks: install_docker.yml
+- include_tasks: install_compose.yml
+
+- name: Enable Docker service to start on boot
+  service:
+    name: docker
+    enabled: yes
+
+- name: Add current user to docker group
+  user:
+    name: "{{ ansible_user_id }}"
+    groups: docker
+    append: yes
+
+- name: Copy secure Docker daemon configuration
+  copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "userns-remap": "default"
+      }
+  notify: restart docker

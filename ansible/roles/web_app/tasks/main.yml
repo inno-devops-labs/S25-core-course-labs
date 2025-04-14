@@ -1,0 +1,32 @@
+---
+- name: Deploy Web Application Container
+  block:
+    - name: Pull Docker image for web application
+      docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+      tags:
+        - docker
+
+    - name: Ensure deployment directory exists
+      file:
+        path: /opt/web_app
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Render docker-compose file for web application
+      template:
+        src: docker-compose.yml.j2
+        dest: /opt/web_app/docker-compose.yml
+      tags:
+        - config
+
+    - name: Start web application container using docker-compose
+      shell: sudo docker-compose -f /opt/web_app/docker-compose.yml up -d
+      args:
+        chdir: /opt/web_app
+      tags:
+        - deploy
+  when: not web_app_full_wipe
