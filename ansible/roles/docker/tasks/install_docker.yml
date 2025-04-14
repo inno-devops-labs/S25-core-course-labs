@@ -1,0 +1,44 @@
+- name: Update apt packages
+  apt:
+    update_cache: yes
+
+- name: Install prequisites
+  apt:
+    name:
+      - ca-certificates
+      - curl
+
+- name: Make keyrings
+  command: sudo install -m 0755 -d /etc/apt/keyrings
+  become: yes
+
+- name: Add GPG
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+  become: yes
+
+- name: Add repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: Install Docker packages
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+
+- name: Check if Docker service is enabled
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Add current user to docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
+  become: yes

@@ -1,0 +1,10 @@
+---
+- name: Stop docker-compose
+  community.docker.docker_compose_v2:
+    project_src: /opt/deploy
+    state: absent
+
+- name: Delete deployment directory
+  file:
+    path: /opt/deploy
+    state: absent
