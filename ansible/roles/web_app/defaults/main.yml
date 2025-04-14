@@ -1,0 +1,8 @@
+# The Docker image name to pull and deploy.
+docker_image: "raydenoir/app_python:distroless"
+
+# The port on the host that maps to the container's port 80.
+app_port: 8080
+
+# Enable full wipe (container removal, image removal, and file removal) when set to true.
+web_app_full_wipe: false

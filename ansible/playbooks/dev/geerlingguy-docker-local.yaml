@@ -1,0 +1,6 @@
+- name: Deploy Docker locally using the geerlingguy role
+  hosts: localhost
+  connection: local
+  become: true
+  roles:
+    - geerlingguy.docker
