@@ -1,0 +1,7 @@
+- name: Deploy Docker using the Docker role
+  hosts: all
+  become: yes
+
+  roles:
+    - docker
+    - web_app

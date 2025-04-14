@@ -1,0 +1,10 @@
+all:
+  hosts:
+    vm-1:
+      ansible_host: 158.160.90.175
+      ansible_user: misha
+      ansible_ssh_private_key_file: ~/.ssh/id_rsa
+    vm-2:
+      ansible_host: 158.160.89.38
+      ansible_user: misha
+      ansible_ssh_private_key_file: ~/.ssh/id_rsa

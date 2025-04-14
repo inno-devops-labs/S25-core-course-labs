@@ -1,0 +1,15 @@
+- name: Wipe existing web app deployment
+  block:
+    - name: Docker Compose Down
+      command: docker compose -f docker-compose.yml down
+      args:
+        chdir: "{{ web_app_deploy_dir }}"
+      ignore_errors: yes
+
+    - name: Remove deployment directory
+      file:
+        path: "{{ web_app_deploy_dir }}"
+        state: absent
+  when: web_app_full_wipe | bool
+  tags:
+    - wipe
