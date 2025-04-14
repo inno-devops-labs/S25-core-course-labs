@@ -1,0 +1,3 @@
+plugin: yacloud_compute
+yacloud_clouds: cloud-fallenchromium
+yacloud_folders: default

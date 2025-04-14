@@ -1,0 +1,59 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.input-section {
+    margin: 20px 0;
+}
+
+#formula-input {
+    width: 100%;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.result-box, .ast-box {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    white-space: pre-wrap;
+}
+
+.error {
+    color: #d32f2f;
+    background-color: #ffebee;
+}
+
+.success {
+    color: #2e7d32;
+    background-color: #e8f5e9;
+} 

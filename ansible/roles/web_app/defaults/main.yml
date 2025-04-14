@@ -1,0 +1,18 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for roles/web_app
+
+# Docker image configuration
+docker_image: ""  # Replace with your actual image
+app_port: 8080  # Default application port
+app_bind_port: "127.0.0.1:8000"  # Default application bind port
+
+app_clean_install: false  # Set to true to enable wipe functionality
+
+# Docker compose configuration
+# docker_compose_dir: "/opt/web_app"
+app_name: "{{ docker_image.split('/')[-1].split(':')[0] }}"  # Extract name from image
+docker_compose_file: "docker-compose.yml"
+
+# Application environment variables (customize as needed)
+app_environment: {}
