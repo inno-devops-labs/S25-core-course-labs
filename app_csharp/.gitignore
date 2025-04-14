@@ -1,0 +1,21 @@
+
+---
+
+### **.gitignore**  
+
+```plaintext
+bin/
+obj/
+.vscode/
+*.suo
+*.user
+*.cache
+*.pdb
+*.log
+*.csproj.user
+packages/
+*.dll
+*.exe
+*.vs
+*.swp
+*.config
