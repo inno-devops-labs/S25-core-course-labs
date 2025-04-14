@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - lab3
+    paths:
+      - 'app_python/**'
+  pull_request:
+    branches:
+      - lab3
+    paths:
+      - 'app_python/**'
+
+jobs:
+  build-and-run-tests:
+    strategy:
+      fail-fast: true
+      matrix:
+        python-version: [3.9, 3.11]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-3.11-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-3.11-
+
+      - name: Install Dependencies
+        run: python -m pip install -r app_python/requirements.txt
+
+      - name: Run Linter
+        run: flake8 --exclude=.git,__pycache__,migrations,venv,build,dist,docs --ignore=E402,F841 .
+
+      - name: Run Tests
+        run: pytest
+
+
+  security:
+    needs: 
+      - build-and-run-tests
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python-3.10@master
+        with:
+          command: code test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+  
+
+  build-and-push-docker:
+    needs: 
+      - build-and-run-tests
+      - security
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker Image
+        run: |
+          cd /home/runner/work/devops/devops/app_python
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/moscow-time:latest .
+
+      - name: Push Docker Image
+        run: |
+          cd /home/runner/work/devops/devops/app_python
+          docker push ${{ secrets.DOCKER_USERNAME }}/moscow-time:latest

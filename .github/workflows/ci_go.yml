@@ -1,0 +1,54 @@
+name: CI-GO
+
+on:
+  push:
+    branches:
+      - lab3
+    paths:
+      - 'app_go/**'
+  pull_request:
+    branches:
+      - lab3
+    paths:
+      - 'app_go/**'
+
+jobs:
+
+  security:
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/golang@master
+        with:
+          command: code test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+  
+
+  build-and-push-docker:
+    needs: security
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker Image
+        run: |
+          cd /home/runner/work/devops/devops/app_go
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/moscow-time-go:latest .
+
+      - name: Push Docker Image
+        run: |
+          cd /home/runner/work/devops/devops/app_go
+          docker push ${{ secrets.DOCKER_USERNAME }}/moscow-time-go:latest
