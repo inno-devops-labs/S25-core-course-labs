@@ -1,0 +1,8 @@
+version: '3'
+services:
+  app:
+    image: "{{ docker_image }}"
+    container_name: "{{ web_app_container_name }}"
+    ports:
+      - "{{ web_app_port }}:80"
+    restart: "always"

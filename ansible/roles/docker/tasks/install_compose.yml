@@ -1,0 +1,9 @@
+---
+- name: Download Docker Compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+    dest: /usr/local/bin/docker-compose
+    mode: "0755"
+
+- name: Check Docker Compose version
+  command: docker-compose --version
