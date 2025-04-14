@@ -1,0 +1,14 @@
+---
+- name: Stop and remove the application container
+  docker_container:
+    name: "{{ container_name }}"
+    state: absent
+  tags:
+    - wipe
+
+- name: Remove docker-compose file
+  file:
+    path: /home/{{ ansible_user }}/docker-compose.yml
+    state: absent
+  tags:
+    - wipe
