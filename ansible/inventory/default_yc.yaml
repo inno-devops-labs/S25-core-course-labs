@@ -1,0 +1,5 @@
+all:
+  hosts:
+    compute-vm-2-2-20-ssd-1739256675625:
+      ansible_host: 51.250.69.125
+      ansible_user: flake
