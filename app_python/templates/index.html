@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Uncomment this if you want auto refresh <meta http-equiv="refresh" content="1"> -->
+    <title>Moscow Time</title>
+    <!-- This whole thing could be done with JS only.. -->
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'VT323', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #0a0a0a;
+        }
+        .time-container {
+            text-align: center;
+            padding: 2rem;
+        }
+        .time-title {
+            color: #00ff00;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        .time-display {
+            color: #00ff00;
+            font-size: 4rem;
+            letter-spacing: 4px;
+            text-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+            }
+            to {
+                text-shadow: 0 0 15px #00ff00, 0 0 25px #00ff00, 0 0 35px #00ff00;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="time-container">
+        <div class="time-title">MOSCOW TIME</div>
+        <div class="time-display">{{ time.split(' ')[1] }}</div>
+        <div class="time-display" style="font-size: 2rem">{{ time.split(' ')[0] }}</div>
+    </div>
+</body>
+</html>

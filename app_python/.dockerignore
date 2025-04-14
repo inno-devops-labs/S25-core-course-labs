@@ -1,0 +1,46 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+venv/
+*.egg-info/
+dist/
+build/
+
+# Environment files
+.env
+.env.*
+*.env
+.env.local
+
+# Logs and development files
+*.log
+*.swp
+*.swo
+
+# Editor configurations
+.vscode/
+.idea/
+
+# Docker files
+docker-compose.yml
+docker-compose.*.yml
+
+# Documentation
+README.md
+CHANGELOG.md
+
+# Test files
+tests/
+test/
+coverage.xml
+
+# Ignore the Dockerfile and .dockerignore in the build context (they're not needed in the image)
+Dockerfile
+.dockerignore
