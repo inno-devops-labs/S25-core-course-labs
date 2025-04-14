@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      # --------------------------------
+      # 1. Check out the code
+      # --------------------------------
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      # --------------------------------
+      # 2. Cache Python Dependencies
+      # --------------------------------
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('app_python/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      # --------------------------------
+      # 3. Set up Python
+      # --------------------------------
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      # --------------------------------
+      # 4. Install Dependencies
+      # --------------------------------
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r app_python/requirements.txt
+          pip install pytest flake8
+
+      # --------------------------------
+      # 5. Install Snyk
+      # --------------------------------
+      - name: Install Snyk
+        run: npm install -g snyk
+
+      # --------------------------------
+      # 6. Authenticate Snyk
+      # --------------------------------
+      - name: Authenticate Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      # --------------------------------
+      # 7. Run Snyk Vulnerability Scan
+      # --------------------------------
+      - name: Snyk vulnerability scan
+        run: snyk test --file=app_python/requirements.txt --severity-threshold=medium
+
+      # --------------------------------
+      # 8. Run Linter
+      # --------------------------------
+      - name: Lint with flake8
+        run: |
+          cd app_python
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      # --------------------------------
+      # 9. Run Tests
+      # --------------------------------
+      - name: Run tests
+        run: |
+          cd app_python
+          python -m pytest --maxfail=1 --disable-warnings
+
+  docker-build-push:
+    needs: build-and-test # Runs only if tests and security checks pass
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/python-moscow-time:latest -f app_python/Dockerfile app_python
+
+      - name: Push Docker Image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/python-moscow-time:latest
