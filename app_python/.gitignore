@@ -1,0 +1,21 @@
+
+
+
+### **3. `.gitignore` Contents**
+```gitignore
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE
+.vscode/
+.idea/
+
+# Environment files
+.env
+.env.local
+
+# Logs
+*.log

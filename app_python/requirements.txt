@@ -1,0 +1,6 @@
+Flask==3.0.0
+pytz==2023.3
+pytest==7.4.0
+freezegun==1.2.2  # Added for time mocking
+flake8==6.1.0     # Added for linting
+
