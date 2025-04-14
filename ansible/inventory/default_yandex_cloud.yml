@@ -1,0 +1,6 @@
+all:
+  hosts:
+    yandex_instance_1:
+      ansible_host: 51.250.15.50
+      ansible_user: yc-user
+      ansible_ssh_private_key_file: ~/.ssh/yacloud
