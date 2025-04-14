@@ -1,0 +1,5 @@
+docker_image: achulakov/lab2
+docker_image_tag: latest
+docker_container_name: python_app
+docker_container_port: 80
+docker_host_port: 8080
