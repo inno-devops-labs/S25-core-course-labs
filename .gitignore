@@ -1,0 +1,44 @@
+# Python virtual environment
+.venv/
+venv/
+env/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*.so
+
+# IDE settings
+.vscode/
+.idea/
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+*.log
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Rust
+target/
+**/*.rs.bk
+*.pdb
+
+# Rust profiling and debugging
+flamegraph.svg
+perf.data
+perf.data.old
