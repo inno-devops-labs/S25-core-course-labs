@@ -1,0 +1,3 @@
+---
+docker_image: "azeeeez/python_moscow_time"
+app_port: 5000
