@@ -1,0 +1,7 @@
+Thumbs.db
+__pycache__
+.venv
+.DS_Store
+tests/__pycache__
+.coverage
+.pytest_cache
