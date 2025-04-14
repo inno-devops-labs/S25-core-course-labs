@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moscow Time</title>
+</head>
+<body>
+    <h1>Current Time in Moscow:</h1>
+    <h2 id="time"></h2>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const moscowTime = now.toLocaleTimeString("en-GB", { timeZone: "Europe/Moscow" });
+            document.getElementById("time").innerText = moscowTime;
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+</body>
+</html>
