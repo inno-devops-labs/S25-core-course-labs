@@ -1,0 +1,15 @@
+- name: Deploy the web application
+  block:
+    - name: Create application directory
+      file:
+        path: "{{ app_base_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Render docker-compose configuration
+      template:
+        src: "{{ compose_filename }}.j2"
+        dest: "{{ app_base_dir }}/{{ compose_filename }}"
+        mode: '0755'
+      notify: restart_app
+  tags: [deployment]

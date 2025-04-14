@@ -97,7 +97,7 @@ In this lab, you will get acquainted with Ansible, a powerful configuration mana
       - hosts: all
          roles:
             - role: docker
-   ```
+      ```
 
 3. Deployment Output:
    - Execute your playbook to deploy the Docker role.
