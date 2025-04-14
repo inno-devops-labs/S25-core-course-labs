@@ -1,0 +1,47 @@
+- name: Pull Python Docker Image
+  when: app_port == app_python_port
+  community.docker.docker_image:
+    name: "{{ docker_image_python }}"
+    source: pull
+  tags:
+    - docker
+
+- name: Pull Node.js Docker Image
+  when: app_port == app_node_port
+  community.docker.docker_image:
+    name: "{{ docker_image_node }}"
+    source: pull
+  tags:
+    - docker
+
+- name: Deploy Python Application with Docker Compose (Default Template)
+  when: app_port == app_python_port
+  ansible.builtin.template:
+    src: docker-compose.yml.j2  # Existing default template for Python
+    dest: /home/ubuntu/docker-compose.yml
+    owner: ubuntu
+    group: ubuntu
+    mode: "0644"
+
+- name: Deploy Node.js Application with Custom Docker Compose
+  when: app_port == app_node_port
+  ansible.builtin.template:
+    src: docker-compose-node.yml.j2  # New separate template for Node.js
+    dest: /home/ubuntu/docker-compose-node.yml
+    owner: ubuntu
+    group: ubuntu
+    mode: "0644"
+
+- name: Start Python Application with Docker Compose v2
+  when: app_port == app_python_port
+  community.docker.docker_compose_v2:
+    project_src: /home/ubuntu
+  tags:
+    - deploy
+
+- name: Start Node.js Application with Docker Compose v2
+  when: app_port == app_node_port
+  community.docker.docker_compose_v2:
+    project_src: /home/ubuntu
+  tags:
+    - deploy

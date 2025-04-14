@@ -1,0 +1,8 @@
+- name: Deploy Node.js Application
+  hosts: all
+  become: true
+  roles:
+    - web_app
+  vars:
+    docker_image: "{{ docker_image_node }}"
+    app_port: "{{ app_node_port }}"

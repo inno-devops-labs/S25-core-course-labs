@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  # Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Loki
+  - job_name: 'loki'
+    static_configs:
+      - targets: ['loki:3100']
+
+  # Node.js App
+  - job_name: 'node-app'
+    static_configs:
+      - targets: ['node-app:3000']
+
+  # Python App
+  - job_name: 'python-app'
+    static_configs:
+      - targets: ['python-app:5000']

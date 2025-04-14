@@ -1,0 +1,6 @@
+services:
+  app:
+    image: "{{ docker_image_python }}"
+    ports:
+      - "{{ app_python_port }}:5000"
+    restart: always
