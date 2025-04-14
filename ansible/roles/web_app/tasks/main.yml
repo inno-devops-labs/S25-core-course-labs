@@ -1,0 +1,23 @@
+- name: Set up Docker compose
+  block:
+    - name: Duplicate Docker configuration
+      template:
+        src: docker-compose.yml.j2
+        dest: "{{ web_app_compose_path }}/docker-compose.yml"
+
+    - name: Docker compose installation
+      pip:
+        name: docker-compose
+        state: present
+
+    - name: Launch Docker compose
+      command: docker compose up -d
+      args:
+        chdir: "{{ web_app_compose_path }}"
+  tags:
+    - deploy
+
+- include_tasks: 0-cleanup.yml
+  when: web_app_full_wipe
+  tags:
+    - wipe

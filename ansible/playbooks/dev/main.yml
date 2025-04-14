@@ -1,0 +1,12 @@
+- name: Docker VM
+  hosts: all
+  become: true
+
+  roles:
+    - docker
+
+- name: Deploy web application
+  hosts: all
+  become: true
+  roles:
+    - web_app

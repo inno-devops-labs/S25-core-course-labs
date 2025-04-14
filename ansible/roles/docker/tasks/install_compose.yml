@@ -1,0 +1,14 @@
+- name: Docker Compose
+  ansible.builtin.get_url:
+    url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system | lower }}-{{ ansible_architecture }}"
+    dest: /usr/local/bin/docker-compose
+    mode: 'a+x'
+
+- name: Check Docker Compose
+  ansible.builtin.command: docker-compose --version
+  register: compose_version
+  changed_when: false
+
+- name: Version od Docker Compose
+  ansible.builtin.debug:
+    msg: "Docker Compose version: {{ compose_version.stdout }}"
