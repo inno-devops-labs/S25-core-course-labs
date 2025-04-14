@@ -1,0 +1,35 @@
+- name: Setup Docker Environment
+  block:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Start Docker Service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+  tags:
+    - setup
+
+- name: Pull Docker Image
+  docker_image:
+    name: "{{ docker_image }}"
+    source: pull
+  tags:
+    - docker
+
+- name: Deploy Docker Compose
+  template:
+    src: docker-compose.yml.j2
+    dest: /home/ubuntu/docker-compose.yml
+  tags:
+    - deploy
+
+- name: Start Application
+  command: docker compose up -d
+  args:
+    chdir: /home/ubuntu/
+  tags:
+    - deploy
