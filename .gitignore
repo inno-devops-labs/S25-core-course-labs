@@ -1,0 +1,4 @@
+env/
+__pycache__
+.idea/
+app.log

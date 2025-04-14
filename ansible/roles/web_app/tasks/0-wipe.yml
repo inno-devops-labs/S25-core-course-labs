@@ -1,0 +1,19 @@
+- name: Stop and remove the web application
+  block:
+    - name: Stop running container
+      shell: docker-compose down
+      args:
+        chdir: /home/venom
+      tags:
+        - wipe
+
+    - name: Remove all related files
+      file:
+        path: /home/venom/docker-compose.yml
+        state: absent
+      tags:
+        - wipe
+
+  when: web_app_full_wipe
+  tags:
+    - wipe
