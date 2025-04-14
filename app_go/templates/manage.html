@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage URLs</title>
+    <script src="https://unpkg.com/htmx.org"></script>
+</head>
+<body>
+    <h1>Manage Your URLs</h1>
+
+    <!-- Form for adding new URLs -->
+    <form id="add-url-form" hx-post="/urls" hx-target="#url-list ul" hx-swap="beforeend" hx-trigger="submit">
+        <input type="url" name="url" placeholder="Enter a URL" required>
+        <input type="text" name="alias" placeholder="Optional alias">
+        <button type="submit">Add URL</button>
+    </form>
+
+    <hr>
+
+    <!-- List of managed URLs -->
+    <div id="url-list">
+        <ul>
+            {{range .URLs}}
+            <li id="url-{{.Alias}}">
+                <a href="{{.Path}}" target="_blank">{{.Alias}}</a>
+                <button hx-delete="/urls?alias={{.Alias}}" hx-target="#url-{{.Alias}}" hx-swap="outerHTML">Delete</button>
+            </li>
+            {{end}}
+        </ul>
+    </div>
+
+</body>
+</html>
