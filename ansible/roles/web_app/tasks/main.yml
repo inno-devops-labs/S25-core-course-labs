@@ -1,0 +1,12 @@
+---
+- name: APP CD
+  ansible.builtin.include_tasks: app_cd.yml
+  tags:
+    - docker
+    - docker-compose
+
+- name: Wipe
+  ansible.builtin.import_tasks: 0-wipe.yml
+  when: app_full_wipe | bool
+  tags:
+    - wipe

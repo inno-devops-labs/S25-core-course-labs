@@ -1,0 +1,16 @@
+---
+# vars file for roles/web_app
+
+# Docker
+app_image_name: "your_docker_image_name"
+app_image_tag: "latest"
+app_container_name: "your_app_container"
+container_port: "80"
+host_port: "8080"
+
+# Docker Compose
+compose_config_dir: "/opt/webapp"
+compose_template_src: "docker-compose.yml.j2"
+compose_owner: "root"
+compose_group: "root"
+compose_permissions: "0755"
