@@ -1,0 +1,14 @@
+- name: Download Docker Compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64"
+    dest: "/usr/local/bin/docker-compose"
+    mode: '0755'
+
+- name: Verify Docker Compose installation
+  command: docker-compose --version
+  register: compose_version
+  changed_when: false
+
+- name: Display installed Docker Compose version
+  debug:
+    msg: "{{ compose_version.stdout }}"

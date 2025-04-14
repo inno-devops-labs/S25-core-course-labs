@@ -1,0 +1,5 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for ansible/roles/web_app
+docker_image: "theanushervon/moscow_time:latest"
+container_name: "web_app"
