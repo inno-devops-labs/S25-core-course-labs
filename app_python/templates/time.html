@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ time }}</title>
+    <style>
+        body {
+            background-color: #341e72ff;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+        }
+
+        .tc {
+            text-align: center;
+        }
+
+        .timezone {
+            color: #fff;
+            margin: 0 0 20px 0;
+            font-size: 2em;
+        }
+
+        .time {
+            color: #fff;
+            margin: 0;
+            font-size: 4.5em;
+        }
+    </style>
+</head>
+<body>
+<div class="tc">
+    <h1 class="timezone">{{ timezone }}</h1>
+    <div class="time">{{ time }}</div>
+</div>
+</body>
+</html>
