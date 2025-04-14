@@ -1,0 +1,71 @@
+name: Python App
+
+on:
+  pull_request:
+    paths:
+      - 'app_python/**'
+      - '.github/workflows/app_python.yml'
+
+jobs:
+  initial:
+    name: Building, linting and testing
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app_python
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -r requirements-test.txt
+
+      - name: Run linter
+        run: flake8 .
+
+      - name: Run tests
+        run: pytest tests
+  security:
+    name: Security Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python-3.10@master
+        with:
+          args: --skip-unresolved ./app_python
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  docker:
+    name: Docker Build and Push
+    runs-on: ubuntu-latest
+    needs: [initial, security]
+    defaults:
+      run:
+        working-directory: app_python
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Docker Login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: app_python
+          file: app_python/distroless.Dockerfile
+          push: true
+          tags: nai1ka/time-service-cicd:latest

@@ -1,0 +1,4 @@
+.history
+.vscode
+.terraform*
+terraform.*
