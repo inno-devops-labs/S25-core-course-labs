@@ -1,0 +1,4 @@
+- hosts: aws
+  become: true
+  roles:
+    - roles/web_app
