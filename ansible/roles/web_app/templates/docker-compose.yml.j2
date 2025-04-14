@@ -1,0 +1,10 @@
+version: '3'
+services:
+  app:
+    image: "{{ docker_image }}"
+    container_name: "{{ app_container_name }}"
+    ports:
+      - "{{ app_external_port }}:{{ app_port }}"
+    environment:
+      - TZ=Europe/Moscow
+    restart: unless-stopped 
