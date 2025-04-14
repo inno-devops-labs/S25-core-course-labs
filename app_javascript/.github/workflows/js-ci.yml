@@ -1,0 +1,42 @@
+name: JavaScript CI
+
+on:
+  push:
+    paths:
+      - "app_javascript/**"
+  pull_request:
+    paths:
+      - "app_javascript/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Cache Node Modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('app_javascript/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm install --prefix app_javascript/
+
+      - name: Check Node.js version
+        run: node --version
+
+      - name: Run Tests
+        run: npm test --prefix app_javascript/
+
+      - name: Run npm audit
+        run: npm audit --prefix app_javascript/
