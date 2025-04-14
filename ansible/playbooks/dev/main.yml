@@ -1,0 +1,8 @@
+- name: Deploy application with Docker container
+  hosts: all
+  become: yes
+  vars_files:
+    - ./roles/web_app/defaults/main.yml
+  roles:
+    - docker      
+    - web_app     
