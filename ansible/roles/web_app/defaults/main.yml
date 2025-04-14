@@ -1,0 +1,18 @@
+---
+# Docker image configuration
+docker_image_name: "whatislav/moscow-time-app"
+docker_image_tag: "latest"
+docker_container_name: "web-app"
+
+# Container configuration
+container_ports:
+  - "80:80"
+container_env:
+  NODE_ENV: "production"
+
+# Container restart policy
+restart_policy: "unless-stopped"
+
+# Container resource limits
+memory_limit: "512m"
+cpu_limit: "0.5" 
