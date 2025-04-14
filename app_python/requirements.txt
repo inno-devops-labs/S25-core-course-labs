@@ -1,0 +1,5 @@
+flask==3.0.0
+pytz==2024.1
+beautifulsoup4==4.12.3
+pytest==8.0.0
+flake8==7.0.0
