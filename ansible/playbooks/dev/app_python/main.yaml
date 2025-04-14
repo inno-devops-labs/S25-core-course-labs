@@ -1,0 +1,11 @@
+---
+- name: Deploy Python Web Application
+  hosts: all
+  become: true
+
+  vars:
+    docker_image: "docker-image:latest"
+    app_port: 8080
+
+  roles:
+    - web_app
