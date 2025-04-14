@@ -1,0 +1,6 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for roles/web_app
+docker_image: "haidarjbeily/distroless-random-quote-app"
+container_name: "rust_web_app"
+web_app_full_wipe: true

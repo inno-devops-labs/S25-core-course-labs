@@ -1,0 +1,6 @@
+---
+- name: Ansible and Docker Deployment
+  hosts: aws_ec2
+  become: true
+  roles:
+    - roles/rust_web_app

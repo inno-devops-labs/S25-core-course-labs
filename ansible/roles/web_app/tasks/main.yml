@@ -1,0 +1,35 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/web_app
+- name: Setup Docker Environment
+  block:
+    - name: Pull Docker image
+      docker_image:
+        name: '{{ docker_image }}'
+        source: pull
+      tags:
+        - docker
+
+    - name: Start Docker container
+      docker_container:
+        name: '{{ container_name }}'
+        image: '{{ docker_image }}'
+        state: started
+        restart_policy: always
+      tags:
+        - docker
+  tags:
+    - setup
+
+- name: Execute wipe logic if enabled
+  ansible.builtin.include_tasks: '0-wipe.yml'
+  when: web_app_full_wipe | bool
+  tags:
+    - wipe
+
+- name: Deploy Docker Compose File
+  template:
+    src: ./templates/docker-compose.yml.j2
+    dest: /home/docker_compose
+  tags:
+    - docker

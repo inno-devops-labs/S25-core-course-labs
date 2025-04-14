@@ -1,0 +1,10 @@
+---
+- name: Install Docker packages
+  ansible.builtin.package:  # Use the fully qualified module name
+    name: "{{ docker_packages }}"
+    state: "{{ docker_packages_state }}"
+  notify: restart docker  # Notify the handler to restart Docker
+  ignore_errors: "{{ ansible_check_mode }}"  # Ignore errors in check mode
+  when:  # Only run if conditions are met
+    - ansible_version.full is version_compare('2.12', '<') or ansible_os_family not in ['RedHat', 'Debian']
+  tags: docker  # Add a tag for selective execution
