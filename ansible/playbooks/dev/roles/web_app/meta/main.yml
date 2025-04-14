@@ -1,0 +1,6 @@
+galaxy_info:
+  author: Egor Valikov
+  description: Deploy a Flask web application inside a Docker container.
+  min_ansible_version: 2.9
+
+dependencies: []
