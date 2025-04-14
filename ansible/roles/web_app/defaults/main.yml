@@ -1,0 +1,10 @@
+image: "angelika2707/lab2:latest"
+container_name: "python-web-app"
+docker_compose: "docker-compose.yml"
+
+web_app: "/webapp"
+
+internal_port: 5000
+external_port: 5000
+
+web_app_full_wipe: true
