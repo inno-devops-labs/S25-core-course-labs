@@ -1,0 +1,7 @@
+docker_image: "tedor49/python_msk_time:latest"
+dockerhub_username: "{{ lookup('ansible.builtin.env', 'HUB_USER') }}"
+dockerhub_password: "{{ lookup('ansible.builtin.env', 'HUB_PASS') }}"
+
+deploy_type: "docker"
+
+web_app_full_wipe: false
