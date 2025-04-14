@@ -1,0 +1,26 @@
+---
+# Docker version configuration
+docker_version: "latest"
+docker_compose_version: "v2.24.5"
+
+# Docker daemon configuration
+docker_daemon_options: {}
+
+# User configuration
+docker_users: []
+
+# System configuration
+docker_apt_repository: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+docker_apt_gpg_key: "https://download.docker.com/linux/ubuntu/gpg"
+
+# Required packages for Debian/Ubuntu and RedHat/CentOS
+docker_required_packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - software-properties-common
+  - gnupg
+
+# Arch Linux specific packages
+docker_required_packages_arch:
+  - docker

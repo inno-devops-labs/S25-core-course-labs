@@ -1,0 +1,38 @@
+---
+- name: Pull Docker image
+  docker_image:
+    name: "{{ docker_image }}"
+    source: pull
+  tags:
+    - docker
+
+- name: Create Docker Compose directory
+  file:
+    path: "{{ web_app_compose_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Template Docker Compose file
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ web_app_compose_dir }}/{{ web_app_compose_file }}"
+    mode: '0644'
+  tags:
+    - docker
+
+- name: Start Docker Compose services
+  community.docker.docker_compose_v2:
+    project_src: "{{ web_app_compose_dir }}"
+    state: present
+  tags:
+    - docker
+
+- name: Start Docker container
+  docker_container:
+    name: "{{ web_app_container_name }}"
+    image: "{{ web_app_image }}"
+    state: started
+    restart_policy: always
+    ports: "{{ web_app_ports }}"
+  tags:
+    - docker

@@ -1,0 +1,23 @@
+{
+  "name": "app_js",
+  "version": "1.0.0",
+  "description": "## Overview Displays a real-time digital clock with smooth transitions and gradient background",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vue/compiler-sfc": "^3.5.13",
+    "vite": "^6.0.11"
+  }
+}
