@@ -1,0 +1,27 @@
+- name: Pull the latest Docker image
+  docker_image:
+    name: "{{ docker_image }}"
+    source: pull
+  tags:
+    - docker
+
+- name: Copy docker-compose template
+  template:
+    src: docker-compose.yml.j2
+    dest: /home/venom/docker-compose.yml
+    mode: '0644'
+  tags:
+    - config
+
+- name: Wipe old application (if enabled)
+  import_tasks: 0-wipe.yml
+  when: web_app_full_wipe
+  tags:
+    - wipe
+
+- name: Start the web application
+  shell: docker-compose up -d
+  args:
+    chdir: /home/venom
+  tags:
+    - deploy

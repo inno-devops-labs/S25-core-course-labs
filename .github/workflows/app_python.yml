@@ -1,0 +1,79 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - lab3
+  pull_request:
+    branches:
+      - lab3
+
+jobs:
+  lint-and-test:
+    name: Lint and Unit Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          cd app_python
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flake8
+
+      - name: Lint Code
+        run: flake8 .
+
+      - name: Run Unit Tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python -m unittest discover -s app_python/tests_python -p "*.py"
+
+  docker-build-and-push:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+    needs: lint-and-test
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Log in to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker Image
+        run: |
+          cd app_python
+          docker build --cache-from=type=gha --cache-to=type=gha,mode=max -t ${{ secrets.DOCKER_USERNAME }}/moscow-time-app:latest .
+
+      - name: Push Docker Image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/moscow-time-app:latest
+
+  snyk-security-check:
+    name: Snyk Security Scan
+    runs-on: ubuntu-latest
+    needs: docker-build-and-push
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Snyk CLI
+        run: |
+          curl -Lo snyk https://github.com/snyk/snyk/releases/latest/download/snyk-linux
+          chmod +x snyk
+          sudo mv snyk /usr/local/bin/
+
+      - name: Run Snyk Security Scan
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: snyk test --docker ${{ secrets.DOCKER_USERNAME }}/moscow-time-app:latest --severity-threshold=high || true
