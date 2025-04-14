@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: #393a3e;
+}
+
+.container {
+    text-align: center;
+    background: rgb(68, 67, 67);
+    padding: 40px;
+    border-radius: 5px;
+}
+
+#age-header {
+    color: #fdfdfd;
+}
+
+input[type="date"] {
+    background: rgb(68, 67, 67);
+    border-radius: 6px;
+    border: 1px solid #130f0f;
+    color: #fdfdfd;
+    font-size: 20pt;
+    margin: 10px 0;
+    padding: 8px;
+}
+
+#age-display {
+    margin-top: 10px;
+    font-size: 1.2em;
+    color: #fdfdfd;
+}
