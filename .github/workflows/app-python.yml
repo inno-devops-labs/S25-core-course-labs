@@ -1,0 +1,84 @@
+name: Python App CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'app_python/**'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'app_python/**'
+
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: |
+          cd app_python
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run linter
+        run: |
+          cd app_python
+          pip install flake8
+          flake8 .
+        continue-on-error: true
+
+      - name: Run tests
+        run: |
+          cd app_python
+          pip install pytest pytest-cov
+          python -m pytest --verbose --cov
+
+  security:
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/python-3.10@master
+        with:
+          args: --skip-unresolved app_python/
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+
+  build:
+      runs-on: ubuntu-latest
+      needs: security
+      steps:
+        - name: Login to Docker Hub
+          uses: docker/login-action@v3
+          with:
+            username: ${{ vars.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+        - name: Set up QEMU
+          uses: docker/setup-qemu-action@v3
+
+        - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v3
+
+        - name: Build and push
+          uses: docker/build-push-action@v6
+          with:
+            context: "{{defaultContext}}:app_python"
+            push: true
+            tags: wensiet/devops-py-app:latest
+            cache-from: wensiet/devops-py-app:latest
+            cache-to: type=inline

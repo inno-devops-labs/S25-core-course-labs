@@ -1,0 +1,6 @@
+apiVersion: v2
+name: py-app
+description: A Helm chart for moscow time pyapp
+type: application
+version: 0.1.0
+appVersion: "1.16.0"
