@@ -1,0 +1,22 @@
+__pycache__/
+*.pyc
+.env
+
+# Terraform local state files
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+# Ignore Terraform crash logs
+crash.log
+
+# Ignore Terraform variable overrides
+*.auto.tfvars
+terraform.tfvars
+
+# Ignore private SSH keys (if using SSH authentication)
+*.pem
+*.key
+id_rsa
+id_rsa.pub

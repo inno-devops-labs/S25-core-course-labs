@@ -1,0 +1,7 @@
+docker_image_python: "em1999jay/python-app"
+docker_image_node: "em1999jay/moscow-time-app-node:v1"
+
+app_python_port: "5000"
+app_node_port: "7000"
+
+web_app_full_wipe: false  # Can be set to true for wipe logic

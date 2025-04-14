@@ -1,0 +1,15 @@
+- include_tasks: install_docker.yml
+- include_tasks: install_compose.yml
+- include_tasks: secure_docker_config.yml
+- name: Enable Docker to start on boot
+  ansible.builtin.systemd:
+    name: docker
+    enabled: yes
+    state: started
+
+- name: Add user to the Docker group
+  ansible.builtin.user:
+    name: ubuntu
+    groups: docker
+    append: yes
+
