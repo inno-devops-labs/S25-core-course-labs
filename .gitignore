@@ -1,0 +1,19 @@
+Packages
+.build
+xcuserdata
+*.xcodeproj
+DerivedData/
+.DS_Store
+db.sqlite
+.swiftpm
+.env
+.env.*
+! .env.example
+.vscode
+
+# Byte-compiled files
+*.pyc
+__pycache__/
+
+# Virtual environment
+venv/
