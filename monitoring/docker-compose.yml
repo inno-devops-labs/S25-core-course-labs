@@ -77,6 +77,8 @@ services:
     image: fridorovich04/app_python:latest
     ports:
       - "80:80"
+    volumes:
+      - ./data:/data
     networks:
       - loki
     labels:
