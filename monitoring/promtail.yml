@@ -1,0 +1,17 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+  log_level: "warn"
+positions:
+  filename: /var/lib/promtail/positions/positions.yaml
+client:
+  url: http://loki:3100/api/prom/push
+scrape_configs:
+  - job_name: containers
+
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: docker
+          __path__: /var/lib/docker/containers/*/*log # For linux only
