@@ -8,7 +8,11 @@ This is a simple Python web application that displays the current time in Moscow
 ## Features
 - Displays the current time in Moscow.
 - Automatically updates the time upon page refresh.
+- Returns total number of visits.
 - Interactive API documentation provided by FastAPI.
+
+## Data Persistence
+Visit counter is stored in `/data/visits.txt` file which is persisted on host machine in `./data` directory.
 
 ## Installation
 To run this application locally, follow these steps:
