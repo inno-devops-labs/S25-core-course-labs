@@ -1,0 +1,89 @@
+name: Web App CI Workflow
+
+on:
+  push:
+    paths:
+      - 'app_javascript/**'
+      - '.github/workflows/app_javascript.yaml'
+
+jobs:
+  build:
+    defaults:
+      run:
+        working-directory: app_javascript
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Run Linters
+        run: |
+          npx eslint src/**/*.js
+          npx stylelint src/**/*.css
+
+  test:
+    defaults:
+      run:
+        working-directory: app_javascript
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm test
+
+      - name: Download Snyk
+        run: |
+          curl -LO https://github.com/snyk/cli/releases/latest/download/snyk-linux
+          chmod +x snyk-linux
+
+      - name: Run Snyk Security Scan
+        run: ./snyk-linux test --severity-threshold=high
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  docker:
+    defaults:
+      run:
+        working-directory: app_javascript
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/app_javascript:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/app_javascript:latest
