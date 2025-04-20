@@ -1,0 +1,37 @@
+# values.yaml
+
+# Глобальные настройки (используются несколькими компонентами)
+global:
+  database:
+    name: times         # Название БД
+    user: myuser        # Пользователь БД
+    password: mypassword # Пароль БД
+
+# Настройки PostgreSQL
+db:
+  image:
+    repository: jmartynova123/dev-lab3-db  # Репозиторий образа БД
+    tag: latest                             # Тег образа
+  service:
+    port: 5432             # Порт сервиса БД
+  persistence:
+    size: 1Gi              # Размер PVC для хранения данных
+
+# Настройки Backend
+backend:
+  image:
+    repository: jmartynova123/dev-lab3-back # Репозиторий образа бэкенда
+    tag: latest                             # Тег образа
+  service:
+    type: ClusterIP        # Тип сервиса (ClusterIP/NodePort/LoadBalancer)
+    port: 8080             # Порт сервиса бэкенда
+
+# Настройки Frontend
+frontend:
+  image:
+    repository: jmartynova123/dev-lab3-front # Репозиторий образа фронтенда
+    tag: latest                              # Тег образа
+  service:
+    type: NodePort         # Тип сервиса (NodePort для доступа извне)
+    port: 3000             # Порт сервиса фронтенда
+    # nodePort: 30007      # Раскомментируйте, чтобы зафиксировать NodePort

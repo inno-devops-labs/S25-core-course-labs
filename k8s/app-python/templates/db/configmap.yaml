@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-db-init
+data:
+  init.sql: |
+    DO $$
+    BEGIN
+        IF NOT EXISTS (SELECT 1 FROM pg_namespace WHERE nspname = 'public') THEN
+            CREATE SCHEMA public;
+        END IF;
+    END $$;
+    
+    GRANT ALL ON SCHEMA public TO {{ .Values.global.database.user | quote }};
+    
+    CREATE TABLE IF NOT EXISTS zone (
+        id SERIAL NOT NULL,
+        name VARCHAR(256),
+        timezone VARCHAR(20),
+        PRIMARY KEY (id)
+    );
+    
+    INSERT INTO zone (name, timezone) 
+    VALUES 
+    ('London', 'Europe/London'),
+    ('Moscow', 'Europe/Moscow'),
+    ('New York', 'America/New_York'),
+    ('Sydney', 'Australia/Sydney')
+    ON CONFLICT DO NOTHING;

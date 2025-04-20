@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-backend
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-backend
+    spec:
+      containers:
+      - name: backend
+        image: {{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}
+        ports:
+        - containerPort: {{ .Values.backend.service.port }}
+        env:
+        - name: DATABASE_URI
+          value: postgres://{{ .Values.global.database.user }}:{{ .Values.global.database.password }}@{{ .Release.Name }}-db-svc:{{ .Values.db.service.port }}/{{ .Values.global.database.name }}
+        livenessProbe:
+          httpGet:
+            path: /times
+            port: {{ .Values.backend.service.port }}
+          initialDelaySeconds: 30
+          periodSeconds: 10

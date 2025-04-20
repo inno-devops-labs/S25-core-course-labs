@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-db-svc 
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.db.service.port }}  # 5432
+      targetPort: {{ .Values.db.service.port }}
+  selector:
+    app: {{ .Release.Name }}-db  # Селектор для связи с подами БД

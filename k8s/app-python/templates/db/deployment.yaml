@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-db
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-db
+    spec:
+      initContainers:
+      - name: init-db
+        image: {{ .Values.db.image.repository }}:{{ .Values.db.image.tag }}
+        envFrom:
+        - secretRef:
+            name: {{ .Release.Name }}-db-secret
+        command: ["/bin/sh", "-c", "cp /docker-entrypoint-initdb.d/* /tmp/"]
+        volumeMounts:
+        - name: init-script
+          mountPath: /docker-entrypoint-initdb.d
+      containers:
+      - name: db
+        image: {{ .Values.db.image.repository }}:{{ .Values.db.image.tag }}
+        args: ["-c", "listen_addresses=*"]
+        ports:
+        - containerPort: 5432
+        envFrom:
+        - secretRef:
+            name: {{ .Release.Name }}-db-secret
+        lifecycle:
+          postStart:
+            exec:
+              command: ["sh", "-c", "until pg_isready -U $POSTGRES_USER -h 127.0.0.1; do sleep 2; done"]
+        volumeMounts:
+        - name: db-storage
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: db-storage
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-db-pvc
+      - name: init-script
+        configMap:
+          name: {{ .Release.Name }}-db-init
