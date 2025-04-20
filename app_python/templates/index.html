@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Clock</title>
+    <script>
+        // function which fetches time and updates text with new time
+        async function fetchTime() {
+            try {
+                const response = await fetch('/time');
+                const data = await response.json();
+                document.getElementById('time').innerText = data.time;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        setInterval(fetchTime, 1000);
+    </script>
+</head>
+<body>
+<h1>Time in Moscow</h1>
+<h2 id="time">Loading...</h2>
+</body>
+</html>
