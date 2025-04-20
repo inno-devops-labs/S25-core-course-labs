@@ -1,0 +1,10 @@
+version: "3"
+services:
+  app:
+    image: "{{ app_image }}"
+    ports:
+      - "{{ app_port }}:5000"
+    environment:
+      - FLASK_ENV=development
+    volumes:
+      - ./app:/app

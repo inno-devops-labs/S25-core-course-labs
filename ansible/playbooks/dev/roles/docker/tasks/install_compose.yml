@@ -1,0 +1,9 @@
+- name: Build the Docker image
+  command: docker build -t matt_app_image .
+  args:
+    chdir: /home/ubuntu/matt-app
+  become: true
+
+- name: Start containers with Docker Compose
+  command: docker-compose -f /home/ubuntu/matt-app/docker-compose.yml up -d
+  become: true

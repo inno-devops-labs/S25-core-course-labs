@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bonus-app
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/MattWay224/S25-core-course-labs.git
+    targetRevision: Lab13
+    path: k8s/app_java
+
+    helm:
+      valueFiles:
+        - values.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: bonus
+
+  syncPolicy:
+    automated: {}
