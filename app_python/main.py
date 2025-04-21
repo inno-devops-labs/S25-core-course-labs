@@ -17,7 +17,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import uvicorn
 from prometheus_fastapi_instrumentator import Instrumentator
-
+from starlette.responses import JSONResponse
 
 app = FastAPI()
 
@@ -27,39 +27,25 @@ templates = Jinja2Templates(directory="templates")
 
 Instrumentator().instrument(app).expose(app)
 
-VISITS_FILE = "/app/visits.txt"
+VISITS_FILE = "/data/visits.txt"
 
 
-def read_visits() -> int:
-    """
-    Read the current visit count from the file.
-
-    Returns:
-        int: The number of visits read from the file. Returns 0 if the file is not found or empty.
-    """
-    if not os.path.exists(VISITS_FILE):
-        # Create the file with initial count 0
-        with open(VISITS_FILE, "w", encoding="utf-8") as file:
+def visit():
+    """Increments visits count of root handler"""
+    if not os.path.isfile(VISITS_FILE):
+        with open(VISITS_FILE, "w") as file:
             file.write("0")
-        return 0
-
-    try:
-        with open(VISITS_FILE, "r", encoding="utf-8") as file:
-            content = file.read().strip()
-            return int(content) if content else 0
-    except ValueError:
-        return 0
+    with open(VISITS_FILE, "r") as file:
+        v = int(file.read())
+    with open(VISITS_FILE, "w") as file:
+        file.write(str(v + 1))
 
 
-def write_visits(count: int) -> None:
-    """
-    Write the visit count to the file.
+@app.get("/visits", response_class=JSONResponse)
+async def get_visits():
+    with open(VISITS_FILE, "r") as file:
+        return JSONResponse(content={"visits": int(file.read())})
 
-    Args:
-        count (int): The number of visits to save.
-    """
-    with open(VISITS_FILE, "w", encoding="utf-8") as file:
-        file.write(str(count))
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -77,10 +63,7 @@ async def index(request: Request):
         TemplateResponse: An HTML response rendered using the "item.html" template
         with the current time passed to the template context.
     """
-    # Increment visit counter
-    current_visits = read_visits()
-    current_visits += 1
-    write_visits(current_visits)
+    visit()
 
     # Get current time
     zone = timezone(timedelta(hours=3))
