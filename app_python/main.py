@@ -25,7 +25,7 @@ templates = Jinja2Templates(directory="templates")
 
 Instrumentator().instrument(app).expose(app)
 
-VISITS_FILE = "visits.txt"
+VISITS_FILE = "/app/visits.txt"
 
 
 def read_visits() -> int:
