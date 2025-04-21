@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a simple python web application on FastAPI that shows current time in Moscow.
+This is a simple python web application on FastAPI that shows current time in Moscow.  It also shows number of visits of main page.
 
 ## Running locally
 
