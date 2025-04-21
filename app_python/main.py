@@ -33,19 +33,22 @@ VISITS_FILE = "/data/visits.txt"
 def visit():
     """Increments visits count of root handler"""
     if not os.path.isfile(VISITS_FILE):
-        with open(VISITS_FILE, "w") as file:
+        with open(VISITS_FILE, "w", encoding="utf-8") as file:
             file.write("0")
-    with open(VISITS_FILE, "r") as file:
+    with open(VISITS_FILE, "r", encoding="utf-8") as file:
         v = int(file.read())
-    with open(VISITS_FILE, "w") as file:
+    with open(VISITS_FILE, "w", encoding="utf-8") as file:
         file.write(str(v + 1))
 
 
 @app.get("/visits", response_class=JSONResponse)
 async def get_visits():
-    with open(VISITS_FILE, "r") as file:
+    """
+    Handle the "/visits" endpoint to return the current number of visits
+    as a JSON object.
+    """
+    with open(VISITS_FILE, "r", encoding="utf-8") as file:
         return JSONResponse(content={"visits": int(file.read())})
-
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -70,18 +73,6 @@ async def index(request: Request):
     time = datetime.now(timezone.utc).astimezone(zone)
 
     return templates.TemplateResponse(request, "item.html", {"time": time})
-
-
-@app.get("/visits")
-async def get_visits():
-    """
-    Endpoint to retrieve the current number of visits.
-
-    Returns:
-        dict: A JSON object containing the visit count.
-    """
-    visits = read_visits()
-    return {"visits": visits}
 
 
 if __name__ == "__main__":

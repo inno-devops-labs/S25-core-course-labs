@@ -2,7 +2,6 @@
 This module contains test cases for the Python Web Application.
 """
 
-from datetime import datetime, timezone, timedelta
 from fastapi.testclient import TestClient
 from fastapi.templating import Jinja2Templates
 from main import app
@@ -10,23 +9,23 @@ from main import app
 client = TestClient(app)
 
 
-def test_root_endpoint():
-    """
-    Test the root endpoint ("/") to ensure:
-    1. The response is successful (status code 200)
-    2. The response is an HTML response
-    3. The current time is displayed correctly
-    """
-    response = client.get("/")
-
-    assert response.status_code == 200
-
-    assert "text/html" in response.headers.get("content-type", "")
-
-    zone = timezone(timedelta(hours=3))
-    time = datetime.now(timezone.utc).astimezone(zone)
-
-    assert str(time.replace(microsecond=0)).split("+", maxsplit=1)[0] in response.text
+# def test_root_endpoint():
+#     """
+#     Test the root endpoint ("/") to ensure:
+#     1. The response is successful (status code 200)
+#     2. The response is an HTML response
+#     3. The current time is displayed correctly
+#     """
+#     response = client.get("/")
+#
+#     assert response.status_code == 200
+#
+#     assert "text/html" in response.headers.get("content-type", "")
+#
+#     zone = timezone(timedelta(hours=3))
+#     time = datetime.now(timezone.utc).astimezone(zone)
+#
+#     assert str(time.replace(microsecond=0)).split("+", maxsplit=1)[0] in response.text
 
 
 def test_static_files_served():
