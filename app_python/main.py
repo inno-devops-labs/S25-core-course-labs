@@ -9,6 +9,7 @@ This module defines a FastAPI application with the following features:
 Author: Sviatoslav Sviatkin (s.sviatkin@innopolis.university)
 """
 
+import os
 from datetime import datetime, timedelta, timezone
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
@@ -16,6 +17,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import uvicorn
 from prometheus_fastapi_instrumentator import Instrumentator
+
 
 app = FastAPI()
 
