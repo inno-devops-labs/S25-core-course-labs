@@ -35,11 +35,17 @@ def read_visits() -> int:
     Returns:
         int: The number of visits read from the file. Returns 0 if the file is not found or empty.
     """
+    if not os.path.exists(VISITS_FILE):
+        # Create the file with initial count 0
+        with open(VISITS_FILE, "w", encoding="utf-8") as file:
+            file.write("0")
+        return 0
+
     try:
         with open(VISITS_FILE, "r", encoding="utf-8") as file:
             content = file.read().strip()
             return int(content) if content else 0
-    except (FileNotFoundError, ValueError):
+    except ValueError:
         return 0
 
 
