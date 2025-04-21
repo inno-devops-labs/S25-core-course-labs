@@ -8,6 +8,7 @@ RUN mkdir -p /data && chown app_python_user:app_python_user /data
 COPY --chown=app_python_user:app_python_user main.py requirements.txt ./
 COPY --chown=app_python_user:app_python_user templates/ ./templates/
 COPY --chown=app_python_user:app_python_user static/ ./static/
+COPY --chown=app_python_user:app_python_user pyapp/data/ ./data/
 
 RUN pip install --no-cache-dir -r requirements.txt
 
