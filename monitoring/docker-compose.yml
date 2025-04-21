@@ -82,7 +82,7 @@ services:
       timeout: 3s
       retries: 3
   app_python:
-    image: dmhd6219/inno_devops_lab2_python_bonus:latest
+    image: dmhd6219/inno_devops_lab2_python_basic:latest
     ports:
       - "8000:8000"
     networks:
@@ -94,6 +94,8 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
+    volumes:
+      - ./visits_data:/app
   app_typescript:
     image: dmhd6219/inno_devops_lab2_typescript_basic:latest
     ports:
