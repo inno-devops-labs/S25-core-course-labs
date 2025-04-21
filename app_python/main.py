@@ -36,7 +36,7 @@ def read_visits() -> int:
         int: The number of visits read from the file. Returns 0 if the file is not found or empty.
     """
     try:
-        with open(VISITS_FILE, "r", encoding='utf-8') as file:
+        with open(VISITS_FILE, "r", encoding="utf-8") as file:
             content = file.read().strip()
             return int(content) if content else 0
     except (FileNotFoundError, ValueError):
@@ -50,7 +50,7 @@ def write_visits(count: int) -> None:
     Args:
         count (int): The number of visits to save.
     """
-    with open(VISITS_FILE, "w", encoding='utf-8') as file:
+    with open(VISITS_FILE, "w", encoding="utf-8") as file:
         file.write(str(count))
 
 
