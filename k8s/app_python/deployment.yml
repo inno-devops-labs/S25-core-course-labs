@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-python
+  namespace: default
+  labels:
+    app: app-python
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-python
+  template:
+    metadata:
+      labels:
+        app: app-python
+    spec:
+      containers:
+      - name: app-python
+        image: dmhd6219/inno_devops_lab2_python_bonus:latest
+        ports:
+          - containerPort: 8000
+            name: app-python-port
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "100m"
+          limits:
+            memory: "100Mi"
+            cpu: "100m"

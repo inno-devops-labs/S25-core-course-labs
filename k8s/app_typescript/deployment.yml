@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-typescript
+  namespace: default
+  labels:
+    app: app-typescript
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-typescript
+  template:
+    metadata:
+      labels:
+        app: app-typescript
+    spec:
+      containers:
+      - name: app-typescript
+        image: dmhd6219/inno_devops_lab2_typescript_basic:latest
+        ports:
+          - containerPort: 8080
+            name: app-ts-port
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "100m"
+          limits:
+            memory: "100Mi"
+            cpu: "100m"
