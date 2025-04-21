@@ -95,7 +95,7 @@ services:
       timeout: 3s
       retries: 3
     volumes:
-      - ./pyapp/data:/data
+      - ./pyapp/data:/data:rw
   app_typescript:
     image: dmhd6219/inno_devops_lab2_typescript_basic:latest
     ports:

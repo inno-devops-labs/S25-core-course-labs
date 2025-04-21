@@ -10,6 +10,8 @@ COPY --chown=app_python_user:app_python_user static/ ./static/
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN mkdir /data && chown app_python_user /data
+
 USER app_python_user
 
 EXPOSE 8000
