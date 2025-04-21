@@ -1,0 +1,4 @@
+plugin: yacloud_compute
+yacloud_clouds: cloud-kamil-mirgasimoff
+yacloud_folders: devops
+yacloud_token: y0__xCtpsKQARjB3RMgocvhoBLaQARQVmvR5gFf_-cZMVSnpGeT2w
