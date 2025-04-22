@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "app-python.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "app-python.fullname" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "app-python.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "app-python.fullname" . }}
+    spec:
+      containers:
+        - name: python-msk
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 80
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
