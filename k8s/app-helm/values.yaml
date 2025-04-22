@@ -6,6 +6,15 @@ image:
   tag: "latest"
 
 imagePullSecrets: [ ]
+secrets:
+  username: admin
+  password: A#erg.kf;erw=
+
+vault:
+  enabled: true
+  role: "app-python"
+  secretPath: "internal/data/database/config"
+
 nameOverride: ""
 fullnameOverride: ""
 
