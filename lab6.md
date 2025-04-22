@@ -30,22 +30,22 @@ In this lab, you will utilize Ansible to set up a Continuous Deployment (CD) pro
    - Organize related tasks within your playbooks using Ansible blocks.
    - Implement logical blocks. For example:
 
-   ```yaml
+```yaml
    - name: Setup Docker Environment
-      block:
-      - name: Install Docker
-         apt:
-            name: docker.io
-            state: present
+       block:
+         - name: Install Docker
+             apt:
+               name: docker.io
+               state: present
 
-      - name: Start Docker Service
-         service:
-            name: docker
-            state: started
-            enabled: yes
-      tags:
-      - setup
-   ```
+         - name: Start Docker Service
+             service:
+               name: docker
+               state: started
+               enabled: yes
+       tags:
+         - setup
+```
 
 2. Role Dependency:
    - Set the role dependency for your `web_app` role to include the `docker` role.
