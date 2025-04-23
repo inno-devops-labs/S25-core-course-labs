@@ -17,7 +17,7 @@ spec:
         image: {{ .Values.db.image.repository }}:{{ .Values.db.image.tag }}
         envFrom:
         - secretRef:
-            name: {{ .Release.Name }}-db-secret
+            name: my-app-secret
         command: ["/bin/sh", "-c", "cp /docker-entrypoint-initdb.d/* /tmp/"]
         volumeMounts:
         - name: init-script
@@ -30,7 +30,7 @@ spec:
         - containerPort: 5432
         envFrom:
         - secretRef:
-            name: {{ .Release.Name }}-db-secret
+            name: my-app-secret
         lifecycle:
           postStart:
             exec:

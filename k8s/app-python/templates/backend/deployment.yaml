@@ -18,8 +18,23 @@ spec:
         ports:
         - containerPort: {{ .Values.backend.service.port }}
         env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: my-app-secret
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: my-app-secret
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: my-app-secret
+              key: POSTGRES_DB
         - name: DATABASE_URI
-          value: postgres://{{ .Values.global.database.user }}:{{ .Values.global.database.password }}@{{ .Release.Name }}-db-svc:{{ .Values.db.service.port }}/{{ .Values.global.database.name }}
+          value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@{{ .Release.Name }}-db-svc:{{ .Values.db.service.port }}/{{ .Values.global.database.name }}
         livenessProbe:
           httpGet:
             path: /times
