@@ -1,0 +1,12 @@
+{
+  "name": "popular-song-by-year",
+  "version": "1.0.0",
+  "description": "Web app that shows the most popular song for a random year",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+} 
