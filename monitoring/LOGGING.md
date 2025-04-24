@@ -102,6 +102,6 @@ level=info ts=2025-04-24T13:03:56.690394054Z caller=filetargetmanager.go:181 msg
 ts=2025-04-24T13:03:56.783986638Z caller=log.go:168 level=info msg="Re-opening moved/deleted file /var/log/fsck_apfs_error.log ..."
 ts=2025-04-24T13:03:56.790844888Z caller=log.go:168 level=info msg="Successfully reopened /var/log/fsck_apfs_error.log"
 
-![Alt text](screenshots/loki1.png)
-![Alt text](screenshots/loki2.png)
+![Alt text](loki1.png)
+![Alt text](loki2.png)
 
