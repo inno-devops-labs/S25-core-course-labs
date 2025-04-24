@@ -1,0 +1,17 @@
+---
+dependencies:
+  - role: docker
+
+galaxy_info:
+  author: S25 Student
+  description: Role to deploy a web application using Docker
+  license: MIT
+  min_ansible_version: 2.9
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+  galaxy_tags:
+    - web
+    - docker
+    - deployment 
