@@ -19,6 +19,25 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+# StatefulSet specific configurations
+statefulSet:
+  # Specifies whether a StatefulSet or Deployment should be used
+  enabled: true
+  # Pod management policy: OrderedReady or Parallel
+  podManagementPolicy: Parallel
+  # Update strategy: RollingUpdate or OnDelete
+  updateStrategy: RollingUpdate
+  # PVC configurations for StatefulSet
+  persistence:
+    enabled: true
+    # StorageClass name; leave empty to use default
+    storageClassName: ""
+    accessModes:
+      - ReadWriteOnce
+    size: 1Gi
+    # Path where the volume will be mounted in the container
+    mountPath: /data
+
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
   # Specifies whether a service account should be created
@@ -56,6 +75,9 @@ service:
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 80
   targetPort: 5000
+  # Enable headless service for StatefulSet
+  headless:
+    enabled: true
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:

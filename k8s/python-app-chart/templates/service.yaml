@@ -6,6 +6,9 @@ metadata:
     {{- include "python-app-chart.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
+  {{- if .Values.service.headless.enabled }}
+  clusterIP: None
+  {{- end }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.targetPort }}

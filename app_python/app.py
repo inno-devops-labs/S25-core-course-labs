@@ -12,7 +12,8 @@ log_dir = '/home/appuser/logs'
 os.makedirs(log_dir, exist_ok=True)
 
 # Create visits directory if it doesn't exist
-visits_dir = '/home/appuser/data'
+# Changed to use /data directory which will be mounted by StatefulSet
+visits_dir = '/data'
 os.makedirs(visits_dir, exist_ok=True)
 visits_file = f'{visits_dir}/visits'
 
