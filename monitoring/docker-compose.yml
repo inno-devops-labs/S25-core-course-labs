@@ -1,6 +1,21 @@
 version: "3.8"
 
 services:
+  python-app:
+    build:
+      context: ../app_python
+      dockerfile: Dockerfile
+    ports:
+      - "4000:3000"
+    volumes:
+      - ../:/app_python
+      - ./app-logs:/app_python/logs
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - loki
+    restart: unless-stopped
+
   loki:
     image: grafana/loki:2.9.1
     volumes:
@@ -10,16 +25,15 @@ services:
 
   promtail:
     image: grafana/promtail:2.9.1
-    container_name: promtail
     volumes:
       - ./promtail-config.yml:/etc/promtail/config.yml
       - /var/log:/var/log
+      - ./app-logs:/app_python/logs
     command: -config.file=/etc/promtail/config.yml
     restart: unless-stopped
 
   grafana:
     image: grafana/grafana:latest
-    container_name: grafana
     ports:
       - "3000:3000"
     volumes:
@@ -30,3 +44,4 @@ services:
 
 volumes:
   grafana-data:
+  app-logs:
