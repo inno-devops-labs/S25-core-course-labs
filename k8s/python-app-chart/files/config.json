@@ -1,0 +1,19 @@
+{
+  "app_name": "Moscow Time App",
+  "version": "1.0.0",
+  "timezone": "Europe/Moscow",
+  "features": {
+    "visit_counter": true,
+    "timezone_display": true,
+    "metrics_enabled": true
+  },
+  "display": {
+    "show_seconds": true,
+    "show_date": true,
+    "date_format": "%A, %B %d, %Y"
+  },
+  "monitoring": {
+    "prometheus_enabled": true,
+    "log_level": "INFO"
+  }
+} 
