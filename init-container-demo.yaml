@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: demo-init
+spec:
+  serviceName: "demo-init"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-init
+  template:
+    metadata:
+      labels:
+        app: demo-init
+    spec:
+      volumes:
+      - name: shared-data
+        emptyDir: {}
+      initContainers:
+      - name: init-container
+        image: busybox
+        command: ['sh', '-c', 'wget -O /data/test.html http://info.cern.ch/hypertext/WWW/TheProject.html && echo "File downloaded successfully" || echo "Download failed"']
+        volumeMounts:
+        - name: shared-data
+          mountPath: /data
+      containers:
+      - name: nginx
+        image: nginx:1.21
+        ports:
+        - containerPort: 80
+          name: web
+        volumeMounts:
+        - name: shared-data
+          mountPath: /usr/share/nginx/html
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m" 

@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: init-demo
+  labels:
+    app: init-demo
+spec:
+  volumes:
+  - name: shared-data
+    emptyDir: {}
+  initContainers:
+  - name: init-container
+    image: busybox
+    command: ['sh', '-c', 'wget -O /data/test.html http://info.cern.ch/hypertext/WWW/TheProject.html && echo "File downloaded successfully"']
+    volumeMounts:
+    - name: shared-data
+      mountPath: /data
+  containers:
+  - name: nginx
+    image: nginx:1.21
+    ports:
+    - containerPort: 80
+      name: web
+    volumeMounts:
+    - name: shared-data
+      mountPath: /usr/share/nginx/html 
