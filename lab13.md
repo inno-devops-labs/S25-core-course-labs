@@ -6,7 +6,7 @@ In this lab, you will implement ArgoCD to automate Kubernetes application deploy
 
 ## Task 1: Deploy and Configure ArgoCD
 
-
+**6 Points:**
 
 1. Install ArgoCD via Helm
    - Add the ArgoCD Helm repository:
@@ -130,6 +130,7 @@ In this lab, you will implement ArgoCD to automate Kubernetes application deploy
 
 ### Task 2: Multi-Environment Deployment & Auto-Sync
 
+**4 Points:**
 
 1. Set Up Multi-Environment Configurations
    - Extend your Python app’s Helm chart to support `dev` and `prod` environments.
@@ -189,9 +190,23 @@ In this lab, you will implement ArgoCD to automate Kubernetes application deploy
      - Screenshots of ArgoCD UI showing sync status and the dashboard after both tests.
      - Explanation of how ArgoCD handles configuration drift vs. runtime events.
 
+## Bonus Task: Sync Your Bonus App with ArgoCD
+
+**2.5 Points:**
+
+1. Configure ArgoCD for Bonus App
+   - Create an `argocd-<bonus>-app.yaml` similar to Task 1, pointing to your bonus app’s helm chart folder.
+   - Sync and validate deployment with:
+
+     ```bash
+     kubectl get pods -n <namespace>
+     ```
 
 ### Guidelines
 
 - Follow the [ArgoCD docs](https://argo-cd.readthedocs.io/) for advanced configurations.
 - Use consistent naming conventions (e.g., `lab13` branch for Git commits).
 - Document all steps in `13.md` (include diffs, outputs, and UI screenshots).
+- For your repository PR, ensure it's from the `lab14` branch to the main branch.
+
+> **Note**: This lab emphasizes GitOps workflows, environment isolation, and automation. Mastery of ArgoCD will streamline your CI/CD pipelines in real-world scenarios.
