@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "python-web.fullname" . }}-headless
+  labels:
+    {{- include "python-web.labels" . | nindent 4 }}
+spec:
+  clusterIP: None
+  ports:
+  - port: 80
+    name: http
+  selector:
+    {{- include "python-web.selectorLabels" . | nindent 4 }}
