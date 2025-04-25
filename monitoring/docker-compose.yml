@@ -1,0 +1,64 @@
+version: "3.8"
+
+networks:
+  loki:
+    name: loki_network
+    driver: bridge
+
+services:
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - loki
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - /var/log:/var/log
+      - ./promtail.yml:/etc/promtail/config.yml
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - loki
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    ports:
+      - "3000:3000"
+    networks:
+      - loki
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    ports:
+      - "9090:9090"
+    networks:
+      - loki
+
+  app_python:
+    image: fridorovich04/app_python:latest
+    ports:
+      - "8000:80"
+    networks:
+      - loki
+    labels:
+      - "prometheus.scrape=true"
+      - "prometheus.port=80"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:80/metrics" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
