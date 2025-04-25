@@ -1,0 +1,83 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/web_app/
+
+- name: Include wipe tasks
+  include_tasks: 0-wipe.yml
+  when: web_app_full_wipe | default(false) | bool
+  tags:
+    - wipe
+
+- name: Setup application environment
+  block:
+    - name: Create application directory
+      file:
+        path: "{{ deploy_directory }}"
+        state: directory
+        owner: "{{ deploy_user }}"
+        group: "{{ deploy_user }}"
+        mode: '0755'
+
+    - name: Template docker-compose.yml
+      template:
+        src: docker-compose.yml.j2
+        dest: "{{ deploy_directory }}/docker-compose.yml"
+        owner: "{{ deploy_user }}"
+        group: "{{ deploy_user }}"
+        mode: '0744'
+  tags:
+    - setup
+
+- name: Configure Docker authentication
+  block:
+    - name: Create Docker config directory
+      file:
+        path: "/root/.docker"
+        state: directory
+        mode: '0700'
+      become: true
+
+    - name: Configure Docker credentials
+      copy:
+        content: |
+          {
+            "auths": {
+              "https://index.docker.io/v1/": {
+                "auth": "{{ (lookup('env', 'DOCKER_USERNAME') + ':' + lookup('env', 'DOCKER_PASSWORD')) | b64encode }}"
+              }
+            }
+          }
+        dest: "/root/.docker/config.json"
+        mode: '0600'
+      become: true
+      no_log: true
+  tags:
+    - docker
+    - auth
+
+- name: Deploy application
+  block:
+    - name: Wait for Docker daemon
+      wait_for:
+        path: /var/run/docker.sock
+
+    - name: Pull application image
+      community.docker.docker_image:
+        name: "{{ app_image }}"
+        source: pull
+        force_source: yes
+
+    - name: Create deployment directory for web_app
+      file:
+        path: "{{ deploy_directory }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+    
+    - name: Start the application container using Docker Compose
+      command: docker-compose -f docker-compose.yml up -d
+      args:
+        chdir: "{{ deploy_directory }}"
+  tags:
+    - deploy

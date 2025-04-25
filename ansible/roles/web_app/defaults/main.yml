@@ -1,0 +1,12 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for roles/web_app/
+
+app_name: "python-app"
+app_image: "tjann7/moscow_time:latest"
+app_port: 5005
+
+deploy_user: "tjann"
+deploy_directory: "/opt/{{ app_name }}"
+
+web_app_full_wipe: true

@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  app:
+    image: {{ app_image }}
+    container_name: {{ app_name }}
+    restart: unless-stopped
+    ports:
+      - "{{ app_port }}:5005"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5005"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

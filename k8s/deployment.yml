@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moscow-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: moscow-app
+  template:
+    metadata:
+      labels:
+        app: moscow-app
+    spec:
+      containers:
+        - name: moscow-app
+          image: tjann7/moscow_time:latest
+          ports:
+            - containerPort: 5005

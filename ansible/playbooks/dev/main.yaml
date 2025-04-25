@@ -1,0 +1,7 @@
+
+---
+- name: Deploy Python Container
+  hosts: all
+  become: true
+  roles:
+    - role: web_app
