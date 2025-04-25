@@ -15,4 +15,4 @@ ec66725c3fca   grafana/grafana:latest                "/run.sh"                41
 2f28b2c78650   grafana/promtail:latest               "/usr/bin/promtail -…"   41 seconds ago   Up 40 seconds
                                                                                      monitoring-promtail-1
 ```
-![](prom.png)
+![](prom.PNG)
