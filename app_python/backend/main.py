@@ -1,23 +1,22 @@
 import datetime
 import logging
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import pytz
 from dotenv import load_dotenv
 import os
 import sys
+from prometheus_flask_exporter import PrometheusMetrics
 
 project_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_dir)
 from backend.database.db import db, Zones
-
+VISITS_FILE_PATH = '/usr/local/app/visits'
 # Load environment variables from .env file
 load_dotenv()
-os.makedirs('/var/log/backend', exist_ok=True)
+
 # Set up logging
-logging.basicConfig(filename='/var/log/backend/app.log',
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
@@ -26,12 +25,25 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 # Database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://myuser:mypassword@db:5432/times"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize SQLAlchemy
 db.init_app(app)
 
+# Initialize Prometheus metrics
+def read_counter():
+    try:
+        with open(VISITS_FILE_PATH, 'r') as file:
+            counter = int(file.read().strip())
+    except FileNotFoundError:
+        counter = 0
+    return counter
+
+# Function to write the counter value to the file
+def write_counter(counter):
+    with open(VISITS_FILE_PATH, 'w') as file:
+        file.write(str(counter))
 
 # Route to get all time zones
 @app.route('/times', methods=['GET'])
@@ -53,7 +65,6 @@ def get_time():
         logger.error(f"Error fetching time zones: {e}")
         return jsonify({"err": "Internal server error"}), 500
 
-
 # Route to get the current time for a given city
 @app.route('/times/<string:name>', methods=['GET'])
 def get_current_time(name):
@@ -72,12 +83,29 @@ def get_current_time(name):
     except Exception as e:
         logger.error(f"Error fetching current time for city {name}: {e}")
         return jsonify({"err": "Internal server error"}), 500
+# Route to get the number of visits
+@app.route('/visits', methods=['GET'])
+def get_visits():
+    try:
+        counter = read_counter()
+        return jsonify({"visits": counter}), 200
+    except Exception as e:
+        logger.error(f"Error fetching visits: {e}")
+        return jsonify({"err": "Internal server error"}), 500
 
-
+# Middleware to increment the counter on each request
+@app.before_request
+def increment_counter():
+    if request.path == '/times':
+        counter = read_counter()
+        counter += 1
+        write_counter(counter)
 # Create tables and run the application
 if __name__ == '__main__':
+    metrics = PrometheusMetrics(app,export_defaults=True)
+    metrics.info('app_info', 'Application info', version='1.0.0')
     try:
-        app.run(host='0.0.0.0', port=8080, debug=True)
-        logger.Info("App is running successfully")
+        app.run(host='0.0.0.0', port=8080, debug=False)
+        logger.info("App is running successfully")
     except Exception as e:
         logger.error(f"Error starting the application: {e}")

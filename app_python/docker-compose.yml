@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   db:
-    image: jmartynova123/dev-lab3-db
+    image: jmartynova123/dev-lab3-db:latest
     environment:
       POSTGRES_DB: times
       POSTGRES_USER: myuser
@@ -13,66 +13,45 @@ services:
       - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U myuser -d times"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+      interval: 5s             
+      timeout: 5s
+      retries: 10              
+      start_period: 10s 
+    networks:
+      - my_app_network       
 
   backend:
-    image: jmartynova123/dev-lab3-back
+    image: jmartynova123/dev-lab3-back:latest
     environment:
-      DATABASE_URI: postgres://myuser:mypassword@db:5432/times
+      DATABASE_URI: postgresql://myuser:mypassword@db:5432/times
     ports:
       - "8080:8080"
     depends_on:
       db:
         condition: service_healthy
-        restart: true
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080/times || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/times || exit 1"]  
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s        
     volumes:
-      - ./backend/logs:/var/log/backend  # Монтируем директорию для логов бэкенда
+      - ./visits:/usr/local/app/visits
+    networks:
+      - my_app_network        
 
   frontend:
-    image: jmartynova123/dev-lab3-front
+    image: jmartynova123/dev-lab3-front:latest
     ports:
       - "3000:3000"
-    depends_on:
-      backend:
-        condition: service_healthy
-        restart: true
     healthcheck:
       test: [ "CMD-SHELL", "curl -f http://localhost:3000 || exit 1" ]
       interval: 30s
       timeout: 10s
       retries: 5
-    # volumes:
-    #   - ./frontend/logs:/var/log/frontend  # Монтируем директорию для логов фронтенда
+    networks:
+      - my_app_network
 
-  loki:
-    image: grafana/loki:latest
-    ports:
-      - "3100:3100"
-    volumes:
-      - ./loki-config.yaml:/etc/loki/local-config.yaml
-    command: -config.file=/etc/loki/local-config.yaml
-
-  promtail:
-    image: grafana/promtail:latest
-    volumes:
-      - ./promtail-config.yaml:/etc/promtail/config.yml
-      - ./backend/logs:/var/log/backend  # Монтируем логи бэкенда
-      #- ./frontend/logs:/var/log/frontend  # Монтируем логи фронтенда
-    command: -config.file=/etc/promtail/config.yml
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3001:3001"  # Измените порт, чтобы не конфликтовать с фронтендом
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-    depends_on:
-      loki:
-        condition: service_healthy
+networks:
+  my_app_network:
+    driver: bridge

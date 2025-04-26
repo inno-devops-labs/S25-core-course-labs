@@ -1,0 +1,9 @@
+{
+  "app": {
+    "visits_file": "/usr/local/app/visits"
+  },
+  "database": {
+    "timeout": 30,
+    "max_connections": 50
+  }
+}
