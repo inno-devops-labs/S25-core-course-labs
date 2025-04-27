@@ -1,22 +1,29 @@
-import os 
-VISITS_FILE = '/app/visits'  # Path inside the Docker container
+import os
+from django.conf import settings
+
+VISITS_FILE = os.getenv('VISITS_FILE', os.path.join(os.path.dirname(settings.BASE_DIR), 'data', 'visits'))
 
 def visit_counter_middleware(get_response):
     def middleware(request):
-        # Read the current count or start at 0
-        if os.path.exists(VISITS_FILE):
-            with open(VISITS_FILE, 'r') as f:
-                count = int(f.read().strip())
-        else:
-            count = 0
-        # Increment the count
-        count += 1
-        # Save the new count
-        with open(VISITS_FILE, 'w') as f:
-            f.write(str(count))
-        # Attach the count to the request object
-        request.visit_count = count
-        # Proceed with the request
+        if request.path != '/visits':
+            try:
+                os.makedirs(os.path.dirname(VISITS_FILE), exist_ok=True)
+                
+                if os.path.exists(VISITS_FILE):
+                    with open(VISITS_FILE, 'r') as f:
+                        content = f.read().strip()
+                        count = int(content) if content else 0
+                else:
+                    count = 0
+                
+                count += 1
+                
+                with open(VISITS_FILE, 'w') as f:
+                    f.write(str(count))
+            except Exception as e:
+                print(f"Error updating visits: {e}")
+
         response = get_response(request)
         return response
+
     return middleware

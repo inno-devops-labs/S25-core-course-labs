@@ -17,13 +17,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy main folder of Django application
 #(without this folder it would not run Django web app)
 COPY moscow_time/ /app/moscow_time
-
 # Transfer ownership of /app to appuser (recursively)
 RUN chown -R appuser:appgroup /app
 
 # Switch to non-privileged user
 USER appuser
-
 # Expose the Django development server port
 EXPOSE 8000
 

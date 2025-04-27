@@ -90,3 +90,11 @@ Go to ```http://localhost:8000```
 coverage run --source="display_time" manage.py test
 coverage report 
 ``` 
+
+# Lab 12: Kubernetes ConfigMaps
+
+## Task 1: Upgrade Application for Persistence
+
+As we can see from the screenshot, I have created volume and several times entered to the application and after it counted, after ``docker compose down`` and ``docker compose up -d`` it still shows for us the value from the previous indicating that the volume stores and shows us previous values: 
+![visits_counter.png](visit_endpoint.png) 
+
