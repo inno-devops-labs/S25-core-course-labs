@@ -1,0 +1,5 @@
+{
+    "app_name": "Moscow Time",
+    "environment": "development",
+    "log_level": "INFO"
+  }

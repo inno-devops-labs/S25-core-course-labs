@@ -32,7 +32,6 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: internal-app
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.securityContext }}
@@ -48,10 +47,11 @@ spec:
           env:
             - name: MY_SECRET
               valueFrom:
-               secretKeyRef:
-                name: {{ .Release.Name }}-secrets
-                key: MY_SECRET
-                
+                secretKeyRef:
+                  name: {{ .Release.Name }}-secrets
+                  key: MY_SECRET
+            - name: VISITS_FILE
+              value: /app/data/visits
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
@@ -64,14 +64,18 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
+            - name: config-volume
+              mountPath: /app/config.json
+              subPath: config.json
+            - name: data
+              mountPath: /app/data
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: config-volume
+          configMap:
+            name: {{ include "moscow-time-app.fullname" . }}-config
+        - name: data
+          emptyDir: {}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

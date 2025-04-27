@@ -56,7 +56,6 @@ service:
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 8000
 
-
 containerPort: 8000
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
@@ -121,7 +120,6 @@ volumeMounts: []
 
 secrets:
   my_secret: "the_anushervon"
-
 
 nodeSelector: {}
 
