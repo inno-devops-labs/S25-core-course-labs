@@ -1,0 +1,156 @@
+<pre><font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ minikube addons enable ingress
+💡  ingress is an addon maintained by Kubernetes. For any concerns contact minikube on GitHub.
+You can view the list of minikube maintainers at: https://github.com/kubernetes/minikube/blob/master/OWNERS
+    ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.4.4
+    ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.4.4
+    ▪ Using image registry.k8s.io/ingress-nginx/controller:v1.11.3
+🔎  Verifying ingress addon...
+🌟  The &apos;ingress&apos; addon is enabled
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ nano deployment-app2.yml
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ cat deployment-app2.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app-2
+  template:
+    metadata:
+      labels:
+        app: my-app-2
+    spec:
+      containers:
+      - name: httpd
+        image: httpd:alpine
+        ports:
+        - containerPort: 80
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ nano  service-app2.yml
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ cat  service-app2.yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app-2
+spec:
+  selector:
+    app: my-app-2
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ nano ingress.yml
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ cat ingress.yml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /app1
+        pathType: Prefix
+        backend:
+          service:
+            name: my-app
+            port:
+              number: 80
+      - path: /app2
+        pathType: Prefix
+        backend:
+          service:
+            name: my-app-2
+            port:
+              number: 80
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ kubectl apply -f deployment-app2.yml
+deployment.apps/my-app-2 created
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ kubectl apply -f service-app2.yml
+service/my-app-2 created
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ kubectl apply -f ingress.yml
+ingress.networking.k8s.io/my-ingress created
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ minikube ip
+192.168.49.2
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ curl http://192.168.49.2/app1
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;404 Not Found&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;center&gt;&lt;h1&gt;404 Not Found&lt;/h1&gt;&lt;/center&gt;
+&lt;hr&gt;&lt;center&gt;nginx/1.27.4&lt;/center&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ curl http://192.168.49.2/app2
+&lt;!DOCTYPE HTML PUBLIC &quot;-//IETF//DTD HTML 2.0//EN&quot;&gt;
+&lt;html&gt;&lt;head&gt;
+&lt;title&gt;404 Not Found&lt;/title&gt;
+&lt;/head&gt;&lt;body&gt;
+&lt;h1&gt;Not Found&lt;/h1&gt;
+&lt;p&gt;The requested URL was not found on this server.&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ curl http://192.168.49.2/app1
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;404 Not Found&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;center&gt;&lt;h1&gt;404 Not Found&lt;/h1&gt;&lt;/center&gt;
+&lt;hr&gt;&lt;center&gt;nginx/1.27.4&lt;/center&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ nano ingress.yml
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ cat ingress.yml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /  # Rewrite path to root
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /app1
+        pathType: Prefix
+        backend:
+          service:
+            name: my-app
+            port:
+              number: 80
+      - path: /app2
+        pathType: Prefix
+        backend:
+          service:
+            name: my-app-2
+            port:
+              number: 80
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ kubectl apply -f ingress.yml
+ingress.networking.k8s.io/my-ingress configured
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ minikube ip
+192.168.49.2
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ curl http://192.168.49.2/app1
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Welcome to nginx!&lt;/title&gt;
+&lt;style&gt;
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Welcome to nginx!&lt;/h1&gt;
+&lt;p&gt;If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.&lt;/p&gt;
+
+&lt;p&gt;For online documentation and support please refer to
+&lt;a href=&quot;http://nginx.org/&quot;&gt;nginx.org&lt;/a&gt;.&lt;br/&gt;
+Commercial support is available at
+&lt;a href=&quot;http://nginx.com/&quot;&gt;nginx.com&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Thank you for using nginx.&lt;/em&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ curl http://192.168.49.2/app2
+&lt;html&gt;&lt;body&gt;&lt;h1&gt;It works!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~/My station/DevOps/lab9/k8s</b></font>$ 
+</pre>

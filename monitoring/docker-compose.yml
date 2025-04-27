@@ -1,0 +1,23 @@
+version: "3.3"
+services:
+
+  app_python:
+    build: ../app_python
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+        tag: "{{.ImageName}}|{{.Name}}"
+    mem_limit: "512m"  
+    volumes:
+      - ./visits:/visits
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import http.client; conn = http.client.HTTPConnection('localhost', 5000); conn.request('GET', '/'); response = conn.getresponse(); exit(0) if response.status == 200 else exit(1)"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

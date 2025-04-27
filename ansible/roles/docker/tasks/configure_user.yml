@@ -1,0 +1,9 @@
+---
+- name: Add user to docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes
+
+- name: Reload user groups (requires logout/login)
+  meta: reset_connection

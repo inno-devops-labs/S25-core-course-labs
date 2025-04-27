@@ -1,0 +1,44 @@
+<pre><font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~</b></font>$ sudo snap install kubectl --classic
+kubectl 1.32.2 from Canonical<font color="#26A269">✓</font> installed
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~</b></font>$ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  119M  100  119M    0     0  6972k      0  0:00:17  0:00:17 --:--:-- 7714k
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~</b></font>$ minikube start --driver=docker
+😄  minikube v1.35.0 on Ubuntu 22.04
+✨  Using the docker driver based on user configuration
+📌  Using Docker driver with root privileges
+👍  Starting &quot;minikube&quot; primary control-plane node in &quot;minikube&quot; cluster
+🚜  Pulling base image v0.0.46 ...
+💾  Downloading Kubernetes v1.32.0 preload ...
+    &gt; preloaded-images-k8s-v18-v1...:  333.57 MiB / 333.57 MiB  100.00% 3.23 Mi
+    &gt; gcr.io/k8s-minikube/kicbase...:  500.31 MiB / 500.31 MiB  100.00% 4.42 Mi
+🔥  Creating docker container (CPUs=2, Memory=2200MB) ...
+🐳  Preparing Kubernetes v1.32.0 on Docker 27.4.1 ...
+    ▪ Generating certificates and keys ...
+    ▪ Booting up control plane ...
+    ▪ Configuring RBAC rules ...
+🔗  Configuring bridge CNI (Container Networking Interface) ...
+🔎  Verifying Kubernetes components...
+    ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+🌟  Enabled addons: storage-provisioner, default-storageclass
+🏄  Done! kubectl is now configured to use &quot;minikube&quot; cluster and &quot;default&quot; namespace by default
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~</b></font>$ kubectl create deployment my-app --image=nginx:alpine
+deployment.apps/my-app created
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~</b></font>$ kubectl expose deployment my-app --type=NodePort --port=80
+service/my-app exposed
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~</b></font>$ minikube service my-app --url  
+http://192.168.49.2:32362
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~</b></font>$ kubectl get pods,svc
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/my-app-d94b8f998-c27wt   1/1     Running   0          113s
+
+NAME                 TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+service/kubernetes   ClusterIP   10.96.0.1      &lt;none&gt;        443/TCP        8m14s
+service/my-app       NodePort    10.110.81.28   &lt;none&gt;        80:32362/TCP   69s
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~</b></font>$ kubectl delete deployment my-app
+deployment.apps &quot;my-app&quot; deleted
+<font color="#26A269"><b>yehia@yehia-Aspire-A315-58</b></font>:<font color="#12488B"><b>~</b></font>$ kubectl delete service my-app
+service &quot;my-app&quot; deleted
+</pre>
