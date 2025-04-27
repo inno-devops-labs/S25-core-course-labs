@@ -1,0 +1,28 @@
+# templates/hooks.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "my-app.fullname" . }}-pre-install"
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  containers:
+    - name: pre-install
+      image: busybox
+      command: ["sh", "-c", "echo 'Running pre-install hook'; sleep 20"]
+  restartPolicy: Never
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "my-app.fullname" . }}-post-install"
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  containers:
+    - name: post-install
+      image: busybox
+      command: ["sh", "-c", "echo 'Running post-install hook'; sleep 20"]
+  restartPolicy: Never
