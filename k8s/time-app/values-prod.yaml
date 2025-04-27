@@ -10,7 +10,7 @@ service:
 
 containerPort: 5000
 
-replicaCount: 777
+replicaCount: 7
 
 secrets:
   lab13_secret: "lab13-prod-secret"
