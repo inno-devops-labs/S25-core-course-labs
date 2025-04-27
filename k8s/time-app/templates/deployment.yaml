@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "time-app.labels" . | nindent 4 }}
 spec:
-  replicas: {{- .Values.replicaCount }}
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "time-app.selectorLabels" . | nindent 6 }}
