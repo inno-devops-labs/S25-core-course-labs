@@ -1,10 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "time-app.fullname" . }}
   labels:
     {{- include "time-app.labels" . | nindent 4 }}
 spec:
+  podManagementPolicy: Parallel
+  serviceName: {{ .Values.statefulSet.serviceName }}
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
@@ -20,16 +22,39 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: {{ .Values.containerPort }}
+          volumeMounts:
+            - name: data-volume
+              mountPath: /app/data
+            - name: config-volume
+              mountPath: /app/config
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.containerPort }}
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.containerPort }}
+            initialDelaySeconds: 5
+            periodSeconds: 5
           env:
             - name: lab11_secret
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}-secrets
                   key: lab11_secret
-          volumeMounts:
-            - name: config-volume
-              mountPath: /app/config
       volumes:
         - name: config-volume
           configMap:
             name: {{ .Release.Name }}-config
+  volumeClaimTemplates:
+    - metadata:
+        name: data-volume
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "standard"
+        resources:
+          requests:
+            storage: 1Gi

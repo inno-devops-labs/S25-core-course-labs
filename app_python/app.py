@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 logging.basicConfig(level=logging.INFO)
 
-VISITS_FILE = '/data/visits.txt'
+VISITS_FILE = '/app/data/visits.txt'
 
 if not os.path.exists(VISITS_FILE):
     with open(VISITS_FILE, 'w') as f:
