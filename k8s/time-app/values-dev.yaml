@@ -15,3 +15,5 @@ replicaCount: 3
 secrets:
   lab13_secret: "lab13-dev-secret"
 
+statefulSet:
+  serviceName: "time-app-headless-service"
