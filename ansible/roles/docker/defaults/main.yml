@@ -1,0 +1,11 @@
+docker_version: "5:27.5.1-1~ubuntu.22.04~noble"
+docker_compose_version: "v2.32.4"
+
+sys: "{{ ansible_system | lower }}"
+dist: "{{ ansible_distribution | lower }}"
+dist_release: "{{ ansible_distribution_release }}"
+arch: "{{ ansible_architecture }}"
+
+docker_gpg_link: "https://download.docker.com/{{ sys }}/{{ dist }}/gpg"
+docker_repository_link: "deb https://download.docker.com/{{ sys }}/{{ dist }} {{ dist_release }} stable"
+docker_compose_link: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ sys }}-{{ arch }}"

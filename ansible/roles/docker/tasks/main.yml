@@ -1,0 +1,4 @@
+- include_tasks: install_docker.yml
+- include_tasks: install_compose.yml
+- include_tasks: configure_docker.yml
+- include_tasks: start_docker.yml

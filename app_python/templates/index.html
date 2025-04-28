@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Moscow Time</title>
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body, html {
+            height: 100%;
+            font-family: Inter, sans-serif;
+            color: white;
+        }
+        body {
+            background-blend-mode: screen;
+            background:
+                linear-gradient(rgba(135, 60, 255, 0.4), rgba(135, 60, 255, 0.0) 80%),
+                linear-gradient(-45deg, rgba(120, 155, 255, 0.9) 25%, rgba(255, 160, 65, 0.9) 75%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .time-container {
+            padding: 2em;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        h1 {
+            font-size: 3em;
+            font-weight: bold;
+        }
+        </style>
+    </head>
+
+    <body>
+        <div class="time-container">
+            <h2>Moscow time</h2>
+            <h1>{{ time }}</h1>
+        </div>
+    </body>
+</html>

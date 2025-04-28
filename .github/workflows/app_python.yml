@@ -1,0 +1,83 @@
+name: Python Application CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'app_python/**'
+      - '.github/workflows/app_python.yml'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'app_python/**'
+      - '.github/workflows/app_python.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+
+    defaults:
+      run:
+        working-directory: ./app_python
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install -r ./requirements.txt
+
+      - name: Run tests
+        run: |
+          source .venv/bin/activate
+          pytest tests.py
+
+  snyk_checking:
+    needs: test
+
+    name: Run SNYK
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Snyk checking
+        uses: snyk/actions/python-3.10@master
+        with:
+          args: --skip-unresolved app_python/
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  build:
+    runs-on: ubuntu-22.04
+    needs: [test, snyk_checking]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build and push Docker image to the dockerhub
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: "${{ secrets.DOCKER_USERNAME }}/app_python:latest"
+          context: app_python
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
