@@ -71,7 +71,7 @@ In this lab assignment, you will explore Infrastructure as Code (IAC) using Terr
 **2.5 Points:**
 
 1. GitHub Teams Using Terraform:
-   - You need to upgrade your account to organization.
+   - You need to create a new organization.
    - Extend your Terraform configuration to add several teams to your GitHub repository, each with different levels of access.
    - Apply the changes and ensure they take effect in your GitHub repository.
 
