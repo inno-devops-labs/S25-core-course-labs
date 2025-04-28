@@ -1,0 +1,15 @@
+---
+- name: Pull Docker image for the web app
+  community.general.docker_image:
+    name: chr1st1na/app_python
+    source: pull
+    state: present
+    tag: latest
+
+- name: Run the Docker container
+  community.general.docker_container:
+    name: web_app_container
+    image: chr1st1na/app_python:latest
+    state: started
+    ports:
+      - "80:80"

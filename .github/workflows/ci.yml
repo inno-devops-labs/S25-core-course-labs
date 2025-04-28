@@ -1,0 +1,125 @@
+name: Python CI with Docker
+
+on:
+  push:
+    branches:
+      - main
+      - lab3
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-python-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-python-
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r app_python/requirements.txt
+
+  linter:
+    runs-on: ubuntu-latest
+    needs: python
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r app_python/requirements.txt
+
+    - name: Run linter (flake8)
+      run: |
+        pip install flake8
+        flake8 .
+
+  tests:
+    runs-on: ubuntu-latest
+    needs: python
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r app_python/requirements.txt
+
+    - name: Run tests with pytest
+      run: |
+        pip install pytest
+        pytest --maxfail=1 --disable-warnings -q
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: python
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build Docker image
+      run: |
+        docker build --cache-from=chr1st1na/app_python:latest -t chr1st1na/app_python:latest -f app_python/Dockerfile app_python
+
+    - name: Push Docker image
+      run: |
+        docker push chr1st1na/app_python:latest
+
+  snyk:
+    runs-on: ubuntu-latest
+    needs: python
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install --no-cache-dir flask pytest flask-testing
+        pip install -r app_python/requirements.txt
+        pip list
+
+    - name: Install snyk
+      run: npm install -g snyk
+
+    - name: Run snyk vulnerability test
+      run: snyk test --file=app_python/requirements.txt --skip-unresolved
