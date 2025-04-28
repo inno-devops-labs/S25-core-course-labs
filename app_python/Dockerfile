@@ -1,5 +1,8 @@
 FROM python:3.9-slim
 
+USER root
+RUN apt-get update && apt-get install -y dnsutils iputils-ping
+
 RUN adduser --disabled-password myuser
 USER myuser
 
