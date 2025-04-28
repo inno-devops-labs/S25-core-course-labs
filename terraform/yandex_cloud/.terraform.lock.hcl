@@ -2,8 +2,8 @@
 # Manual edits may be lost in future updates.
 
 provider "registry.terraform.io/yandex-cloud/yandex" {
-  version = "0.136.0"
+  version = "0.140.1"
   hashes = [
-    "h1:SH6M5s8DCFynxlpbao+4Zl/OoGyhKxi/jnK6kA3QqJE=",
+    "h1:RiO8hVBAJ5I/U/DFIzaaGhTkom+KyMTCplnW0+ZmkYQ=",
   ]
 }
