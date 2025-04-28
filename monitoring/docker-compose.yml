@@ -54,3 +54,13 @@ services:
       - loki
     networks:
       - monitoring
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring
