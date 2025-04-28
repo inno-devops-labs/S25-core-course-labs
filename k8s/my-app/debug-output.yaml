@@ -1,0 +1,184 @@
+NAME: my-release
+LAST DEPLOYED: Mon Apr 28 18:01:22 2025
+NAMESPACE: default
+STATUS: pending-install
+REVISION: 1
+USER-SUPPLIED VALUES:
+{}
+
+COMPUTED VALUES:
+affinity: {}
+autoscaling:
+  enabled: false
+  maxReplicas: 100
+  minReplicas: 1
+  targetCPUUtilizationPercentage: 80
+fullnameOverride: ""
+image:
+  pullPolicy: IfNotPresent
+  repository: nginx
+  tag: ""
+imagePullSecrets: []
+ingress:
+  annotations: {}
+  className: ""
+  enabled: false
+  hosts:
+  - host: chart-example.local
+    paths:
+    - path: /
+      pathType: ImplementationSpecific
+  tls: []
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+nameOverride: ""
+nodeSelector: {}
+persistence:
+  enabled: true
+  size: 1Gi
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+replicaCount: 3
+resources: {}
+secret:
+  password: mySuperSecret123
+securityContext: {}
+service:
+  port: 80
+  type: ClusterIP
+serviceAccount:
+  annotations: {}
+  automount: true
+  create: true
+  name: ""
+tolerations: []
+volumeMounts: []
+volumes: []
+
+HOOKS:
+---
+# Source: my-app/templates/tests/test-connection.yaml
+# templates/tests/test-connection.yaml
+apiVersion: v1  # <-- MUST BE PRESENT
+kind: Pod
+metadata:
+  name: "my-release-my-app-test-connection"
+  labels:
+    helm.sh/chart: my-app-0.1.0
+    app.kubernetes.io/name: my-app
+    app.kubernetes.io/instance: my-release
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['my-release-my-app:80']
+  restartPolicy: Never
+MANIFEST:
+---
+# Source: my-app/templates/serviceaccount.yaml
+# templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-release-my-app
+  labels:
+    helm.sh/chart: my-app-0.1.0
+    app.kubernetes.io/name: my-app
+    app.kubernetes.io/instance: my-release
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+automountServiceAccountToken: true
+---
+# Source: my-app/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-secret
+type: Opaque
+data:
+  MY_PASS: bXlTdXBlclNlY3JldDEyMw==
+---
+# Source: my-app/templates/service.yaml
+# templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-release-my-app-headless
+  labels:
+    helm.sh/chart: my-app-0.1.0
+    app.kubernetes.io/name: my-app
+    app.kubernetes.io/instance: my-release
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  clusterIP: None
+  ports:
+    - port: 80
+      name: http
+  selector:
+    app.kubernetes.io/name: my-app
+    app.kubernetes.io/instance: my-release
+---
+# Source: my-app/templates/statefulset.yaml
+# templates/statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-release-my-app
+  labels:
+    helm.sh/chart: my-app-0.1.0
+    app.kubernetes.io/name: my-app
+    app.kubernetes.io/instance: my-release
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  serviceName: my-release-my-app-headless
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: my-app
+      app.kubernetes.io/instance: my-release
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: my-app
+        app.kubernetes.io/instance: my-release
+    spec:
+      containers:
+        - name: my-app
+          image: "nginx:1.16.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
+
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=my-app,app.kubernetes.io/instance=my-release" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
