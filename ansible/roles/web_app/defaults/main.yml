@@ -1,0 +1,7 @@
+docker_image: "darrpyy/devops"
+docker_container: "py-app"
+docker_compose_file_name: "docker-compose.yml"
+internal_port: 5000
+external_port: 80
+app_dir: "/app"
+app_wipe: true

@@ -163,3 +163,125 @@ changed: [my_server]
 PLAY RECAP *************************************************************************************************************************************************************
 my_server                  : ok=17   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
 ```
+
+# Web App Role
+
+```bash
+  ansible-playbook playbooks/dev/app_python/main.yaml
+```
+
+Output: 
+```
+(.venv) darya@darya-vivobook:~/Documents/F25/DevOps/ansible$ ansible-playbook playbooks/dev/app_python/main.yaml -K
+BECOME password: 
+
+PLAY [Deploy Python App] ***********************************************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************************
+ok: [my_server]
+
+TASK [docker : include_tasks] ******************************************************************************************************************************************
+included: /home/darya/Documents/F25/DevOps/ansible/roles/docker/tasks/install_docker.yml for my_server
+
+TASK [docker : Ensure required packages for Docker are installed] ******************************************************************************************************
+ok: [my_server]
+
+TASK [docker : Add Docker official GPG key] ****************************************************************************************************************************
+ok: [my_server]
+
+TASK [docker : Set up Docker repo] *************************************************************************************************************************************
+ok: [my_server]
+
+TASK [docker : Install Docker] *****************************************************************************************************************************************
+ok: [my_server]
+
+TASK [docker : include_tasks] ******************************************************************************************************************************************
+included: /home/darya/Documents/F25/DevOps/ansible/roles/docker/tasks/install_compose.yml for my_server
+
+TASK [docker : Install Docker Compose] *********************************************************************************************************************************
+ok: [my_server]
+
+TASK [docker : include_tasks] ******************************************************************************************************************************************
+included: /home/darya/Documents/F25/DevOps/ansible/roles/docker/tasks/configure_docker.yml for my_server
+
+TASK [docker : Ensure Docker service is stopped and disabled] **********************************************************************************************************
+changed: [my_server]
+
+TASK [docker : Delete Docker socket file if present] *******************************************************************************************************************
+ok: [my_server]
+
+TASK [docker : Install required packages for Docker rootless mode] *****************************************************************************************************
+ok: [my_server]
+
+TASK [docker : Assign user to docker group] ****************************************************************************************************************************
+ok: [my_server]
+
+TASK [docker : Configure Docker daemon to restrict root privileges] ****************************************************************************************************
+ok: [my_server]
+
+TASK [docker : Initialize Docker rootless setup for user] **************************************************************************************************************
+ok: [my_server]
+
+TASK [docker : include_tasks] ******************************************************************************************************************************************
+included: /home/darya/Documents/F25/DevOps/ansible/roles/docker/tasks/start_docker.yml for my_server
+
+TASK [docker : Start Docker] *******************************************************************************************************************************************
+changed: [my_server]
+
+TASK [web_app : Check existing application directory] ******************************************************************************************************************
+ok: [my_server]
+
+TASK [web_app : Check existing Docker Compose File] ********************************************************************************************************************
+ok: [my_server]
+
+TASK [web_app : Stop and Remove application] ***************************************************************************************************************************
+changed: [my_server]
+
+TASK [web_app : Remove application directory] **************************************************************************************************************************
+changed: [my_server]
+
+TASK [web_app : Creating application directory] ************************************************************************************************************************
+changed: [my_server]
+
+TASK [web_app : Creating docker compose file] **************************************************************************************************************************
+changed: [my_server]
+
+RUNNING HANDLER [web_app : Restart Docker Compose] *********************************************************************************************************************
+changed: [my_server]
+
+PLAY RECAP *************************************************************************************************************************************************************
+my_server                  : ok=24   changed=7    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+### Stop App
+
+```bash
+ansible-playbook playbooks/dev/app_python/main.yaml --tags wipe
+```
+
+Output:
+
+```
+(.venv) darya@darya-vivobook:~/Documents/F25/DevOps/ansible$ ansible-playbook playbooks/dev/app_python/main.yaml --tags wipe -K
+BECOME password: 
+
+PLAY [Deploy Python App] ***********************************************************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************************************************************
+ok: [my_server]
+
+TASK [web_app : Check existing application directory] ******************************************************************************************************************
+ok: [my_server]
+
+TASK [web_app : Check existing Docker Compose File] ********************************************************************************************************************
+ok: [my_server]
+
+TASK [web_app : Stop and Remove application] ***************************************************************************************************************************
+changed: [my_server]
+
+TASK [web_app : Remove application directory] **************************************************************************************************************************
+changed: [my_server]
+
+PLAY RECAP *************************************************************************************************************************************************************
+my_server                  : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
+```
