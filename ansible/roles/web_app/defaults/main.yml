@@ -1,0 +1,5 @@
+docker_image: "daniilzimin4/devopsapp:latest"
+
+app_port: 9200
+
+web_app_full_wipe: false
