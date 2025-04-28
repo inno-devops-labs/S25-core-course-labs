@@ -1,0 +1,45 @@
+- name: Ensure Docker service is stopped and disabled
+  systemd:
+    name: docker
+    state: stopped
+    enabled: false
+
+- name: Delete Docker socket file if present
+  file:
+    path: /var/run/docker.sock
+    state: absent
+  ignore_errors: true
+
+- name: Install required packages for Docker rootless mode
+  apt:
+    name:
+      - uidmap
+      - dbus-user-session
+    state: present
+    update_cache: true
+
+- name: Assign user to docker group
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: true
+    shell: /bin/bash
+    create_home: true
+
+- name: Configure Docker daemon to restrict root privileges
+  copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "userns-remap": "default"
+      }
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Initialize Docker rootless setup for user
+  command: dockerd-rootless-setuptool.sh install
+  become: true
+  become_user: "{{ ansible_user }}"
+  register: rootless_install
+  changed_when: "'successfully set up' in rootless_install.stdout"

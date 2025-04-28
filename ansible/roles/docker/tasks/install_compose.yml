@@ -1,0 +1,5 @@
+- name: Install Docker Compose
+  get_url:
+    url: "{{ docker_compose_link }}"
+    dest: "/usr/local/bin/docker-compose"
+    mode: "u+x,g+x"
