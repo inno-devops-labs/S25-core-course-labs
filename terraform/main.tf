@@ -37,7 +37,7 @@ resource "docker_container" "app_python" {
 }
 provider "yandex" {
   zone                     = "ru-central1-a"
-  service_account_key_file = "/home/ezzy/key.json"
+  service_account_key_file = "${path.module}/key.json"
   folder_id                = "b1gfoi96fd0usptt167i"
 }
 

@@ -1,19 +1,20 @@
 terraform {
   required_providers {
     github = {
-      source = "integrations/github"
+      source  = "integrations/github"
       version = "6.5.0"
     }
   }
 }
-provider "github" { 
+provider "github" {
   token = var.token # or `GITHUB_TOKEN`
+  owner = "EzzySoft"
 }
 
 #Create and initialise a public GitHub Repository with MIT license and a Visual Studio .gitignore file (incl. issues and wiki)
 resource "github_repository" "repo" {
-  name               = "Pwd9000-Demo-Repo-2022"
-  description        = "My awesome codebase"
+  name               = "1Pwd9000-Demo-Repo-2022"
+  description        = "My awesome codebase :)"
   visibility         = "public"
   has_issues         = true
   has_wiki           = true
@@ -42,8 +43,8 @@ resource "github_branch_protection" "default" {
 }
 
 
-resource "github_repository" "S25-core-course-labs" {
-    name = "S25-core-course-labs"
-    description        = "Imported repository"
-
-}
+# resource "github_repository" "S25-core-course-labs" {
+#   name        = "S25-core-course-labs"
+#   description = "Imported repository"
+#
+# }
