@@ -51,31 +51,11 @@ jobs:
         
   security:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
-
-      - name: Install Snyk
-        run: |
-          npm install -g snyk
-
-      - name: Install Python dependencies
-        run: |
-          pip install -r app_python/requirements.txt
-      - name: Authenticate to Snyk
-        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+      - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
-        run: |
-          snyk test app_python
+        uses: snyk/actions/python-3.10@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
