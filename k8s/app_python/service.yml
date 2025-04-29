@@ -9,4 +9,4 @@ spec:
   ports:
     - protocol: TCP
       port: 8001
-      targetPort: 8001
+      targetPort: 5000

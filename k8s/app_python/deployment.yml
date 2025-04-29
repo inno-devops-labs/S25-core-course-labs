@@ -18,4 +18,4 @@ spec:
         - name: app-python
           image: darrpyy/devops:latest
           ports:
-            - containerPort: 8001
+            - containerPort: 5000
