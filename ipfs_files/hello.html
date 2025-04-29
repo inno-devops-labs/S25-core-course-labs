@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IPFS Test File</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .highlight {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-left: 3px solid #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello from IPFS!</h1>
+        <p>This is a test file uploaded to the InterPlanetary File System.</p>
+        <div class="highlight">
+            <p>IPFS is a peer-to-peer hypermedia protocol designed to make the web faster, safer, and more open.</p>
+        </div>
+        <p>File created for Lab 16 at: <span id="timestamp"></span></p>
+    </div>
+    
+    <script>
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+    </script>
+</body>
+</html> 
