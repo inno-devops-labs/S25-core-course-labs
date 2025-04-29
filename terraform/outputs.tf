@@ -1,9 +1,9 @@
-output "container_id" {
-  description = "ID of the Docker container"
-  value       = docker_container.nginx.id
+output "instance_id" {
+  description = "ID of the EC2 instance"
+  value       = aws_instance.app_server.id
 }
 
-output "image_id" {
-  description = "ID of the Docker image"
-  value       = docker_image.nginx.id
+output "instance_public_ip" {
+  description = "Public IP address of the EC2 instance"
+  value       = aws_instance.app_server.public_ip
 }

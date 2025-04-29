@@ -1,0 +1,2 @@
+terraform state show github_team.admin_team
+terraform state show github_team.developer_team

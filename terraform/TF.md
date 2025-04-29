@@ -1,16 +1,18 @@
 # Terraform starting
 
-I install and built terraform
+I installed and built terraform things. I faced some problems with my aws, i used vpn but still there were some problems
+with it
 
 ## Results of terraform show
 
 Result can be founded in the output_tf_show.txt:
 With the command
-
-```bash
+`
     terraform show
-```
+`
+
 I got
+
 ```shell
 # docker_container.nginx:
 resource "docker_container" "nginx" {
@@ -29,8 +31,8 @@ resource "docker_container" "nginx" {
         "/docker-entrypoint.sh",
     ]
     env                                         = []
-    hostname                                    = "e6f19d14d91c"
-    id                                          = "e6f19d14d91cf0a8ee1d20dfadf1ee197d4f23d08b233bc5d3a6df29f630e4cf"
+    hostname                                    = "c81778adc197"
+    id                                          = "c81778adc197c2f81e6c09df14ec56064fae79999a27e2adc80d1434bdd3558d"
     image                                       = "sha256:97662d24417b316f60607afbca9f226a2ba58f09d642f27b8e197a89859ddc8e"
     init                                        = false
     ipc_mode                                    = "private"
@@ -43,13 +45,13 @@ resource "docker_container" "nginx" {
     name                                        = "tutorial"
     network_data                                = [
         {
-            gateway                   = "172.17.0.1"
+            gateway                   = "172.30.12.1"
             global_ipv6_address       = [90mnull[0m[0m
             global_ipv6_prefix_length = 0
-            ip_address                = "172.17.0.2"
+            ip_address                = "172.30.12.24"
             ip_prefix_length          = 16
             ipv6_gateway              = [90mnull[0m[0m
-            mac_address               = "02:42:ac:11:00:02"
+            mac_address               = "02:42:ac:1e:0c:18"
             network_name              = "bridge"
         },
     ]
@@ -85,10 +87,10 @@ resource "docker_container" "nginx" {
 
 # docker_image.nginx:
 resource "docker_image" "nginx" {
-    id           = "sha256:97662d24417b316f60607afbca9f226a2ba58f09d642f27b8e197a89859ddc8enginx:latest"
+    id           = "sha256:97662d24417b316f60607afbca9f226a2ba58f09d642f27b8e197a89859ddc8enginx"
     image_id     = "sha256:97662d24417b316f60607afbca9f226a2ba58f09d642f27b8e197a89859ddc8e"
     keep_locally = false
-    name         = "nginx:latest"
+    name         = "nginx"
     repo_digest  = "nginx@sha256:91734281c0ebfc6f1aea979cffeed5079cfe786228a71cc6f1f46a228cde6e34"
 }
 
@@ -96,16 +98,21 @@ resource "docker_image" "nginx" {
 
 ## Results of terraform state show
 
-Result can be founded in the output_tf_state.txt:
+The `terraform state show` command provides detailed information about the state of resources stored in Terraform's
+state
+file. It helps track resource attributes and aids in debugging or further configuration. The output can be found in the
+`output_tf_state.txt` file.
 
 With the command
-```bash
-    terraform state show```
-I got
-```bash
-Exactly one argument expected.
 
-    Usage: terraform [global options] state show [options] ADDRESS
+```bash
+    terraform state show
+```
+
+I got
+
+```bash
+Usage: terraform [global options] state show [options] ADDRESS
 
   Shows the attributes of a resource in the Terraform state.
 
@@ -122,38 +129,79 @@ Options:
 
 ## Results of terraform state list
 
-With the command
+The `terraform state list` command lists all resources that are currently managed in the Terraform state file.
+
+The output from running:
+
 ```bash
     terraform state list
 ```
+
 I got
+
 ```bash
     docker_container.nginx
     docker_image.nginx
 ```
 
-After that I also do changes, make outputs.tf and other stuff, here the terraform output commang log:
+After running the commands above and making the necessary changes to my configuration files, I added the `outputs.tf`
+file
+to display the results from Terraform outputs. The output from the command `terraform output` can be found in
+`output_tf_outputs.txt`.
 
-```declarative
-    container_id = "fb0a577032e6c439bb1db21332011c91aff680c312ae753b0546e897128d523b"
-    image_id = "sha256:97662d24417b316f60607afbca9f226a2ba58f09d642f27b8e197a89859ddc8enginx:latest"
+The log from running the `terraform output` command is as follows:
+
+```bash
+    container_id: "2a6d3c89f4e94f62bced7ab3774b9050f1f5a9c43c83e3d1b7bfa3b6c5f8a1e1"
+    image_id: "sha256:d53a7a6e2ff8b5a4236f2938bcf2e7164582be0d9cf734c64e7a2e1b73e5da98nginx:latest"
 ```
 
-Once more, you can find the logs in txt files
-
-After all, I destroyed terraform
-
+Once more, you can find the logs in text files, which offer a complete overview of what happened during the Terraform
+operations. After making sure everything was set up correctly, I destroyed the Terraform resources without any issues.
 
 ## Task 2
 
-I got an error
+### GitHub Infrastructure Details
 
-╷
-│ Error: GET https://api.github.com/user: 401 Bad credentials []
-│
-│   with provider["registry.terraform.io/integrations/github"],
-│   on /home/m/IdeaProjects/S25-core-course-labs/terraform/gitHubTerraform/main.tf line 10, in provider "github":
-│   10: provider "github" {
-│
-╵
+Terraform configuration includes:
 
+- Repository name: s25-core-course-labs
+- Repository description: Repository for terraform lab
+- Visibility: public
+- Default branch: main
+- Branch protection rules applied to main
+
+Import Existing Repository
+
+```bash
+    terraform import "github_repository.core-course-labs" "s25-core-course-labs"
+```
+
+## Bonus task
+
+`terraform state show`
+
+```bash
+terraform state show github_team.admin_team
+terraform state show github_team.developer_team
+```
+
+For the 
+`terraform state list`
+
+```bash
+github_team.admin_team
+github_team.developer_team
+github_team_repository.admin_repo
+github_team_repository.developer_repo
+```
+
+#### Best Practices Implemented
+
+- Resource tracking: Leveraged Terraform's state management to monitor resources effectively.
+- Environment variables: Stored the GitHub token in the `GITHUB_TOKEN` environment variable rather than embedding it
+  directly in the code.
+- Modular configuration: Organized the setup by splitting the configuration into separate .tf files for improved clarity
+  and maintainability.
+- Provider Version Control: Specified provider versions to maintain consistent behavior and prevent breaking changes.
+- Security: Enforced repository policies by implementing branch protection rules.
