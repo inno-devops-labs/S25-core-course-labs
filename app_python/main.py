@@ -1,3 +1,5 @@
+import os
+import threading
 from datetime import datetime
 from time import monotonic
 
@@ -9,6 +11,8 @@ TIMEZONE = "Europe/Moscow"
 TIME_FORMAT = "%Y.%m.%d %H:%M:%S"
 PAGE = "index.html"
 
+COUNTER_FILE = "visits.txt"
+
 app = Flask(__name__)
 
 REQUESTS_COUNT = Counter(
@@ -19,10 +23,31 @@ REQUESTS_LATENCY = Histogram(
 )
 
 
+def increment_counter():
+    if os.path.exists(COUNTER_FILE):
+        with open(COUNTER_FILE, "r") as f:
+            try:
+                count = int(f.read()) + 1
+            except ValueError:
+                count = 1
+    else:
+        count = 1
+
+    with open(COUNTER_FILE, "w") as f:
+        f.write(str(count))
+
+    return count
+
+
+lock = threading.Lock()
+
+
 @app.before_request
 def record_start_time():
     """Store start time in Flask's global context"""
     g.start_time = monotonic()
+    with lock:
+        g.requests_count = increment_counter()
 
 
 @app.after_request
@@ -66,6 +91,11 @@ def index():
 @app.route("/metrics", methods=["GET"])
 def metrics():
     return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
+
+
+@app.route("/visits", methods=["GET"])
+async def get_visits():
+    return f"Visits: {g.requests_count}"
 
 
 if __name__ == "__main__":

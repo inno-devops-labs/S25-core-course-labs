@@ -9,6 +9,8 @@ services:
   app-python:
     image: darrpyy/devops:latest
     restart: unless-stopped
+    volumes:
+      - ./visits.txt:/code/visits.txt
     ports:
       - "5000:5000"
     networks:

@@ -57,3 +57,10 @@ run tests.
 2. Build job will do checkout code, set up python, build docker image,
 and run docker container.
 
+## Using `monitoring` `docker-compose.yml` file
+
+Run the following command in `monitoring` directory:
+
+```bash
+docker compose up -d
+```

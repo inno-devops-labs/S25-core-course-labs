@@ -46,6 +46,9 @@ spec:
                 secretKeyRef:
                   name: credentials
                   key: PASS
+          envFrom:
+            - configMapRef:
+                name: app-python-config
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
