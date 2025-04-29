@@ -21,6 +21,10 @@ services:
     image: daniilzimin4/devopsapp:latest
     ports:
       - "9200:9200"
+    networks:
+      - monitor
+    volumes:
+      - ./visits.txt:/app/visits.txt
     logging: *default-logging
     deploy: *default-deploy
 
