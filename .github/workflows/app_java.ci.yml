@@ -1,0 +1,43 @@
+name: CI Workflow Java Mgn Time
+
+on:
+  push:
+    branches:
+      - main
+      - Lab3
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: gradle-${{ runner.os }}-
+
+      - name: Build with Gradle
+        run: |
+          cd app_java
+          gradle build --no-daemon
+
+      - name: Run tests
+        run: |
+          cd app_java
+          gradle test --no-daemon
