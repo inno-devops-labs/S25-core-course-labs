@@ -17,3 +17,9 @@ To run unit tests install the pytest via
 and start them by using:
 
 `python -m pytest`
+
+## CI
+
+* Dependencies for the flask app are collected in the requirements.txt file
+* flake8 was installed and ran for Linter
+* For dcker were provided authentification to the DockerHub and built the application by the Dockerfile
