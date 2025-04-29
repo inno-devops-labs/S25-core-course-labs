@@ -7,6 +7,7 @@ VISITS_FILE = "visits.txt"
 
 app = Flask(__name__)
 
+
 def plus_plus():
     if not os.path.exists(VISITS_FILE):
         with open(VISITS_FILE, 'w') as f:
@@ -19,6 +20,7 @@ def plus_plus():
         f.write(str(new_sum))
     return new_sum
 
+
 @app.route("/")
 def get_time():
     try:
@@ -29,6 +31,7 @@ def get_time():
     except Exception as e:
         app.logger.error(f"An error occurred: {e}")
         return "Internal server error", 500
+
 
 @app.route("/visits")
 def visits():
@@ -42,6 +45,7 @@ def visits():
         return f"Total visits: {sum}"
     except Exception as e:
         return str(e), 500
+
 
 if __name__ == "__main__":
     print("=== Registered routes ===")
