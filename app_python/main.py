@@ -44,4 +44,7 @@ def visits():
         return str(e), 500
 
 if __name__ == "__main__":
+    print("=== Registered routes ===")
+    for rule in app.url_map.iter_rules():
+        print(rule.rule)
     app.run(host='0.0.0.0', port=9200)
