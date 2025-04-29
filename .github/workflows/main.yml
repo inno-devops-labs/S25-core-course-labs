@@ -75,6 +75,6 @@ jobs:
 
       - name: Run Snyk to check for vulnerabilities
         run: |
-          snyk test app_python/backend
+          snyk test app_python
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
