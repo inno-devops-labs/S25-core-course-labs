@@ -19,13 +19,18 @@ db:
 
 # Настройки Backend
 backend:
+  replicaCount: 3
   image:
-    repository: jmartynova123/dev-lab3-back # Репозиторий образа бэкенда
-    tag: latest                             # Тег образа
+    repository: jmartynova123/dev-lab3-back
+    tag: latest
   service:
-    type: ClusterIP        # Тип сервиса (ClusterIP/NodePort/LoadBalancer)
-    port: 8080             # Порт сервиса бэкенда
-
+    port: 8080
+  livenessProbe:
+    path: /visits
+    initialDelaySeconds: 30
+  readinessProbe:
+    path: /time
+    initialDelaySeconds: 5
 # Настройки Frontend
 frontend:
   image:
