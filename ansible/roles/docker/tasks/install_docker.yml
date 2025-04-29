@@ -1,0 +1,39 @@
+- name: install required packages
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - software-properties-common
+      - gnupg
+    state: present
+    update_cache: true
+
+- name: add gpg key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: add docker repo
+  ansible.builtin.apt_repository:
+    repo: "deb https://download.docker.com/linux/ubuntu bionic stable"
+    filename: docker
+    state: present
+
+- name: install docker
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+    state: present
+    update_cache: true
+
+- name: ensure that group `docker` exists
+  ansible.builtin.group:
+    name: docker
+    state: present
+
+- name: adding ubuntu to docker group
+  user:
+    name: ubuntu
+    groups: docker
+    append: yes
