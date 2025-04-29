@@ -6,11 +6,11 @@ ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     SERVICE_NAME="flask-app"
 
-COPY requirements.txt .
+COPY ./app_python/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY web_app .
+COPY ./app_python/web_app.py .
 
 EXPOSE 5000
 
@@ -20,4 +20,4 @@ RUN addgroup --system $SERVICE_NAME && \
 
 USER $SERVICE_NAME
 
-CMD ["python3", "-u", "web_app"]
+CMD ["python3", "-u", "web_app.py"]
