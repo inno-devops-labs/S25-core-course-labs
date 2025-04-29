@@ -1,33 +1,63 @@
 networks:
-  monitor:
+  default:
+    name: loki
+
+x-logging:
+  &default-logging
+  driver: "json-file"
+  options:
+    max-size: "5m"
+    max-file: "3"
+    tag: "{{.ImageName}}|{{.Name}}"
+
+x-deploy:
+  &default-deploy
+  resources:
+    limits:
+      memory: 100M
 
 services:
+  app-python:
+    image: daniilzimin4/devopsapp:latest
+    ports:
+      - "9200:9200"
+    logging: *default-logging
+    deploy: *default-deploy
+
   loki:
-    container_name: loki
-    image: grafana/loki:latest
+    image: grafana/loki:2.9.2
     ports:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
-    networks:
-      - monitor
+    logging: *default-logging
+    deploy: *default-deploy
 
   promtail:
-    container_name: promtail
-    image: grafana/promtail:latest
+    image: grafana/promtail:2.9.2
     volumes:
       - ./promtail.yml:/etc/promtail/config.yml
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/containers:/var/lib/docker/containers
     command: -config.file=/etc/promtail/config.yml
-    networks:
-      - monitor
+    logging: *default-logging
+    deploy: *default-deploy
+
+  prometheus:
+    image: prom/prometheus:v2.30.1
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    logging: *default-logging
+    deploy: *default-deploy
+
 
   grafana:
-    container_name: grafana
     environment:
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
-      - GF_FEATURE_TOGGLES_ENABLE=alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode
     entrypoint:
       - sh
       - -euc
@@ -38,7 +68,7 @@ services:
         datasources:
         - name: Loki
           type: loki
-          access: proxy 
+          access: proxy
           orgId: 1
           url: http://loki:3100
           basicAuth: false
@@ -50,12 +80,5 @@ services:
     image: grafana/grafana:latest
     ports:
       - "3000:3000"
-    networks:
-      - monitor
-
-  app_python:
-    image: daniilzimin4/devopsapp:latest
-    ports:
-      - "9200:9200"
-    networks:
-      - monitor
+    logging: *default-logging
+    deploy: *default-deploy
