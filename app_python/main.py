@@ -35,7 +35,7 @@ def get_time():
 
 @app.route("/health")
 def check200():
-        return "OK", 200
+    return "OK", 200
 
 
 @app.route("/visits")
