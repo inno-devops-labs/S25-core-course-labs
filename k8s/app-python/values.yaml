@@ -17,17 +17,14 @@ db:
   persistence:
     size: 1Gi              # Размер PVC для хранения данных
 
-
+# Настройки Backend
 backend:
-  replicaCount: 3
   image:
-    repository: jmartynova123/dev-lab3-back
-    tag: latest
+    repository: jmartynova123/dev-lab3-back # Репозиторий образа бэкенда
+    tag: latest                             # Тег образа
   service:
-    port: 8080
-  persistence:
-    size: 100Mi
-    storageClass: "standard"
+    type: ClusterIP        # Тип сервиса (ClusterIP/NodePort/LoadBalancer)
+    port: 8080             # Порт сервиса бэкенда
 
 # Настройки Frontend
 frontend:

@@ -1,9 +1,8 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: {{ .Release.Name }}-backend
 spec:
-  serviceName: {{ .Release.Name }}-backend-svc
   replicas: {{ .Values.backend.replicaCount }}
   selector:
     matchLabels:
@@ -22,7 +21,7 @@ spec:
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
-              name: {{ .Release.Name }}-my-app-secret
+              name: {{ .Release.Name }}-my-app-secret  # Используем имя с релизом
               key: POSTGRES_USER
         - name: POSTGRES_PASSWORD
           valueFrom:
@@ -36,14 +35,3 @@ spec:
               key: POSTGRES_DB
         - name: DATABASE_URI
           value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@{{ .Release.Name }}-db-svc:{{ .Values.db.service.port }}/{{ .Values.global.database.name }}
-        volumeMounts:
-        - name: visits-storage
-          mountPath: /usr/local/app
-  volumeClaimTemplates:
-  - metadata:
-      name: visits-storage
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 100Mi
