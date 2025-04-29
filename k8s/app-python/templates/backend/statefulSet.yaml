@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-backend
+spec:
+  serviceName: {{ .Release.Name }}-backend-headless
+  podManagementPolicy: Parallel  # Параллельный запуск подов
+  replicas: {{ .Values.backend.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-backend
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-backend
+    spec:
+      containers:
+      - name: backend
+        image: {{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}
+        ports:
+        - containerPort: {{ .Values.backend.service.port }}
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-my-app-secret
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-my-app-secret
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-my-app-secret
+              key: POSTGRES_DB
+        - name: DATABASE_URI
+          value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@{{ .Release.Name }}-db-svc:{{ .Values.db.service.port }}/{{ .Values.global.database.name }}
+        livenessProbe:
+          httpGet:
+            path: /healthz  # Эндпоинт для проверки жизнеспособности
+            port: {{ .Values.backend.service.port }}
+          initialDelaySeconds: 30  # Задержка перед первой проверкой
+          periodSeconds: 10        # Периодичность проверок
+        readinessProbe:
+          httpGet:
+            path: /readyz  # Эндпоинт для проверки готовности
+            port: {{ .Values.backend.service.port }}
+          initialDelaySeconds: 5   # Задержка перед первой проверкой
+          periodSeconds: 5         # Периодичность проверок
+        volumeMounts:
+        - name: visits-storage
+          mountPath: /usr/local/app
+  volumeClaimTemplates:
+  - metadata:
+      name: visits-storage
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 100Mi
