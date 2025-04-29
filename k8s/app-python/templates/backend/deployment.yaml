@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ .Release.Name }}-backend
 spec:
-  replicas: 1
+  replicas: {{ .Values.backend.replicaCount }}
   selector:
     matchLabels:
       app: {{ .Release.Name }}-backend
@@ -13,42 +13,25 @@ spec:
         app: {{ .Release.Name }}-backend
     spec:
       containers:
-        - name: backend
-          image: {{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}
-          ports:
-            - containerPort: {{ .Values.backend.service.port }}
-          env:
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: my-app-secret
-                  key: POSTGRES_USER
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: my-app-secret
-                  key: POSTGRES_PASSWORD
-            - name: POSTGRES_DB
-              valueFrom:
-                secretKeyRef:
-                  name: my-app-secret
-                  key: POSTGRES_DB
-            - name: DATABASE_URI
-              value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@{{ .Release.Name }}-db-svc:{{ .Values.db.service.port }}/{{ .Values.global.database.name }}
-          volumeMounts:
-            - name: config-volume
-              mountPath: /etc/config
-              readOnly: true
-          livenessProbe:
-            httpGet:
-              path: /times
-              port: {{ .Values.backend.service.port }}
-            initialDelaySeconds: 30
-            periodSeconds: 10
-      volumes:
-        - name: config-volume
-          configMap:
-            name: {{ .Release.Name }}-app-config
-            items:
-              - key: config.json
-                path: config.json
+      - name: backend
+        image: {{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag }}
+        ports:
+        - containerPort: {{ .Values.backend.service.port }}
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-my-app-secret  # Используем имя с релизом
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-my-app-secret
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-my-app-secret
+              key: POSTGRES_DB
+        - name: DATABASE_URI
+          value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@{{ .Release.Name }}-db-svc:{{ .Values.db.service.port }}/{{ .Values.global.database.name }}

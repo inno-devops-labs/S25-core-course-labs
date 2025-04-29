@@ -1,4 +1,3 @@
-# Prod
 backend:
   replicaCount: 3  # Для отказоустойчивости
   image:

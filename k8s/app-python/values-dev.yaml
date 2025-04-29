@@ -1,5 +1,5 @@
 backend:
-  replicaCount: 1
+  replicaCount: 1 
   image:
     tag: latest
 
