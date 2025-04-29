@@ -39,13 +39,13 @@ spec:
           value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@{{ .Release.Name }}-db-svc:{{ .Values.db.service.port }}/{{ .Values.global.database.name }}
         livenessProbe:
           httpGet:
-            path: /healthz  # Эндпоинт для проверки жизнеспособности
+            path: /visits  # Эндпоинт для проверки жизнеспособности
             port: {{ .Values.backend.service.port }}
           initialDelaySeconds: 30  # Задержка перед первой проверкой
           periodSeconds: 10        # Периодичность проверок
         readinessProbe:
           httpGet:
-            path: /readyz  # Эндпоинт для проверки готовности
+            path: /times  # Эндпоинт для проверки готовности
             port: {{ .Values.backend.service.port }}
           initialDelaySeconds: 5   # Задержка перед первой проверкой
           periodSeconds: 5         # Периодичность проверок
