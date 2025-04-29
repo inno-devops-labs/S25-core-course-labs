@@ -7,7 +7,7 @@ metadata:
 spec:
   serviceName: {{ include "moscow-time-app.fullname" . }}
   replicas: {{ .Values.replicaCount }}
-  podManagementPolicy: Parallel   # Можно убрать, если хотите OrderedReady
+  podManagementPolicy: Parallel   
   selector:
     matchLabels:
       {{- include "moscow-time-app.selectorLabels" . | nindent 6 }}
