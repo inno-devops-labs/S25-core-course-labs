@@ -8,5 +8,5 @@ spec:
     app: app-python
   ports:
     - protocol: TCP
-      port: 9200
+      port: 80
       targetPort: 9200
