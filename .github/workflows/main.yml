@@ -72,7 +72,8 @@ jobs:
       - name: Install Python dependencies
         run: |
           pip install -r app_python/requirements.txt
-
+      - name: Authenticate to Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
       - name: Run Snyk to check for vulnerabilities
         run: |
           snyk test app_python
