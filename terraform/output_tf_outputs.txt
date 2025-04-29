@@ -1,0 +1,2 @@
+container_id: "2a6d3c89f4e94f62bced7ab3774b9050f1f5a9c43c83e3d1b7bfa3b6c5f8a1e1"
+image_id: "sha256:d53a7a6e2ff8b5a4236f2938bcf2e7164582be0d9cf734c64e7a2e1b73e5da98nginx:latest"
