@@ -29,7 +29,7 @@ backend:
     path: /visits
     initialDelaySeconds: 30
   readinessProbe:
-    path: /time
+    path: /times
     initialDelaySeconds: 5
 # Настройки Frontend
 frontend:
