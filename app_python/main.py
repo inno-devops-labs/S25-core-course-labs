@@ -3,7 +3,7 @@ from flask import Flask, render_template
 import os
 import pytz
 
-VISITS_FILE = "visits.txt"
+VISITS_FILE = "data/visits.txt"
 
 app = Flask(__name__)
 
@@ -31,6 +31,11 @@ def get_time():
     except Exception as e:
         app.logger.error(f"An error occurred: {e}")
         return "Internal server error", 500
+
+
+@app.route("/health")
+def check200():
+        return "OK", 200
 
 
 @app.route("/visits")
