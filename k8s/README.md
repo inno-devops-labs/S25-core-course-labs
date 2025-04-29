@@ -113,26 +113,123 @@ service/kubernetes   ClusterIP      10.96.0.1      <none>         443/TCP       
 3. Test application
 ```bash
 curl 10.98.155.70:8001/
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Moscow Time</title>
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body, html {
+            height: 100%;
+            font-family: Inter, sans-serif;
+            color: white;
+        }
+        body {
+            background-blend-mode: screen;
+            background:
+                linear-gradient(rgba(135, 60, 255, 0.4), rgba(135, 60, 255, 0.0) 80%),
+                linear-gradient(-45deg, rgba(120, 155, 255, 0.9) 25%, rgba(255, 160, 65, 0.9) 75%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .time-container {
+            padding: 2em;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        h1 {
+            font-size: 3em;
+            font-weight: bold;
+        }
+        </style>
+    </head>
+
+    <body>
+        <div class="time-container">
+            <h2>Moscow time</h2>
+            <h1>2025.04.29 17:37:36</h1>
+        </div>
+    </body>
+</html>
 ```
 
 4. Test application using `minikube service --all`
 ```bash
 minikube service --all
+|-----------|------------|-------------|---------------------------|
+| NAMESPACE |    NAME    | TARGET PORT |            URL            |
+|-----------|------------|-------------|---------------------------|
+| default   | app-python |        8001 | http://192.168.49.2:31699 |
+|-----------|------------|-------------|---------------------------|
+|-----------|-----------------|-------------|--------------|
+| NAMESPACE |      NAME       | TARGET PORT |     URL      |
+|-----------|-----------------|-------------|--------------|
+| default   | app-python-helm |             | No node port |
+|-----------|-----------------|-------------|--------------|
+😿  service default/app-python-helm has no node port
+|-----------|------------|-------------|--------------|
+| NAMESPACE |    NAME    | TARGET PORT |     URL      |
+|-----------|------------|-------------|--------------|
+| default   | kubernetes |             | No node port |
+|-----------|------------|-------------|--------------|
+😿  service default/kubernetes has no node port
+❗  Services [default/app-python-helm default/kubernetes] have type "ClusterIP" not meant to be exposed, however for local development minikube allows you to access this !
+🎉  Opening service default/app-python in default browser...
+🏃  Starting tunnel for service app-python-helm.
+🏃  Starting tunnel for service kubernetes.
+Opening in existing browser session.
+|-----------|-----------------|-------------|------------------------|
+| NAMESPACE |      NAME       | TARGET PORT |          URL           |
+|-----------|-----------------|-------------|------------------------|
+| default   | app-python-helm |             | http://127.0.0.1:33761 |
+| default   | kubernetes      |             | http://127.0.0.1:38703 |
+|-----------|-----------------|-------------|------------------------|
+🎉  Opening service default/app-python-helm in default browser...
+🎉  Opening service default/kubernetes in default browser...
+❗  Because you are using a Docker driver on linux, the terminal needs to be open to run it.
+Opening in existing browser session.
+[591146:591146:0100/000000.837142:ERROR:zygote_linux.cc(664)] write: Broken pipe (32)
+Opening in existing browser session.
+
 ```
 
 Screenshots:
 
+![img.png](screenshots/service_browser.png)
+
 5. Remove deployment
 ```bash
 kubectl delete deployment app-python
+deployment.apps "app-python" deleted
 ```
 
 6. Remove service
 ```bash
 kubectl delete service app-python
+service "app-python" deleted
+
 ```
 
 7. See information about deployments, pods, and service one more time
 ```bash
 kubectl get pods,deployments,svc
+NAME                                   READY   STATUS    RESTARTS   AGE
+pod/app-python-helm-79cffdbc5d-nbjdv   1/1     Running   0          97m
+
+NAME                              READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/app-python-helm   1/1     1            1           97m
+
+NAME                      TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+service/app-python-helm   ClusterIP   10.98.190.42   <none>        80/TCP    97m
+service/kubernetes        ClusterIP   10.96.0.1      <none>        443/TCP   5h26m
 ```
+
+I started lab 10 too, so there appeared helm app python
