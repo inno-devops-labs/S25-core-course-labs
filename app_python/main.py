@@ -11,7 +11,9 @@ TIMEZONE = "Europe/Moscow"
 TIME_FORMAT = "%Y.%m.%d %H:%M:%S"
 PAGE = "index.html"
 
+COUNTER_FOLDER = "visits"
 COUNTER_FILE = "visits.txt"
+COUNTER_FILE_PATH = os.path.join(COUNTER_FOLDER, COUNTER_FILE)
 
 app = Flask(__name__)
 
@@ -24,8 +26,11 @@ REQUESTS_LATENCY = Histogram(
 
 
 def increment_counter():
-    if os.path.exists(COUNTER_FILE):
-        with open(COUNTER_FILE, "r") as f:
+    if not os.path.exists(COUNTER_FOLDER):
+        os.makedirs(COUNTER_FOLDER)
+
+    if os.path.exists(COUNTER_FILE_PATH):
+        with open(COUNTER_FILE_PATH, "r") as f:
             try:
                 count = int(f.read()) + 1
             except ValueError:
@@ -33,7 +38,7 @@ def increment_counter():
     else:
         count = 1
 
-    with open(COUNTER_FILE, "w") as f:
+    with open(COUNTER_FILE_PATH, "w") as f:
         f.write(str(count))
 
     return count

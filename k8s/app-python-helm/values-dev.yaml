@@ -10,7 +10,7 @@ image:
   repository: darrpyy/devops
   tag: "latest"
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -113,6 +113,15 @@ volumeMounts:
   - name: app-python-config-v
     mountPath: /code/config.json
     subPath: config.json
+  - name: app-python-visits-v
+    mountPath: /code/visits
+
+podManagementPolicy: Parallel
+
+persistence:
+  name: app-python-visits-v
+  size: 1Gi
+
 nodeSelector: {}
 
 tolerations: []

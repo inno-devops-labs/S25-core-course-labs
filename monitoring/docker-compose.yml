@@ -10,7 +10,7 @@ services:
     image: darrpyy/devops:latest
     restart: unless-stopped
     volumes:
-      - ./visits.txt:/code/visits.txt
+      - ./visits:/code/visits
     ports:
       - "5000:5000"
     networks:
