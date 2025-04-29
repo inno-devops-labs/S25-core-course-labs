@@ -51,23 +51,9 @@ jobs:
         
   security:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.11"
-      - name: Install Snyk
-        run: |
-          npm install -g snyk
-      - name: Install Python dependencies
-        run: |
-          pip install -r app_python/requirements.txt
+      - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
-        run: |
-          snyk test app_python
+        uses: snyk/actions/python-3.8@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
