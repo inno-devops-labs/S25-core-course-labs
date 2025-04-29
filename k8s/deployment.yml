@@ -17,3 +17,9 @@ spec:
           image: daniilzimin4/devopsapp:latest
           ports:
             - containerPort: 9200
+          env:
+            - name: MY_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: python-app-secret
+                  key: MY_PASS
