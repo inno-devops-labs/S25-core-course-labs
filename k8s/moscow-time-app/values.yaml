@@ -1,4 +1,7 @@
-replicaCount: 5
+replicaCount: 3
+
+persistence:
+  size: 1Gi
 
 image:
   repository: utkanosss/moscow-time-app  

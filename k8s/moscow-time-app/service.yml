@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: moscow-time-app
 spec:
-  type: NodePort
+  clusterIP: None   # <-- Это делает сервис headless, важно для DNS подов
   ports:
-  - port: 80
-    targetPort: 5000
-    protocol: TCP
+    - port: 80
+      targetPort: 5000
+      protocol: TCP
   selector:
     app: moscow-time-app
