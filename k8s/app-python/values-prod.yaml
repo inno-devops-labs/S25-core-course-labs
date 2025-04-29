@@ -1,0 +1,9 @@
+# Prod
+backend:
+  replicaCount: 3  # Для отказоустойчивости
+  image:
+    tag: v1.0.0
+
+frontend:
+  image:
+    tag: v1.0.0
