@@ -17,3 +17,11 @@ To run unit tests install the pytest via
 and start them by using:
 
 `python -m pytest`
+
+# Requests:
+
+**GET /** - Main page.
+
+ 
+
+- **GET /visits** - Visits counter.

@@ -1,0 +1,37 @@
+services:
+ 
+
+  python-app:
+ 
+
+    image: atkond/flask-app:latest
+ 
+
+    container_name: app_python
+ 
+
+    user: "1000:1000"
+ 
+
+    ports:
+ 
+
+      - "5000:5000"
+ 
+
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]
+ 
+
+    working_dir: /app
+ 
+
+    volumes:
+ 
+
+      - .:/app
+ 
+
+      - ./visits:/app/visits
+ 
+
+    restart: unless-stopped
