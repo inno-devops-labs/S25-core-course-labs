@@ -1,0 +1,192 @@
+NAME: time-app
+LAST DEPLOYED: Tue Apr 29 04:09:02 2025
+NAMESPACE: default
+STATUS: pending-install
+REVISION: 1
+USER-SUPPLIED VALUES:
+{}
+
+COMPUTED VALUES:
+affinity: {}
+autoscaling:
+  enabled: false
+  maxReplicas: 100
+  minReplicas: 1
+  targetCPUUtilizationPercentage: 80
+fullnameOverride: ""
+image:
+  pullPolicy: IfNotPresent
+  repository: nginx
+  tag: ""
+imagePullSecrets: []
+ingress:
+  annotations: {}
+  className: ""
+  enabled: false
+  hosts:
+  - host: chart-example.local
+    paths:
+    - path: /
+      pathType: ImplementationSpecific
+  tls: []
+nameOverride: ""
+nodeSelector: {}
+podAnnotations: {}
+podSecurityContext: {}
+replicaCount: 1
+resources: {}
+securityContext: {}
+service:
+  port: 80
+  type: ClusterIP
+serviceAccount:
+  create: true
+  name: time-app
+tolerations: []
+vault:
+  annotations:
+    vault.hashicorp.com/agent-inject: "true"
+    vault.hashicorp.com/agent-inject-secret-db-config: internal/data/database/config
+    vault.hashicorp.com/agent-inject-template-db-config: |
+      {{- with secret "internal/data/database/config" -}}
+      DB_USER={{ .Data.data.username }}
+      DB_PASS={{ .Data.data.password }}
+      {{- end }}
+    vault.hashicorp.com/role: time-app-role
+  enabled: true
+
+HOOKS:
+---
+# Source: time-app/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "time-app-test-connection"
+  labels:
+    helm.sh/chart: time-app-0.1.0
+    app.kubernetes.io/name: time-app
+    app.kubernetes.io/instance: time-app
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['time-app:80']
+  restartPolicy: Never
+MANIFEST:
+---
+# Source: time-app/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: time-app
+  labels:
+    helm.sh/chart: time-app-0.1.0
+    app.kubernetes.io/name: time-app
+    app.kubernetes.io/instance: time-app
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: time-app/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysecret
+type: Opaque
+data:
+  MY_PASS: U3VwZXJTZWNyZXRQYXNzd29yZA==
+---
+# Source: time-app/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: time-app
+  labels:
+    helm.sh/chart: time-app-0.1.0
+    app.kubernetes.io/name: time-app
+    app.kubernetes.io/instance: time-app
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: time-app
+    app.kubernetes.io/instance: time-app
+---
+# Source: time-app/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: time-app
+  labels:
+    helm.sh/chart: time-app-0.1.0
+    app.kubernetes.io/name: time-app
+    app.kubernetes.io/instance: time-app
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: time-app
+      app.kubernetes.io/instance: time-app
+  template:
+    metadata:
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/agent-inject-secret-db-config: internal/data/database/config
+        vault.hashicorp.com/agent-inject-template-db-config: |
+          {{- with secret "internal/data/database/config" -}}
+          DB_USER={{ .Data.data.username }}
+          DB_PASS={{ .Data.data.password }}
+          {{- end }}
+        vault.hashicorp.com/role: time-app-role
+      labels:
+        app.kubernetes.io/name: time-app
+        app.kubernetes.io/instance: time-app
+    spec:
+      serviceAccountName: time-app
+      securityContext:
+        {}
+      containers:
+        - name: time-app
+          securityContext:
+            {}
+          image: "nginx:1.16.0"
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: vault-secrets
+              mountPath: /vault/data/secrets
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {}
+      volumes:
+        - name: vault-secrets
+          emptyDir: {}
+
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=time-app,app.kubernetes.io/instance=time-app" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
