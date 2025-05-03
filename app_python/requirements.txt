@@ -1,0 +1,2 @@
+bottle==0.13.2
+gunicorn==23.0.0

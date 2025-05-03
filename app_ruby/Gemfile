@@ -1,0 +1,17 @@
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
+
+# Gems for running the app (production)
+gem 'sinatra', '~> 4.1'
+gem 'tzinfo', '~> 2.0'
+gem 'rackup', '~> 2.2'
+gem 'puma', '~> 6.5'
+gem 'time', '~> 0.4'
+
+# Gems for development and testing
+group :development, :test do
+  gem 'rack-test', '~> 2.2'
+  gem 'rspec'
+  gem 'rubocop', '~> 1.71', require: false
+end
