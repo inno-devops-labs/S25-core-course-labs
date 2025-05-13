@@ -30,3 +30,17 @@ spec:
             secretKeyRef:
               name: helm-secret
               key: MY_PASS
+        
+        volumeMounts:
+          - name: config-volume
+            mountPath: /app/config
+          - name: data-volume
+            mountPath: /data
+
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "timeapp.fullname" . }}-config
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistentVolumeClaim.name | default (printf "%s-data-pvc" (include "timeapp.fullname" .)) }}

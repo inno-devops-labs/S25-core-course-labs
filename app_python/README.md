@@ -6,6 +6,8 @@
 
 A production-ready web application displaying current Moscow time with retro pixel styling and automatic refresh.
 
+Now with visitors counter!
+
 ![Moscow Time Screenshot](docs/screenshot.png)
 
 ## Features ✨
@@ -59,6 +61,8 @@ To run the container, use the following command (PORT environment variable can b
 ```bash
 docker run -p 8080:8080 moscow-time-app:latest
 ```
+
+Tip: mount the /data/visits.txt to host, so it will persist across container restarts
 
 ### Running the Tests
 

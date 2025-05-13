@@ -35,6 +35,7 @@ class Config:
     HOST = '0.0.0.0'
     PORT = 5000
     LOG_LEVEL = logging.INFO # Some logging never was bad
+    VISITS_FILE = '/data/visits.txt'  # Docker volume mount path
 
 # Initialize Flask application
 app = Flask(__name__)
@@ -67,6 +68,26 @@ def get_moscow_time() -> Tuple[str, str]:
         logger.error(f"Invalid timezone configuration: {Config.TIMEZONE}")
         raise e
 
+
+def read_visits() -> int:
+    """Read current visit count from persistent storage."""
+    try:
+        with open(Config.VISITS_FILE, 'r') as f:
+            return int(f.read().strip() or 0)
+    except (FileNotFoundError, ValueError):
+        return 0
+    except Exception as e:
+        logger.error(f"Error reading visits file: {str(e)}")
+        return 0
+
+def write_visits(count: int) -> None:
+    """Persist updated visit count to storage."""
+    try:
+        with open(Config.VISITS_FILE, 'w') as f:
+            f.write(str(count))
+    except Exception as e:
+        logger.error(f"Error writing visits file: {str(e)}")
+
 @app.route('/', methods=['GET'])
 def display_time() -> Response:
     """
@@ -82,6 +103,14 @@ def display_time() -> Response:
     try:
         date_str, time_str = get_moscow_time()
         logger.debug(f"Successfully retrieved time: {date_str} {time_str}")
+
+        # Update visit counter
+        try:
+            current_visits = read_visits() + 1
+            write_visits(current_visits)
+        except Exception as e:
+            logger.error(f"Visit counter update failed: {str(e)}")
+
         return render_template(
             'index.html',
             time=time_str,
@@ -93,6 +122,20 @@ def display_time() -> Response:
         return render_template(
             'error.html',
             error_message="Unable to retrieve current time"
+        ), 500
+
+@app.route('/visits')
+def show_visits() -> Response:
+    """Endpoint displaying total visits count."""
+    try:
+        count = read_visits()
+        logger.debug(f"Displaying visit count: {count}")
+        return render_template('visits.html', visits=count)
+    except Exception as e:
+        logger.exception("Failed to retrieve visit count")
+        return render_template(
+            'error.html',
+            error_message="Unable to retrieve visit count"
         ), 500
 
 if __name__ == '__main__':

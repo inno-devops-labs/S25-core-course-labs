@@ -27,3 +27,13 @@ vault:
     - name: creds
       path: internal/secret
       key: password
+
+
+
+persistentVolumeClaim:
+  create: true
+  name: timeapp-data-pvc
+  size: 1Gi
+  storageClass: ""
+  accessModes:
+    - ReadWriteOnce
