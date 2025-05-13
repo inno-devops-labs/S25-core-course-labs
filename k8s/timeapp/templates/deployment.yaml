@@ -13,9 +13,20 @@ spec:
     metadata:
       labels:
         app: {{ .Values.appName }}
+      annotations:
+        vault.hashicorp.com/agent-inject-secret-secret.txt: "internal/data/secret"
+        vault.hashicorp.com/role: "internal-app"
+        vault.hashicorp.com/agent-inject: "true"
     spec:
+      serviceAccountName: internal-app
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         ports:
         - containerPort: {{ .Values.service.port }}
+        env:
+        - name: MY_PASS
+          valueFrom:
+            secretKeyRef:
+              name: helm-secret
+              key: MY_PASS

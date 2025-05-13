@@ -13,7 +13,17 @@ service:
 hooks:
   preInstall:
     image: alpine
-    command: ["/bin/sh", "-c", "sleep 20"]
+    command: ["/bin/sh", "-c", "sleep 1"]
   postInstall:
     image: alpine
-    command: ["/bin/sh", "-c", "sleep 20"]
+    command: ["/bin/sh", "-c", "sleep 1"]
+
+secretPassword: "supersecret"
+
+vault:
+  enabled: true
+  role: internal-app
+  secrets:
+    - name: creds
+      path: internal/secret
+      key: password
