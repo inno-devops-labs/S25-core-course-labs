@@ -1,0 +1,5 @@
+---
+- name: Ensure Docker Compose is installed
+  apt:
+    name: docker-compose-plugin
+    state: present 
