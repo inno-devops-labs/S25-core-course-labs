@@ -1,0 +1,42 @@
+replicaCount: 3
+
+image:
+  repository: pr0ventu5/moscow-time-app
+  tag: latest
+
+appName: "timeapp"
+
+service:
+  type: ClusterIP
+  port: 8086
+
+secret:
+  name: helm-secret
+  key: MY_PASS
+  password: secretpassword
+
+serviceAccount:
+  name: internal-app
+
+hooks:
+  preInstall:
+    image: alpine
+    command: ["/bin/sh", "-c", "sleep 1"]
+  postInstall:
+    image: alpine
+    command: ["/bin/sh", "-c", "sleep 1"]
+
+vault:
+  enabled: true
+  role: internal-app
+  secrets:
+    - name: creds
+      path: internal/data/secret
+      key: password
+
+persistentVolumeClaim:
+  create: true
+  size: 1Gi
+  storageClass: ""
+  accessModes:
+    - ReadWriteOnce

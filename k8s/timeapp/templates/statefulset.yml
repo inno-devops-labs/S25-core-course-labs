@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "timeapp.fullname" . }}
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  podManagementPolicy: {{ .Values.statefulset.podManagementPolicy | quote }}
+  serviceName: {{ include "timeapp.fullname" . }}-headless
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+      {{- if .Values.vault.enabled }}
+      annotations:
+      {{- range .Values.vault.secrets }}
+        vault.hashicorp.com/agent-inject-secret-{{ .name }}.txt: "{{ .path }}"
+      {{- end }}
+        vault.hashicorp.com/role: "{{ .Values.vault.role }}"
+        vault.hashicorp.com/agent-inject: "{{ .Values.vault.enabled }}"
+      {{- end }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        ports:
+        - containerPort: {{ .Values.service.port }}
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.probes.liveness.path }}
+            port: {{ .Values.service.port }}
+          initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.probes.readiness.path }}
+            port: {{ .Values.service.port }}
+          initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.probes.readiness.periodSeconds }}
+        env:
+        - name: MY_PASS
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.secret.name }}
+              key: {{ .Values.secret.key }}
+        volumeMounts:
+          - name: config-volume
+            mountPath: /app/config
+          - name: data-volume
+            mountPath: /data
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "timeapp.fullname" . }}-config
+  {{- if .Values.persistentVolumeClaim.create }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data-volume
+      spec:
+        accessModes:
+          {{- toYaml .Values.persistentVolumeClaim.accessModes | nindent 8 }}
+        resources:
+          requests:
+            storage: {{ .Values.persistentVolumeClaim.size }}
+        {{- if .Values.persistentVolumeClaim.storageClass }}
+        storageClassName: {{ .Values.persistentVolumeClaim.storageClass | quote }}
+        {{- end }}
+  {{- end }}
