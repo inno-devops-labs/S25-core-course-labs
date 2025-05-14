@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "timeapp.fullname" . }}-headless
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  clusterIP: None
+  ports:
+    - port: {{ .Values.service.port }}
+      name: http
+  selector:
+    app: {{ .Values.appName }}
