@@ -8,7 +8,7 @@ appName: "timeapp"
 
 service:
   type: ClusterIP
-  port: 8085
+  port: 8086
 
 hooks:
   preInstall:
