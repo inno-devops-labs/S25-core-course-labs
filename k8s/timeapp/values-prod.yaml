@@ -1,0 +1,39 @@
+replicaCount: 3
+
+image:
+  repository: pr0ventu5/moscow-time-app
+  tag: latest
+
+appName: "timeapp"
+
+service:
+  type: ClusterIP
+  port: 8087
+
+hooks:
+  preInstall:
+    image: alpine
+    command: ["/bin/sh", "-c", "sleep 1"]
+  postInstall:
+    image: alpine
+    command: ["/bin/sh", "-c", "sleep 1"]
+
+secretPassword: "changedprodsecret"
+
+vault:
+  enabled: true
+  role: internal-app
+  secrets:
+    - name: creds
+      path: internal/secret
+      key: password
+
+
+
+persistentVolumeClaim:
+  create: true
+  # name: timeapp-data-pvc
+  size: 1Gi
+  storageClass: ""
+  accessModes:
+    - ReadWriteOnce
