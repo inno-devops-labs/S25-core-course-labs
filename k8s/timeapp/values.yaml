@@ -32,7 +32,7 @@ vault:
 
 persistentVolumeClaim:
   create: true
-  name: timeapp-data-pvc
+  # name: timeapp-data-pvc
   size: 1Gi
   storageClass: ""
   accessModes:
