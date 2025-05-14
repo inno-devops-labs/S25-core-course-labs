@@ -5,6 +5,7 @@ metadata:
   labels:
     app: {{ .Values.appName }}
 spec:
+  podManagementPolicy: {{ .Values.statefulset.podManagementPolicy | quote }}
   serviceName: {{ include "timeapp.fullname" . }}-headless
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -29,6 +30,18 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         ports:
         - containerPort: {{ .Values.service.port }}
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.probes.liveness.path }}
+            port: {{ .Values.service.port }}
+          initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.probes.readiness.path }}
+            port: {{ .Values.service.port }}
+          initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
+          periodSeconds: {{ .Values.probes.readiness.periodSeconds }}
         env:
         - name: MY_PASS
           valueFrom:

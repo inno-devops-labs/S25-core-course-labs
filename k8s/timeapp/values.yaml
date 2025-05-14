@@ -40,3 +40,16 @@ persistentVolumeClaim:
   storageClass: ""
   accessModes:
     - ReadWriteOnce
+
+probes:
+  liveness:
+    path: /
+    initialDelaySeconds: 15
+    periodSeconds: 10
+  readiness:
+    path: /
+    initialDelaySeconds: 5
+    periodSeconds: 10
+
+statefulset:
+  podManagementPolicy: Parallel
