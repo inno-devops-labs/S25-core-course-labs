@@ -6,22 +6,22 @@ Welcome to the DevOps Engineering course labs! These hands-on labs are designed 
 
 ## Lab Syllabus
 
-Lab 1: Web Application Development
-Lab 2: Containerization
-Lab 3: Continuous Integration
-Lab 4: Infrastructure as Code & Terraform
-Lab 5: Configuration Management
-Lab 6: Ansible Automation
-Lab 7: Observability, Logging, Loki Stack
-Lab 8: Monitoring & Prometheus
-Lab 9: Kubernetes & Declarative Manifests
-Lab 10: Helm Charts & Library Charts
-Lab 11: Kubernetes Secrets Management (Vault, ConfigMaps)
-Lab 12: Kubernetes ConfigMaps & Environment Variables
-Lab 13: GitOps with ArgoCD
-Lab 14: StatefulSet Optimization
-Lab 15: Kubernetes Monitoring & Init Containers
-Lab 16: IPFS & Fleek Decentralization
+1. Web Application Development
+2. Containerization
+3. Continuous Integration
+4. Infrastructure as Code & Terraform
+5. Configuration Management
+6. Ansible Automation
+7. Observability, Logging, Loki Stack
+8. Monitoring & Prometheus
+9. Kubernetes & Declarative Manifests
+10. Helm Charts & Library Charts
+11. Kubernetes Secrets Management (Vault, ConfigMaps)
+12. Kubernetes ConfigMaps & Environment Variables
+13. GitOps with ArgoCD
+14. StatefulSet Optimization
+15. Kubernetes Monitoring & Init Containers
+16. IPFS & Fleek Decentralization
 
 ## Architecture
 
