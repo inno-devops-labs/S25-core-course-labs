@@ -1,0 +1,37 @@
+server:
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+client:
+  url: http://loki:3100/loki/api/v1/push
+
+scrape_configs: #https://grafana.com/docs/loki/latest/send-data/promtail/configuration/#scrape_configs
+  - job_name: containers
+
+    static_configs: # https://grafana.com/docs/loki/latest/send-data/promtail/configuration/#static_configs
+      - targets:
+          - localhost
+        labels:
+          __path__: /var/lib/docker/containers/*/*log
+
+    pipeline_stages:
+      - json: # https://grafana.com/docs/loki/latest/send-data/promtail/stages/json/
+          expressions:
+            stream: stream
+            attrs: attrs
+            tag: attrs.tag
+            time: time
+            log: log
+      - regex: # https://grafana.com/docs/loki/latest/send-data/promtail/stages/regex/
+          expression: ^(?P<image_name>([^|]+))\|(?P<container_name>([^|]+))$
+          source: "tag"
+      - timestamp: # https://grafana.com/docs/loki/latest/send-data/promtail/stages/timestamp/
+          source: time
+          format: ANSIC
+      - labels: # These labels will be used to query the logs in Grafana (https://grafana.com/docs/loki/latest/send-data/promtail/stages/labels/)
+          stream: # container log output (normal logs/ error logs)
+          time:
+          image_name:
+          container_name:
