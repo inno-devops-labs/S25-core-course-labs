@@ -1,0 +1,18 @@
+replicaCount: 1
+
+image:
+  repository: alimansour000/moscow-time-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resources:
+  limits:
+    memory: 150Mi
+    cpu: 100m
+  requests:
+    memory: 100Mi
+    cpu: 50m
+
+env:
+  - name: ENVIRONMENT
+    value: "development"
