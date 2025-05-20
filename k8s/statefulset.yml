@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-app
+  labels:
+    app: python-app
+spec:
+  ports:
+  - port: 8000
+    name: web
+  clusterIP: None  # Headless service
+  selector:
+    app: python-app
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: python-app
+spec:
+  serviceName: python-app
+  replicas: 3
+  podManagementPolicy: Parallel  # Allow parallel pod creation/deletion
+  selector:
+    matchLabels:
+      app: python-app
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      containers:
+      - name: python-app
+        image: python-app:latest
+        imagePullPolicy: Never  # For local development with minikube
+        ports:
+        - containerPort: 8000
+          name: web
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "512Mi"
+          requests:
+            cpu: "0.1"
+            memory: "128Mi"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: web
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: web
+          initialDelaySeconds: 5
+          periodSeconds: 10
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi 

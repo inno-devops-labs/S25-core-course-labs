@@ -106,3 +106,20 @@ affinity: {}
 
 secrets:
   myPass: "mysecretpassword"
+
+# StatefulSet specific configurations
+statefulset:
+  podManagementPolicy: Parallel  # Options: OrderedReady, Parallel
+
+# Persistence configuration
+persistence:
+  size: 1Gi
+
+# Probe configurations
+probes:
+  liveness:
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  readiness:
+    initialDelaySeconds: 5
+    periodSeconds: 10

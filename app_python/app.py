@@ -8,7 +8,7 @@ import os
 
 app = FastAPI()
 
-VISITS_FILE = "visits"
+VISITS_FILE = "/data/visits"
 VISITS_COUNT = 0
 
 def load_visits():

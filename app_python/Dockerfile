@@ -33,6 +33,9 @@ COPY . .
 # Change ownership of the application directory to the non-root user
 RUN chown -R appuser:appuser /home/appuser/app
 
+# Create /data directory and set ownership
+RUN mkdir -p /data && chown appuser:appuser /data
+
 # Switch to the non-root user
 USER appuser
 
