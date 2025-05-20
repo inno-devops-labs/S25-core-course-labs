@@ -68,3 +68,24 @@ PIP_DISABLE_PIP_VERSION_CHECK: Disables the pip version check.
 * Clean Up After Installation : We cleaned up unnecessary files after installing dependencies using apk del to reduce the final image size.
 * Expose Ports Explicitly : We explicitly exposed port 8000 using the EXPOSE instruction. This makes it clear which ports the container listens on and helps with documentation and troubleshooting.
 * CMD Instruction : We used the CMD instruction to specify the default command to run the application. This allows users to override the command if needed without modifying the Dockerfile.
+
+## New Features
+
+### Visit Counter
+The application now includes a visit counter feature that:
+- Tracks the number of times the application is accessed
+- Persists the counter data in a `visits` file
+- Provides a new `/visits` endpoint to display the total number of visits
+
+### Endpoints
+- `/` - Shows current Moscow time and the current visit count
+- `/visits` - Displays the total number of visits
+- `/metrics` - Prometheus metrics endpoint
+- `/health` - Health check endpoint
+
+### Running with Docker Compose
+To run the application with persistence:
+```bash
+docker-compose up --build
+```
+The visits counter will be persisted in the `visits` file in the application directory.
