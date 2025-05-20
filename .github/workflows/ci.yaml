@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main", "lab3" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python environment
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+
+      # Step 3: Cache pip dependencies to speed up builds
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('app_python/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      # Step 4: Install dependencies
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          # If you have a requirements.txt file in app_python, it will be used;
+          # otherwise, install the basic packages needed.
+          if [ -f app_python/requirements.txt ]; then
+            pip install -r app_python/requirements.txt
+          else
+            pip install fastapi uvicorn pytest flake8
+          fi
+
+      # Step 5: Lint the code using flake8
+      - name: Lint with flake8
+        run: |
+          pip install flake8
+          flake8 app_python
+
+      # Step 6: Run unit tests using pytest
+      - name: Run tests
+        run: pytest app_python/tests/
+
+  docker:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Login to Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Step 3: Build Docker image
+      - name: Build Docker image
+        run: |
+          # Assuming you have a Dockerfile in app_python or you build directly from the folder.
+          # Adjust the image name as needed.
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/app:latest app_python
+
+      # Step 4: Push Docker image to Docker Hub
+      - name: Push Docker image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/app:latest

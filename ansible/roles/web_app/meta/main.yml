@@ -1,0 +1,21 @@
+---
+dependencies:
+  - role: docker
+    tags: [docker, setup]
+
+galaxy_info:
+  role_name: web_app
+  author: Your Name
+  description: Role for deploying web applications using Docker
+  company: Your Company
+  license: MIT
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+  galaxy_tags:
+    - docker
+    - web
+    - deployment
