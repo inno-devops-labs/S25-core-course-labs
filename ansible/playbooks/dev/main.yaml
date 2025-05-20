@@ -1,0 +1,38 @@
+---
+- name: Deploy Docker and Docker Compose
+  hosts: webservers
+  become: yes
+  gather_facts: yes
+
+  pre_tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+  roles:
+    - role: docker
+      vars:
+        docker_version: "latest"
+        docker_compose_version: "2.24.5"
+
+  post_tasks:
+    - name: Verify Docker installation
+      command: docker --version
+      register: docker_version_check
+      changed_when: false
+      failed_when: false
+
+    - name: Display Docker version
+      debug:
+        var: docker_version_check.stdout_lines
+
+    - name: Verify Docker Compose installation
+      command: docker-compose --version
+      register: docker_compose_version_check
+      changed_when: false
+      failed_when: false
+
+    - name: Display Docker Compose version
+      debug:
+        var: docker_compose_version_check.stdout_lines
