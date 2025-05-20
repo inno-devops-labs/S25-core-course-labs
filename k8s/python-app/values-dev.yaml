@@ -1,0 +1,3 @@
+# values-dev.yaml for dev environment
+replicaCount: 1
+# ... add other overrides as needed 
