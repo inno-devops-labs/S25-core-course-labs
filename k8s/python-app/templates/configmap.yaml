@@ -1,9 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: python-app-config
+  name: "{{ .Release.Name }}-config"
   labels:
-    app: python-app
+    app.kubernetes.io/name: "{{ include \"python-app.name\" . }}"
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
 data:
   config.json: |
     {
