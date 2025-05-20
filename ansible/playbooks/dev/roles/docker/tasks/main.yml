@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: MIT-0
+---
+# tasks file for ansible/playbooks/dev/roles/docker
+
+- name: Remove old Docker versions if they exist
+  apt:
+    name: 
+      - docker
+      - docker.io
+      - docker-engine
+      - containerd
+      - runc
+    state: absent
+    purge: yes
+    autoremove: yes
+
+- name: Install required system packages
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+    state: present
+    update_cache: yes
+
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable
+    state: present
+    filename: docker
+
+- name: Install Docker Engine
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+    update_cache: yes
+
+- name: Ensure Docker service is running
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+    daemon_reload: yes
