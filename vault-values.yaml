@@ -1,0 +1,11 @@
+server:
+  dev:
+    enabled: true
+  injector:
+    enabled: true
+  serviceAccount:
+    create: true
+    name: vault
+  service:
+    enabled: true
+    type: ClusterIP 

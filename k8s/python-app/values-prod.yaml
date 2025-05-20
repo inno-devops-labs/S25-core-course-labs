@@ -1,0 +1,3 @@
+# values-prod.yaml for prod environment
+replicaCount: 2
+# ... add other overrides as needed 

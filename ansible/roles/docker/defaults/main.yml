@@ -1,0 +1,29 @@
+---
+# Docker version to install
+docker_version: "latest"
+
+# Docker Compose version to install
+docker_compose_version: "2.24.5"
+
+# Docker repository URL
+docker_repository_url: "https://download.docker.com/linux/ubuntu"
+
+# Docker repository key URL
+docker_repository_key_url: "https://download.docker.com/linux/ubuntu/gpg"
+
+# Docker repository key ID
+docker_repository_key_id: "9DC858229FC7DD38854AE2D88D81803C0EBFCD88"
+
+# Docker repository components
+docker_repository_components: "stable"
+
+# Docker repository architecture
+docker_repository_architecture: "amd64"
+
+# Docker daemon options
+docker_daemon_options:
+  log-driver: "json-file"
+  log-opts:
+    max-size: "100m"
+    max-file: "3"
+  storage-driver: "overlay2"
