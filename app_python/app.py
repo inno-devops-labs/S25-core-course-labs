@@ -89,6 +89,15 @@ async def metrics():
 async def health_check():
     return {"status": "healthy"}
 
+@app.get("/vault-secret")
+async def get_vault_secret():
+    try:
+        with open('/vault/secrets/mysecret', 'r') as f:
+            secret_data = json.load(f)
+        return {"secret": secret_data}
+    except Exception as e:
+        return {"error": str(e)}
+
 if __name__ == '__main__':
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

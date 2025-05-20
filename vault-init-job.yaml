@@ -1,0 +1,63 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vault-init
+  namespace: vault
+spec:
+  template:
+    spec:
+      serviceAccountName: vault
+      containers:
+      - name: vault-init
+        image: hashicorp/vault:1.19.0
+        command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Waiting for Vault to be ready..."
+          until nc -z vault 8200; do
+            sleep 1
+          done
+          echo "Vault is ready, initializing..."
+          export VAULT_ADDR=http://vault:8200
+          export VAULT_TOKEN=root
+          # Enable KV secrets engine
+          vault secrets enable -version=2 kv
+          # Create a secret
+          vault kv put secret/mysecret username=admin password=secret
+          # Enable Kubernetes auth
+          vault auth enable kubernetes
+          # Configure Kubernetes auth
+          vault write auth/kubernetes/config \
+            token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
+            kubernetes_host="https://kubernetes.default.svc" \
+            kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          # Create role for python-app
+          vault write auth/kubernetes/role/python-app \
+            bound_service_account_names=python-app-dev \
+            bound_service_account_namespaces=dev \
+            policies=python-app-policy \
+            ttl=1h
+          # Create policy
+          vault policy write python-app-policy - <<EOF
+          path "secret/data/mysecret" {
+            capabilities = ["read"]
+          }
+          EOF
+        volumeMounts:
+        - name: token
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+          readOnly: true
+      volumes:
+      - name: token
+        projected:
+          sources:
+          - serviceAccountToken:
+              expirationSeconds: 3600
+              path: token
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+              - key: ca.crt
+                path: ca.crt
+      restartPolicy: OnFailure 

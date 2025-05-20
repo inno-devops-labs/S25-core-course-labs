@@ -16,11 +16,6 @@ spec:
       labels:
         app.kubernetes.io/name: "{{ include "python-app.name" . }}"
         app.kubernetes.io/instance: "{{ .Release.Name }}"
-      annotations:
-        vault.hashicorp.com/agent-inject: "true"
-        vault.hashicorp.com/agent-inject-status: "update"
-        vault.hashicorp.com/agent-inject-secret-mysecret: "secret/data/mysecret"
-        vault.hashicorp.com/role: "python-app"
     spec:
       serviceAccountName: "{{ include "python-app.serviceAccountName" . }}"
       containers:
@@ -35,11 +30,6 @@ spec:
             - name: config-volume
               mountPath: /app/config.json
               subPath: config.json
-          env:
-            - name: VAULT_ADDR
-              value: "http://vault:8200"
-            - name: SECRET_PATH
-              value: "/vault/secrets/mysecret"
           resources:
 {{- toYaml .Values.resources | nindent 12 }}
       volumes:

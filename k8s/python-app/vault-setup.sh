@@ -29,7 +29,7 @@ EOF
 # Create a role for our application
 kubectl exec vault-0 -- vault write auth/kubernetes/role/python-app \
     bound_service_account_names=python-app \
-    bound_service_account_namespaces=default \
+    bound_service_account_namespaces=default,dev,prod \
     policies=python-app \
     ttl=1h
 
