@@ -1,0 +1,10 @@
+all:
+  children:
+    webservers:
+      hosts:
+        web1:
+          ansible_host: "176.108.253.168"
+          ansible_user: "user1"
+          ansible_ssh_private_key_file: "{{ lookup('env', 'AWS_PRIVATE_KEY_PATH') | default('~/.ssh/id_rsa', true) }}"
+      vars:
+        ansible_python_interpreter: /usr/bin/python3

@@ -1,0 +1,8 @@
+# values-dev.yaml for dev environment
+replicaCount: 1
+
+serviceAccount:
+  create: true
+  name: python-app-dev
+
+# ... add other overrides as needed 

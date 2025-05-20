@@ -1,0 +1,10 @@
+{
+    "app_name": "Python Time App",
+    "timezone": "Europe/Moscow",
+    "version": "1.0.0",
+    "features": {
+        "visit_counter": true,
+        "metrics": true,
+        "health_check": true
+    }
+} 

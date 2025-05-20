@@ -1,0 +1,39 @@
+---
+- name: Include wipe tasks
+  ansible.builtin.import_tasks: 0-wipe.yml
+
+- name: Deploy web application
+  block:
+    - name: Ensure docker-compose directory exists
+      file:
+        path: "{{ playbook_dir }}"
+        state: directory
+        mode: '0755'
+      tags:
+        - setup
+
+    - name: Deploy docker-compose file
+      template:
+        src: docker-compose.yml.j2
+        dest: "{{ playbook_dir }}/docker-compose.yml"
+        mode: '0644'
+      tags:
+        - deploy
+
+    - name: Pull latest Docker image
+      docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+        force_source: true
+      tags:
+        - deploy
+
+    - name: Start web application
+      community.docker.docker_compose_v2:
+        project_src: "{{ playbook_dir }}"
+        state: present
+        remove_orphans: true
+      tags:
+        - deploy
+  tags:
+    - deploy
