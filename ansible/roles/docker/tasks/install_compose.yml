@@ -1,0 +1,19 @@
+---
+- name: Download Docker Compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/v{{ docker_compose_version }}/docker-compose-Linux-x86_64"
+    dest: /usr/local/bin/docker-compose
+    mode: '0755'
+    force: yes
+
+- name: Create Docker Compose directory
+  file:
+    path: /etc/docker/compose
+    state: directory
+    mode: '0755'
+
+- name: Verify Docker Compose installation
+  command: docker-compose --version
+  register: docker_compose_version_check
+  changed_when: false
+  failed_when: false

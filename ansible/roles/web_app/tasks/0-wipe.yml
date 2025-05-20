@@ -1,0 +1,27 @@
+---
+- name: Wipe web application
+  block:
+    - name: Stop and remove web application container
+      docker_container:
+        name: "{{ app_container_name }}"
+        state: absent
+        force_kill: true
+      when: web_app_full_wipe | bool
+
+    - name: Remove docker-compose file
+      file:
+        path: "{{ playbook_dir }}/docker-compose.yml"
+        state: absent
+      when: web_app_full_wipe | bool
+
+    - name: Remove any temporary files
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - "{{ playbook_dir }}/.env"
+        - "{{ playbook_dir }}/docker-compose.override.yml"
+      when: web_app_full_wipe | bool
+  tags:
+    - wipe
+    - always 

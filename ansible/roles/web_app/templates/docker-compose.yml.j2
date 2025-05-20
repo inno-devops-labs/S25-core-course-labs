@@ -1,0 +1,17 @@
+version: '{{ docker_compose_version }}'
+
+services:
+  {{ app_container_name }}:
+    image: "{{ docker_image }}"
+    container_name: "{{ app_container_name }}"
+    ports:
+      - "{{ app_port }}:8000"
+    restart: "{{ app_restart_policy }}"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
